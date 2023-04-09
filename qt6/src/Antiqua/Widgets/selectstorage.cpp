@@ -10,6 +10,7 @@
 
 namespace AntiquaCRM {
 
+// TODO select storage compartment
 SelectStorage::SelectStorage(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   m_select = new AntiquaCRM::AComboBox(this);

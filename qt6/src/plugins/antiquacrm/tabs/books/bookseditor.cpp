@@ -110,6 +110,13 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_title = new AntiquaCRM::TextLine(this);
   ib_title->setObjectName("ib_title");
   ib_title->setInputToolTip(infoText->text());
+  tempWhatsThis =
+      tr("A Book title is restricted to 80 Characters. Some Online Providers "
+         "only support this title length. Other Providers allowing more "
+         "characters in Book titles. To get around this, the following "
+         "Subtitle field will appended seperated by „-“ to the Book title when "
+         "exporting the books data to your online shop providers.");
+  ib_title->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_title, row2c++, 1, 1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Book Subtitle"), _lbAlign, this);
@@ -117,6 +124,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_title_extended = new AntiquaCRM::TextLine(this);
   ib_title_extended->setObjectName("ib_title_extended");
   ib_title_extended->setInputToolTip(infoText->text());
+  // WARNING - ib_title->setWhatsThisText is used!
+  ib_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_title_extended, row2c++, 1, 1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Author"), _lbAlign, this);
@@ -138,6 +147,12 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_publisher = new AntiquaCRM::TextLine(this);
   ib_publisher->setObjectName("ib_publisher");
   ib_publisher->setInputToolTip(infoText->text());
+  tempWhatsThis = tr("This field is reserved to insert Book Publishers.\n"
+                     "Used Format is: „Publisher, Location“\n"
+                     "Example: J.F. Lehmanns Verlag, Munich\n"
+                     "AntiquaCRM suggests the most common publisher names, "
+                     "when editing this field.");
+  ib_publisher->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Condition"), _lbAlign, this);
@@ -145,14 +160,19 @@ BooksEditor::BooksEditor(QWidget *parent)
   QHBoxLayout *conditionlayout = new QHBoxLayout();
   ib_condition = new AntiquaCRM::ConditionEdit(this);
   ib_condition->setObjectName("ib_condition");
-  ib_condition->setWhatsThisText(tr("Condition of this Book."));
+  tempWhatsThis =
+      tr("The Book condition is predefined by your Book Seller online shop.\n"
+         "Mostly defined with 1-4, very good to heavily worn.");
+  ib_condition->setWhatsThisText(tempWhatsThis);
   conditionlayout->addWidget(ib_condition, Qt::AlignLeft);
 
   infoText = new AntiquaCRM::ALabel(tr("Language"), _lbAlign, this);
   conditionlayout->addWidget(infoText, Qt::AlignRight);
   ib_language = new AntiquaCRM::SelectLanguage(this);
   ib_language->setObjectName("ib_language");
-  ib_language->setWhatsThisText(tr("TODO"));
+  tempWhatsThis =
+      tr("In this field the content language of the book is specified.");
+  ib_language->setWhatsThisText(tempWhatsThis);
   conditionlayout->addWidget(ib_language);
   row2->addLayout(conditionlayout, row2c++, 1, 1, 1);
 
@@ -163,11 +183,22 @@ BooksEditor::BooksEditor(QWidget *parent)
   binding_layout->setContentsMargins(0, 0, 0, 0);
   ib_binding = new AntiquaCRM::BookBindingEdit(this);
   ib_binding->setObjectName("ib_binding");
-  ib_binding->setToolTip(tr("Cover"));
+  ib_binding->setToolTip(tr("Bookbinding"));
+  tempWhatsThis =
+      tr("The Bookbinding selecter  contains the most prefinied Book bindings. "
+         "Please select the best Category for this Book.");
+  ib_binding->setWhatsThisText(tempWhatsThis);
   binding_layout->addWidget(ib_binding);
+
   ib_designation = new AntiquaCRM::TextLine(this);
   ib_designation->setObjectName("ib_designation");
   ib_designation->setToolTip(infoText->text());
+  tempWhatsThis = tr(
+      "This Field is reserved to add Book Designations. It is a addition for "
+      "detailed Description of the Book cover.\n"
+      "You can edit predefined Designations in your Database Configuration "
+      "Menu.");
+  ib_designation->setWhatsThisText(tempWhatsThis);
   binding_layout->addWidget(ib_designation);
   row2->addLayout(binding_layout, row2c++, 1, 1, 1);
 
@@ -176,12 +207,26 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_storage = new AntiquaCRM::SelectStorage(this);
   ib_storage->setObjectName("ib_storage");
   ib_storage->setToolTip(infoText->text());
+  tempWhatsThis =
+      tr("Storage location where this Book has been stored.\n"
+         "You can set Storage locations in your Database Configuration Menu.");
+  ib_storage->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_storage, row2c++, 1, 1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Keywords"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_keyword = new AntiquaCRM::KeywordsEdit(this);
   ib_keyword->setObjectName("ib_keyword");
+  tempWhatsThis = tr(
+      "Keywords will help Buyers, to find your Article on Provider pages. This "
+      "Articles keyword management can also be compared to „Search Engine "
+      "Optimization“ (SEO).\n"
+      "Restrictions:\n"
+      "- A Keyword must have a minimum length from 3 characters.\n"
+      "- A Keywords list is restricted to a Maximum length of 60 Characters.\n"
+      "- A keyword cannot contain spaces or non unicode special characters.\n"
+      "You can edit predefined Keywords in your Database Configuration Menu.");
+  ib_keyword->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
   row2->setRowStretch(row2c++, 1);
 
@@ -224,19 +269,19 @@ BooksEditor::BooksEditor(QWidget *parent)
                          tr("Internal Description"));
   // Info Tab
   QWidget *m_infos = new QWidget(this);
-  // TODO
+  // __TODO__
 
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
 
   m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
-  // m_actionBar->setPrinterMenu(PrinterButton::Bookcard);
+  // __TODO__ m_actionBar->setPrinterMenu(PrinterButton::Bookcard);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
 
   // Signals:ImageToolBar
-  /*
+  /* __TODO__
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(actionRemoveImage(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
@@ -293,7 +338,8 @@ void BooksEditor::setInputFields() {
   ib_storage->initData();
 
   // Schlüsselwörter
-  ib_keyword->initData();
+  QStringList _keywords_data({"TODO", "Keywords"});
+  ib_keyword->setCompleterList(_keywords_data);
 }
 
 bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {

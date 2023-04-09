@@ -5,9 +5,11 @@
 #include "keywordeditor/keywordlistview.h"
 
 #include <AntiquaCRM>
+#include <QCompleter>
 #include <QDebug>
 #include <QMessageBox>
 #include <QRegularExpression>
+#include <QRegularExpressionValidator>
 #include <QToolButton>
 
 namespace AntiquaCRM {
@@ -37,14 +39,27 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
   m_edit->setClearButtonEnabled(true);
   m_edit->setMinimumWidth(150);
   m_edit->setMaximumWidth(200);
-  m_edit->setValidation(AntiquaCRM::ALineEdit::STRINGS);
   layout->addWidget(m_edit);
 
+  QRegularExpressionValidator *m_validator = new QRegularExpressionValidator(
+      AntiquaCRM::AUtil::keywordRegExp(), m_edit);
+  m_edit->setValidator(m_validator);
+
   initData();
+
   connect(ac_clear, SIGNAL(clicked()), SLOT(clearKeywords()));
   connect(ac_add, SIGNAL(clicked()), SLOT(insertKeyword()));
   connect(m_edit, SIGNAL(editingFinished()), SLOT(insertKeyword()));
   connect(m_keywords, SIGNAL(valueChanged()), SLOT(valueChanged()));
+}
+
+void KeywordsEdit::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setLength(m_keywords->maxLength());
+  setRestrictions(_f);
+  setWindowModified(false);
 }
 
 void KeywordsEdit::valueChanged() {
@@ -71,8 +86,6 @@ void KeywordsEdit::insertKeyword() {
   if (_keyword.length() < minLength)
     return;
 
-  static const QRegularExpression strip("([^\\w\\d\\-]+)");
-  _keyword.replace(strip, "");
   m_keywords->insertKeyword(_keyword);
 }
 
@@ -90,16 +103,8 @@ void KeywordsEdit::setValue(const QVariant &value) {
 void KeywordsEdit::setFocus() { m_edit->setFocus(); }
 
 void KeywordsEdit::reset() {
+  m_keywords->clearKeywords();
   m_edit->clear();
-  setWindowModified(false);
-}
-
-void KeywordsEdit::initData() {
-  QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
-  _f.setRequiredStatus(QSqlField::Required);
-  setRestrictions(_f);
-
   setWindowModified(false);
 }
 
@@ -120,8 +125,19 @@ void KeywordsEdit::setBuddyLabel(const QString &text) {
   m_lb->setBuddy(m_edit);
 }
 
+void KeywordsEdit::setCompleterList(const QStringList &list) {
+  if (list.isEmpty())
+    return;
+
+  QCompleter *_completer = new QCompleter(list, this);
+  _completer->setCompletionMode(QCompleter::PopupCompletion);
+  _completer->setFilterMode(Qt::MatchStartsWith);
+  _completer->setMaxVisibleItems(15);
+  m_edit->setCompleter(_completer);
+}
+
 bool KeywordsEdit::isValid() {
-  if (isRequired() && m_keywords->length() < 1)
+  if (isRequired() && !m_keywords->isValid())
     return false;
 
   return true;
@@ -130,13 +146,14 @@ bool KeywordsEdit::isValid() {
 const QVariant KeywordsEdit::getValue() { return m_keywords->getKeywords(); }
 
 const QString KeywordsEdit::popUpHints() {
-  QStringList txt(statusHints());
-  txt << tr("And Restricted to a maximum %1 Characters length.").arg(60);
+  QStringList txt(statusHints() + " ");
+  txt << tr("And Restricted to a maximum %1 Characters length.")
+             .arg(m_keywords->maxLength());
   return txt.join("\n");
 }
 
 const QString KeywordsEdit::statusHints() {
-  return tr("It requires minimum one Keyword!");
+  return tr("Minimum one Keyword is required for this field!");
 }
 
 } // namespace AntiquaCRM

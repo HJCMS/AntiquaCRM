@@ -41,24 +41,24 @@ const QString AUtil::trim(const QString &str) {
 }
 
 const QString AUtil::ucFirst(const QString &str) {
-  QStringList array = str.trimmed().split(" ", Qt::SkipEmptyParts);
-  for (int i = 0; i < array.size(); i++) {
-    array[i].replace(0, 1, array[i][0].toUpper());
+  QStringList _arr = str.trimmed().split(" ", Qt::SkipEmptyParts);
+  for (int i = 0; i < _arr.size(); i++) {
+    _arr[i].replace(0, 1, _arr[i][0].toUpper());
   }
-  return array.join(" ");
+  return _arr.join(" ");
 }
 
 const QRegularExpression AUtil::emailRegExp() {
-  QRegularExpression reg;
-  reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$");
-  return reg;
+  QRegularExpression _reg;
+  _reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+  _reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$");
+  return _reg;
 }
 
 bool AUtil::checkMail(const QString &mail) {
-  QString str = mail.trimmed().toLower();
-  QRegularExpressionMatch match = emailRegExp().match(str);
-  if (match.hasMatch()) {
+  QString _str = mail.trimmed().toLower();
+  QRegularExpressionMatch _match = emailRegExp().match(_str);
+  if (_match.hasMatch()) {
     QStringList _l = mail.split("@");
     QUrl _url;
     _url.setScheme("mailto");
@@ -70,16 +70,23 @@ bool AUtil::checkMail(const QString &mail) {
 }
 
 const QRegularExpression AUtil::phoneRegExp() {
-  QRegularExpression reg;
-  reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  reg.setPattern("^(0[\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
-  return reg;
+  QRegularExpression _reg;
+  _reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
+  _reg.setPattern("^(0[\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
+  return _reg;
 }
 
 bool AUtil::checkPhone(const QString &phone) {
-  QString str = phone.trimmed().toLower();
-  QRegularExpressionMatch match = phoneRegExp().match(str);
-  return match.hasMatch();
+  QString _str = phone.trimmed().toLower();
+  QRegularExpressionMatch _match = phoneRegExp().match(_str);
+  return _match.hasMatch();
+}
+
+const QRegularExpression AUtil::keywordRegExp() {
+  QRegularExpression _reg;
+  _reg.setPatternOptions(QRegularExpression::UseUnicodePropertiesOption);
+  _reg.setPattern("^([\\w\\d]+)$");
+  return _reg;
 }
 
 const QString AUtil::zerofill(qint64 number, int length) {
@@ -88,9 +95,9 @@ const QString AUtil::zerofill(qint64 number, int length) {
 
 const QString AUtil::toMoney(double value,
                              QLocale::CurrencySymbolFormat format) {
-  QLocale lc = QLocale::system();
-  QString cs = lc.currencySymbol(format);
-  return lc.toCurrencyString(value, cs, 2);
+  QLocale _lc = QLocale::system();
+  QString _cs = _lc.currencySymbol(format);
+  return _lc.toCurrencyString(value, _cs, 2);
 }
 
 }; // namespace AntiquaCRM

@@ -19,7 +19,7 @@ class KeywordListView;
 
 /**
  * @class KeywordsEdit
- * @brief Text Input for Keywords
+ * @brief Add/Remove Article Keywords
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY KeywordsEdit final : public AntiquaCRM::AbstractInput {
@@ -40,6 +40,8 @@ private:
    * @brief input box
    */
   ALineEdit *m_edit;
+
+  void initData() override;
 
 private Q_SLOTS:
   /**
@@ -62,6 +64,9 @@ public Q_SLOTS:
 
   void setFocus() override;
 
+  /**
+   * @brief Remove all Keywords
+   */
   void reset() override;
 
 public:
@@ -70,13 +75,16 @@ public:
    */
   explicit KeywordsEdit(QWidget *parent = nullptr);
 
-  void initData() override;
-
   void setRestrictions(const QSqlField &) override;
 
   void setInputToolTip(const QString &) override;
 
   void setBuddyLabel(const QString &) override;
+
+  /**
+   * @brief Add QStringList to create a Completer ...
+   */
+  void setCompleterList(const QStringList &);
 
   bool isValid() override;
 

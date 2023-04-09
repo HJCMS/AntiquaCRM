@@ -21,11 +21,10 @@ class ANTIQUACRM_LIBRARY KeywordListView final : public QWidget {
   Q_OBJECT
 
 private:
-  int maxLength = 60;
   QHBoxLayout *layout;
+  qsizetype p_minLength = 5;
+  qsizetype p_maxLength = 60;
   QStringList p_uniqList;
-
-  void updateToolTip();
 
 Q_SIGNALS:
   void valueChanged();
@@ -39,7 +38,10 @@ public Q_SLOTS:
 public:
   explicit KeywordListView(QWidget *parent = nullptr);
   const QString getKeywords();
+  const QString getToolTip();
+  bool isValid();
   qsizetype length();
+  qsizetype maxLength();
 };
 
 } // namespace AntiquaCRM

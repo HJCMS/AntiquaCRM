@@ -67,6 +67,14 @@ public:
   static bool checkPhone(const QString &);
 
   /**
+   * @brief Regular expression to match keywords with UTF8 characters.
+   * @code
+   *   '^([\\w\\d]+)$/u'
+   * @endcode
+   */
+  static const QRegularExpression keywordRegExp();
+
+  /**
    * @brief Convert Number to AntiquaCRM with leading zeros to String
    */
   static const QString zerofill(qint64 number, int length = 7);

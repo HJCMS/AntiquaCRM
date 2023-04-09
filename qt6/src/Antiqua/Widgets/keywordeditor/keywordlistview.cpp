@@ -13,14 +13,6 @@ KeywordListView::KeywordListView(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 }
 
-void KeywordListView::updateToolTip() {
-  QStringList list = p_uniqList;
-  QString tip = tr("Current Keywords length %1 from allowed %2 used.")
-                    .arg(list.join(",").size())
-                    .arg(maxLength);
-  setToolTip(tip);
-}
-
 void KeywordListView::setKeywordList(const QStringList &list) {
   foreach (QString _k, list) {
     if (p_uniqList.contains(_k) || _k.isEmpty())
@@ -31,7 +23,7 @@ void KeywordListView::setKeywordList(const QStringList &list) {
     connect(klb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
     p_uniqList << _k;
   }
-  updateToolTip();
+  setToolTip(getToolTip());
   setWindowModified(false);
 }
 
@@ -44,7 +36,7 @@ void KeywordListView::insertKeyword(const QString &keyword) {
   layout->addWidget(klb);
   connect(klb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
   p_uniqList << _k;
-  updateToolTip();
+  setToolTip(getToolTip());
   emit valueChanged();
 }
 
@@ -58,7 +50,7 @@ void KeywordListView::removeKeyword() {
     }
     layout->removeWidget(klb);
     klb->deleteLater();
-    updateToolTip();
+    setToolTip(getToolTip());
     emit valueChanged();
   }
 }
@@ -91,6 +83,19 @@ const QString KeywordListView::getKeywords() {
   return _keys.join(",");
 }
 
+const QString KeywordListView::getToolTip() {
+  QString _tip = tr("Current Keywords length %1 from allowed %2 used.")
+                     .arg(length())
+                     .arg(maxLength());
+  return _tip;
+}
+
+bool KeywordListView::isValid() {
+  return (length() >= p_minLength && length() <= p_maxLength);
+}
+
 qsizetype KeywordListView::length() { return p_uniqList.join(",").size(); }
+
+qsizetype KeywordListView::maxLength() { return p_maxLength; }
 
 } // namespace AntiquaCRM
