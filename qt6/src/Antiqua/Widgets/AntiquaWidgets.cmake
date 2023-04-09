@@ -30,6 +30,12 @@
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
+// AntiquaCRM::ImageSource
+#include "imagesource.h"
+
+// AntiquaCRM::ImageViewer
+#include "imageviewer.h"
+
 // AntiquaCRM::IsbnEdit
 #include "isbnedit.h"
 

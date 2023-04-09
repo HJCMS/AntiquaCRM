@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordsedit.h"
-#include "keywordeditor/keywordlistview.h"
+#include "private/keywordlistview.h"
 
 #include <AntiquaCRM>
 #include <QCompleter>

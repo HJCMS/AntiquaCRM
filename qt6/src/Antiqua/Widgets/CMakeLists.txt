@@ -14,7 +14,7 @@ INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-ADD_SUBDIRECTORY (keywordeditor)
+ADD_SUBDIRECTORY (private)
 
 CONFIGURE_FILE (AntiquaWidgets.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaWidgets
@@ -44,6 +44,8 @@ SET (_library_SOURCES
  crowdedit.cpp
  emailedit.cpp
  genderedit.cpp
+ imagesource.cpp
+ imageviewer.cpp
  isbnedit.cpp
  keywordsedit.cpp
  numedit.cpp
@@ -83,6 +85,8 @@ SET (_library_HEADERS
  crowdedit.h
  emailedit.h
  genderedit.h
+ imagesource.h
+ imageviewer.h
  isbnedit.h
  keywordsedit.h
  numedit.h
@@ -128,7 +132,7 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Sql
  Qt6::Xml
  AntiquaCRM
- KeywordEditor
+ AntiquaSubWidgets
 )
 
 INSTALL (TARGETS ${_sharedLibrary}

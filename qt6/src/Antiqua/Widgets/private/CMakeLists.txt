@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET(_subWidgetLibrary "KeywordEditor")
+SET(_subWidgetLibrary "AntiquaSubWidgets")
 
 INCLUDE_DIRECTORIES (
  ${INTERNAL_WIDGET_INCLUDE_DIRS}
@@ -15,11 +15,13 @@ INCLUDE_DIRECTORIES (
 SET (_subWidgetLibrary_SOURCES
  keywordlistview.cpp
  keywordlabel.cpp
+ rubberband.cpp
 )
 
 SET (_subWidgetLibrary_HEADERS
  keywordlistview.h
  keywordlabel.h
+ rubberband.h
 )
 
 ADD_LIBRARY (${_subWidgetLibrary} STATIC

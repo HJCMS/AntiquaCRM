@@ -61,13 +61,13 @@ private:
    * @brief Bilder operations Knopfleiste
    * @todo
    */
-  QWidget *m_imageToolBar;
+  QToolBar *m_imageToolBar;
 
   /**
    * @brief Eingebettete Bildansicht
    * @todo
    */
-  QWidget *m_imageView;
+  AntiquaCRM::ImageViewer *m_imageView;
 
   void setInputFields() override;
 

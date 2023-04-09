@@ -238,7 +238,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_isbn->setObjectName("ib_isbn");
   tbLayout->addWidget(ib_isbn);
   tbLayout->addStretch(1);
-  QToolBar *m_imageToolBar = new QToolBar(this);
+  m_imageToolBar = new QToolBar(this);
   m_imageToolBar->setToolTip("__TODO__");
   tbLayout->addWidget(m_imageToolBar);
   // @END_GROUP
@@ -246,8 +246,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   row2Widget->setLayout(row2);
 
   // Image Viewer
-  // QSize maxSize = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
-  QWidget *m_imageView = new QWidget(this);
+  QSize _max_size = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
+  m_imageView = new AntiquaCRM::ImageViewer(_max_size, this);
   m_imageView->setMinimumWidth(100);
   m_splitter->addLeft(row2Widget);
   m_splitter->addRight(m_imageView);
@@ -630,7 +630,7 @@ void BooksEditor::setFinalLeaveEditor(bool force) {
 
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
-  // m_imageView->clear();               /**< Bildvorschau leeren */
+  m_imageView->clear();               /**< Bildvorschau leeren */
   emit sendLeaveEditor(); /**< Back to MainView */
 }
 

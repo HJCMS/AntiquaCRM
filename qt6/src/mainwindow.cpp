@@ -14,7 +14,7 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
-  setMinimumWidth(800);
+  setMinimumSize(QSize(800, 550));
 
   m_menubar = new MenuBar(this);
   setMenuBar(m_menubar);
@@ -60,15 +60,15 @@ bool MainWindow::loadTabInterfaces() {
 }
 
 void MainWindow::debugContent() {
-//QRegularExpression pattern("^[a-z]{1,}_[a-z_]{2,}");
-//QList<AntiquaCRM::AbstractInput *> list =
-//    centralWidget()->findChildren<AntiquaCRM::AbstractInput *>(pattern);
-//for (int i = 0; i < list.size(); i++) {
-//  AntiquaCRM::AbstractInput *obj = list.at(i);
-//  if (obj != nullptr) {
-//    qDebug() << obj->objectName() << obj->getValue();
-//  }
-//}
+  // QRegularExpression pattern("^[a-z]{1,}_[a-z_]{2,}");
+  // QList<AntiquaCRM::AbstractInput *> list =
+  //     centralWidget()->findChildren<AntiquaCRM::AbstractInput *>(pattern);
+  // for (int i = 0; i < list.size(); i++) {
+  //   AntiquaCRM::AbstractInput *obj = list.at(i);
+  //   if (obj != nullptr) {
+  //     qDebug() << obj->objectName() << obj->getValue();
+  //   }
+  // }
 }
 
 void MainWindow::openWindow() {

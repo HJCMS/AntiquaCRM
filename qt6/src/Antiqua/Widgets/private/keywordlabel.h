@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_KEYWORDEDITOR_LABEL_H
-#define ANTIQUACRM_KEYWORDEDITOR_LABEL_H
+#ifndef ANTIQUACRM_PRIVATE_KEYWORDLABEL_H
+#define ANTIQUACRM_PRIVATE_KEYWORDLABEL_H
 
 #include <AGlobal>
 #include <QFrame>
@@ -37,4 +37,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_KEYWORDEDITOR_LABEL_H
+#endif // ANTIQUACRM_PRIVATE_KEYWORDLABEL_H
