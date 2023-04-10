@@ -27,22 +27,24 @@ class RubberBand;
 
 /**
  * @class ImageViewer
- * @brief Databse Image previewer
+ * @brief Database Image previewer
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY ImageViewer final : public QGraphicsView {
   Q_OBJECT
 
 private:
+  bool thumbnailmode;
+
   /**
    * @brief Maximum Areasize
    */
-  const QSize p_maxSize;
+  QSize p_maxSize;
 
   /**
    * @brief Start point for create Rubberband region
    */
-  QPoint p_startRect;
+  QPoint p_startPoint;
 
   QPixmapCache p_pixCache;
   QGraphicsScene *m_scene;
@@ -59,11 +61,6 @@ private:
    * damit auf m_pixmap->pixmap().isNull() prüfen.
    */
   bool setPixmapItem(const QPixmap &pixmap = QPixmap(0, 0));
-
-  /**
-   * @brief Maximale Bild Quellengröße
-   */
-  const QSize getMaxScaleSize() const;
 
   /**
    * @brief Mauswheel zoom
@@ -137,12 +134,32 @@ public Q_SLOTS:
 public:
   /**
    * @param parent - parent widget
+   * @param tumbnail - disable Rubberband in Thumbnail mode
    */
-  explicit ImageViewer(const QSize &max, QWidget *parent = nullptr);
+  explicit ImageViewer(QWidget *parent = nullptr, bool tumbnail = false);
   ~ImageViewer();
 
   /**
+   * @brief get max visible Sreen size from current display
+   * Used to change the size limit of the preview window.
+   * If this cannot be read, fall back to PAL 800x600 Size!
+   * @code
+   * AntiquaCRM::ASettings cfg(this);
+   * QSize thumpSize = cfg.value("image/max_size", QSize(128, 128)).toSize();
+   *
+   * AntiquaCRM::ImageViewer *viewer = new AntiquaCRM::ImageViewer(this);
+   * QSize displaySize = viewer->getMaxScaleSize();
+   * int max_width = qMin(thumpSize.width(), displaySize.width());
+   * int max_height = qMin(thumpSize.height(), displaySize.height());
+   * viewer->setMaximumSize(QSize(max_width, max_height));
+   * addWidget(viewer);
+   * @endcode
+   */
+  const QSize getMaxScaleSize() const;
+
+  /**
    * @brief get Current Modified QImage
+   * Only used with Editor Mode
    */
   const QImage getImage();
 };

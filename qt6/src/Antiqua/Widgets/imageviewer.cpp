@@ -4,6 +4,7 @@
 #include "imageviewer.h"
 #include "private/rubberband.h"
 
+#include <QApplication>
 #include <QColor>
 #include <QDebug>
 #include <QPainter>
@@ -13,12 +14,12 @@
 
 namespace AntiquaCRM {
 
-ImageViewer::ImageViewer(const QSize &max, QWidget *parent)
-    : QGraphicsView{parent}, p_maxSize{max} {
+ImageViewer::ImageViewer(QWidget *parent, bool tumbnail)
+    : QGraphicsView{parent}, thumbnailmode{tumbnail} {
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
   setCacheMode(QGraphicsView::CacheNone);
-  setMinimumWidth((p_maxSize.width() / 2));
+
   m_scene = new QGraphicsScene(rect(), this);
   m_pixItem = nullptr;
   m_rubberband = nullptr;
@@ -38,11 +39,6 @@ bool ImageViewer::setPixmapItem(const QPixmap &pixmap) {
   return (m_pixItem != nullptr);
 }
 
-const QSize ImageViewer::getMaxScaleSize() const {
-  QSize maxSize(1366, 768);
-  return maxSize;
-}
-
 void ImageViewer::wheelEvent(QWheelEvent *event) {
   if (event->buttons() & Qt::RightButton)
     zoom(qPow(1.2, event->angleDelta().y() / 240.0));
@@ -56,18 +52,23 @@ void ImageViewer::resizeEvent(QResizeEvent *event) {
 }
 
 void ImageViewer::mousePressEvent(QMouseEvent *event) {
-  if (event->button() == Qt::LeftButton) {
+  if (!thumbnailmode && event->button() == Qt::LeftButton) {
     if (m_rubberband == nullptr) {
       m_rubberband = new RubberBand(this);
     }
-    p_startRect = event->pos();
-    m_rubberband->setGeometry(QRect(p_startRect, QSize(1, 1)));
+    p_startPoint = event->pos();
+    m_rubberband->setGeometry(QRect(p_startPoint, QSize(1, 1)));
     m_rubberband->show();
   }
   QGraphicsView::mousePressEvent(event);
 }
 
-void ImageViewer::mouseMoveEvent(QMouseEvent *) {}
+void ImageViewer::mouseMoveEvent(QMouseEvent *event) {
+  if (m_rubberband != nullptr)
+    m_rubberband->setGeometry(QRect(p_startPoint, event->pos()));
+
+  QGraphicsView::mouseMoveEvent(event);
+}
 
 void ImageViewer::zoom(qreal f) {
   // vertical shearing factor
@@ -117,6 +118,11 @@ void ImageViewer::clear() { setPixmapItem(); }
 void ImageViewer::setPixmap(const QPixmap &pixmap) {
   bool _success = setPixmapItem(pixmap);
   p_pixCache.insert("source", pixmap);
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (!_success) {
+    qDebug() << Q_FUNC_INFO << _success;
+  }
+#endif
   emit sendSetViewSuccess(_success);
 }
 
@@ -139,6 +145,14 @@ void ImageViewer::setImage(const QImage &image) {
   }
   _px.detach();
   setPixmap(_opx);
+}
+
+const QSize ImageViewer::getMaxScaleSize() const {
+  QSize _size = qApp->screenAt(pos())->size();
+  if (!_size.isValid())
+    _size = QSize(800, 600);
+
+  return _size;
 }
 
 const QImage ImageViewer::getImage() {

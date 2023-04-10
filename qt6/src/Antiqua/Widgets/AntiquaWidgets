@@ -33,6 +33,9 @@
 // AntiquaCRM::ImageSource
 #include "imagesource.h"
 
+// AntiquaCRM::ImageToolBar
+#include "imagetoolbar.h"
+
 // AntiquaCRM::ImageViewer
 #include "imageviewer.h"
 

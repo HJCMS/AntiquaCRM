@@ -10,19 +10,25 @@
 #define ANTIQUACRM_WIDGETS_IMAGESOURCE_H
 
 #include <AntiquaCRM>
+#include <QByteArray>
 #include <QDir>
 #include <QFileInfo>
+#include <QImage>
 #include <QPixmap>
-#include <QString>
+#include <QSize>
 
 namespace AntiquaCRM {
 
 /**
  * @class ImageSource
- * @brief Image File information
+ * @brief Image Source Info and SQL-Database operations.
  * AntiquaCRM using zero filled id numbers for Image Filenames.
  * This will provide a better view an sorting in System File Managers.
- * Additional, AntiquaCRM identify Source Images with Article Numbers.
+ * @note AntiquaCRM identify Source Images with Article Numbers.
+ *
+ * This class additionally supports SQL select/insert/remove operation for
+ * thumbnails.
+ *
  * @code
  *   qint64 _articleId = 123456;
  *   QString fileBasename = DatabaseImage::toBaseName(_articleId);
@@ -49,6 +55,12 @@ private:
    * If the Image is not equal to Source, a copy stored here.
    */
   QPixmap p_pixmap;
+
+  /**
+   * @brief Import Thumbnail data from Database
+   * @param data - rwa data from database
+   */
+  bool loadDatabaseImage(const QByteArray &data);
 
 public:
   /**
@@ -78,7 +90,7 @@ public:
   /**
    * @brief set Article Number to current Source
    */
-  void setFileId(qint64 id);
+  void setFileId(qint64 articleId);
 
   /**
    * @brief get Article Id from current Source
@@ -98,24 +110,47 @@ public:
   void setTarget(const QDir &dest);
 
   /**
-   * @brief save image destination
+   * @brief get image destination
    */
   const QString getTarget() const;
 
   /**
-   * @brief insert modief pixmap
+   * @brief Insert or modify cached pixmap
    */
-  void setPixmap(const QPixmap &);
+  void setCachedPixmap(const QPixmap &);
 
   /**
-   * @brief get current pixmap
+   * @brief Current cached pixmap
    */
-  const QPixmap getPixmap();
+  const QPixmap getCachedPixmap();
 
   /**
-   * @brief remove pixmap
+   * @brief Remove cached pixmap
    */
-  void removePixmap();
+  void removeCachedPixmap();
+
+  /**
+   * @brief Search - Get/set Thumbnail Image from Database!
+   * @param db        - AntiquaCRM::ASqlCore handle
+   * @param articleId - Article ID
+   */
+  bool findInDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId);
+
+  /**
+   * @brief Store cached Pixmap in database
+   * @param db        - AntiquaCRM::ASqlCore handle
+   * @param max       - Restrict to Max Thumbnail size
+   * @param articleId - Article ID
+   */
+  bool storeInDatabase(AntiquaCRM::ASqlCore *db, const QSize &max,
+                       qint64 articleId);
+
+  /**
+   * @brief Remove existing Thumbnail from Database!
+   * @param db        - AntiquaCRM::ASqlCore handle
+   * @param articleId - Article ID
+   */
+  bool removeFromDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId);
 };
 
 } // namespace AntiquaCRM

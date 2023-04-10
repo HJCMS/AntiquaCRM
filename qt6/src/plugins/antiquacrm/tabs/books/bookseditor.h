@@ -61,13 +61,13 @@ private:
    * @brief Bilder operations Knopfleiste
    * @todo
    */
-  QToolBar *m_imageToolBar;
+  AntiquaCRM::ImageToolBar *m_imageToolBar;
 
   /**
    * @brief Eingebettete Bildansicht
    * @todo
    */
-  AntiquaCRM::ImageViewer *m_imageView;
+  AntiquaCRM::ImageViewer *m_thumbnail;
 
   void setInputFields() override;
 
@@ -97,8 +97,9 @@ private Q_SLOTS:
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor(bool force = true) override;
   void setPrintBookCard();
-  void actionRemoveImage(qint64 articleId);
-  void actionEditImages();
+  void setLoadThumbnail(qint64 articleId);
+  void setRemoveThumbnail(qint64 articleId);
+  void setActionEditImages();
 
 public Q_SLOTS:
   void setRestore() override;

@@ -238,8 +238,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_isbn->setObjectName("ib_isbn");
   tbLayout->addWidget(ib_isbn);
   tbLayout->addStretch(1);
-  m_imageToolBar = new QToolBar(this);
-  m_imageToolBar->setToolTip("__TODO__");
+  m_imageToolBar = new AntiquaCRM::ImageToolBar(this);
   tbLayout->addWidget(m_imageToolBar);
   // @END_GROUP
   row2->addLayout(tbLayout, row2c++, 1, 1, 1);
@@ -247,10 +246,11 @@ BooksEditor::BooksEditor(QWidget *parent)
 
   // Image Viewer
   QSize _max_size = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
-  m_imageView = new AntiquaCRM::ImageViewer(_max_size, this);
-  m_imageView->setMinimumWidth(100);
+  m_thumbnail = new AntiquaCRM::ImageViewer(this, true);
+  m_thumbnail->setMinimumWidth(100);
+  m_thumbnail->setMaximumWidth(_max_size.width());
   m_splitter->addLeft(row2Widget);
-  m_splitter->addRight(m_imageView);
+  m_splitter->addRight(m_thumbnail);
   mainLayout->addWidget(m_splitter);
   mainLayout->setStretch(2, 1);
 
@@ -281,15 +281,9 @@ BooksEditor::BooksEditor(QWidget *parent)
   setLayout(mainLayout);
 
   // Signals:ImageToolBar
-  /* __TODO__
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
-          SLOT(actionRemoveImage(qint64)));
-  connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(actionEditImages()));
-
-  // Signals:ImageViewer
-  connect(m_imageView, SIGNAL(sendImageLoadSuccess(bool)), m_imageToolBar,
-          SLOT(enableActions(bool)));
-  */
+          SLOT(setRemoveThumbnail(qint64)));
+  connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setActionEditImages()));
 
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
@@ -630,8 +624,8 @@ void BooksEditor::setFinalLeaveEditor(bool force) {
 
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
-  m_imageView->clear();               /**< Bildvorschau leeren */
-  emit sendLeaveEditor(); /**< Back to MainView */
+  m_thumbnail->clear();               /**< Bildvorschau leeren */
+  emit sendLeaveEditor();             /**< Back to MainView */
 }
 
 void BooksEditor::setPrintBookCard() {
@@ -649,26 +643,41 @@ void BooksEditor::setPrintBookCard() {
   // m_d->exec(data);
 }
 
-void BooksEditor::actionRemoveImage(qint64 articleId) {
-  qint64 id = ib_id->getValue().toLongLong();
-  if (articleId != id)
+void BooksEditor::setLoadThumbnail(qint64 articleId) {
+  if (articleId < 1)
     return;
 
-  QString image_id = QString::number(id);
-  QString t(tr("Remove Image from Database"));
-  QString ask(tr("Do you really want to delete the Image?"));
-  QString m = tr("%1\n\nImage - Article Id: %2").arg(ask, image_id);
-  QMessageBox::StandardButton set = QMessageBox::question(this, t, m);
+  m_imageToolBar->setArticleId(articleId);
+
+  AntiquaCRM::ImageSource thumbnail;
+  thumbnail.setFileId(articleId);
+  if (thumbnail.findInDatabase(m_sql, articleId))
+    m_thumbnail->setPixmap(thumbnail.getCachedPixmap());
+}
+
+void BooksEditor::setRemoveThumbnail(qint64 articleId) {
+  qint64 _id = ib_id->getValue().toLongLong();
+  if (articleId != _id) {
+    qWarning("Remove Thumbnail ids not equal!");
+    return;
+  }
+
+  QMessageBox::StandardButton set = QMessageBox::question(
+      this, tr("Remove Image from Database"),
+      tr("%1\n\nImage - Article Id: %2")
+          .arg(tr("Do you really want to delete the Image?"),
+               QString::number(_id)));
   if (set == QMessageBox::Yes) {
-    qDebug() << Q_FUNC_INFO << "__TODO__";
-    // if (m_imageView->removeFromDatabase(id)) {
-    //   m_imageView->clear();
-    //   sendStatusMessage(tr("Image delete successfully!"));
-    // }
+    AntiquaCRM::ImageSource thumbnail;
+    thumbnail.setFileId(_id);
+    if (thumbnail.removeFromDatabase(m_sql, _id)) {
+      m_thumbnail->clear();
+      sendStatusMessage(tr("Image delete successfully!"));
+    }
   }
 }
 
-void BooksEditor::actionEditImages() {
+void BooksEditor::setActionEditImages() {
   qint64 _id = ib_id->getValue().toLongLong();
   qDebug() << Q_FUNC_INFO << "__TODO__" << _id;
   // ImageDialog *d = new ImageDialog(_id, this);
@@ -702,6 +711,7 @@ bool BooksEditor::openEditEntry(qint64 articleId) {
         m_tableData->setValue(key, q.value(r.indexOf(key)));
       }
     }
+    setLoadThumbnail(articleId);
     status = true;
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
