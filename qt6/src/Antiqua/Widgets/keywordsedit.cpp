@@ -97,8 +97,8 @@ void KeywordsEdit::setValue(const QVariant &value) {
 void KeywordsEdit::setFocus() { m_edit->setFocus(); }
 
 void KeywordsEdit::reset() {
-  m_keywords->clearKeywords();
   m_edit->clear();
+  m_keywords->clearKeywords();
   setWindowModified(false);
 }
 

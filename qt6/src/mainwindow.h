@@ -26,10 +26,19 @@ private:
   MenuBar *m_menuBar;
   AntiquaCRM::TabWidget *m_tabWidget;
   StatusBar *m_statusBar;
+  AntiquaCRM::AReceiver *m_rx;
+
+  /**
+   * @brief Der lokalen Socketserver starten.
+   */
+  bool createSocketListener();
 
   bool loadTabInterfaces();
 
   void debugContent();
+
+private Q_SLOTS:
+  void setAction(const QJsonObject &obj);
 
 Q_SIGNALS:
   void sendApplicationQuit();

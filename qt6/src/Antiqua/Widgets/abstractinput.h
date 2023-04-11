@@ -98,13 +98,6 @@ protected:
   QBoxLayout *layout;
 
   /**
-   * @brief Is this input Widget required by sql database?
-   * You can set this Value manually in Class constructor or change it in Method
-   * „setRestrictions“.
-   */
-  void setRequired(bool);
-
-  /**
    * @brief e.g. initial database, container or model data
    * This virtual function is reserved for loading custom data after construct
    * the subclass.
@@ -144,6 +137,13 @@ Q_SIGNALS:
   void inputChanged();
 
 public Q_SLOTS:
+  /**
+   * @brief Is this input Widget required by sql database?
+   * You can set this Value manually in Class constructor or change it in Method
+   * „setRestrictions“.
+   */
+  void setRequired(bool);
+
   /**
    * @brief set value
    * For a uniform parameter transfer. We read all data from Sql queries which
@@ -190,6 +190,13 @@ public:
   AntiquaCRM::ALabel *addTitleLabel(const QString &);
 
   /**
+   * @brief get about status, if this input is required or not.
+   * This helper function will called when user clicked save or leave editor.
+   * See also „setRequired“ and „setRestrictions“ for more Info to set this.
+   */
+  bool isRequired();
+
+  /**
    * @brief Insert a buddy label before the Input widget
    * When set, prepend a Textlabel to the Input edit field.
    * @note Use addTitleLabel() to set and get the Buddy label.
@@ -209,13 +216,6 @@ public:
    * already been done.
    */
   virtual void appendStretch(int expanding = 0);
-
-  /**
-   * @brief get about status, if this input is required or not.
-   * This helper function will called when user clicked save or leave editor.
-   * See also „setRequired“ and „setRestrictions“ for more Info to set this.
-   */
-  bool isRequired();
 
   /**
    * @brief Caller for validate current Input.

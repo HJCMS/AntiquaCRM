@@ -31,6 +31,18 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
           SIGNAL(sendApplicationQuit()));
 }
 
+bool MainWindow::createSocketListener() {
+  m_rx = new AntiquaCRM::AReceiver(this);
+  connect(m_rx, SIGNAL(sendWindowOperation(const QJsonObject &)),
+          SLOT(setAction(const QJsonObject &)));
+  connect(m_rx, SIGNAL(sendInfoMessage(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
+  connect(m_rx, SIGNAL(sendWarnMessage(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
+
+  return m_rx->listen(AntiquaCRM::AUtil::socketName());
+}
+
 bool MainWindow::loadTabInterfaces() {
   AntiquaCRM::TabsLoader _loader(this);
   QList<AntiquaCRM::TabsInterface *> _list = _loader.interfaces(this);
@@ -46,7 +58,8 @@ bool MainWindow::loadTabInterfaces() {
         // QString _id = _iface->interfaceName();
         AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
         Q_CHECK_PTR(_tab);
-        m_tabWidget->registerTab(_tab, _name);
+        if (_iface->addIndexOnInit())
+          m_tabWidget->registerTab(_tab, _name);
 
         QAction *_ac = _viewMenu->addAction(_tab->windowIcon(), _name);
         _ac->setObjectName(_tab->tabIndexId());
@@ -72,9 +85,24 @@ void MainWindow::debugContent() {
   // }
 }
 
+void MainWindow::setAction(const QJsonObject &obj) {
+  if (obj.contains("window_operation")) {
+    QString _name = obj.value("tab").toString();
+    int _index = m_tabWidget->indexByName(_name);
+    AntiquaCRM::TabsIndex *_widget = m_tabWidget->tabWithIndex(_index);
+    if (_widget == nullptr)
+      return;
+
+    if (_widget->customAction(obj))
+      m_tabWidget->setCurrentIndex(_index);
+  }
+}
+
 void MainWindow::openWindow() {
   // TODO - load configurations
   showNormal();
+
+  createSocketListener();
 
   // start plz inputs
   m_statusBar->showMessage(tr("Window opened"));

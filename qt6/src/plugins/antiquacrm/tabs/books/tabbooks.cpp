@@ -5,8 +5,7 @@
 #include "booksconfig.h"
 #include "bookswidget.h"
 
-TabBooks::TabBooks(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
-}
+TabBooks::TabBooks(QObject *parent) : AntiquaCRM::TabsInterface{parent} {}
 
 const QString TabBooks::displayName() const { return tr("Books"); }
 
@@ -22,6 +21,8 @@ QWidget *TabBooks::configWidget(QWidget *parent) const {
   Q_UNUSED(parent);
   return nullptr;
 }
+
+bool TabBooks::addIndexOnInit() const { return BOOKS_ALWAYS_ADD_ONLOAD; }
 
 AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
   BooksWidget *_widget = new BooksWidget(parent);

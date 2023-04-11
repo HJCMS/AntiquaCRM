@@ -31,6 +31,8 @@ public:
 
   QWidget *configWidget(QWidget *parent) const override;
 
+  bool addIndexOnInit() const override;
+
   AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
 
   bool createInterface(QObject *parent) override;

@@ -356,14 +356,12 @@ bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
     return false;
 
   QString key = field.name();
-
-  // qDebug() << __LINE__ << "Search:" << field.name() << value;
-
+  // qDebug() << "setDataField:" << field.name() << value;
   bool required = (field.requiredStatus() == QSqlField::Required);
   AntiquaCRM::AbstractInput *inp =
       findChild<AntiquaCRM::AbstractInput *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
-    // qDebug() << __LINE__ << inp->objectName() << key << value;
+    // qDebug() << "setDataField:" << inp->objectName() << key << value;
     inp->setValue(value);
     inp->setRestrictions(field);
     return true;
@@ -397,11 +395,8 @@ void BooksEditor::importSqlResult() {
 
   // Suche Bilddaten
   qint64 id = ib_id->getValue().toLongLong();
-  if (id > 0) {
-    // m_imageToolBar->setArticleId(id);
-    // m_imageToolBar->setActive(true);
-    // m_imageView->readFromDatabase(id);
-  }
+  if (id > 0)
+    m_imageToolBar->setArticleId(id);
 
   m_actionBar->setRestoreable(m_tableData->isValid());
   setResetModified(inputFields);
@@ -462,8 +457,7 @@ void BooksEditor::createSqlUpdate() {
     return;
   }
   // UPDATE Anforderungen
-  qDebug() << Q_FUNC_INFO << __LINE__ << "TODO";
-  // ib_id->setRequired(true);
+  ib_id->setRequired(true);
 
   QHash<QString, QVariant> data = createSqlDataset();
   if (data.size() < 1)
@@ -476,15 +470,16 @@ void BooksEditor::createSqlUpdate() {
     if (it.key() == "ib_id")
       continue;
 
+    const QString _key = it.key();
     // Nur geänderte Felder in das Update aufnehmen!
-    if (!isModifiedCompare(it.key(), m_tableData->getValue(it.key())))
+    if (!isModifiedCompare(_key, m_tableData->getValue(_key)))
       continue;
 
-    if (m_tableData->getType(it.key()).id() == QMetaType::QString) {
-      set.append(it.key() + "='" + it.value().toString() + "'");
+    if (m_tableData->getType(_key).id() == QMetaType::QString) {
+      set.append(_key + "='" + it.value().toString() + "'");
       changes++;
     } else {
-      set.append(it.key() + "=" + it.value().toString());
+      set.append(_key + "=" + it.value().toString());
       changes++;
     }
   }
@@ -534,9 +529,8 @@ void BooksEditor::createSqlInsert() {
     return;
   }
   // Bei einem INSERT die Anforderungen anpassen.
-  qDebug() << Q_FUNC_INFO << __LINE__ << "TODO";
-  // ib_count->setRequired(true);
-  // ib_id->setRequired(false);
+  ib_count->setRequired(true);
+  ib_id->setRequired(false);
 
   // Prüfung der Buchdaten Klasse
   // Die Initialisierung erfolgt in setInputFields!
@@ -577,11 +571,10 @@ void BooksEditor::createSqlInsert() {
   if (sendSqlQuery(sql) && ib_id->getValue().toInt() >= 1) {
     qInfo("SQL INSERT Inventory Books success!");
     // Zurücksetzen Knopf Aktivieren?
-    qDebug() << Q_FUNC_INFO << __LINE__ << "TODO";
-    // m_actionBar->setRestoreable(m_tableData->isValid());
+    m_actionBar->setRestoreable(m_tableData->isValid());
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
-    // m_imageToolBar->setActive(true);
-    // ib_id->setRequired(true);
+    m_imageToolBar->setArticleId(ib_id->getValue().toInt());
+    ib_id->setRequired(true);
   }
 }
 
@@ -603,13 +596,11 @@ bool BooksEditor::realyDeactivateEntry() {
   int ret = QMessageBox::question(this, tr("Book deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ib_count->setValue(m_tableData->getValue("ib_count"));
-    qDebug() << Q_FUNC_INFO << __LINE__ << "TODO";
-    // ib_count->setRequired(true);
+    ib_count->setRequired(true);
     return false;
   }
 
-  qDebug() << Q_FUNC_INFO << __LINE__ << "TODO";
-  // ib_count->setRequired(false);
+  ib_count->setRequired(false);
   return true;
 }
 
@@ -743,8 +734,7 @@ bool BooksEditor::openEditEntry(qint64 articleId) {
 
 bool BooksEditor::createNewEntry() {
   setInputFields();
-  qDebug() << Q_FUNC_INFO << "__TODO__";
-  // m_imageView->clear();
+  m_thumbnail->clear();
   foreach (QString column, m_tableData->columnNames()) {
     QSqlField field = m_tableData->getProperties(column);
     if (column == "ib_id")

@@ -37,6 +37,8 @@ public:
 
   virtual QWidget *configWidget(QWidget *parent) const = 0;
 
+  virtual bool addIndexOnInit() const = 0;
+
   virtual AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const = 0;
 
   virtual bool createInterface(QObject *parent) = 0;

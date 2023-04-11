@@ -9,7 +9,7 @@ namespace AntiquaCRM {
 
 // BEGIN::AbstractInput
 AbstractInput::AbstractInput(QWidget *parent)
-  : QWidget{parent}, required{false} {
+    : QWidget{parent}, required{false} {
   config = new AntiquaCRM::ASettings(this);
   displayToolTips =
       config->groupValue("window_behavior", "display_tooltip_buttons", true)
@@ -27,10 +27,6 @@ AbstractInput::AbstractInput(QWidget *parent)
 
 AbstractInput::~AbstractInput() {}
 
-void AbstractInput::setRequired(bool b) {
-  required = b;
-}
-
 void AbstractInput::focusOutEvent(QFocusEvent *e) {
   if (e->type() == QEvent::FocusOut)
     emit sendLeaveInput();
@@ -38,9 +34,7 @@ void AbstractInput::focusOutEvent(QFocusEvent *e) {
   QWidget::focusOutEvent(e);
 }
 
-bool AbstractInput::isRequired() {
-  return required;
-}
+void AbstractInput::setRequired(bool b) { required = b; }
 
 AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
   ALabel *m_lb = new ALabel(title, this);
@@ -49,6 +43,8 @@ AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
   layout->insertWidget(0, m_lb);
   return m_lb;
 }
+
+bool AbstractInput::isRequired() { return required; }
 
 void AbstractInput::setWhatsThisText(const QString &text) {
   if (text.isEmpty())

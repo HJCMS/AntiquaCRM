@@ -171,17 +171,11 @@ bool TabsEditor::isModifiedCompare(const QString &name,
   if (_input == nullptr)
     return false;
 
-  // Der Datensatzwert der vieleicht Neu ist?
-  QVariant _value = _input->getValue();
-  // Wenn der Datentyp nicht stimmt austeigen!
-  if (origin.metaType().id() != _value.metaType().id()) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Type::Missmatch" << name << _value << origin;
+  qDebug() << Q_FUNC_INFO << name << origin;
 #endif
-    return true;
-  }
 
-  // Jetzt vergleiche anstellen.
+  QVariant _value = _input->getValue();
   bool _status = false;
   switch (origin.metaType().id()) {
   case QMetaType::QString: {
@@ -225,6 +219,9 @@ bool TabsEditor::isModifiedCompare(const QString &name,
     break;
 
   default:
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "TabsEditor::Type::Missmatch" << name << _value << origin;
+#endif
     _status = false;
     break;
   };

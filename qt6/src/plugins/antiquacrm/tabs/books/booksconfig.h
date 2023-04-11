@@ -25,4 +25,8 @@
 #define BOOKS_SQL_EDITOR_PATTERN "^ib_[a-z_]+\\b$"
 #endif
 
+#ifndef BOOKS_ALWAYS_ADD_ONLOAD
+#define BOOKS_ALWAYS_ADD_ONLOAD true
+#endif
+
 #endif

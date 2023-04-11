@@ -35,11 +35,15 @@ public Q_SLOTS:
 public:
   explicit TabWidget(QWidget *parent = nullptr);
 
-  int indexById(const QString &);
+  int indexByName(const QString &);
 
   int registerTab(AntiquaCRM::TabsIndex *, const QString &title);
 
   static const QIcon defaultIcon();
+
+  AntiquaCRM::TabsIndex *tabWithIndex(int);
+
+  AntiquaCRM::TabsIndex *tabWithName(const QString &);
 
   /**
    * @brief Alle Registerkarten schließen!

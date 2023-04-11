@@ -22,15 +22,15 @@ TabWidget::TabWidget(QWidget *parent) : QTabWidget{parent} {
 void TabWidget::setViewTab() {
   QString _id = sender()->objectName();
   if (!_id.isEmpty())
-    setCurrentIndex(indexById(_id));
+    setCurrentIndex(indexByName(_id));
 }
 
 void TabWidget::setCurrentTab(const QString &id) {
   if (!id.isEmpty())
-    setCurrentIndex(indexById(id));
+    setCurrentIndex(indexByName(id));
 }
 
-int TabWidget::indexById(const QString &id) {
+int TabWidget::indexByName(const QString &id) {
   if (id.isEmpty())
     return -1;
 
@@ -58,6 +58,14 @@ int TabWidget::registerTab(AntiquaCRM::TabsIndex *tab, const QString &title) {
 
 const QIcon TabWidget::defaultIcon() {
   return AntiquaApplIcon("action-edit-document");
+}
+
+AntiquaCRM::TabsIndex *TabWidget::tabWithIndex(int index) {
+  return qobject_cast<AntiquaCRM::TabsIndex *>(widget(index));
+}
+
+AntiquaCRM::TabsIndex *TabWidget::tabWithName(const QString &name) {
+  return tabWithIndex(indexByName(name));
 }
 
 bool TabWidget::beforeCloseAllTabs() {

@@ -28,6 +28,7 @@ void KeywordListView::setKeywordList(const QStringList &list) {
 }
 
 void KeywordListView::insertKeyword(const QString &keyword) {
+  p_uniqList.clear();
   QString _k = keyword.trimmed();
   if (p_uniqList.contains(_k) || _k.isEmpty())
     return;
@@ -65,6 +66,7 @@ void KeywordListView::clearKeywords() {
       lb->deleteLater();
     }
     _list.clear();
+    p_uniqList.clear();
     emit valueChanged();
   }
 }
