@@ -17,19 +17,17 @@ ImageToolBar::ImageToolBar(QWidget *parent) : QToolBar{parent} {
 
   m_btnOpen = new QPushButton(img_icon, tr("Image Dialog"), this);
   m_btnOpen->setToolTip(tr("Dialog to Edit/Import Images."));
-  connect(m_btnOpen, SIGNAL(clicked()), SLOT(checkOpen()));
+  connect(m_btnOpen, SIGNAL(clicked()), SIGNAL(sendOpenImage()));
   addWidget(m_btnOpen);
 
   m_btnRemove = new QPushButton(del_icon, tr("Remove Image"), this);
   m_btnRemove->setToolTip(tr("Remove image from Database."));
   m_btnRemove->setEnabled(false);
-  connect(m_btnRemove, SIGNAL(clicked()), SLOT(checkRemove()));
+  connect(m_btnRemove, SIGNAL(clicked()), SLOT(beforeRemove()));
   addWidget(m_btnRemove);
 }
 
-void ImageToolBar::checkOpen() { emit sendOpenImage(); }
-
-void ImageToolBar::checkRemove() {
+void ImageToolBar::beforeRemove() {
   if (articleId > 0)
     emit sendDeleteImage(articleId);
 }

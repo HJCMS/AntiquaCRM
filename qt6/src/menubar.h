@@ -23,6 +23,9 @@ private:
   QMenu *m_configMenu;
   QMenu *m_aboutMenu;
 
+Q_SIGNALS:
+  void sendApplicationQuit();
+
 public:
   explicit MenuBar(QWidget *parent = nullptr);
   void setViewsMenu(QMenu *);

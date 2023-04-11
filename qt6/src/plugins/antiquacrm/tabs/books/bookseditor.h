@@ -67,7 +67,7 @@ private:
    * @brief Eingebettete Bildansicht
    * @todo
    */
-  AntiquaCRM::ImageViewer *m_thumbnail;
+  AntiquaCRM::ImageThumbnail *m_thumbnail;
 
   void setInputFields() override;
 

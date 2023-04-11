@@ -14,8 +14,8 @@
 
 namespace AntiquaCRM {
 
-ImageViewer::ImageViewer(QWidget *parent, bool tumbnail)
-    : QGraphicsView{parent}, thumbnailmode{tumbnail} {
+ImageViewer::ImageViewer(QWidget *parent)
+    : QGraphicsView{parent} {
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
   setCacheMode(QGraphicsView::CacheNone);
@@ -52,7 +52,7 @@ void ImageViewer::resizeEvent(QResizeEvent *event) {
 }
 
 void ImageViewer::mousePressEvent(QMouseEvent *event) {
-  if (!thumbnailmode && event->button() == Qt::LeftButton) {
+  if (event->button() == Qt::LeftButton) {
     if (m_rubberband == nullptr) {
       m_rubberband = new RubberBand(this);
     }
@@ -71,7 +71,7 @@ void ImageViewer::mouseMoveEvent(QMouseEvent *event) {
 }
 
 void ImageViewer::zoom(qreal f) {
-  // vertical shearing factor
+  // horizontal scaling factor
   const qreal yf = transform().m11();
   if ((f < 1 && yf < 0.1) || (f > 1 && yf > 10))
     return;

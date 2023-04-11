@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "imagesource.h"
+#include "imagefilesource.h"
 
 #include <QSize>
 
@@ -15,39 +15,39 @@ namespace AntiquaCRM {
 #define IMAGE_JPEG_QUALITY 85
 #endif
 
-ImageSource::ImageSource(const QString &target) : QFileInfo{} {
+ImageFileSource::ImageFileSource(const QString &target) : QFileInfo{} {
   p_fileId = -1;
-  p_target = target;
+  p_tempTarget = target;
   p_pixmap = QPixmap();
 }
 
-ImageSource::ImageSource(const QFileInfo &other) : QFileInfo{other} {
+ImageFileSource::ImageFileSource(const QFileInfo &other) : QFileInfo{other} {
   p_fileId = -1;
-  p_target = other.path();
+  p_tempTarget = other.path();
   p_pixmap = QPixmap();
   setFile(other.filePath());
 }
 
-ImageSource::ImageSource(const ImageSource &other)
+ImageFileSource::ImageFileSource(const ImageFileSource &other)
     : QFileInfo{other.filePath()} {
   p_fileId = other.p_fileId;
-  p_target = other.p_target;
+  p_tempTarget = other.p_tempTarget;
   p_pixmap = other.p_pixmap;
   setFile(other.filePath());
 }
 
-ImageSource &ImageSource::operator=(const ImageSource &other) {
+ImageFileSource &ImageFileSource::operator=(const ImageFileSource &other) {
   if (this == &other)
     return *this;
 
   p_fileId = other.p_fileId;
-  p_target = other.p_target;
+  p_tempTarget = other.p_tempTarget;
   p_pixmap = other.p_pixmap;
   setFile(other.filePath());
   return *this;
 }
 
-bool ImageSource::loadDatabaseImage(const QByteArray &data) {
+bool ImageFileSource::loadFromDatabase(const QByteArray &data) {
   QImage _img = QImage::fromData(data, IMAGE_SAVE_FORMAT);
   QPixmap _pixmap = QPixmap::fromImage(_img);
   bool _status = _pixmap.isNull() ? false : true;
@@ -57,53 +57,53 @@ bool ImageSource::loadDatabaseImage(const QByteArray &data) {
   return _status;
 }
 
-bool ImageSource::isValidSource() const {
+bool ImageFileSource::isValidSource() const {
   if (p_fileId > 0 && isFile() && isReadable()) {
     return exists();
   }
   return false;
 }
 
-bool ImageSource::isOriginal() { return p_pixmap.isNull(); };
+bool ImageFileSource::isOriginal() { return p_pixmap.isNull(); };
 
-void ImageSource::setFileId(qint64 articleId) {
+void ImageFileSource::setFileId(qint64 articleId) {
   if (articleId < 1) {
-    qWarning("ImageSource::setFileId - rejected!");
+    qWarning("ImageFileSource::setFileId - rejected!");
     return;
   }
   p_fileId = articleId;
 }
 
-qint64 ImageSource::getFileId() const { return p_fileId; }
+qint64 ImageFileSource::getFileId() const { return p_fileId; }
 
-const QString ImageSource::toBaseName(qint64 id, qint8 zerofill) {
+const QString ImageFileSource::toBaseName(qint64 id, qint8 zerofill) {
   return AntiquaCRM::AUtil::zerofill(id, zerofill);
 }
 
-void ImageSource::setTarget(const QDir &dest) {
+void ImageFileSource::setTempTarget(const QDir &dest) {
   if (!dest.exists() || (p_fileId < 1))
     return;
 
-  p_target = dest.path();
+  p_tempTarget = dest.path();
 }
 
-const QString ImageSource::getTarget() const { return p_target; }
+const QString ImageFileSource::getTempTarget() const { return p_tempTarget; }
 
-void ImageSource::setCachedPixmap(const QPixmap &pix) {
+void ImageFileSource::setCachedPixmap(const QPixmap &pix) {
   if (pix.isNull() || pix.height() < 10 || pix.width() < 10)
     return;
 
   p_pixmap = pix;
 }
 
-const QPixmap ImageSource::getCachedPixmap() { return p_pixmap; }
+const QPixmap ImageFileSource::getCachedPixmap() { return p_pixmap; }
 
-void ImageSource::removeCachedPixmap() { p_pixmap = QPixmap(); }
+void ImageFileSource::removeCachedPixmap() { p_pixmap = QPixmap(); }
 
-bool ImageSource::findInDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId) {
+bool ImageFileSource::findInDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId) {
   Q_CHECK_PTR(db);
   if (articleId < 1 || !db->open()) {
-    qWarning("ImageSource::findInDatabase - reject - invalid usage!");
+    qWarning("ImageFileSource::findInDatabase - reject - invalid usage!");
     return false;
   }
 
@@ -118,7 +118,7 @@ bool ImageSource::findInDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId) {
   if (_query.next()) {
     _data = QByteArray::fromBase64(_query.value(0).toByteArray(),
                                    QByteArray::Base64Encoding);
-    _status = loadDatabaseImage(_data);
+    _status = loadFromDatabase(_data);
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -134,11 +134,11 @@ bool ImageSource::findInDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId) {
   return _status;
 }
 
-bool ImageSource::storeInDatabase(AntiquaCRM::ASqlCore *db, const QSize &max,
+bool ImageFileSource::storeInDatabase(AntiquaCRM::ASqlCore *db, const QSize &max,
                                   qint64 articleId) {
   Q_CHECK_PTR(db);
   if (articleId < 1 || !db->open()) {
-    qWarning("ImageSource::storeInDatabase - reject - invalid usage!");
+    qWarning("ImageFileSource::storeInDatabase - reject - invalid usage!");
     return false;
   }
 
@@ -193,11 +193,11 @@ bool ImageSource::storeInDatabase(AntiquaCRM::ASqlCore *db, const QSize &max,
   return _status;
 }
 
-bool ImageSource::removeFromDatabase(AntiquaCRM::ASqlCore *db,
+bool ImageFileSource::removeFromDatabase(AntiquaCRM::ASqlCore *db,
                                      qint64 articleId) {
   Q_CHECK_PTR(db);
   if (articleId < 1 || !db->open()) {
-    qWarning("ImageSource::removeFromDatabase - reject - invalid usage!");
+    qWarning("ImageFileSource::removeFromDatabase - reject - invalid usage!");
     return false;
   }
 

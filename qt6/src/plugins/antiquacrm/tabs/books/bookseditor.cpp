@@ -164,14 +164,15 @@ BooksEditor::BooksEditor(QWidget *parent)
       tr("The Book condition is predefined by your Book Seller online shop.\n"
          "Mostly defined with 1-4, very good to heavily worn.");
   ib_condition->setWhatsThisText(tempWhatsThis);
+  ib_condition->appendStretch();
   conditionlayout->addWidget(ib_condition, Qt::AlignLeft);
 
   infoText = new AntiquaCRM::ALabel(tr("Language"), _lbAlign, this);
   conditionlayout->addWidget(infoText, Qt::AlignRight);
   ib_language = new AntiquaCRM::SelectLanguage(this);
   ib_language->setObjectName("ib_language");
-  tempWhatsThis =
-      tr("In this field the content language of the book is specified.");
+  tempWhatsThis = tr("This field is reserved to the content language of the "
+                     "book. If Multilingual content select Europe.");
   ib_language->setWhatsThisText(tempWhatsThis);
   conditionlayout->addWidget(ib_language);
   row2->addLayout(conditionlayout, row2c++, 1, 1, 1);
@@ -246,7 +247,7 @@ BooksEditor::BooksEditor(QWidget *parent)
 
   // Image Viewer
   QSize _max_size = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
-  m_thumbnail = new AntiquaCRM::ImageViewer(this, true);
+  m_thumbnail = new AntiquaCRM::ImageThumbnail(this);
   m_thumbnail->setMinimumWidth(100);
   m_thumbnail->setMaximumWidth(_max_size.width());
   m_splitter->addLeft(row2Widget);
@@ -649,7 +650,7 @@ void BooksEditor::setLoadThumbnail(qint64 articleId) {
 
   m_imageToolBar->setArticleId(articleId);
 
-  AntiquaCRM::ImageSource thumbnail;
+  AntiquaCRM::ImageFileSource thumbnail;
   thumbnail.setFileId(articleId);
   if (thumbnail.findInDatabase(m_sql, articleId))
     m_thumbnail->setPixmap(thumbnail.getCachedPixmap());
@@ -668,7 +669,7 @@ void BooksEditor::setRemoveThumbnail(qint64 articleId) {
           .arg(tr("Do you really want to delete the Image?"),
                QString::number(_id)));
   if (set == QMessageBox::Yes) {
-    AntiquaCRM::ImageSource thumbnail;
+    AntiquaCRM::ImageFileSource thumbnail;
     thumbnail.setFileId(_id);
     if (thumbnail.removeFromDatabase(m_sql, _id)) {
       m_thumbnail->clear();

@@ -35,6 +35,7 @@ void Application::initGui() {
   m_window = new MainWindow;
   m_window->setObjectName("MainWindow");
   m_window->setWindowIcon(applIcon());
+  connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
 }
 
 bool Application::checkInterfaces() {

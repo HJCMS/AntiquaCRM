@@ -17,6 +17,7 @@ BooksWidget::BooksWidget(QWidget *parent)
   setObjectName(BOOKS_SQL_TABLE_NAME);
   setWindowTitle(tr("Books"));
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("view-log"));
+  setClosable(false);
 
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
@@ -174,8 +175,8 @@ bool BooksWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("window_operation"))
     return false;
 
-  if (!initialed) /**< first call? */
-    onEnterChanged();
+  // first call?
+  onEnterChanged();
 
   if (currentIndex() != 0) {
     popupWarningTabInEditMode();

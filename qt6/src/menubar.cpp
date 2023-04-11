@@ -11,6 +11,10 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   setStyleSheet("");
 
   m_applMenu = addMenu("Antiqua CRM");
+  QAction *ac_quit = m_applMenu->addAction(tr("Application Quit"));
+  ac_quit->setIcon(AntiquaCRM::AntiquaApplIcon("action-quit"));
+  ac_quit->setShortcut(QKeySequence::Quit);
+  connect(ac_quit, SIGNAL(triggered()), this, SIGNAL(sendApplicationQuit()));
   addMenu(m_applMenu);
 
   m_viewsMenu = new QMenu(tr("Views"), this);

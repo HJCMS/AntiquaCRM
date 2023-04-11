@@ -64,8 +64,7 @@ void BoolBox::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
-  m_lb->setBuddy(m_edit);
+  m_edit->setText(text);
 }
 
 bool BoolBox::isValid() {

@@ -44,7 +44,8 @@ SET (_library_SOURCES
  crowdedit.cpp
  emailedit.cpp
  genderedit.cpp
- imagesource.cpp
+ imagefilesource.cpp
+ imagethumbnail.cpp
  imagetoolbar.cpp
  imageviewer.cpp
  isbnedit.cpp
@@ -86,7 +87,8 @@ SET (_library_HEADERS
  crowdedit.h
  emailedit.h
  genderedit.h
- imagesource.h
+ imagefilesource.h
+ imagethumbnail.h
  imagetoolbar.h
  imageviewer.h
  isbnedit.h

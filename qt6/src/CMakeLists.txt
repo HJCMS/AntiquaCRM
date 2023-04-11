@@ -38,7 +38,6 @@ QT6_ADD_RESOURCES(APPLICATION_QRC applicons.qrc)
 SET(APPLICATION_HEADERS
  application.h
  mainwindow.h
- tabwidget.h
  menubar.h
  statusbar.h
  test_widget.h
@@ -48,7 +47,6 @@ SET(APPLICATION_SOURCES
  main.cpp
  application.cpp
  mainwindow.cpp
- tabwidget.cpp
  menubar.cpp
  statusbar.cpp
  test_widget.cpp

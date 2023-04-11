@@ -9,10 +9,11 @@
 #ifndef ANTIQUA_UI_MAINWINDOW_H
 #define ANTIQUA_UI_MAINWINDOW_H
 
-#include <QMainWindow>
+#include <AntiquaTabs>
 #include <QList>
-#include <QPair>
+#include <QMainWindow>
 #include <QObject>
+#include <QPair>
 
 class MenuBar;
 class TabWidget;
@@ -22,13 +23,16 @@ class MainWindow final : public QMainWindow {
   Q_OBJECT
 
 private:
-  MenuBar *m_menubar;
-  TabWidget *m_tabwidget;
-  StatusBar *m_statusbar;
+  MenuBar *m_menuBar;
+  AntiquaCRM::TabWidget *m_tabWidget;
+  StatusBar *m_statusBar;
 
   bool loadTabInterfaces();
 
   void debugContent();
+
+Q_SIGNALS:
+  void sendApplicationQuit();
 
 public:
   explicit MainWindow(QWidget *parent = nullptr);

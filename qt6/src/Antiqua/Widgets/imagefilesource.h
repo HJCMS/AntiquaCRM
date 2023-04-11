@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_IMAGESOURCE_H
-#define ANTIQUACRM_WIDGETS_IMAGESOURCE_H
+#ifndef ANTIQUACRM_WIDGETS_IMAGESFILEOURCE_H
+#define ANTIQUACRM_WIDGETS_IMAGESFILEOURCE_H
 
 #include <AntiquaCRM>
 #include <QByteArray>
@@ -20,24 +20,57 @@
 namespace AntiquaCRM {
 
 /**
- * @class ImageSource
- * @brief Image Source Info and SQL-Database operations.
+ * @class ImageFileSource
+ * @brief this class handles File and SQL-Database operations.
  * AntiquaCRM using zero filled id numbers for Image Filenames.
  * This will provide a better view an sorting in System File Managers.
- * @note AntiquaCRM identify Source Images with Article Numbers.
+ * It also supports SQL:SELECT/INSERT/REMOVE operation for thumbnails.
  *
- * This class additionally supports SQL select/insert/remove operation for
- * thumbnails.
+ * AntiquaCRM identify Source Images with Article Numbers in a Filesystem Tree,
+ * only Thumbnails will stored in the Database. You can set different targets in
+ * the Source tree to categorize a temporary Destination.
+ * e.g.: Books, Media or Various.
  *
+ * A Server cron job will read this temporary dirs and upload this images with
+ * SFTP client to your Web-Storage. When image upload success, the image are
+ * moved hierarchical to the „Sources“ tree.
+ *
+ * You can set some targets in configuration group „dirs“ with:
+ * - „dirs/images“ = Primary images source storage for recursive search.
+ * - „dirs/import“ = Opens this target first when import pictures. e.g.: Camera
+ *
+ * This code example will show how AntiquaCRM Server images saved.
  * @code
- *   qint64 _articleId = 123456;
- *   QString fileBasename = DatabaseImage::toBaseName(_articleId);
- *   fileBasename.append(".jpg");
- *   // 00123456.jpg
+ * smb://serverhost:445/release/archiv
+ * ├── Imported    // temporary destinations
+ * │   ├── Prints
+ * │   ├── Books
+ * │   ├── Media
+ * │   ├── Various
+ * │   └── ...
+ * │
+ * ├── Sources    // Sources tree where images stored by cron-job
+ * │   ├── 2022   // stored in year
+ * │   │   ├── 01 // stored in month of year
+ * │   │   ├── 02
+ * │   │   ├── 03
+ * │   │   ├── 04
+ * │   │   ...
+ * │   │
+ * │   └── 2023
+ * │       ├── 01
+ * │       ...
+ * │
+ * └── ...
  * @endcode
+ *
+ * @warning Do not use the Server Sources directory to store new imports.
+ *
+ * @note This class will not touch the Server Sources Directory
+ *
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY ImageSource final : public QFileInfo {
+class ANTIQUACRM_LIBRARY ImageFileSource final : public QFileInfo {
 private:
   /**
    * @brief Artikel number
@@ -48,7 +81,7 @@ private:
   /**
    * @brief Where to save the image!
    */
-  QString p_target;
+  QString p_tempTarget;
 
   /**
    * @brief cached Pixmap
@@ -60,22 +93,19 @@ private:
    * @brief Import Thumbnail data from Database
    * @param data - rwa data from database
    */
-  bool loadDatabaseImage(const QByteArray &data);
+  bool loadFromDatabase(const QByteArray &data);
 
 public:
   /**
    * @param target - load/save from source target
    */
-  ImageSource(const QString &target = QString());
+  ImageFileSource(const QString &target = QString("Imported"));
 
-  /**
-   * @param other - get data  from QFileInfo
-   */
-  ImageSource(const QFileInfo &other);
+  ImageFileSource(const QFileInfo &other);
 
-  ImageSource(const ImageSource &other);
+  ImageFileSource(const ImageFileSource &other);
 
-  ImageSource &operator=(const ImageSource &other);
+  ImageFileSource &operator=(const ImageFileSource &other);
 
   /**
    * @brief all required parameters set and valid?
@@ -107,12 +137,12 @@ public:
   /**
    * @brief set image destination
    */
-  void setTarget(const QDir &dest);
+  void setTempTarget(const QDir &dest);
 
   /**
    * @brief get image destination
    */
-  const QString getTarget() const;
+  const QString getTempTarget() const;
 
   /**
    * @brief Insert or modify cached pixmap
@@ -155,4 +185,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_IMAGESOURCE_H
+#endif // ANTIQUACRM_WIDGETS_IMAGESFILEOURCE_H

@@ -6,53 +6,54 @@
 #include "statusbar.h"
 #include "tabwidget.h"
 
-#include "test_widget.h"
-
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
-  setMinimumSize(QSize(800, 550));
+#ifdef ANTIQUA_DEVELOPEMENT
+  setMinimumSize(QSize(1600, 900));
+#else
+  setMinimumSize(QSize(800, 600));
+#endif
 
-  m_menubar = new MenuBar(this);
-  setMenuBar(m_menubar);
+  m_menuBar = new MenuBar(this);
+  setMenuBar(m_menuBar);
 
-  m_tabwidget = new TabWidget(this);
-  setCentralWidget(m_tabwidget);
+  m_tabWidget = new AntiquaCRM::TabWidget(this);
+  setCentralWidget(m_tabWidget);
 
-  TestWidget *_test = new TestWidget(m_tabwidget);
-  m_tabwidget->addTab(_test, QString("TEST"));
+  m_statusBar = new StatusBar(this);
+  setStatusBar(m_statusBar);
 
-  m_statusbar = new StatusBar(this);
-  setStatusBar(m_statusbar);
+  connect(m_menuBar, SIGNAL(sendApplicationQuit()),
+          SIGNAL(sendApplicationQuit()));
 }
 
 bool MainWindow::loadTabInterfaces() {
   AntiquaCRM::TabsLoader _loader(this);
   QList<AntiquaCRM::TabsInterface *> _list = _loader.interfaces(this);
   if (_list.size() > 0) {
-    QMenu *_viewMenu = new QMenu(tr("Tabs"), m_menubar);
-    _viewMenu->setIcon(m_menubar->tabIcon());
+    QMenu *_viewMenu = new QMenu(tr("Tabs"), m_menuBar);
+    _viewMenu->setIcon(m_menuBar->tabIcon());
 
     QListIterator<AntiquaCRM::TabsInterface *> it(_list);
     while (it.hasNext()) {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
         QString _name = _iface->displayName();
-        QString _id = _iface->interfaceName();
-        AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabwidget);
+        // QString _id = _iface->interfaceName();
+        AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
         Q_CHECK_PTR(_tab);
-        _tab->setObjectName("tab_" + _id);
-        QIcon _icon = _tab->windowIcon();
-        m_tabwidget->addTab(_tab, _icon, _name);
-        QAction *_ac = _viewMenu->addAction(_icon, _name);
-        _ac->setObjectName(_id);
-        connect(_ac, SIGNAL(triggered()), m_tabwidget, SLOT(viewTab()));
+        m_tabWidget->registerTab(_tab, _name);
+
+        QAction *_ac = _viewMenu->addAction(_tab->windowIcon(), _name);
+        _ac->setObjectName(_tab->tabIndexId());
+        connect(_ac, SIGNAL(triggered()), m_tabWidget, SLOT(setViewTab()));
       }
     }
-    m_menubar->setViewsMenu(_viewMenu);
+    m_menuBar->setViewsMenu(_viewMenu);
     _list.clear();
     return true;
   }
@@ -76,10 +77,10 @@ void MainWindow::openWindow() {
   showNormal();
 
   // start plz inputs
-  m_statusbar->showMessage(tr("Window opened"));
+  m_statusBar->showMessage(tr("Window opened"));
 
   if (!loadTabInterfaces())
-    m_statusbar->showMessage(tr("No tabs available"));
+    m_statusBar->showMessage(tr("No tabs available"));
 
 #ifdef ANTIQUA_DEVELOPEMENT
   debugContent();

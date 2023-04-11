@@ -27,15 +27,13 @@ class RubberBand;
 
 /**
  * @class ImageViewer
- * @brief Database Image previewer
+ * @brief Source Image Edit Viewer
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY ImageViewer final : public QGraphicsView {
   Q_OBJECT
 
 private:
-  bool thumbnailmode;
-
   /**
    * @brief Maximum Areasize
    */
@@ -74,14 +72,14 @@ private:
   void resizeEvent(QResizeEvent *) override;
 
   /**
-   * @brief modify Rubberband actions
+   * @brief modify/show Rubberband actions
    */
   void mousePressEvent(QMouseEvent *) override;
   void mouseMoveEvent(QMouseEvent *) override;
 
 Q_SIGNALS:
   /**
-   * @brief add Image/Pixmap to view successfully
+   * @brief a view was add successfully
    */
   void sendSetViewSuccess(bool);
 
@@ -112,12 +110,12 @@ public Q_SLOTS:
   void rotate();
 
   /**
-   * @brief reset to default
+   * @brief reset and load GraphicsPixmapItem
    */
   void reset();
 
   /**
-   * @brief clear the Scene
+   * @brief clear the Scene and reset GraphicsPixmapItem
    */
   void clear();
 
@@ -134,9 +132,8 @@ public Q_SLOTS:
 public:
   /**
    * @param parent - parent widget
-   * @param tumbnail - disable Rubberband in Thumbnail mode
    */
-  explicit ImageViewer(QWidget *parent = nullptr, bool tumbnail = false);
+  explicit ImageViewer(QWidget *parent = nullptr);
   ~ImageViewer();
 
   /**

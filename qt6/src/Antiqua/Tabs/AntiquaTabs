@@ -6,6 +6,4 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_TABS_LIB_H
 #include "antiquatabs.h"
-#endif

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_TABS_LIB_H
-#define ANTIQUACRM_TABS_LIB_H
+#ifndef ANTIQUACRM_ANTIQUATABS_H
+#define ANTIQUACRM_ANTIQUATABS_H
 
 #ifndef ANTIQUACRM_TABS_INTERFACE
 #define ANTIQUACRM_TABS_INTERFACE "@CMAKE_ANTIQUA_TABS_INTERFACE@"
@@ -48,4 +48,4 @@
 // AntiquaCRM::TabsEditActionBar
 #include "tabseditactionbar.h"
 
-#endif // ANTIQUACRM_TABS_LIB_H
+#endif // ANTIQUACRM_ANTIQUATABS_H
