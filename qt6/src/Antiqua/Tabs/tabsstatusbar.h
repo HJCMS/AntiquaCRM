@@ -94,11 +94,6 @@ protected:
    */
   void setHistoryActionMenu(QPushButton *parent);
 
-  /**
-   * @brief Helferlein für Icon zuweisung
-   */
-  static const QIcon getIcon(const QString &name);
-
 protected Q_SLOTS:
   /**
    * @brief Auswahl von Menüeinträgen verarbeiten!

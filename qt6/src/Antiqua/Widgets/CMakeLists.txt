@@ -68,6 +68,7 @@ SET (_library_SOURCES
  tableview.cpp
  textfield.cpp
  textline.cpp
+ yearedit.cpp
 )
 
 SET (_library_HEADERS
@@ -111,6 +112,7 @@ SET (_library_HEADERS
  tableview.h
  textfield.h
  textline.h
+ yearedit.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED

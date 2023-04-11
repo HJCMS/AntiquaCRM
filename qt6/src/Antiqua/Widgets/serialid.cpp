@@ -4,14 +4,17 @@
 #include "serialid.h"
 
 #include <QDebug>
+#include <QSizePolicy>
 
 namespace AntiquaCRM {
 
 SerialId::SerialId(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
-  m_edit = new AntiquaCRM::ALineEdit(this);
+  m_edit = new ASpinBox(this);
   m_edit->setReadOnly(true);
-  m_edit->setStyleSheet("QLineEdit {border:none;background:transparent;}");
-  m_edit->setClearButtonEnabled(false);
+  m_edit->setMinimum(0);
+  m_edit->setMaximum(9999999);
+  m_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
+  m_edit->setStyleSheet("QSpinBox {border:none;background:transparent;}");
   layout->addWidget(m_edit);
   initData();
 }
@@ -25,8 +28,9 @@ void SerialId::setValue(const QVariant &value) {
   switch (_type.id()) {
   case (QMetaType::Int):
   case (QMetaType::Long):
+  case (QMetaType::Double):
   case (QMetaType::LongLong):
-    m_edit->setText(QString::number(value.toInt()));
+    m_edit->setValue(value.toLongLong());
     break;
 
   default:
@@ -34,7 +38,7 @@ void SerialId::setValue(const QVariant &value) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << "SerialId Requires type int but get:" << value;
 #endif
-    m_edit->setText(value.toString());
+    m_edit->setValue(value.toLongLong());
     break;
   };
 }
@@ -62,19 +66,14 @@ void SerialId::setBuddyLabel(const QString &text) {
 }
 
 bool SerialId::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
+  if (isRequired() && m_edit->value() < 1)
     return false;
 
-  QVariant data(m_edit->text().trimmed());
-  qint64 isbn = data.toLongLong();
-  if (isbn >= 0)
-    return true;
-
-  return false;
+  return true;
 }
 
 const QVariant SerialId::getValue() {
-  quint64 _value = QVariant(m_edit->text()).toLongLong();
+  quint64 _value = m_edit->value();
   /**< @warning Es darf keine 0 zurück gegeben werden */
   if (_value < 1)
     return QVariant();

@@ -3,6 +3,7 @@
 
 #include "tabsstatusbar.h"
 
+#include <AntiquaWidgets>
 #include <QDebug>
 #include <QHash>
 #include <QSignalMapper>
@@ -21,7 +22,7 @@ TabsStatusBar::TabsStatusBar(QWidget *parent) : QStatusBar{parent} {
   insertPermanentWidget(0, m_frame, 0);
 
   btn_refresh = new QPushButton(this);
-  btn_refresh->setIcon(getIcon("action-reload"));
+  btn_refresh->setIcon(AntiquaApplIcon("action-reload"));
   btn_refresh->setText(tr("Update"));
   btn_refresh->setToolTip(tr("Update current View"));
   btn_refresh->setWhatsThis(tr("When pressed the table query will reloaded."));
@@ -47,7 +48,7 @@ void TabsStatusBar::addButton(QPushButton *btn) { layout->addWidget(btn); }
 
 QPushButton *TabsStatusBar::createButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(getIcon("database-add"));
+  btn->setIcon(AntiquaApplIcon("database-add"));
   btn->setToolTip(tr("Create a new entry."));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -62,7 +63,7 @@ QPushButton *TabsStatusBar::createButton(const QString &title) {
 
 QPushButton *TabsStatusBar::historyButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(getIcon("view-list"));
+  btn->setIcon(AntiquaApplIcon("view-list"));
   btn->setToolTip(tr("History menue"));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -77,7 +78,7 @@ QPushButton *TabsStatusBar::historyButton(const QString &title) {
 
 QPushButton *TabsStatusBar::defaultViewButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(getIcon("spreadsheet"));
+  btn->setIcon(AntiquaApplIcon("spreadsheet"));
   btn->setToolTip(tr("Push to load the Standard view."));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -94,7 +95,7 @@ void TabsStatusBar::setHistoryActionMenu(QPushButton *parent) {
   // Mapper für Verlaufssignale
   QSignalMapper *m_mapper = new QSignalMapper(parent);
   QMenu *m_menu = new QMenu(parent);
-  QIcon icon = getIcon("view-books");
+  QIcon icon = AntiquaApplIcon("view-books");
   QStringList entries;
   QMapIterator<TabsStatusBar::History, QString> it(historyItems());
   while (it.hasNext()) {
@@ -105,11 +106,6 @@ void TabsStatusBar::setHistoryActionMenu(QPushButton *parent) {
   }
   parent->setMenu(m_menu);
   connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
-}
-
-const QIcon TabsStatusBar::getIcon(const QString &name) {
-  QIcon _back("://icons/" + name + ".png");
-  return QIcon::fromTheme(name, _back);
 }
 
 void TabsStatusBar::setStockEnabled(bool b) { SearchWithStock = b; }

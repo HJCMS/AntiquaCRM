@@ -30,6 +30,11 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_count = new AntiquaCRM::CrowdEdit(this);
   ib_count->setObjectName("ib_count");
   ib_count->setBuddyLabel(tr("Count"));
+  tempWhatsThis =
+      tr("The Article count is the main Value to Activate and Disable Books in "
+         "your Inventory. If you set it to 0 it will deleted on your Provider "
+         "pages and no longer Visible for selling.");
+  ib_count->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_count);
 
   double minPrice = m_cfg->value("payment/min_price", 5.00).toDouble();
@@ -37,24 +42,24 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_price->setObjectName("ib_price");
   ib_price->setBuddyLabel(tr("Price"));
   ib_price->setMinimum(minPrice);
+  tempWhatsThis = tr("Book price you want to have for it. You can always set a "
+                     "Minimum Price in the Configuration dialog.");
+  ib_price->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_price);
-
-  ib_including_vat = new AntiquaCRM::BoolBox(this);
-  ib_including_vat->setObjectName("ib_including_vat");
-  ib_including_vat->setBuddyLabel(tr("incl. vat"));
-  row0->addWidget(ib_including_vat);
 
   ib_signed = new AntiquaCRM::BoolBox(this);
   ib_signed->setObjectName("ib_signed");
   ib_signed->setBuddyLabel(tr("Signed Version"));
+  tempWhatsThis = tr("Is this Book signed by Author?");
+  ib_signed->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_signed);
 
   ib_restricted = new AntiquaCRM::BoolBox(this);
   ib_restricted->setObjectName("ib_restricted");
   ib_restricted->setBuddyLabel(tr("Local Usage only"));
-  ib_restricted->setToolTip(tr("When this Options is marked. Then this Article "
-                               "will not exported to your Providers."));
-
+  tempWhatsThis = tr("The Article will not exported to your Online Sellers "
+                     "when it is marked.\nHints: This can not do afterwards.");
+  ib_restricted->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_restricted);
   row0->addStretch(1);
   mainLayout->addLayout(row0, 0);
@@ -64,28 +69,36 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_edition = new AntiquaCRM::NumEdit(this);
   ib_edition->setObjectName("ib_edition");
   ib_edition->setBuddyLabel(tr("Edition"));
+  tempWhatsThis = tr("Add here the Book edition.");
+  ib_edition->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_edition);
 
   ib_pagecount = new AntiquaCRM::NumEdit(this);
   ib_pagecount->setObjectName("ib_pagecount");
   ib_pagecount->setContextMenuPolicy(Qt::DefaultContextMenu);
-  ib_pagecount->setRange(10, 100000);
+  ib_pagecount->setRange(10, 99999);
   ib_pagecount->setSingleStep(10);
   ib_pagecount->setBuddyLabel(tr("Page count"));
+  tempWhatsThis = tr("Add here the Book page count.");
+  ib_pagecount->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_pagecount);
 
   ib_weight = new AntiquaCRM::NumEdit(this);
   ib_weight->setObjectName("ib_weight");
-  ib_weight->setRange(100, 100000000);
+  ib_weight->setRange(100, 9999999);
   ib_weight->setSuffix(tr("g"));
   ib_weight->setBuddyLabel(tr("Weight"));
+  tempWhatsThis = tr("Add here the Book weight in grams.");
+  ib_weight->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_weight);
 
-  QDate _curDate = QDate::currentDate();
-  ib_year = new AntiquaCRM::NumEdit(this);
+  ib_year = new AntiquaCRM::YearEdit(this);
   ib_year->setObjectName("ib_year");
-  ib_year->setRange(868, _curDate.year());
   ib_year->setBuddyLabel(tr("Year"));
+  tempWhatsThis = tr("The Book Year input starts with 1400 and ending one Year "
+                     "in the future. You mean to input an older Book then "
+                     "Diamant-Sutra? You not need this Software.");
+  ib_year->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_year);
 
   ib_volume = new AntiquaCRM::NumEdit(this);
@@ -300,6 +313,7 @@ void BooksEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
+  ignoreFields << "ib_including_vat"; /**< @deprecated */
 
   m_tableData = new AntiquaCRM::ASqlDataQuery(BOOKS_SQL_TABLE_NAME);
   inputFields = m_tableData->columnNames();

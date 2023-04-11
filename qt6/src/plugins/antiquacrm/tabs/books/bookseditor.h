@@ -21,14 +21,13 @@ private:
   AntiquaCRM::SerialId *ib_id;           /**< @brief ReadOnly:ArticleID */
   AntiquaCRM::CrowdEdit *ib_count;       /**< @brief Bestandsangabe */
   AntiquaCRM::PriceEdit *ib_price;       /**< @brief Preis */
-  AntiquaCRM::BoolBox *ib_including_vat; /**< @brief inkl. Mehwertsteuer */
   AntiquaCRM::BoolBox *ib_signed;        /**< @brief Signiert? */
   AntiquaCRM::BoolBox *ib_restricted;    /**< @brief Zensiert? */
   // Row 1
   AntiquaCRM::NumEdit *ib_edition;   /**< @brief Ausgabe */
   AntiquaCRM::NumEdit *ib_pagecount; /**< @brief Seitenanzahl */
   AntiquaCRM::NumEdit *ib_weight;    /**< @brief Gewicht */
-  AntiquaCRM::NumEdit *ib_year;      /**< @brief Jahr */
+  AntiquaCRM::YearEdit *ib_year;     /**< @brief Jahr */
   AntiquaCRM::NumEdit *ib_volume;    /**< @brief Band ? */
   // Row 2
   AntiquaCRM::Splitter *m_splitter;        /**< @brief Splitter */

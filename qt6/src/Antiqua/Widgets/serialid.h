@@ -24,7 +24,7 @@ class ANTIQUACRM_LIBRARY SerialId final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  ALineEdit *m_edit;
+  ASpinBox *m_edit;
 
 private Q_SLOTS:
   void valueChanged();
@@ -53,6 +53,11 @@ public:
 
   bool isValid() override;
 
+  /**
+   * @brief Current SerialId
+   * @note If no valid Serial exists it returns NULL and not Digits!
+   * @return 1-9999999 or NULL
+   */
   const QVariant getValue() override;
 
   const QString popUpHints() override;

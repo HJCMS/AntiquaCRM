@@ -62,13 +62,7 @@ void KeywordsEdit::initData() {
   setWindowModified(false);
 }
 
-void KeywordsEdit::valueChanged() {
-  QString _keyword = m_edit->text().trimmed();
-  if (_keyword.length() < minLength)
-    return;
-
-  setWindowModified(true);
-}
+void KeywordsEdit::valueChanged() { setWindowModified(true); }
 
 void KeywordsEdit::clearKeywords() {
   QMessageBox::StandardButton ret = QMessageBox::warning(

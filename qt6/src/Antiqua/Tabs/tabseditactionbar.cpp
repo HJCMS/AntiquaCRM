@@ -13,7 +13,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_cancelBtn = new QPushButton(tr("Cancel"), this);
   m_cancelBtn->setObjectName("editor_action_button_cancel");
-  m_cancelBtn->setIcon(AntiquaApplIcon("action-cancel"));
+  m_cancelBtn->setIcon(AntiquaApplIcon("dialog-cancel"));
   m_cancelBtn->setShortcut(QKeySequence::Cancel);
   QString sc_cancel = m_cancelBtn->shortcut().toString();
   m_cancelBtn->setToolTip(tr("Exit without saving.") + " " + sc_cancel);
@@ -33,17 +33,19 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_mailButton = new QPushButton(tr("eMail"), this);
   m_mailButton->setObjectName("editor_action_mailer_button");
+  m_mailButton->setIcon(AntiquaApplIcon("mail-message"));
   layout->addWidget(m_mailButton);
 
   m_printerButton = new QPushButton(tr("Print"), this);
   m_printerButton->setObjectName("editor_action_print_button");
+  m_printerButton->setIcon(AntiquaApplIcon("printer"));
   layout->addWidget(m_printerButton);
 
   layout->addStretch(1);
 
   m_addArticle = new QPushButton(tr("Add Article"), this);
   m_addArticle->setObjectName("editor_action_button_article");
-  m_addArticle->setIcon(QIcon("://icons/action_add.png"));
+  m_addArticle->setIcon(AntiquaApplIcon("action-add"));
   m_addArticle->setEnabled(false);
   m_addArticle->setVisible(false);
   connect(m_addArticle, SIGNAL(clicked()), SIGNAL(sendAddCustomAction()));
@@ -60,7 +62,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_readyBtn = new QPushButton(tr("Back to Mainview"), this);
   m_readyBtn->setObjectName("editor_action_button_back");
-  m_readyBtn->setIcon(AntiquaApplIcon("action-ok"));
+  m_readyBtn->setIcon(AntiquaApplIcon("action-undo"));
   m_readyBtn->setShortcut(QKeySequence::Back);
   QString sc_ready = m_readyBtn->shortcut().toString();
   m_readyBtn->setToolTip(tr("Go back to Mainview") + " " + sc_ready);

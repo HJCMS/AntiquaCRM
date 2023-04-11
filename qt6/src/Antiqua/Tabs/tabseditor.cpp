@@ -176,7 +176,7 @@ bool TabsEditor::isModifiedCompare(const QString &name,
   // Wenn der Datentyp nicht stimmt austeigen!
   if (origin.metaType().id() != _value.metaType().id()) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Type::Missmatch" << _value << origin;
+    qDebug() << Q_FUNC_INFO << "Type::Missmatch" << name << _value << origin;
 #endif
     return true;
   }

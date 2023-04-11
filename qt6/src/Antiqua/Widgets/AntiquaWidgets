@@ -102,5 +102,8 @@
 // AntiquaCRM::TextLine
 #include "textline.h"
 
+// AntiquaCRM::YearEdit
+#include "yearedit.h"
+
 #endif
 // EOF

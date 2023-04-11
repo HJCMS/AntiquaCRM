@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_NUMEDIT_H
-#define ANTIQUACRM_WIDGETS_NUMEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_YEAREDIT_H
+#define ANTIQUACRM_WIDGETS_YEAREDIT_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -16,15 +16,14 @@
 namespace AntiquaCRM {
 
 /**
- * @class NumEdit
- * @brief Numeric Input Editor
  * @ingroup AntiquaWidgets
+ * @class YearEdit
  */
-class ANTIQUACRM_LIBRARY NumEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY YearEdit final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  ASpinBox *m_edit;
+  AntiquaCRM::ASpinBox *m_edit;
 
 private Q_SLOTS:
   void valueChanged(int);
@@ -41,19 +40,12 @@ public Q_SLOTS:
 
 public:
   /**
+   * @brief __TODO__
    * @param parent - parent widget
    */
-  explicit NumEdit(QWidget *parent = nullptr);
+  explicit YearEdit(QWidget *parent = nullptr);
 
   void setRestrictions(const QSqlField &) override;
-
-  void setRange(int min, int max = 99999);
-
-  void setSingleStep(int step = 0);
-
-  void setPrefix(const QString &);
-
-  void setSuffix(const QString &);
 
   void setInputToolTip(const QString &) override;
 
@@ -70,4 +62,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_NUMEDIT_H
+#endif // ANTIQUACRM_WIDGETS_YEAREDIT_H

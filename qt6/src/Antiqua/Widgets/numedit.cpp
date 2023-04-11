@@ -12,10 +12,10 @@ NumEdit::NumEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   m_edit->setMinimum(0);
   layout->addWidget(m_edit);
   initData();
-  // connect(m_edit, SIGNAL(), SLOT(valueChanged()));
+  connect(m_edit, SIGNAL(valueChanged(int)), SLOT(valueChanged(int)));
 }
 
-void NumEdit::valueChanged() {
+void NumEdit::valueChanged(int) {
   if (isValid())
     setWindowModified(true);
 }
