@@ -27,7 +27,7 @@ private:
   ALineEdit *m_edit;
 
 private Q_SLOTS:
-  void valueChanged();
+  void valueChanged(const QString &);
 
 protected:
   void initData() override;

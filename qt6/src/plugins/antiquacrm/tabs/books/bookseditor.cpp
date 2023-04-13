@@ -297,7 +297,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   // Signals:ImageToolBar
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(setRemoveThumbnail(qint64)));
-  connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setActionEditImages()));
+  connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setImportEditImage()));
 
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
@@ -347,8 +347,10 @@ void BooksEditor::setInputFields() {
   ib_storage->initData();
 
   // Schlüsselwörter
-  QStringList _keywords_data({"TODO", "Keywords"});
-  ib_keyword->setCompleterList(_keywords_data);
+  _completer_data = _dataFiles.getCompleterList("keywords", "name");
+  ib_keyword->setCompleterList(_completer_data);
+
+  _completer_data.clear();
 }
 
 bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
@@ -655,10 +657,9 @@ void BooksEditor::setLoadThumbnail(qint64 articleId) {
 
   m_imageToolBar->setArticleId(articleId);
 
-  AntiquaCRM::ImageFileSource thumbnail;
-  thumbnail.setFileId(articleId);
-  if (thumbnail.findInDatabase(m_sql, articleId))
-    m_thumbnail->setPixmap(thumbnail.getCachedPixmap());
+  AntiquaCRM::ImageFileSource image_preview;
+  if (image_preview.findInDatabase(m_sql, articleId))
+    m_thumbnail->setPixmap(image_preview.getThumbnail());
 }
 
 void BooksEditor::setRemoveThumbnail(qint64 articleId) {
@@ -683,13 +684,20 @@ void BooksEditor::setRemoveThumbnail(qint64 articleId) {
   }
 }
 
-void BooksEditor::setActionEditImages() {
+void BooksEditor::setImportEditImage() {
   qint64 _id = ib_id->getValue().toLongLong();
-  qDebug() << Q_FUNC_INFO << "__TODO__" << _id;
-  // ImageDialog *d = new ImageDialog(_id, this);
-  // if (d->exec()) {
-  //   m_imageView->readFromDatabase(id);
-  // }
+  if (_id < 1) {
+    sendStatusMessage(tr("No Article number for Image import!"));
+    return;
+  }
+
+  AntiquaCRM::ImageImportDialog *d =
+      new AntiquaCRM::ImageImportDialog(_id, "Books", this);
+  connect(d, SIGNAL(sendThumbnail(const QPixmap &)), m_thumbnail,
+          SLOT(setPixmap(const QPixmap &)));
+
+  d->exec();
+  d->deleteLater();
 }
 
 void BooksEditor::setRestore() {

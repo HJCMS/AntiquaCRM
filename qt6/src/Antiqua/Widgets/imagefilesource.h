@@ -81,7 +81,7 @@ private:
   /**
    * @brief Where to save the image!
    */
-  QString p_tempTarget;
+  QString p_store;
 
   /**
    * @brief cached Pixmap
@@ -90,10 +90,16 @@ private:
   QPixmap p_pixmap;
 
   /**
-   * @brief Import Thumbnail data from Database
-   * @param data - rwa data from database
+   * @brief cached Pixmap
+   * If the Image is not equal to Source, a copy stored here.
    */
-  bool loadFromDatabase(const QByteArray &data);
+  QPixmap p_pthumnail;
+
+  /**
+   * @brief Import Thumbnail data from Database
+   * @param data - raw data from database
+   */
+  bool loadThumbnail(const QByteArray &data);
 
 public:
   /**
@@ -135,29 +141,39 @@ public:
   static const QString toBaseName(qint64 articleId, qint8 zerofill = 8);
 
   /**
-   * @brief set image destination
+   * @brief Save image to this Directory
    */
-  void setTempTarget(const QDir &dest);
+  void setStoreDirectory(const QDir &dest);
 
   /**
-   * @brief get image destination
+   * @brief Get Image Save Directory
    */
-  const QString getTempTarget() const;
+  const QString getStoreDirectory() const;
 
   /**
    * @brief Insert or modify cached pixmap
    */
-  void setCachedPixmap(const QPixmap &);
+  void setPixmap(const QPixmap &);
 
   /**
    * @brief Current cached pixmap
    */
-  const QPixmap getCachedPixmap();
+  const QPixmap getPixmap();
 
   /**
    * @brief Remove cached pixmap
    */
-  void removeCachedPixmap();
+  void removePixmap();
+
+  /**
+   * @brief set thumbnail
+   */
+  void setThumbnail(const QPixmap &);
+
+  /**
+   * @brief get stored thumbnail
+   */
+  const QPixmap getThumbnail();
 
   /**
    * @brief Search - Get/set Thumbnail Image from Database!
@@ -169,11 +185,9 @@ public:
   /**
    * @brief Store cached Pixmap in database
    * @param db        - AntiquaCRM::ASqlCore handle
-   * @param max       - Restrict to Max Thumbnail size
    * @param articleId - Article ID
    */
-  bool storeInDatabase(AntiquaCRM::ASqlCore *db, const QSize &max,
-                       qint64 articleId);
+  bool storeInDatabase(AntiquaCRM::ASqlCore *db, qint64 articleId);
 
   /**
    * @brief Remove existing Thumbnail from Database!

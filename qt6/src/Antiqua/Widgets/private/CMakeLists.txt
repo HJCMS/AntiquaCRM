@@ -16,12 +16,18 @@ SET (_subWidgetLibrary_SOURCES
  keywordlistview.cpp
  keywordlabel.cpp
  rubberband.cpp
+ imagetreeview.cpp
+ imageviewtoolbar.cpp
+ imagetreepathview.cpp
 )
 
 SET (_subWidgetLibrary_HEADERS
  keywordlistview.h
  keywordlabel.h
  rubberband.h
+ imagetreeview.h
+ imageviewtoolbar.h
+ imagetreepathview.h
 )
 
 ADD_LIBRARY (${_subWidgetLibrary} STATIC

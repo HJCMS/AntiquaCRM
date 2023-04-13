@@ -44,44 +44,31 @@ private:
    */
   QPoint p_startPoint;
 
-  QPixmapCache p_pixCache;
+  /**
+   * @brief Original Pixmap
+   * This will only done when use setPixmap or setImage
+   */
+  QPixmapCache p_origin;
+
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixItem;
-
   RubberBand *m_rubberband;
 
-  /**
-   * @brief Pixmap in Scene einfügen!
-   * @warning resizeEvent();
-   * Es gibt keine Möglichkeit einen QGraphicsPixmapItem auf Inhalt zu prüfen
-   * ohne das es crashen würde. Deshalb gehe ich hin und füge ein leeres
-   * QPixmap(0,0) im Konstuktor und bei clear() ein. Im resizeEvent() kann ich
-   * damit auf m_pixmap->pixmap().isNull() prüfen.
-   */
   bool setPixmapItem(const QPixmap &pixmap = QPixmap(0, 0));
 
-  /**
-   * @brief Mauswheel zoom
-   */
   void wheelEvent(QWheelEvent *) override;
 
-  /**
-   * @brief Scale image to frame
-   * @warning A Pximap must already exits, otherwise it crashes!
-   */
   void resizeEvent(QResizeEvent *) override;
 
-  /**
-   * @brief modify/show Rubberband actions
-   */
   void mousePressEvent(QMouseEvent *) override;
+
   void mouseMoveEvent(QMouseEvent *) override;
 
 Q_SIGNALS:
   /**
-   * @brief a view was add successfully
+   * @brief a add scene successfully or not
    */
-  void sendSetViewSuccess(bool);
+  void sendSetSceneView(bool);
 
 public Q_SLOTS:
   /**
@@ -113,6 +100,11 @@ public Q_SLOTS:
    * @brief reset and load GraphicsPixmapItem
    */
   void reset();
+
+  /**
+   * @brief cut image to current rubberband region
+   */
+  void cutting();
 
   /**
    * @brief clear the Scene and reset GraphicsPixmapItem
@@ -155,10 +147,9 @@ public:
   const QSize getMaxScaleSize() const;
 
   /**
-   * @brief get Current Modified QImage
-   * Only used with Editor Mode
+   * @brief get Current Modified source Pixmap
    */
-  const QImage getImage();
+  const QPixmap getPixmap();
 };
 
 } // namespace AntiquaCRM

@@ -5,17 +5,12 @@
 #include "private/rubberband.h"
 
 #include <QApplication>
-#include <QColor>
 #include <QDebug>
-#include <QPainter>
-#include <QPainterPath>
-#include <QStyle>
-#include <QStylePainter>
+#include <QTransform>
 
 namespace AntiquaCRM {
 
-ImageViewer::ImageViewer(QWidget *parent)
-    : QGraphicsView{parent} {
+ImageViewer::ImageViewer(QWidget *parent) : QGraphicsView{parent} {
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
   setCacheMode(QGraphicsView::CacheNone);
@@ -27,7 +22,7 @@ ImageViewer::ImageViewer(QWidget *parent)
 
 ImageViewer::~ImageViewer() {
   setPixmapItem(QPixmap(0, 0));
-  p_pixCache.clear();
+  p_origin.clear();
   m_scene->deleteLater();
 }
 
@@ -90,61 +85,89 @@ void ImageViewer::adjust() {
 }
 
 void ImageViewer::rotate() {
-  QImage img(getImage());
-  if (img.isNull())
+  if (m_pixItem->pixmap().isNull())
     return;
 
   QTransform transform;
   transform.rotate(90.0);
-  QImage out = img.transformed(transform, Qt::SmoothTransformation);
-  if (out.isNull())
+  QPixmap _pixmap =
+      m_pixItem->pixmap().transformed(transform, Qt::SmoothTransformation);
+  if (_pixmap.isNull())
     return;
 
-  setImage(out);
-  update();
+  if (setPixmapItem(_pixmap))
+    update();
+
+  _pixmap.detach();
 }
 
 void ImageViewer::reset() {
   QPixmap _pixmap;
-  if (p_pixCache.find("source", &_pixmap)) {
-    setPixmap(_pixmap);
+  if (p_origin.find("source", &_pixmap)) {
+    setPixmapItem(_pixmap);
+    adjust();
   }
+  _pixmap.detach();
+
   if (m_rubberband != nullptr && m_rubberband->isValid())
     m_rubberband->reset();
 }
 
-void ImageViewer::clear() { setPixmapItem(); }
+void ImageViewer::cutting() {
+  if (m_rubberband == nullptr || !m_rubberband->isValid())
+    return;
+
+  QRect _from(p_startPoint, m_rubberband->size());
+  QRectF _to = mapToScene(_from).boundingRect().normalized();
+  QPixmap _pixmap = m_pixItem->pixmap().copy(_to.toRect());
+  if (_pixmap.isNull())
+    return;
+
+  setPixmapItem(_pixmap);
+  _pixmap.detach();
+
+  m_rubberband->reset();
+}
+
+void ImageViewer::clear() {
+  setPixmapItem();
+  p_origin.clear();
+}
 
 void ImageViewer::setPixmap(const QPixmap &pixmap) {
-  bool _success = setPixmapItem(pixmap);
-  p_pixCache.insert("source", pixmap);
-#ifdef ANTIQUA_DEVELOPEMENT
-  if (!_success) {
-    qDebug() << Q_FUNC_INFO << _success;
+  bool _success = false;
+  const QSize _s = getMaxScaleSize();
+  qreal _max_with = qMax(_s.width(), p_maxSize.width());
+  qreal _max_height = qMax(_s.height(), p_maxSize.height());
+  if (pixmap.width() > _max_with || pixmap.height() > _max_height) {
+    // Scale
+    QPixmap _scaled = pixmap.scaled(_max_with, _max_height,
+                                    Qt::KeepAspectRatio, // ratio
+                                    Qt::SmoothTransformation);
+    if (_scaled.isNull()) {
+      _scaled.detach();
+      return;
+    }
+    _scaled.detach();
+    _success = setPixmapItem(_scaled);
+    if (_success)
+      p_origin.insert("source", _scaled);
+  } else {
+    _success = setPixmapItem(pixmap);
+    if (_success)
+      p_origin.insert("source", pixmap);
   }
-#endif
-  emit sendSetViewSuccess(_success);
+
+  emit sendSetSceneView(_success);
 }
 
 void ImageViewer::setImage(const QImage &image) {
-  QPixmap _px = QPixmap::fromImage(image);
-  if (_px.isNull()) {
-    emit sendSetViewSuccess(false);
+  QPixmap _pixmap = QPixmap::fromImage(image);
+  if (_pixmap.isNull()) {
+    emit sendSetSceneView(false);
     return;
   }
-
-  const QSize _s = getMaxScaleSize();
-  qreal _w = qMax(_s.width(), p_maxSize.width());
-  qreal _h = qMax(_s.height(), p_maxSize.height());
-  QPixmap _opx = _px.scaled(_w, _h,              // size
-                            Qt::KeepAspectRatio, // ratio
-                            Qt::SmoothTransformation);
-  if (_opx.isNull()) {
-    _opx.detach();
-    return;
-  }
-  _px.detach();
-  setPixmap(_opx);
+  setPixmap(_pixmap);
 }
 
 const QSize ImageViewer::getMaxScaleSize() const {
@@ -155,14 +178,14 @@ const QSize ImageViewer::getMaxScaleSize() const {
   return _size;
 }
 
-const QImage ImageViewer::getImage() {
+const QPixmap ImageViewer::getPixmap() {
   if (m_pixItem == nullptr)
-    return QImage();
+    return QPixmap();
 
   if (m_pixItem->pixmap().isNull())
-    return QImage();
+    return QPixmap();
 
-  return m_pixItem->pixmap().toImage();
+  return m_pixItem->pixmap();
 }
 
 } // namespace AntiquaCRM

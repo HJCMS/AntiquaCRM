@@ -12,18 +12,18 @@ TextLine::TextLine(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   layout->addWidget(m_edit);
   initData();
-  // connect(m_edit, SIGNAL(), SLOT(valueChanged()));
+  connect(m_edit, SIGNAL(textChanged(const QString &)),
+          SLOT(valueChanged(const QString &)));
 }
 
-void TextLine::valueChanged() {
-  if (isValid())
-    setWindowModified(true);
+void TextLine::valueChanged(const QString &) {
+  setWindowModified(true);
 }
 
 void TextLine::initData() {
   QSqlField _f;
   _f.setMetaType(QMetaType(QMetaType::QString));
-  _f.setRequiredStatus(QSqlField::Required);
+  _f.setRequiredStatus(QSqlField::Optional);
   setRestrictions(_f);
   setWindowModified(false);
 }

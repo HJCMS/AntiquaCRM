@@ -98,7 +98,7 @@ private Q_SLOTS:
   void setPrintBookCard();
   void setLoadThumbnail(qint64 articleId);
   void setRemoveThumbnail(qint64 articleId);
-  void setActionEditImages();
+  void setImportEditImage();
 
 public Q_SLOTS:
   void setRestore() override;

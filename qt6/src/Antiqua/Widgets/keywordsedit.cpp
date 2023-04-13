@@ -49,8 +49,8 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
 
   connect(ac_clear, SIGNAL(clicked()), SLOT(clearKeywords()));
   connect(ac_add, SIGNAL(clicked()), SLOT(insertKeyword()));
-  connect(m_edit, SIGNAL(editingFinished()), SLOT(insertKeyword()));
-  connect(m_keywords, SIGNAL(valueChanged()), SLOT(valueChanged()));
+  connect(m_edit, SIGNAL(returnPressed()), SLOT(insertKeyword()));
+  connect(m_keywords, SIGNAL(keywordsChanged()), SLOT(valueChanged()));
 }
 
 void KeywordsEdit::initData() {
@@ -77,7 +77,7 @@ void KeywordsEdit::clearKeywords() {
 
 void KeywordsEdit::insertKeyword() {
   QString _keyword = m_edit->text().trimmed();
-  if (_keyword.length() < minLength)
+  if (_keyword.length() < m_keywords->minLength())
     return;
 
   m_keywords->insertKeyword(_keyword);

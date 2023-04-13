@@ -33,6 +33,9 @@
 // AntiquaCRM::ImageFileSource
 #include "imagefilesource.h"
 
+// AntiquaCRM::ImageImportDialog
+#include "imageimportdialog.h"
+
 // AntiquaCRM::ImageThumbnail
 #include "imagethumbnail.h"
 

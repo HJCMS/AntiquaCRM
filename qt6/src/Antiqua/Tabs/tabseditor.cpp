@@ -171,9 +171,9 @@ bool TabsEditor::isModifiedCompare(const QString &name,
   if (_input == nullptr)
     return false;
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << name << origin;
-#endif
+//#ifdef ANTIQUA_DEVELOPEMENT
+//  qDebug() << Q_FUNC_INFO << name << origin;
+//#endif
 
   QVariant _value = _input->getValue();
   bool _status = false;
