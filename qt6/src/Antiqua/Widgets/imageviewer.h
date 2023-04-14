@@ -43,6 +43,7 @@ private:
    * @brief Start point for create Rubberband region
    */
   QPoint p_startPoint;
+  QRect p_rubberRect;
 
   /**
    * @brief Original Pixmap

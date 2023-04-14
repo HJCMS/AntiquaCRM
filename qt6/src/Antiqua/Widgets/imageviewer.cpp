@@ -14,6 +14,7 @@ ImageViewer::ImageViewer(QWidget *parent) : QGraphicsView{parent} {
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
   setCacheMode(QGraphicsView::CacheNone);
+  setDragMode(QGraphicsView::NoDrag);
 
   m_scene = new QGraphicsScene(rect(), this);
   m_pixItem = nullptr;
@@ -59,9 +60,13 @@ void ImageViewer::mousePressEvent(QMouseEvent *event) {
 }
 
 void ImageViewer::mouseMoveEvent(QMouseEvent *event) {
-  if (m_rubberband != nullptr)
-    m_rubberband->setGeometry(QRect(p_startPoint, event->pos()));
-
+  if (m_rubberband != nullptr) {
+    const QPoint sp = p_startPoint;
+    const QPoint ep = event->pos();
+    m_rubberband->setGeometry(QRect(sp, ep).normalized());
+    p_rubberRect = QRect(qMin(sp.x(), ep.x()), qMin(sp.y(), ep.y()),
+                         qAbs(sp.x() - ep.x()) + 1, qAbs(sp.y() - ep.y()) + 1);
+  }
   QGraphicsView::mouseMoveEvent(event);
 }
 
@@ -117,15 +122,18 @@ void ImageViewer::cutting() {
   if (m_rubberband == nullptr || !m_rubberband->isValid())
     return;
 
-  QRect _from(p_startPoint, m_rubberband->size());
-  QRectF _to = mapToScene(_from).boundingRect().normalized();
+  QRectF _to = mapToScene(p_rubberRect).boundingRect().normalized();
+  if (_to.isNull()) {
+    m_rubberband->reset();
+    return;
+  }
+
   QPixmap _pixmap = m_pixItem->pixmap().copy(_to.toRect());
   if (_pixmap.isNull())
     return;
 
   setPixmapItem(_pixmap);
   _pixmap.detach();
-
   m_rubberband->reset();
 }
 

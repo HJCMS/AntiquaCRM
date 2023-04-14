@@ -28,7 +28,7 @@ const QStyleOptionRubberBand RubberBand::styleOption() {
 
 const QPen RubberBand::pen() {
   QPen p(Qt::DashLine);
-  p.setWidth(1);
+  p.setWidth(2);
   p.setColor(Qt::red);
   return p;
 }

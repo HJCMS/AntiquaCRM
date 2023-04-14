@@ -413,9 +413,9 @@ bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
   AntiquaCRM::AbstractInput *inp =
       findChild<AntiquaCRM::AbstractInput *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
-    // qDebug() << "setDataField:" << inp->objectName() << key << value;
-    inp->setValue(value);
     inp->setRestrictions(field);
+    // Muss nach setRestrictions kommen!
+    inp->setValue(value);
     return true;
   }
 
