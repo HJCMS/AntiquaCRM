@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_TEXTFIELD_H
-#define ANTIQUACRM_WIDGETS_TEXTFIELD_H
+#ifndef ANTIQUACRM_WIDGETS_DATETIMEINFO_H
+#define ANTIQUACRM_WIDGETS_DATETIMEINFO_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -16,15 +16,15 @@
 namespace AntiquaCRM {
 
 /**
- * @class TextField
- * @brief Large Text inputs with QTextEdit
+ * @class DateTimeInfo
+ * @brief Show Date time Information (no editor)
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY TextField final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY DateTimeInfo final : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
-  ATextEdit *m_edit;
+  ADateTimeEdit *m_edit;
 
 private Q_SLOTS:
   void valueChanged();
@@ -43,7 +43,7 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit TextField(QWidget *parent = nullptr);
+  explicit DateTimeInfo(QWidget *parent = nullptr);
 
   void setRestrictions(const QSqlField &) override;
 
@@ -62,4 +62,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_TEXTFIELD_H
+#endif // ANTIQUACRM_WIDGETS_DATETIMEINFO_H

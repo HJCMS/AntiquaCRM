@@ -5,7 +5,6 @@
 #include "imagefilesource.h"
 
 #include <QDebug>
-#include <QHeaderView>
 
 namespace AntiquaCRM {
 
@@ -81,12 +80,21 @@ void ImageTreeView::folderChanged(const QModelIndex &index) {
 
 void ImageTreeView::expandTopLevel() { expand(p_rootIndex); }
 
-void ImageTreeView::setSourceImage(const AntiquaCRM::ImageFileSource &image) {
-  if (setDirectory(image.absoluteDir())) {
-    QModelIndex index = m_model->index(image.filePath());
-    if (index.isValid()) {
-      setCurrentIndex(index);
+void ImageTreeView::setShowSource(const QString &path) {
+  QModelIndex index = m_model->index(path);
+  if (index.isValid()) {
+    int _d = 0;
+    QModelIndex _p(index);
+    while (_p.parent().isValid()) {
+      if (_p == p_rootIndex || _d >= 10) {
+        m_headerView->resizeSections(QHeaderView::ResizeToContents);
+        break;
+      }
+      setExpanded(_p, true);
+      _p = _p.parent();
+      _d++;
     }
+    setCurrentIndex(index);
   }
 }
 
@@ -99,6 +107,7 @@ bool ImageTreeView::setDirectory(const QDir &dir) {
   p_directory.setPath(dir.path());
   QModelIndex index = m_model->setRootPath(p_directory.path());
   setRootIndex(index);
+  setExpanded(rootIndex(), true);
   return index.isValid();
 }
 

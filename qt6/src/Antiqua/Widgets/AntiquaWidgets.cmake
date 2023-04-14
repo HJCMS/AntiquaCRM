@@ -24,6 +24,9 @@
 // AntiquaCRM::ConditionEdit
 #include "conditionedit.h"
 
+// AntiquaCRM::DateTimeInfo
+#include "datetimeinfo.h"
+
 // AntiquaCRM::EMailEdit
 #include "emailedit.h"
 

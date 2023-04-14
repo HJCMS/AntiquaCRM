@@ -20,7 +20,8 @@ namespace AntiquaCRM {
  * @brief Storage location selecter
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY SelectStorage final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY SelectStorage final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -31,11 +32,15 @@ private Q_SLOTS:
   void valueChanged(int);
   void filterChanged(const QString &);
 
+Q_SIGNALS:
+  /**
+   * @brief Signal emitted when Storage location changed
+   */
+  void sendValueChanged();
+
 public Q_SLOTS:
   void setValue(const QVariant &) override;
-
   void setFocus() override;
-
   void reset() override;
 
 public:
@@ -44,7 +49,17 @@ public:
    */
   explicit SelectStorage(QWidget *parent = nullptr);
 
+  /**
+   * @brief read Storage locations from Cache
+   * It fallback to PgSQL query if no cache file exists!
+   */
   void initData() override;
+
+  /**
+   * @brief get Completer list for Storage compartments
+   * It only works with a valid storage selection!
+   */
+  const QStringList getCompartments();
 
   void setRestrictions(const QSqlField &) override;
 

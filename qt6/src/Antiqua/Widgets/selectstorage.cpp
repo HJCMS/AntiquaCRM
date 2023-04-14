@@ -10,18 +10,17 @@
 
 namespace AntiquaCRM {
 
-// TODO select storage compartment
 SelectStorage::SelectStorage(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   m_select = new AntiquaCRM::AComboBox(this);
   m_select->setToolTip(tr("Storage Location"));
   m_select->setWithoutDisclosures(QString());
   m_select->setMaxVisibleItems(20);
-  m_select->setWhatsThis(tr("Changes the Storage location of this Article."));
+  m_select->setWhatsThis(tr("Changes the Storage location for this Article."));
   layout->addWidget(m_select);
 
   m_edit = new AntiquaCRM::ALineEdit(this);
-  m_edit->setPlaceholderText(tr("Storage Location"));
+  m_edit->setPlaceholderText(tr("Search Storage location"));
   m_edit->setMinimumWidth(130);
   layout->addWidget(m_edit);
 
@@ -37,8 +36,10 @@ SelectStorage::SelectStorage(QWidget *parent)
 }
 
 void SelectStorage::valueChanged(int index) {
-  if (index > 0)
+  if (index > 0) {
     setWindowModified(true);
+    emit sendValueChanged();
+  }
 }
 
 void SelectStorage::filterChanged(const QString &filter) {
@@ -95,39 +96,72 @@ void SelectStorage::initData() {
   QString key("storagelocations");
   AntiquaCRM::ASharedDataFiles dataFile;
   if (dataFile.fileExists(key)) {
-    QJsonDocument jdoc = dataFile.getJson(key);
-    QJsonArray arr = jdoc.object().value(key).toArray();
-    if (arr.size() > 0) {
-      for (int i = 0; i < arr.size(); i++) {
-        QJsonObject jo = arr[i].toObject();
-        int index = jo.value("id").toInt();
-        if (index == 0)
+    QJsonDocument _jd = dataFile.getJson(key);
+    QJsonArray _arr = _jd.object().value(key).toArray();
+    if (_arr.size() > 0) {
+      for (int i = 0; i < _arr.size(); i++) {
+        QJsonObject _jo = _arr[i].toObject();
+        int _id = _jo.value("id").toInt();
+        if (_id == 0)
           continue;
 
-        QString display = jo.value("storage").toString();
-        display.append(" - ");
-        display.append(jo.value("identifier").toString());
-        m_select->insertItem(index, display, index);
+        QString _str = _jo.value("storage").toString();
+        _str.append(" - ");
+        _str.append(_jo.value("identifier").toString());
+        m_select->insertItem(_id, _str, _id);
       }
     }
   } else {
     qWarning("Storage:No storagelocations.json - fallback to SQL query!");
-    AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
-    QString sql("SELECT * FROM ref_storage_location ORDER BY sl_id;");
-    QSqlQuery q = m_sql->query(sql);
-    if (q.size() > 0) {
-      while (q.next()) {
-        int index = q.value("sl_id").toInt();
+    AntiquaCRM::ASqlCore aSql(this);
+    QString _sql("SELECT * FROM ref_storage_location ORDER BY sl_id;");
+    QSqlQuery _q = aSql.query(_sql);
+    if (_q.size() > 0) {
+      while (_q.next()) {
+        int index = _q.value("sl_id").toInt();
         if (index == 0)
           continue;
 
-        QString display = q.value("sl_storage").toString();
-        display.append(" - ");
-        display.append(q.value("sl_identifier").toString());
-        m_select->insertItem(index, display, index);
+        QString _str = _q.value("sl_storage").toString();
+        _str.append(" - ");
+        _str.append(_q.value("sl_identifier").toString());
+        m_select->insertItem(index, _str, index);
       }
+      _q.clear();
     }
+#ifdef ANTIQUA_DEVELOPEMENT
+    else if (!aSql.lastError().isEmpty()) {
+      qDebug() << Q_FUNC_INFO << _sql << aSql.lastError();
+    }
+#endif
   }
+}
+
+const QStringList SelectStorage::getCompartments() {
+  QStringList _list;
+  int _id = getValue().toInt();
+  if (_id < 1)
+    return _list;
+
+  QString _sql("SELECT sc_storage_compartments");
+  _sql.append(" FROM ref_storage_compartment");
+  _sql.append(" WHERE sc_storage_location=" + QString::number(_id));
+  _sql.append(" ORDER BY sc_storage_location");
+  _sql.append(" LIMIT 1;");
+
+  AntiquaCRM::ASqlCore aSql(this);
+  QSqlQuery _q = aSql.query(_sql);
+  if (_q.size() > 0) {
+    _q.next();
+    _list = _q.value("sc_storage_compartment").toStringList();
+    _q.clear();
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else if (!aSql.lastError().isEmpty()) {
+    qDebug() << Q_FUNC_INFO << _sql << aSql.lastError();
+  }
+#endif
+  return _list;
 }
 
 void SelectStorage::setRestrictions(const QSqlField &field) {

@@ -14,6 +14,7 @@ namespace AntiquaCRM {
 
 ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setClearButtonEnabled(true);
+  setFocusPolicy(Qt::StrongFocus);
   QIcon back("://icons/view-list.png");
   QIcon icon = QIcon::fromTheme("view-list-details", back);
   ac_completer = addAction(icon, QLineEdit::TrailingPosition);

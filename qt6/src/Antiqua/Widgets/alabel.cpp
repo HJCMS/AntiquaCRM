@@ -8,8 +8,7 @@ namespace AntiquaCRM {
 ALabel::ALabel(QWidget *parent) : QLabel{parent} {
   setIndent(2);
   setTextFormat(Qt::PlainText);
-  setTextInteractionFlags(Qt::TextSelectableByKeyboard |
-                          Qt::TextSelectableByMouse);
+  setTextInteractionFlags(Qt::NoTextInteraction);
 }
 
 ALabel::ALabel(const QString &text, QWidget *parent) : ALabel{parent} {

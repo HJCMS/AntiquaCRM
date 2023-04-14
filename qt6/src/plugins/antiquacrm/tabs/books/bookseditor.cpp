@@ -25,15 +25,21 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_id = new AntiquaCRM::SerialId(this);
   ib_id->setObjectName("ib_id");
   ib_id->setBuddyLabel(tr("Article ID"));
+  tempWhatsThis = tr("Probably the most important parameter for the article "
+                     "processing and is generated automatically when creating "
+                     "a book. AntiquaCRM use a running numbering system.");
+  ib_id->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_id);
 
   ib_count = new AntiquaCRM::CrowdEdit(this);
   ib_count->setObjectName("ib_count");
   ib_count->setBuddyLabel(tr("Count"));
   tempWhatsThis =
-      tr("The Article count is the main Value to Activate and Disable Books in "
-         "your Inventory. If you set it to 0 it will deleted on your Provider "
-         "pages and no longer Visible for selling.");
+      tr("The Article count is the main value for activating and deactivating "
+         "books in your inventory. If you set it to 0, it will be disabled on "
+         "your vendor pages and no longer visible for sale.\nNotes: These "
+         "updates are not done directly, however daily performed from "
+         "AntiquaCRM Server after working time.");
   ib_count->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_count);
 
@@ -42,23 +48,26 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_price->setObjectName("ib_price");
   ib_price->setBuddyLabel(tr("Price"));
   ib_price->setMinimum(minPrice);
-  tempWhatsThis = tr("Book price you want to have for it. You can always set a "
-                     "Minimum Price in the Configuration dialog.");
+  tempWhatsThis =
+      tr("The Book price you want to have for it.\nNotes: You can always set "
+         "limits for Prices in the main Configuration dialog.");
   ib_price->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_price);
 
   ib_signed = new AntiquaCRM::BoolBox(this);
   ib_signed->setObjectName("ib_signed");
   ib_signed->setBuddyLabel(tr("Signed Version"));
-  tempWhatsThis = tr("Is this Book signed by Author?");
+  tempWhatsThis = tr("Is this Book signed by Authors?");
   ib_signed->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_signed);
 
   ib_restricted = new AntiquaCRM::BoolBox(this);
   ib_restricted->setObjectName("ib_restricted");
   ib_restricted->setBuddyLabel(tr("Local Usage only"));
-  tempWhatsThis = tr("The Article will not exported to your Online Sellers "
-                     "when it is marked.\nHints: This can not do afterwards.");
+  tempWhatsThis =
+      tr("The Article will not exported to your Online Sellers when it is "
+         "marked.\nNotes: You cannot do this afterwards, there are no remote "
+         "deletion processes with your online retailer for this.");
   ib_restricted->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_restricted);
   row0->addStretch(1);
@@ -69,7 +78,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_edition = new AntiquaCRM::NumEdit(this);
   ib_edition->setObjectName("ib_edition");
   ib_edition->setBuddyLabel(tr("Edition"));
-  tempWhatsThis = tr("Add here the Book edition.");
+  tempWhatsThis = tr("If known, set here the Book edition with "
+                     "digits.\nExample: „first edition“ is equal to 1.");
   ib_edition->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_edition);
 
@@ -95,16 +105,21 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_year = new AntiquaCRM::YearEdit(this);
   ib_year->setObjectName("ib_year");
   ib_year->setBuddyLabel(tr("Year"));
-  tempWhatsThis = tr("The Book Year input starts with 1400 and ending one Year "
-                     "in the future. You mean to input an older Book then "
-                     "Diamant-Sutra? You not need this Software.");
+  tempWhatsThis =
+      tr("The Book Year input mask starts with 1400 and ending one Year in the "
+         "future. If the Book edition Year is unknown, set an estimate and add "
+         "a note in the description section.");
   ib_year->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_year);
 
   ib_volume = new AntiquaCRM::NumEdit(this);
   ib_volume->setObjectName("ib_volume");
   ib_volume->setPrefix(tr("Bd."));
+  ib_volume->setInputToolTip(tr("Book volume"));
   ib_volume->setBuddyLabel(tr("Volume"));
+  tempWhatsThis = tr("Is this Book a part of a Book volume or the Article "
+                     "contains one or more volumes? Then enter this here.");
+  ib_volume->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_volume);
   row1->addStretch(1);
   mainLayout->addLayout(row1);
@@ -118,11 +133,11 @@ BooksEditor::BooksEditor(QWidget *parent)
   row2->setContentsMargins(0, 0, 0, 0);
 
   AntiquaCRM::ALabel *infoText;
-  infoText = new AntiquaCRM::ALabel(tr("Booktitle"), _lbAlign, row2Widget);
+  infoText = new AntiquaCRM::ALabel(tr("Title"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_title = new AntiquaCRM::TextLine(this);
   ib_title->setObjectName("ib_title");
-  ib_title->setInputToolTip(infoText->text());
+  ib_title->setInputToolTip(tr("Book title"));
   tempWhatsThis =
       tr("A Book title is restricted to 80 Characters. Some Online Providers "
          "only support this title length. Other Providers allowing more "
@@ -132,12 +147,12 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_title->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_title, row2c++, 1, 1, 1);
 
-  infoText = new AntiquaCRM::ALabel(tr("Book Subtitle"), _lbAlign, this);
+  infoText = new AntiquaCRM::ALabel(tr("Subtitle"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_title_extended = new AntiquaCRM::TextLine(this);
   ib_title_extended->setObjectName("ib_title_extended");
-  ib_title_extended->setInputToolTip(infoText->text());
-  // WARNING - ib_title->setWhatsThisText is used!
+  ib_title_extended->setInputToolTip(tr("Book subtitle"));
+  // Warnung: Verwende „tempWhatsThis“ von ib_title!
   ib_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_title_extended, row2c++, 1, 1, 1);
 
@@ -173,6 +188,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   QHBoxLayout *conditionlayout = new QHBoxLayout();
   ib_condition = new AntiquaCRM::ConditionEdit(this);
   ib_condition->setObjectName("ib_condition");
+  ib_condition->setToolTip(tr("Book condition"));
   tempWhatsThis =
       tr("The Book condition is predefined by your Book Seller online shop.\n"
          "Mostly defined with 1-4, very good to heavily worn.");
@@ -184,20 +200,21 @@ BooksEditor::BooksEditor(QWidget *parent)
   conditionlayout->addWidget(infoText, Qt::AlignRight);
   ib_language = new AntiquaCRM::SelectLanguage(this);
   ib_language->setObjectName("ib_language");
+  ib_language->setInputToolTip(tr("Book content language"));
   tempWhatsThis = tr("This field is reserved to the content language of the "
                      "book. If Multilingual content select Europe.");
   ib_language->setWhatsThisText(tempWhatsThis);
   conditionlayout->addWidget(ib_language);
   row2->addLayout(conditionlayout, row2c++, 1, 1, 1);
 
-  infoText = new AntiquaCRM::ALabel(tr("Designation"), _lbAlign, this);
+  infoText = new AntiquaCRM::ALabel(tr("Binding"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   // Bucheinband und Bindungsart
   QHBoxLayout *binding_layout = new QHBoxLayout();
   binding_layout->setContentsMargins(0, 0, 0, 0);
   ib_binding = new AntiquaCRM::BookBindingEdit(this);
   ib_binding->setObjectName("ib_binding");
-  ib_binding->setToolTip(tr("Bookbinding"));
+  ib_binding->setInputToolTip(tr("Bookbinding"));
   tempWhatsThis =
       tr("The Bookbinding selecter  contains the most prefinied Book bindings. "
          "Please select the best Category for this Book.");
@@ -206,12 +223,11 @@ BooksEditor::BooksEditor(QWidget *parent)
 
   ib_designation = new AntiquaCRM::TextLine(this);
   ib_designation->setObjectName("ib_designation");
-  ib_designation->setToolTip(infoText->text());
-  tempWhatsThis = tr(
-      "This Field is reserved to add Book Designations. It is a addition for "
-      "detailed Description of the Book cover.\n"
-      "You can edit predefined Designations in your Database Configuration "
-      "Menu.");
+  ib_designation->setInputToolTip(tr("Book binding and cover condition."));
+  tempWhatsThis =
+      tr("This Field is reserved to add Book binding Designations. It is a "
+         "addition for detailed Description of the Book cover. You can edit "
+         "predefined Designations in your Database Configuration Menu.");
   ib_designation->setWhatsThisText(tempWhatsThis);
   binding_layout->addWidget(ib_designation);
   row2->addLayout(binding_layout, row2c++, 1, 1, 1);
@@ -220,12 +236,27 @@ BooksEditor::BooksEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_storage = new AntiquaCRM::SelectStorage(this);
   ib_storage->setObjectName("ib_storage");
-  ib_storage->setToolTip(infoText->text());
-  tempWhatsThis =
-      tr("Storage location where this Book has been stored.\n"
-         "You can set Storage locations in your Database Configuration Menu.");
+  ib_storage->setInputToolTip(tr("Storage location"));
+  tempWhatsThis = tr("The Storage location where this Book has been stored. "
+                     "You need to Configure Storage locations first in your "
+                     "Database Configuration Menu before you can use it.");
   ib_storage->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_storage, row2c++, 1, 1, 1);
+
+  infoText = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
+  ib_storage_compartment = new AntiquaCRM::TextLine(this);
+  ib_storage_compartment->setObjectName("ib_storage_compartment");
+  ib_storage_compartment->setInputToolTip(tr("Storage compartment"));
+  ib_storage_compartment->setBuddyLabel(tr("compartment"));
+  tempWhatsThis =
+      tr("Define Storage compartment in this Input field. It depends on the "
+         "Storage location and will printed on top of the Book card. If you "
+         "select Storage location first a completer will add for this input "
+         "field.");
+  ib_storage_compartment->setWhatsThisText(tempWhatsThis);
+  ib_storage_compartment->appendStretch();
+  row2->addWidget(ib_storage_compartment, row2c++, 1, 1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Keywords"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
@@ -283,8 +314,23 @@ BooksEditor::BooksEditor(QWidget *parent)
                          tr("Internal Description"));
   // Info Tab
   QWidget *m_infos = new QWidget(this);
-  // __TODO__
+  QGridLayout *infoLayout = new QGridLayout(m_infos);
+  infoLayout->setColumnStretch(1, 1);
 
+  infoText = new AntiquaCRM::ALabel(tr("Created"), _lbAlign, m_infos);
+  infoLayout->addWidget(infoText, 0, 0, 1, 1);
+  ib_since = new AntiquaCRM::DateTimeInfo(m_infos);
+  ib_since->setObjectName("ib_since");
+  infoLayout->addWidget(ib_since, 0, 1, 1, 1);
+
+  infoText = new AntiquaCRM::ALabel(tr("Changed"), _lbAlign, m_infos);
+  infoLayout->addWidget(infoText, 1, 0, 1, 1);
+  ib_changed = new AntiquaCRM::DateTimeInfo(m_infos);
+  ib_changed->setObjectName("ib_changed");
+  infoLayout->addWidget(ib_changed, 1, 1, 1, 1);
+
+  infoLayout->setRowStretch(2, 1);
+  m_infos->setLayout(infoLayout);
   m_tabWidget->insertTab(2, m_infos, tabIcons, tr("Information"));
   mainLayout->addWidget(m_tabWidget);
 
@@ -298,6 +344,10 @@ BooksEditor::BooksEditor(QWidget *parent)
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(setRemoveThumbnail(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setImportEditImage()));
+
+  // Signals::Storage
+  connect(ib_storage, SIGNAL(sendValueChanged()),
+          SLOT(setStorageCompartments()));
 
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
@@ -636,6 +686,14 @@ void BooksEditor::setFinalLeaveEditor(bool force) {
   emit sendLeaveEditor();             /**< Back to MainView */
 }
 
+void BooksEditor::setStorageCompartments() {
+  QStringList _list = ib_storage->getCompartments();
+  if (_list.size() > 0)
+    ib_storage_compartment->setCompleterList(_list);
+
+  _list.clear();
+}
+
 void BooksEditor::setPrintBookCard() {
   qDebug() << Q_FUNC_INFO << "__TODO__";
   // BookCard *m_d = new BookCard(this);
@@ -646,6 +704,7 @@ void BooksEditor::setPrintBookCard() {
   // data.insert("author", getDataValue("ib_author"));
   // data.insert("year", getDataValue("ib_year"));
   // data.insert("storage", getDataValue("ib_storage"));
+  // data.insert("compartment", getDataValue("ib_storage_compartment"));
   // data.insert("since", getDataValue("ib_since"));
   // data.insert("keywords", getDataValue("ib_keyword"));
   // m_d->exec(data);

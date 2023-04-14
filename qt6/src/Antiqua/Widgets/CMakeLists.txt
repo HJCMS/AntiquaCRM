@@ -20,6 +20,10 @@ CONFIGURE_FILE (AntiquaWidgets.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaWidgets
 )
 
+CONFIGURE_FILE (AntiquaInput.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaInput
+)
+
 SET (_library_FILES
  AntiquaInput
  AntiquaInput.cmake
@@ -37,11 +41,13 @@ SET (_library_SOURCES
  alineedit.cpp
  aslider.cpp
  aspinbox.cpp
+ atextedit.cpp
  awhatsthisbutton.cpp
  bookbindingedit.cpp
  boolbox.cpp
  conditionedit.cpp
  crowdedit.cpp
+ datetimeinfo.cpp
  emailedit.cpp
  genderedit.cpp
  imagefilesource.cpp
@@ -82,11 +88,13 @@ SET (_library_HEADERS
  alineedit.h
  aslider.h
  aspinbox.h
+ atextedit.h
  awhatsthisbutton.h
  bookbindingedit.h
  boolbox.h
  conditionedit.h
  crowdedit.h
+ datetimeinfo.h
  emailedit.h
  genderedit.h
  imagefilesource.h

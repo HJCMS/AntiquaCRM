@@ -18,6 +18,7 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent} {
   // ColumnList
   m_keywords = new KeywordListView(this);
+  m_keywords->setFocusPolicy(Qt::NoFocus);
   layout->addWidget(m_keywords);
   layout->addStretch();
 
@@ -25,10 +26,12 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
   QToolButton *ac_clear = new QToolButton(this);
   ac_clear->setIcon(AntiquaApplIcon("action-remove"));
   ac_clear->setToolTip(tr("This button reset the Keyword field."));
+  ac_clear->setFocusPolicy(Qt::NoFocus);
   layout->addWidget(ac_clear);
   QToolButton *ac_add = new QToolButton(this);
   ac_add->setIcon(AntiquaApplIcon("action-add"));
   ac_add->setToolTip(tr("Keyword add"));
+  ac_add->setFocusPolicy(Qt::NoFocus);
   layout->addWidget(ac_add);
 
   // LineEdit

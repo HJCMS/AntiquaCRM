@@ -49,4 +49,10 @@
 #include "aslider.h"
 #endif
 
+// AntiquaCRM::ATextEdit
+#ifndef ANTIQUACRM_INPUT_TEXTEDIT_H
+#include "atextedit.h"
+#endif
+
+//
 // EOF

@@ -39,6 +39,9 @@ protected:
    */
   void wheelEvent(QWheelEvent *e) override;
 
+public Q_SLOTS:
+  void setSqlTimestamp(const QString &);
+
 public:
   /**
    * @param parent      - parent Widget

@@ -18,11 +18,11 @@ class ANTIQUACRM_LIBRARY BooksEditor final : public AntiquaCRM::TabsEditor {
 
 private:
   // Row 0
-  AntiquaCRM::SerialId *ib_id;           /**< @brief ReadOnly:ArticleID */
-  AntiquaCRM::CrowdEdit *ib_count;       /**< @brief Bestandsangabe */
-  AntiquaCRM::PriceEdit *ib_price;       /**< @brief Preis */
-  AntiquaCRM::BoolBox *ib_signed;        /**< @brief Signiert? */
-  AntiquaCRM::BoolBox *ib_restricted;    /**< @brief Zensiert? */
+  AntiquaCRM::SerialId *ib_id;        /**< @brief ReadOnly:ArticleID */
+  AntiquaCRM::CrowdEdit *ib_count;    /**< @brief Bestandsangabe */
+  AntiquaCRM::PriceEdit *ib_price;    /**< @brief Preis */
+  AntiquaCRM::BoolBox *ib_signed;     /**< @brief Signiert? */
+  AntiquaCRM::BoolBox *ib_restricted; /**< @brief Zensiert? */
   // Row 1
   AntiquaCRM::NumEdit *ib_edition;   /**< @brief Ausgabe */
   AntiquaCRM::NumEdit *ib_pagecount; /**< @brief Seitenanzahl */
@@ -40,8 +40,9 @@ private:
   AntiquaCRM::BookBindingEdit *ib_binding; /**< @brief BuchEinband Kategorie */
   AntiquaCRM::TextLine *ib_designation;    /**< @brief Umschreibung */
   AntiquaCRM::SelectStorage *ib_storage;   /**< @brief Lager bestimmung */
-  AntiquaCRM::KeywordsEdit *ib_keyword;    /**< @brief Schlüsselwort */
-  AntiquaCRM::IsbnEdit *ib_isbn;           /**< @brief ISBN */
+  AntiquaCRM::TextLine *ib_storage_compartment; /**< @brief Lagerfach */
+  AntiquaCRM::KeywordsEdit *ib_keyword;         /**< @brief Schlüsselwort */
+  AntiquaCRM::IsbnEdit *ib_isbn;                /**< @brief ISBN */
 
   // Row 3
   AntiquaCRM::TabWidget *m_tabWidget;
@@ -49,6 +50,8 @@ private:
   AntiquaCRM::TextField *ib_description;
   /** @brief Interne Beschreibung */
   AntiquaCRM::TextField *ib_internal_description;
+  AntiquaCRM::DateTimeInfo *ib_since;
+  AntiquaCRM::DateTimeInfo *ib_changed;
 
   /**
    * @brief Beinhaltet Cancel, Restore, Save und go-back.
@@ -95,6 +98,7 @@ private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor(bool force = true) override;
+  void setStorageCompartments();
   void setPrintBookCard();
   void setLoadThumbnail(qint64 articleId);
   void setRemoveThumbnail(qint64 articleId);

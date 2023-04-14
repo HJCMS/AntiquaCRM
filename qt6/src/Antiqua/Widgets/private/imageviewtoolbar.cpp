@@ -90,7 +90,7 @@ void ImageViewToolBar::prepareTargetChange() {
   }
 
   if (_target.isEmpty()) {
-    _target = QStandardPaths::locate(QStandardPaths::PicturesLocation,
+    _target = QStandardPaths::locate(QStandardPaths::DocumentsLocation,
                                      tr("Documents"),
                                      QStandardPaths::LocateDirectory);
   }

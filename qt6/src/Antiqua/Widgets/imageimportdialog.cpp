@@ -282,8 +282,9 @@ int ImageImportDialog::exec() {
   }
 
   if (source->exists()) {
-    treeView->setDirectory(p_target.path());
+    treeView->setDirectory(p_target);
     setViewerImage(source->filePath());
+    treeView->setShowSource(source->filePath());
   } else {
     // Set Default Selecters directory
     statusBar->showMessage(tr("No stored Sources by Article number found!"));

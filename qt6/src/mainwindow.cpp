@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
 #ifdef ANTIQUA_DEVELOPEMENT
-  setMinimumSize(QSize(1600, 900));
+  setMinimumSize(QSize(1230, 800));
 #else
   setMinimumSize(QSize(800, 600));
 #endif

@@ -12,6 +12,7 @@
 #include <AGlobal>
 #include <QDir>
 #include <QFileSystemModel>
+#include <QHeaderView>
 #include <QModelIndex>
 #include <QObject>
 #include <QTreeView>
@@ -43,7 +44,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void expandTopLevel();
-  void setSourceImage(const AntiquaCRM::ImageFileSource &image);
+  void setShowSource(const QString &);
   void setChangeRoot(const QDir &);
 
 public:

@@ -52,6 +52,7 @@ void AbstractInput::setWhatsThisText(const QString &text) {
 
   if (displayToolTips) {
     AWhatsThisButton *m_tbn = new AWhatsThisButton(text, this);
+    m_tbn->setFocusPolicy(Qt::NoFocus);
     layout->addWidget(m_tbn);
   }
 }

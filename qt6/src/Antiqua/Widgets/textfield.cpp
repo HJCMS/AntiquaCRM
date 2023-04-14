@@ -4,30 +4,17 @@
 #include "textfield.h"
 
 #include <QDebug>
-#include <QRegularExpression>
 
 namespace AntiquaCRM {
 
 TextField::TextField(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
-  m_edit = new QTextEdit(this);
-  m_edit->setAcceptDrops(false);
-  m_edit->setAcceptRichText(false);
-  m_edit->setTextInteractionFlags(Qt::TextEditorInteraction);
-  m_edit->setAutoFormatting(QTextEdit::AutoNone);
+  m_edit = new ATextEdit(this);
   layout->addWidget(m_edit);
   connect(m_edit, SIGNAL(textChanged()), SLOT(valueChanged()));
   initData();
 }
 
-const QString TextField::stripString(const QString &str) const {
-  QString buf = str.trimmed();
-  buf.replace("'", "’");
-  const QRegularExpression pattern("^\\s+");
-  buf.replace(pattern, " ");
-  return buf.trimmed();
-}
-
-void TextField::valueChanged() {}
+void TextField::valueChanged() { setWindowModified(true); }
 
 void TextField::initData() {
   QSqlField _f;
@@ -40,7 +27,7 @@ void TextField::initData() {
 void TextField::setValue(const QVariant &value) {
   QMetaType _type = value.metaType();
   if (_type.id() == QMetaType::QString) {
-    m_edit->setPlainText(value.toString().trimmed());
+    m_edit->setText(value.toString());
     return;
   }
 
@@ -52,7 +39,7 @@ void TextField::setValue(const QVariant &value) {
 void TextField::setFocus() { m_edit->setFocus(); }
 
 void TextField::reset() {
-  m_edit->setPlainText(QString());
+  m_edit->setText(QString());
   m_edit->clear();
   setWindowModified(false);
 }
@@ -79,12 +66,10 @@ bool TextField::isValid() {
   return true;
 }
 
-const QVariant TextField::getValue() {
-  return stripString(m_edit->toPlainText());
-}
+const QVariant TextField::getValue() { return m_edit->text(); }
 
 const QString TextField::popUpHints() {
-  return tr("This Textfield requires a valid input.");
+  return tr("This Text field requires a valid input.");
 }
 
 const QString TextField::statusHints() { return popUpHints(); }
