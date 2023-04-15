@@ -4,11 +4,10 @@
 #include "imageviewtoolbar.h"
 #include "abstractinput.h"
 
-#include <QActionGroup>
-#include <QLayout>
+#include <QHBoxLayout>
 #include <QMenu>
-#include <QStandardPaths>
 #include <QToolBar>
+#include <QtCore>
 
 namespace AntiquaCRM {
 
@@ -44,13 +43,17 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
   layout->addStretch(1);
 
   // Tree Actions
-  btn_targets = new QPushButton(tr("Display Directory"), this);
+  btn_targets = new QPushButton(tr("Open Directory"), this);
   btn_targets->setIcon(AntiquaApplIcon("inode-directory"));
-  btn_targets->setToolTip(tr("Changes the directory for Tree view."));
+  btn_targets->setToolTip(tr("Open directory for Tree view."));
   layout->addWidget(btn_targets);
 
   QAction *ac = nullptr;
   QMenu *tm = new QMenu(btn_targets);
+  ac = tm->addAction(AntiquaApplIcon("folder-documents"), tr("Documents"));
+  ac->setObjectName("documents");
+  connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
+
   ac = tm->addAction(AntiquaApplIcon("folder-documents"), tr("Archiv"));
   ac->setObjectName("archiv");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
@@ -67,35 +70,69 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
   ac->setObjectName("pictures");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 
+#ifdef Q_OS_LINUX
+  ac = tm->addAction(AntiquaApplIcon("folder-public"), tr("Public"));
+  ac->setObjectName("public");
+  connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
+#endif
+
   btn_targets->setMenu(tm);
   setLayout(layout);
 }
 
+const QString ImageViewToolBar::xdgUserDir(const QString &search) const {
+  QString _out;
+  QString _home = QDir::homePath();
+  QFileInfo _file(_home + "/.config/user-dirs.dirs");
+  if (_file.isReadable()) {
+    QFile _fp(_file.filePath());
+    if (!_fp.open(QIODevice::ReadOnly))
+      return _out;
+
+    QTextStream _data(&_fp);
+    while (!_data.atEnd()) {
+      QString _line = _data.readLine();
+      if (_line.contains(search)) {
+        QString _var = _line.split("=").last();
+        _var.replace("\"", "");
+        _var.replace("\\", "");
+        _var.replace("$HOME", _home);
+        _file.setFile(_var.trimmed());
+        if (_file.exists())
+          _out = _file.filePath();
+      }
+    }
+    _fp.close();
+  }
+  return _out;
+}
+
 void ImageViewToolBar::prepareTargetChange() {
-  QString _target;
-  ASettings cfg(this);
+  QString _dest;
+  ASettings _cfg(this);
   QString _id = sender()->objectName();
   if (_id == "archiv") {
-    _target = cfg.value("dirs/images", QString()).toString();
+    _dest = _cfg.value("dirs/images", QString()).toString();
   } else if (_id == "import") {
-    _target = cfg.value("dirs/import", QString()).toString();
+    _dest = _cfg.value("dirs/import", QString()).toString();
   } else if (_id == "downloads") {
-    _target = QStandardPaths::locate(QStandardPaths::DownloadLocation,
-                                     tr("Downloads"),
-                                     QStandardPaths::LocateDirectory);
+    _dest = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
   } else if (_id == "pictures") {
-    _target =
-        QStandardPaths::locate(QStandardPaths::PicturesLocation, tr("Pictures"),
-                               QStandardPaths::LocateDirectory);
+    _dest = QStandardPaths::writableLocation(QStandardPaths::PicturesLocation);
+  } else if (_id == "documents") {
+    _dest = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+  }
+#ifdef Q_OS_LINUX
+  else if (_id == "public") {
+    _dest = xdgUserDir("XDG_PUBLICSHARE_DIR");
+  }
+#endif
+
+  if (_dest.isEmpty()) {
+    _dest = QStandardPaths::writableLocation(QStandardPaths::HomeLocation);
   }
 
-  if (_target.isEmpty()) {
-    _target = QStandardPaths::locate(QStandardPaths::DocumentsLocation,
-                                     tr("Documents"),
-                                     QStandardPaths::LocateDirectory);
-  }
-
-  QDir _d(_target);
+  QDir _d(_dest);
   if (_d.exists() && _d.isReadable())
     emit sendChangeTarget(_d);
 }

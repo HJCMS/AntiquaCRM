@@ -10,8 +10,8 @@
 #define ANTIQUACRM_PRIVATE_IMAGEVIEWTOOLBAR_H
 
 #include <AGlobal>
-#include <QDir>
 #include <QAction>
+#include <QDir>
 #include <QFrame>
 #include <QObject>
 #include <QPushButton>
@@ -35,6 +35,12 @@ private:
   QAction *ac_scale;
   QAction *ac_save;
   QAction *ac_close;
+
+  /**
+   * @brief Find XDG .config/user-dirs.dirs and search ...
+   * Search additional XDG_*_DIR, not supported by Qt*!
+   */
+  const QString xdgUserDir(const QString &) const;
 
   /**
    * TreeView Actions

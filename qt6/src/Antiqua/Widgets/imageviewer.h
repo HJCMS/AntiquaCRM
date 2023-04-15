@@ -113,7 +113,7 @@ public Q_SLOTS:
   void clear();
 
   /**
-   * @brief add QPixmap
+   * @brief Add Pixmap and History cache
    */
   void setPixmap(const QPixmap &);
 

@@ -38,9 +38,11 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
 
   // Splitter
   splitter = new AntiquaCRM::Splitter(this);
+
   // ImageViewer
   viewer = new ImageViewer(this);
   splitter->addLeft(viewer);
+
   // ImageTreeView
   QFrame *rightFrame = new QFrame(this);
   QBoxLayout *rLayout = new QBoxLayout(QBoxLayout::TopToBottom, rightFrame);
