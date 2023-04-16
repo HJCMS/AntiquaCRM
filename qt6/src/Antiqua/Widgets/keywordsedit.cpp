@@ -11,6 +11,7 @@
 #include <QRegularExpression>
 #include <QRegularExpressionValidator>
 #include <QToolButton>
+#include <QToolTip>
 
 namespace AntiquaCRM {
 
@@ -80,9 +81,16 @@ void KeywordsEdit::clearKeywords() {
 
 void KeywordsEdit::insertKeyword() {
   QString _keyword = m_edit->text().trimmed();
-  if (_keyword.length() < m_keywords->minLength())
+  if (_keyword.length() <= m_edit->getMinLength()) {
+    int _timeout = 1500;
+    m_edit->setFocus();
+    m_edit->setVisualFeedback(_timeout);
+    QPoint _p = mapToGlobal(m_edit->pos());
+    _p.setY(_p.y() - (m_edit->rect().height() * 2));
+    QString _txt = tr("The Keyword length is to small!");
+    QToolTip::showText(_p, _txt, m_edit, m_edit->rect(), _timeout);
     return;
-
+  }
   m_keywords->insertKeyword(_keyword);
 }
 

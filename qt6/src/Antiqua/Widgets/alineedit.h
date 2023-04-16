@@ -22,30 +22,60 @@ namespace AntiquaCRM {
 /**
  * @class ALineEdit
  * @brief AntiquaCRM Line input edit widget
+ * Some extended Functions with SQL-Field properties, prefinined Validators,
+ * Completer and visual feedback functions. Also includes the minLength property
+ * for SQL table field constraints.
  * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {
   Q_OBJECT
+  Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY
+                 sendMinLengthChanged)
 
 private:
+  /**
+   * @brief Minimum Characters length before a event emitted.
+   * Only emit Signals if Input length is greater than ...
+   */
+  int minLength = 2;
+
+  /**
+   * @brief Action icon to open Completer Popup.
+   * Only visible if a QCompleter is add and Completers size is greater then 0.
+   * See also QLineEdit::addAction
+   */
   QAction *ac_completer;
 
   /**
    * @short Simple text validator
+   * @code
+   *  "^\\S{2}.+"
+   * @endcode
    */
   void setTextValidator();
 
   /**
    * @short Simple numeric validator
+   * @code
+   *  "^\\d+$"
+   * @endcode
    */
   void setNumericValidator();
 
   /**
    * @short AntiquaCRM Articlenumber validator
+   * The item number system in Antiqua CRM consists of consecutive numbers.
+   * When searching, these may also be entered separated by commas.
+   * @code
+   *  "^(\\d{1,9}[\\,]?)+$"
+   * @endcode
    */
   void setArticleValidator();
 
 private Q_SLOTS:
+  /**
+   * @brief Initial QCompleter and add to Editor
+   */
   void showCompleter();
 
   /**
@@ -58,19 +88,51 @@ private Q_SLOTS:
    */
   void skipReturnPressed();
 
+  /**
+   * @brief This slot resetting Tooltip from
+   */
+  void resetVisualFeedback();
+
 Q_SIGNALS:
+  /**
+   * @brief Minimum Input Characters length has changed
+   */
+  void sendMinLengthChanged(int);
+
+  /**
+   * @brief This signal emitted after focusOutEvent restriction checks
+   */
   void sendFocusOut();
-  void sendPoupEvent();
+
+  /**
+   * @brief This signal emitted when completer Popup is visible.
+   */
+  void sendCompleterShown();
 
 public Q_SLOTS:
+  /**
+   * @brief Set Minimum Characters inout length
+   */
+  void setMinLength(int);
+
   /**
    * @brief Set border highlight when unvalid content
    */
   void isValidContent(bool);
 
+  /**
+   * @brief Set isValidContent, with timeout!
+   * @param timeout in Milliseconds
+   * @note Only works if it has a focus!
+   */
+  void setVisualFeedback(int timeout = 2000);
+
 public:
+  /**
+   * @brief Predefined Input validator enumeration.
+   */
   enum InputValidator {
-    NOTHING = 0, /**< @brief Not Input Validation (default) */
+    NOTHING = 0, /**< @brief No Input Validation (default) */
     STRINGS = 1, /**< @brief Match strings */
     NUMERIC = 2, /**< @brief Match numeric */
     ARTICLE = 3  /**< @brief Match ArticleID */
@@ -83,23 +145,31 @@ public:
   explicit ALineEdit(QWidget *parent = nullptr);
 
   /**
+   * @brief the minimum acceptable Characters length.
+   */
+  int getMinLength();
+
+  /**
    * @brief set Input Validator
    */
   void setValidation(AntiquaCRM::ALineEdit::InputValidator);
 
   /**
-   * @brief Enable+Visible, completer-popup action.
+   * @brief Sets Completer-PopUp action icon to active and visible.
    */
   void setCompleterAction(bool enabled = false);
 
   /**
-   * @brief Set max Length and PlaceHolder Text by given SQL Field Properties.
+   * @brief Set SQL Field Properties.
    * @param prop - QSqlField properties
+   * This function use QSqlField properties to set QLineEdit properties. It
+   * modifies setMaxLength, setPlaceHolderText and if QSqlField::Required is
+   * set, setClearButtonEnabled will change to false.
    */
   void setLineEditProperties(const QSqlField &prop);
 
   /**
-   * @brief current input text length
+   * @brief current text length
    */
   int length();
 };

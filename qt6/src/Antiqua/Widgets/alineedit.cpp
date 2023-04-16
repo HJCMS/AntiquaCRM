@@ -8,6 +8,7 @@
 #include <QDebug>
 #include <QIcon>
 #include <QRegularExpressionValidator>
+#include <QTimer>
 #include <QValidator>
 
 namespace AntiquaCRM {
@@ -32,12 +33,12 @@ void ALineEdit::setTextValidator() {
 }
 
 void ALineEdit::setNumericValidator() {
-  const QRegularExpression pattern("^[0-9]+$");
+  const QRegularExpression pattern("^\\d+$");
   setValidator(new QRegularExpressionValidator(pattern, this));
 }
 
 void ALineEdit::setArticleValidator() {
-  const QRegularExpression pattern("^([0-9]{1,9}[\\,]?)+$");
+  const QRegularExpression pattern("^(\\d{1,9}[\\,]?)+$");
   setValidator(new QRegularExpressionValidator(pattern, this));
 }
 
@@ -50,22 +51,28 @@ void ALineEdit::showCompleter() {
     m_view->setSelectionMode(QAbstractItemView::SingleSelection);
 
     m_cpl->complete(rect());
+    emit sendCompleterShown();
   }
 }
 
 void ALineEdit::focusOutEvent(QFocusEvent *event) {
-  if (event->lostFocus() && (text().length() > 2)) {
+  if (event->lostFocus() && (text().length() > minLength)) {
     emit sendFocusOut();
   }
   QLineEdit::focusOutEvent(event);
 }
 
 void ALineEdit::skipReturnPressed() {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug("AntiquaCRM::ALineEdit::skipReturnPressed()");
-#endif
-  if (text().length() > 0)
+  // qDebug("AntiquaCRM::ALineEdit::skipReturnPressed()");
+  if (text().length() > minLength)
     setModified(true);
+}
+
+void ALineEdit::resetVisualFeedback() { isValidContent(true); }
+
+void ALineEdit::setMinLength(int length) {
+  minLength = length;
+  emit sendMinLengthChanged(minLength);
 }
 
 void ALineEdit::isValidContent(bool b) {
@@ -75,6 +82,15 @@ void ALineEdit::isValidContent(bool b) {
 
   setStyleSheet(_css);
 }
+
+void ALineEdit::setVisualFeedback(int timeout) {
+  if (hasFocus())
+    isValidContent(false);
+
+  QTimer::singleShot(timeout, this, SLOT(resetVisualFeedback()));
+}
+
+int ALineEdit::getMinLength() { return minLength; }
 
 void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
   switch (type) {
