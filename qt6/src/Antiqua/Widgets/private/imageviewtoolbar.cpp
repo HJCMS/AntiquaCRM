@@ -2,8 +2,11 @@
 // vim: set fileencoding=utf-8
 
 #include "imageviewtoolbar.h"
-#include "abstractinput.h"
 
+#include <ASettings>
+#include <AntiquaInput>
+#include <QDialog>
+#include <QDirIterator>
 #include <QHBoxLayout>
 #include <QMenu>
 #include <QToolBar>
@@ -25,27 +28,44 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
 
   ac_reset = lbar->addAction(tr("Reset"));
   ac_reset->setIcon(AntiquaApplIcon("action-redo"));
+  ac_reset->setToolTip(tr("Revert the image back to the original."));
+  ac_reset->setStatusTip(ac_reset->toolTip());
   connect(ac_reset, SIGNAL(triggered()), SIGNAL(sendReset()));
 
   ac_cut = lbar->addAction(tr("Cutting"));
   ac_cut->setIcon(AntiquaApplIcon("action-cut"));
+  ac_cut->setToolTip(tr("Cut image to Rubberband."));
+  ac_cut->setStatusTip(ac_cut->toolTip());
   connect(ac_cut, SIGNAL(triggered()), SIGNAL(sendCutting()));
 
   ac_scale = lbar->addAction(tr("Scale"));
   ac_scale->setIcon(AntiquaApplIcon("view-scale"));
+  ac_scale->setToolTip(tr("Scale image to view."));
+  ac_scale->setStatusTip(ac_scale->toolTip());
   connect(ac_scale, SIGNAL(triggered()), SIGNAL(sendAdjust()));
 
   ac_rotate = lbar->addAction(tr("Rotate"));
   ac_rotate->setIcon(AntiquaApplIcon("view-rotate-right"));
+  ac_rotate->setToolTip(tr("Rotate image clockwise."));
+  ac_rotate->setStatusTip(ac_rotate->toolTip());
   connect(ac_rotate, SIGNAL(triggered()), SIGNAL(sendRotate()));
 
   // Stretch
   layout->addStretch(1);
 
+  // Search
+  QPushButton *ac_search = new QPushButton(tr("Search"), lbar);
+  ac_search->setIcon(AntiquaApplIcon("action-search"));
+  ac_search->setToolTip(tr("Search picture with article number."));
+  ac_search->setStatusTip(ac_search->toolTip());
+  connect(ac_search, SIGNAL(clicked()), SLOT(searchArticleImage()));
+  layout->addWidget(ac_search);
+
   // Tree Actions
   btn_targets = new QPushButton(tr("Open Directory"), this);
   btn_targets->setIcon(AntiquaApplIcon("inode-directory"));
-  btn_targets->setToolTip(tr("Open directory for Tree view."));
+  btn_targets->setToolTip(tr("Open a directory in the tree view."));
+  btn_targets->setStatusTip(btn_targets->toolTip());
   layout->addWidget(btn_targets);
 
   QAction *ac = nullptr;
@@ -105,6 +125,60 @@ const QString ImageViewToolBar::xdgUserDir(const QString &search) const {
     _fp.close();
   }
   return _out;
+}
+
+void ImageViewToolBar::searchArticleImage() {
+  QDialog *m_dialog = new QDialog(this, Qt::Tool);
+  m_dialog->setContentsMargins(0, 0, 0, 0);
+  m_dialog->setWindowTitle(tr("Search Image"));
+  m_dialog->setMinimumWidth(350);
+  m_dialog->setToolTip(tr("Insert Id and press <enter>."));
+
+  QHBoxLayout *layout = new QHBoxLayout(m_dialog);
+  layout->setContentsMargins(0, 0, 0, 0);
+  ALabel *m_label = new ALabel(tr("Search"), m_dialog);
+  m_label->setToolTip(tr("Search Files recursively."));
+  layout->addWidget(m_label);
+  ALineEdit *m_search = new ALineEdit(m_dialog);
+  m_search->setObjectName("search_image");
+  m_search->setPlaceholderText(tr("Article number"));
+  m_search->setValidation(ALineEdit::InputValidator::NUMERIC);
+  layout->addWidget(m_search);
+  connect(m_search, SIGNAL(returnPressed()), m_dialog, SLOT(accept()));
+  m_dialog->setLayout(layout);
+  m_dialog->exec();
+
+  QString _file = m_search->getArticleNumber();
+  if (_file.isEmpty())
+    return;
+
+  ASettings cfg(this);
+  QString _ext = cfg.value("image/extension", "jpg").toString();
+  _file.append(".");
+  _file.append(_ext);
+  _file.prepend(QDir::separator());
+
+  QString _path = cfg.value("dirs/images", QString()).toString();
+  _path.append(QDir::separator());
+  _path.append("Sources");
+  _path.append(QDir::separator());
+  _path.append(QDate::currentDate().toString("yyyy"));
+
+  QDir _d(_path);
+  if (_d.isReadable()) {
+    QDir::Filters filter(QDir::Dirs | QDir::NoDotAndDotDot | QDir::Writable);
+    QDirIterator it(_d.path(), QStringList(), filter,
+                    QDirIterator::Subdirectories);
+
+    QFileInfo _find;
+    while (it.hasNext()) {
+      _find.setFile(it.next() + _file);
+      if (_find.isReadable())
+        emit sendSelectArticle(_find.filePath());
+    }
+  }
+
+  m_dialog->deleteLater();
 }
 
 void ImageViewToolBar::prepareTargetChange() {

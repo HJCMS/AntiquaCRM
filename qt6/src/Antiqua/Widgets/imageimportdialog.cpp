@@ -17,6 +17,7 @@
 #include <QImageReader>
 #include <QMessageBox>
 #include <QPushButton>
+#include <QStatusTipEvent>
 
 namespace AntiquaCRM {
 
@@ -66,10 +67,16 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   buttonBox = new QDialogButtonBox(this);
   QPushButton *btn_save = buttonBox->addButton(QDialogButtonBox::Save);
   btn_save->setIcon(AntiquaApplIcon("action-save"));
+  btn_save->setToolTip(tr("Save image to database."));
+  btn_save->setStatusTip(btn_save->toolTip());
   QPushButton *btn_close = buttonBox->addButton(QDialogButtonBox::Close);
   btn_close->setIcon(AntiquaApplIcon("action-quit"));
+  btn_close->setToolTip(tr("End dialog and process data."));
+  btn_close->setStatusTip(btn_close->toolTip());
   QPushButton *btn_abort = buttonBox->addButton(QDialogButtonBox::Abort);
   btn_abort->setIcon(AntiquaApplIcon("action-quit"));
+  btn_abort->setToolTip(tr("Cancel dialogue."));
+  btn_abort->setStatusTip(btn_abort->toolTip());
   layout->addWidget(buttonBox);
 
   // StatusBox
@@ -101,6 +108,8 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   connect(toolBar, SIGNAL(sendAdjust()), viewer, SLOT(adjust()));
   connect(toolBar, SIGNAL(sendChangeTarget(const QDir &)), treeView,
           SLOT(setChangeRoot(const QDir &)));
+  connect(toolBar, SIGNAL(sendSelectArticle(const QString &)), treeView,
+          SLOT(setShowSource(const QString &)));
 
   // Signals::QDialogButtonBox
   connect(btn_save, SIGNAL(clicked()), SLOT(aboutToSave()));
@@ -180,6 +189,18 @@ void ImageImportDialog::closeEvent(QCloseEvent *e) {
     return;
   }
   QDialog::closeEvent(e);
+}
+
+bool ImageImportDialog::event(QEvent *e) {
+  if (e->type() == QEvent::StatusTip) {
+    QStatusTipEvent *t = static_cast<QStatusTipEvent *>(e);
+    if (t->tip().isEmpty())
+      return false;
+
+    statusBar->showMessage(t->tip(), 1000);
+    return true;
+  }
+  return QDialog::event(e);
 }
 
 void ImageImportDialog::setViewerImage(const QString &path) {
@@ -285,7 +306,6 @@ int ImageImportDialog::exec() {
 
   if (source->exists()) {
     treeView->setDirectory(p_target);
-    setViewerImage(source->filePath());
     treeView->setShowSource(source->filePath());
   } else {
     // Set Default Selecters directory

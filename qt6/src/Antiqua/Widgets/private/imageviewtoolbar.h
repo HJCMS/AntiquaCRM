@@ -19,6 +19,8 @@
 
 namespace AntiquaCRM {
 
+class ALineEdit;
+
 /**
  * @brief Image Import Actions bar
  */
@@ -48,6 +50,7 @@ private:
   QPushButton *btn_targets;
 
 private Q_SLOTS:
+  void searchArticleImage();
   void prepareTargetChange();
 
 Q_SIGNALS:
@@ -56,6 +59,7 @@ Q_SIGNALS:
   void sendRotate();
   void sendAdjust();
   void sendChangeTarget(const QDir &);
+  void sendSelectArticle(const QString &);
 
 public:
   explicit ImageViewToolBar(QWidget *parent = nullptr);

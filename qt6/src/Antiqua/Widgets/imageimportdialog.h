@@ -21,8 +21,8 @@
 
 namespace AntiquaCRM {
 
-class ImageFileSource;
 class Splitter;
+class ImageFileSource;
 class ImageViewer;
 class ImageViewToolBar;
 class ImageTreePathView;
@@ -60,6 +60,9 @@ private:
    */
   QDir p_import;
 
+  /**
+   * @brief current Image file source
+   */
   AntiquaCRM::ImageFileSource *source;
 
   /**
@@ -95,6 +98,14 @@ private:
    */
   void closeEvent(QCloseEvent *) override;
 
+  /**
+   * @brief find StatusTip events
+   */
+  bool event(QEvent *) override;
+
+  /**
+   * @brief set image from imageSelected
+   */
   void setViewerImage(const QString &path);
 
 Q_SIGNALS:

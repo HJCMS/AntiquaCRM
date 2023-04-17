@@ -22,7 +22,7 @@ namespace AntiquaCRM {
 /**
  * @class ALineEdit
  * @brief AntiquaCRM Line input edit widget
- * Some extended Functions with SQL-Field properties, prefinined Validators,
+ * Some extended Functions with SQL-Field properties, predefined Validators,
  * Completer and visual feedback functions. Also includes the minLength property
  * for SQL table field constraints.
  * @ingroup EditInputs
@@ -52,6 +52,7 @@ private:
    *  "^\\S{2}.+"
    * @endcode
    */
+  static const QRegularExpression textPattern();
   void setTextValidator();
 
   /**
@@ -60,6 +61,7 @@ private:
    *  "^\\d+$"
    * @endcode
    */
+  static const QRegularExpression digitPattern();
   void setNumericValidator();
 
   /**
@@ -70,6 +72,7 @@ private:
    *  "^(\\d{1,9}[\\,]?)+$"
    * @endcode
    */
+  static const QRegularExpression articlePattern();
   void setArticleValidator();
 
 private Q_SLOTS:
@@ -150,7 +153,7 @@ public:
   int getMinLength();
 
   /**
-   * @brief set Input Validator
+   * @brief set predefined input validator
    */
   void setValidation(AntiquaCRM::ALineEdit::InputValidator);
 
@@ -172,6 +175,12 @@ public:
    * @brief current text length
    */
   int length();
+
+  /**
+   * @brief Article Number
+   * Input is a Article Number? Then returning a Zerofilled Id.
+   */
+  const QString getArticleNumber();
 };
 
 } // namespace AntiquaCRM

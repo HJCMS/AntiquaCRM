@@ -3,6 +3,7 @@
 
 #include "alineedit.h"
 
+#include <ASettings>
 #include <QAbstractItemView>
 #include <QCompleter>
 #include <QDebug>
@@ -27,19 +28,28 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
 }
 
+const QRegularExpression ALineEdit::textPattern() {
+  return QRegularExpression("^\\S{2}.+");
+}
+
 void ALineEdit::setTextValidator() {
-  const QRegularExpression pattern("^\\S{2}.+");
-  setValidator(new QRegularExpressionValidator(pattern, this));
+  setValidator(new QRegularExpressionValidator(textPattern(), this));
+}
+
+const QRegularExpression ALineEdit::digitPattern() {
+  return QRegularExpression("^\\d+$");
 }
 
 void ALineEdit::setNumericValidator() {
-  const QRegularExpression pattern("^\\d+$");
-  setValidator(new QRegularExpressionValidator(pattern, this));
+  setValidator(new QRegularExpressionValidator(digitPattern(), this));
+}
+
+const QRegularExpression ALineEdit::articlePattern() {
+  return QRegularExpression("^(\\d{1,9}[\\,]?)+$");
 }
 
 void ALineEdit::setArticleValidator() {
-  const QRegularExpression pattern("^(\\d{1,9}[\\,]?)+$");
-  setValidator(new QRegularExpressionValidator(pattern, this));
+  setValidator(new QRegularExpressionValidator(articlePattern(), this));
 }
 
 void ALineEdit::showCompleter() {
@@ -145,5 +155,16 @@ void ALineEdit::setLineEditProperties(const QSqlField &prop) {
 }
 
 int ALineEdit::length() { return text().trimmed().length(); }
+
+const QString ALineEdit::getArticleNumber() {
+  QString _buffer = text().trimmed();
+  ASettings cfg(this);
+  int _len = cfg.value("image/zerofill", 8).toInt();
+  QRegularExpressionMatch match = articlePattern().match(_buffer);
+  if (match.hasMatch())
+    return _buffer.rightJustified(_len, '0');
+
+  return QString();
+}
 
 } // namespace AntiquaCRM

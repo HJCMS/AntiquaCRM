@@ -71,7 +71,8 @@ bool ASqlCore::isConnected() {
   qWarning("Can't open Database Connection!");
   QSqlError err = database->lastError();
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << err.driverText() << err.databaseText();
+  if (err.isValid())
+    qDebug() << err.driverText() << err.databaseText();
 #endif
   return false;
 }
@@ -96,11 +97,7 @@ const QString ASqlCore::identifier() {
 
 bool ASqlCore::open() {
   if (initDatabase()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << database->hostName();
-#else
     qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
-#endif
     return true;
   }
   return false;
