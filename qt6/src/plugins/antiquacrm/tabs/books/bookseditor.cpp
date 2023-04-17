@@ -335,7 +335,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   mainLayout->addWidget(m_tabWidget);
 
   m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
-  // __TODO__ m_actionBar->setPrinterMenu(PrinterButton::Bookcard);
+  m_actionBar->setViewMailButton(false);
+  m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_BOOKCARD);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);

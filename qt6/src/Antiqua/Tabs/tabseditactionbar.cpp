@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "tabseditactionbar.h"
+#include "abstractinput.h"
 
-#include <AntiquaInput>
 #include <QLayout>
 
 namespace AntiquaCRM {
@@ -17,6 +17,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   m_cancelBtn->setShortcut(QKeySequence::Cancel);
   QString sc_cancel = m_cancelBtn->shortcut().toString();
   m_cancelBtn->setToolTip(tr("Exit without saving.") + " " + sc_cancel);
+  m_cancelBtn->setWhatsThis(m_cancelBtn->toolTip());
   connect(m_cancelBtn, SIGNAL(clicked()), SIGNAL(sendCancelClicked()));
   layout->addWidget(m_cancelBtn);
 
@@ -27,18 +28,17 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   QString sc_undo = tr("Restore dataset to last save operation.");
   sc_undo.append(" " + m_restoreBtn->shortcut().toString());
   m_restoreBtn->setToolTip(sc_undo);
+  m_restoreBtn->setWhatsThis(m_restoreBtn->toolTip());
   m_restoreBtn->setEnabled(false);
   connect(m_restoreBtn, SIGNAL(clicked()), SIGNAL(sendRestoreClicked()));
   layout->addWidget(m_restoreBtn);
 
-  m_mailButton = new QPushButton(tr("eMail"), this);
+  m_mailButton = new MailButton(this);
   m_mailButton->setObjectName("editor_action_mailer_button");
-  m_mailButton->setIcon(AntiquaApplIcon("mail-message"));
   layout->addWidget(m_mailButton);
 
-  m_printerButton = new QPushButton(tr("Print"), this);
+  m_printerButton = new PrinterButton(this);
   m_printerButton->setObjectName("editor_action_print_button");
-  m_printerButton->setIcon(AntiquaApplIcon("printer"));
   layout->addWidget(m_printerButton);
 
   layout->addStretch(1);
@@ -46,6 +46,8 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   m_addArticle = new QPushButton(tr("Add Article"), this);
   m_addArticle->setObjectName("editor_action_button_article");
   m_addArticle->setIcon(AntiquaApplIcon("action-add"));
+  m_addArticle->setToolTip(tr("Create a new article"));
+  m_addArticle->setWhatsThis(m_addArticle->toolTip());
   m_addArticle->setEnabled(false);
   m_addArticle->setVisible(false);
   connect(m_addArticle, SIGNAL(clicked()), SIGNAL(sendAddCustomAction()));
@@ -57,6 +59,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   m_saveBtn->setShortcut(QKeySequence::Save);
   QString sc_save = m_saveBtn->shortcut().toString();
   m_saveBtn->setToolTip(tr("Save current dataset") + " " + sc_save);
+  m_saveBtn->setWhatsThis(m_saveBtn->toolTip());
   connect(m_saveBtn, SIGNAL(clicked()), SIGNAL(sendSaveClicked()));
   layout->addWidget(m_saveBtn);
 
@@ -66,13 +69,13 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   m_readyBtn->setShortcut(QKeySequence::Back);
   QString sc_ready = m_readyBtn->shortcut().toString();
   m_readyBtn->setToolTip(tr("Go back to Mainview") + " " + sc_ready);
+  m_readyBtn->setWhatsThis(m_readyBtn->toolTip());
   connect(m_readyBtn, SIGNAL(clicked()), SIGNAL(sendFinishClicked()));
   layout->addWidget(m_readyBtn);
 
   setLayout(layout);
 
-  // Signals::Printer Button
-  /*
+  // Signals::PrinterButton
   connect(m_printerButton, SIGNAL(sendPrintDelivery()),
           SIGNAL(sendPrintDeliveryNote()));
   connect(m_printerButton, SIGNAL(sendPrintInvoice()),
@@ -81,10 +84,9 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
           SIGNAL(sendPrintPaymentReminder()));
   connect(m_printerButton, SIGNAL(sendPrintBookcard()),
           SIGNAL(sendPrintBookCard()));
-  // Signals:Mailer Button
+  // Signals:MailButton
   connect(m_mailButton, SIGNAL(sendMailAction(const QString &)),
           SIGNAL(sendCreateMailMessage(const QString &)));
-  */
 }
 
 void TabsEditActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
@@ -102,17 +104,18 @@ void TabsEditActionBar::setViewPrintButton(bool b) {
   m_printerButton->setVisible(b);
 }
 
-// void TabsEditActionBar::setPrinterMenu(PrinterButton::Buttons buttons) {
-//   m_printerButton->setButtons(buttons);
-// }
-
-void TabsEditActionBar::setViewMailButton(bool) {
-  // m_mailButton->hasMailAddress(b);
+void TabsEditActionBar::setPrinterMenu(AntiquaCRM::PrinterGroups buttons) {
+  m_printerButton->setButtons(buttons);
 }
 
-// void TabsEditActionBar::setMailMenu(MailButton::Sections sections) {
-//   m_mailButton->setSections(sections);
-// }
+void TabsEditActionBar::setViewMailButton(bool b) {
+  m_mailButton->setEnabled(b);
+  m_mailButton->setVisible(b);
+}
+
+void TabsEditActionBar::setMailMenu(const QMap<QString, QString> &map) {
+  qDebug() << Q_FUNC_INFO << map.size();
+}
 
 void TabsEditActionBar::setViewActionAddButton(bool b,
                                                const QString &customTitle) {

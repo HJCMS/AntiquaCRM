@@ -11,12 +11,23 @@ namespace AntiquaCRM {
 
 TabWidget::TabWidget(QWidget *parent) : QTabWidget{parent} {
   setContentsMargins(1, 1, 1, 1);
+  setTabsClosable(false);
   m_cfg = new AntiquaCRM::ASettings(this);
   bool _wheel_support =
       m_cfg->groupValue("window_behavior", "mouse_wheel_support", false)
           .toBool();
   m_tabBar = new AntiquaCRM::TabsBar(this, _wheel_support);
   setTabBar(m_tabBar);
+}
+
+void TabWidget::tabInserted(int index) {
+  AntiquaCRM::TabsIndex *m_tab =
+      qobject_cast<AntiquaCRM::TabsIndex *>(tabWithIndex(index));
+  if (m_tab != nullptr) {
+    m_tabBar->setTabCloseable(index, m_tab->isClosable());
+  } else {
+    m_tabBar->setTabCloseable(index, false);
+  }
 }
 
 void TabWidget::setViewTab() {

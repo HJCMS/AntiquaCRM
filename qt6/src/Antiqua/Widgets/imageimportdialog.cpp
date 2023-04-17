@@ -155,20 +155,21 @@ bool ImageImportDialog::initialConfiguration() {
   return (_a && _b);
 }
 
-ImageFileSource *ImageImportDialog::findSource(QDir inDir, qint64 id) {
+ImageFileSource *ImageImportDialog::findSource(QDir dir, qint64 id) {
   ImageFileSource *_ifs = new ImageFileSource(p_target.path());
   _ifs->setFileId(id);
 
-  if (inDir.exists()) {
+  if (dir.exists()) {
     QStringList _found;
-    QString s_simple = QString::number(id);
-    QString s_normal = _ifs->toBaseName(id);
-    QStringList s_filter;
-    s_filter << s_simple + ".JPG";
-    s_filter << s_normal + ".JPG";
-    s_filter << s_simple + ".jpg";
-    s_filter << s_normal + ".jpg";
-    QDirIterator it(inDir.path(), s_filter, QDir::NoFilter,
+    QString _simple = QString::number(id);
+    QString _normal = _ifs->toBaseName(id);
+    QStringList _format;
+    _format << _simple + ".JPG";
+    _format << _normal + ".JPG";
+    _format << _simple + ".jpg";
+    _format << _normal + ".jpg";
+
+    QDirIterator it(dir.path(), _format, (QDir::Files | QDir::Readable),
                     QDirIterator::Subdirectories);
     while (it.hasNext()) {
       QFileInfo _info(it.next());

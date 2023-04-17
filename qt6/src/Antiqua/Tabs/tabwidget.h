@@ -23,6 +23,9 @@ class TabsBar;
 class ANTIQUACRM_LIBRARY TabWidget final : public QTabWidget {
   Q_OBJECT
 
+private:
+  void tabInserted(int) override;
+
 protected:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::TabsBar *m_tabBar;

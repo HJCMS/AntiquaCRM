@@ -10,6 +10,7 @@
 #define ANTIQUACRM_TABS_EDITACTIONBAR_H
 
 #include <AGlobal>
+#include <AntiquaButtons>
 #include <QObject>
 #include <QPushButton>
 #include <QWidget>
@@ -29,13 +30,13 @@ private:
    * @brief Verschiedene Druck Dialoge öffnen
    * @todo __TODO__ PrinterButton
    */
-  QPushButton *m_printerButton;
+  PrinterButton *m_printerButton;
 
   /**
    * @brief E-Mail Benachrichtigungen
    * @todo __TODO__ MailButton
    */
-  QPushButton *m_mailButton;
+  MailButton *m_mailButton;
 
   /**
    * @brief Abbrechen
@@ -101,7 +102,7 @@ public:
   /**
    * @brief Druckerdialog Menü festlegen
    */
-  // void setPrinterMenu(PrinterButton::Buttons buttons);
+  void setPrinterMenu(AntiquaCRM::PrinterGroups);
 
   /**
    * @brief E-Mail Knopf anzeigen/ausblenden
@@ -111,7 +112,7 @@ public:
   /**
    * @brief E-Mail Nachrichten Menü festlegen
    */
-  // void setMailMenu(MailButton::Sections sections);
+  void setMailMenu(const QMap<QString,QString> &);
 
   /**
    * @brief Article Einfügen Anzeigen

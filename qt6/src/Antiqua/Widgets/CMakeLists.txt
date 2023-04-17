@@ -24,11 +24,17 @@ CONFIGURE_FILE (AntiquaInput.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaInput
 )
 
+CONFIGURE_FILE (AntiquaButtons.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaButtons
+)
+
 SET (_library_FILES
  AntiquaInput
  AntiquaInput.cmake
  AntiquaWidgets
  AntiquaWidgets.cmake
+ AntiquaButtons
+ AntiquaButtons.cmake
 )
 
 SET (_library_SOURCES
@@ -57,10 +63,12 @@ SET (_library_SOURCES
  imageviewer.cpp
  isbnedit.cpp
  keywordsedit.cpp
+ mailbutton.cpp
  numedit.cpp
  phoneedit.cpp
  postalcodeedit.cpp
  priceedit.cpp
+ printerbutton.cpp
  salutationedit.cpp
  selecteucountry.cpp
  selectlanguage.cpp
@@ -104,10 +112,12 @@ SET (_library_HEADERS
  imageviewer.h
  isbnedit.h
  keywordsedit.h
+ mailbutton.h
  numedit.h
  phoneedit.h
  postalcodeedit.h
  priceedit.h
+ printerbutton.h
  salutationedit.h
  selecteucountry.h
  selectlanguage.h
