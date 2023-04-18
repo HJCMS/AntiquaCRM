@@ -49,11 +49,16 @@ private:
    * @brief Original Pixmap
    * This will only done when use setPixmap or setImage
    */
-  QPixmapCache p_origin;
+  QPixmapCache p_sourceCache;
 
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixItem;
   RubberBand *m_rubberband;
+
+  /**
+   * @brief Initial and set PixmapCache limit.
+   */
+  void initSourceCache(const QSize &, int depth);
 
   bool setPixmapItem(const QPixmap &pixmap = QPixmap(0, 0));
 
@@ -64,12 +69,6 @@ private:
   void mousePressEvent(QMouseEvent *) override;
 
   void mouseMoveEvent(QMouseEvent *) override;
-
-Q_SIGNALS:
-  /**
-   * @brief a add scene successfully or not
-   */
-  void sendSetSceneView(bool);
 
 public Q_SLOTS:
   /**
@@ -114,6 +113,8 @@ public Q_SLOTS:
 
   /**
    * @brief Add Pixmap and History cache
+   * To prevent Buffer Overflows, setPixmap() will always resize with
+   * getMaxScaleSize().
    */
   void setPixmap(const QPixmap &);
 
@@ -130,20 +131,14 @@ public:
   ~ImageViewer();
 
   /**
+   * @brief Check for Scenes
+   */
+  bool isEmpty();
+
+  /**
    * @brief get max visible Sreen size from current display
    * Used to change the size limit of the preview window.
    * If this cannot be read, fall back to PAL 800x600 Size!
-   * @code
-   * AntiquaCRM::ASettings cfg(this);
-   * QSize thumpSize = cfg.value("image/max_size", QSize(128, 128)).toSize();
-   *
-   * AntiquaCRM::ImageViewer *viewer = new AntiquaCRM::ImageViewer(this);
-   * QSize displaySize = viewer->getMaxScaleSize();
-   * int max_width = qMin(thumpSize.width(), displaySize.width());
-   * int max_height = qMin(thumpSize.height(), displaySize.height());
-   * viewer->setMaximumSize(QSize(max_width, max_height));
-   * addWidget(viewer);
-   * @endcode
    */
   const QSize getMaxScaleSize() const;
 

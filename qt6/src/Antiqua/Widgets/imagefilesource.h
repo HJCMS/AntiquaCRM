@@ -70,7 +70,7 @@ namespace AntiquaCRM {
  *
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY ImageFileSource final : public QFileInfo {
+class ANTIQUACRM_LIBRARY ImageFileSource final : private QFileInfo {
 private:
   /**
    * @brief Artikel number
@@ -81,7 +81,7 @@ private:
   /**
    * @brief Where to save the image!
    */
-  QString p_store;
+  QString p_destination;
 
   /**
    * @brief cached Pixmap
@@ -114,14 +114,17 @@ public:
   ImageFileSource &operator=(const ImageFileSource &other);
 
   /**
-   * @brief all required parameters set and valid?
+   * @brief Simply checks isFile and isWritable
    */
-  bool isValidSource() const;
+  bool isValid() const;
 
   /**
-   * @brief is it original Source or a modified version exists?
+   * @brief Source file has different Id or not Exists?
+   * This function compare current File Path with Image Source and Destination
+   * Directory. If this File on one of this targets exists and the File basename
+   * is equal to Article ID it returns true, otherwise false.
    */
-  bool isOriginal();
+  bool compare();
 
   /**
    * @brief set Article Number to current Source
@@ -141,14 +144,14 @@ public:
   static const QString toBaseName(qint64 articleId, qint8 zerofill = 8);
 
   /**
-   * @brief Save image to this Directory
+   * @brief Save image into this Directory path.
    */
-  void setStoreDirectory(const QDir &dest);
+  void setDestination(const QDir &dest);
 
   /**
-   * @brief Get Image Save Directory
+   * @brief Get Image save Directory path.
    */
-  const QString getStoreDirectory() const;
+  const QString getDestination() const;
 
   /**
    * @brief Insert or modify cached pixmap
@@ -174,6 +177,16 @@ public:
    * @brief get stored thumbnail
    */
   const QPixmap getThumbnail();
+
+  /**
+   * @brief set File Source
+   */
+  bool setSource(const QString &);
+
+  /**
+   * @brief getSourcePath
+   */
+  const QString getSourcePath() const;
 
   /**
    * @brief Search - Get/set Thumbnail Image from Database!

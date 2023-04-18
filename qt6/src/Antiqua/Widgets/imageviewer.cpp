@@ -6,6 +6,7 @@
 
 #include <QApplication>
 #include <QDebug>
+#include <QScreen>
 #include <QTransform>
 
 namespace AntiquaCRM {
@@ -23,8 +24,14 @@ ImageViewer::ImageViewer(QWidget *parent) : QGraphicsView{parent} {
 
 ImageViewer::~ImageViewer() {
   setPixmapItem(QPixmap(0, 0));
-  p_origin.clear();
+  p_sourceCache.clear();
   m_scene->deleteLater();
+}
+
+void ImageViewer::initSourceCache(const QSize &size, int depth) {
+  p_sourceCache.clear();
+  qint64 _cache = ((size.width() * size.height() * depth) / 8);
+  p_sourceCache.setCacheLimit(_cache);
 }
 
 bool ImageViewer::setPixmapItem(const QPixmap &pixmap) {
@@ -101,14 +108,14 @@ void ImageViewer::rotate() {
     return;
 
   if (setPixmapItem(_pixmap))
-    update();
+    setWindowModified(true);
 
   _pixmap.detach();
 }
 
 void ImageViewer::reset() {
   QPixmap _pixmap;
-  if (p_origin.find("source", &_pixmap)) {
+  if (p_sourceCache.find("source", &_pixmap)) {
     setPixmapItem(_pixmap);
     adjust();
   }
@@ -132,21 +139,27 @@ void ImageViewer::cutting() {
   if (_pixmap.isNull())
     return;
 
-  setPixmapItem(_pixmap);
+  if (setPixmapItem(_pixmap))
+    setWindowModified(true);
+
   _pixmap.detach();
   m_rubberband->reset();
 }
 
 void ImageViewer::clear() {
   setPixmapItem();
-  p_origin.clear();
+  p_sourceCache.clear();
 }
 
 void ImageViewer::setPixmap(const QPixmap &pixmap) {
-  bool _success = false;
   const QSize _s = getMaxScaleSize();
   qreal _max_with = qMax(_s.width(), p_maxSize.width());
   qreal _max_height = qMax(_s.height(), p_maxSize.height());
+  int _depth = QPixmap::defaultDepth();
+  if (pixmap.depth() > _depth) {
+    _depth = pixmap.depth();
+  }
+
   if (pixmap.width() > _max_with || pixmap.height() > _max_height) {
     // Scale
     QPixmap _scaled = pixmap.scaled(_max_with, _max_height,
@@ -157,26 +170,29 @@ void ImageViewer::setPixmap(const QPixmap &pixmap) {
       return;
     }
     _scaled.detach();
-    _success = setPixmapItem(_scaled);
-    if (_success)
-      p_origin.insert("source", _scaled);
-  } else {
-    _success = setPixmapItem(pixmap);
-    if (_success)
-      p_origin.insert("source", pixmap);
-  }
+    if (!setPixmapItem(_scaled))
+      return;
 
-  emit sendSetSceneView(_success);
+    initSourceCache(_scaled.size(), _depth);
+    p_sourceCache.insert("source", _scaled);
+  } else {
+    if (!setPixmapItem(pixmap))
+      return;
+
+    initSourceCache(pixmap.size(), _depth);
+    p_sourceCache.insert("source", pixmap);
+  }
 }
 
 void ImageViewer::setImage(const QImage &image) {
   QPixmap _pixmap = QPixmap::fromImage(image);
-  if (_pixmap.isNull()) {
-    emit sendSetSceneView(false);
+  if (_pixmap.isNull())
     return;
-  }
+
   setPixmap(_pixmap);
 }
+
+bool ImageViewer::isEmpty() { return (items().size() < 1); }
 
 const QSize ImageViewer::getMaxScaleSize() const {
   QSize _size = qApp->screenAt(pos())->size();

@@ -60,10 +60,7 @@ void ImageTreePathView::openDirectoryDialog() {
     QFileInfo info(d->directory(), l.first());
     if (info.isFile() && info.isReadable()) {
       setDirectory(d->directory());
-
-      AntiquaCRM::ImageFileSource src(d->directory().path());
-      src.setFile(info.filePath());
-      emit sendSelected(src);
+      emit sendSelected(info);
     }
   }
 }

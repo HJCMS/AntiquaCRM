@@ -18,7 +18,6 @@
 namespace AntiquaCRM {
 
 class ALineEdit;
-class ImageFileSource;
 
 class ANTIQUACRM_LIBRARY ImageTreePathView final : public QFrame {
   Q_OBJECT
@@ -28,7 +27,7 @@ private:
   QPushButton *m_ac;
 
 Q_SIGNALS:
-  void sendSelected(const AntiquaCRM::ImageFileSource &);
+  void sendSelected(const QFileInfo &);
 
 public Q_SLOTS:
   void openDirectoryDialog();

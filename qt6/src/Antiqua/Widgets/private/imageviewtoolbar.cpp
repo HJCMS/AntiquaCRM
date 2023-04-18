@@ -26,12 +26,6 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
   lbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   layout->addWidget(lbar);
 
-  ac_reset = lbar->addAction(tr("Reset"));
-  ac_reset->setIcon(AntiquaApplIcon("action-redo"));
-  ac_reset->setToolTip(tr("Revert the image back to the original."));
-  ac_reset->setStatusTip(ac_reset->toolTip());
-  connect(ac_reset, SIGNAL(triggered()), SIGNAL(sendReset()));
-
   ac_cut = lbar->addAction(tr("Cutting"));
   ac_cut->setIcon(AntiquaApplIcon("action-cut"));
   ac_cut->setToolTip(tr("Cut image to Rubberband."));
@@ -49,6 +43,14 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
   ac_rotate->setToolTip(tr("Rotate image clockwise."));
   ac_rotate->setStatusTip(ac_rotate->toolTip());
   connect(ac_rotate, SIGNAL(triggered()), SIGNAL(sendRotate()));
+
+  lbar->addSeparator();
+
+  ac_reset = lbar->addAction(tr("Reset to default"));
+  ac_reset->setIcon(AntiquaApplIcon("action-redo"));
+  ac_reset->setToolTip(tr("Revert the view back to the original."));
+  ac_reset->setStatusTip(ac_reset->toolTip());
+  connect(ac_reset, SIGNAL(triggered()), SIGNAL(sendReset()));
 
   // Stretch
   layout->addStretch(1);

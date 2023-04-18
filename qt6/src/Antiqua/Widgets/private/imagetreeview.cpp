@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "imagetreeview.h"
-#include "imagefilesource.h"
 
 #include <QDebug>
 
@@ -50,16 +49,9 @@ void ImageTreeView::currentChanged(const QModelIndex &current,
   if (m_model->isDir(current))
     return;
 
-  ImageFileSource info(m_model->fileInfo(current));
-  if (info.isReadable()) {
-    bool b;
-    qint64 id = info.baseName().toInt(&b);
-    if (b && id > 0)
-      info.setFileId(id);
-
-    info.setStoreDirectory(m_model->rootPath());
+  QFileInfo info(m_model->fileInfo(current));
+  if (info.isReadable())
     emit sendSelected(info);
-  }
 }
 
 void ImageTreeView::targetChanged(const QString &path) {

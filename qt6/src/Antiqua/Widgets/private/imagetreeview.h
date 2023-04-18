@@ -20,8 +20,6 @@
 
 namespace AntiquaCRM {
 
-class ImageFileSource;
-
 class ANTIQUACRM_LIBRARY ImageTreeView final : public QTreeView {
   Q_OBJECT
 
@@ -40,7 +38,7 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void sendPathChanged(const QDir &);
-  void sendSelected(const AntiquaCRM::ImageFileSource &);
+  void sendSelected(const QFileInfo &);
 
 public Q_SLOTS:
   void expandTopLevel();

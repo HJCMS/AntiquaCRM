@@ -3,6 +3,7 @@
 
 #include "imagefilesource.h"
 
+#include <ASettings>
 #include <QSize>
 
 namespace AntiquaCRM {
@@ -17,26 +18,26 @@ namespace AntiquaCRM {
 
 ImageFileSource::ImageFileSource(const QString &target) : QFileInfo{} {
   p_fileId = -1;
-  p_store = target;
+  p_destination = target;
   p_pixmap = QPixmap();
   p_pthumnail = QPixmap();
 }
 
 ImageFileSource::ImageFileSource(const QFileInfo &other) : QFileInfo{other} {
   p_fileId = -1;
-  p_store = other.path();
+  p_destination = other.path();
   p_pixmap = QPixmap();
   p_pthumnail = QPixmap();
-  setFile(other.filePath());
+  setSource(other.filePath());
 }
 
 ImageFileSource::ImageFileSource(const ImageFileSource &other)
     : QFileInfo{other.filePath()} {
   p_fileId = other.p_fileId;
-  p_store = other.p_store;
+  p_destination = other.p_destination;
   p_pixmap = other.p_pixmap;
   p_pthumnail = other.p_pthumnail;
-  setFile(other.filePath());
+  setSource(other.filePath());
 }
 
 ImageFileSource &ImageFileSource::operator=(const ImageFileSource &other) {
@@ -44,10 +45,10 @@ ImageFileSource &ImageFileSource::operator=(const ImageFileSource &other) {
     return *this;
 
   p_fileId = other.p_fileId;
-  p_store = other.p_store;
+  p_destination = other.p_destination;
   p_pixmap = other.p_pixmap;
   p_pthumnail = other.p_pthumnail;
-  setFile(other.filePath());
+  setSource(other.filePath());
   return *this;
 }
 
@@ -61,14 +62,35 @@ bool ImageFileSource::loadThumbnail(const QByteArray &data) {
   return _status;
 }
 
-bool ImageFileSource::isValidSource() const {
-  if (p_fileId > 0 && isFile() && isReadable()) {
-    return exists();
-  }
-  return false;
+bool ImageFileSource::isValid() const {
+  // TODO Image check
+  return (isFile() && isWritable());
 }
 
-bool ImageFileSource::isOriginal() { return p_pixmap.isNull(); };
+bool ImageFileSource::compare() {
+  AntiquaCRM::ASettings cfg;
+  // Sources Directory
+  QString _src = cfg.value("dirs/images", QString()).toString();
+  if (_src.isEmpty() || p_fileId < 1) {
+    qWarning("Image Source Configuration missmatch!");
+    return false;
+  }
+  _src.append(QDir::separator());
+
+  QDir _dir(_src);
+  if (!_dir.exists("Sources")) {
+    qWarning("Image Source Target not exists!");
+    return false;
+  }
+  _src.append("Sources");
+
+  if (toBaseName(p_fileId) == baseName()) {
+    QString _p = filePath();
+    if (_p.contains(_src) || _p.contains(p_destination))
+      return true;
+  }
+  return false;
+};
 
 void ImageFileSource::setFileId(qint64 articleId) {
   if (articleId < 1) {
@@ -84,14 +106,14 @@ const QString ImageFileSource::toBaseName(qint64 id, qint8 zerofill) {
   return AntiquaCRM::AUtil::zerofill(id, zerofill);
 }
 
-void ImageFileSource::setStoreDirectory(const QDir &dest) {
+void ImageFileSource::setDestination(const QDir &dest) {
   if (!dest.exists() || (p_fileId < 1))
     return;
 
-  p_store = dest.path();
+  p_destination = dest.path();
 }
 
-const QString ImageFileSource::getStoreDirectory() const { return p_store; }
+const QString ImageFileSource::getDestination() const { return p_destination; }
 
 void ImageFileSource::setPixmap(const QPixmap &pix) {
   if (pix.isNull() || pix.height() < 10 || pix.width() < 10)
@@ -132,6 +154,17 @@ const QPixmap ImageFileSource::getThumbnail() {
 
   return p_pthumnail;
 }
+
+bool ImageFileSource::setSource(const QString &path) {
+  QFileInfo _test(path);
+  if (_test.isReadable()) {
+    QFileInfo::setFile(path);
+    return true;
+  }
+  return false;
+}
+
+const QString ImageFileSource::getSourcePath() const { return filePath(); }
 
 bool ImageFileSource::findInDatabase(AntiquaCRM::ASqlCore *db,
                                      qint64 articleId) {

@@ -37,9 +37,10 @@ class ANTIQUACRM_LIBRARY ImageImportDialog final : public QDialog {
   Q_OBJECT
 
 private:
-  int p_article_id;   /**< @brief Article Id */
-  QString p_category; /**< @brief where to save new idFile */
-  ASettings *config;  /**< @brief Configreader */
+  bool p_sourceOnload = false;
+  int p_article_id;         /**< @brief Article Id */
+  const QString p_category; /**< @brief where to save new idFile */
+  ASettings *config;        /**< @brief Configreader */
 
   /**
    * @brief Primary store directory for Images
@@ -49,10 +50,10 @@ private:
 
   /**
    * @brief Absolute Path to current Image store Directory.
-   * This Directory must inside from „p_target“ and will set by  „p_category“,
+   * This Directory must inside from „p_target“ and will set by „p_category“,
    * if it not exists, this Subdirectory will created automatically.
    */
-  QDir p_store;
+  QDir p_destination;
 
   /**
    * @brief Image import Directory
@@ -84,7 +85,7 @@ private:
   /**
    * @brief read all targets from configuration
    */
-  bool initialConfiguration();
+  void initialConfiguration();
 
   /**
    * @brief find previous Source Image with Id in Storage
@@ -104,6 +105,11 @@ private:
   bool event(QEvent *) override;
 
   /**
+   * @brief find QEvent::ModifiedChange in GraphicsView
+   */
+  bool eventFilter(QObject *, QEvent *) override;
+
+  /**
    * @brief set image from imageSelected
    */
   void setViewerImage(const QString &path);
@@ -117,15 +123,8 @@ Q_SIGNALS:
 public Q_SLOTS:
   /**
    * @brief A File selected, in the FileSystemModel.
-   * This Slot do 1 \b ImageViewer operation:
-   * @li Insert Image into current Graphicsscene
-   * It makes also 3 \b ImageFileSource operations:
-   * @li Update with „source->setStoreDirectory“ the store target, this prevents
-   * override Images from existing Source location.
-   * @li set Filepath to Current image.
-   * @li set/replace Pixmap Cache and Thumbnail
    */
-  void imageSelected(const AntiquaCRM::ImageFileSource &);
+  void imageSelected(const QFileInfo &);
 
   /**
    * @brief Create/Execute SQL-Queries and File-Save operations.

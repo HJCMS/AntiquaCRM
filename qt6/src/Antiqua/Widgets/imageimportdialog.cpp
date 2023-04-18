@@ -27,7 +27,7 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   setObjectName("image_import_dialog");
   setWindowTitle(tr("Import Edit Source Images") + "[*]");
   setWindowIcon(AntiquaApplIcon("antiquacrm"));
-  setMinimumSize(600, 400);
+  setMinimumSize(700, 500);
   setSizeGripEnabled(true);
   setContentsMargins(2, 2, 2, 0);
 
@@ -42,6 +42,7 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
 
   // ImageViewer
   viewer = new ImageViewer(this);
+  viewer->installEventFilter(this);
   splitter->addLeft(viewer);
 
   // ImageTreeView
@@ -73,10 +74,6 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   btn_close->setIcon(AntiquaApplIcon("action-quit"));
   btn_close->setToolTip(tr("End dialog and process data."));
   btn_close->setStatusTip(btn_close->toolTip());
-  QPushButton *btn_abort = buttonBox->addButton(QDialogButtonBox::Abort);
-  btn_abort->setIcon(AntiquaApplIcon("action-quit"));
-  btn_abort->setToolTip(tr("Cancel dialogue."));
-  btn_abort->setStatusTip(btn_abort->toolTip());
   layout->addWidget(buttonBox);
 
   // StatusBox
@@ -87,19 +84,15 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   setLayout(layout);
 
   // Signals::ImageTreeView
-  connect(treeView, SIGNAL(sendSelected(const AntiquaCRM::ImageFileSource &)),
-          SLOT(imageSelected(const AntiquaCRM::ImageFileSource &)));
+  connect(treeView, SIGNAL(sendSelected(const QFileInfo &)),
+          SLOT(imageSelected(const QFileInfo &)));
 
   connect(treeView, SIGNAL(sendPathChanged(const QDir &)), pathView,
           SLOT(setDirectory(const QDir &)));
 
   // Signals::ImageTreePathView
-  connect(pathView, SIGNAL(sendSelected(const AntiquaCRM::ImageFileSource &)),
-          SLOT(imageSelected(const AntiquaCRM::ImageFileSource &)));
-
-  // Signals::ImageViewer
-  connect(viewer, SIGNAL(sendSetSceneView(bool)), toolBar,
-          SLOT(setEnabled(bool)));
+  connect(pathView, SIGNAL(sendSelected(const QFileInfo &)),
+          SLOT(imageSelected(const QFileInfo &)));
 
   // Signals::ImageViewToolBar
   connect(toolBar, SIGNAL(sendReset()), viewer, SLOT(reset()));
@@ -114,7 +107,6 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   // Signals::QDialogButtonBox
   connect(btn_save, SIGNAL(clicked()), SLOT(aboutToSave()));
   connect(btn_close, SIGNAL(clicked()), SLOT(aboutToQuit()));
-  connect(btn_abort, SIGNAL(clicked()), SLOT(reject()));
 }
 
 ImageImportDialog::~ImageImportDialog() {
@@ -124,20 +116,23 @@ ImageImportDialog::~ImageImportDialog() {
   treeView->deleteLater();
 }
 
-bool ImageImportDialog::initialConfiguration() {
+void ImageImportDialog::initialConfiguration() {
   config->beginGroup("dirs");
   p_target = QDir(config->value("images", QString()).toString());
   if (!p_target.exists()) {
     p_import = config->getArchivPath("images");
   }
-  bool _a = p_target.exists();
-
   p_import = QDir(config->value("import", QString()).toString());
   if (!p_import.exists()) {
     p_import = config->getArchivPath("import");
   }
-  bool _b = p_import.exists();
   config->endGroup();
+
+  if (!p_import.exists() || !p_target.exists()) {
+    QMessageBox::warning(this, tr("Configurtion Error"),
+                         tr("Can not find Import Directory. Please Check your "
+                            "Archive settings."));
+  }
 
   if (!p_target.exists(p_category))
     p_target.mkdir(p_category);
@@ -145,14 +140,12 @@ bool ImageImportDialog::initialConfiguration() {
   QString _path = p_target.path();
   _path.append(QDir::separator());
   _path.append(p_category);
-  p_store.setPath(_path);
+  p_destination.setPath(_path);
 
   config->beginGroup("dialog/imaging");
   if (config->contains("geometry"))
     restoreGeometry(config->value("geometry").toByteArray());
   config->endGroup();
-
-  return (_a && _b);
 }
 
 ImageFileSource *ImageImportDialog::findSource(QDir dir, qint64 id) {
@@ -176,8 +169,8 @@ ImageFileSource *ImageImportDialog::findSource(QDir dir, qint64 id) {
       _found << _info.filePath();
     }
     if (_found.size() > 0) {
-      _ifs->setFile(_found.first());
-      _ifs->setStoreDirectory(p_store.path());
+      _ifs->setSource(_found.first());
+      _ifs->setDestination(p_destination.path());
     }
   }
   return _ifs;
@@ -186,7 +179,7 @@ ImageFileSource *ImageImportDialog::findSource(QDir dir, qint64 id) {
 void ImageImportDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
     e->setAccepted(false);
-    statusBar->showMessage(tr("Use Tool Buttons to safely quit!"));
+    statusBar->showMessage(tr("Please use Dialog Buttons to safely quit!"));
     return;
   }
   QDialog::closeEvent(e);
@@ -204,6 +197,17 @@ bool ImageImportDialog::event(QEvent *e) {
   return QDialog::event(e);
 }
 
+bool ImageImportDialog::eventFilter(QObject *obj, QEvent *event) {
+  if (event->type() == QEvent::ModifiedChange) {
+    QWidget *w = qobject_cast<QWidget *>(obj);
+    if (w != nullptr && w->isWindowModified()) {
+      setWindowModified(true);
+      return true;
+    }
+  }
+  return QObject::eventFilter(obj, event);
+}
+
 void ImageImportDialog::setViewerImage(const QString &path) {
   QImageReader reader(path);
   QImage _image = reader.read();
@@ -213,12 +217,12 @@ void ImageImportDialog::setViewerImage(const QString &path) {
   viewer->setImage(_image);
 }
 
-void ImageImportDialog::imageSelected(const AntiquaCRM::ImageFileSource &src) {
+void ImageImportDialog::imageSelected(const QFileInfo &src) {
   setViewerImage(src.filePath());
-
-  source->setStoreDirectory(p_store.path());
-  source->setFile(src.filePath());
+  source->setSource(src.filePath());
   source->setPixmap(viewer->getPixmap());
+  toolBar->setEnabled(true);
+  setWindowModified(!source->compare());
 }
 
 void ImageImportDialog::aboutToSave() {
@@ -227,14 +231,14 @@ void ImageImportDialog::aboutToSave() {
     return;
   }
 
-  if (!source->isValidSource()) {
+  if (!source->isValid()) {
     statusBar->showMessage(tr("No valid Data found!"));
     return;
   }
 
   source->setPixmap(viewer->getPixmap());
   if (source->getPixmap().isNull()) {
-    statusBar->showMessage(tr("No Image to save - abort!"));
+    statusBar->showMessage(tr("No Pixmap to save - abort!"));
     return;
   }
 
@@ -254,13 +258,13 @@ void ImageImportDialog::aboutToSave() {
 
   QPixmap _pixmap = source->getPixmap();
   QImage _image = _pixmap.toImage();
-  QFileInfo ouput(p_store, _filename);
+  QFileInfo ouput(p_destination, _filename);
   QFile fp(ouput.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     _image.save(&fp, "jpeg", 90);
     fp.close();
     setWindowModified(false);
-    source->setFile(ouput.filePath());
+    source->setSource(ouput.filePath());
     statusBar->showMessage(tr("Saved"));
   }
 
@@ -271,15 +275,20 @@ void ImageImportDialog::aboutToSave() {
 }
 
 void ImageImportDialog::aboutToQuit() {
-  if (isWindowModified()) {
-    int _retval =
-        QMessageBox::question(this, tr("Unsaved changes"),
-                              tr("You have unsaved changes.\n"
-                                 "Do you really want to close this Dialog?"));
-    if (_retval != QMessageBox::Yes)
-      return;
+  if (!isWindowModified()) {
+    done(QDialog::Accepted);
+    return;
   }
-  done(QDialog::Accepted);
+
+  int _retval = QMessageBox::question(
+      this, tr("Unsaved changes"),
+      tr("<b>You have unsaved changes.</b><p>Do you really want to close this "
+         "Dialog?</p><b>Notes:</b><br>When saving, the Database Thumbnail will "
+         "replaced.<p>The Server upload or replace the Source file to your "
+         "Online Storage.</p><p>If you not want to replace Images, click "
+         "Yes.</p>"));
+  if (_retval == QMessageBox::Yes)
+    done(QDialog::Rejected);
 }
 
 ImageFileSource *ImageImportDialog::currentSource() { return source; }
@@ -290,28 +299,32 @@ int ImageImportDialog::exec() {
     return QDialog::Rejected;
   }
 
-  if (!initialConfiguration()) {
+  initialConfiguration();
+
+  if (!p_target.exists()) {
     qWarning("ImageEditor: Configuration mismatch!");
     return QDialog::Rejected;
   }
-
-  source = findSource(p_store, p_article_id);
-  if (!source->exists()) {
+  // check from category folder
+  source = findSource(p_destination, p_article_id);
+  if (!source->isValid()) {
     QString _path = p_target.path();
     _path.append(QDir::separator());
     _path.append("Sources");
-
-    QDir _sourcedir(_path);
-    source = findSource(_sourcedir, p_article_id);
+    source = findSource(QDir(_path), p_article_id);
+    // reset WindowModified
+    viewer->setWindowModified(false);
+    setWindowModified(false);
   }
-
-  if (source->exists()) {
+  // check again ...
+  if (source->isValid()) {
     treeView->setDirectory(p_target);
-    treeView->setShowSource(source->filePath());
+    treeView->setShowSource(source->getSourcePath());
   } else {
-    // Set Default Selecters directory
+    // fallback default selecters directory
     statusBar->showMessage(tr("No stored Sources by Article number found!"));
     treeView->setDirectory(p_import);
+    setWindowModified(true);
   }
 
   return QDialog::exec();
