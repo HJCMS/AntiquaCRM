@@ -42,8 +42,8 @@
 // AntiquaCRM::TabsEditor
 #include "tabseditor.h"
 
-// AntiquaCRM::TabWidget
-#include "tabwidget.h"
+// AntiquaCRM::TabsWidget
+#include "tabswidget.h"
 
 // AntiquaCRM::TabsEditActionBar
 #include "tabseditactionbar.h"
