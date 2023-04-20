@@ -77,8 +77,8 @@ void BookBindingEdit::setFocus() {
 }
 
 void BookBindingEdit::reset() {
-  setWindowModified(false);
   m_edit->setCurrentIndex(0);
+  setWindowModified(false);
 }
 
 void BookBindingEdit::setRestrictions(const QSqlField &field) {

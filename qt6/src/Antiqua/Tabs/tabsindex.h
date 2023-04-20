@@ -89,7 +89,7 @@ Q_SIGNALS:
   /**
    * @brief Speichernstände mitteilen
    */
-  void sendUnsafedChanges(bool);
+  void sendModifiedStatus(bool);
 
   /**
    * @brief Send Tab closeable changed

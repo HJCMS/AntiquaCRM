@@ -23,6 +23,9 @@ TabsEditor::TabsEditor(const QString &pattern, QWidget *parent)
   messages_timeout =
       m_cfg->groupValue("window_behavior", "popup_timeout", 1).toInt();
   m_tableData = nullptr;
+  m_signalMapper = new QSignalMapper(this);
+  connect(m_signalMapper, SIGNAL(mappedString(const QString &)),
+          SLOT(checkInputModified(const QString &)));
 }
 
 TabsEditor::~TabsEditor() {
@@ -34,6 +37,22 @@ TabsEditor::~TabsEditor() {
 
   if (m_tableData != nullptr)
     delete m_tableData;
+
+  if (m_signalMapper != nullptr)
+    m_signalMapper->deleteLater();
+}
+
+bool TabsEditor::registerInputChanged() {
+  QList<AntiquaCRM::AbstractInput *> list = getInputEditList(fieldPattern);
+  for (int i = 0; i < list.size(); ++i) {
+    AntiquaCRM::AbstractInput *m_inp = list.at(i);
+    if (m_inp == nullptr || m_inp->objectName().isEmpty())
+      continue;
+
+    connect(m_inp, SIGNAL(sendInputChanged()), m_signalMapper, SLOT(map()));
+    m_signalMapper->setMapping(m_inp, m_inp->objectName());
+  }
+  return true;
 }
 
 bool TabsEditor::isInputField(const QString &name) {
@@ -171,9 +190,9 @@ bool TabsEditor::isModifiedCompare(const QString &name,
   if (_input == nullptr)
     return false;
 
-//#ifdef ANTIQUA_DEVELOPEMENT
-//  qDebug() << Q_FUNC_INFO << name << origin;
-//#endif
+  //#ifdef ANTIQUA_DEVELOPEMENT
+  //  qDebug() << Q_FUNC_INFO << name << origin;
+  //#endif
 
   QVariant _value = _input->getValue();
   bool _status = false;
@@ -267,6 +286,33 @@ void TabsEditor::openNoticeMessage(const QString &info) {
   d->exec();
 }
 
+void TabsEditor::checkInputModified(const QString &name) {
+  AntiquaCRM::AbstractInput *m_inp = getInputEdit(name);
+  if (m_inp == nullptr)
+    return;
+
+  if (m_tableData != nullptr) {
+    QVariant _buffer;
+    QHashIterator<QString, QVariant> it(m_tableData->getDataset());
+    while (it.hasNext()) {
+      it.next();
+      QSqlField field = m_tableData->getProperties(it.key());
+      if (field.name() == name) {
+        _buffer = it.value();
+        break;
+      }
+    }
+
+    if (!_buffer.isNull() && isModifiedCompare(name, _buffer)) {
+      m_inp->setWindowModified(true);
+      setWindowModified(true);
+      return;
+    }
+  }
+  m_inp->setWindowModified(false);
+  setWindowModified(false);
+}
+
 void TabsEditor::unsavedChangesPopup() {
   QString ti = tr("Warning");
   QString txt(tr("Unsaved Changes") + "\n");
@@ -305,6 +351,7 @@ void TabsEditor::setResetInputFields() {
     if (obj != nullptr)
       obj->reset();
   }
+  setWindowModified(false);
 }
 
 } // namespace AntiquaCRM

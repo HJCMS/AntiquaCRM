@@ -15,7 +15,6 @@
 BooksWidget::BooksWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"books_tab", parent} {
   setObjectName(BOOKS_SQL_TABLE_NAME);
-  setWindowTitle(tr("Books"));
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("view-log"));
   setClosable(false);
 
@@ -116,6 +115,11 @@ void BooksWidget::openStartPage() {
   }
   if (currentIndex() != 0)
     setCurrentIndex(0);
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (isWindowModified())
+    qDebug() << Q_FUNC_INFO << isWindowModified();
+#endif
 }
 
 void BooksWidget::createSearchQuery(const QString &query) {

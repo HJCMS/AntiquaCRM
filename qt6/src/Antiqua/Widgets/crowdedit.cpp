@@ -52,8 +52,8 @@ void CrowdEdit::setValue(const QVariant &value) {
 void CrowdEdit::setFocus() { m_edit->setFocus(); }
 
 void CrowdEdit::reset() {
-  setWindowModified(false);
   m_edit->setValue(m_edit->minimum());
+  setWindowModified(false);
 }
 
 void CrowdEdit::setRestrictions(const QSqlField &field) {

@@ -55,8 +55,8 @@ void NumEdit::setValue(const QVariant &value) {
 void NumEdit::setFocus() { m_edit->setFocus(); }
 
 void NumEdit::reset() {
-  setWindowModified(false);
   m_edit->setValue(m_edit->minimum());
+  setWindowModified(false);
 }
 
 void NumEdit::setRestrictions(const QSqlField &field) {

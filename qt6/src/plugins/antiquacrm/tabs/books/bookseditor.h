@@ -45,7 +45,7 @@ private:
   AntiquaCRM::IsbnEdit *ib_isbn;                /**< @brief ISBN */
 
   // Row 3
-  AntiquaCRM::TabWidget *m_tabWidget;
+  AntiquaCRM::TabsWidget *m_tabWidget;
   /** @brief Öffentliche Beschreibung */
   AntiquaCRM::TextField *ib_description;
   /** @brief Interne Beschreibung */

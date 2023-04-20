@@ -86,8 +86,8 @@ void PriceEdit::setValue(const QVariant &value) {
 void PriceEdit::setFocus() { m_edit->setFocus(); }
 
 void PriceEdit::reset() {
-  setWindowModified(false);
   m_edit->setValue(m_edit->minimum());
+  setWindowModified(false);
 }
 
 void PriceEdit::setRestrictions(const QSqlField &field) {

@@ -300,7 +300,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   mainLayout->setStretch(2, 1);
 
   // Row3
-  m_tabWidget = new AntiquaCRM::TabWidget(this);
+  m_tabWidget = new AntiquaCRM::TabsWidget(this);
   QIcon tabIcons = m_tabWidget->defaultIcon();
 
   // Description
@@ -571,6 +571,7 @@ void BooksEditor::createSqlUpdate() {
   sql.append(";");
   if (sendSqlQuery(sql)) {
     qInfo("SQL UPDATE Inventory Books success!");
+    setWindowModified(false);
   }
 }
 
@@ -628,6 +629,7 @@ void BooksEditor::createSqlInsert() {
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
     m_imageToolBar->setArticleId(ib_id->getValue().toInt());
     ib_id->setRequired(true);
+    setWindowModified(false);
   }
 }
 
@@ -674,7 +676,7 @@ void BooksEditor::setCheckLeaveEditor() {
     unsavedChangesPopup();
     return;
   }
-  setFinalLeaveEditor(false);
+  setFinalLeaveEditor();
 }
 
 void BooksEditor::setFinalLeaveEditor(bool force) {
@@ -795,6 +797,7 @@ bool BooksEditor::openEditEntry(qint64 articleId) {
   if (status) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
+    registerInputChanged();
   }
 
   return status;
@@ -811,5 +814,6 @@ bool BooksEditor::createNewEntry() {
     setDefaultInput(field);
   }
   setResetModified(inputFields);
+  registerInputChanged();
   return isEnabled();
 }

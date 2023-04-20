@@ -43,9 +43,7 @@ bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
     if (m_te != nullptr) {
       bool _status = m_te->isWindowModified();
       setWindowModified(_status);
-      if (_status)
-        emit sendUnsafedChanges(_status);
-
+      emit sendModifiedStatus(_status);
       return true;
     }
   }

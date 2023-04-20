@@ -49,8 +49,8 @@ void SerialId::setValue(const QVariant &value) {
 void SerialId::setFocus() { m_edit->setFocus(); }
 
 void SerialId::reset() {
-  setWindowModified(false);
   m_edit->clear();
+  setWindowModified(false);
 }
 
 void SerialId::setRestrictions(const QSqlField &field) {

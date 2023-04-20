@@ -73,8 +73,8 @@ void ConditionEdit::setFocus() {
 }
 
 void ConditionEdit::reset() {
-  setWindowModified(false);
   m_edit->setCurrentIndex(0);
+  setWindowModified(false);
 }
 
 void ConditionEdit::setRestrictions(const QSqlField &field) {

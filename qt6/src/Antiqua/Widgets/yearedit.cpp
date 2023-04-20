@@ -53,8 +53,8 @@ void YearEdit::setValue(const QVariant &value) {
 void YearEdit::setFocus() { m_edit->setFocus(); }
 
 void YearEdit::reset() {
-  setWindowModified(false);
   m_edit->setValue(m_edit->minimum());
+  setWindowModified(false);
 }
 
 void YearEdit::setRestrictions(const QSqlField &field) {

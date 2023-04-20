@@ -17,6 +17,7 @@
 #include <QObject>
 #include <QRegularExpression>
 #include <QSqlField>
+#include <QSignalMapper>
 #include <QStringList>
 #include <QVariant>
 #include <QWidget>
@@ -31,6 +32,8 @@ class ANTIQUACRM_LIBRARY TabsEditor : public QWidget {
 
 private:
   int messages_timeout = 2; /**< @brief seconds */
+
+  QSignalMapper *m_signalMapper;
 
 protected:
   AntiquaCRM::ASqlCore *m_sql;
@@ -61,6 +64,11 @@ protected:
    * Datenprüfung verwendet wird.
    */
   virtual void setInputFields() = 0;
+
+  /**
+   * @brief Register AbstractInput::sendInputChanged() from Inputs
+   */
+  bool registerInputChanged();
 
   /**
    * @brief Sucht nach Tabellen Feldname in @ref inputFields
@@ -190,6 +198,12 @@ protected Q_SLOTS:
   void openErrnoMessage(const QString &info, const QString &error);
   void openSuccessMessage(const QString &info);
   void openNoticeMessage(const QString &info);
+
+  /**
+   * @brief used by Signal Mapper
+   */
+  void checkInputModified(const QString &name);
+
   void unsavedChangesPopup();
 
   /**
