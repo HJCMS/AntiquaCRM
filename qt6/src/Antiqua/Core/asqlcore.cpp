@@ -58,6 +58,7 @@ bool ASqlCore::initDatabase() {
     qWarning("Missing SQL::Connection");
     return false;
   }
+  qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
   return database->isOpen();
 }
 
@@ -78,7 +79,7 @@ bool ASqlCore::isConnected() {
 }
 
 bool ASqlCore::status() {
-  if (!db().isOpen())
+  if (!database->isOpen())
     return false;
 
   QString _select("SELECT state FROM pg_stat_activity WHERE");
@@ -96,11 +97,10 @@ const QString ASqlCore::identifier() {
 }
 
 bool ASqlCore::open() {
-  if (initDatabase()) {
-    qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
+  if (database->isOpen())
     return true;
-  }
-  return false;
+
+  return initDatabase();
 }
 
 const QSqlDatabase ASqlCore::db() {
@@ -153,15 +153,9 @@ const QString ASqlCore::lastError() {
 }
 
 void ASqlCore::close() {
-  if (database != nullptr) {
-    if (database->isOpen()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << database->connectionName();
-#else
-      qInfo("Database '%s' closed.", qPrintable(database->connectionName()));
-#endif
-      database->close();
-    }
+  if (database != nullptr && database->isOpen()) {
+    qInfo("Close Database to '%s'.", qPrintable(database->hostName()));
+    database->close();
   }
 }
 

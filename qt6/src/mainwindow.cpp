@@ -4,7 +4,7 @@
 #include "mainwindow.h"
 #include "menubar.h"
 #include "statusbar.h"
-#include "tabwidget.h"
+#include "tabswidget.h"
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
@@ -21,7 +21,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   m_menuBar = new MenuBar(this);
   setMenuBar(m_menuBar);
 
-  m_tabWidget = new AntiquaCRM::TabWidget(this);
+  m_tabWidget = new AntiquaCRM::TabsWidget(this);
   setCentralWidget(m_tabWidget);
 
   m_statusBar = new StatusBar(this);
@@ -29,6 +29,11 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
 
   connect(m_menuBar, SIGNAL(sendApplicationQuit()),
           SIGNAL(sendApplicationQuit()));
+}
+
+MainWindow::~MainWindow() {
+  if (config != nullptr)
+    config->deleteLater();
 }
 
 bool MainWindow::createSocketListener() {
@@ -61,9 +66,14 @@ bool MainWindow::loadTabInterfaces() {
         if (_iface->addIndexOnInit())
           m_tabWidget->registerTab(_tab, _name);
 
+        // SIGNALS
+        connect(_tab, SIGNAL(sendModifiedStatus(bool)),
+                SLOT(setTabsModified(bool)));
+
         QAction *_ac = _viewMenu->addAction(_tab->windowIcon(), _name);
         _ac->setObjectName(_tab->tabIndexId());
         connect(_ac, SIGNAL(triggered()), m_tabWidget, SLOT(setViewTab()));
+        p_tabs.append(_tab);
       }
     }
     m_menuBar->setViewsMenu(_viewMenu);
@@ -73,16 +83,8 @@ bool MainWindow::loadTabInterfaces() {
   return false;
 }
 
-void MainWindow::debugContent() {
-  // QRegularExpression pattern("^[a-z]{1,}_[a-z_]{2,}");
-  // QList<AntiquaCRM::AbstractInput *> list =
-  //     centralWidget()->findChildren<AntiquaCRM::AbstractInput *>(pattern);
-  // for (int i = 0; i < list.size(); i++) {
-  //   AntiquaCRM::AbstractInput *obj = list.at(i);
-  //   if (obj != nullptr) {
-  //     qDebug() << obj->objectName() << obj->getValue();
-  //   }
-  // }
+void MainWindow::setTabsModified(bool b) {
+  setWindowModified(b);
 }
 
 void MainWindow::setAction(const QJsonObject &obj) {
@@ -98,24 +100,54 @@ void MainWindow::setAction(const QJsonObject &obj) {
   }
 }
 
+void MainWindow::setToggleWindow() {
+  if (isVisible()) {
+    hide();
+  } else {
+    showNormal();
+  }
+}
+
+void MainWindow::setToggleFullScreen() {
+  if (isFullScreen()) {
+    setWindowState(windowState() & ~Qt::WindowFullScreen);
+  } else {
+    setWindowState(windowState() ^ Qt::WindowFullScreen);
+  }
+}
+
 void MainWindow::openWindow() {
-  // TODO - load configurations
-  showNormal();
+  p_tabs.clear();
+  config = new AntiquaCRM::ASettings(this);
 
   createSocketListener();
-
-  // start plz inputs
-  m_statusBar->showMessage(tr("Window opened"));
 
   if (!loadTabInterfaces())
     m_statusBar->showMessage(tr("No tabs available"));
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  debugContent();
-#endif
+  if (config->contains("window/geometry"))
+    restoreGeometry(config->value("window/geometry").toByteArray());
+
+  showNormal();
+  m_statusBar->showMessage(tr("Window opened"));
 }
 
-bool MainWindow::checkClose() {
-  // TODO
-  return true;
+bool MainWindow::closeWindow() {
+  if (isWindowModified()) {
+    QString _title = tr("Save request");
+    QStringList _warn(tr("<b>You have unsaved changes.</b>"));
+    _warn << tr("<p>Do you really want to close the application?</p>");
+    int _ret = QMessageBox::question(this, _title, _warn.join("\n"));
+    if (_ret == QMessageBox::No) {
+      return false;
+    }
+  }
+
+  QByteArray _geometry = saveGeometry();
+  if (!_geometry.isNull())
+    config->setValue("window/geometry", _geometry);
+
+  _geometry.clear();
+
+  return (m_tabWidget->unloadTabs() && close());
 }

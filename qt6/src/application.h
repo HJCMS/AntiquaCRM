@@ -15,24 +15,21 @@
 #include <QObject>
 
 class MainWindow;
+class SystemTrayIcon;
 
 class Application final : public QApplication {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASettings *m_cfg;   /**< @brief Configurations */
-  AntiquaCRM::ASqlCore *m_sql;    /**< @brief PostgreSQL Database */
-  MainWindow *m_window = nullptr; /**< @brief UI Window */
+  AntiquaCRM::ASettings *m_cfg;          /**< @brief Configurations */
+  AntiquaCRM::ASqlCore *m_sql = nullptr; /**< @brief PostgreSQL Database */
+  MainWindow *m_window = nullptr;        /**< @brief UI Window */
+  SystemTrayIcon *m_systray = nullptr;   /**< @brief UI SystemTray */
 
   /**
    * @brief Search Qt based translation files „*.qm“ and load it.
    */
   bool initTranslations();
-
-  /**
-   * @brief Load and initial - D-Bus, Window and System Tray.
-   */
-  void initGui();
 
   /**
    * @brief Network Interfaces and connection check.
@@ -47,7 +44,12 @@ private:
   /**
    * @brief Connect to Database
    */
-  bool checkDatabase();
+  bool openDatabase();
+
+  /**
+   * @brief Load and initial components.
+   */
+  void initGui();
 
 Q_SIGNALS:
   /**

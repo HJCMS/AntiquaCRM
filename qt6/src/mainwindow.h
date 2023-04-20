@@ -16,7 +16,7 @@
 #include <QPair>
 
 class MenuBar;
-class TabWidget;
+class TabsWidget;
 class StatusBar;
 
 class MainWindow final : public QMainWindow {
@@ -24,9 +24,12 @@ class MainWindow final : public QMainWindow {
 
 private:
   MenuBar *m_menuBar;
-  AntiquaCRM::TabWidget *m_tabWidget;
+  AntiquaCRM::ASettings *config = nullptr;
+  AntiquaCRM::TabsWidget *m_tabWidget;
   StatusBar *m_statusBar;
   AntiquaCRM::AReceiver *m_rx;
+
+  QList<AntiquaCRM::TabsIndex *> p_tabs;
 
   /**
    * @brief Der lokalen Socketserver starten.
@@ -35,18 +38,24 @@ private:
 
   bool loadTabInterfaces();
 
-  void debugContent();
-
 private Q_SLOTS:
+  void setTabsModified(bool);
   void setAction(const QJsonObject &obj);
 
 Q_SIGNALS:
   void sendApplicationQuit();
 
+public Q_SLOTS:
+  Q_INVOKABLE void setToggleWindow();
+  Q_INVOKABLE void setToggleFullScreen();
+
 public:
   explicit MainWindow(QWidget *parent = nullptr);
+  ~MainWindow();
+
   void openWindow();
-  bool checkClose();
+
+  bool closeWindow();
 };
 
 #endif // ANTIQUA_UI_MAINWINDOW_H

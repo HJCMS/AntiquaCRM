@@ -50,20 +50,22 @@ int main(int argc, char *argv[]) {
 #endif
 #endif
 
+  QApplication::setAttribute(Qt::AA_DisableSessionManager, true);
+
   Application *_app = new Application(argc, argv);
   _app->initTheme();
 
-  if (argc > 0) {
-    for (int i = 0; i <= argc; i++) {
-      QString arg = QString(argv[i]).toLower();
-      arg.replace("-", "");
-      arg.replace(" ", "");
-      if (arg.trimmed() == "assistant") {
-        QProcess::execute("antiquacrm_assistant", QStringList());
-        return 0;
-      }
-    }
-  }
+  // if (argc > 0) {
+  //   for (int i = 0; i <= argc; i++) {
+  //     QString arg = QString(argv[i]).toLower();
+  //     arg.replace("-", "");
+  //     arg.replace(" ", "");
+  //     if (arg.trimmed() == "assistant") {
+  //       QProcess::execute("antiquacrm_assistant", QStringList());
+  //       return 0;
+  //     }
+  //   }
+  // }
 
   if (_app->isRunning()) {
     qWarning("AntiquaCRM is already up!");

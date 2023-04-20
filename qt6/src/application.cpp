@@ -3,6 +3,7 @@
 
 #include "application.h"
 #include "mainwindow.h"
+#include "systemtrayicon.h"
 
 #include <AntiquaWidgets>
 #include <QJsonObject>
@@ -21,21 +22,13 @@ Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
 }
 
 bool Application::initTranslations() {
-  QString path = m_cfg->getTranslationDir().path();
-  QTranslator *transl = new QTranslator(this);
-  if (transl->load(QLocale::system(), "antiquacrm", "_", path, ".qm")) {
-    installTranslator(transl);
+  QString _p = m_cfg->getTranslationDir().path();
+  QTranslator *m_qtr = new QTranslator(this);
+  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _p, ".qm")) {
+    installTranslator(m_qtr);
     return true;
   }
   return false;
-}
-
-void Application::initGui() {
-  // Window
-  m_window = new MainWindow;
-  m_window->setObjectName("MainWindow");
-  m_window->setWindowIcon(applIcon());
-  connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
 }
 
 bool Application::checkInterfaces() {
@@ -48,23 +41,59 @@ bool Application::checkInterfaces() {
 }
 
 bool Application::checkRemotePort() {
-  qInfo("TODO Network remote ports");
-  return true;
+  AntiquaCRM::ASqlSettings _csql(this);
+  AntiquaCRM::ASqlProfile _pr = _csql.connectionProfile();
+  AntiquaCRM::ANetworkIface iface;
+  if (iface.checkRemotePort(_pr.getHostname(), _pr.getPort()))
+    return true;
+
+  qWarning("PostgreSQL Connection profile „%s“, is unreachable!",
+           qPrintable(_csql.getProfile()));
+  return false;
 }
 
-bool Application::checkDatabase() {
+bool Application::openDatabase() {
   m_sql = new AntiquaCRM::ASqlCore(this);
   if (m_sql->open()) {
     return true;
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << m_sql->lastError();
+#else
+  qFatal("No Database connection!");
 #endif
   return false;
 }
 
+void Application::initGui() {
+  // Window
+  m_window = new MainWindow;
+  m_window->setWindowIcon(applIcon());
+  connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
+
+  m_systray = new SystemTrayIcon(applIcon(), this);
+  connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
+  connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
+  connect(m_systray, SIGNAL(sendToggleView()), m_window,
+          SLOT(setToggleWindow()));
+  connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+}
+
 void Application::applicationQuit() {
-  // TODO
+  // close
+  m_systray->setVisible(false);
+  m_window->closeWindow();
+  m_sql->close();
+
+  // Force destructers
+  if (m_window != nullptr)
+    m_window->deleteLater();
+
+  if (m_systray != nullptr)
+    m_systray->deleteLater();
+
+  if (m_sql != nullptr)
+    m_sql->deleteLater();
 
   // finaly
   quit();
@@ -76,12 +105,13 @@ const QIcon Application::applIcon() {
 
 void Application::initTheme() {
   setStyle(QStyleFactory::create("Fusion"));
-
-// Bugfix: Qt6 Linux
-#ifdef Q_OS_LINUX
+  // Color Pallete for some hacks
   QPalette _p = palette();
-  QColor _phtc = _p.color(QPalette::PlaceholderText).toRgb();
-  if (!AntiquaCRM::AColorLuminance(this).checkForeground(_phtc))
+
+// Bugfix: Qt6 and Linux Fusion Theme
+#ifdef Q_OS_LINUX
+  QColor _rgb = _p.color(QPalette::PlaceholderText).toRgb();
+  if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb))
     _p.setColor(QPalette::PlaceholderText, Qt::darkGray);
 #endif
 
@@ -125,17 +155,32 @@ bool Application::isRunning() {
 
 int Application::exec() {
   QMutex mutex;
+  // mutex.lock();
   // initTranslations();
+  // mutex.unlock();
+
+  mutex.lock();
+  checkInterfaces();
+  mutex.unlock();
+
+  mutex.lock();
+  checkRemotePort();
+  mutex.unlock();
+
+  mutex.lock();
+  openDatabase();
+  mutex.unlock();
 
   mutex.lock();
   initGui();
   if (m_window == nullptr) {
-    qFatal("failed to initital widgets");
+    qFatal("failed to initital window");
     return 2;
   }
   mutex.unlock();
 
-  // last step - open application window
+  // last step - open components
+  m_systray->show();
   m_window->openWindow();
 
   // TODO

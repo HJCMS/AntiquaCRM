@@ -40,7 +40,7 @@ SET(APPLICATION_HEADERS
  mainwindow.h
  menubar.h
  statusbar.h
- test_widget.h
+ systemtrayicon.h
 )
 
 SET(APPLICATION_SOURCES
@@ -49,7 +49,7 @@ SET(APPLICATION_SOURCES
  mainwindow.cpp
  menubar.cpp
  statusbar.cpp
- test_widget.cpp
+ systemtrayicon.cpp
 )
 
 SET(APPLICATION_LIBRARIES
