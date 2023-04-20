@@ -116,10 +116,8 @@ void SelectEUCountry::valueChanged(int index) {
   if (m_model->size() < 1)
     return;
 
-  if (isValid()) {
-    setWindowModified(true);
-    emit inputChanged();
-  }
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void SelectEUCountry::initData() {

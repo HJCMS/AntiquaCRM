@@ -42,9 +42,12 @@ bool PriceEdit::fromMoneyString(const QString &money) const {
   return false;
 }
 
-void PriceEdit::valueChanged(double _price) {
-  if (_price > 0)
-    setWindowModified(true);
+void PriceEdit::valueChanged(double d) {
+  if (d < m_edit->minimum())
+    return;
+
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void PriceEdit::initData() {

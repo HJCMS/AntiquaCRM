@@ -19,7 +19,10 @@ SerialId::SerialId(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   initData();
 }
 
-void SerialId::valueChanged() { setWindowModified(true); }
+void SerialId::valueChanged() {
+  setWindowModified(true);
+  emit sendInputChanged();
+}
 
 void SerialId::initData() { setWindowModified(false); }
 

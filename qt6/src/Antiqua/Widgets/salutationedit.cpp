@@ -30,7 +30,10 @@ SalutationEdit::SalutationEdit(QWidget *parent)
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void SalutationEdit::valueChanged(int) { setWindowModified(true); }
+void SalutationEdit::valueChanged(int) {
+  setWindowModified(true);
+  emit sendInputChanged();
+}
 
 void SalutationEdit::initData() {
   QSqlField _f;

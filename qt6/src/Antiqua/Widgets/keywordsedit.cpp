@@ -66,7 +66,10 @@ void KeywordsEdit::initData() {
   setWindowModified(false);
 }
 
-void KeywordsEdit::valueChanged() { setWindowModified(true); }
+void KeywordsEdit::valueChanged() {
+  setWindowModified(true);
+  emit sendInputChanged();
+}
 
 void KeywordsEdit::clearKeywords() {
   QMessageBox::StandardButton ret = QMessageBox::warning(

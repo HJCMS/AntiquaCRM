@@ -218,6 +218,9 @@ void ImageImportDialog::setViewerImage(const QString &path) {
 }
 
 void ImageImportDialog::imageSelected(const QFileInfo &src) {
+  if (!src.isReadable())
+    return;
+
   setViewerImage(src.filePath());
   source->setSource(src.filePath());
   source->setPixmap(viewer->getPixmap());
@@ -312,9 +315,6 @@ int ImageImportDialog::exec() {
     _path.append(QDir::separator());
     _path.append("Sources");
     source = findSource(QDir(_path), p_article_id);
-    // reset WindowModified
-    viewer->setWindowModified(false);
-    setWindowModified(false);
   }
   // check again ...
   if (source->isValid()) {
@@ -324,7 +324,6 @@ int ImageImportDialog::exec() {
     // fallback default selecters directory
     statusBar->showMessage(tr("No stored Sources by Article number found!"));
     treeView->setDirectory(p_import);
-    setWindowModified(true);
   }
 
   return QDialog::exec();

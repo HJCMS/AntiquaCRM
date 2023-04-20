@@ -21,6 +21,7 @@ void SelectPaymentMethod::valueChanged(int index) {
 
   int _mt = m_edit->itemData(index, Qt::UserRole).toInt();
   emit sendPaymentMethodChanged(static_cast<AntiquaCRM::PaymentMethod>(_mt));
+  emit sendInputChanged();
 }
 
 void SelectPaymentMethod::initData() {

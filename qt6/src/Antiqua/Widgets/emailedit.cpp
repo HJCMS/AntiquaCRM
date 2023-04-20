@@ -39,6 +39,7 @@ void EMailEdit::initData() {
 void EMailEdit::valueChanged(const QString &email) {
   validate(email);
   setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void EMailEdit::setValue(const QVariant &value) {

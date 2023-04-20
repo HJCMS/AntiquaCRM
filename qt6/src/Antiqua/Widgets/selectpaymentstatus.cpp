@@ -23,6 +23,7 @@ void SelectPaymentStatus::valueChanged(int index) {
   int _status = m_edit->itemData(index, Qt::UserRole).toInt();
   emit sendPaymentStatusChanged(
       static_cast<AntiquaCRM::ProviderPaymentStatus>(_status));
+  emit sendInputChanged();
 }
 
 void SelectPaymentStatus::initData() {

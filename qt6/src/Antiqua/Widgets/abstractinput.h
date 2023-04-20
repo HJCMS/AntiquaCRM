@@ -134,7 +134,7 @@ Q_SIGNALS:
    * This is a part to find unsaved changes from inputs.
    * @note This procedure must manually implemented in subclasses.
    */
-  void inputChanged();
+  void sendInputChanged();
 
 public Q_SLOTS:
   /**

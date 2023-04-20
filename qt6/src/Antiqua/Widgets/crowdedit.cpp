@@ -19,7 +19,7 @@ void CrowdEdit::valueChanged(int count) {
     return;
 
   setWindowModified(true);
-  emit inputChanged();
+  emit sendInputChanged();
 }
 
 void CrowdEdit::initData() {

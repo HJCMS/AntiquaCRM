@@ -17,9 +17,12 @@ YearEdit::YearEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   connect(m_edit, SIGNAL(valueChanged(int)), SLOT(valueChanged(int)));
 }
 
-void YearEdit::valueChanged(int) {
-  if (isValid())
-    setWindowModified(true);
+void YearEdit::valueChanged(int y) {
+  if (y < m_edit->minimum())
+    return;
+
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void YearEdit::initData() {

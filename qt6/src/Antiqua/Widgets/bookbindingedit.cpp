@@ -20,7 +20,7 @@ void BookBindingEdit::valueChanged(int index) {
     return;
 
   setWindowModified(true);
-  emit inputChanged();
+  emit sendInputChanged();
 }
 
 void BookBindingEdit::initData() {

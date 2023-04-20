@@ -36,10 +36,11 @@ SelectStorage::SelectStorage(QWidget *parent)
 }
 
 void SelectStorage::valueChanged(int index) {
-  if (index > 0) {
-    setWindowModified(true);
-    emit sendValueChanged();
-  }
+  if (index < 1)
+    return;
+
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void SelectStorage::filterChanged(const QString &filter) {

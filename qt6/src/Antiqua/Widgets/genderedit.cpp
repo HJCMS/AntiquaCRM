@@ -15,7 +15,10 @@ GenderEdit::GenderEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void GenderEdit::valueChanged(int) { setWindowModified(true); }
+void GenderEdit::valueChanged(int) {
+  setWindowModified(true);
+  emit sendInputChanged();
+}
 
 void GenderEdit::initData() {
   QSqlField _f;

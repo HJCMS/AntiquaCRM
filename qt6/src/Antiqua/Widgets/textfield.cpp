@@ -14,7 +14,10 @@ TextField::TextField(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
   initData();
 }
 
-void TextField::valueChanged() { setWindowModified(true); }
+void TextField::valueChanged() {
+  setWindowModified(true);
+  emit sendInputChanged();
+}
 
 void TextField::initData() {
   QSqlField _f;

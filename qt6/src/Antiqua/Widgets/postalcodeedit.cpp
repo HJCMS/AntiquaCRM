@@ -186,6 +186,7 @@ void PostalCodeEdit::valueChanged(int index) {
     m_postalcode->setCompleter(m_completer);
     emit sendResetDependencies();
   }
+  emit sendInputChanged();
 }
 
 void PostalCodeEdit::setPostalCodeLeave() {

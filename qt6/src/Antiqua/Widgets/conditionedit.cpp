@@ -27,7 +27,7 @@ void ConditionEdit::valueChanged(int index) {
     return;
 
   setWindowModified(true);
-  emit inputChanged();
+  emit sendInputChanged();
 }
 
 void ConditionEdit::initData() {

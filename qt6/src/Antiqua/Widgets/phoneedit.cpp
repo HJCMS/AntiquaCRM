@@ -137,6 +137,7 @@ void PhoneEdit::initData() {
 void PhoneEdit::valueChanged(const QString &phone) {
   validate(phone);
   setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void PhoneEdit::setValue(const QVariant &value) {

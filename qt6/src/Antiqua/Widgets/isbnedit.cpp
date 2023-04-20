@@ -116,7 +116,7 @@ void IsbnEdit::valueChanged(const QString &data) {
 
   if (valid) {
     setWindowModified(true);
-    emit inputChanged();
+    emit sendInputChanged();
   }
 }
 

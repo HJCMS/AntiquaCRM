@@ -16,8 +16,11 @@ NumEdit::NumEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
 }
 
 void NumEdit::valueChanged(int) {
-  if (isValid())
-    setWindowModified(true);
+  if (!isValid())
+    return;
+
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void NumEdit::initData() {

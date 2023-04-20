@@ -18,6 +18,7 @@ TextLine::TextLine(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
 
 void TextLine::valueChanged(const QString &) {
   setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void TextLine::initData() {

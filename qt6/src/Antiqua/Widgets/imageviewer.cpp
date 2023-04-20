@@ -192,7 +192,10 @@ void ImageViewer::setImage(const QImage &image) {
   setPixmap(_pixmap);
 }
 
-bool ImageViewer::isEmpty() { return (items().size() < 1); }
+bool ImageViewer::isEmpty() {
+  // qDebug() << Q_FUNC_INFO << items().size();
+  return (items().size() < 1);
+}
 
 const QSize ImageViewer::getMaxScaleSize() const {
   QSize _size = qApp->screenAt(pos())->size();

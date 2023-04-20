@@ -16,8 +16,8 @@ SelectLanguage::SelectLanguage(QWidget *parent)
 }
 
 void SelectLanguage::valueChanged(int) {
-  if (isValid())
-    setWindowModified(true);
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void SelectLanguage::initData() {

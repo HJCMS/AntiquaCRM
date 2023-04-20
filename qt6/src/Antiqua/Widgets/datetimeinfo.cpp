@@ -15,7 +15,10 @@ DateTimeInfo::DateTimeInfo(QWidget *parent)
   initData();
 }
 
-void DateTimeInfo::valueChanged() {}
+void DateTimeInfo::valueChanged() {
+  // Not used here
+  // emit sendInputChanged();
+}
 
 void DateTimeInfo::initData() {
   QSqlField _f;

@@ -15,8 +15,11 @@ BoolBox::BoolBox(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
 }
 
 void BoolBox::valueChanged() {
-  if (isValid())
-    setWindowModified(true);
+  if (!isValid())
+    return;
+
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void BoolBox::initData() {
@@ -56,9 +59,7 @@ void BoolBox::setRestrictions(const QSqlField &field) {
     setRequired(true);
 }
 
-void BoolBox::setInputToolTip(const QString &tip) {
-  m_edit->setToolTip(tip);
-}
+void BoolBox::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
 
 void BoolBox::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
@@ -67,20 +68,12 @@ void BoolBox::setBuddyLabel(const QString &text) {
   m_edit->setText(text);
 }
 
-bool BoolBox::isValid() {
-  return true;
-}
+bool BoolBox::isValid() { return true; }
 
-const QVariant BoolBox::getValue() {
-  return m_edit->isChecked();
-}
+const QVariant BoolBox::getValue() { return m_edit->isChecked(); }
 
-const QString BoolBox::popUpHints() {
-  return tr("is required must selected.");
-}
+const QString BoolBox::popUpHints() { return tr("is required must selected."); }
 
-const QString BoolBox::statusHints() {
-  return popUpHints();
-}
+const QString BoolBox::statusHints() { return popUpHints(); }
 
 } // namespace AntiquaCRM
