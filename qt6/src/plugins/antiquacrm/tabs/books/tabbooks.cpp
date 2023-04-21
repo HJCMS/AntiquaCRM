@@ -26,7 +26,7 @@ bool TabBooks::addIndexOnInit() const { return BOOKS_ALWAYS_ADD_ONLOAD; }
 
 AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
   BooksWidget *_widget = new BooksWidget(parent);
-  _widget->setWindowTitle(displayName() + "[*]");
+  _widget->setWindowTitle(_widget->getTitle() + " [*]");
   return _widget;
 }
 

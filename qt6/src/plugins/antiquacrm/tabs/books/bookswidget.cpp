@@ -165,6 +165,8 @@ void BooksWidget::onEnterChanged() {
   }
 }
 
+const QString BooksWidget::getTitle() const { return tr("Books"); }
+
 AntiquaCRM::TabsIndex::ViewPage BooksWidget::currentView() {
   switch (currentIndex()) {
   case 1:

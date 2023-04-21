@@ -10,8 +10,8 @@
 #define ANTIQUACRM_PLUGIN_BOOKSWIDGET_H
 
 #include <AntiquaTabs>
-#include <QScrollArea>
 #include <QObject>
+#include <QScrollArea>
 #include <QWidget>
 
 class BooksSearchBar;
@@ -47,6 +47,8 @@ public:
   void openEntry(qint64 articleId) override;
 
   void onEnterChanged() override;
+
+  const QString getTitle() const override;
 
   AntiquaCRM::TabsIndex::ViewPage currentView() override;
 
