@@ -8,13 +8,12 @@
 
 set +x
 
-_script_base=$(dirname $0)
+_script_base=${HOME}/Developement/antiqua/qt6/templates/widgets
 _classname=$1
 
-if [ $(basename ${_script_base}) != "templates" ] ; then
+if [ $(basename ${_script_base}) != "widgets" ] ; then
 cat <<EOF
  Invalid target ...
- Usage ./templates/`basename $0` <CLASSNAME>
 EOF
   exit 1
 fi
@@ -44,17 +43,17 @@ if [[ -e ${_filename}.h ]] || [[ -e ${_filename}.cpp ]]  ; then
   exit 1
 fi
 
-if test -r ./templates/input_tpl.h ; then
+if test -r ${_script_base}/input_tpl.h ; then
  echo "Generate: ${_classname}.h"
- cat ./templates/input_tpl.h | \
+ cat ${_script_base}/input_tpl.h | \
    sed "s,@YEAR@,$(date +"%Y"),gm" | \
    sed "s,@CLASSMACRO@,${_macro},gm" | \
    sed "s,@CLASSNAME@,${_classname},m" > ${_filename}.h
 fi
 
-if test -r ./templates/input_tpl.cpp ; then
+if test -r ${_script_base}/input_tpl.cpp ; then
  echo "Generate: ${_filename}.cpp"
- cat ./templates/input_tpl.cpp | \
+ cat ${_script_base}/input_tpl.cpp | \
    sed "s,@CLASSNAME@,${_classname},gm" | \
    sed "s,@INCLUDE@,${_filename},m" > ${_filename}.cpp
 fi

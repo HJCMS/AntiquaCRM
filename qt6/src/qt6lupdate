@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+
+set +x
+
+_build_dir="../../build-qt6-Desktop_Qt_6_2_4_GCC_64bit-Debug"
+_lang="de"
+_dirs="`find . -maxdepth 1 -type d -not -name i18n -not -name icons -exec basename "{}" \;`"
+_lupdate="`ls ~/Programme/Qt/6*/gcc_64/bin/lupdate`"
+
+${_lupdate} -no-obsolete -locations relative \
+  -recursive ./Antiqua -extensions cpp,h \
+  -ts ./i18n/antiquacore_untranslated.ts  ./i18n/antiquacore_de.ts
+
+${_lupdate} \
+  -no-obsolete \
+  -locations relative \
+  -no-recursive . \
+  -extensions rc,cpp,cxx,h \
+  -ts ./i18n/antiquacrm_untranslated.ts  ./i18n/antiquacrm_de.ts
+
+exit $?

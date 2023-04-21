@@ -169,6 +169,7 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 ###
 ## \Section SubTargets
 ###
+ADD_SUBDIRECTORY (templates)
 ADD_SUBDIRECTORY (src)
 
 ##EOF
