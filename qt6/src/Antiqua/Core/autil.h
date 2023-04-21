@@ -19,10 +19,6 @@ namespace AntiquaCRM {
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AUtil final {
-private:
-  static const QRegularExpression strip_lineends();
-  static const QRegularExpression strip_spaces();
-
 public:
   /**
    * @brief AntiquaCRM Socket Identifier
@@ -31,6 +27,7 @@ public:
 
   /**
    * @brief prepare and normalize single strings
+   * @warning Line Breaks will removed!
    */
   static const QString trim(const QString &);
 

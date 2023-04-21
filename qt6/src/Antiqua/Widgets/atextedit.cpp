@@ -3,6 +3,8 @@
 
 #include "atextedit.h"
 
+#include <QRegularExpression>
+
 namespace AntiquaCRM {
 
 ATextEdit::ATextEdit(QWidget *parent) : QTextEdit{parent} {
@@ -34,27 +36,26 @@ void ATextEdit::keyReleaseEvent(QKeyEvent *event) {
   QTextEdit::keyReleaseEvent(event);
 }
 
-const QRegularExpression ATextEdit::pattern() {
-  return QRegularExpression("(\\s+|\\t+)");
-}
+void ATextEdit::setText(const QString &txt) { setPlainText(strip(txt)); }
 
-void ATextEdit::setText(const QString &txt) {
-  QString _text = strip(txt);
-  setPlainText(_text);
-}
+const QString ATextEdit::text() { return strip(toPlainText()); }
 
-const QString ATextEdit::strip(const QString &str) const {
-  QString _buf = str.trimmed();
+const QString ATextEdit::strip(const QString &str) {
+  QString _buf = str;
   _buf.replace("'", "’");
   _buf.replace("<", "«");
   _buf.replace(">", "»");
-  _buf.replace(pattern(), " ");
-  return _buf.trimmed();
-}
 
-const QString ATextEdit::text() {
-  QString _text = toPlainText();
-  return strip(_text);
+  static const QRegularExpression spaces("\\b\\s+\\b",
+                                         QRegularExpression::NoPatternOption);
+  _buf.replace(spaces, " ");
+
+  static const QRegularExpression tabs("\\t+",
+                                       QRegularExpression::NoPatternOption);
+  _buf.remove(tabs);
+
+  _buf.squeeze();
+  return _buf.trimmed();
 }
 
 } // namespace AntiquaCRM

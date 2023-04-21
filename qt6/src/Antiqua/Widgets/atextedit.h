@@ -12,7 +12,6 @@
 #include <AGlobal>
 #include <QKeyEvent>
 #include <QObject>
-#include <QRegularExpression>
 #include <QTextEdit>
 
 namespace AntiquaCRM {
@@ -20,7 +19,13 @@ namespace AntiquaCRM {
 /**
  * @class ATextEdit
  * @brief AntiquaCRM Text edit widget
- * @note Only Text plain supported for SQL inputs and CSV exports!
+ * Only Text plain supported for SQL inputs and CSV exports!
+ * The Following functions or features disabled by default in this Input class:
+ *  @li TAB gestures
+ *  @li Drag and Drop
+ *  @li HTML and Formatted rich text
+ *  @li Focus Policy restricted to mouse click focus only
+ *
  * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ATextEdit final : public QTextEdit {
@@ -34,12 +39,11 @@ private:
   void keyPressEvent(QKeyEvent *) override;
   void keyReleaseEvent(QKeyEvent *) override;
 
-  /**
-   * @brief Pattern for remove SQL injection code
-   */
-  static const QRegularExpression pattern();
-
 public Q_SLOTS:
+  /**
+   * @brief set plain text
+   * @note Contains the strip() function
+   */
   void setText(const QString &);
 
 public:
@@ -48,9 +52,26 @@ public:
    */
   explicit ATextEdit(QWidget *parent = nullptr);
 
-  const QString strip(const QString &) const;
-
+  /**
+   * @brief current plain text
+   * @note Contains the strip() function
+   */
   const QString text();
+
+  /**
+   * @brief Remove unwanted Character sets
+   * Some simple remove or replacements to prevent SQL and CSV export errors.
+   *
+   * Remove:
+   *  @li double Spaces,
+   *  @li Tabs
+   *
+   * Replace:
+   *  @li Quotes with: ’
+   *  @li Greater than sign with: »
+   *  @li Smaller than sign with: «
+   */
+  static const QString strip(const QString &);
 };
 
 } // namespace AntiquaCRM

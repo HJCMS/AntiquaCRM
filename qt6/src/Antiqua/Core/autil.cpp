@@ -11,14 +11,6 @@
 
 namespace AntiquaCRM {
 
-const QRegularExpression AUtil::strip_lineends() {
-  return QRegularExpression("[\\n\\r]+");
-}
-
-const QRegularExpression AUtil::strip_spaces() {
-  return QRegularExpression("[\\s\\t]+");
-}
-
 const QString AUtil::socketName() {
   QString _name(ANTIQUACRM_CONNECTION_DOMAIN);
   _name.append("-");
@@ -34,9 +26,17 @@ const QString AUtil::socketName() {
 }
 
 const QString AUtil::trim(const QString &str) {
-  QString _str(str.trimmed());
-  _str.replace(strip_lineends(), " ");
-  _str.replace(strip_spaces(), " ");
+  QString _str = str.trimmed();
+  static const QRegularExpression pcr1("[\\n\\r]+",
+                                       QRegularExpression::NoPatternOption);
+  _str.replace(pcr1, " ");
+
+  static const QRegularExpression pcr2("(\\b[\\s\\t]+\\b)",
+                                       QRegularExpression::NoPatternOption);
+  _str.replace(pcr2, " ");
+
+  _str.squeeze();
+
   return _str.trimmed();
 }
 
