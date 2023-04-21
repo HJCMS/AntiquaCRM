@@ -13,5 +13,3 @@ perf.data
 build-*
 build_*
 CMakeLists.txt.user
-database/
-share/
