@@ -1,3 +1,6 @@
 [submodule "qt5/src/i18n/qt5-tr"]
 	path = qt5/src/i18n/qt5-tr
 	url = https://github.com/qt/qttranslations
+[submodule "qt6/src/i18n/qt6-tr"]
+	path = qt6/src/i18n/qt6-tr
+	url = https://github.com/qt/qttranslations
