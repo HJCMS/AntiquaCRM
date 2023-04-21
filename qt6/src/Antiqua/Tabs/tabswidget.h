@@ -33,6 +33,9 @@ protected:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::TabsBar *m_tabBar;
 
+Q_SIGNALS:
+  void sendMessage(const QString &);
+
 public Q_SLOTS:
   void setViewTab();
 

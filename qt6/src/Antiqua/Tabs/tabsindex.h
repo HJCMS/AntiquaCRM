@@ -160,6 +160,11 @@ public:
   explicit TabsIndex(const char *index, QWidget *parent = nullptr);
 
   /**
+   * @brief Fixed Title for Window and Message boxes
+   */
+  virtual const QString getTitle() const = 0;
+
+  /**
    * @brief Which Stacked index is currently in use?
    * This allows widgets to be set variably
    */

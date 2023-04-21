@@ -87,9 +87,15 @@ AntiquaCRM::TabsIndex *TabsWidget::tabWithName(const QString &name) {
 bool TabsWidget::unloadTabs() {
   for (int t = 0; t < count(); t++) {
     TabsIndex *m_tab = tabWithIndex(t);
-    // TODO Check Editor opened
-    if (m_tab != nullptr)
-      removeTab(t);
+    if (m_tab == nullptr)
+      continue;
+
+    if (m_tab->currentView() != TabsIndex::ViewPage::MainView) {
+      setCurrentIndex(t);
+      emit sendMessage(tr("'%1' Editor is open!").arg(m_tab->getTitle()));
+      return false;
+    }
+    removeTab(t);
   }
   return true;
 }

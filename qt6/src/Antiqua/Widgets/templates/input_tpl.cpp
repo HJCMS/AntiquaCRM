@@ -15,18 +15,16 @@ namespace AntiquaCRM {
 }
 
 void @CLASSNAME@::valueChanged() {
-  if (isValid())
-    setWindowModified(true);
+  //
+  setWindowModified(true);
 }
 
 void @CLASSNAME@::initData() {
   QSqlField _f;
   _f.setMetaType(QMetaType(QMetaType::Int));
+  // Required | Optional
   _f.setRequiredStatus(QSqlField::Required);
-  _f.setDefaultValue(0);
-  if (!objectName().isEmpty())
-    _f.setName(objectName());
-
+  // _f.setDefaultValue(0);
   setRestrictions(_f);
   setWindowModified(false);
 }
@@ -52,9 +50,12 @@ void @CLASSNAME@::setValue(const QVariant &value) {
 void @CLASSNAME@::setFocus() { m_edit->setFocus(); }
 
 void @CLASSNAME@::reset() {
-  setWindowModified(false);
+  // Some clear options
   // m_edit->clear();
   // m_edit->setValue(m_edit->minimum());
+
+  // The last line
+  setWindowModified(false);
 }
 
 void @CLASSNAME@::setRestrictions(const QSqlField &field) {
@@ -82,14 +83,17 @@ bool @CLASSNAME@::isValid() {
 }
 
 const QVariant @CLASSNAME@::getValue() {
+  // Final Return value for database
   return QVariant(); //m_edit->value();
 }
 
 const QString @CLASSNAME@::popUpHints() {
+  // MessageBox Notifications
   return tr("__TODO__");
 }
 
 const QString @CLASSNAME@::statusHints() {
+  // StatusBar Notifications
   return tr("__TODO__");
 }
 
