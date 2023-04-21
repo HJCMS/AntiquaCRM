@@ -29,6 +29,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
 
   connect(m_menuBar, SIGNAL(sendApplicationQuit()),
           SIGNAL(sendApplicationQuit()));
+
+  connect(m_tabWidget, SIGNAL(sendMessage(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
 }
 
 MainWindow::~MainWindow() {
@@ -83,9 +86,7 @@ bool MainWindow::loadTabInterfaces() {
   return false;
 }
 
-void MainWindow::setTabsModified(bool b) {
-  setWindowModified(b);
-}
+void MainWindow::setTabsModified(bool b) { setWindowModified(b); }
 
 void MainWindow::setAction(const QJsonObject &obj) {
   if (obj.contains("window_operation")) {
