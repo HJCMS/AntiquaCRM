@@ -1,0 +1,3 @@
+[submodule "qt5/src/i18n/qt5-tr"]
+	path = qt5/src/i18n/qt5-tr
+	url = https://github.com/qt/qttranslations
