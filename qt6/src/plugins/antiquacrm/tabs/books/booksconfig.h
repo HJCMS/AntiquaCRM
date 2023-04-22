@@ -9,6 +9,11 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSCONFIG_H
 #define ANTIQUACRM_PLUGIN_BOOKSCONFIG_H
 
+/**
+ * @brief Books tab plugin Macros
+ * @ingroup TabsPlugin
+ * @{
+ */
 #ifndef BOOKS_INTERFACE_NAME
 #define BOOKS_INTERFACE_NAME "books"
 #endif
@@ -28,5 +33,9 @@
 #ifndef BOOKS_ALWAYS_ADD_ONLOAD
 #define BOOKS_ALWAYS_ADD_ONLOAD true
 #endif
+
+/**
+ * @}
+ */
 
 #endif

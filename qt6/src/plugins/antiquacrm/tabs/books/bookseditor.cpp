@@ -549,7 +549,7 @@ void BooksEditor::createSqlUpdate() {
   }
 
   if (changes == 0) {
-    sendStatusMessage(tr("No Modifications found, Update aborted!"));
+    pushStatusMessage(tr("No Modifications found, Update aborted!"));
     setWindowModified(false);
     return;
   }
@@ -752,7 +752,7 @@ void BooksEditor::setRemoveThumbnail(qint64 articleId) {
     thumbnail.setFileId(_id);
     if (thumbnail.removeFromDatabase(m_sql, _id)) {
       m_thumbnail->clear();
-      sendStatusMessage(tr("Image delete successfully!"));
+      pushStatusMessage(tr("Image delete successfully!"));
     }
   }
 }
@@ -760,7 +760,7 @@ void BooksEditor::setRemoveThumbnail(qint64 articleId) {
 void BooksEditor::setImportEditImage() {
   qint64 _id = ib_id->getValue().toLongLong();
   if (_id < 1) {
-    sendStatusMessage(tr("No Article number for Image import!"));
+    pushStatusMessage(tr("No Article number for Image import!"));
     return;
   }
 

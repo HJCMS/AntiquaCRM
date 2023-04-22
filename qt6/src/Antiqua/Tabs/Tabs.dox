@@ -1,0 +1,13 @@
+/**
+ * @section AntiquaTabs Interface library
+ * @short AntiquaCRM Tabs interface library
+ *
+ * @addtogroup AntiquaTabs
+ * @{
+ *  @defgroup TabsPlugin Tabs
+ *     @brief Primary Tabs
+ *
+ *  @defgroup ProviderPlugin Provider
+ *     @brief Provider Plugins
+ * @}
+ */

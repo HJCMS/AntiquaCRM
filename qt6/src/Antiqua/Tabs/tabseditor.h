@@ -16,8 +16,8 @@
 #include <QJsonObject>
 #include <QObject>
 #include <QRegularExpression>
-#include <QSqlField>
 #include <QSignalMapper>
+#include <QSqlField>
 #include <QStringList>
 #include <QVariant>
 #include <QWidget>
@@ -25,7 +25,9 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Main Editor Interfaces class
+ * @class TabsEditor
+ * @brief InventoryEditor
+ * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsEditor : public QWidget {
   Q_OBJECT
@@ -40,15 +42,15 @@ protected:
   AntiquaCRM::ASettings *m_cfg;
 
   /**
-   * @brief Regulärer Ausdruck für "findChild|findChildren"
-   * Die Objektnamen der Eingabedatenfelder sollten Identisch mit den
-   * Tabellenfeldnamen in @ref inputFields sein!
+   * @brief Regular expression for "findChild|findChildren"
+   * The object names of the input data fields should be identical to the table
+   * field names in @ref inputFields!
    * @code
-   *  Tabelle "inventory_books" beginnen die Feldenamen immer mit "ib_*"
-   *  Daraus ergibt sich folgender Regulärer Ausdruck für die Objektsuche:
+   *  Table "inventory_books" the field names always start with "ib_*"
+   *  This results in the following regular expression for the object search:
    *    ^ib_[a-z_]+\\b$
    * @endcode
-   * @note Bei PostgreSQL sind Feldnamen immer in Kleinschrift!
+   * @note With PostgreSQL, field names are always in lower case!
    */
   const QRegularExpression fieldPattern;
 
@@ -58,10 +60,7 @@ protected:
   QStringList inputFields;
 
   /**
-   * @brief Alle Eingabefelder in @ref inputFields einfügen.
-   * Hier wird aus den Tabellenfeldern die Eingabeliste für @ref inputFields
-   * erstellt. Dient als Helfer für das erstellen der SQL Statements und der
-   * Datenprüfung verwendet wird.
+   * @brief Put all input fields in @ref inputFields.
    */
   virtual void setInputFields() = 0;
 
@@ -71,12 +70,12 @@ protected:
   bool registerInputChanged();
 
   /**
-   * @brief Sucht nach Tabellen Feldname in @ref inputFields
+   * @brief Searches for table field name in @ref inputFields
    */
   bool isInputField(const QString &name);
 
   /**
-   * @brief Suche @ref SerialID Werte mit Objektname.
+   * @brief Find @ref SerialID values with object name.
    */
   qint64 getSerialID(const QString &name);
 
@@ -94,103 +93,89 @@ protected:
   getInputEditList(const QRegularExpression &pcre);
 
   /**
-   * @brief Nehme Daten von AntiquaWidgets::InputEdit
+   * @brief get data from AntiquaCRM::AbstractInput::objectName()
    */
   const QVariant getDataValue(const QString &name);
 
   /**
-   * @brief Liste der Datenfelder welche in @ref inputFields enthalten sind.
-   * Jedoch \b nicht in SQL::{UPDATE|INSERT}s aufgenommen werden sollen!
+   * @brief List of data fields contained in @ref inputFields.
+   * However, should not be included in SQL::{UPDATE|INSERT}s!
    */
   QStringList ignoreFields;
 
   /**
-   * @brief Sucht nach Tabellen Feldname in @ref ignoreFields
+   * @brief Searches for table field name in @ref ignoreFields.
    */
   bool isIgnoredField(const QString &fieldName);
 
   /**
-   * @brief Diese Container Klasse enthält alle Artikeldaten.
-   * Sie werden beim öffnen mit @ref openEditEntry eingelesen.
-   * Die Initialisierung erfolgt Typischerweise in @ref setInputFields()
+   * @brief This container class contains all sql item data.
    */
   AntiquaCRM::ASqlDataQuery *m_tableData;
 
   /**
-   * @brief Setze Standard Eingabefeld Optionen
-   * Wird nur bei \ref createNewEntry() benötigt!
-   * @note Benötigt AntiquaCRM::ASqlDataQuery
+   * @brief Set default input field options onLoad.
+   * @note Requires AntiquaCRM::ASqlDataQuery
    */
   void setDefaultInput(const QSqlField &);
 
   /**
-   * @brief Mit Zeiger auf Objekt-/Feldnamen Datenfeld befüllen.
-   * @param field - Ist der SQL Datenfeldbezeichner der Identisch mit dem
-   * Eingabe::Objektnamen ist.
-   * @param value - Tabellenspalten Wert
+   * @brief Fill data field with pointer to object/field name.
+   * @param field - Is the SQL array identifier that is the same as
+   *                Input::ObjectName.
+   * @param value - Current Value
    */
   virtual bool setDataField(const QSqlField &field, const QVariant &value) = 0;
 
   /**
-   * @brief Durchläuft @ref AntiquaCRM::ASqlDataQuery
-   * Buchdaten auslesen und @ref setDataField aufrufen.
+   * @brief Runs through AntiquaCRM::ASqlDataQuery
+   * Find data fields and call setDataField() here.
    */
   virtual void importSqlResult() = 0;
 
   /**
-   * @brief Erstelltes SQL Statements an die Datenbank senden.
+   * @brief Sends SQL statements to the database.
    */
   virtual bool sendSqlQuery(const QString &query) = 0;
 
   /**
-   * @brief Prüft und erstellt die Datensatzfelder.
-   *
-   * In dieser Methode werden alle Datenfelder von InputEdit abgefragt
-   * und bei Erfolg in den Hash geschrieben. Die Erstellung ist von mehreren
-   * Faktoren abhängig und beinhaltet folgende Vorgangsweise, welche sich für
-   * jedes Datenfeld wiederholt.
-   *
-   * @li Prüfe Datenfeld Klasse auf @b isRequired() @b isValid()
-   * @li Wenn die vorherige Abfrage fehlschlägt dann:
-   *  a) MessageBox aufrufen,
-   *  b) setFocus auf das Datenfeld,
-   *  c) den Hash wieder leeren und abbrechen.
-   *
-   * Die Leerung muss zur Fehlervermeidung und für die Abfrage Methoden
-   * durchgeführt werden.
+   * @brief Checks and creates the record fields.
+   * In this method, all data fields of InputEdit are queried and written to the
+   * hash if successful. The creation depends on several factors and includes
+   * the following procedure, which is repeated for each data field.
+   * Flushing must be done for error prevention and for querying methods.
    */
   virtual const QHash<QString, QVariant> createSqlDataset() = 0;
 
   /**
-   * @brief SQL UPDATE Statement erstellen!
+   * @brief Create SQL UPDATE statement!
    */
   virtual void createSqlUpdate() = 0;
 
   /**
-   * @brief SQL INSERT Statement erstellen!
+   * @brief Create SQL INSERT statement!
    */
   virtual void createSqlInsert() = 0;
 
   /**
-   * @brief Mit Objectnamensliste alle Änderungen zurück setzen!
+   * @brief Reset all changes with object names list!
    */
   void setResetModified(const QStringList &objectList);
 
   /**
-   * @brief Eigenschaften für das Object setzen!
+   * @brief Set properties for the object!
    */
   void setProperties(const QString &objectName, QSqlField &field);
 
   /**
-   * @brief Sucht mit @ref fieldPattern nacht Datenfeldänderungen!
+   * @brief Uses "fieldPattern" to find modified values.
    */
   bool checkIsModified();
 
   /**
-   * @brief Sucht mit @ref fieldPattern nacht Datenfeld und vergleicht Werte.
+   * @brief Uses "fieldPattern", finds a data field and compare values.
    * @param name   - Objectname
    * @param origin - Origin (Restore Value)
-   * @return true if modified
    */
   bool isModifiedCompare(const QString &name, const QVariant &origin);
 
@@ -204,73 +189,81 @@ protected Q_SLOTS:
    */
   void checkInputModified(const QString &name);
 
+  /**
+   * @brief predefined Pop Up unsaved changes message
+   */
   void unsavedChangesPopup();
 
   /**
-   * @brief Statusnachricht senden.
+   * @brief send a status bar message.
    */
-  void sendStatusMessage(const QString &message);
+  void pushStatusMessage(const QString &message);
 
   /**
-   * @brief Article Status an Dienstleister senden.
+   * @brief Send article status to service provider.
    */
   void pushPluginOperation(const QJsonObject &obj);
 
   /**
-   * @brief Ruft die reset() Methode Eingabefelder auf!
-   * @note Die "reset" Funktion der Eingabefelder verwendet auch
-   * setModified(false)!
+   * @brief Calls the reset() from input fields!
    */
   void setResetInputFields();
 
   /**
-   * @brief Vorbereitung für die SQL- /Speichern Operationen.
+   * @brief Preparation for the SQL/Save operations.
    */
   virtual void setSaveData() = 0;
 
   /**
-   * @brief Methode zum durchführen verschiedener Prüfungen.
-   * @note Sollte immer vor setFinalLeaveEditor aufgerufen werden!
+   * @brief Method for performing various exit tests.
+   * @note Should always be called before setFinalLeaveEditor!
    */
   virtual void setCheckLeaveEditor() = 0;
 
   /**
-   * @brief Beenden/Verlassen
-   * Vor dem verlassen Aufräumen!
-   * Hier kann Abschließend das Signal::sendLeaveEditor gesendet werden.
+   * @brief Quit/Exit
+   * Clean up before leaving!
+   * Finally, the Signal sendLeaveEditor() must sent here.
    */
   virtual void setFinalLeaveEditor(bool force = true) = 0;
 
+  virtual void setStorageCompartments() = 0;
+
+  virtual void setLoadThumbnail(qint64) = 0;
+
+  virtual void setRemoveThumbnail(qint64) = 0;
+
+  virtual void setImportEditImage() = 0;
+
 Q_SIGNALS:
   /**
-   * @brief Sende Artikel Nummer an den Bilder Editor.
+   * @brief Send article number to image editor.
    */
   void sendEditImage(qint64);
 
   /**
-   * @brief Sende Artikel Nummer für Bilder hochladen.
+   * @brief Submit article number for upload pictures.
    */
   void sendUploadImage(qint64);
 
   /**
-   * @brief Editor Beenden
+   * @brief Send Editor Exit
    */
   void sendLeaveEditor();
 
   /**
-   * @brief Je nach Tab die Id an das Elternfenster senden!
+   * @brief Depending on the tab, send the id to the parent window!
    */
   void sendEditorAction(qint64);
 
 public Q_SLOTS:
   /**
-   * @brief Methode für das Zurücksetzen von Datenfeldern.
+   * @brief Method for resetting data fields.
    */
   virtual void setRestore() = 0;
 
 public:
   /**
-   * @brief InventoryEditor
    * @param pattern - Der Reguläre Ausdruck für @ref fieldPattern
    * @param parent
    */

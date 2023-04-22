@@ -27,6 +27,7 @@ CONFIGURE_FILE (AntiquaButtons.cmake
 )
 
 SET (_library_FILES
+ Widgets.dox
  AntiquaInput
  AntiquaInput.cmake
  AntiquaWidgets

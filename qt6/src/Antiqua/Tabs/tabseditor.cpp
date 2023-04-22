@@ -322,7 +322,7 @@ void TabsEditor::unsavedChangesPopup() {
   d->exec();
 }
 
-void TabsEditor::sendStatusMessage(const QString &message) {
+void TabsEditor::pushStatusMessage(const QString &message) {
   AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushStatusBarMessage(message))

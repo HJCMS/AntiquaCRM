@@ -20,6 +20,7 @@ CONFIGURE_FILE (AntiquaCRM.cmake
 )
 
 SET (projectLibrary_FILES
+ Core.dox
  aglobal.h.cmake
  AntiquaCRM.cmake
 )

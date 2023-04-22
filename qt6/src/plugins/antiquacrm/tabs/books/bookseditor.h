@@ -277,15 +277,15 @@ private Q_SLOTS:
    */
   void setFinalLeaveEditor(bool force = true) override;
 
-  void setStorageCompartments();
+  void setStorageCompartments() override;
 
   void setPrintBookCard();
 
-  void setLoadThumbnail(qint64 articleId);
+  void setLoadThumbnail(qint64) override;
 
-  void setRemoveThumbnail(qint64 articleId);
+  void setRemoveThumbnail(qint64) override;
 
-  void setImportEditImage();
+  void setImportEditImage() override;
 
 public Q_SLOTS:
   void setRestore() override;

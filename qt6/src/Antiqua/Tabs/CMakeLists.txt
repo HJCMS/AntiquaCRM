@@ -18,6 +18,7 @@ CONFIGURE_FILE (antiquatabs.h.cmake
 )
 
 SET (_library_FILES
+ Tabs.dox
  AntiquaTabs
  antiquatabs.h
  antiquatabs.h.cmake
