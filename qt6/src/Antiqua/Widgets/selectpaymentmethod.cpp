@@ -97,8 +97,7 @@ void SelectPaymentMethod::reset() {
 void SelectPaymentMethod::setReadOnly(bool b) { m_edit->setEnabled(!b); }
 
 void SelectPaymentMethod::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
+  setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
 void SelectPaymentMethod::setInputToolTip(const QString &tip) {

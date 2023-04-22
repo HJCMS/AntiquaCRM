@@ -77,16 +77,7 @@ void ConditionEdit::reset() {
   setWindowModified(false);
 }
 
-void ConditionEdit::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() != QSqlField::Required) {
-    setRequired(false);
-    return;
-  }
-
-  int _default = field.defaultValue().toInt();
-  if (_default != getValue().toInt()) {
-    setValue(_default);
-  }
+void ConditionEdit::setRestrictions(const QSqlField &) {
   setRequired(true);
 }
 
@@ -103,7 +94,7 @@ void ConditionEdit::setBuddyLabel(const QString &text) {
 }
 
 bool ConditionEdit::isValid() {
-  if (isRequired() && m_edit->currentIndex() == 0)
+  if (isRequired() && m_edit->currentIndex() < 1)
     return false;
 
   return true;
@@ -111,10 +102,7 @@ bool ConditionEdit::isValid() {
 
 const QVariant ConditionEdit::getValue() {
   int _c = m_edit->itemData(m_edit->currentIndex(), Qt::UserRole).toInt();
-  if (_c >= 0)
-    return static_cast<AntiquaCRM::Condition>(_c);
-  else
-    return AntiquaCRM::Condition::NO_CONDITION;
+  return static_cast<AntiquaCRM::Condition>(_c);
 }
 
 const QString ConditionEdit::popUpHints() {

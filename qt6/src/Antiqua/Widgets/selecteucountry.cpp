@@ -160,11 +160,6 @@ void SelectEUCountry::reset() {
 }
 
 void SelectEUCountry::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required) {
-    setRequired(true);
-  }
-  setRequired(false);
-
   if (m_edit->currentIndex() == 0) {
     QString _default = field.defaultValue().toString();
     if (_default.isEmpty())
@@ -172,6 +167,7 @@ void SelectEUCountry::setRestrictions(const QSqlField &field) {
 
     setValue(_default);
   }
+  setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
 void SelectEUCountry::setInputToolTip(const QString &tip) {

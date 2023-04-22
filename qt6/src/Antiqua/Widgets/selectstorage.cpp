@@ -166,8 +166,7 @@ const QStringList SelectStorage::getCompartments() {
 }
 
 void SelectStorage::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
+  setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
 void SelectStorage::setInputToolTip(const QString &tip) {

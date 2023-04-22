@@ -81,9 +81,8 @@ void BookBindingEdit::reset() {
   setWindowModified(false);
 }
 
-void BookBindingEdit::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
+void BookBindingEdit::setRestrictions(const QSqlField &) {
+  setRequired(true);
 }
 
 void BookBindingEdit::setInputToolTip(const QString &tip) {

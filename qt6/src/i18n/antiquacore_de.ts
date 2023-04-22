@@ -6,7 +6,7 @@
     <message>
         <location filename="../Antiqua/Widgets/acombobox.cpp" line="+35"/>
         <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohne Angaben</translation>
     </message>
 </context>
 <context>
@@ -14,142 +14,142 @@
     <message>
         <location filename="../Antiqua/Core/aeucountries.cpp" line="+11"/>
         <source>Non European Country</source>
-        <translation type="unfinished"></translation>
+        <translation>Außereuropäisches Land</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Belgium</source>
-        <translation type="unfinished"></translation>
+        <translation>Belgien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Bulgaria</source>
-        <translation type="unfinished"></translation>
+        <translation>Bulgarien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Denmark</source>
-        <translation type="unfinished"></translation>
+        <translation>Dänemark</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Germany</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutschland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Estonia</source>
-        <translation type="unfinished"></translation>
+        <translation>Estland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Finland</source>
-        <translation type="unfinished"></translation>
+        <translation>Finland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>France</source>
-        <translation type="unfinished"></translation>
+        <translation>Frankreich</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Greece</source>
-        <translation type="unfinished"></translation>
+        <translation>Griechenland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Ireland</source>
-        <translation type="unfinished"></translation>
+        <translation>Irland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italy</source>
-        <translation type="unfinished"></translation>
+        <translation>Italien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Croatia</source>
-        <translation type="unfinished"></translation>
+        <translation>Kroatien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Latvia</source>
-        <translation type="unfinished"></translation>
+        <translation>Lettland</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Lithuania</source>
-        <translation type="unfinished"></translation>
+        <translation>Litauen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Luxembourg</source>
-        <translation type="unfinished"></translation>
+        <translation>Luxemburg</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Malta</source>
-        <translation type="unfinished"></translation>
+        <translation>Malta</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Netherlands</source>
-        <translation type="unfinished"></translation>
+        <translation>Niederlande</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Austria</source>
-        <translation type="unfinished"></translation>
+        <translation>Österreich</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Poland</source>
-        <translation type="unfinished"></translation>
+        <translation>Polen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Portugal</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugal</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Romania</source>
-        <translation type="unfinished"></translation>
+        <translation>Rumänien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Sweden</source>
-        <translation type="unfinished"></translation>
+        <translation>Schweden</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slovakia</source>
-        <translation type="unfinished"></translation>
+        <translation>Slowakei</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slovenia</source>
-        <translation type="unfinished"></translation>
+        <translation>Slowenien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Spain</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Tschechien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Hungary</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungarn</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Cyprus</source>
-        <translation type="unfinished"></translation>
+        <translation>Zypern</translation>
     </message>
 </context>
 <context>
@@ -157,12 +157,12 @@
     <message>
         <location filename="../Antiqua/Widgets/alineedit.cpp" line="+23"/>
         <source>Show Completer Popup.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vervollständigungs Fenster anzeigen.</translation>
     </message>
     <message>
         <location line="+114"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation>Maximal zulässige Länge</translation>
     </message>
 </context>
 <context>
@@ -170,22 +170,22 @@
     <message>
         <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+100"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>Ja</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>Nein</translation>
     </message>
     <message>
         <location line="+14"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - Abfrage mit &apos;%2&apos; Zeilen beendet.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>%1 - Query without result!</source>
-        <translation type="unfinished"></translation>
+        <translation>%1 - Abfrage ergab kein Ergebnis!</translation>
     </message>
 </context>
 <context>
@@ -193,7 +193,7 @@
     <message>
         <location filename="../Antiqua/Widgets/awhatsthisbutton.cpp" line="+16"/>
         <source>Click here for Additional Information.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie hier für zusätzliche Informationen.</translation>
     </message>
 </context>
 <context>
@@ -201,7 +201,7 @@
     <message>
         <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+115"/>
         <source>A valid book binding is required for this input!</source>
-        <translation type="unfinished"></translation>
+        <translation>Für diese Eingabe ist eine gültige Buchbindung erforderlich!</translation>
     </message>
     <message>
         <location line="+1"/>

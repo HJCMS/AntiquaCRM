@@ -13,7 +13,7 @@ namespace AntiquaCRM {
 #endif
 
 #ifndef IMAGE_JPEG_QUALITY
-#define IMAGE_JPEG_QUALITY 85
+#define IMAGE_JPEG_QUALITY 90
 #endif
 
 ImageFileSource::ImageFileSource(const QString &target) : QFileInfo{} {
@@ -192,7 +192,7 @@ bool ImageFileSource::findInDatabase(AntiquaCRM::ASqlCore *db,
     setFileId(articleId);
   }
 #ifdef ANTIQUA_DEVELOPEMENT
-  else {
+  else if (!db->lastError().isEmpty()) {
     qDebug() << Q_FUNC_INFO << _sql << Qt::endl << db->lastError();
   }
 #endif

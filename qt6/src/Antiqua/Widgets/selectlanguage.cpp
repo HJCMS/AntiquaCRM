@@ -62,8 +62,7 @@ void SelectLanguage::reset() {
 }
 
 void SelectLanguage::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
+  setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
 void SelectLanguage::setInputToolTip(const QString &tip) {

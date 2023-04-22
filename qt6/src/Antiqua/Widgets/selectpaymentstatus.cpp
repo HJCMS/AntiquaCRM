@@ -76,8 +76,7 @@ void SelectPaymentStatus::reset() {
 }
 
 void SelectPaymentStatus::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
+  setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
 void SelectPaymentStatus::setInputToolTip(const QString &tip) {

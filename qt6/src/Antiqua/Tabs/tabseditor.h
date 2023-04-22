@@ -276,7 +276,10 @@ public:
    */
   explicit TabsEditor(const QString &pattern, QWidget *parent = nullptr);
 
-  virtual ~TabsEditor();
+  /**
+   * @brief Savelly unload
+   */
+  virtual ~TabsEditor() = 0;
 
   /**
    * @brief Einen Artikel zum bearbeiten öffnen.

@@ -360,6 +360,16 @@ BooksEditor::BooksEditor(QWidget *parent)
   connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintBookCard()));
 }
 
+BooksEditor::~BooksEditor() {
+  ignoreFields.clear();
+  inputFields.clear();
+  if (m_sql != nullptr)
+    m_sql->deleteLater();
+
+  if (m_cfg != nullptr)
+    m_cfg->deleteLater();
+}
+
 void BooksEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
@@ -489,7 +499,8 @@ const QHash<QString, QVariant> BooksEditor::createSqlDataset() {
       continue;
 
     // qDebug() << objName << cur->isRequired() << cur->isValid() <<
-    // cur->value();
+    // cur->getValue();
+
     if (cur->isRequired() && !cur->isValid()) {
       openNoticeMessage(cur->popUpHints());
       cur->setFocus();
