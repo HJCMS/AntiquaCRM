@@ -81,7 +81,7 @@ void Application::initGui() {
 
 void Application::applicationQuit() {
   // close
-  if(!m_window->closeWindow()) {
+  if (!m_window->closeWindow()) {
     m_window->showNormal();
     m_systray->setMessage(tr("Please close all editors before exiting!"));
     return;

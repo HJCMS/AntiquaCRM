@@ -22,6 +22,11 @@ ConfigGeneral::ConfigGeneral(QWidget *parent)
   m_currency->appendStretch(1);
   layout->addWidget(m_currency, row++, 0, 1, 2);
 
+  AntiquaCRM::SelectEUCountry *mc = new AntiquaCRM::SelectEUCountry(this);
+  mc->setBuddyLabel(tr("Country"));
+  mc->appendStretch(1);
+  layout->addWidget(mc, row++, 0, 1, 2);
+
   m_vatNormal = new AntiquaCRM::NumEdit(this);
   m_vatNormal->setBuddyLabel(tr("Tax Normal"));
   m_vatNormal->setSuffix("%");

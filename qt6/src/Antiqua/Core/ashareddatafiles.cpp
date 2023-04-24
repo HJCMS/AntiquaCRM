@@ -9,6 +9,7 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include <QJsonParseError>
+#include <QLocale>
 #include <QTextStream>
 
 namespace AntiquaCRM {
@@ -90,11 +91,18 @@ bool ASharedDataFiles::storeJson(const QString &basename,
 const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
   QJsonDocument doc;
   QJsonParseError parseHandle;
-  QFileInfo info(path(), basename + ".json");
+
+  QString lng = QLocale::system().name();
+  lng = lng.split("_").last().toLower();
+  QFileInfo info(path(), basename + "_" + lng + ".json");
+  if (!info.isReadable())
+    info.setFile(path(), basename + ".json");
+
   if (!info.isReadable()) {
     qWarning("No File or Permission denied (%s).", qPrintable(info.filePath()));
     return doc;
   }
+
   QFile fp(info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream data(&fp);

@@ -3,6 +3,7 @@
 
 SET (json_data_FILES
  european_countries.json
+ european_countries_de.json
  iso_countrycodes.json
  id3taglist.json
  salutations.json

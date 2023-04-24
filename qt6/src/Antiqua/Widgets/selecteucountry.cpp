@@ -24,8 +24,7 @@ SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
   p_list.clear();
 }
 
-const QString
-SelectEUCountryModel::translateToName(const QString &iso) const {
+const QString SelectEUCountryModel::translateToName(const QString &iso) const {
   QMap<QString, QString> _map;
   _map.insert("XX", tr("Non European Country"));
   _map.insert("BE", tr("Belgium"));
@@ -101,28 +100,24 @@ QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
 }
 
 bool SelectEUCountryModel::initModel() {
-  AntiquaCRM::AEUCountries countries;
-  if (countries.size() < 1)
-    return false;
-
-  int row = 0;
-  beginInsertRows(createIndex(row, 0), 0, countries.size());
-  // No Selection (Fix sort order)
-  EUCountry _item(row++, "XX", tr("Non European Country"));
-  p_list.append(_item);
-
-  QMapIterator<QString, QString> it(countries);
-  while (it.hasNext()) {
-    it.next();
-    QString _name = translateToName(it.key());
-    if (_name.isEmpty())
-      qDebug() << "initModel:" << it.key() << it.value() << _name;
-
-    if (it.key() != "XX")
-      p_list.append(EUCountry(row++, it.key(), _name));
+  AntiquaCRM::ASharedDataFiles files(AntiquaCRM::ASettings::getDataDir("json"));
+  QJsonObject obj = files.getJson("european_countries").object();
+  QStringList _keys = obj.keys();
+  if (_keys.size() > 0) {
+    int row = 0;
+    QJsonArray _arr = obj.value("european_countries").toArray();
+    beginInsertRows(createIndex(row, 0), 0, _arr.size() + 1);
+    // No Selection (Fix sort order)
+    EUCountry _item(row++, "XX", tr("Non European Country"));
+    p_list.append(_item);
+    for (int i = 0; i < _arr.size(); i++) {
+      QJsonObject item = _arr[i].toObject();
+      EUCountry eu(row++, item.value("code").toString(),
+                   item.value("country").toString());
+      p_list.append(eu);
+    }
+    endInsertRows();
   }
-  endInsertRows();
-
   return (p_list.size() > 0);
 }
 
