@@ -10,149 +10,6 @@
     </message>
 </context>
 <context>
-    <name>AntiquaCRM::AEUCountries</name>
-    <message>
-        <location filename="../Antiqua/Core/aeucountries.cpp" line="+11"/>
-        <source>Non European Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Belgium</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Bulgaria</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Denmark</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Germany</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Estonia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Finland</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>France</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Greece</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Ireland</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Italy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Croatia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Latvia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Lithuania</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Luxembourg</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Malta</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Netherlands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Austria</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Poland</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Portugal</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Romania</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Sweden</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Slovakia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Slovenia</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Spain</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Czech</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hungary</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Cyprus</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>AntiquaCRM::ALineEdit</name>
     <message>
         <location filename="../Antiqua/Widgets/alineedit.cpp" line="+23"/>
@@ -199,7 +56,7 @@
 <context>
     <name>AntiquaCRM::BookBindingEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+115"/>
+        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+114"/>
         <source>A valid book binding is required for this input!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -255,7 +112,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+91"/>
         <source>Missing Condition for this Article!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -280,6 +137,15 @@
     <message>
         <location line="+4"/>
         <source>Article count is to low!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::CurrencySelector</name>
+    <message>
+        <location filename="../Antiqua/Widgets/currencyselector.cpp" line="+94"/>
+        <location line="+5"/>
+        <source>__TODO__</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -820,7 +686,7 @@
 <context>
     <name>AntiquaCRM::SelectEUCountry</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+203"/>
+        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+199"/>
         <source>A valid Country selection is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -908,7 +774,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+60"/>
         <source>Language field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -986,7 +852,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+68"/>
         <source>a Valid payment method is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,7 +890,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+62"/>
         <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1047,7 +913,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+173"/>
         <source>Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1416,6 +1282,14 @@
     <message>
         <location filename="../Antiqua/Widgets/yearedit.cpp" line="+86"/>
         <source>A valid Year must set!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../Antiqua/Core/aeucountries.cpp" line="+10"/>
+        <source>Non European Country</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

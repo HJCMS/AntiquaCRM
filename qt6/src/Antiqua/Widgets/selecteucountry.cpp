@@ -9,9 +9,9 @@
 namespace AntiquaCRM {
 
 // BEGIN::CountryItem
-EUCountry::EUCountry(int ro, QString ke, QString na) {
+EUCountry::EUCountry(int ro, QString is, QString na) {
   index = ro;
-  bcp47 = ke;
+  iso = is;
   name = na;
 }
 // END::CountryItem
@@ -22,6 +22,41 @@ SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
       euIcon(AntiquaApplIcon("european-flag")),
       nonIcon(AntiquaApplIcon("dialog-warning")) {
   p_list.clear();
+}
+
+const QString
+SelectEUCountryModel::translateToName(const QString &iso) const {
+  QMap<QString, QString> _map;
+  _map.insert("XX", tr("Non European Country"));
+  _map.insert("BE", tr("Belgium"));
+  _map.insert("BG", tr("Bulgaria"));
+  _map.insert("DK", tr("Denmark"));
+  _map.insert("DE", tr("Germany"));
+  _map.insert("EE", tr("Estonia"));
+  _map.insert("FI", tr("Finland"));
+  _map.insert("FR", tr("France"));
+  _map.insert("GR", tr("Greece"));
+  _map.insert("IE", tr("Ireland"));
+  _map.insert("IT", tr("Italy"));
+  _map.insert("HR", tr("Croatia"));
+  _map.insert("LV", tr("Latvia"));
+  _map.insert("LT", tr("Lithuania"));
+  _map.insert("LU", tr("Luxembourg"));
+  _map.insert("MT", tr("Malta"));
+  _map.insert("NL", tr("Netherlands"));
+  _map.insert("AT", tr("Austria"));
+  _map.insert("PL", tr("Poland"));
+  _map.insert("PT", tr("Portugal"));
+  _map.insert("RO", tr("Romania"));
+  _map.insert("SE", tr("Sweden"));
+  _map.insert("SK", tr("Slovakia"));
+  _map.insert("SI", tr("Slovenia"));
+  _map.insert("SV", tr("Sweden"));
+  _map.insert("ES", tr("Spain"));
+  _map.insert("CZ", tr("Czechia"));
+  _map.insert("HU", tr("Hungary"));
+  _map.insert("CY", tr("Cyprus"));
+  return _map.value(iso.toUpper());
 }
 
 int SelectEUCountryModel::rowCount(const QModelIndex &parent) const {
@@ -44,13 +79,13 @@ QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
 
   case (Qt::EditRole):
   case (Qt::UserRole):
-    return _country.bcp47;
+    return _country.iso;
 
   case (Qt::ToolTipRole):
     return _country.name;
 
   case (Qt::DecorationRole):
-    return (_country.bcp47 == "XX") ? nonIcon : euIcon;
+    return (_country.iso == "XX") ? nonIcon : euIcon;
 
   case (Qt::BackgroundRole):
     return ((row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
@@ -66,21 +101,25 @@ QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
 }
 
 bool SelectEUCountryModel::initModel() {
-  AntiquaCRM::AEUCountries countries(this);
+  AntiquaCRM::AEUCountries countries;
   if (countries.size() < 1)
     return false;
 
   int row = 0;
   beginInsertRows(createIndex(row, 0), 0, countries.size());
   // No Selection (Fix sort order)
-  EUCountry _item(row++, "XX", countries.country("XX"));
+  EUCountry _item(row++, "XX", tr("Non European Country"));
   p_list.append(_item);
 
   QMapIterator<QString, QString> it(countries);
   while (it.hasNext()) {
     it.next();
+    QString _name = translateToName(it.key());
+    if (_name.isEmpty())
+      qDebug() << "initModel:" << it.key() << it.value() << _name;
+
     if (it.key() != "XX")
-      p_list.append(EUCountry(row++, it.key(), it.value()));
+      p_list.append(EUCountry(row++, it.key(), _name));
   }
   endInsertRows();
 

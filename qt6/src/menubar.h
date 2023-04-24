@@ -26,6 +26,9 @@ private:
 Q_SIGNALS:
   void sendApplicationQuit();
 
+public Q_SLOTS:
+  void openConfiguration();
+
 public:
   explicit MenuBar(QWidget *parent = nullptr);
   void setViewsMenu(QMenu *);

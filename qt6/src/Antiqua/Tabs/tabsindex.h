@@ -17,6 +17,11 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class TabsIndex
+ * @brief Tabs Inventory
+ * @ingroup TabsInterface
+ */
 class ANTIQUACRM_LIBRARY TabsIndex : public QStackedWidget {
   Q_OBJECT
   Q_PROPERTY(bool closable READ isClosable WRITE setClosable NOTIFY
@@ -153,7 +158,6 @@ public:
   };
 
   /**
-   * @brief Tabs Inventory
    * @param index - Uniq tab Index Name
    * @param parent
    */

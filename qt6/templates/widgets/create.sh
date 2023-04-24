@@ -9,6 +9,7 @@
 set +x
 
 _script_base=${HOME}/Developement/antiqua/qt6/templates/widgets
+_source_base=${HOME}/Developement/antiqua/qt6/src/Antiqua/Widgets
 _classname=$1
 
 if [ $(basename ${_script_base}) != "widgets" ] ; then
@@ -37,9 +38,9 @@ _macro="`echo ${_classname} | awk '{print toupper($1)}'`"
 
 _filename="`echo ${_classname} | awk '{print tolower($1)}'`"
 
-if [[ -e ${_filename}.h ]] || [[ -e ${_filename}.cpp ]]  ; then
+if [[ -e ${_source_base}/${_filename}.h ]] || [[ -e ${_source_base}/${_filename}.cpp ]]  ; then
   echo "Already Exits - abort!"
-  ls -ltGh ${_filename}.* 2> /dev/null
+  ls -ltGh ${_source_base}/${_filename}.* 2> /dev/null
   exit 1
 fi
 
@@ -48,19 +49,21 @@ if test -r ${_script_base}/input_tpl.h ; then
  cat ${_script_base}/input_tpl.h | \
    sed "s,@YEAR@,$(date +"%Y"),gm" | \
    sed "s,@CLASSMACRO@,${_macro},gm" | \
-   sed "s,@CLASSNAME@,${_classname},m" > ${_filename}.h
+   sed "s,@CLASSNAME@,${_classname},m" > ${_source_base}/${_filename}.h
 fi
 
 if test -r ${_script_base}/input_tpl.cpp ; then
  echo "Generate: ${_filename}.cpp"
  cat ${_script_base}/input_tpl.cpp | \
    sed "s,@CLASSNAME@,${_classname},gm" | \
-   sed "s,@INCLUDE@,${_filename},m" > ${_filename}.cpp
+   sed "s,@INCLUDE@,${_filename},m" > ${_source_base}/${_filename}.cpp
 fi
 
 echo "created ..."
-ls -ltGh ${_filename}.{h,cpp}
+ls -ltGh ${_source_base}/${_filename}.{h,cpp}
 cat <<EOF
+
+Basename: ${_filename}
 
 // AntiquaCRM::${_classname}
 #include "${_filename}.h"

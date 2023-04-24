@@ -21,6 +21,9 @@
 // AntiquaCRM::TabsInterface
 #include "tabsinterface.h"
 
+// AntiquaCRM::TabsConfigWidget
+#include "tabsconfigwidget.h"
+
 // AntiquaCRM::TabsLoader
 #include "tabsloader.h"
 

@@ -10,149 +10,6 @@
     </message>
 </context>
 <context>
-    <name>AntiquaCRM::AEUCountries</name>
-    <message>
-        <location filename="../Antiqua/Core/aeucountries.cpp" line="+11"/>
-        <source>Non European Country</source>
-        <translation>Außereuropäisches Land</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Belgium</source>
-        <translation>Belgien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Bulgaria</source>
-        <translation>Bulgarien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Denmark</source>
-        <translation>Dänemark</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Germany</source>
-        <translation>Deutschland</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Estonia</source>
-        <translation>Estland</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Finland</source>
-        <translation>Finland</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>France</source>
-        <translation>Frankreich</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Greece</source>
-        <translation>Griechenland</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Ireland</source>
-        <translation>Irland</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Italy</source>
-        <translation>Italien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Croatia</source>
-        <translation>Kroatien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Latvia</source>
-        <translation>Lettland</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Lithuania</source>
-        <translation>Litauen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Luxembourg</source>
-        <translation>Luxemburg</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Malta</source>
-        <translation>Malta</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Netherlands</source>
-        <translation>Niederlande</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Austria</source>
-        <translation>Österreich</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Poland</source>
-        <translation>Polen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Portugal</source>
-        <translation>Portugal</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Romania</source>
-        <translation>Rumänien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Sweden</source>
-        <translation>Schweden</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Slovakia</source>
-        <translation>Slowakei</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Slovenia</source>
-        <translation>Slowenien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Spain</source>
-        <translation>Spanien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Czech</source>
-        <translation>Tschechien</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Hungary</source>
-        <translation>Ungarn</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Cyprus</source>
-        <translation>Zypern</translation>
-    </message>
-</context>
-<context>
     <name>AntiquaCRM::ALineEdit</name>
     <message>
         <location filename="../Antiqua/Widgets/alineedit.cpp" line="+23"/>
@@ -199,7 +56,7 @@
 <context>
     <name>AntiquaCRM::BookBindingEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+115"/>
+        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+114"/>
         <source>A valid book binding is required for this input!</source>
         <translation>Für diese Eingabe ist eine gültige Buchbindung erforderlich!</translation>
     </message>
@@ -255,7 +112,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+103"/>
+        <location line="+91"/>
         <source>Missing Condition for this Article!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -284,6 +141,15 @@
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::CurrencySelector</name>
+    <message>
+        <location filename="../Antiqua/Widgets/currencyselector.cpp" line="+94"/>
+        <location line="+5"/>
+        <source>__TODO__</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::DateTimeInfo</name>
     <message>
         <location filename="../Antiqua/Widgets/datetimeinfo.cpp" line="+89"/>
@@ -296,7 +162,7 @@
     <message>
         <location filename="../Antiqua/Widgets/emailedit.cpp" line="+75"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Maximal zulässige Länge</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -686,7 +552,7 @@
     <message>
         <location filename="../Antiqua/Widgets/phoneedit.cpp" line="+192"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Maximal zulässige Länge</translation>
     </message>
     <message>
         <location line="+37"/>
@@ -820,7 +686,7 @@
 <context>
     <name>AntiquaCRM::SelectEUCountry</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+203"/>
+        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+199"/>
         <source>A valid Country selection is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -908,7 +774,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+60"/>
         <source>Language field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -986,7 +852,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+68"/>
         <source>a Valid payment method is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1024,7 +890,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+62"/>
         <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1047,7 +913,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+173"/>
         <source>Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1403,7 +1269,7 @@
     <message>
         <location filename="../Antiqua/Widgets/textline.cpp" line="+74"/>
         <source>Max allowed length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Maximal zulässige Länge</translation>
     </message>
     <message>
         <location line="+31"/>
@@ -1417,6 +1283,14 @@
         <location filename="../Antiqua/Widgets/yearedit.cpp" line="+86"/>
         <source>A valid Year must set!</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>QObject</name>
+    <message>
+        <location filename="../Antiqua/Core/aeucountries.cpp" line="+10"/>
+        <source>Non European Country</source>
+        <translation>Außereuropäisches Land</translation>
     </message>
 </context>
 </TS>

@@ -22,16 +22,16 @@ namespace AntiquaCRM {
  */
 class ANTIQUACRM_LIBRARY EUCountry final {
 public:
-  int index;     /**< @brief Sort order index */
-  QString bcp47; /**< @brief ISO 3166-1 Alpha-2 Code */
-  QString name;  /**< @brief Translated Country name */
+  int index;    /**< @brief Sort order index */
+  QString iso;  /**< @brief ISO 3166-1 Alpha-2 Code */
+  QString name; /**< @brief Translated Country name */
 
   /**
    * @param ro - Row index
-   * @param ke - BCP47 Key
+   * @param is - ISO 3166-1 Alpha-2 Code
    * @param na - Country name
    */
-  explicit EUCountry(int ro, QString ke, QString na);
+  explicit EUCountry(int ro, QString is, QString na);
 };
 
 /**
@@ -64,6 +64,12 @@ private:
    * @brief Country Model list
    */
   QList<EUCountry> p_list;
+
+  /**
+   * @brief translate ISO 3166-1 alpha-2 to Country name
+   * @param iso
+   */
+  const QString translateToName(const QString &iso) const;
 
 public:
   /**

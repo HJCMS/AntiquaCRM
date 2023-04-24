@@ -24,6 +24,9 @@
 // AntiquaCRM::ConditionEdit
 #include "conditionedit.h"
 
+// AntiquaCRM::CurrencySelector
+#include "currencyselector.h"
+
 // AntiquaCRM::DateTimeInfo
 #include "datetimeinfo.h"
 

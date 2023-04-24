@@ -1,42 +1,41 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 //
-// SPDX-FileCopyrightText: @YEAR@ Juergen Heinemann <nospam@hjcms.de>
+// SPDX-FileCopyrightText: 2023 Juergen Heinemann <nospam@hjcms.de>
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_@CLASSMACRO@_H
-#define ANTIQUACRM_WIDGETS_@CLASSMACRO@_H
+#ifndef ANTIQUACRM_WIDGETS_CURRENCYSELECTOR_H
+#define ANTIQUACRM_WIDGETS_CURRENCYSELECTOR_H
 
 #include <AntiquaInput>
+#include <QLocale>
+#include <QMap>
 #include <QObject>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
 /**
- * @class @CLASSNAME@
- * @brief The „@CLASSNAME@“ input edit class.
+ * @class CurrencySelector
+ * @brief The „CurrencySelector“ input edit class.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY @CLASSNAME@ final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY CurrencySelector final
+    : public AntiquaCRM::AbstractInput,
+      private QLocale {
   Q_OBJECT
 
 private:
-  // AComboBox *m_edit;
-  // ADateTimeEdit *m_edit;
-  // ADoubleBox *m_edit;
+  AComboBox *m_box;
   ALineEdit *m_edit;
-  // ASlider *m_edit;
-  // ASpinBox *m_edit;
-  // ATextEdit *m_edit;
 
 private Q_SLOTS:
   /**
    * @brief Internal changes when data has changed
    */
-  void valueChanged();
+  void valueChanged(int);
 
 protected:
   /**
@@ -64,7 +63,7 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit @CLASSNAME@(QWidget *parent = nullptr);
+  explicit CurrencySelector(QWidget *parent = nullptr);
 
   /**
    * @brief Restrict input wirt QSqlField parameters.
@@ -103,8 +102,13 @@ public:
    * @brief Reserved for QStatusBar messages.
    */
   const QString statusHints() override;
+
+  /**
+   * @brief Primary Cuerrency Territories
+   */
+  static const QMap<QLocale::Territory, QString> cuerrencies();
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_@CLASSMACRO@_H
+#endif // ANTIQUACRM_WIDGETS_CURRENCYSELECTOR_H
