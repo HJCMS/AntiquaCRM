@@ -24,40 +24,6 @@ SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
   p_list.clear();
 }
 
-const QString SelectEUCountryModel::translateToName(const QString &iso) const {
-  QMap<QString, QString> _map;
-  _map.insert("XX", tr("Non European Country"));
-  _map.insert("BE", tr("Belgium"));
-  _map.insert("BG", tr("Bulgaria"));
-  _map.insert("DK", tr("Denmark"));
-  _map.insert("DE", tr("Germany"));
-  _map.insert("EE", tr("Estonia"));
-  _map.insert("FI", tr("Finland"));
-  _map.insert("FR", tr("France"));
-  _map.insert("GR", tr("Greece"));
-  _map.insert("IE", tr("Ireland"));
-  _map.insert("IT", tr("Italy"));
-  _map.insert("HR", tr("Croatia"));
-  _map.insert("LV", tr("Latvia"));
-  _map.insert("LT", tr("Lithuania"));
-  _map.insert("LU", tr("Luxembourg"));
-  _map.insert("MT", tr("Malta"));
-  _map.insert("NL", tr("Netherlands"));
-  _map.insert("AT", tr("Austria"));
-  _map.insert("PL", tr("Poland"));
-  _map.insert("PT", tr("Portugal"));
-  _map.insert("RO", tr("Romania"));
-  _map.insert("SE", tr("Sweden"));
-  _map.insert("SK", tr("Slovakia"));
-  _map.insert("SI", tr("Slovenia"));
-  _map.insert("SV", tr("Sweden"));
-  _map.insert("ES", tr("Spain"));
-  _map.insert("CZ", tr("Czechia"));
-  _map.insert("HU", tr("Hungary"));
-  _map.insert("CY", tr("Cyprus"));
-  return _map.value(iso.toUpper());
-}
-
 int SelectEUCountryModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
   return p_list.size();

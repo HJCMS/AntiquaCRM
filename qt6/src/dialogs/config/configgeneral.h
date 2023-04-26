@@ -13,15 +13,13 @@
 #include <AntiquaWidgets>
 #include <QObject>
 
+class PaymentSettingsGroup;
+
 class ConfigGeneral final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::CurrencySelector *m_currency;
-  AntiquaCRM::NumEdit *m_vatNormal;
-  AntiquaCRM::NumEdit *m_vatReduced;
-
-  void initUi();
+  PaymentSettingsGroup *m_paymentGroup;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

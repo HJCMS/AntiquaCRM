@@ -24,6 +24,23 @@ TabsConfigWidget::~TabsConfigWidget() {
     pgsql->deleteLater();
 }
 
+QList<AntiquaCRM::AbstractInput *>
+TabsConfigWidget::getInputList(QObject *parent) {
+  QList<AntiquaCRM::AbstractInput *> _l;
+  QListIterator<AntiquaCRM::AbstractInput *> it(
+      parent->findChildren<AntiquaCRM::AbstractInput *>(
+          QString(), Qt::FindChildrenRecursively));
+
+  while (it.hasNext()) {
+    AntiquaCRM::AbstractInput *obj = it.next();
+    if (obj != nullptr && !obj->objectName().isEmpty()) {
+      _l.append(obj);
+    }
+  }
+
+  return _l;
+}
+
 const QString TabsConfigWidget::getGroup() const {
   if (!config->contains(p_gid)) {
     config->beginGroup(p_gid);

@@ -2,56 +2,45 @@
 // vim: set fileencoding=utf-8
 
 #include "configgeneral.h"
+#include "paymentsettingsgroup.h"
 
 #include <QLocale>
 #include <QtWidgets>
 
 ConfigGeneral::ConfigGeneral(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"General", QString(), parent} {
-  setContentsMargins(0, 0, 0, 0);
-
-  QGroupBox *moneyGroup = new QGroupBox(this);
-  moneyGroup->setTitle(tr(""));
-
-  qint8 row = 0;
-  QGridLayout *layout = new QGridLayout(moneyGroup);
+  // Central Widget
+  QWidget *m_central = new QWidget(this);
+  QVBoxLayout *layout = new QVBoxLayout(m_central);
   layout->setContentsMargins(5, 5, 5, 5);
 
-  m_currency = new AntiquaCRM::CurrencySelector(this);
-  m_currency->setBuddyLabel(tr("Currency"));
-  m_currency->appendStretch(1);
-  layout->addWidget(m_currency, row++, 0, 1, 2);
+  m_paymentGroup = new PaymentSettingsGroup(m_central);
+  layout->addWidget(m_paymentGroup);
 
-  AntiquaCRM::SelectEUCountry *mc = new AntiquaCRM::SelectEUCountry(this);
-  mc->setBuddyLabel(tr("Country"));
-  mc->appendStretch(1);
-  layout->addWidget(mc, row++, 0, 1, 2);
-
-  m_vatNormal = new AntiquaCRM::NumEdit(this);
-  m_vatNormal->setBuddyLabel(tr("Tax Normal"));
-  m_vatNormal->setSuffix("%");
-  m_vatNormal->setValue(19);
-  layout->addWidget(m_vatNormal, row, 0, 1, 1);
-
-  m_vatReduced = new AntiquaCRM::NumEdit(this);
-  m_vatReduced->setBuddyLabel(tr("Tax Reduced"));
-  m_vatReduced->setSuffix("%");
-  m_vatReduced->appendStretch(1);
-  m_vatReduced->setValue(7);
-  layout->addWidget(m_vatReduced, row++, 1, 1, 1);
-
-  layout->setRowStretch(row++, 1);
-  moneyGroup->setLayout(layout);
-
-  setWidget(moneyGroup);
+  m_central->setLayout(layout);
+  layout->addStretch(1);
+  setWidget(m_central);
 }
 
-void ConfigGeneral::initUi() {
+void ConfigGeneral::loadSectionConfig() {
+  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
+  while (it.hasNext()) {
+    AntiquaCRM::AbstractInput *m_inp = it.next();
+    QVariant _val = config->value(m_inp->objectName());
+    if (_val.isNull())
+      continue;
+
+    m_inp->setValue(_val);
+  }
 }
 
-void ConfigGeneral::loadSectionConfig() { initUi(); }
-
-void ConfigGeneral::saveSectionConfig() {}
+void ConfigGeneral::saveSectionConfig() {
+  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
+  while (it.hasNext()) {
+    AntiquaCRM::AbstractInput *m_inp = it.next();
+    config->setValue(m_inp->objectName(), m_inp->getValue());
+  }
+}
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigGeneral::getType() const {
   return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;

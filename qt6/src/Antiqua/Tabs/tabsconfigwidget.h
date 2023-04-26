@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_TABS_CONFIGWIDGET_H
 #define ANTIQUACRM_TABS_CONFIGWIDGET_H
 
-#include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QIcon>
 #include <QMap>
 #include <QMetaType>
@@ -43,6 +43,12 @@ protected:
    * @warning Do not initialize SQL Connections in Constructors!
    */
   AntiquaCRM::ASqlCore *pgsql = nullptr;
+
+  /**
+   * @brief get all AntiquaCRM::AbstractInput from Widget
+   * @param parent
+   */
+  QList<AntiquaCRM::AbstractInput *> getInputList(QObject *parent);
 
 Q_SIGNALS:
   void sendHasModified(bool);

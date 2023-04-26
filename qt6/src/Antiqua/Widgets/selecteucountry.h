@@ -65,12 +65,6 @@ private:
    */
   QList<EUCountry> p_list;
 
-  /**
-   * @brief translate ISO 3166-1 alpha-2 to Country name
-   * @param iso
-   */
-  const QString translateToName(const QString &iso) const;
-
 public:
   /**
    * @param parent - a Widget is required to fetch the right Color palette.

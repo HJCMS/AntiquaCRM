@@ -1,14 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "currencyselector.h"
+#include "selectcurrency.h"
 
 #include <QDebug>
 #include <QLineEdit>
 
 namespace AntiquaCRM {
 
-CurrencySelector::CurrencySelector(QWidget *parent)
+SelectCurrency::SelectCurrency(QWidget *parent)
     : AntiquaCRM::AbstractInput{parent}, QLocale{QLocale::system()} {
   m_box = new AntiquaCRM::AComboBox(this);
   m_edit = new ALineEdit(m_box);
@@ -18,14 +18,6 @@ CurrencySelector::CurrencySelector(QWidget *parent)
   m_box->view()->setAlternatingRowColors(true);
   layout->addWidget(m_box);
 
-  initData();
-  connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
-}
-
-void CurrencySelector::valueChanged(int) { setWindowModified(true); }
-
-void CurrencySelector::initData() {
-  m_box->clear();
   QMapIterator<QLocale::Territory, QString> it(cuerrencies());
   while (it.hasNext()) {
     it.next();
@@ -35,48 +27,70 @@ void CurrencySelector::initData() {
     QString _d(_s + " - " + it.value() + " - " + _n);
     m_box->addItem(_d.trimmed(), _s);
   }
+
+  m_view = new ALabel(this);
+  m_view->setMinimumWidth(20);
+  layout->addWidget(m_view);
+
+  connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
+
+  initData();
+}
+
+void SelectCurrency::valueChanged(int index) {
+  if (index > 0) {
+    m_view->setText(getValue().toString());
+    setWindowModified(true);
+  }
+}
+
+void SelectCurrency::initData() {
+  QSqlField _f;
+  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setDefaultValue(currencySymbol(QLocale::CurrencySymbol));
+  setRestrictions(_f);
+
   int index = m_box->findData(currencySymbol(QLocale::CurrencySymbol),
                               Qt::UserRole, Qt::MatchExactly);
   if (index > 0)
     m_box->setCurrentIndex(index);
 
-  QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
-  _f.setRequiredStatus(QSqlField::Required);
-  setRestrictions(_f);
-
   setWindowModified(false);
 }
 
-void CurrencySelector::setValue(const QVariant &value) {
-  int index = m_box->findData(value, Qt::UserRole, Qt::MatchExactly);
-  if (index > 0)
-    m_box->setCurrentIndex(index);
-  else
-    m_edit->setText(value.toString());
+void SelectCurrency::setValue(const QVariant &value) {
+  int _index = m_box->findData(value, Qt::UserRole, Qt::MatchExactly);
+  if (_index > 0) {
+    m_edit->clear();
+    m_box->setCurrentIndex(_index);
+    return;
+  }
+
+  m_edit->setText(value.toString());
 }
 
-void CurrencySelector::setFocus() {
+void SelectCurrency::setFocus() {
   m_box->setFocus();
   m_box->showPopup();
 }
 
-void CurrencySelector::reset() {
+void SelectCurrency::reset() {
+  m_edit->clear();
   m_box->setCurrentIndex(0);
-  // The last line
   setWindowModified(false);
 }
 
-void CurrencySelector::setRestrictions(const QSqlField &field) {
+void SelectCurrency::setRestrictions(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void CurrencySelector::setInputToolTip(const QString &tip) {
+void SelectCurrency::setInputToolTip(const QString &tip) {
   m_box->setToolTip(tip);
 }
 
-void CurrencySelector::setBuddyLabel(const QString &text) {
+void SelectCurrency::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
     return;
 
@@ -84,29 +98,35 @@ void CurrencySelector::setBuddyLabel(const QString &text) {
   m_lb->setBuddy(m_box);
 }
 
-bool CurrencySelector::isValid() {
+bool SelectCurrency::isValid() {
   if (isRequired() && getValue().isNull())
     return false;
 
   return true;
 }
 
-const QVariant CurrencySelector::getValue() { return m_edit->text().trimmed(); }
-
-const QString CurrencySelector::popUpHints() {
-  // MessageBox Notifications
-  return tr("__TODO__");
+const QVariant SelectCurrency::getValue() {
+  int _index = m_box->currentIndex();
+  const QString _edit = m_edit->text().trimmed();
+  if (_index < 1 && _edit.length() > 0) {
+    return _edit;
+  } else if (_index < 1 && _edit.length() < 1) {
+    return currencySymbol(QLocale::CurrencySymbol);
+  }
+  return m_box->itemData(_index, Qt::UserRole).toString();
 }
 
-const QString CurrencySelector::statusHints() {
-  // StatusBar Notifications
-  return tr("__TODO__");
+const QString SelectCurrency::popUpHints() {
+  return tr("A valid currency is required for this entry.");
 }
 
-const QMap<QLocale::Territory, QString> CurrencySelector::cuerrencies() {
+const QString SelectCurrency::statusHints() {
+  return tr("Please enter a valid currency.");
+}
+
+const QMap<QLocale::Territory, QString> SelectCurrency::cuerrencies() {
   QMap<QLocale::Territory, QString> _m;
-  _m.insert(QLocale(QLocale::German, QLocale::Europe).territory(),
-            tr("European Union"));
+  _m.insert(QLocale::France, tr("European Union"));
   _m.insert(QLocale::Switzerland, tr("Switzerland"));
   _m.insert(QLocale::UnitedKingdom, tr("United Kingdom"));
   _m.insert(QLocale::UnitedStates, tr("United States"));

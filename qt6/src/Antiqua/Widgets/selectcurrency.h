@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_CURRENCYSELECTOR_H
-#define ANTIQUACRM_WIDGETS_CURRENCYSELECTOR_H
+#ifndef ANTIQUACRM_WIDGETS_SELECTCURRENCY_H
+#define ANTIQUACRM_WIDGETS_SELECTCURRENCY_H
 
 #include <AntiquaInput>
 #include <QLocale>
@@ -18,11 +18,11 @@
 namespace AntiquaCRM {
 
 /**
- * @class CurrencySelector
- * @brief The „CurrencySelector“ input edit class.
+ * @class SelectCurrency
+ * @brief The „SelectCurrency“ input edit class.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY CurrencySelector final
+class ANTIQUACRM_LIBRARY SelectCurrency final
     : public AntiquaCRM::AbstractInput,
       private QLocale {
   Q_OBJECT
@@ -30,6 +30,7 @@ class ANTIQUACRM_LIBRARY CurrencySelector final
 private:
   AComboBox *m_box;
   ALineEdit *m_edit;
+  ALabel *m_view;
 
 private Q_SLOTS:
   /**
@@ -63,7 +64,7 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit CurrencySelector(QWidget *parent = nullptr);
+  explicit SelectCurrency(QWidget *parent = nullptr);
 
   /**
    * @brief Restrict input wirt QSqlField parameters.
@@ -111,4 +112,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_CURRENCYSELECTOR_H
+#endif // ANTIQUACRM_WIDGETS_SELECTCURRENCY_H

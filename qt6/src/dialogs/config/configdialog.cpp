@@ -77,7 +77,12 @@ void ConfigDialog::statusMessage(const QString &message) {
   m_statusbar->showMessage(message, 5000);
 }
 
-void ConfigDialog::aboutToSave() {}
+void ConfigDialog::aboutToSave() {
+  QListIterator<AntiquaCRM::TabsConfigWidget *> it(groups());
+  while (it.hasNext()) {
+    it.next()->saveSectionConfig();
+  }
+}
 
 void ConfigDialog::aboutToClose() {
   if (isWindowModified()) {

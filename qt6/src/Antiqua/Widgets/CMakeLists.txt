@@ -52,7 +52,6 @@ SET (_library_SOURCES
  boolbox.cpp
  conditionedit.cpp
  crowdedit.cpp
- currencyselector.cpp
  datetimeinfo.cpp
  emailedit.cpp
  genderedit.cpp
@@ -70,6 +69,7 @@ SET (_library_SOURCES
  priceedit.cpp
  printerbutton.cpp
  salutationedit.cpp
+ selectcurrency.cpp
  selecteucountry.cpp
  selectlanguage.cpp
  selectpaymentmethod.cpp
@@ -102,7 +102,6 @@ SET (_library_HEADERS
  boolbox.h
  conditionedit.h
  crowdedit.h
- currencyselector.h
  datetimeinfo.h
  emailedit.h
  genderedit.h
@@ -120,6 +119,7 @@ SET (_library_HEADERS
  priceedit.h
  printerbutton.h
  salutationedit.h
+ selectcurrency.h
  selecteucountry.h
  selectlanguage.h
  selectpaymentmethod.h
