@@ -59,7 +59,7 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
 
 void KeywordsEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setLength(m_keywords->maxLength());
   setRestrictions(_f);
@@ -149,6 +149,10 @@ bool KeywordsEdit::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType KeywordsEdit::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant KeywordsEdit::getValue() { return m_keywords->getKeywords(); }

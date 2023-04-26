@@ -104,6 +104,8 @@ public:
 
   qint64 number();
 
+  const QMetaType getType() const override;
+
   const QVariant getValue() override;
 
   const QString popUpHints() override;

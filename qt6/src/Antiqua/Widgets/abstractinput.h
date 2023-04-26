@@ -226,6 +226,11 @@ public:
   virtual bool isValid() = 0;
 
   /**
+   * @brief Default Metatype for this Input.
+   */
+  virtual const QMetaType getType() const = 0;
+
+  /**
    * @brief value from input widget ...
    * Get current Value as QVariant. The Conversion will done in this Section.
    * You can use the „setRestrictions“ to set class environments.

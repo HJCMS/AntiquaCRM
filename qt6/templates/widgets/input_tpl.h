@@ -20,7 +20,8 @@ namespace AntiquaCRM {
  * @brief The „@CLASSNAME@“ input edit class.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY @CLASSNAME@ final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY @CLASSNAME@ final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -88,6 +89,11 @@ public:
    * @brief Validate Input with given Parameters from setRestrictions.
    */
   bool isValid() override;
+
+  /**
+   * @brief Current MetaType for this input
+   */
+  const QMetaType getType() const override;
 
   /**
    * @brief get current Data ...

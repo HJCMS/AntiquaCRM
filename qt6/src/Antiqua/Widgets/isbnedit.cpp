@@ -217,6 +217,10 @@ qint64 IsbnEdit::number() {
   return isbn;
 }
 
+const QMetaType IsbnEdit::getType() const {
+  return QMetaType(QMetaType::LongLong);
+}
+
 const QVariant IsbnEdit::getValue() {
   if (!isValid())
     return 0;

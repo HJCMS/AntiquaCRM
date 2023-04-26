@@ -281,7 +281,7 @@ void PostalCodeEdit::reset() {
 
 void PostalCodeEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setLength(10);
   setRestrictions(_f);
@@ -378,6 +378,10 @@ bool PostalCodeEdit::isValid() {
   return true;
 }
 
+const QMetaType PostalCodeEdit::getType() const {
+  return QMetaType(QMetaType::QString);
+}
+
 const QVariant PostalCodeEdit::getValue() {
   return m_postalcode->text().trimmed();
 }
@@ -430,7 +434,7 @@ void PostalCodeState::setRestrictions(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
-  if (field.metaType().id() != QMetaType::QString)
+  if (field.metaType().id() != getType().id())
     return;
 
   m_edit->setLineEditProperties(field);
@@ -453,6 +457,10 @@ void PostalCodeState::setBuddyLabel(const QString &text) {
 
   ALabel *m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
+}
+
+const QMetaType PostalCodeState::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant PostalCodeState::getValue() { return m_edit->text().trimmed(); }
@@ -538,6 +546,10 @@ void PostalCodeLocation::setBuddyLabel(const QString &text) {
 
   ALabel *m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
+}
+
+const QMetaType PostalCodeLocation::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant PostalCodeLocation::getValue() {

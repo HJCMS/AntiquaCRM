@@ -53,6 +53,8 @@ public:
 
   bool isValid() override;
 
+  const QMetaType getType() const override;
+
   const QVariant getValue() override;
 
   const QString popUpHints() override;

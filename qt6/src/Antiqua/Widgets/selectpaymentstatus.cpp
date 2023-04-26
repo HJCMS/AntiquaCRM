@@ -28,7 +28,7 @@ void SelectPaymentStatus::valueChanged(int index) {
 
 void SelectPaymentStatus::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setDefaultValue(AntiquaCRM::STATUS_NOT_SET);
   setRestrictions(_f);
 
@@ -96,6 +96,10 @@ bool SelectPaymentStatus::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SelectPaymentStatus::getType() const {
+  return QMetaType(QMetaType::Int);
 }
 
 const QVariant SelectPaymentStatus::getValue() {

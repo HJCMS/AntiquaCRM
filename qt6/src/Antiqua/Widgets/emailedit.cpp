@@ -29,7 +29,7 @@ bool EMailEdit::validate(const QString &mail) const {
 
 void EMailEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setLength(80);
   setRestrictions(_f);
@@ -104,6 +104,10 @@ bool EMailEdit::isValid() {
     return false;
 
   return validate(m_edit->text());
+}
+
+const QMetaType EMailEdit::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant EMailEdit::getValue() { return m_edit->text(); }

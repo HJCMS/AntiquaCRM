@@ -24,7 +24,7 @@ void BoolBox::valueChanged() {
 
 void BoolBox::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Bool));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(false);
   setRestrictions(_f);
@@ -69,6 +69,8 @@ void BoolBox::setBuddyLabel(const QString &text) {
 }
 
 bool BoolBox::isValid() { return true; }
+
+const QMetaType BoolBox::getType() const { return QMetaType(QMetaType::Bool); }
 
 const QVariant BoolBox::getValue() { return m_edit->isChecked(); }
 

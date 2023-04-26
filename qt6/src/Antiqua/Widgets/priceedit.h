@@ -95,6 +95,8 @@ public:
    */
   const QString currencySymbol() const;
 
+  const QMetaType getType() const override;
+
   const QVariant getValue() override;
 
   /**

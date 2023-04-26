@@ -22,7 +22,7 @@ void SelectLanguage::valueChanged(int) {
 
 void SelectLanguage::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Optional);
   _f.setLength(3);
   setRestrictions(_f);
@@ -82,6 +82,10 @@ bool SelectLanguage::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SelectLanguage::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant SelectLanguage::getValue() {

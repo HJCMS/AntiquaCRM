@@ -37,7 +37,7 @@ void SalutationEdit::valueChanged(int) {
 
 void SalutationEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Optional);
   _f.setLength(25);
   setRestrictions(_f);
@@ -94,6 +94,10 @@ bool SalutationEdit::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SalutationEdit::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant SalutationEdit::getValue() {

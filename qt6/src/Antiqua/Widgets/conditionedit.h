@@ -20,7 +20,8 @@ namespace AntiquaCRM {
  * @brief Edit primary Article condition
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY ConditionEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY ConditionEdit final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -52,6 +53,8 @@ public:
   void setBuddyLabel(const QString &) override;
 
   bool isValid() override;
+
+  const QMetaType getType() const override;
 
   const QVariant getValue() override;
 

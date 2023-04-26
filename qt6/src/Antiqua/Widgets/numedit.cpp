@@ -25,7 +25,7 @@ void NumEdit::valueChanged(int) {
 
 void NumEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(0);
   setRestrictions(_f);
@@ -33,23 +33,26 @@ void NumEdit::initData() {
 }
 
 void NumEdit::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  switch (_type.id()) {
+  int _num = value.toInt();
+  switch (value.metaType().id()) {
   case (QMetaType::Int):
   case (QMetaType::Double):
   case (QMetaType::Long):
   case (QMetaType::ULong):
   case (QMetaType::LongLong):
-    m_edit->setValue(value.toInt());
-    break;
+    m_edit->setValue(_num);
+    return;
 
-  default:
-    qWarning("Invalid given Data Type in NumEdit.");
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "NumEdit Requires type int but get:" << value;
-#endif
-    break;
+  default: {
+    if (_num > 0) {
+      m_edit->setValue(_num);
+      return;
+    }
+  } break;
   };
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "NumEdit Invalid:" << value;
+#endif
 }
 
 void NumEdit::setFocus() { m_edit->setFocus(); }
@@ -87,6 +90,10 @@ bool NumEdit::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType NumEdit::getType() const {
+  return QMetaType(QMetaType::Int);
 }
 
 const QVariant NumEdit::getValue() { return m_edit->value(); }

@@ -32,7 +32,7 @@ void ConditionEdit::valueChanged(int index) {
 
 void ConditionEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(AntiquaCRM::Condition::NO_CONDITION);
   setRestrictions(_f);
@@ -77,9 +77,7 @@ void ConditionEdit::reset() {
   setWindowModified(false);
 }
 
-void ConditionEdit::setRestrictions(const QSqlField &) {
-  setRequired(true);
-}
+void ConditionEdit::setRestrictions(const QSqlField &) { setRequired(true); }
 
 void ConditionEdit::setInputToolTip(const QString &tip) {
   m_edit->setToolTip(tip);
@@ -100,6 +98,10 @@ bool ConditionEdit::isValid() {
   return true;
 }
 
+const QMetaType ConditionEdit::getType() const {
+  return QMetaType(QMetaType::Int);
+}
+
 const QVariant ConditionEdit::getValue() {
   int _c = m_edit->itemData(m_edit->currentIndex(), Qt::UserRole).toInt();
   return static_cast<AntiquaCRM::Condition>(_c);
@@ -108,7 +110,8 @@ const QVariant ConditionEdit::getValue() {
 const QString ConditionEdit::popUpHints() {
   QStringList info;
   info << tr("Missing Condition for this Article!");
-  info << tr("The condition of an article should always be specified for the buyer.");
+  info << tr(
+      "The condition of an article should always be specified for the buyer.");
   return info.join("\n");
 }
 

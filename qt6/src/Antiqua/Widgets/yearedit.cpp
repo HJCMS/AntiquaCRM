@@ -27,7 +27,7 @@ void YearEdit::valueChanged(int y) {
 
 void YearEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Double));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   setRestrictions(_f);
   setWindowModified(false);
@@ -77,6 +77,10 @@ bool YearEdit::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType YearEdit::getType() const {
+  return QMetaType(QMetaType::Double);
 }
 
 const QVariant YearEdit::getValue() {

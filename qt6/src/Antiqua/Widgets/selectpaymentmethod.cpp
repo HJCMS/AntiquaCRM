@@ -26,7 +26,7 @@ void SelectPaymentMethod::valueChanged(int index) {
 
 void SelectPaymentMethod::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setDefaultValue(AntiquaCRM::PAYMENT_NOT_SET);
   setRestrictions(_f);
 
@@ -117,6 +117,10 @@ bool SelectPaymentMethod::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SelectPaymentMethod::getType() const {
+  return QMetaType(QMetaType::Int);
 }
 
 const QVariant SelectPaymentMethod::getValue() {

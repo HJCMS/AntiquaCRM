@@ -52,7 +52,7 @@ void PriceEdit::valueChanged(double d) {
 
 void PriceEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Double));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(0.00);
   setRestrictions(_f);
@@ -140,6 +140,10 @@ bool PriceEdit::isValid() {
 const QString PriceEdit::currencySymbol() const {
   QString sym = QLocale::system().currencySymbol(QLocale::CurrencySymbol);
   return config->value("payment/currency", sym).toString();
+}
+
+const QMetaType PriceEdit::getType() const {
+  return QMetaType(QMetaType::Double);
 }
 
 const QVariant PriceEdit::getValue() { return m_edit->value(); }

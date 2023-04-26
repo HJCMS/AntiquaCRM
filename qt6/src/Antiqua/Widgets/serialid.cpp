@@ -75,6 +75,10 @@ bool SerialId::isValid() {
   return true;
 }
 
+const QMetaType SerialId::getType() const {
+  return QMetaType(QMetaType::LongLong);
+}
+
 const QVariant SerialId::getValue() {
   quint64 _value = m_edit->value();
   /**< @warning Es darf keine 0 zurück gegeben werden */

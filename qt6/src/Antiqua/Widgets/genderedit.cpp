@@ -22,7 +22,7 @@ void GenderEdit::valueChanged(int) {
 
 void GenderEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(AntiquaCRM::NO_GENDER);
   setRestrictions(_f);
@@ -118,6 +118,10 @@ bool GenderEdit::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType GenderEdit::getType() const {
+  return QMetaType(QMetaType::Int);
 }
 
 const QVariant GenderEdit::getValue() {

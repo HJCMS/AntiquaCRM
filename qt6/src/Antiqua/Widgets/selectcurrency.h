@@ -89,6 +89,8 @@ public:
    */
   bool isValid() override;
 
+  const QMetaType getType() const override;
+
   /**
    * @brief get current Data ...
    */

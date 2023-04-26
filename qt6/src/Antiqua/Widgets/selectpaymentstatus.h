@@ -19,7 +19,8 @@ namespace AntiquaCRM {
  * @ingroup AntiquaWidgets
  * @class SelectPaymentStatus
  */
-class ANTIQUACRM_LIBRARY SelectPaymentStatus final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY SelectPaymentStatus final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -53,6 +54,8 @@ public:
   void setBuddyLabel(const QString &) override;
 
   bool isValid() override;
+
+  const QMetaType getType() const override;
 
   const QVariant getValue() override;
 

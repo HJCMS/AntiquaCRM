@@ -8,6 +8,7 @@
 #include <AGlobal>
 #include <QDir>
 #include <QHash>
+#include <QMetaType>
 #include <QObject>
 #include <QSettings>
 #include <QString>
@@ -40,6 +41,8 @@ public:
    * @param configPath
    */
   bool check(const QString &configPath);
+
+  const QVariant getValue(const QString &path, const QMetaType &type) const;
 
   /**
    * @brief Returns Directory from Section[dirs]

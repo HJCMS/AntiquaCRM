@@ -5,6 +5,7 @@
 #include "paymentsettingsgroup.h"
 
 #include <QLocale>
+#include <QMetaType>
 #include <QtWidgets>
 
 ConfigGeneral::ConfigGeneral(QWidget *parent)
@@ -26,7 +27,11 @@ void ConfigGeneral::loadSectionConfig() {
   QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
   while (it.hasNext()) {
     AntiquaCRM::AbstractInput *m_inp = it.next();
-    QVariant _val = config->value(m_inp->objectName());
+    if (m_inp->objectName().isEmpty())
+      continue;
+
+    const QMetaType _type = m_inp->getType();
+    QVariant _val = config->getValue(m_inp->objectName(), _type);
     if (_val.isNull())
       continue;
 
@@ -38,6 +43,9 @@ void ConfigGeneral::saveSectionConfig() {
   QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
   while (it.hasNext()) {
     AntiquaCRM::AbstractInput *m_inp = it.next();
+    if (m_inp->objectName().isEmpty())
+      continue;
+
     config->setValue(m_inp->objectName(), m_inp->getValue());
   }
 }
@@ -47,7 +55,7 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigGeneral::getType() const {
 }
 
 const QIcon ConfigGeneral::getIcon() const {
-  return QIcon("://icons/configure.png");
+  return AntiquaCRM::AntiquaApplIcon("configure");
 }
 
 const QString ConfigGeneral::getTitle() const { return tr("General"); }

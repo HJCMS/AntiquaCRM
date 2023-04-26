@@ -21,7 +21,7 @@ void TextField::valueChanged() {
 
 void TextField::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Optional);
   setRestrictions(_f);
   setWindowModified(false);
@@ -67,6 +67,10 @@ bool TextField::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType TextField::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant TextField::getValue() { return m_edit->text(); }

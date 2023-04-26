@@ -13,8 +13,8 @@
 #include <QAbstractListModel>
 #include <QCompleter>
 #include <QList>
-#include <QPalette>
 #include <QObject>
+#include <QPalette>
 #include <QWidget>
 
 namespace AntiquaCRM {
@@ -103,7 +103,8 @@ public:
  *
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PostalCodeEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY PostalCodeEdit final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -200,6 +201,8 @@ public:
 
   bool isValid() override;
 
+  const QMetaType getType() const override;
+
   const QVariant getValue() override;
 
   const QString popUpHints() override;
@@ -212,7 +215,8 @@ public:
  * @brief Display Postalcode country/state
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PostalCodeState final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY PostalCodeState final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -256,6 +260,8 @@ public:
 
   bool isValid() override;
 
+  const QMetaType getType() const override;
+
   const QVariant getValue() override;
 
   const QString popUpHints() override;
@@ -268,7 +274,8 @@ public:
  * @brief Display Postalcode locations
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PostalCodeLocation final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY PostalCodeLocation final
+    : public AntiquaCRM::AbstractInput {
   Q_OBJECT
 
 private:
@@ -306,6 +313,8 @@ public:
   void setBuddyLabel(const QString &) override;
 
   bool isValid() override;
+
+  const QMetaType getType() const override;
 
   const QVariant getValue() override;
 

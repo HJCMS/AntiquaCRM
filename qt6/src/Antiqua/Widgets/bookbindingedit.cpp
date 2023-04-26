@@ -25,7 +25,7 @@ void BookBindingEdit::valueChanged(int index) {
 
 void BookBindingEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(0);
   setRestrictions(_f);
@@ -81,9 +81,7 @@ void BookBindingEdit::reset() {
   setWindowModified(false);
 }
 
-void BookBindingEdit::setRestrictions(const QSqlField &) {
-  setRequired(true);
-}
+void BookBindingEdit::setRestrictions(const QSqlField &) { setRequired(true); }
 
 void BookBindingEdit::setInputToolTip(const QString &tip) {
   m_edit->setToolTip(tip);
@@ -102,6 +100,10 @@ bool BookBindingEdit::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType BookBindingEdit::getType() const {
+  return QMetaType(QMetaType::Int);
 }
 
 const QVariant BookBindingEdit::getValue() {

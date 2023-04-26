@@ -24,7 +24,7 @@ void CrowdEdit::valueChanged(int count) {
 
 void CrowdEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(0);
   setRestrictions(_f);
@@ -77,6 +77,8 @@ bool CrowdEdit::isValid() {
 
   return true;
 }
+
+const QMetaType CrowdEdit::getType() const { return QMetaType(QMetaType::Int); }
 
 const QVariant CrowdEdit::getValue() { return m_edit->value(); }
 

@@ -53,6 +53,8 @@ public:
 
   bool isValid() override;
 
+  const QMetaType getType() const override;
+
   /**
    * @brief Current SerialId
    * @note If no valid Serial exists it returns NULL and not Digits!

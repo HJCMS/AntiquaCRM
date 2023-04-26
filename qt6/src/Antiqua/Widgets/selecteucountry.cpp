@@ -122,7 +122,7 @@ void SelectEUCountry::valueChanged(int index) {
 
 void SelectEUCountry::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Optional);
   _f.setLength(2);
   setRestrictions(_f);
@@ -187,6 +187,10 @@ bool SelectEUCountry::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SelectEUCountry::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant SelectEUCountry::getValue() {

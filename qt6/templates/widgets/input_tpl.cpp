@@ -21,7 +21,7 @@ void @CLASSNAME@::valueChanged() {
 
 void @CLASSNAME@::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   // Required | Optional
   _f.setRequiredStatus(QSqlField::Required);
   // _f.setDefaultValue(0);
@@ -80,6 +80,11 @@ bool @CLASSNAME@::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType @CLASSNAME@::getType() const {
+  qDebug() << Q_FUNC_INFO << "FIXME";
+  return QMetaType(QMetaType::QVariant);
 }
 
 const QVariant @CLASSNAME@::getValue() {

@@ -23,7 +23,7 @@ void TextLine::valueChanged(const QString &) {
 
 void TextLine::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Optional);
   setRestrictions(_f);
   setWindowModified(false);
@@ -97,6 +97,10 @@ bool TextLine::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType TextLine::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant TextLine::getValue() { return m_edit->text().trimmed(); }

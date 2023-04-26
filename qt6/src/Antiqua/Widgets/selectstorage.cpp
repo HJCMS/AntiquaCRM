@@ -25,7 +25,7 @@ SelectStorage::SelectStorage(QWidget *parent)
   layout->addWidget(m_edit);
 
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::Int));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   setRestrictions(_f);
 
@@ -186,6 +186,10 @@ bool SelectStorage::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SelectStorage::getType() const {
+  return QMetaType(QMetaType::Int);
 }
 
 const QVariant SelectStorage::getValue() {

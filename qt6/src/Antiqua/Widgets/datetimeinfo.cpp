@@ -22,7 +22,7 @@ void DateTimeInfo::valueChanged() {
 
 void DateTimeInfo::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Optional);
   setRestrictions(_f);
   setWindowModified(false);
@@ -81,6 +81,10 @@ bool DateTimeInfo::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType DateTimeInfo::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant DateTimeInfo::getValue() { return m_edit->dateTime(); }

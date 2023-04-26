@@ -36,6 +36,36 @@ bool ASettings::check(const QString &configPath) {
   return false;
 }
 
+const QVariant ASettings::getValue(const QString &path,
+                                   const QMetaType &type) const {
+  if (path.isEmpty())
+    return QVariant();
+
+  QVariant _value = value(path);
+  if (_value.metaType().id() == type.id())
+    return _value;
+
+  switch (type.id()) {
+  case (QMetaType::Bool):
+    return _value.toBool();
+
+  case (QMetaType::Int):
+  case (QMetaType::Long):
+  case (QMetaType::LongLong):
+    return _value.toInt();
+
+  case (QMetaType::Float):
+    return _value.toFloat();
+
+  case (QMetaType::Double):
+    return _value.toDouble();
+
+  default:
+    break;
+  };
+  return _value;
+}
+
 const QDir ASettings::getArchivPath(const QString &section) {
   QDir d;
   QStandardPaths::StandardLocation location;

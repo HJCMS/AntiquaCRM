@@ -109,7 +109,7 @@ bool PhoneEdit::validate(const QString &phone) const {
 
 void PhoneEdit::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setLength(80);
   setRestrictions(_f);
@@ -221,6 +221,10 @@ bool PhoneEdit::isValid() {
     return false;
 
   return validate(m_edit->text());
+}
+
+const QMetaType PhoneEdit::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant PhoneEdit::getValue() { return m_edit->text(); }

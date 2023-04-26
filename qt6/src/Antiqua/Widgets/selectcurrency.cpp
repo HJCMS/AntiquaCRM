@@ -46,7 +46,7 @@ void SelectCurrency::valueChanged(int index) {
 
 void SelectCurrency::initData() {
   QSqlField _f;
-  _f.setMetaType(QMetaType(QMetaType::QString));
+  _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
   _f.setDefaultValue(currencySymbol(QLocale::CurrencySymbol));
   setRestrictions(_f);
@@ -103,6 +103,10 @@ bool SelectCurrency::isValid() {
     return false;
 
   return true;
+}
+
+const QMetaType SelectCurrency::getType() const {
+  return QMetaType(QMetaType::QString);
 }
 
 const QVariant SelectCurrency::getValue() {
