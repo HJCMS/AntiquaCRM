@@ -10,16 +10,54 @@
 #define ANTIQUACRM_PAYMENT_SETTINGS_GROUP_H
 
 #include <AntiquaWidgets>
+#include <QFrame>
 #include <QGroupBox>
 
-class PaymentSettingsGroup final : public QGroupBox {
+/**
+ * @class PaymentSettingsGroup
+ * @brief Reserved for Currency, Tax and Price limits.
+ */
+class PaymentSettingsGroup final : public QFrame {
   Q_OBJECT
 
+private:
+  QGroupBox *m_taxGroup;
+  QGroupBox *m_limitsGroup;
+
+private Q_SLOTS:
+  void updateCurrency();
+
 public:
+  /**
+   * @brief Tax and Currency
+   * @{
+   */
   AntiquaCRM::SelectCurrency *m_currency;
   AntiquaCRM::NumEdit *m_vatNormal;
   AntiquaCRM::NumEdit *m_vatReduced;
 
+  /**
+   * @}
+   *
+   * @brief Price limits
+   * @{
+   */
+  AntiquaCRM::PriceEdit *m_minBook;
+  AntiquaCRM::PriceEdit *m_normalBook;
+
+  AntiquaCRM::PriceEdit *m_minMedia;
+  AntiquaCRM::PriceEdit *m_normalMedia;
+
+  AntiquaCRM::PriceEdit *m_minPrints;
+  AntiquaCRM::PriceEdit *m_normalPrints;
+
+  /**
+   * @}
+   */
+
+  /**
+   * @param parent
+   */
   explicit PaymentSettingsGroup(QWidget *parent = nullptr);
 };
 

@@ -90,6 +90,10 @@ void PriceEdit::reset() {
   setWindowModified(false);
 }
 
+void PriceEdit::updateCurrencySuffix(const QString &symbol) {
+  m_edit->setSuffix(" " + symbol);
+}
+
 void PriceEdit::setRestrictions(const QSqlField &field) {
   if (field.requiredStatus() != QSqlField::Required) {
     setRequired(false);

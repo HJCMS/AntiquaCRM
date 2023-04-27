@@ -18,6 +18,9 @@ SelectCurrency::SelectCurrency(QWidget *parent)
   m_box->view()->setAlternatingRowColors(true);
   layout->addWidget(m_box);
 
+  // Important and required
+  m_box->addItem(QString(), QString());
+
   QMapIterator<QLocale::Territory, QString> it(cuerrencies());
   while (it.hasNext()) {
     it.next();
@@ -32,16 +35,39 @@ SelectCurrency::SelectCurrency(QWidget *parent)
   m_view->setMinimumWidth(20);
   layout->addWidget(m_view);
 
-  connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
+  connect(m_box, SIGNAL(currentIndexChanged(int)), SLOT(currencySelected(int)));
+  connect(m_edit, SIGNAL(returnPressed()), SLOT(currencyEdited()));
 
   initData();
 }
 
-void SelectCurrency::valueChanged(int index) {
-  if (index > 0) {
-    m_view->setText(getValue().toString());
-    setWindowModified(true);
-  }
+bool SelectCurrency::checkSymbol(const QString &symbol) const {
+  const QString _s(symbol.trimmed());
+  if (_s.length() == 1)
+    return true;
+  else if (_s.length() > 1 && !_s.contains(" "))
+    return true;
+
+  return false;
+}
+
+void SelectCurrency::currencySelected(int) {
+  if (m_box->currentIndex() == 0)
+    return;
+
+  m_view->setText(getValue().toString());
+  setWindowModified(true);
+  emit sendInputChanged();
+}
+
+void SelectCurrency::currencyEdited() {
+  QString _str = m_edit->text().trimmed();
+  if (!checkSymbol(_str))
+    return;
+
+  m_view->setText(_str);
+  setWindowModified(true);
+  emit sendInputChanged();
 }
 
 void SelectCurrency::initData() {
@@ -111,13 +137,18 @@ const QMetaType SelectCurrency::getType() const {
 
 const QVariant SelectCurrency::getValue() {
   int _index = m_box->currentIndex();
-  const QString _edit = m_edit->text().trimmed();
-  if (_index < 1 && _edit.length() > 0) {
-    return _edit;
-  } else if (_index < 1 && _edit.length() < 1) {
-    return currencySymbol(QLocale::CurrencySymbol);
+  if (_index > 0) {
+    QString _symbol = m_box->itemData(_index, Qt::UserRole).toString();
+    if (checkSymbol(_symbol))
+      return _symbol;
   }
-  return m_box->itemData(_index, Qt::UserRole).toString();
+
+  const QString _edit = m_edit->text().trimmed();
+  if (_index == 0 && checkSymbol(_edit))
+    return _edit;
+
+  qWarning("invalid currency symbol detected - fallback!");
+  return currencySymbol(QLocale::CurrencySymbol);
 }
 
 const QString SelectCurrency::popUpHints() {

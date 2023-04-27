@@ -32,11 +32,14 @@ private:
   ALineEdit *m_edit;
   ALabel *m_view;
 
+  bool checkSymbol(const QString &) const;
+
 private Q_SLOTS:
   /**
    * @brief Internal changes when data has changed
    */
-  void valueChanged(int);
+  void currencySelected(int);
+  void currencyEdited();
 
 protected:
   /**

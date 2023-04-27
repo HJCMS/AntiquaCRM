@@ -44,6 +44,8 @@ public Q_SLOTS:
 
   void reset() override;
 
+  void updateCurrencySuffix(const QString &);
+
 public:
   /**
    * @param min    - minimum price
