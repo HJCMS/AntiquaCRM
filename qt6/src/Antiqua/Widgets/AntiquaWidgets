@@ -87,6 +87,9 @@
 // AntiquaCRM::SelectStorage
 #include "selectstorage.h"
 
+// AntiquaCRM::SelectTargets
+#include "selecttargets.h"
+
 // AntiquaCRM::SerialId
 #include "serialid.h"
 

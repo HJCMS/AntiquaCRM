@@ -11,13 +11,17 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 SET (_library_HEADERS
  configdialog.cpp
  configgeneral.cpp
+ configpaths.cpp
  paymentsettingsgroup.cpp
+ pathsettingsgroup.cpp
 )
 
 SET (_library_SOURCES
  configdialog.h
  configgeneral.h
+ configpaths.h
  paymentsettingsgroup.h
+ pathsettingsgroup.h
 )
 
 INCLUDE_DIRECTORIES (

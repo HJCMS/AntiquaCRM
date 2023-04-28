@@ -15,7 +15,6 @@ PaymentSettingsGroup::PaymentSettingsGroup(QWidget *parent) : QFrame{parent} {
   // Tax and Currency Group
   QGroupBox *m_taxGroup = new QGroupBox(this);
   m_taxGroup->setTitle(tr("Payment settings"));
-  // m_taxGroup->setStyleSheet("QFrame {border: 1px solid red;}");
 
   QGridLayout *grLayout1 = new QGridLayout(m_taxGroup);
   grLayout1->setContentsMargins(5, 5, 5, 5);
@@ -59,7 +58,6 @@ PaymentSettingsGroup::PaymentSettingsGroup(QWidget *parent) : QFrame{parent} {
   // Price Limits Group
   m_limitsGroup = new QGroupBox(this);
   m_limitsGroup->setTitle(tr("Price restrictions"));
-  // m_limitsGroup->setStyleSheet("QFrame {border: 1px solid red;}");
 
   QGridLayout *grLayout2 = new QGridLayout(m_limitsGroup);
   grLayout2->setContentsMargins(5, 5, 5, 5);

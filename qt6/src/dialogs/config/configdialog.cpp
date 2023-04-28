@@ -3,6 +3,7 @@
 
 #include "configdialog.h"
 #include "configgeneral.h"
+#include "configpaths.h"
 
 #include <QMessageBox>
 
@@ -23,6 +24,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_cfgGeneral = new ConfigGeneral(m_pageView);
   m_pageView->insertTab(0, m_cfgGeneral, m_cfgGeneral->getIcon(),
                         m_cfgGeneral->getTitle());
+
+  m_cfgPaths = new ConfigPaths(m_pageView);
+  m_pageView->insertTab(1, m_cfgPaths, m_cfgPaths->getIcon(),
+                        m_cfgPaths->getTitle());
 
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);

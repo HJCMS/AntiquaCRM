@@ -75,6 +75,7 @@ SET (_library_SOURCES
  selectpaymentmethod.cpp
  selectpaymentstatus.cpp
  selectstorage.cpp
+ selecttargets.cpp
  serialid.cpp
  splitter.cpp
  sqlinfopopup.cpp
@@ -125,6 +126,7 @@ SET (_library_HEADERS
  selectpaymentmethod.h
  selectpaymentstatus.h
  selectstorage.h
+ selecttargets.h
  serialid.h
  splitter.h
  sqlinfopopup.h

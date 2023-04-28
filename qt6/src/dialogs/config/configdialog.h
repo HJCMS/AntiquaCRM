@@ -20,6 +20,7 @@
 #include <QWidget>
 
 class ConfigGeneral;
+class ConfigPaths;
 
 class ConfigDialog final : public QDialog {
   Q_OBJECT
@@ -32,6 +33,7 @@ private:
   QDialogButtonBox *m_buttonBox;
 
   ConfigGeneral *m_cfgGeneral;
+  ConfigPaths *m_cfgPaths;
 
   const QList<AntiquaCRM::TabsConfigWidget *> groups();
 
