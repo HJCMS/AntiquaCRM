@@ -7,10 +7,6 @@
 #include <QCoreApplication>
 #include <QStandardPaths>
 
-#ifndef ANTIQUACRM_CONFIG_MAILLER_KEY
-#define ANTIQUACRM_CONFIG_MAILLER_KEY QString("dirs/mailappl")
-#endif
-
 namespace AntiquaCRM {
 
 ASettings::ASettings(QObject *parent)
@@ -81,7 +77,7 @@ const QDir ASettings::getArchivPath(const QString &section) {
     location = QStandardPaths::DocumentsLocation;
 
   QString fallback = QStandardPaths::writableLocation(location);
-  beginGroup("dirs");
+  beginGroup(ANTIQUACRM_ARCHIVE_CONFIG_DIRS);
   d.setPath(value(section, fallback).toString());
   endGroup();
   return d;

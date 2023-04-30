@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "alineedit.h"
+#include "abstractinput.h"
 
 #include <ASettings>
 #include <QAbstractItemView>
@@ -17,12 +18,17 @@ namespace AntiquaCRM {
 ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setClearButtonEnabled(true);
   setFocusPolicy(Qt::StrongFocus);
-  QIcon back("://icons/view-list.png");
-  QIcon icon = QIcon::fromTheme("view-list-details", back);
-  ac_completer = addAction(icon, QLineEdit::TrailingPosition);
+  ac_completer = addAction(AntiquaApplIcon("view-list-details"),
+                           QLineEdit::TrailingPosition);
   ac_completer->setToolTip(tr("Show Completer Popup."));
   ac_completer->setEnabled(false);
   ac_completer->setVisible(false);
+
+  ac_invalid = addAction(AntiquaApplIcon("dialog-warning"), // warn
+                         QLineEdit::TrailingPosition);
+  ac_invalid->setToolTip(tr("Invalid content"));
+  ac_invalid->setEnabled(false);
+  ac_invalid->setVisible(false);
 
   connect(ac_completer, SIGNAL(triggered()), SLOT(showCompleter()));
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
@@ -87,9 +93,16 @@ void ALineEdit::setMinLength(int length) {
 
 void ALineEdit::isValidContent(bool b) {
   QString _css;
-  if (!b)
+  if (b) {
+    ac_invalid->setEnabled(false);
+    ac_invalid->setVisible(false);
+    _css.clear();
+  } else {
+    ac_invalid->setEnabled(true);
+    ac_invalid->setVisible(true);
+    setClearButtonEnabled(false);
     _css = "QLineEdit {selection-background-color:red;}";
-
+  }
   setStyleSheet(_css);
 }
 

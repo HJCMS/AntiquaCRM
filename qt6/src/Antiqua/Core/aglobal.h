@@ -246,6 +246,27 @@
 #define ANTIQUACRM_TEXTCODEC "UTF8"
 #endif
 
+/**
+ * @ingroup AMacros
+ * @brief Predefined configuration parameters for path settings.
+ * @code
+ *   AntiquaCRM::ASettings *m_config = new AntiquaCRM::ASettings(this);
+ *   m_config->beginGroup(ANTIQUACRM_ARCHIVE_CONFIG_DIRS);
+ *   qDebug() << m_config->value(ANTIQUACRM_ARCHIVE_IMAGES);
+ *   m_config->endGroup();
+ * @endcode
+ */
+#ifndef ANTIQUACRM_ARCHIVE_CONFIG_DIRS
+#define ANTIQUACRM_ARCHIVE_CONFIG_DIRS "dirs"
+#define ANTIQUACRM_ARCHIVE_IMAGES "archive_images"
+#define ANTIQUACRM_ARCHIVE_DELIVERY "archive_delivery"
+#define ANTIQUACRM_ARCHIVE_CARDS "archive_cards"
+#define ANTIQUACRM_ARCHIVE_INVOICES "archive_invoices"
+#define ANTIQUACRM_ARCHIVE_REMINDERS "archive_reminder"
+#define ANTIQUACRM_ARCHIVE_REPORTS "archive_reports"
+#define ANTIQUACRM_ARCHIVE_IMPORT "import_folder"
+#endif
+
 #ifdef ANTIQUACRM_DBUS_ENABLED
 #include <QDBusAbstractAdaptor>
 #else

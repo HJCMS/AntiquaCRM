@@ -117,17 +117,8 @@ ImageImportDialog::~ImageImportDialog() {
 }
 
 void ImageImportDialog::initialConfiguration() {
-  config->beginGroup("dirs");
-  p_target = QDir(config->value("images", QString()).toString());
-  if (!p_target.exists()) {
-    p_import = config->getArchivPath("images");
-  }
-  p_import = QDir(config->value("import", QString()).toString());
-  if (!p_import.exists()) {
-    p_import = config->getArchivPath("import");
-  }
-  config->endGroup();
-
+  p_target = config->getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES);
+  p_import = config->getArchivPath(ANTIQUACRM_ARCHIVE_IMPORT);
   if (!p_import.exists() || !p_target.exists()) {
     QMessageBox::warning(this, tr("Configurtion Error"),
                          tr("Can not find Import Directory. Please Check your "

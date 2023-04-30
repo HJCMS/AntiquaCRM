@@ -160,7 +160,7 @@ void ImageViewToolBar::searchArticleImage() {
   _file.append(_ext);
   _file.prepend(QDir::separator());
 
-  QString _path = cfg.value("dirs/images", QString()).toString();
+  QString _path = cfg.getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES).path();
   _path.append(QDir::separator());
   _path.append("Sources");
   _path.append(QDir::separator());
@@ -188,9 +188,9 @@ void ImageViewToolBar::prepareTargetChange() {
   ASettings _cfg(this);
   QString _id = sender()->objectName();
   if (_id == "archiv") {
-    _dest = _cfg.value("dirs/images", QString()).toString();
+    _dest = _cfg.getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES).path();
   } else if (_id == "import") {
-    _dest = _cfg.value("dirs/import", QString()).toString();
+    _dest = _cfg.getArchivPath(ANTIQUACRM_ARCHIVE_IMPORT).path();
   } else if (_id == "downloads") {
     _dest = QStandardPaths::writableLocation(QStandardPaths::DownloadLocation);
   } else if (_id == "pictures") {

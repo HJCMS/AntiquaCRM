@@ -139,7 +139,9 @@ const QMetaType SelectTargets::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant SelectTargets::getValue() { return m_edit->text().trimmed(); }
+const QVariant SelectTargets::getValue() {
+  return (isAccessible() ? m_edit->text().trimmed() : QString());
+}
 
 const QString SelectTargets::popUpHints() {
   return tr("This entry requires a directory specification.");

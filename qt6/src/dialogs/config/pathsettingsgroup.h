@@ -16,6 +16,9 @@
 class PathSettingsGroup : public QFrame {
   Q_OBJECT
 
+private:
+  inline const QString configPath(const QString &) const;
+
 public:
   AntiquaCRM::SelectTargets *m_setDelivery;
   AntiquaCRM::SelectTargets *m_setInvoices;

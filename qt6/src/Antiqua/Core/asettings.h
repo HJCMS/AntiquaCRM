@@ -46,6 +46,12 @@ public:
 
   /**
    * @brief Returns Directory from Section[dirs]
+   * if required Directory not exists, a „QStandardPaths“ returned!
+   * @code
+   *   AntiquaCRM::ASettings config(this);
+   *   // ANTIQUACRM_ARCHIVE_IMAGES or QStandardPaths::PicturesLocation
+   *   qDebug() << config.getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES);
+   * @endcode
    */
   const QDir getArchivPath(const QString &section);
 

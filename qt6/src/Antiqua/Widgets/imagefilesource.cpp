@@ -69,24 +69,24 @@ bool ImageFileSource::isValid() const {
 
 bool ImageFileSource::compare() {
   AntiquaCRM::ASettings cfg;
-  // Sources Directory
-  QString _src = cfg.value("dirs/images", QString()).toString();
-  if (_src.isEmpty() || p_fileId < 1) {
+  // Create sources directory
+  QString _path = cfg.getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES).path();
+  if (_path.isEmpty() || p_fileId < 1) {
     qWarning("Image Source Configuration missmatch!");
     return false;
   }
-  _src.append(QDir::separator());
+  _path.append(QDir::separator());
 
-  QDir _dir(_src);
+  QDir _dir(_path);
   if (!_dir.exists("Sources")) {
     qWarning("Image Source Target not exists!");
     return false;
   }
-  _src.append("Sources");
+  _path.append("Sources");
 
   if (toBaseName(p_fileId) == baseName()) {
     QString _p = filePath();
-    if (_p.contains(_src) || _p.contains(p_destination))
+    if (_p.contains(_path) || _p.contains(p_destination))
       return true;
   }
   return false;

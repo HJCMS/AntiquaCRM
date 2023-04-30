@@ -47,6 +47,11 @@ private:
   QAction *ac_completer;
 
   /**
+   * @brief Action icon to note invalid content!
+   */
+  QAction *ac_invalid;
+
+  /**
    * @short Simple text validator
    * @code
    *  "^\\S{2}.+"
