@@ -8,6 +8,7 @@
 
 ConfigPaths::ConfigPaths(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"General", QString(), parent} {
+  setWindowTitle(getTitle());
   // Central Widget
   QWidget *m_central = new QWidget(this);
   QVBoxLayout *layout = new QVBoxLayout(m_central);

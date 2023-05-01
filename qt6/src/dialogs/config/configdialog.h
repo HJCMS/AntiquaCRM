@@ -15,10 +15,11 @@
 #include <QDialogButtonBox>
 #include <QEvent>
 #include <QStatusBar>
-#include <QTabWidget>
+#include <QStackedWidget>
 #include <QVBoxLayout>
 #include <QWidget>
 
+class ConfigTreeWidget;
 class ConfigGeneral;
 class ConfigPaths;
 
@@ -27,17 +28,22 @@ class ConfigDialog final : public QDialog {
 
 private:
   AntiquaCRM::ASettings *config;
-  QVBoxLayout *layout;
-  QTabWidget *m_pageView;
+  ConfigTreeWidget *m_treeWidget;
+  QStackedWidget *m_pageView;
   QStatusBar *m_statusbar;
   QDialogButtonBox *m_buttonBox;
 
   ConfigGeneral *m_cfgGeneral;
   ConfigPaths *m_cfgPaths;
 
-  const QList<AntiquaCRM::TabsConfigWidget *> groups();
+  const QList<AntiquaCRM::TabsConfigWidget *> pages();
+  AntiquaCRM::TabsConfigWidget *page(int);
 
   void closeEvent(QCloseEvent *) override;
+
+  bool loadTabPlugins();
+
+  void loadProviderPlugins();
 
   void loadConfigs();
 
@@ -45,6 +51,7 @@ private Q_SLOTS:
   void statusMessage(const QString &);
 
 public Q_SLOTS:
+  void setOpenPage(int);
   void aboutToSave();
   void aboutToClose();
 

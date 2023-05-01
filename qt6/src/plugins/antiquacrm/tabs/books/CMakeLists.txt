@@ -25,6 +25,7 @@ SET (plugin_SOURCES
  bookstablemodel.cpp
  booksstatusbar.cpp
  bookseditor.cpp
+ bookstabconfigwidget.cpp
 )
 
 SET (plugin_HEADERS
@@ -37,6 +38,7 @@ SET (plugin_HEADERS
  bookstablemodel.h
  booksstatusbar.h
  bookseditor.h
+ bookstabconfigwidget.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

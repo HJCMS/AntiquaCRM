@@ -3,6 +3,7 @@
 
 #include "menubar.h"
 #include "dialogs/config/configdialog.h"
+#include "mainwindow.h"
 
 #include <AntiquaWidgets>
 

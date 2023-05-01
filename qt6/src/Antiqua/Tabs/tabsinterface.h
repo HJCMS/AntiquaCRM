@@ -16,6 +16,7 @@
 namespace AntiquaCRM {
 
 class TabsIndex;
+class TabsConfigWidget;
 
 class ANTIQUACRM_LIBRARY TabsInterface : public QObject {
   Q_OBJECT
@@ -35,7 +36,7 @@ public:
 
   virtual const QString sqlFieldPrefix() const = 0;
 
-  virtual QWidget *configWidget(QWidget *parent) const = 0;
+  virtual AntiquaCRM::TabsConfigWidget *configWidget(QWidget *parent) const = 0;
 
   virtual bool addIndexOnInit() const = 0;
 

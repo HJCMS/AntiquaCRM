@@ -10,6 +10,7 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 
 SET (_library_HEADERS
  configdialog.cpp
+ configtreewidget.cpp
  configgeneral.cpp
  configpaths.cpp
  paymentsettingsgroup.cpp
@@ -18,6 +19,7 @@ SET (_library_HEADERS
 
 SET (_library_SOURCES
  configdialog.h
+ configtreewidget.h
  configgeneral.h
  configpaths.h
  paymentsettingsgroup.h
