@@ -10,6 +10,7 @@
 #include <QDebug>
 #include <QIcon>
 #include <QRegularExpressionValidator>
+#include <QStyle>
 #include <QTimer>
 #include <QValidator>
 
@@ -24,8 +25,8 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   ac_completer->setEnabled(false);
   ac_completer->setVisible(false);
 
-  ac_invalid = addAction(AntiquaApplIcon("dialog-warning"), // warn
-                         QLineEdit::TrailingPosition);
+  QIcon _warnIcon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
+  ac_invalid = addAction(_warnIcon, QLineEdit::TrailingPosition);
   ac_invalid->setToolTip(tr("Invalid content"));
   ac_invalid->setEnabled(false);
   ac_invalid->setVisible(false);

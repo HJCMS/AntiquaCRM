@@ -68,46 +68,24 @@ PaymentSettingsGroup::PaymentSettingsGroup(QWidget *parent) : QFrame{parent} {
   m_info2->setWordWrap(true);
   m_info2->setText(
       tr("In this area you can set the price restrictions, which are set by "
-         "default when creating a new article. There are 3 Categories: Books, "
-         "Media and „Prints + Stitches or Engravings“. You can set a minimum "
-         "and default value for each category."));
-  grLayout2->addWidget(m_info2, 0, 2, 4, 1);
-  grLayout2->setColumnStretch(2, 1);
+         "default when creating a new article."));
+  grLayout2->addWidget(m_info2, 0, 0, 1, 2);
 
-  m_minBook = new AntiquaCRM::PriceEdit(m_limitsGroup);
-  m_minBook->setObjectName("payment/limits_book_low");
-  m_minBook->setToolTip(tr("Books and Magazines"));
-  m_minBook->setBuddyLabel(tr("Books min."));
-  grLayout2->addWidget(m_minBook, 0, 0, 1, 1);
-  m_normalBook = new AntiquaCRM::PriceEdit(m_limitsGroup);
-  m_normalBook->setObjectName("payment/limits_book_normal");
-  m_normalBook->setBuddyLabel(tr("Default"));
-  m_normalBook->setToolTip(m_minBook->toolTip());
-  grLayout2->addWidget(m_normalBook, 0, 1, 1, 1);
+  m_minPrice = new AntiquaCRM::PriceEdit(m_limitsGroup);
+  m_minPrice->setObjectName("payment/price_limit_lowest");
+  m_minPrice->setToolTip(tr("Price limit"));
+  m_minPrice->setBuddyLabel(tr("Price minimal"));
+  grLayout2->addWidget(m_minPrice, 1, 0, 1, 1);
+  m_normalPrice = new AntiquaCRM::PriceEdit(m_limitsGroup);
+  m_normalPrice->setObjectName("payment/price_limit_normal");
+  m_normalPrice->setBuddyLabel(tr("Default"));
+  m_normalPrice->setToolTip(m_normalPrice->toolTip());
+  m_normalPrice->appendStretch(1);
+  grLayout2->addWidget(m_normalPrice, 1, 1, 1, 1);
 
-  m_minMedia = new AntiquaCRM::PriceEdit(m_limitsGroup);
-  m_minMedia->setObjectName("payment/limits_media_low");
-  m_minMedia->setToolTip(tr("DVD/CDs and Vinyl"));
-  m_minMedia->setBuddyLabel(tr("Media min."));
-  grLayout2->addWidget(m_minMedia, 1, 0, 1, 1);
-  m_normalMedia = new AntiquaCRM::PriceEdit(m_limitsGroup);
-  m_normalMedia->setObjectName("payment/limits_media_normal");
-  m_normalMedia->setBuddyLabel(tr("Default"));
-  m_normalMedia->setToolTip(m_minMedia->toolTip());
-  grLayout2->addWidget(m_normalMedia, 1, 1, 1, 1);
+  m_minPrice->setValue(2);
+  m_normalPrice->setValue(12);
 
-  m_minPrints = new AntiquaCRM::PriceEdit(m_limitsGroup);
-  m_minPrints->setObjectName("payment/limits_prints_low");
-  m_minPrints->setToolTip(tr("Prints and Stitches"));
-  m_minPrints->setBuddyLabel(tr("Prints min."));
-  grLayout2->addWidget(m_minPrints, 2, 0, 1, 1);
-  m_normalPrints = new AntiquaCRM::PriceEdit(m_limitsGroup);
-  m_normalPrints->setObjectName("payment/limits_prints_normal");
-  m_normalPrints->setBuddyLabel(tr("Default"));
-  m_normalPrints->setToolTip(m_minPrints->toolTip());
-  grLayout2->addWidget(m_normalPrints, 2, 1, 1, 1);
-
-  grLayout2->setRowStretch(3, 1);
   m_limitsGroup->setLayout(grLayout2);
   layout->addWidget(m_limitsGroup);
 
@@ -123,8 +101,6 @@ void PaymentSettingsGroup::updateCurrency() {
   QList<AntiquaCRM::PriceEdit *> _l =
       findChildren<AntiquaCRM::PriceEdit *>(QString());
   for (int i = 0; i < _l.size(); i++) {
-    AntiquaCRM::PriceEdit *m_n = _l.at(i);
-    if (m_n->objectName().contains("payment/limits_"))
-      m_n->updateCurrencySuffix(_cyrrency);
+    _l.at(i)->updateCurrencySuffix(_cyrrency);
   }
 }

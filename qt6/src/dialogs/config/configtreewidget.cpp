@@ -12,7 +12,8 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   setAlternatingRowColors(true);
 
   QTreeWidgetItem *m_header = headerItem();
-  m_header->setText(0, tr("Configuration"));
+  m_header->setText(0, tr("Configuration Menu"));
+  m_header->setIcon(0, AntiquaCRM::AntiquaApplIcon("antiquacrm"));
 
   m_mainIndex = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
   m_mainIndex->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);

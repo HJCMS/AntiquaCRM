@@ -18,6 +18,10 @@
 #define BOOKS_INTERFACE_NAME "books"
 #endif
 
+#ifndef BOOKS_CONFIG_POINTER
+#define BOOKS_CONFIG_POINTER QString("CONFIG_BOOK_TAB")
+#endif
+
 #ifndef BOOKS_SQL_TABLE_NAME
 #define BOOKS_SQL_TABLE_NAME "inventory_books"
 #endif

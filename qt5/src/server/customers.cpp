@@ -73,7 +73,9 @@ qint64 Customers::sqlQuery() {
   sql.append(value("c_postalcode").toString() + "'");
   sql.append(") OR (c_provider_import ILIKE '");
   sql.append(buyer_name);
-  sql.append("');");
+  sql.append("' AND c_postalcode='");
+  sql.append(value("c_postalcode").toString() + "'");
+  sql.append(");");
 
   QList<qint64> ids;
   QSqlQuery q = m_sql->query(sql);

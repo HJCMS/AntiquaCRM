@@ -42,20 +42,12 @@ public:
    * @brief Price limits
    * @{
    */
-  AntiquaCRM::PriceEdit *m_minBook;
-  AntiquaCRM::PriceEdit *m_normalBook;
-
-  AntiquaCRM::PriceEdit *m_minMedia;
-  AntiquaCRM::PriceEdit *m_normalMedia;
-
-  AntiquaCRM::PriceEdit *m_minPrints;
-  AntiquaCRM::PriceEdit *m_normalPrints;
+  AntiquaCRM::PriceEdit *m_minPrice;
+  AntiquaCRM::PriceEdit *m_normalPrice;
 
   /**
    * @}
-   */
-
-  /**
+   *
    * @param parent
    */
   explicit PaymentSettingsGroup(QWidget *parent = nullptr);

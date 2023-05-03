@@ -72,11 +72,17 @@
 // AntiquaCRM::SelectCurrency
 #include "selectcurrency.h"
 
+// AntiquaCRM::SelectFile
+#include "selectfile.h"
+
 // AntiquaCRM::SelectEUCountry
 #include "selecteucountry.h"
 
 // AntiquaCRM::SelectLanguage
 #include "selectlanguage.h"
+
+// AntiquaCRM::SelectMediaType
+#include "selectmediatype.h"
 
 // AntiquaCRM::SelectPaymentMethod
 #include "selectpaymentmethod.h"

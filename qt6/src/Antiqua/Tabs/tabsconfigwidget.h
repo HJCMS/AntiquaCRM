@@ -71,8 +71,8 @@ public:
   };
 
   /**
-   * @param group  - Configuration group
-   * @param id     - Configuration identifier
+   * @param group  - Configuration TreeView group
+   * @param id     - Configuration Identifier group
    * @param parent - Parent Widget
    */
   explicit TabsConfigWidget(const QString &group, // config group

@@ -69,18 +69,13 @@ void SelectTargets::valueChanged() {
 
 void SelectTargets::setTarget() {
   QString _old = m_edit->text();
-  QString _dir = QFileDialog::getExistingDirectory(this, m_edit->toolTip(),
-                                                   m_edit->text());
+  QString _dir =
+      QFileDialog::getExistingDirectory(this, m_edit->toolTip(), _old);
   QFileInfo _info(_dir);
   if (_info.isWritable() && _info.filePath() != _old) {
     m_edit->setText(_info.filePath());
     valueChanged();
   }
-#ifdef ANTIQUA_DEVELOPEMENT
-  else {
-    qDebug() << Q_FUNC_INFO << _info.filePath();
-  }
-#endif
 }
 
 void SelectTargets::initData() {

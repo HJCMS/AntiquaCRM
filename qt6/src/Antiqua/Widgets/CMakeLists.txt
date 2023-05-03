@@ -71,7 +71,9 @@ SET (_library_SOURCES
  salutationedit.cpp
  selectcurrency.cpp
  selecteucountry.cpp
+ selectfile.cpp
  selectlanguage.cpp
+ selectmediatype.cpp
  selectpaymentmethod.cpp
  selectpaymentstatus.cpp
  selectstorage.cpp
@@ -122,7 +124,9 @@ SET (_library_HEADERS
  salutationedit.h
  selectcurrency.h
  selecteucountry.h
+ selectfile.h
  selectlanguage.h
+ selectmediatype.h
  selectpaymentmethod.h
  selectpaymentstatus.h
  selectstorage.h

@@ -9,7 +9,6 @@ ASlider::ASlider(QWidget *parent, bool mouseEvents)
     : QSlider{Qt::Horizontal, parent}, wheel_support{mouseEvents} {
   setMinimum(0);
   setTickPosition(QSlider::TicksAbove);
-  connect(this, SIGNAL(valueChanged(int)), SLOT(setStep(int)));
 }
 
 void ASlider::wheelEvent(QWheelEvent *e) {

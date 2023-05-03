@@ -4,6 +4,7 @@
 #include "configdialog.h"
 #include "configgeneral.h"
 #include "configpaths.h"
+#include "configprinting.h"
 #include "configtreewidget.h"
 
 #include <QMessageBox>
@@ -43,6 +44,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_cfgPaths = new ConfigPaths(m_pageView);
   m_treeWidget->addGeneral(1, m_cfgPaths->getTitle());
   m_pageView->insertWidget(1, m_cfgPaths);
+
+  m_cfgPrinter = new ConfigPrinting(m_pageView);
+  m_treeWidget->addGeneral(2, m_cfgPrinter->getTitle());
+  m_pageView->insertWidget(2, m_cfgPrinter);
 
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);
@@ -103,7 +108,6 @@ bool ConfigDialog::loadTabPlugins() {
       if (_w != nullptr) {
         m_pageView->insertWidget(_c, _w);
         m_treeWidget->addTabPlugin(_c, _w->getTitle());
-        // _w->getIcon();
         _c++;
       }
     }

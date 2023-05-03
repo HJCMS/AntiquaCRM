@@ -13,8 +13,11 @@ SET (_library_HEADERS
  configtreewidget.cpp
  configgeneral.cpp
  configpaths.cpp
+ configprinting.cpp
  paymentsettingsgroup.cpp
  pathsettingsgroup.cpp
+ printerfonts.cpp
+ printerattachments.cpp
 )
 
 SET (_library_SOURCES
@@ -22,8 +25,11 @@ SET (_library_SOURCES
  configtreewidget.h
  configgeneral.h
  configpaths.h
+ configprinting.h
  paymentsettingsgroup.h
  pathsettingsgroup.h
+ printerfonts.h
+ printerattachments.h
 )
 
 INCLUDE_DIRECTORIES (

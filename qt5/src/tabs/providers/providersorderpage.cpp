@@ -84,12 +84,14 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
            << "c_lastname"
            << "c_postalcode";
 
+    QString postalcode;
     foreach (QString f, fields) {
       QVariant v = customer.value(f);
       if (!v.isNull()) {
-        if (f == "c_postalcode")
+        if (f == "c_postalcode") {
           buffer << f + " ILIKE '" + v.toString() + "'";
-        else
+          postalcode = v.toString().trimmed();
+        } else
           buffer << f + " ILIKE '" + v.toString() + "%'";
       }
     }
@@ -97,8 +99,11 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
     clause.append(buffer.join(" AND "));
     clause.append(") OR (c_provider_import ILIKE '");
     clause.append(fullname);
+    clause.append("' AND c_postalcode LIKE '");
+    clause.append(postalcode);
     clause.append("')");
     query.setWhereClause(clause);
+
     QSqlQuery q = m_sql->query(query.getQueryContent());
     if (q.size() > 0) {
       q.next();
@@ -109,6 +114,11 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
         // qDebug() << Q_FUNC_INFO << name;
         return true;
       }
+#ifdef ANTIQUA_DEVELOPEMENT
+      else {
+        qDebug() << Q_FUNC_INFO << query.getQueryContent();
+      }
+#endif
     }
   }
   return false;
@@ -191,6 +201,7 @@ void ProvidersOrderPage::createOpenCustomer() {
   obj.insert("window_operation", "open_customer");
   obj.insert("tab", "customers_tab");
   obj.insert("open_customer", c_id);
+  // qDebug() << Q_FUNC_INFO << obj;
   pushCmd(obj);
 }
 

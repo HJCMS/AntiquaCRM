@@ -28,6 +28,8 @@ public:
   AntiquaCRM::SelectTargets *m_setImageArchive;
   AntiquaCRM::SelectTargets *m_setImageImport;
 
+  AntiquaCRM::SelectFile *m_setMailBinary;
+
   explicit PathSettingsGroup(QWidget *parent = nullptr);
 };
 

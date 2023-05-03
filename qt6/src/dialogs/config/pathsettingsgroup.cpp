@@ -4,6 +4,7 @@
 #include "pathsettingsgroup.h"
 
 #include <QGroupBox>
+#include <QLabel>
 #include <QLayout>
 
 PathSettingsGroup::PathSettingsGroup(QWidget *parent) : QFrame{parent} {
@@ -71,12 +72,24 @@ PathSettingsGroup::PathSettingsGroup(QWidget *parent) : QFrame{parent} {
   m_group2->setTitle(tr("Application paths"));
   // m_group2->setStyleSheet("QFrame {border: 1px solid red;}");
 
-  QGridLayout *grLayout2 = new QGridLayout(m_group2);
+  QVBoxLayout *grLayout2 = new QVBoxLayout(m_group2);
   grLayout2->setContentsMargins(5, 5, 5, 5);
 
-  // appl_mailler
+  QLabel *m_info2 = new QLabel(m_group2);
+  m_info2->setIndent(2);
+  m_info2->setAlignment(Qt::AlignTop | Qt::AlignLeft);
+  m_info2->setWordWrap(true);
+  m_info2->setText(tr(
+      "An eMail Application for sending emails with attachments is required."));
+  grLayout2->addWidget(m_info2);
 
-  // grLayout2->setRowStretch(, 1);
+  m_setMailBinary = new AntiquaCRM::SelectFile(m_group2);
+  m_setMailBinary->setObjectName(configPath("appl_mailler"));
+  m_setMailBinary->setToolTip(tr("Mail Application"));
+  m_setMailBinary->setBuddyLabel(m_setMailBinary->toolTip());
+  grLayout2->addWidget(m_setMailBinary);
+
+  grLayout2->addStretch(1);
   m_group2->setLayout(grLayout2);
   layout->addWidget(m_group2);
 
