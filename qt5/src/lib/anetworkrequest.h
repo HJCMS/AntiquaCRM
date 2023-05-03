@@ -33,6 +33,11 @@ public:
   void setHeaderAcceptJson();
 
   void setHeaderContentTypeJson();
+
+  /**
+   * @brief Header Content type
+   * @param charset - default=utf-8
+   */
   void setHeaderContentTypeXml(const QByteArray &charset = antiquaCharset());
 
   /**

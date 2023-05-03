@@ -75,7 +75,9 @@ public:
    * @return NetworkReply
    */
   QNetworkReply *jsonPostRequest(const QUrl &url, const QJsonDocument &body);
-  QNetworkReply *xmlPostRequest(const QUrl &url, const QDomDocument &body);
+  QNetworkReply *xmlPostRequest(const QUrl &url,           // api url
+                                const QByteArray &charset, // utf8 default
+                                const QDomDocument &body);
 
   QNetworkReply *jsonMultiPartRequest(const QUrl &url, const QString &name,
                                       const QJsonDocument &body);

@@ -18,6 +18,12 @@ class AbeBooks final : public Provider {
   Q_OBJECT
 
 private:
+  /**
+   * @brief Codec for XML/SOAP Request
+   * @warning AbeBooks using IS0-8859-1 with invalid Content-Header
+   */
+  QTextCodec *m_abeCodec;
+
   void initConfiguration() override;
 
   AbeBooksDocument initDocument();
@@ -33,6 +39,7 @@ private:
   void prepareContent(const QDomDocument &);
 
 private Q_SLOTS:
+  void incomingCodec(QTextCodec *);
   void responsed(const QByteArray &) override;
 
 public Q_SLOTS:

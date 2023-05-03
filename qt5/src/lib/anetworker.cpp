@@ -5,9 +5,9 @@
 #include "anetworkcache.h"
 #include "anetworkrequest.h"
 
-//#ifndef ANTIQUACRM_NETWORK_DEBUG
-//#define ANTIQUACRM_NETWORK_DEBUG true
-//#endif
+#ifdef ANTIQUA_DEVELOPEMENT
+#define ANTIQUACRM_NETWORK_DEBUG true
+#endif
 
 #include <ASettings>
 #include <QBuffer>
@@ -87,6 +87,7 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
+  const QUrl _url = m_reply->url();
   bool textContent = false;
   QStringList findText("application/json");
   findText << "text/plain";
@@ -135,14 +136,15 @@ void ANetworker::slotReadResponse() {
   }
   buf.clear();
 
-  QString replyHost = m_reply->url().host();
 #ifdef ANTIQUACRM_NETWORK_DEBUG
-  qInfo("Host: %s", qPrintable(replyHost));
+  qInfo("Request to:\"%s\" {", qPrintable(_url.host()));
+  qInfo("-- Url: %s", qPrintable(m_reply->url().toString()));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
   }
+  qInfo("}");
 #else
-  qInfo("Host: %s, response with %d bytes.", qPrintable(replyHost),
+  qInfo("Host: %s, response with %d bytes.", qPrintable(_url.host()),
         data.size());
 #endif
 
@@ -152,7 +154,7 @@ void ANetworker::slotReadResponse() {
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
       qWarning("%s: Responsed json is not well format:(%s)!",
-               qPrintable(replyHost), qPrintable(parser.errorString()));
+               qPrintable(_url.host()), qPrintable(parser.errorString()));
       emit sendFinishedWithErrors();
       return;
     }
@@ -161,9 +163,18 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-  // XML/SOAP Request
+  /**
+   * @short XML/SOAP Request
+   * @warning AbeBooks using IS0-8859-1 with invalid Content-Header
+   */
   if (queryType == AntiquaCRM::XML_QUERY) {
     QDomDocument xml("response");
+    if (decodeWith != m_textCodec->name()) {
+      QTextCodec *codec = QTextCodec::codecForName(decodeWith);
+      QString _str = codec->toUnicode(data);
+      _str.replace(decodeWith, m_textCodec->name());
+      data = _str.toLocal8Bit();
+    }
     QString errorMsg = QString();
     int errorLine = 0;
     int errorColumn = 0;
@@ -177,7 +188,7 @@ void ANetworker::slotReadResponse() {
     return;
   }
 
-  qWarning("Network: Unknown response from %s!", qPrintable(replyHost));
+  qWarning("Network: Unknown response from %s!", qPrintable(_url.host()));
 }
 
 void ANetworker::slotSslErrors(const QList<QSslError> &list) {
@@ -242,17 +253,26 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
 }
 
 QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
+                                          const QByteArray &charset,
                                           const QDomDocument &body) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
   request.setHeaderAcceptText();
   request.setHeaderCacheControl();
-  request.setHeaderContentTypeXml();
   request.setTransferTimeout((transfer_timeout * 1000));
+  if (charset.isNull()) // use defaults
+    request.setHeaderContentTypeXml(request.antiquaCharset());
+  else
+    request.setHeaderContentTypeXml(charset);
 
   QByteArray data = body.toByteArray(-1);
   request.setHeaderContentLength(data.size());
+
+#ifdef ANTIQUACRM_NETWORK_DEBUG
+  qDebug() << "Request::ContentTypeHeader="
+           << request.header(QNetworkRequest::ContentTypeHeader);
+#endif
 
   m_reply = post(request, data);
 

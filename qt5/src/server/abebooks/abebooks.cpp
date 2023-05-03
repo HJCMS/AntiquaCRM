@@ -16,7 +16,9 @@
 #include <QTextEncoder>
 #include <QUrlQuery>
 
-AbeBooks::AbeBooks(QObject *parent) : Provider{AntiquaCRM::XML_QUERY, parent} {}
+AbeBooks::AbeBooks(QObject *parent) : Provider{AntiquaCRM::XML_QUERY, parent} {
+  m_abeCodec = QTextCodec::codecForName(ABEBOOKS_XML_CHARSET);
+}
 
 void AbeBooks::initConfiguration() {
   QString host("orderupdate.abebooks.com");
@@ -56,7 +58,6 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
-    data.setCodec(ABEBOOKS_XML_CHARSET);
     data << doc.toString(1); // Indented: 1
     fp.close();
   }
@@ -250,11 +251,17 @@ void AbeBooks::prepareContent(const QDomDocument &doc) {
   emit sendDisjointed();
 }
 
+void AbeBooks::incomingCodec(QTextCodec *c) {
+  if (c->name() != m_abeCodec->name()) {
+    qWarning("Abebooks codec '%s' missmatch!", c->name().constData());
+  }
+}
+
 void AbeBooks::responsed(const QByteArray &data) {
   QDomDocument xml("response");
   // WARNING: We need a Header with codec
   QDomProcessingInstruction pir = xml.createProcessingInstruction(
-      "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"");
+      "xml", "version=\"1.0\" encoding=\"" + m_abeCodec->name() + "\"");
   xml.appendChild(pir);
 
   QString errorMsg;
@@ -272,9 +279,10 @@ void AbeBooks::start() {
   QString operation("getAllNewOrders");
   AbeBooksDocument doc = initDocument();
   doc.createAction(operation);
-
   QUrl url(apiQuery(operation));
-  m_networker->xmlPostRequest(url, doc);
+  m_networker->xmlPostRequest(url, m_abeCodec->name(), doc);
+  connect(m_networker, SIGNAL(sendContentCodec(QTextCodec *)),
+          SLOT(incomingCodec(QTextCodec *)));
 }
 
 bool AbeBooks::init() {
