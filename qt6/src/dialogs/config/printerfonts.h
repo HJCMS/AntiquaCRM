@@ -36,8 +36,8 @@ private Q_SLOTS:
   void setSectionFont(const QString &);
 
 public Q_SLOTS:
-  void loadFonts(AntiquaCRM::ASettings *);
-  void saveFonts(AntiquaCRM::ASettings *);
+  void loadSection(AntiquaCRM::ASettings *);
+  void saveSection(AntiquaCRM::ASettings *);
 
 public:
   explicit PrinterFonts(QWidget *parent = nullptr);

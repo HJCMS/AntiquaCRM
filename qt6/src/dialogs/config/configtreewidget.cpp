@@ -44,17 +44,16 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
 }
 
 void ConfigTreeWidget::addChild(QTreeWidgetItem *main, int page,
-                                const QString &title) {
+                                const QString &title, const QIcon &icon) {
   QFont _font(font());
   _font.setItalic(true);
-  QVariant _iconRole = main->data(0, Qt::DecorationRole);
   QTreeWidgetItem *_item = new QTreeWidgetItem(main, // toplevel
                                                QTreeWidgetItem::UserType);
   _item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
                   Qt::ItemNeverHasChildren);
   _item->setText(0, title);
   _item->setFont(0, _font);
-  _item->setData(0, Qt::DecorationRole, _iconRole);
+  _item->setData(0, Qt::DecorationRole, icon);
   _item->setData(1, Qt::UserRole, page);
   main->addChild(_item);
 }
@@ -73,14 +72,18 @@ void ConfigTreeWidget::setItemSelected(QTreeWidgetItem *item, int) {
   emit sendPageIndex(_page.toInt());
 }
 
-void ConfigTreeWidget::addGeneral(int page, const QString &title) {
-  addChild(m_mainIndex, page, title);
+void ConfigTreeWidget::addGeneral(int page, const QString &title,
+                                  const QIcon &icon) {
+  addChild(m_mainIndex, page, title, icon);
 }
 
-void ConfigTreeWidget::addTabPlugin(int page, const QString &title) {
-  addChild(m_tabsIndex, page, title);
+void ConfigTreeWidget::addTabPlugin(int page, const QString &title,
+                                    const QIcon &icon) {
+
+  addChild(m_tabsIndex, page, title, icon);
 }
 
-void ConfigTreeWidget::addProviderPlugin(int page, const QString &title) {
-  addChild(m_providerIndex, page, title);
+void ConfigTreeWidget::addProviderPlugin(int page, const QString &title,
+                                         const QIcon &icon) {
+  addChild(m_providerIndex, page, title, icon);
 }

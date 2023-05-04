@@ -4,7 +4,9 @@
 #include "printerfonts.h"
 #include "awhatsthisbutton.h"
 
-#include <QtWidgets>
+#include <QDialog>
+#include <QFontDialog>
+#include <QGridLayout>
 
 PrinterFonts::PrinterFonts(QWidget *parent) : QGroupBox{parent} {
   setTitle(tr("Primary font settings for all documents to be printed."));
@@ -110,8 +112,7 @@ void PrinterFonts::setSectionFont(const QString &name) {
     updateSection(l);
 }
 
-void PrinterFonts::loadFonts(AntiquaCRM::ASettings *config) {
-  config->beginGroup("printer");
+void PrinterFonts::loadSection(AntiquaCRM::ASettings *config) {
   QList<QLabel *> labels = findChildren<QLabel *>(fontPattern(), // pattern
                                                   Qt::FindDirectChildrenOnly);
   if (labels.count() > 1) {
@@ -128,11 +129,9 @@ void PrinterFonts::loadFonts(AntiquaCRM::ASettings *config) {
       }
     }
   }
-  config->endGroup();
 }
 
-void PrinterFonts::saveFonts(AntiquaCRM::ASettings *config) {
-  config->beginGroup("printer");
+void PrinterFonts::saveSection(AntiquaCRM::ASettings *config) {
   QList<QLabel *> labels = findChildren<QLabel *>(fontPattern(), // pattern
                                                   Qt::FindDirectChildrenOnly);
   if (labels.count() > 1) {
@@ -146,7 +145,6 @@ void PrinterFonts::saveFonts(AntiquaCRM::ASettings *config) {
       }
     }
   }
-  config->endGroup();
 }
 
 const QRegularExpression PrinterFonts::fontPattern() {

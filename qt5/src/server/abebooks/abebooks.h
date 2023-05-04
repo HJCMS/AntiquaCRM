@@ -33,7 +33,7 @@ private:
   const QUrl apiQuery(const QString &) override;
 
   void prepareContent(const QJsonDocument &) override{
-      /* AbeBooks verwendet XML */
+      /* AbeBooks only using XML/SOAP */
   };
 
   void prepareContent(const QDomDocument &);

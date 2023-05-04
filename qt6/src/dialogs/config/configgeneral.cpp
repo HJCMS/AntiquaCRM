@@ -13,6 +13,8 @@ ConfigGeneral::ConfigGeneral(QWidget *parent)
   setWindowTitle(getTitle());
   // Central Widget
   QWidget *m_central = new QWidget(this);
+  m_central->setContentsMargins(0, 0, 0, 20);
+
   QVBoxLayout *layout = new QVBoxLayout(m_central);
   layout->setContentsMargins(5, 5, 5, 5);
 

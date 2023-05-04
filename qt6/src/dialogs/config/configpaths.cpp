@@ -11,6 +11,8 @@ ConfigPaths::ConfigPaths(QWidget *parent)
   setWindowTitle(getTitle());
   // Central Widget
   QWidget *m_central = new QWidget(this);
+  m_central->setContentsMargins(0, 0, 0, 20);
+
   QVBoxLayout *layout = new QVBoxLayout(m_central);
   layout->setContentsMargins(5, 5, 5, 5);
 
@@ -54,7 +56,7 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigPaths::getType() const {
 }
 
 const QIcon ConfigPaths::getIcon() const {
-  return AntiquaCRM::AntiquaApplIcon("configure");
+  return style()->standardIcon(QStyle::SP_DirOpenIcon);
 }
 
-const QString ConfigPaths::getTitle() const { return tr("Paths"); }
+const QString ConfigPaths::getTitle() const { return tr("Directories"); }

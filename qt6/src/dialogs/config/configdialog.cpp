@@ -38,15 +38,17 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_central->setWidget(m_pageView);
 
   m_cfgGeneral = new ConfigGeneral(m_pageView);
-  m_treeWidget->addGeneral(0, m_cfgGeneral->getTitle());
+  m_treeWidget->addGeneral(0, m_cfgGeneral->getTitle(),
+                           m_cfgGeneral->getIcon());
   m_pageView->insertWidget(0, m_cfgGeneral);
 
   m_cfgPaths = new ConfigPaths(m_pageView);
-  m_treeWidget->addGeneral(1, m_cfgPaths->getTitle());
+  m_treeWidget->addGeneral(1, m_cfgPaths->getTitle(), m_cfgPaths->getIcon());
   m_pageView->insertWidget(1, m_cfgPaths);
 
   m_cfgPrinter = new ConfigPrinting(m_pageView);
-  m_treeWidget->addGeneral(2, m_cfgPrinter->getTitle());
+  m_treeWidget->addGeneral(2, m_cfgPrinter->getTitle(),
+                           m_cfgPrinter->getIcon());
   m_pageView->insertWidget(2, m_cfgPrinter);
 
   m_buttonBox = new QDialogButtonBox(this);
@@ -107,7 +109,7 @@ bool ConfigDialog::loadTabPlugins() {
       AntiquaCRM::TabsConfigWidget *_w = _list.at(i)->configWidget(m_pageView);
       if (_w != nullptr) {
         m_pageView->insertWidget(_c, _w);
-        m_treeWidget->addTabPlugin(_c, _w->getTitle());
+        m_treeWidget->addTabPlugin(_c, _w->getTitle(), _w->getIcon());
         _c++;
       }
     }

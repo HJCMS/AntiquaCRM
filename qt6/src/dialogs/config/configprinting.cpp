@@ -3,16 +3,25 @@
 
 #include "configprinting.h"
 #include "printerattachments.h"
+#include "printerdevices.h"
 #include "printerfonts.h"
+#include "printerpaperlayout.h"
+#include "printerqrcode.h"
 
 #include <QtWidgets>
 
 ConfigPrinting::ConfigPrinting(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"General", "printer", parent} {
   setWindowTitle(getTitle());
+
   QWidget *m_central = new QWidget(this);
+  m_central->setContentsMargins(0, 0, 0, 20);
+
   QVBoxLayout *layout = new QVBoxLayout(m_central);
   layout->setContentsMargins(5, 5, 5, 5);
+
+  m_printers = new PrinterDevices(this);
+  layout->addWidget(m_printers);
 
   m_fontGroup = new PrinterFonts(this);
   layout->addWidget(m_fontGroup);
@@ -20,46 +29,48 @@ ConfigPrinting::ConfigPrinting(QWidget *parent)
   m_attachmentGroup = new PrinterAttachments(this);
   layout->addWidget(m_attachmentGroup);
 
+  m_paperLayout = new PrinterPaperLayout(this);
+  layout->addWidget(m_paperLayout);
+
+  m_qrCode = new PrinterQRCode(this);
+  layout->addWidget(m_qrCode);
+
   m_central->setLayout(layout);
   layout->addStretch(1);
+
   setWidget(m_central);
 }
 
 void ConfigPrinting::loadSectionConfig() {
+  config->beginGroup("printer");
+  // Printers
+  m_printers->loadSection(config);
   // Fonts
-  m_fontGroup->loadFonts(config);
+  m_fontGroup->loadSection(config);
   // Attachments
   m_attachmentGroup->loadSection(config);
-
-  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
-  while (it.hasNext()) {
-    AntiquaCRM::AbstractInput *m_inp = it.next();
-    if (m_inp->objectName().isEmpty())
-      continue;
-
-    const QMetaType _type = m_inp->getType();
-    QVariant _val = config->getValue(m_inp->objectName(), _type);
-    if (_val.isNull())
-      continue;
-
-    m_inp->setValue(_val);
-  }
+  // Page Layout
+  m_paperLayout->loadSection(config);
+  // QRCode
+  m_qrCode->loadSection(config);
+  // end
+  config->endGroup();
 }
 
 void ConfigPrinting::saveSectionConfig() {
+  config->beginGroup("printer");
+  // Printers
+  m_printers->saveSection(config);
   // Fonts
-  m_fontGroup->saveFonts(config);
+  m_fontGroup->saveSection(config);
   // Attachments
   m_attachmentGroup->saveSection(config);
-
-  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
-  while (it.hasNext()) {
-    AntiquaCRM::AbstractInput *m_inp = it.next();
-    if (m_inp->objectName().isEmpty())
-      continue;
-
-    config->setValue(m_inp->objectName(), m_inp->getValue());
-  }
+  // Page Layout
+  m_paperLayout->saveSection(config);
+  // QRCode
+  m_qrCode->saveSection(config);
+  // end
+  config->endGroup();
 }
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigPrinting::getType() const {
@@ -67,7 +78,7 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigPrinting::getType() const {
 }
 
 const QIcon ConfigPrinting::getIcon() const {
-  return AntiquaCRM::AntiquaApplIcon("configure");
+  return AntiquaCRM::AntiquaApplIcon("printer");
 }
 
 const QString ConfigPrinting::getTitle() const { return tr("Printer"); }

@@ -3,30 +3,40 @@
 
 #include "printerattachments.h"
 
-#include <QtWidgets>
+#include <QDir>
+#include <QFileInfo>
+#include <QLayout>
 
 PrinterAttachments::PrinterAttachments(QWidget *parent) : QGroupBox{parent} {
   setTitle(tr("Document heading attachment."));
-  QGridLayout *layout = new QGridLayout(this);
+  QVBoxLayout *layout = new QVBoxLayout(this);
 
   m_path = new AntiquaCRM::SelectTargets(this);
   m_path->setObjectName("print_attachments_path");
   m_path->setBuddyLabel(tr("Directory"));
-  layout->addWidget(m_path, 0, 0, 1, 1);
+  layout->addWidget(m_path);
 
   m_watermark = new AntiquaCRM::SelectFile(this);
   m_watermark->setObjectName("print_watermark_file");
   m_watermark->setBuddyLabel(tr("Watermark"));
-  layout->addWidget(m_watermark, 1, 0, 1, 1);
+  layout->addWidget(m_watermark);
+
+  QHBoxLayout *opacityLayout = new QHBoxLayout();
+
+  AntiquaCRM::ALabel *m_opacityInfo = new AntiquaCRM::ALabel(this);
+  m_opacityInfo->setText(tr("Opacity") + ":");
+  opacityLayout->addWidget(m_opacityInfo);
 
   m_opacity = new AntiquaCRM::ASlider(this);
   m_opacity->setObjectName("print_watermark_opacity");
   m_opacity->setRange(1, 10);
   m_opacity->setValue(5);
-  layout->addWidget(m_opacity, 2, 0, 1, 1);
+  opacityLayout->addWidget(m_opacity);
 
   m_opacityLabel = new AntiquaCRM::ALabel(this);
-  layout->addWidget(m_opacityLabel, 2, 1, 1, 1);
+  opacityLayout->addWidget(m_opacityLabel);
+
+  layout->addLayout(opacityLayout);
 
   setLayout(layout);
 
@@ -44,7 +54,6 @@ void PrinterAttachments::opacityChanged(int i) {
 }
 
 void PrinterAttachments::loadSection(AntiquaCRM::ASettings *config) {
-  config->beginGroup("printer");
   QDir _dir(config->value("print_attachments_path").toString());
   if (_dir.exists())
     m_path->setValue(_dir.path());
@@ -60,11 +69,9 @@ void PrinterAttachments::loadSection(AntiquaCRM::ASettings *config) {
       break;
     }
   }
-  config->endGroup();
 }
 
 void PrinterAttachments::saveSection(AntiquaCRM::ASettings *config) {
-  config->beginGroup("printer");
   QDir _dir(m_path->getValue().toString());
   if (_dir.exists())
     config->setValue("print_attachments_path", _dir.path());
@@ -75,5 +82,4 @@ void PrinterAttachments::saveSection(AntiquaCRM::ASettings *config) {
 
   QString _opacity(m_opacityLabel->text());
   config->setValue("print_watermark_opacity", _opacity.toDouble());
-  config->endGroup();
 }

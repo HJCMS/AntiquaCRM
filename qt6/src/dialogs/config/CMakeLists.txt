@@ -18,6 +18,10 @@ SET (_library_HEADERS
  pathsettingsgroup.cpp
  printerfonts.cpp
  printerattachments.cpp
+ printersetborder.cpp
+ printerpaperlayout.cpp
+ printerqrcode.cpp
+ printerdevices.cpp
 )
 
 SET (_library_SOURCES
@@ -30,6 +34,10 @@ SET (_library_SOURCES
  pathsettingsgroup.h
  printerfonts.h
  printerattachments.h
+ printersetborder.h
+ printerpaperlayout.h
+ printerqrcode.h
+ printerdevices.h
 )
 
 INCLUDE_DIRECTORIES (

@@ -13,15 +13,21 @@
 #include <AntiquaWidgets>
 #include <QObject>
 
+class PrinterDevices;
 class PrinterFonts;
 class PrinterAttachments;
+class PrinterPaperLayout;
+class PrinterQRCode;
 
 class ConfigPrinting final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
 private:
+  PrinterDevices *m_printers;
   PrinterFonts *m_fontGroup;
   PrinterAttachments *m_attachmentGroup;
+  PrinterPaperLayout *m_paperLayout;
+  PrinterQRCode *m_qrCode;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

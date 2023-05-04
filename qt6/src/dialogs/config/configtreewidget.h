@@ -21,7 +21,10 @@ private:
   QTreeWidgetItem *m_tabsIndex;
   QTreeWidgetItem *m_providerIndex;
 
-  void addChild(QTreeWidgetItem *main, int page, const QString &title);
+  void addChild(QTreeWidgetItem *main,
+                int page,             // section
+                const QString &title, // title
+                const QIcon &icon);
 
 private Q_SLOTS:
   void setItemSelected(QTreeWidgetItem *, int);
@@ -30,9 +33,9 @@ Q_SIGNALS:
   void sendPageIndex(int);
 
 public Q_SLOTS:
-  void addGeneral(int page, const QString &title);
-  void addTabPlugin(int page, const QString &title);
-  void addProviderPlugin(int page, const QString &title);
+  void addGeneral(int page, const QString &title, const QIcon &icon);
+  void addTabPlugin(int page, const QString &title, const QIcon &icon);
+  void addProviderPlugin(int page, const QString &title, const QIcon &icon);
 
 public:
   explicit ConfigTreeWidget(QWidget *parent = nullptr);
