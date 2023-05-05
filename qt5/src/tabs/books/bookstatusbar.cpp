@@ -66,7 +66,7 @@ void BookStatusBar::setHistoryAction(int index) {
   }
 
   case (History::NOIMAGE): {
-    q.append("DATE(ib_changed)>(CURRENT_DATE - 5) AND im_id IS NULL");
+    q.append("DATE(ib_changed)>(CURRENT_DATE - 14) AND im_id IS NULL");
     q.append(" AND ib_count>0");
     break;
   }
