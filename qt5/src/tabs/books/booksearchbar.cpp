@@ -95,7 +95,12 @@ const QString BookSearchBar::getTitleSearch(const QStringList &fields) {
 }
 
 void BookSearchBar::setSearch() {
-  if (m_searchLeft->isEnabled() && m_searchLeft->isValid(getMinLength())) {
+  QVariant _v = m_selectFilter->currentData(Qt::UserRole);
+  if (qvariant_cast<BookSelectFilter::Filter>(_v) ==
+      BookSelectFilter::ArticleId) {
+    emit sendSearchClicked();
+  } else if (m_searchLeft->isEnabled() &&
+             m_searchLeft->isValid(getMinLength())) {
     emit sendSearchClicked();
   } else if (m_searchRight->isEnabled() &&
              m_searchRight->isValid(getMinLength())) {

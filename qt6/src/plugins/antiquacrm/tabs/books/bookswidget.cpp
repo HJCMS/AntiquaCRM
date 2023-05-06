@@ -122,20 +122,23 @@ void BooksWidget::openStartPage() {
 #endif
 }
 
-void BooksWidget::createSearchQuery(const QString &query) {
-  if (query.isEmpty()) {
-    // Die Standardabfrage wird aufgerufen!
-    QString w_sql = m_searchBar->getSearchStatement();
-    if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
-      m_table->setQuery(w_sql);
-      // Nur Aktivieren wenn eine Suche ausgeführt wurde.
-      m_statusBar->setCreateButtonEnabled(true);
-    }
+void BooksWidget::createSearchQuery(const QString &history) {
+  // Verlaufs und Suchanfrage
+  if (history.length() > 10) {
+    m_table->setQuery(history);
+    m_statusBar->setCreateButtonEnabled(false);
     return;
   }
-  // Verlaufs und Suchanfrage
-  m_table->setQuery(query);
-  m_statusBar->setCreateButtonEnabled(false);
+  // Die Standardabfrage wird aufgerufen!
+  QString _sql = m_searchBar->getSearchStatement();
+  if (_sql.isEmpty()) {
+    qWarning("BooksWidget::createSearchQuery „length()“, to small!");
+    return;
+  }
+
+  m_table->setQuery(_sql);
+  // Nur Aktivieren wenn eine Suche ausgeführt wurde.
+  m_statusBar->setCreateButtonEnabled(true);
 }
 
 void BooksWidget::createNewEntry() {

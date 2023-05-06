@@ -40,7 +40,7 @@ public:
 
   void openStartPage() override;
 
-  void createSearchQuery(const QString &query = QString()) override;
+  void createSearchQuery(const QString &history = QString()) override;
 
   void createNewEntry() override;
 

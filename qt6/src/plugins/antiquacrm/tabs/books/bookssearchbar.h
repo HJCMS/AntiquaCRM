@@ -28,11 +28,22 @@ private:
   AntiquaCRM::ALineEdit *m_customSearch;
   QPushButton *m_searchBtn;
 
-  const QString getTitleSearch(const QStringList &);
+  /**
+   * @brief Prepare SQL-Titlesearch statement
+   * @param fields - append Fields to WHERE clause
+   */
+  const QString getTitleSearch(const QStringList &fields);
 
-  void enableCustomSearch(const QString &);
+  /**
+   * @brief Check if one LineInput isEnabled
+   */
+  bool lineInputsEnabled();
 
-  void disableCustomSearch();
+  /**
+   * @brief Custom Search Input
+   * @param info - QLineEdit::PlaceholderText
+   */
+  void setCustomSearch(const QString &info = QString());
 
 private Q_SLOTS:
   void setSearch() override;
@@ -47,6 +58,8 @@ public:
   explicit BooksSearchBar(QWidget *parent = nullptr);
 
   int searchLength() override;
+
+  bool requiredLengthExists();
 
   const QString getSearchStatement() override;
 };

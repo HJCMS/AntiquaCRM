@@ -100,26 +100,33 @@ const QString BooksSearchBar::getTitleSearch(const QStringList &fields) {
   return query;
 }
 
-void BooksSearchBar::enableCustomSearch(const QString &info) {
-  m_customSearch->clear();
-  m_customSearch->setEnabled(true);
-  m_customSearch->setPlaceholderText(info);
+bool BooksSearchBar::lineInputsEnabled() {
+  return (m_searchInput->isEnabled() || m_customSearch->isEnabled());
 }
 
-void BooksSearchBar::disableCustomSearch() {
-  m_customSearch->clear();
-  m_customSearch->setValidation(AntiquaCRM::ALineEdit::InputValidator::NOTHING);
-  m_customSearch->setEnabled(false);
-  m_customSearch->setPlaceholderText(QString());
+void BooksSearchBar::setCustomSearch(const QString &info) {
+  if (info.length() < 1) {
+    m_customSearch->clear();
+    m_customSearch->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::NOTHING);
+    m_customSearch->setEnabled(false);
+    m_customSearch->setPlaceholderText(QString());
+  } else {
+    m_customSearch->clear();
+    m_customSearch->setEnabled(true);
+    m_customSearch->setPlaceholderText(info);
+  }
 }
 
 void BooksSearchBar::setSearch() {
-  if (m_searchInput->isEnabled() && searchLength() >= getMinLength()) {
+  BooksSelectFilter::Filter _filter = m_selectFilter->currentFilter();
+  if (_filter == BooksSelectFilter::BOOK_ARTICLE_ID) {
     emit sendSearchClicked();
-  } else if (m_customSearch->isEnabled() && searchLength() >= getMinLength()) {
+  } else if (lineInputsEnabled() && requiredLengthExists()) {
     emit sendSearchClicked();
-  } else
+  } else {
     emit sendNotify(tr("Your input is too short, increase your search!"));
+  }
 }
 
 void BooksSearchBar::setFilter(int index) {
@@ -135,7 +142,7 @@ void BooksSearchBar::setFilter(int index) {
     m_searchInput->setPlaceholderText(tr("Article number"));
     m_searchInput->setToolTip(
         tr("Multiple Articlenumbers separated by comma."));
-    disableCustomSearch();
+    setCustomSearch();
     break;
   }
 
@@ -144,7 +151,7 @@ void BooksSearchBar::setFilter(int index) {
         AntiquaCRM::ALineEdit::InputValidator::NUMERIC);
     m_searchInput->setPlaceholderText(tr("ISBN search"));
     m_searchInput->setToolTip(tr("Search ISBN number"));
-    disableCustomSearch();
+    setCustomSearch();
     break;
   }
 
@@ -153,7 +160,7 @@ void BooksSearchBar::setFilter(int index) {
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Booktitle"));
     m_searchInput->setToolTip(tr("Search Book in title, text fields"));
-    enableCustomSearch(tr("and Keyword."));
+    setCustomSearch(tr("and Keyword."));
     m_customSearch->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_customSearch->setToolTip(tr("and Keyword field."));
@@ -165,7 +172,7 @@ void BooksSearchBar::setFilter(int index) {
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Booktitle and Author"));
     m_searchInput->setToolTip(tr("Search Book in title"));
-    enableCustomSearch(tr("and Author."));
+    setCustomSearch(tr("and Author."));
     m_customSearch->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_customSearch->setToolTip(" " + tr("and Authors."));
@@ -178,7 +185,7 @@ void BooksSearchBar::setFilter(int index) {
     m_searchInput->setPlaceholderText(tr("In Storages search"));
     m_searchInput->setToolTip(
         tr("Search with Keyword for Books in Storage locations."));
-    disableCustomSearch();
+    setCustomSearch();
     break;
   }
 
@@ -186,7 +193,7 @@ void BooksSearchBar::setFilter(int index) {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Authors search"));
-    disableCustomSearch();
+    setCustomSearch();
     break;
   }
 
@@ -194,7 +201,7 @@ void BooksSearchBar::setFilter(int index) {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Publishers search"));
-    disableCustomSearch();
+    setCustomSearch();
     break;
   }
 
@@ -202,7 +209,7 @@ void BooksSearchBar::setFilter(int index) {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Unknown"));
-    disableCustomSearch();
+    setCustomSearch();
     break;
   }
   };
@@ -225,6 +232,10 @@ void BooksSearchBar::setSearchFocus() { setClearAndFocus(); }
 
 int BooksSearchBar::searchLength() {
   return (m_searchInput->length() + m_customSearch->length());
+}
+
+bool BooksSearchBar::requiredLengthExists() {
+  return (searchLength() >= getMinLength());
 }
 
 const QString BooksSearchBar::getSearchStatement() {
