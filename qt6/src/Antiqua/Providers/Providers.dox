@@ -1,8 +1,8 @@
 /**
- * @section AntiquaInterface Interface Library
- * @short AntiquaCRM Interface Library
+ * @section AntiquaProviders Providers Library
+ * @short AntiquaCRM Providers Library
  *
- * @addtogroup AntiquaInterface
+ * @addtogroup AntiquaProviders
  * @{
  *  @defgroup Provider  Provider Interface
  *  @defgroup Settings  Settings Interface
