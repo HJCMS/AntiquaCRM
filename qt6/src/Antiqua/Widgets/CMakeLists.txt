@@ -19,6 +19,7 @@ SET (_library_FILES
  antiquainput.h.cmake
  antiquawidgets.h.cmake
  antiquabuttons.h.cmake
+ antiquaprinting.h.cmake
 )
 
 CONFIGURE_FILE (antiquawidgets.h.cmake
@@ -33,6 +34,10 @@ CONFIGURE_FILE (antiquabuttons.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquabuttons.h
 )
 
+CONFIGURE_FILE (antiquaprinting.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
+)
+
 SET (_stl_HEADERS
  AntiquaInput
  antiquainput.h
@@ -40,6 +45,8 @@ SET (_stl_HEADERS
  antiquawidgets.h
  AntiquaButtons
  antiquabuttons.h
+ AntiquaPrinting
+ antiquaprinting.h
 )
 
 SET (_library_SOURCES
@@ -53,6 +60,9 @@ SET (_library_SOURCES
  aslider.cpp
  aspinbox.cpp
  atextedit.cpp
+ aprintdialog.cpp
+ aprintingformat.cpp
+ aprintingtexteditor.cpp
  awhatsthisbutton.cpp
  bookbindingedit.cpp
  boolbox.cpp
@@ -106,6 +116,9 @@ SET (_library_HEADERS
  aslider.h
  aspinbox.h
  atextedit.h
+ aprintdialog.h
+ aprintingformat.h
+ aprintingtexteditor.h
  awhatsthisbutton.h
  bookbindingedit.h
  boolbox.h
@@ -171,6 +184,7 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Network
  Qt6::Sql
  Qt6::Xml
+ Qt6::PrintSupport
  AntiquaCRM
  AntiquaSubWidgets
 )

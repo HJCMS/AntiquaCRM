@@ -15,7 +15,6 @@ TabBooks::TabBooks(QWidget *parent) : Inventory{"books_tab", parent} {
   setObjectName("inventory_books");
   setWindowTitle(tr("Books"));
   setWindowIcon(getTabIcon("view_log"));
-  // AntiquaCRM::ASettings cfg(this);
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
   QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);

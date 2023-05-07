@@ -47,6 +47,7 @@ TARGET_LINK_LIBRARIES (${_subWidgetLibrary} PRIVATE
  Qt6::Network
  Qt6::Sql
  Qt6::Xml
+ Qt6::PrintSupport
  AntiquaCRM
 )
 
