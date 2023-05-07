@@ -15,7 +15,7 @@
 
 /**
  * @class BooksEditor
- * @brief Editor class for all Books...
+ * @brief Editor class for all Books ...
  * @ingroup TabsPlugin
  */
 class ANTIQUACRM_LIBRARY BooksEditor final : public AntiquaCRM::TabsEditor {
@@ -205,17 +205,17 @@ private:
    *  @li setDataField with: m_tableData->getProperties()
    *  @li Check ArticleId > 0
    *  @li Set Restore History
-   *  @li finally call setResetModified
+   *  @li finally call „setResetModified“
    */
   void importSqlResult() override;
 
   /**
    * @brief The main SQL query function in this class
    * Send SQL-Statements to AntiquaCRM::ASqlCore::query
-   * @li If response data containing „ib_id“ field, „m_tableData“ and „SerialId“
-   * will modified.
-   * @li Additional a Success Message PopUp will also triggered if no error
-   * occurred.
+   * @li If response data containing „ib_id“ field,
+   *    „m_tableData“ and „SerialId“ will modified.
+   * @li Additional a Success Message PopUp will also
+   *    triggered if no error occurred.
    * @li finally call setResetModified for all Input fields.
    *
    * @param query - PgSQL::Query::Statement
@@ -277,24 +277,56 @@ private Q_SLOTS:
    */
   void setFinalLeaveEditor(bool force = true) override;
 
+  /**
+   * @brief This slot search, add Completers for Storage Compartments
+   * The list will called by AntiquaCRM::SelectStorage::getCompartments();
+   */
   void setStorageCompartments() override;
 
+  /**
+   * @brief Create a BookCard for this Article number
+   */
   void setPrintBookCard();
 
+  /**
+   * @brief Create a AntiquaCRM::ImageFileSource from Article Id
+   */
   void setLoadThumbnail(qint64) override;
 
+  /**
+   * @brief Remove Database Thumbnail action ...
+   */
   void setRemoveThumbnail(qint64) override;
 
+  /**
+   * @brief AntiquaCRM::ImageImportDialog caller
+   */
   void setImportEditImage() override;
 
 public Q_SLOTS:
+  /**
+   * @brief Clear the input fields for new Entry
+   */
   void setRestore() override;
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit BooksEditor(QWidget *parent = nullptr);
   ~BooksEditor() override;
 
+  /**
+   * @brief Open Edit Book with Article Number
+   * @param articleId - Existing Article number
+   * @return true on success otherwise false
+   */
   bool openEditEntry(qint64 articleId) override;
+
+  /**
+   * @brief Open Editor with default Completers
+   * @return success
+   */
   bool createNewEntry() override;
 };
 

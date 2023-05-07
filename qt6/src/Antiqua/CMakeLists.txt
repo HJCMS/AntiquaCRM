@@ -7,7 +7,7 @@
 ## API-Documentation
 SET(doxygen_FILES
  Core/Core.dox
- Interface/Interface.dox
+ Providers/Providers.dox
  Widgets/Widgets.dox
  Doxyfile.cmake
 )
@@ -25,18 +25,18 @@ SET (INTERNAL_WIDGET_INCLUDE_DIRS
 )
 ADD_SUBDIRECTORY (Widgets)
 
-# 2) Interface Libraries
-SET (INTERNAL_INTERFACE_INCLUDE_DIRS
+# 2) Providers Libraries
+SET (INTERNAL_PROVIDERS_INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/Core
   ${CMAKE_CURRENT_SOURCE_DIR}/Widgets
 )
-ADD_SUBDIRECTORY (Interface)
+ADD_SUBDIRECTORY (Providers)
 
 # 3) Tabs Interface
 SET (INTERNAL_TABS_INCLUDE_DIRS
   ${CMAKE_CURRENT_SOURCE_DIR}/Core
   ${CMAKE_CURRENT_SOURCE_DIR}/Widgets
-  ${CMAKE_CURRENT_SOURCE_DIR}/Interface
+  ${CMAKE_CURRENT_SOURCE_DIR}/Providers
 )
 ADD_SUBDIRECTORY (Tabs)
 

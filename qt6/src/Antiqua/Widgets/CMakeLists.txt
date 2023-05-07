@@ -14,26 +14,32 @@ INCLUDE_DIRECTORIES (
 
 ADD_SUBDIRECTORY (private)
 
-CONFIGURE_FILE (AntiquaWidgets.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaWidgets
-)
-
-CONFIGURE_FILE (AntiquaInput.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaInput
-)
-
-CONFIGURE_FILE (AntiquaButtons.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaButtons
-)
-
 SET (_library_FILES
  Widgets.dox
+ antiquainput.h.cmake
+ antiquawidgets.h.cmake
+ antiquabuttons.h.cmake
+)
+
+CONFIGURE_FILE (antiquawidgets.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquawidgets.h
+)
+
+CONFIGURE_FILE (antiquainput.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquainput.h
+)
+
+CONFIGURE_FILE (antiquabuttons.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquabuttons.h
+)
+
+SET (_stl_HEADERS
  AntiquaInput
- AntiquaInput.cmake
+ antiquainput.h
  AntiquaWidgets
- AntiquaWidgets.cmake
+ antiquawidgets.h
  AntiquaButtons
- AntiquaButtons.cmake
+ antiquabuttons.h
 )
 
 SET (_library_SOURCES
@@ -145,6 +151,7 @@ SET (_library_HEADERS
 ADD_LIBRARY (${_sharedLibrary} SHARED
  ${_library_SOURCES}
  ${_library_HEADERS}
+ ${_stl_HEADERS}
  ${_library_FILES}
 )
 
@@ -174,7 +181,7 @@ INSTALL (TARGETS ${_sharedLibrary}
  NAMELINK_COMPONENT Development
 )
 
-INSTALL (FILES ${library_HEADERS} AntiquaInput AntiquaWidgets
+INSTALL (FILES ${library_HEADERS} ${_stl_HEADERS}
  DESTINATION include/AntiquaCRM
  COMPONENT Development
 )

@@ -9,6 +9,8 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSCONFIG_H
 #define ANTIQUACRM_PLUGIN_BOOKSCONFIG_H
 
+#include <QString>
+
 /**
  * @brief Books tab plugin Macros
  * @ingroup TabsPlugin

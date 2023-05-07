@@ -4,37 +4,40 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET(_sharedLibrary "AntiquaInterface")
+SET(_sharedLibrary "AntiquaProviders")
 
 INCLUDE_DIRECTORIES (
-  ${INTERNAL_INTERFACE_INCLUDE_DIRS}
+  ${INTERNAL_PROVIDERS_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-CONFIGURE_FILE (AntiquaInterface.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/AntiquaInterface
+SET(CMAKE_ANTIQUA_PROVIDER_INTERFACE "de.hjcms.antiquacrm.provider")
+CONFIGURE_FILE (antiquaproviders.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaproviders.h
 )
 
-SET (projectLibrary_FILES
- AntiquaInterface.cmake
+SET (_library_FILES
+ Providers.dox
+ antiquaproviders.h.cmake
 )
 
-SET (projectinc_FILES
- AntiquaInterface
+SET (_stl_HEADERS
+ AntiquaProviders
+ antiquaproviders.h
 )
 
-SET (projectLibrary_SOURCES
+SET (_library_SOURCES
 )
 
-SET (projectLibrary_HEADERS
- ${projectinc_FILES}
+SET (_library_HEADERS
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED
- ${projectLibrary_SOURCES}
- ${projectLibrary_HEADERS}
- ${projectLibrary_FILES}
+ ${_library_SOURCES}
+ ${_library_HEADERS}
+ ${_stl_HEADERS}
+ ${_library_FILES}
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
@@ -48,6 +51,11 @@ SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
 
 TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
   Qt6::Core
+  Qt6::Gui
+  Qt6::Widgets
+  Qt6::Network
+  Qt6::Sql
+  Qt6::Xml
   AntiquaCRM
   AntiquaWidgets
 )
@@ -58,7 +66,7 @@ INSTALL (TARGETS ${_sharedLibrary}
   NAMELINK_COMPONENT Development
 )
 
-INSTALL (FILES ${projectLibrary_HEADERS}
+INSTALL (FILES ${_library_HEADERS} ${_stl_HEADERS}
   DESTINATION include/AntiquaCRM
   COMPONENT Development
 )

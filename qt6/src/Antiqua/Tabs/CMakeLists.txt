@@ -12,16 +12,19 @@ INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
+SET (_library_FILES
+ Tabs.dox
+ antiquatabs.h.cmake
+)
+
 SET(CMAKE_ANTIQUA_TABS_INTERFACE "de.hjcms.antiquacrm.tabs")
 CONFIGURE_FILE (antiquatabs.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquatabs.h
 )
 
-SET (_library_FILES
- Tabs.dox
+SET (_stl_HEADERS
  AntiquaTabs
  antiquatabs.h
- antiquatabs.h.cmake
 )
 
 SET (_library_SOURCE
@@ -55,6 +58,7 @@ SET (_library_HEADERS
 ADD_LIBRARY (${_sharedLibrary} SHARED
  ${_library_SOURCE}
  ${_library_HEADERS}
+ ${_stl_HEADERS}
  ${_library_FILES}
 )
 
@@ -85,7 +89,7 @@ INSTALL (TARGETS ${_sharedLibrary}
  NAMELINK_COMPONENT Development
 )
 
-INSTALL (FILES ${library_HEADERS} AntiquaTabs
+INSTALL (FILES ${library_HEADERS} ${_stl_HEADERS}
  DESTINATION include/AntiquaCRM
  COMPONENT Development
 )
