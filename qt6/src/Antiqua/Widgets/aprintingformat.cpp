@@ -32,18 +32,12 @@ void APrintingFormat::initConfiguration() {
     while (q.next()) {
       QString key = q.value("ac_class").toString().toUpper();
       QString value = q.value("ac_value").toString();
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << key << ":" << value;
-#endif
+      // #ifdef ANTIQUA_DEVELOPEMENT
+      //       qDebug() << Q_FUNC_INFO << key << ":" << value;
+      // #endif
       p_companyData.insert(key, value);
     }
   }
-}
-
-const QPageSize APrintingFormat::pageSize(QPageSize::PageSizeId id) const {
-  QPageSize init(id);
-  return QPageSize(init.definitionSize(), QPageSize::Point, init.name(),
-                   QPageSize::ExactMatch);
 }
 
 const QPageLayout APrintingFormat::pageLayout(QPageSize::PageSizeId id) const {
@@ -52,7 +46,7 @@ const QPageLayout APrintingFormat::pageLayout(QPageSize::PageSizeId id) const {
   _layout.setPageSize(QPageSize(id));
   _layout.setMinimumMargins(QMargins(0, 0, 0, 0));
   _layout.setMargins(QMargins(marginLeft, 0, marginRight, 0));
-  _layout.setMode(QPageLayout::FullPageMode);
+  //_layout.setMode(QPageLayout::FullPageMode);
   return _layout;
 }
 
@@ -172,6 +166,84 @@ const QFont APrintingFormat::getFont(const QString &key) const {
     qWarning("Can't load Printing '%s' font!", qPrintable(key));
   }
   return font;
+}
+
+qreal APrintingFormat::watermarkOpacity() const {
+  return cfg->value("print_watermark_opacity", 0.6).toReal();
+}
+
+const QImage APrintingFormat::watermark() const {
+  QStringList accept({"PNG", "JPG"});
+  QString file(cfg->value("print_attachments_path").toString());
+  file.append(QDir::separator());
+  file.append(cfg->value("print_watermark_file").toString());
+  QFileInfo info(file);
+  if (info.isFile() && info.isReadable()) {
+    QString type = info.completeSuffix().split(".").last().toUpper();
+    if (!accept.contains(type, Qt::CaseSensitive)) {
+      qWarning("unsupported image type");
+      return QImage();
+    }
+    QByteArray buffer;
+    QFile fp(info.filePath());
+    if (fp.open(QIODevice::ReadOnly)) {
+      while (!fp.atEnd()) {
+        buffer += fp.readLine();
+      }
+    }
+    fp.close();
+    return QImage::fromData(buffer, type.toLocal8Bit());
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << cfg->group()
+             << cfg->value("print_attachments_path").toString()
+             << cfg->value("print_watermark_file").toString();
+  }
+#endif
+  return QImage();
+}
+
+const QRectF APrintingFormat::letterRect() const {
+  QPageLayout _layout(QPageSize(QPageSize::A4), QPageLayout::Portrait,
+                      QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter,
+                      QMarginsF(0, 0, 0, 0));
+  return _layout.fullRect();
+}
+
+const QRectF APrintingFormat::pointsRect() const {
+  QRectF _lr = letterRect();
+  return QRectF(0, 0, (_lr.width() * points), (_lr.height() * points));
+}
+
+qreal APrintingFormat::getPoints(int mm) const { return qRound(mm * points); }
+
+const QRectF APrintingFormat::letterWindowRect() const {
+  QRectF _r(qRound(25 * points), // 25mm left
+            qRound(45 * points), // 25mm top
+            qRound(80 * points), // 80mm width
+            qRound(45 * points)  // 45mm height
+  );
+  return _r;
+}
+
+qreal APrintingFormat::borderLeft() const {
+  // linker Rand
+  return qRound(marginLeft * points);
+}
+
+qreal APrintingFormat::borderRight() const {
+  qreal _w = (letterRect().width() * points);
+  return qRound(_w - (marginRight * points));
+}
+
+qreal APrintingFormat::inlineFrameWidth() const {
+  qreal _w = (letterRect().width() * points);
+  return qRound(_w - (marginLeft * points) - (marginRight * points));
+}
+
+qreal APrintingFormat::recipientPadding() const {
+  return qRound(marginRecipient * points);
 }
 
 } // namespace AntiquaCRM

@@ -10,15 +10,15 @@ PrinterSetBorder::PrinterSetBorder(const QString &info, QWidget *parent)
   QHBoxLayout *layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  m_value = new AntiquaCRM::ADoubleBox(this);
+  m_value = new AntiquaCRM::ASpinBox(this);
   m_value->setButtonSymbols(QAbstractSpinBox::NoButtons);
   m_value->setRange(0, 50);
-  m_value->setSuffix(" px");
+  m_value->setSuffix(" mm");
   m_value->setGroupSeparatorShown(true);
   layout->addWidget(m_value);
 
   m_slider = new AntiquaCRM::ASlider(this);
-  m_slider->setRange(0, 50);
+  m_slider->setRange(0, m_value->maximum());
   m_slider->setTickInterval(1);
   layout->addWidget(m_slider);
 
@@ -29,14 +29,11 @@ PrinterSetBorder::PrinterSetBorder(const QString &info, QWidget *parent)
 }
 
 void PrinterSetBorder::sliderChanged(int i) {
-  if (i % 2 & 1)
-    return;
-
-  m_value->setValue(static_cast<qreal>(i));
+  m_value->setValue(i);
 }
 
-void PrinterSetBorder::setValue(double d) {
-  m_slider->setValue(static_cast<int>(d));
+void PrinterSetBorder::setValue(int d) {
+  m_slider->setValue(d);
   m_value->setValue(d);
 }
 

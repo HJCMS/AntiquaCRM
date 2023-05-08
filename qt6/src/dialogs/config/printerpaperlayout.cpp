@@ -26,6 +26,7 @@ PrinterPaperLayout::PrinterPaperLayout(QWidget *parent) : QGroupBox{parent} {
   QString _tip = tr("General print area. From margin left to content.");
   m_marginLeft = new PrinterSetBorder(_tip, this);
   m_marginLeft->setObjectName("page_margin_left");
+  m_marginLeft->setValue(15); // DIN 5008B
   layout->addWidget(m_marginLeft, row++, 1, 1, 1);
 
   // Margin:Right

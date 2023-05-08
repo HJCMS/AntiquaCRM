@@ -45,6 +45,7 @@ SET (_stl_HEADERS
  antiquawidgets.h
  AntiquaButtons
  antiquabuttons.h
+ AntiquaPrintDialog
  AntiquaPrinting
  antiquaprinting.h
 )
@@ -62,7 +63,6 @@ SET (_library_SOURCES
  atextedit.cpp
  aprintdialog.cpp
  aprintingformat.cpp
- aprintingtexteditor.cpp
  awhatsthisbutton.cpp
  bookbindingedit.cpp
  boolbox.cpp
@@ -83,6 +83,8 @@ SET (_library_SOURCES
  phoneedit.cpp
  postalcodeedit.cpp
  priceedit.cpp
+ printinvoice.cpp
+ printdeliverynote.cpp
  printerbutton.cpp
  salutationedit.cpp
  selectcurrency.cpp
@@ -118,7 +120,6 @@ SET (_library_HEADERS
  atextedit.h
  aprintdialog.h
  aprintingformat.h
- aprintingtexteditor.h
  awhatsthisbutton.h
  bookbindingedit.h
  boolbox.h
@@ -139,6 +140,8 @@ SET (_library_HEADERS
  phoneedit.h
  postalcodeedit.h
  priceedit.h
+ printinvoice.h
+ printdeliverynote.h
  printerbutton.h
  salutationedit.h
  selectcurrency.h

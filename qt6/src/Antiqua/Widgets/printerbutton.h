@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PRINTERBUTTON_H
-#define ANTIQUACRM_WIDGETS_PRINTERBUTTON_H
+#ifndef ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
+#define ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
 
 #include <AGlobal>
 #include <QObject>
@@ -76,4 +76,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_PRINTERBUTTON_H
+#endif // ANTIQUACRM_WIDGETS_PRINT_BUTTON_H

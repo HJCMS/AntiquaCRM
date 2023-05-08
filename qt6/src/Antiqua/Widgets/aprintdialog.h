@@ -6,18 +6,18 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_APRINTDIALOG_H
-#define ANTIQUACRM_WIDGETS_APRINTDIALOG_H
+#ifndef ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
+#define ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
 
 #include <AntiquaCRM>
 #include <QObject>
 #include <QPrinter>
+#include <QScrollArea>
 #include <QtWidgets>
 
 namespace AntiquaCRM {
 
 class APrintingFormat;
-class APrintingTextEditor;
 
 /**
  * @class APrintDialog
@@ -34,29 +34,20 @@ private:
 
 protected:
   AntiquaCRM::ASettings *config;
-  AntiquaCRM::APrintingFormat *format;
 
-  QWidget *printPage;
-  AntiquaCRM::APrintingTextEditor *header;
-  AntiquaCRM::APrintingTextEditor *body;
-  AntiquaCRM::APrintingTextEditor *footer;
+  QScrollArea *viewPort;
 
-  /**
-   * @brief Create text frame from QTextDocument
-   */
-  QTextFrame *textFrame(QTextDocument *document);
+  AntiquaCRM::APrintingFormat *initFormatting();
 
-  bool constructHeader();
+  void setPrintingPage(QWidget *page);
 
-  QTextTable *subjectTable(const QString &subject);
+  virtual bool generateDocument(QPrinter *printer) = 0;
 
 protected Q_SLOTS:
-  virtual bool generateDocument(QPrinter *printer) = 0;
   virtual void openPrintDialog() = 0;
 
 public:
   explicit APrintDialog(QWidget *parent = nullptr);
-  virtual ~APrintDialog();
 
   /**
    * @brief prevent dialog without options
@@ -74,4 +65,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_APRINTDIALOG_H
+#endif // ANTIQUACRM_WIDGETS_PRINT_DIALOG_H

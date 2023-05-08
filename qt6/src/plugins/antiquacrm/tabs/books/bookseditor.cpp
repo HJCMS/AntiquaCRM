@@ -5,6 +5,7 @@
 #include "booksconfig.h"
 
 #include <AntiquaCRM>
+#include <AntiquaPrinting>
 #include <QDate>
 #include <QLayout>
 
@@ -710,6 +711,9 @@ void BooksEditor::setStorageCompartments() {
 
 void BooksEditor::setPrintBookCard() {
   qDebug() << Q_FUNC_INFO << "__TODO__";
+  AntiquaCRM::PrintInvoice *m_d = new AntiquaCRM::PrintInvoice(this);
+  m_d->exec(QStringList({"a", "b"}));
+
   // BookCard *m_d = new BookCard(this);
   // m_d->setObjectName("book_card_printing");
   // QHash<QString, QVariant> data;

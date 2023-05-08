@@ -16,14 +16,14 @@ class PrinterSetBorder final : public QFrame {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ADoubleBox *m_value;
+  AntiquaCRM::ASpinBox *m_value;
   AntiquaCRM::ASlider *m_slider;
 
 private Q_SLOTS:
   void sliderChanged(int);
 
 public Q_SLOTS:
-  void setValue(double);
+  void setValue(int);
 
 public:
   explicit PrinterSetBorder(const QString &info, QWidget *parent = nullptr);

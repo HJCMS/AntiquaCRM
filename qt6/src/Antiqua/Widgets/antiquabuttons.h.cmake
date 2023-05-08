@@ -10,10 +10,14 @@
 #define ANTIQUACRM_WIDGETS_BUTTONS_H
 
 // AntiquaCRM::PrinterButton
+#ifndef ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
 #include "printerbutton.h"
+#endif
 
 // AntiquaCRM::MailButton
+#ifndef ANTIQUACRM_WIDGETS_MAILBUTTON_H
 #include "mailbutton.h"
+#endif
 
 #endif
 

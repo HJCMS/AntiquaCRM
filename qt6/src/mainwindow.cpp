@@ -150,5 +150,9 @@ bool MainWindow::closeWindow() {
 
   _geometry.clear();
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  return close();
+#else
   return (m_tabWidget->unloadTabs() && close());
+#endif
 }

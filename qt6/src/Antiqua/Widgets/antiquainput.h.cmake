@@ -56,5 +56,4 @@
 #include "atextedit.h"
 #endif
 
-//
 // EOF

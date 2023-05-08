@@ -6,10 +6,24 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-// AntiquaCRM::APrintingFormat
-#include "aprintingformat.h"
+// AntiquaCRM::AGlobal
+#ifndef ANTIQUACRM_GLOBAL_H
+#include "aglobal.h"
+#endif
 
-// AntiquaCRM::APrintDialog
-#include "aprintdialog.h"
+// AntiquaCRM::PrintInvoice
+#ifndef ANTIQUACRM_WIDGETS_PRINT_INVOICE_H
+#include "printinvoice.h"
+#endif
+
+// AntiquaCRM::PrintDeliveryNote
+#ifndef ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
+#include "printdeliverynote.h"
+#endif
+
+// AntiquaCRM::PrinterButton
+#ifndef ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
+#include "printerbutton.h"
+#endif
 
 // EOF

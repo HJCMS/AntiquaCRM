@@ -30,7 +30,6 @@ PrinterAttachments::PrinterAttachments(QWidget *parent) : QGroupBox{parent} {
   m_opacity = new AntiquaCRM::ASlider(this);
   m_opacity->setObjectName("print_watermark_opacity");
   m_opacity->setRange(1, 10);
-  m_opacity->setValue(5);
   opacityLayout->addWidget(m_opacity);
 
   m_opacityLabel = new AntiquaCRM::ALabel(this);
@@ -49,7 +48,8 @@ void PrinterAttachments::opacityChanged(int i) {
   } else if (i == m_opacity->maximum()) {
     m_opacityLabel->setText("1.0");
   } else {
-    m_opacityLabel->setText(QString::asprintf("0.%d", i));
+    QString _val = QString::asprintf("0.%d", i);
+    m_opacityLabel->setText(_val);
   }
 }
 

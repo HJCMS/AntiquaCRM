@@ -60,6 +60,7 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   Qt6::Sql
   Qt6::Network
   Qt6::Xml
+  Qt6::PrintSupport
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
