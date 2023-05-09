@@ -27,6 +27,7 @@ public Q_SLOTS:
 
 public:
   explicit PrinterSetBorder(const QString &info, QWidget *parent = nullptr);
+  void setRange(int min, int max);
   double getValue();
 };
 

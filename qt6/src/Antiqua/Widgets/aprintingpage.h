@@ -10,20 +10,21 @@
 #define ANTIQUACRM_WIDGETS_PRINT_FORMAT_H
 
 #include <ASettings>
-#include <QObject>
+#include <QTextEdit>
+#include <QWidget>
 #include <QtGui>
 
 namespace AntiquaCRM {
 
 /**
- * @class APrintingFormat
- * @brief Printer formats
+ * @class APrintingPage
+ * @brief TextEdit Widgets with Watermark and Textformatings
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY APrintingFormat final : public QObject {
+class ANTIQUACRM_LIBRARY APrintingPage : public QTextEdit {
   Q_OBJECT
 
-private:
+protected:
   AntiquaCRM::ASettings *cfg;
 
   /**
@@ -33,7 +34,7 @@ private:
   qreal marginRight;
   qreal marginSubject;
   qreal marginBody;
-  qreal marginRecipient;
+  qreal addressIndent;
 
   /**
    * 1 mm = 2.8452755906 point (printer's)
@@ -41,21 +42,48 @@ private:
    */
   const qreal points = 2.8452755906;
 
-  void initConfiguration();
-
   /**
    * @brief Company data @ref initConfiguration()
    */
   QHash<QString, QString> p_companyData;
 
-public:
-  explicit APrintingFormat(AntiquaCRM::ASettings *config);
-  virtual ~APrintingFormat();
+  /**
+   * @brief QTextDocument rootFrame
+   */
+  QTextFrame *mainFrame;
+
+  /**
+   * @brief load configuration settings and company data
+   */
+  void initConfiguration();
+
+  void paintEvent(QPaintEvent *) override;
 
   /**
    * @brief layout of a page in a paged document
    */
-  const QPageLayout pageLayout(QPageSize::PageSizeId id = QPageSize::A4) const;
+  virtual const QPageLayout pageLayout() const = 0;
+
+public:
+  explicit APrintingPage(QWidget *parent = nullptr);
+  virtual ~APrintingPage();
+
+  /**
+   * @brief initial dcoument letter heading
+   */
+  void setLetterHeading();
+
+  /**
+   * @brief add reciepient address with customerId
+   * @param cutomer - Id
+   */
+  QTextTable *recipientAddress(const QString &subject);
+
+  /**
+   * @brief query Customer data
+   * @param cId - Customer Id
+   */
+  const QMap<QString, QVariant> queryCustomerData(qint64 cId);
 
   /**
    * @brief General Linestyle and for folds and paper punches!
@@ -91,7 +119,7 @@ public:
   /**
    * @brief Table cell formats
    */
-  const QTextTableCellFormat recipientCellFormat();
+  const QTextTableCellFormat addressCellFormat();
 
   /**
    * @brief Table cell formats
@@ -99,7 +127,8 @@ public:
    * If not one of this Alignments, border is disabled!
    * @param border - Set border with Vertical Alignments
    */
-  const QTextTableCellFormat cellFormat(Qt::Alignment border = Qt::AlignTop);
+  const QTextTableCellFormat
+  cellFormat(Qt::Alignment border = Qt::AlignBaseline);
 
   /**
    * @brief Company data from Configuration
@@ -161,8 +190,6 @@ public:
    * @brief get Painting width() minus margins in points!
    */
   qreal inlineFrameWidth() const;
-
-  qreal recipientPadding() const;
 };
 
 } // namespace AntiquaCRM

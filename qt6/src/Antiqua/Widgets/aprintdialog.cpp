@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "aprintdialog.h"
-#include "aprintingformat.h"
+#include "aprintingpage.h"
 
 #include <QLayout>
 
@@ -38,12 +38,7 @@ APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
   connect(m_buttonBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
-AntiquaCRM::APrintingFormat *APrintDialog::initFormatting() {
-  Q_CHECK_PTR(config);
-  return (new AntiquaCRM::APrintingFormat(config));
-}
-
-void APrintDialog::setPrintingPage(QWidget *page) {
+void APrintDialog::setPrintingPage(AntiquaCRM::APrintingPage *page) {
   Q_CHECK_PTR(page);
   viewPort->setWidget(page);
   viewPort->update();

@@ -12,26 +12,26 @@
 #include <AntiquaPrintDialog>
 #include <QObject>
 #include <QPageSize>
+#include <QTextEdit>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
 /**
- * @class InvoiceLetter
+ * @class InvoicePage
  * @brief Invoice Painting Device
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY InvoiceLetter final : public QWidget {
+class ANTIQUACRM_LIBRARY InvoicePage final
+    : public AntiquaCRM::APrintingPage {
   Q_OBJECT
 
 private:
-  AntiquaCRM::APrintingFormat *format;
-  const QStaticText addressBlock(const QStringList &) const;
-  void paintEvent(QPaintEvent *) override;
+  const QPageLayout pageLayout() const override;
 
 public:
-  explicit InvoiceLetter(AntiquaCRM::APrintingFormat *formatting,
-                         QWidget *parent = nullptr);
+  explicit InvoicePage(QWidget *parent = nullptr);
+  void setLetterSubject(const QString &);
 };
 
 /**
@@ -43,7 +43,7 @@ class ANTIQUACRM_LIBRARY PrintInvoice final : public APrintDialog {
   Q_OBJECT
 
 private:
-  InvoiceLetter *device;
+  InvoicePage *page;
 
   bool generateDocument(QPrinter *printer) override;
 
@@ -52,7 +52,7 @@ private Q_SLOTS:
 
 public:
   explicit PrintInvoice(QWidget *parent = nullptr);
-  int exec(const QStringList &options) override;
+  int exec(const QJsonObject &options) override;
 };
 
 } // namespace AntiquaCRM

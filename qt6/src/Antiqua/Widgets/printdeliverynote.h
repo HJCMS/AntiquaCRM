@@ -31,7 +31,7 @@ private Q_SLOTS:
 
 public:
   explicit PrintDeliveryNote(QWidget *parent = nullptr);
-  int exec(const QStringList &options) override;
+  int exec(const QJsonObject &options) override;
 };
 
 } // namespace AntiquaCRM

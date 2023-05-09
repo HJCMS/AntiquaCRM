@@ -712,7 +712,9 @@ void BooksEditor::setStorageCompartments() {
 void BooksEditor::setPrintBookCard() {
   qDebug() << Q_FUNC_INFO << "__TODO__";
   AntiquaCRM::PrintInvoice *m_d = new AntiquaCRM::PrintInvoice(this);
-  m_d->exec(QStringList({"a", "b"}));
+  QJsonObject obj;
+  obj.insert("id", getDataValue("ib_id").toJsonValue());
+  m_d->exec(obj);
 
   // BookCard *m_d = new BookCard(this);
   // m_d->setObjectName("book_card_printing");

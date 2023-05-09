@@ -28,13 +28,16 @@ PrinterSetBorder::PrinterSetBorder(const QString &info, QWidget *parent)
   connect(m_slider, SIGNAL(valueChanged(int)), SLOT(sliderChanged(int)));
 }
 
-void PrinterSetBorder::sliderChanged(int i) {
-  m_value->setValue(i);
-}
+void PrinterSetBorder::sliderChanged(int i) { m_value->setValue(i); }
 
 void PrinterSetBorder::setValue(int d) {
   m_slider->setValue(d);
   m_value->setValue(d);
+}
+
+void PrinterSetBorder::setRange(int min, int max) {
+  m_value->setRange(min, max);
+  m_slider->setRange(min, max);
 }
 
 double PrinterSetBorder::getValue() { return m_value->value(); }

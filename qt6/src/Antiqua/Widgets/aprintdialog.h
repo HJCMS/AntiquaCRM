@@ -17,7 +17,7 @@
 
 namespace AntiquaCRM {
 
-class APrintingFormat;
+class APrintingPage;
 
 /**
  * @class APrintDialog
@@ -37,9 +37,7 @@ protected:
 
   QScrollArea *viewPort;
 
-  AntiquaCRM::APrintingFormat *initFormatting();
-
-  void setPrintingPage(QWidget *page);
+  void setPrintingPage(AntiquaCRM::APrintingPage *page);
 
   virtual bool generateDocument(QPrinter *printer) = 0;
 
@@ -60,7 +58,7 @@ public:
    * @param options
    * @return QDialog::DialogCode
    */
-  virtual int exec(const QStringList &options) = 0;
+  virtual int exec(const QJsonObject &options) = 0;
 };
 
 } // namespace AntiquaCRM

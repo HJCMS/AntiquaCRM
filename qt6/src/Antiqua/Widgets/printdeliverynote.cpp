@@ -15,7 +15,7 @@ bool PrintDeliveryNote::generateDocument(QPrinter *printer) {
 
 void PrintDeliveryNote::openPrintDialog() { qDebug() << Q_FUNC_INFO << "TODO"; }
 
-int PrintDeliveryNote::exec(const QStringList &options) {
+int PrintDeliveryNote::exec(const QJsonObject &options) {
   Q_UNUSED(options);
   return QDialog::exec();
 }

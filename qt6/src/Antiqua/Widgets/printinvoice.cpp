@@ -5,112 +5,28 @@
 
 namespace AntiquaCRM {
 
-InvoiceLetter::InvoiceLetter(AntiquaCRM::APrintingFormat *formatting,
-                             QWidget *parent)
-    : QWidget{parent}, format{formatting} {
-  setAttribute(Qt::WA_OpaquePaintEvent, true);
-  const QRectF _rf = format->pointsRect();
-  setFixedSize(_rf.width(), _rf.height());
+InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
+  setObjectName("printing_invoice_page");
 }
 
-const QStaticText InvoiceLetter::addressBlock(const QStringList &list) const {
-  QTextOption _opt;
-  _opt.setWrapMode(QTextOption::WordWrap);
-  QStaticText _st;
-  _st.setTextFormat(Qt::RichText);
-  _st.setTextOption(_opt);
-  _st.setText(list.join("<br>"));
-  return _st;
+const QPageLayout InvoicePage::pageLayout() const {
+  QPageLayout _layout;
+  _layout.setOrientation(QPageLayout::Portrait);
+  _layout.setPageSize(QPageSize(QPageSize::A4));
+  _layout.setMinimumMargins(QMargins(0, 0, 0, 0));
+  _layout.setMargins(QMargins(marginLeft, 0, marginRight, 0));
+  return _layout;
 }
 
-void InvoiceLetter::paintEvent(QPaintEvent *) {
-  const qreal _inlineWidth = format->inlineFrameWidth();
-  const QRectF _addressFrame = format->letterWindowRect();
-  QStringList _tmp_list;
-  QFont _tmp_font(font());
-  QTextOption _txt_options;
-  _txt_options.setWrapMode(QTextOption::WordWrap);
-  QPainter painter;
-  painter.begin(this);
-  painter.fillRect(rect(), Qt::white);
-
-  // Letter folding lines
-  int _yh = (rect().height() / 3);
-  int _ym = (rect().height() / 2);
-  painter.translate(0, 0);
-  painter.setPen(QPen(Qt::gray));
-  painter.drawLine(QPoint(5, _yh), // start
-                   QPoint((format->borderLeft() / 2), _yh));
-  painter.drawLine(QPoint(5, _ym), // start
-                   QPoint(((format->borderLeft() / 3) * 2), _ym));
-#ifdef ANTIQUA_DEVELOPEMENT
-  // show borders
-  painter.setPen(QPen(Qt::red));
-  painter.drawLine(QPoint(format->borderLeft(), 0),
-                   QPoint(format->borderLeft(), rect().height()));
-  painter.drawLine(QPoint(format->borderRight(), 0),
-                   QPoint(format->borderRight(), rect().height()));
-  // Display letter window
-  painter.drawRect(_addressFrame);
-  painter.setPen(QPen(Qt::gray));
-#endif
-
-  // Start Document
-  const QPointF _startPoint(format->borderLeft(), 0);
-  painter.translate(_startPoint);
-  painter.setPen(QPen(Qt::black));
-  painter.setBrush(QBrush(Qt::black, Qt::SolidPattern));
-
-  // BEGIN:Heading
-  qreal _posY = 0.0;
-  const QImage image = format->watermark();
-  if (!image.isNull()) {
-    painter.setOpacity(format->watermarkOpacity());
-    painter.drawImage(QPointF(5, 5), image);
-    painter.setOpacity(1.0);
-  }
-  _tmp_font = format->getFont("print_font_header");
-  _tmp_list = format->companyData("COMPANY_FULLNAME").split("#");
-  const QString _header_title(_tmp_list.join("\n"));
-  const QRectF _header_rect(0, _posY, _inlineWidth, _addressFrame.y());
-  painter.setFont(_tmp_font);
-  painter.drawText(_header_rect, Qt::AlignCenter, _header_title);
-  // END:Heading
-
-  // BEGIN:Address
-  _tmp_list.clear();
-  _tmp_list << format->companyData("COMPANY_SHORTNAME");
-  _tmp_list << format->companyData("COMPANY_STREET");
-  _tmp_list << format->companyData("COMPANY_LOCATION");
-  _tmp_font = format->getFont("print_font_small");
-  _tmp_font.setUnderline(true);
-  qreal _padding = format->recipientPadding();
-  const QString _addr_str = _tmp_list.join(" - ");
-  const QFontMetricsF _addr_fm(_addr_str);
-  _posY = (_addressFrame.y() - (_addr_fm.height() / 2));
-  const QRectF _addr_rect(_padding, _posY,
-                          _inlineWidth, // width
-                          _addr_fm.height());
-
-  painter.setFont(_tmp_font);
-  painter.drawText(_addr_rect, Qt::AlignLeft, _addr_str);
-  // Anschrift
-  _tmp_list.clear();
-  _tmp_list << "Hans Ulrich Mustermann";
-  _tmp_list << "Langweiler Straße 105a";
-  _tmp_list << "5689 Musterhausen";
-  _tmp_list << "Germany";
-  QStaticText recipient = addressBlock(_tmp_list);
-  _tmp_font = format->getFont("print_font_normal");
-  painter.setFont(_tmp_font);
-  painter.drawStaticText(_padding, _addr_rect.y() + _padding, recipient);
-  // END:Address
-
-  // BEGIN:Subject
-
-  // END:Subject
-
-  painter.end();
+void InvoicePage::setLetterSubject(const QString &text) {
+  QTextBlockFormat _block;
+  _block.setAlignment(Qt::AlignLeft);
+  QTextCursor _cursor = mainFrame->lastCursorPosition();
+  QFont _font = getFont("print_font_subject");
+  _cursor.setCharFormat(charFormat(_font, true));
+  _cursor.insertBlock(_block);
+  _cursor.insertText(text);
+  _cursor.atEnd();
 }
 
 PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {}
@@ -123,11 +39,93 @@ bool PrintInvoice::generateDocument(QPrinter *printer) {
 
 void PrintInvoice::openPrintDialog() { qDebug() << Q_FUNC_INFO << "TODO"; }
 
-int PrintInvoice::exec(const QStringList &options) {
+int PrintInvoice::exec(const QJsonObject &options) {
   Q_UNUSED(options);
-  device = new InvoiceLetter(initFormatting(), this);
-  device->update();
-  setPrintingPage(device);
+
+  page = new InvoicePage(this);
+  page->setLetterHeading();
+
+  qint64 invoiceId = 4;
+  qint64 orderId = 45;
+  qint64 customerId = 381;
+
+  QMap<QString, QVariant> _person = page->queryCustomerData(customerId);
+  QTextTable *table = page->recipientAddress(tr("Invoice"));
+  int row = (table->rows() - 1);
+
+  // Anschrift
+  QTextCursor cursor = page->textCursor();
+  QTextTableCell addrCell = table->cellAt(row, 0);
+  addrCell.setFormat(page->addressCellFormat());
+  cursor = addrCell.firstCursorPosition();
+  int lines = 0;
+  foreach (QString _l, _person.value("address").toString().split("\n")) {
+    cursor.insertText(_l);
+    cursor.insertText("\n");
+    lines++;
+  }
+  // 4 Address lines required
+  while (lines < 4) {
+    cursor.insertText("\n");
+    lines++;
+  }
+
+  // Betreff Informationen
+  QMap<qint8, QString> title;
+  title.insert(0, tr("Invoice No."));
+  title.insert(1, tr("Order No."));
+  title.insert(2, tr("Costumer No."));
+
+  QMap<qint8, QString> data;
+  data.insert(0, AntiquaCRM::AUtil::zerofill(invoiceId));
+  data.insert(1, AntiquaCRM::AUtil::zerofill(orderId));
+  data.insert(2, AntiquaCRM::AUtil::zerofill(customerId));
+
+  QFont _font = page->getFont("print_font_normal");
+  QTextTableCell infoCell = table->cellAt(row, 1);
+  infoCell.setFormat(page->charFormat(_font));
+  cursor = infoCell.firstCursorPosition();
+
+  QTextTableFormat _tbformat = page->inlineTableFormat();
+  QTextTable *child_table = cursor.insertTable(data.size(), 3, _tbformat);
+  QMapIterator<qint8, QString> it(data);
+  while (it.hasNext()) {
+    it.next();
+    // left
+    QTextTableCell cl = child_table->cellAt(it.key(), 0);
+    cl.setFormat(page->charFormat(_font));
+    cursor = cl.firstCursorPosition();
+    cursor.setBlockFormat(page->alignRight());
+    cursor.insertText(title[it.key()]);
+    // middle
+    QTextTableCell cm = child_table->cellAt(it.key(), 1);
+    cm.setFormat(page->charFormat(_font));
+    cursor = cm.firstCursorPosition();
+    cursor.setBlockFormat(page->alignCenter());
+    cursor.insertText(":");
+    // right
+    QTextTableCell cr = child_table->cellAt(it.key(), 2);
+    cr.setFormat(page->charFormat(_font));
+    cursor = cr.firstCursorPosition();
+    cursor.setBlockFormat(page->alignRight());
+    cursor.insertText(it.value());
+  }
+
+  _font = page->getFont("print_font_subject");
+  cursor = page->textCursor();
+  QTextTable *subject_table = cursor.insertTable(1, 2, _tbformat);
+  QTextTableCell scl0 = subject_table->cellAt(0, 0);
+  scl0.setFormat(page->charFormat(_font));
+  cursor = scl0.firstCursorPosition();
+  cursor.insertText(tr("Invoice"));
+
+  QTextTableCell scl1 = subject_table->cellAt(0, 1);
+  scl1.setFormat(page->charFormat(_font));
+  cursor = scl1.firstCursorPosition();
+  cursor.setBlockFormat(page->alignRight());
+  cursor.insertText(QDate::currentDate().toString("dd.MM.yyyy"));
+
+  setPrintingPage(page);
 
   return QDialog::exec();
 }

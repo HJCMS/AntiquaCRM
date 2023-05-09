@@ -11,9 +11,9 @@
 #include "aglobal.h"
 #endif
 
-// AntiquaCRM::APrintingFormat
+// AntiquaCRM::APrintingPage
 #ifndef ANTIQUACRM_WIDGETS_PRINT_FORMAT_H
-#include "aprintingformat.h"
+#include "aprintingpage.h"
 #endif
 
 // AntiquaCRM::APrintDialog

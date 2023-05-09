@@ -48,6 +48,7 @@ PrinterPaperLayout::PrinterPaperLayout(QWidget *parent) : QGroupBox{parent} {
   _tip = tr("Space above for recipient address. Useful for the letterhead "
             "window positioning.");
   m_marginRecipient = new PrinterSetBorder(_tip, this);
+  m_marginRecipient->setRange(0, 10);
   m_marginRecipient->setObjectName("page_margin_recipient");
   layout->addWidget(m_marginRecipient, row++, 1, 1, 1);
 
