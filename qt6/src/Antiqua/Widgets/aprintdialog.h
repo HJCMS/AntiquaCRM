@@ -28,21 +28,23 @@ class ANTIQUACRM_LIBRARY APrintDialog : public QDialog {
   Q_OBJECT
 
 private:
-  QToolBar *m_toolBar;
   QDialogButtonBox *m_buttonBox;
   QStatusBar *m_statusBar;
 
 protected:
   AntiquaCRM::ASettings *config;
-
+  QPageLayout pageLayout;
+  QString pdfFileName;
   QScrollArea *viewPort;
-
   void setPrintingPage(AntiquaCRM::APrintingPage *page);
 
-  virtual bool generateDocument(QPrinter *printer) = 0;
-
 protected Q_SLOTS:
+  virtual void renderPage(QPrinter *printer) = 0;
+  virtual void createPDF() = 0;
   virtual void openPrintDialog() = 0;
+
+public Q_SLOTS:
+  void sendStatusMessage(const QString &);
 
 public:
   explicit APrintDialog(QWidget *parent = nullptr);

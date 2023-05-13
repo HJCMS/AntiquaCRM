@@ -73,6 +73,11 @@ public:
 
   const QVariant getValue() override;
 
+  /**
+   * @brief Current selctet Storage category by name
+   */
+  const QJsonObject getBookcardData();
+
   const QString popUpHints() override;
 
   const QString statusHints() override;

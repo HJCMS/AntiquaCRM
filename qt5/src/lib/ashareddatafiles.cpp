@@ -29,21 +29,31 @@ bool ASharedDataFiles::needsUpdate(const QString &basename,
   if (ext.count() > 0)
     setNameFilters(ext);
 
-  bool status = false;
-  QDateTime dt;
+  // no daily update needet
+  const QStringList _weekly({"postalcode", "publishers", "storagelocations"});
+
+  bool _exists = false;
+  QDate _date;
   QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
   foreach (QFileInfo i, li) {
     if (i.baseName() == basename) {
-      status = true;
-      dt = i.fileTime(QFileDevice::FileMetadataChangeTime);
+      _exists = true;
+      _date = i.fileTime(QFileDevice::FileMetadataChangeTime).date();
       break;
     }
   }
-  setNameFilters(defaultFilter());
+  // restore filter
+  if (ext.count() > 0)
+    setNameFilters(defaultFilter());
 
-  if (status)
-    return (dt.date() == QDate::currentDate()) ? false : true;
-
+  if (_exists && _weekly.contains(basename)) {
+    // weekly update check
+    return (_date.daysTo(QDate::currentDate()) > 5);
+  } else if (_exists) {
+    // daily update check
+    return (_date == QDate::currentDate()) ? false : true;
+  }
+  // need update
   return true;
 }
 
@@ -190,7 +200,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     stream << data;
     fp.close();
     return true;
-  }
+  } // namespace AntiquaCRM
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
@@ -249,5 +259,4 @@ const QJsonObject ASharedCacheFiles::getTempJson(const QString &md5sum) {
   }
   return doc.object();
 }
-
 }; // namespace AntiquaCRM

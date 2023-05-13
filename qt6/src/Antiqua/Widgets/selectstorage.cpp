@@ -196,6 +196,27 @@ const QVariant SelectStorage::getValue() {
   return m_select->itemData(m_select->currentIndex(), Qt::UserRole);
 }
 
+const QJsonObject SelectStorage::getBookcardData() {
+  qint64 _id = getValue().toLongLong();
+  AntiquaCRM::ASqlFiles _tpl("query_storage_by_id");
+  if (!_tpl.openTemplate())
+    return QJsonObject();
+
+  _tpl.setWhereClause("sl_id=" + QString::number(_id));
+  AntiquaCRM::ASqlCore aSql(this);
+  QString _sql(_tpl.getQueryContent());
+  QSqlQuery _q = aSql.query(_sql);
+  if (_q.size() > 0) {
+    _q.next();
+    QJsonObject _card;
+    _card.insert("storage", _q.value("storage_id").toLongLong());
+    _card.insert("name", _q.value("storage_name").toString());
+    _card.insert("category", _q.value("storage_category").toString());
+    return _card;
+  }
+  return QJsonObject();
+}
+
 const QString SelectStorage::popUpHints() {
   return tr("Storage location is required and must set.");
 }

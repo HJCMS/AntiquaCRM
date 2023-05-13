@@ -26,12 +26,8 @@ class ANTIQUACRM_LIBRARY InvoicePage final
     : public AntiquaCRM::APrintingPage {
   Q_OBJECT
 
-private:
-  const QPageLayout pageLayout() const override;
-
 public:
   explicit InvoicePage(QWidget *parent = nullptr);
-  void setLetterSubject(const QString &);
 };
 
 /**
@@ -45,9 +41,9 @@ class ANTIQUACRM_LIBRARY PrintInvoice final : public APrintDialog {
 private:
   InvoicePage *page;
 
-  bool generateDocument(QPrinter *printer) override;
-
 private Q_SLOTS:
+  void renderPage(QPrinter *printer) override;
+  void createPDF() override;
   void openPrintDialog() override;
 
 public:

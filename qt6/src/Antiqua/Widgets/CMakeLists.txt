@@ -10,6 +10,7 @@ INCLUDE_DIRECTORIES (
  ${INTERNAL_WIDGET_INCLUDE_DIRS}
  ${CMAKE_CURRENT_SOURCE_DIR}
  ${CMAKE_CURRENT_BINARY_DIR}
+ ${QRENCODE_INCLUDE_DIRS}
 )
 
 ADD_SUBDIRECTORY (private)
@@ -83,6 +84,7 @@ SET (_library_SOURCES
   phoneedit.cpp
   postalcodeedit.cpp
   priceedit.cpp
+  printbookcard.cpp
   printdeliverynote.cpp
   printerbutton.cpp
   printinvoice.cpp
@@ -144,6 +146,7 @@ SET (_library_HEADERS
   phoneedit.h
   postalcodeedit.h
   priceedit.h
+  printbookcard.h
   printdeliverynote.h
   printerbutton.h
   printinvoice.h
@@ -192,6 +195,7 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Sql
  Qt6::Xml
  Qt6::PrintSupport
+ ${QRENCODE_LIBRARIES}
  AntiquaCRM
  AntiquaSubWidgets
 )

@@ -600,7 +600,7 @@ void BooksEditor::createSqlInsert() {
 
   // Prüfung der Buchdaten Klasse
   // Die Initialisierung erfolgt in setInputFields!
-  // Bei einem INSERT wir diese hier befüllt!
+  // Bei einem INSERT wird diese hier befüllt!
   if (m_tableData == nullptr || !m_tableData->isValid()) {
     qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
     return;
@@ -710,24 +710,40 @@ void BooksEditor::setStorageCompartments() {
 }
 
 void BooksEditor::setPrintBookCard() {
-  qDebug() << Q_FUNC_INFO << "__TODO__";
-  AntiquaCRM::PrintInvoice *m_d = new AntiquaCRM::PrintInvoice(this);
-  QJsonObject obj;
-  obj.insert("id", getDataValue("ib_id").toJsonValue());
-  m_d->exec(obj);
+  qint64 _id = getDataValue("ib_id").toLongLong();
+  if (_id < 1) {
+    pushStatusMessage(tr("Missing valid Article Id!"));
+    return;
+  }
 
-  // BookCard *m_d = new BookCard(this);
-  // m_d->setObjectName("book_card_printing");
-  // QHash<QString, QVariant> data;
-  // data.insert("id", getDataValue("ib_id"));
-  // data.insert("title", getDataValue("ib_title"));
-  // data.insert("author", getDataValue("ib_author"));
-  // data.insert("year", getDataValue("ib_year"));
-  // data.insert("storage", getDataValue("ib_storage"));
-  // data.insert("compartment", getDataValue("ib_storage_compartment"));
-  // data.insert("since", getDataValue("ib_since"));
-  // data.insert("keywords", getDataValue("ib_keyword"));
-  // m_d->exec(data);
+  QJsonObject jsobj = ib_storage->getBookcardData();
+  jsobj.insert("article", AntiquaCRM::AUtil::zerofill(_id));
+  jsobj.insert("title", getDataValue("ib_title").toString());
+  jsobj.insert("year", getDataValue("ib_year").toString());
+  jsobj.insert("author", getDataValue("ib_author").toString());
+
+  QUrl _qr_url;
+  m_cfg->beginGroup("printer");
+  _qr_url.setUrl(m_cfg->value("qrcode_url").toString());
+  QString _query(m_cfg->value("qrcode_query").toString());
+  _query.append("=");
+  _query.append(jsobj.value("article").toString());
+  _qr_url.setQuery(_query);
+  jsobj.insert("qrquery", _qr_url.toString());
+  m_cfg->endGroup();
+
+  QString _buffer = getDataValue("ib_storage_compartment").toString();
+  jsobj.insert("compartment", _buffer.trimmed());
+  _buffer.clear();
+
+  _buffer = getDataValue("ib_changed")
+                .toDate()
+                .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+  jsobj.insert("changed", _buffer.trimmed());
+  _buffer.clear();
+
+  AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
+  m_d->exec(jsobj);
 }
 
 void BooksEditor::setLoadThumbnail(qint64 articleId) {

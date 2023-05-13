@@ -27,6 +27,7 @@ SET (query_tables_FILES
  query_provider_order_exists.sql
  query_provider_orders.sql
  query_returning_articles.sql
+ query_storage_by_id.sql
  query_storage_location.sql
  query_tab_books_main.sql
  query_tab_cdv_main.sql

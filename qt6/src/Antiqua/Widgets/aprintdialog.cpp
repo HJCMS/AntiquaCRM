@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "aprintdialog.h"
+#include "abstractinput.h"
 #include "aprintingpage.h"
 
 #include <QLayout>
@@ -10,22 +11,33 @@ namespace AntiquaCRM {
 
 APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
   setSizeGripEnabled(true);
-  setMinimumSize(600, 400);
+  setMinimumSize(330, 480);
+  setContentsMargins(5, 5, 5, 5);
 
   config = new AntiquaCRM::ASettings(this);
+  pdfFileName = "unknown.pdf";
 
   QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
-
-  m_toolBar = new QToolBar(this);
-  layout->addWidget(m_toolBar);
+  layout->setContentsMargins(2, 2, 2, 2);
 
   viewPort = new QScrollArea(this);
   viewPort->setWidgetResizable(true);
   layout->addWidget(viewPort);
 
   m_buttonBox = new QDialogButtonBox(this);
-  m_buttonBox->addButton(tr("Setup"), QDialogButtonBox::ActionRole);
-  m_buttonBox->addButton(QDialogButtonBox::Apply);
+
+  QPushButton *btn_pdf = new QPushButton(this);
+  btn_pdf->setText(tr("PDF"));
+  btn_pdf->setIcon(AntiquaCRM::AntiquaApplIcon("application-pdf"));
+  btn_pdf->setToolTip(tr("Generate PDF."));
+  m_buttonBox->addButton(btn_pdf, QDialogButtonBox::ActionRole);
+
+  QPushButton *btn_print = new QPushButton(this);
+  btn_print->setText(tr("Print"));
+  btn_print->setIcon(AntiquaCRM::AntiquaApplIcon("printer"));
+  btn_print->setToolTip(tr("Print this view."));
+  m_buttonBox->addButton(btn_print, QDialogButtonBox::ApplyRole);
+
   m_buttonBox->addButton(QDialogButtonBox::Close);
   layout->addWidget(m_buttonBox);
 
@@ -35,6 +47,8 @@ APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
 
   setLayout(layout);
 
+  connect(btn_print, SIGNAL(clicked()), SLOT(openPrintDialog()));
+  connect(btn_pdf, SIGNAL(clicked()), SLOT(createPDF()));
   connect(m_buttonBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
@@ -44,8 +58,12 @@ void APrintDialog::setPrintingPage(AntiquaCRM::APrintingPage *page) {
   viewPort->update();
 }
 
+void APrintDialog::sendStatusMessage(const QString &msg) {
+  m_statusBar->showMessage(msg, 5000);
+}
+
 int APrintDialog::exec() {
-  qWarning("Do not use a Printer dialog without option set!");
+  qWarning("Do not use a Printer dialog without options set!");
   return QDialog::Rejected;
 }
 

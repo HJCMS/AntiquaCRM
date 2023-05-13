@@ -16,6 +16,7 @@
 #include <QPalette>
 #endif
 #include <QLocalSocket>
+#include <QMessageBox>
 #include <QMetaObject>
 #include <QMutex>
 #include <QStyleFactory>
@@ -91,7 +92,9 @@ bool AntiquaAppl::checkRemotePort() {
   int port = sqlConfig.getParam("pg_port").toInt();
   AntiquaCRM::ANetworkIface iface;
   if (!iface.checkRemotePort(host, port)) {
-    qWarning("Sql Server unreachable!");
+    QMessageBox::critical(nullptr, tr("SQL Server Connection"),
+                          tr("The SQL Server '%1' is unreachable!").arg(host));
+    qFatal("Sql Server unreachable!");
     return false;
   }
   return true;
@@ -205,7 +208,7 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-  // Step 4 - sql conenction test
+  // Step 4 - sql connection test
   mutex.lock();
   p_splashScreen.setMessage(tr("Check SQL Server connection!"));
   if (!checkRemotePort()) {

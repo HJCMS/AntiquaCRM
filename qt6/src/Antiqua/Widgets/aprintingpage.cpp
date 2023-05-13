@@ -4,6 +4,8 @@
 #include "aprintingpage.h"
 
 #include <AntiquaCRM>
+#include <QPrinter>
+#include <QPrinterInfo>
 
 #ifdef ANTIQUA_DEVELOPEMENT
 #define DEBUG_DISPLAY_BORDERS 1
@@ -11,7 +13,8 @@
 
 namespace AntiquaCRM {
 
-APrintingPage::APrintingPage(QWidget *parent) : QTextEdit{parent} {
+APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
+    : QTextEdit{parent}, p_pageSizeId{id} {
   setAttribute(Qt::WA_OpaquePaintEvent, true);
   QPalette _p = palette();
   _p.setColor(QPalette::Base, Qt::white);
@@ -26,11 +29,16 @@ APrintingPage::APrintingPage(QWidget *parent) : QTextEdit{parent} {
   initConfiguration();
 
   QTextFrameFormat frameFormat;
-  frameFormat.setLeftMargin((marginLeft * points));
-  frameFormat.setRightMargin((marginRight * points));
+  if (pageLayout().pageSize().id() == QPageSize::A4) {
+    frameFormat.setLeftMargin(margin.left * points);
+    frameFormat.setRightMargin(margin.right * points);
+  } else {
+    frameFormat.setLeftMargin(5 * points);
+    frameFormat.setRightMargin(5 * points);
+  }
   frameFormat.setWidth(QTextLength(QTextLength().PercentageLength, 100));
-  mainFrame = document()->rootFrame();
-  mainFrame->setFrameFormat(frameFormat);
+  rootFrame = document()->rootFrame();
+  rootFrame->setFrameFormat(frameFormat);
 }
 
 APrintingPage::~APrintingPage() {
@@ -40,11 +48,21 @@ APrintingPage::~APrintingPage() {
 
 void APrintingPage::initConfiguration() {
   cfg->beginGroup("printer");
-  marginLeft = cfg->value("page_margin_left", 20.0).toReal();
-  marginRight = cfg->value("page_margin_right", 20.0).toReal();
-  marginSubject = cfg->value("page_margin_subject", 120).toReal();
-  marginBody = cfg->value("page_margin_body", 15).toReal();
-  addressIndent = cfg->value("page_margin_recipient", 0.5).toReal();
+  margin.left = cfg->value("page_margin_left", 20.0).toReal();
+  margin.right = cfg->value("page_margin_right", 20.0).toReal();
+  margin.subject = cfg->value("page_margin_subject", 120).toReal();
+  margin.body = cfg->value("page_margin_body", 15).toReal();
+  margin.address = cfg->value("page_margin_recipient", 0.5).toReal();
+
+  QStringList printers = QPrinterInfo::availablePrinterNames();
+  if (printers.size() > 0) {
+    QString a4 = cfg->value("device_primary").toString();
+    p_printerInfo.dinA4 = QPrinterInfo::printerInfo(a4);
+    QString a6 = cfg->value("device_secondary").toString();
+    p_printerInfo.dinA6 = QPrinterInfo::printerInfo(a6);
+  } else {
+    qWarning("No Printer configuration found!");
+  }
 
   QString _sql_str("SELECT ac_class,ac_value FROM antiquacrm_company");
   _sql_str.append(" ORDER BY ac_class;");
@@ -73,59 +91,77 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QBrush background(Qt::white, Qt::SolidPattern);
   painter.begin(viewport());
   painter.fillRect(viewport()->rect(), background);
-  // Letter folding lines
-  int _yh = (rect().height() / 3);
-  int _ym = (rect().height() / 2);
-  painter.translate(0, 0);
-  painter.setPen(QPen(Qt::gray));
-  painter.drawLine(QPoint(5, _yh), // start
-                   QPoint((borderLeft() / 2), _yh));
-  painter.drawLine(QPoint(5, _ym), // start
-                   QPoint(((borderLeft() / 3) * 2), _ym));
-#ifdef DEBUG_DISPLAY_BORDERS
-  // show borders
-  painter.drawLine(QPoint(borderLeft(), 0),
-                   QPoint(borderLeft(), rect().height()));
-  painter.drawLine(QPoint(borderRight(), 0),
-                   QPoint(borderRight(), rect().height()));
-#endif
-
-  painter.translate(borderLeft(), 0);
-  const QImage image = watermark();
-  if (!image.isNull()) {
-    painter.setOpacity(watermarkOpacity());
-    painter.drawImage(QPointF(5, 5), image);
-    // letter window
-    QRectF _wr = letterWindowRect();
-    _wr.setX(_wr.x() - borderLeft());
+  // only when A4 letter is set
+  if (pageLayout().pageSize().id() == QPageSize::A4) {
+    // Letter folding lines
+    int _yh = (rect().height() / 3);
+    int _ym = (rect().height() / 2);
+    painter.translate(0, 0);
     painter.setPen(QPen(Qt::gray));
-    painter.setOpacity(0.8);
-    painter.fillRect(_wr, background);
+    painter.drawLine(QPoint(5, _yh), // start
+                     QPoint((borderLeft() / 2), _yh));
+    painter.drawLine(QPoint(5, _ym), // start
+                     QPoint(((borderLeft() / 3) * 2), _ym));
+#ifdef DEBUG_DISPLAY_BORDERS
+    // show borders
+    painter.setPen(QPen(Qt::yellow));
+    painter.drawLine(QPoint(borderLeft(), 0),
+                     QPoint(borderLeft(), rect().height()));
+    painter.drawLine(QPoint(borderRight(), 0),
+                     QPoint(borderRight(), rect().height()));
+#endif
+    // heading attachment
+    painter.translate(borderLeft(), 0);
+    const QImage image = watermark();
+    if (!image.isNull()) {
+      painter.setOpacity(watermarkOpacity());
+      painter.drawImage(QPointF(5, 5), image);
+      // letter window
+      QRectF _wr = letterWindowRect();
+      _wr.setX(_wr.x() - borderLeft());
+      painter.setPen(QPen(Qt::gray));
+      painter.setOpacity(0.8);
+#ifdef DEBUG_DISPLAY_BORDERS
+      painter.fillRect(_wr, Qt::yellow);
+#else
+      painter.fillRect(_wr, background);
+#endif
+    }
+    painter.end();
   }
-  painter.end();
   QTextEdit::paintEvent(event);
 }
 
-void APrintingPage::setLetterHeading() {
+const QPageLayout APrintingPage::pageLayout() const {
+  QPageLayout _layout;
+  _layout.setOrientation(QPageLayout::Portrait);
+  _layout.setPageSize(QPageSize(p_pageSizeId));
+  _layout.setMinimumMargins(QMargins(0, 0, 0, 0));
+  _layout.setMargins(QMargins(0, 0, 0, 0));
+  _layout.setUnits(QPageLayout::Millimeter);
+  _layout.setMode(QPageLayout::FullPageMode);
+  return _layout;
+}
+
+void APrintingPage::setLetterHeading(const QString &subject) {
+  // Header
   QString _title = companyData("COMPANY_PRINTING_HEADER");
   QTextBlockFormat _block;
   _block.setAlignment(Qt::AlignCenter);
   QFont _font = getFont("print_font_header");
-  QTextCursor _cursor = mainFrame->firstCursorPosition();
+  QTextCursor _cursor = rootFrame->firstCursorPosition();
   _cursor.setCharFormat(charFormat(_font));
   foreach (QString line, _title.split("#")) {
     _cursor.insertBlock(_block);
     _cursor.insertText(line);
     _cursor.atEnd();
   }
-}
-
-QTextTable *APrintingPage::recipientAddress(const QString &subject) {
-  QTextCursor cursor = textCursor();
+  // Subject
+  _cursor = textCursor();
   QFont font(getFont("print_font_small"));
   font.setUnderline(true);
   font.setPointSize(8);
-
+  // Company
   QString company(companyData("COMPANY_SHORTNAME"));
   company.append(" - ");
   company.append(companyData("COMPANY_STREET"));
@@ -133,25 +169,105 @@ QTextTable *APrintingPage::recipientAddress(const QString &subject) {
   company.append(companyData("COMPANY_LOCATION"));
 
   QTextTableFormat _tableFormat = tableFormat();
-  _tableFormat.setLeftMargin((25 - marginLeft) * points);
+  _tableFormat.setLeftMargin((25 - margin.left) * points);
   _tableFormat.setTopMargin(font.pointSize() * 2);
 
-  QTextTable *table = cursor.insertTable(2, 2, _tableFormat);
+  headingTable = _cursor.insertTable(2, 2, _tableFormat);
 
   QTextCharFormat cellFormat;
   cellFormat.setFont(font);
   cellFormat.setVerticalAlignment(QTextCharFormat::AlignBottom);
 
-  QTextTableCell tc00 = table->cellAt(0, 0);
+  QTextTableCell tc00 = headingTable->cellAt(0, 0);
   tc00.setFormat(cellFormat);
-  cursor = tc00.firstCursorPosition();
-  cursor.insertText(company);
+  _cursor = tc00.firstCursorPosition();
+  _cursor.insertText(company);
 
-  QTextTableCell tc01 = table->cellAt(0, 1);
+  QTextTableCell tc01 = headingTable->cellAt(0, 1);
   tc01.setFormat(cellFormat);
-  cursor = tc01.firstCursorPosition();
-  cursor.insertText(subject);
-  return table;
+  _cursor = tc01.firstCursorPosition();
+  _cursor.insertText(subject);
+}
+
+void APrintingPage::setRecipientAddress(const QString &address) {
+  Q_CHECK_PTR(headingTable);
+  int row = (headingTable->rows() - 1);
+  // Anschrift
+  QTextCursor _cursor = textCursor();
+  QTextTableCell addrCell = headingTable->cellAt(row, 0);
+  addrCell.setFormat(addressCellFormat());
+  _cursor = addrCell.firstCursorPosition();
+  int lines = 0;
+  foreach (QString _l, address.split("\n")) {
+    _cursor.insertText(_l);
+    _cursor.insertText("\n");
+    lines++;
+  }
+  // DIN 5008B address label must have 4 lines!
+  while (lines < 5) {
+    _cursor.insertText("\n");
+    lines++;
+  }
+
+  // Betreff Informationen
+  QMap<qint8, QString> title;
+  title.insert(0, tr("Invoice No."));
+  title.insert(1, tr("Order No."));
+  title.insert(2, tr("Costumer No."));
+
+  QMap<qint8, QString> data;
+  data.insert(0, AntiquaCRM::AUtil::zerofill(001));
+  data.insert(1, AntiquaCRM::AUtil::zerofill(001));
+  data.insert(2, AntiquaCRM::AUtil::zerofill(381));
+
+  QFont _font = getFont("print_font_normal");
+  QTextTableCell infoCell = headingTable->cellAt(row, 1);
+  infoCell.setFormat(charFormat(_font));
+  _cursor = infoCell.firstCursorPosition();
+
+  QTextTable *m_info_table = _cursor.insertTable(data.size(), 3, // Size
+                                                 inlineTableFormat());
+  QMapIterator<qint8, QString> it(data);
+  while (it.hasNext()) {
+    it.next();
+    // left
+    QTextTableCell cl = m_info_table->cellAt(it.key(), 0);
+    cl.setFormat(charFormat(_font));
+    _cursor = cl.firstCursorPosition();
+    _cursor.setBlockFormat(alignRight());
+    _cursor.insertText(title[it.key()]);
+    // middle
+    QTextTableCell cm = m_info_table->cellAt(it.key(), 1);
+    cm.setFormat(charFormat(_font));
+    _cursor = cm.firstCursorPosition();
+    _cursor.setBlockFormat(alignCenter());
+    _cursor.insertText(":");
+    // right
+    QTextTableCell cr = m_info_table->cellAt(it.key(), 2);
+    cr.setFormat(charFormat(_font));
+    _cursor = cr.firstCursorPosition();
+    _cursor.setBlockFormat(alignRight());
+    _cursor.insertText(it.value());
+  }
+}
+
+void APrintingPage::setLetterSubject(const QString &subject) {
+  // Subject Table
+  QFont _font = getFont("print_font_subject");
+  QTextCursor _cursor = textCursor();
+  QTextTable *table = _cursor.insertTable(1, 2, inlineTableFormat());
+  QTextTableCell scl0 = table->cellAt(0, 0);
+  scl0.setFormat(charFormat(_font));
+  _cursor = scl0.firstCursorPosition();
+  _cursor.insertText(subject);
+  QTextTableCell scl1 = table->cellAt(0, 1);
+  scl1.setFormat(charFormat(_font));
+  _cursor = scl1.firstCursorPosition();
+  _cursor.setBlockFormat(alignRight());
+  QString _date(companyData("COMPANY_LOCATION_NAME"));
+  _date.append(" " + tr("on") + " ");
+  _date.append(QDate::currentDate().toString("dd.MM.yyyy"));
+  _cursor.insertText(_date);
 }
 
 const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cId) {
@@ -184,6 +300,13 @@ const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cId) {
   }
 #endif
   return _map;
+}
+
+const QPrinterInfo APrintingPage::getPrinterInfo(QPageSize::PageSizeId id) {
+  if (id == QPageSize::A6)
+    return p_printerInfo.dinA6;
+
+  return p_printerInfo.dinA4;
 }
 
 const QPen APrintingPage::penStyle() const {
@@ -221,7 +344,7 @@ const QTextBlockFormat APrintingPage::alignCenter() {
 
 const QTextTableFormat APrintingPage::tableFormat() {
   QTextTableFormat _f;
-  _f.setWidth(mainFrame->frameFormat().width());
+  _f.setWidth(rootFrame->frameFormat().width());
   _f.setPadding(0);
   _f.setCellPadding(0);
   _f.setCellSpacing(0);
@@ -267,8 +390,8 @@ const QTextTableCellFormat APrintingPage::addressCellFormat() {
   _f.setBorderBrush(QBrush(Qt::NoBrush));
   _f.setBorder(0);
   _f.setPadding(0);
-  _f.setTopPadding(addressIndent);
-  _f.setLeftPadding(addressIndent);
+  _f.setTopPadding(margin.address);
+  _f.setLeftPadding(margin.address);
   _f.setFont(getFont("print_font_address"));
   return _f;
 }
@@ -353,15 +476,8 @@ const QImage APrintingPage::watermark() const {
   return QImage();
 }
 
-const QRectF APrintingPage::letterRect() const {
-  QPageLayout _layout(QPageSize(QPageSize::A4), QPageLayout::Portrait,
-                      QMarginsF(0, 0, 0, 0), QPageLayout::Millimeter,
-                      QMarginsF(0, 0, 0, 0));
-  return _layout.fullRect();
-}
-
 const QRectF APrintingPage::pointsRect() const {
-  QRectF _lr = letterRect();
+  QRectF _lr = pageLayout().fullRect(QPageLayout::Millimeter);
   return QRectF(0, 0, (_lr.width() * points), (_lr.height() * points));
 }
 
@@ -376,16 +492,16 @@ const QRectF APrintingPage::letterWindowRect() const {
   return _r;
 }
 
-qreal APrintingPage::borderLeft() const { return qRound(marginLeft * points); }
+qreal APrintingPage::borderLeft() const { return qRound(margin.left * points); }
 
 qreal APrintingPage::borderRight() const {
-  qreal _w = (letterRect().width() * points);
-  return qRound(_w - (marginRight * points));
+  qreal _w = pointsRect().width();
+  return qRound(_w - (margin.right * points));
 }
 
 qreal APrintingPage::inlineFrameWidth() const {
-  qreal _w = (letterRect().width() * points);
-  return qRound(_w - (marginLeft * points) - (marginRight * points));
+  qreal _w = pointsRect().width();
+  return qRound(_w - (margin.left * points) - (margin.right * points));
 }
 
 } // namespace AntiquaCRM

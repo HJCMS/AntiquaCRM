@@ -21,6 +21,11 @@
 #include "printdeliverynote.h"
 #endif
 
+// AntiquaCRM::PrintBookCard
+#ifndef ANTIQUACRM_WIDGETS_PRINT_BOOKCARD_H
+#include "printbookcard.h"
+#endif
+
 // AntiquaCRM::PrinterButton
 #ifndef ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
 #include "printerbutton.h"

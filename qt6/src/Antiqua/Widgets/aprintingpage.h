@@ -10,6 +10,7 @@
 #define ANTIQUACRM_WIDGETS_PRINT_FORMAT_H
 
 #include <ASettings>
+#include <QPrinterInfo>
 #include <QTextEdit>
 #include <QWidget>
 #include <QtGui>
@@ -25,32 +26,49 @@ class ANTIQUACRM_LIBRARY APrintingPage : public QTextEdit {
   Q_OBJECT
 
 protected:
+  const QPageSize::PageSizeId p_pageSizeId;
   AntiquaCRM::ASettings *cfg;
 
   /**
    * @brief page margins
    */
-  qreal marginLeft;
-  qreal marginRight;
-  qreal marginSubject;
-  qreal marginBody;
-  qreal addressIndent;
+  struct PageMargins {
+    qreal left = 20;   /**< @brief Document margin left */
+    qreal right = 10;  /**< @brief Document margin right */
+    qreal address = 6; /**< @brief Address margin in Letter window */
+    qreal subject = 6; /**< @brief Subject margin top to Letter window */
+    qreal body = 10;   /**< @brief Body margin top to Subject */
+  };
+  PageMargins margin;
+
+  struct PrinterInfo {
+    QPrinterInfo dinA4;
+    QPrinterInfo dinA6;
+  };
+  PrinterInfo p_printerInfo;
 
   /**
+   * @brief 1mm to point
    * 1 mm = 2.8452755906 point (printer's)
    * 1 point (printer's) = 0.3514598035 mm
    */
   const qreal points = 2.8452755906;
 
   /**
-   * @brief Company data @ref initConfiguration()
+   * @brief Company data, loaded by initConfiguration()
    */
   QHash<QString, QString> p_companyData;
 
   /**
    * @brief QTextDocument rootFrame
+   * Initialed and configured in constructor
    */
-  QTextFrame *mainFrame;
+  QTextFrame *rootFrame;
+
+  /**
+   * @brief Letter Heading table with address and Subject
+   */
+  QTextTable *headingTable;
 
   /**
    * @brief load configuration settings and company data
@@ -59,31 +77,38 @@ protected:
 
   void paintEvent(QPaintEvent *) override;
 
+public:
+  explicit APrintingPage(QWidget *parent = nullptr,
+                         QPageSize::PageSizeId id = QPageSize::A4);
+  virtual ~APrintingPage();
+
   /**
    * @brief layout of a page in a paged document
    */
-  virtual const QPageLayout pageLayout() const = 0;
-
-public:
-  explicit APrintingPage(QWidget *parent = nullptr);
-  virtual ~APrintingPage();
+  const QPageLayout pageLayout() const;
 
   /**
    * @brief initial dcoument letter heading
    */
-  void setLetterHeading();
+  void setLetterHeading(const QString &subject);
 
   /**
-   * @brief add reciepient address with customerId
-   * @param cutomer - Id
+   * @brief insert reciepient address
    */
-  QTextTable *recipientAddress(const QString &subject);
+  void setRecipientAddress(const QString &address);
+
+  /**
+   * @brief insert letter subject and date
+   */
+  void setLetterSubject(const QString &subject);
 
   /**
    * @brief query Customer data
    * @param cId - Customer Id
    */
   const QMap<QString, QVariant> queryCustomerData(qint64 cId);
+
+  const QPrinterInfo getPrinterInfo(QPageSize::PageSizeId id = QPageSize::A4);
 
   /**
    * @brief General Linestyle and for folds and paper punches!
@@ -158,13 +183,7 @@ public:
   const QImage watermark() const;
 
   /**
-   * @brief get DIN A4 Rect in mm
-   * @note without margins!
-   */
-  const QRectF letterRect() const;
-
-  /**
-   * @brief get DIN A4 Rect in pixel
+   * @brief get Page Rect in points
    * @note without margins!
    */
   const QRectF pointsRect() const;
@@ -189,7 +208,7 @@ public:
   /**
    * @brief get Painting width() minus margins in points!
    */
-  qreal inlineFrameWidth() const;
+  Q_DECL_DEPRECATED qreal inlineFrameWidth() const;
 };
 
 } // namespace AntiquaCRM

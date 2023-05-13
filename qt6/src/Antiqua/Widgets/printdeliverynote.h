@@ -16,6 +16,19 @@
 namespace AntiquaCRM {
 
 /**
+ * @class DeliveryNote
+ * @brief Delivery note Painting Device
+ * @ingroup EditWidgets
+ */
+class ANTIQUACRM_LIBRARY DeliveryNote final
+    : public AntiquaCRM::APrintingPage {
+  Q_OBJECT
+
+public:
+  explicit DeliveryNote(QWidget *parent = nullptr);
+};
+
+/**
  * @class PrintDeliveryNote
  * @brief Printing Delivery Notes Dialog
  * @ingroup EditWidgets
@@ -24,9 +37,11 @@ class ANTIQUACRM_LIBRARY PrintDeliveryNote : public AntiquaCRM::APrintDialog {
   Q_OBJECT
 
 private:
-  bool generateDocument(QPrinter *printer) override;
+  DeliveryNote *page;
 
 private Q_SLOTS:
+  void renderPage(QPrinter *printer) override;
+  void createPDF() override;
   void openPrintDialog() override;
 
 public:
