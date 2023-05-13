@@ -29,7 +29,6 @@ qint64 OrdersTableView::getTableID(const QModelIndex &index, int column) {
 }
 
 bool OrdersTableView::sqlModelQuery(const QString &query) {
-  // qDebug() << Q_FUNC_INFO << query << Qt::endl;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -40,6 +39,11 @@ bool OrdersTableView::sqlModelQuery(const QString &query) {
     p_tableRecord = m_model->tableRecord();
     return true;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << query;
+  }
+#endif
   emit sendQueryReport(m_model->queryResultInfo());
   emit sendResultExists((m_model->rowCount() > 0));
   return false;
