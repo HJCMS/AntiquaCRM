@@ -29,8 +29,8 @@ bool ASharedDataFiles::needsUpdate(const QString &basename,
   if (ext.count() > 0)
     setNameFilters(ext);
 
-  // no daily update needet
-  const QStringList _weekly({"postalcode", "publishers", "storagelocations"});
+  // this files get only a weekly update
+  const QStringList _weekly({"postalcodes", "publishers", "storagelocations"});
 
   bool _exists = false;
   QDate _date;
@@ -38,7 +38,8 @@ bool ASharedDataFiles::needsUpdate(const QString &basename,
   foreach (QFileInfo i, li) {
     if (i.baseName() == basename) {
       _exists = true;
-      _date = i.fileTime(QFileDevice::FileMetadataChangeTime).date();
+      // When the file was most recently modified.
+      _date = i.fileTime(QFileDevice::FileModificationTime).date();
       break;
     }
   }
