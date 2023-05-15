@@ -15,7 +15,7 @@ ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
 
   p_directory = QDir::home();
   p_directory.setFilter(QDir::Dirs | QDir::Files | QDir::NoDotAndDotDot);
-  p_directory.setNameFilters(viewFilter());
+  p_directory.setNameFilters(filter());
 
   m_model = new QFileSystemModel(this);
   m_model->setObjectName("images_view_model");
@@ -23,7 +23,7 @@ ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
   m_model->setOption(QFileSystemModel::DontWatchForChanges, true);
   m_model->setOption(QFileSystemModel::DontResolveSymlinks, true);
   m_model->setFilter(QDir::AllDirs | QDir::Files | QDir::NoDotAndDotDot);
-  m_model->setNameFilters(p_directory.nameFilters());
+  m_model->setNameFilters(filter());
   setModel(m_model);
 
   m_headerView = header();
@@ -77,11 +77,10 @@ void ImageListView::folderChanged(const QModelIndex &index) {
 void ImageListView::expandTopLevel() { expand(p_rootIndex); }
 
 void ImageListView::setSourceImage(const SourceInfo &image) {
-  if (setDirectory(image.absoluteDir())) {
-    QModelIndex index = m_model->index(image.filePath());
-    if (index.isValid()) {
-      setCurrentIndex(index);
-    }
+  const QModelIndex _index = m_model->index(image.filePath());
+  if (_index.isValid()) {
+    scrollTo(_index, QAbstractItemView::EnsureVisible);
+    setCurrentIndex(_index);
   }
 }
 
@@ -95,11 +94,10 @@ bool ImageListView::setDirectory(const QDir &dir) {
   return index.isValid();
 }
 
-const QStringList ImageListView::viewFilter() {
-  // inode/directory image/jpeg
-  QStringList f("*.jpg");
-  f << "*.JPG";
-  f << "*.jpeg";
-  f << "*.JPEG";
-  return f;
+const QStringList ImageListView::filter() const {
+  return QStringList({"*.jpg", "*.JPG", "*.jpeg", "*.JPEG"});
+}
+
+const QDir ImageListView::directory() const {
+  return QDir(m_model->rootPath());
 }

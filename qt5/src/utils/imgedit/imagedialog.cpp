@@ -87,34 +87,43 @@ bool ImageDialog::findSourceImage() {
     return false;
   }
 
-  QString id_simple = QString::number(p_articleId);
-  QString id_long = SourceInfo::imageBaseName(p_articleId);
-  QString basePath = m_imageSelecter->directory().path();
+  const QString _simple = QString::number(p_articleId);
+  const QString _long = SourceInfo::imageBaseName(p_articleId);
+  QStringList _search;
+  _search << _simple + ".JPG";
+  _search << _long + ".JPG";
+  _search << _simple + ".jpg";
+  _search << _long + ".jpg";
 
-  QStringList search;
-  search << id_simple + ".JPG";
-  search << id_long + ".JPG";
-  search << id_simple + ".jpg";
-  search << id_long + ".jpg";
+  QString _sources(p_archiv.path());
+  _sources.append(QDir::separator());
+  _sources.append("Sources");
 
-  QStringList found;
-  QDirIterator it(basePath, search, QDir::NoFilter,
-                  QDirIterator::Subdirectories);
-  while (it.hasNext()) {
-    QFileInfo f(it.next());
-    found << f.filePath();
+  QMap<QString, QString> _map;
+  QDir::Filters filter(QDir::Files | QDir::NoDotAndDotDot);
+  foreach (QString d, QStringList({p_savePath.path(), _sources})) {
+    QDirIterator it(d, _search, filter, QDirIterator::Subdirectories);
+    while (it.hasNext()) {
+      QFileInfo f(it.next());
+      QDateTime _time = f.fileTime(QFileDevice::FileModificationTime);
+      _map.insert(_time.toString("yyyyMMddhhmm"), f.filePath());
+    }
   }
 
-  if (found.size() < 1)
+  if (_map.size() < 1) {
     return false;
+  } else if (_map.size() > 1) {
+    qWarning("Found '%d' image files!", _map.size());
+  }
 
-  SourceInfo src(basePath);
-  src.setFile(found.first());
+  SourceInfo src(p_archiv.path());
+  src.setFile(_map.last());
   src.setFileId(p_articleId);
   src.setTarget(p_savePath);
   if (src.isValidSource()) {
     m_imageSelecter->setSelection(src);
     m_view->setImageFile(src);
+    _map.clear();
     return true;
   }
   return false;

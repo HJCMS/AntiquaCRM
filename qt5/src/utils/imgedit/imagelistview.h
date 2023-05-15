@@ -45,7 +45,8 @@ public Q_SLOTS:
 public:
   explicit ImageListView(QWidget *parent = nullptr);
   bool setDirectory(const QDir &dir);
-  static const QStringList viewFilter();
+  const QStringList filter() const;
+  const QDir directory() const;
 };
 
 #endif // ANTIQUA_IMAGELISTVIEW_H

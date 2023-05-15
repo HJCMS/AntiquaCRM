@@ -628,6 +628,7 @@ void BookEditor::actionRemoveImage(qint64 articleId) {
 void BookEditor::actionEditImages() {
   qint64 id = ib_id->value().toLongLong();
   ImageDialog *d = new ImageDialog(id, this);
+  d->setSubCategory("Books");
   if (d->exec()) {
     m_imageView->readFromDatabase(id);
   }
