@@ -176,14 +176,13 @@ BookEditor::BookEditor(QWidget *parent)
   ib_storage->setToolTip(infoText->text());
   row2->addWidget(ib_storage, row2c++, 1, 1, 1);
 
-  /* TODO Lagefach
-    infoText = new AntiquaILabel(tr("Compartment"), this);
-    row2->addWidget(infoText, row2c, 0, 1, 1);
-    ib_storage_compartment = new LineEdit(this);
-    ib_storage_compartment->setObjectName("ib_storage_compartment");
-    ib_storage_compartment->setToolTip(infoText->text());
-    row2->addWidget(ib_storage_compartment, row2c++, 1, 1, 1);
-  */
+  // Lagerfach
+  infoText = new AntiquaILabel(tr("Compartment"), this);
+  row2->addWidget(infoText, row2c, 0, 1, 1);
+  ib_storage_compartment = new LineEdit(this, true);
+  ib_storage_compartment->setObjectName("ib_storage_compartment");
+  ib_storage_compartment->setToolTip(tr("Storage compartment"));
+  row2->addWidget(ib_storage_compartment, row2c++, 1, 1, 1);
 
   infoText = new AntiquaILabel(tr("Keywords"), this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
@@ -297,6 +296,12 @@ void BookEditor::setInputFields() {
   // Lager
   ib_storage->reset();
   ib_storage->loadDataset();
+  // Lagerfach
+  QSqlField ib_st_field;
+  ib_st_field.setName("ib_storage_compartment");
+  ib_st_field.setType(QVariant::String);
+  ib_st_field.setRequiredStatus(QSqlField::Required);
+  ib_storage_compartment->setProperties(ib_st_field);
 
   // Buch Zustand
   ib_binding->loadDataset();

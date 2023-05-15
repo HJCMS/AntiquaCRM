@@ -13,10 +13,15 @@ StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
   m_box->setMaxVisibleItems(20);
   m_box->setWhatsThis(tr("Changes the Storage location of this Article."));
   m_layout->addWidget(m_box);
+
   m_search = new QLineEdit(this);
-  m_search->setPlaceholderText(tr("Storage Location"));
+  m_search->setPlaceholderText(tr("Search"));
   m_search->setMinimumWidth(130);
+  m_search->addAction(QIcon(":/icons/action_search.png"),
+                      QLineEdit::TrailingPosition);
+  m_search->setToolTip(tr("Search storage location"));
   m_layout->addWidget(m_search);
+  m_layout->addStretch(0);
   setRequired(true);
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));

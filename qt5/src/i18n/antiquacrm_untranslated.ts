@@ -33,7 +33,17 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+115"/>
+        <location filename="../antiquaappl.cpp" line="+95"/>
+        <source>SQL Server Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The SQL Server &apos;%1&apos; is unreachable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -722,7 +732,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
+        <source>Compartment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Storage compartment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
@@ -752,7 +772,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+93"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -809,12 +829,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-391"/>
+        <location line="-397"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-162"/>
+        <location line="-170"/>
         <source>Local Usage only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -824,7 +844,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+166"/>
+        <location line="+174"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -853,7 +873,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+55"/>
-        <location line="+79"/>
+        <location line="+84"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2849,7 +2869,7 @@ Image - Article Id: %2</source>
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../widgets/emailedit.cpp" line="+14"/>
+        <location filename="../widgets/emailedit.cpp" line="+15"/>
         <source>eMail edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2859,7 +2879,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+58"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2872,7 +2892,7 @@ Image - Article Id: %2</source>
 <context>
     <name>Ecurrency</name>
     <message>
-        <location filename="../widgets/ecurrency.cpp" line="+115"/>
+        <location filename="../widgets/ecurrency.cpp" line="+125"/>
         <source>A valid Currency is Required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3858,7 +3878,12 @@ Image - Article Id: %2</source>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+115"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+87"/>
+        <source>Invalid eMail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+32"/>
         <source>Attachments are disabled in this mode!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3911,7 +3936,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+155"/>
         <source>Missing Attachment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4842,7 +4867,7 @@ Image - Article Id: %2</source>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+52"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+56"/>
         <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6358,7 +6383,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+101"/>
         <source>CD/Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6389,7 +6414,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+91"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7239,17 +7264,26 @@ Image - Article Id: %2</source>
     <name>StorageLocation</name>
     <message>
         <location filename="../widgets/storagelocation.cpp" line="+11"/>
-        <location line="+6"/>
         <source>Storage Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location line="+3"/>
         <source>Changes the Storage location of this Article.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+4"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Search storage location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+119"/>
         <source>Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7309,7 +7343,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+69"/>
         <source>Can&apos;t open this Article</source>
         <translation type="unfinished"></translation>
     </message>

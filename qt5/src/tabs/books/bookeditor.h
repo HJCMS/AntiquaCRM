@@ -44,7 +44,7 @@ private:
   BookBinding *ib_binding;     /**< @brief BuchEinband Kategorie */
   LineEdit *ib_designation;    /**< @brief Umschreibung */
   StorageLocation *ib_storage; /**< @brief Lager bestimmung */
-  // LineEdit *ib_storage_compartment; /**< @brief Lagerfach */
+  LineEdit *ib_storage_compartment; /**< @brief Lagerfach */
   KeywordLineEdit *ib_keyword; /**< @brief Schlüsselwort */
   IsbnEdit *ib_isbn;           /**< @brief ISBN */
   // Row 3

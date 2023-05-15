@@ -33,7 +33,17 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+115"/>
+        <location filename="../antiquaappl.cpp" line="+95"/>
+        <source>SQL Server Connection</source>
+        <translation>SQL Server Verbindung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The SQL Server &apos;%1&apos; is unreachable!</source>
+        <translation>Der SQL Server &apos;%1&apos; ist nicht erreichbar!</translation>
+    </message>
+    <message>
+        <location line="+22"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
@@ -722,7 +732,17 @@
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
+        <source>Compartment</source>
+        <translation>Fach</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Storage compartment</source>
+        <translation>Lagerfach</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Keywords</source>
         <translation>Schlüsselwörter</translation>
     </message>
@@ -752,7 +772,7 @@
         <translation>Autorenteam</translation>
     </message>
     <message>
-        <location line="+87"/>
+        <location line="+93"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten erfolgreich gespeichert!</translation>
     </message>
@@ -811,12 +831,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-391"/>
+        <location line="-397"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="-162"/>
+        <location line="-170"/>
         <source>Local Usage only</source>
         <translation>Nur lokale Verwendung</translation>
     </message>
@@ -826,7 +846,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+166"/>
+        <location line="+174"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -855,7 +875,7 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+55"/>
-        <location line="+79"/>
+        <location line="+84"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
@@ -2853,7 +2873,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../widgets/emailedit.cpp" line="+14"/>
+        <location filename="../widgets/emailedit.cpp" line="+15"/>
         <source>eMail edit</source>
         <translation>E-Mail bearbeiten</translation>
     </message>
@@ -2863,7 +2883,7 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+58"/>
         <source>Max allowed length</source>
         <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
@@ -2876,7 +2896,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>Ecurrency</name>
     <message>
-        <location filename="../widgets/ecurrency.cpp" line="+115"/>
+        <location filename="../widgets/ecurrency.cpp" line="+125"/>
         <source>A valid Currency is Required!</source>
         <translation>Eine gültige Währung ist erforderlich!</translation>
     </message>
@@ -3862,7 +3882,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MailCommand</name>
     <message>
-        <location filename="../utils/mailing/mailcommand.cpp" line="+115"/>
+        <location filename="../utils/mailing/mailcommand.cpp" line="+87"/>
+        <source>Invalid eMail Address</source>
+        <translation>Ungültige E-Mail Adresse</translation>
+    </message>
+    <message>
+        <location line="+32"/>
         <source>Attachments are disabled in this mode!</source>
         <translation>Anhänge sind in diesem Modus deaktiviert!</translation>
     </message>
@@ -3915,7 +3940,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+154"/>
+        <location line="+155"/>
         <source>Missing Attachment</source>
         <translation>Fehlender Anhang</translation>
     </message>
@@ -4846,7 +4871,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+52"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+56"/>
         <source>Open order</source>
         <translation>Auftrag öffnen</translation>
     </message>
@@ -6364,7 +6389,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+101"/>
         <source>CD/Vinyl</source>
         <translation></translation>
     </message>
@@ -6395,7 +6420,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ein Auftrag kann ohne einen Artkel nicht importiert werden!</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+91"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>
@@ -7245,17 +7270,26 @@ Bild - Artikel Nr: %2</translation>
     <name>StorageLocation</name>
     <message>
         <location filename="../widgets/storagelocation.cpp" line="+11"/>
-        <location line="+6"/>
         <source>Storage Location</source>
         <translation>Lagerort</translation>
     </message>
     <message>
-        <location line="-3"/>
+        <location line="+3"/>
         <source>Changes the Storage location of this Article.</source>
         <translation>Ändert den Speicherort dieses Artikels.</translation>
     </message>
     <message>
-        <location line="+122"/>
+        <location line="+4"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Search storage location</source>
+        <translation>Suche Lager Zuordnung</translation>
+    </message>
+    <message>
+        <location line="+119"/>
         <source>Storage location is required and must set.</source>
         <translation>Der Lagerort ist Erforderlich und muss gesetzt sein.</translation>
     </message>
@@ -7315,7 +7349,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bücher</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+69"/>
         <source>Can&apos;t open this Article</source>
         <translation>Dieser Artikel kann nicht geöffnet werden</translation>
     </message>
