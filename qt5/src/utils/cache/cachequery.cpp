@@ -33,6 +33,9 @@ const QJsonArray CacheQuery::createTable(const QString &query) {
 }
 
 bool CacheQuery::createCache(const CacheConfig &config) {
+  if (!isCacheUpdateRequired(config.indicator))
+    return false;
+
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(config.file);
   if (sql.isEmpty())
     return false;
