@@ -21,7 +21,6 @@ StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
                       QLineEdit::TrailingPosition);
   m_search->setToolTip(tr("Search storage location"));
   m_layout->addWidget(m_search);
-  m_layout->addStretch(0);
   setRequired(true);
   connect(m_box, SIGNAL(currentIndexChanged(int)), this,
           SLOT(dataChanged(int)));

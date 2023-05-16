@@ -169,20 +169,22 @@ BookEditor::BookEditor(QWidget *parent)
   binding_layout->addWidget(ib_designation);
   row2->addLayout(binding_layout, row2c++, 1, 1, 1);
 
+  // BEGIN:Storage
   infoText = new AntiquaILabel(tr("Storage"), this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
+  QHBoxLayout *storageLayout = new QHBoxLayout;
   ib_storage = new StorageLocation(this);
   ib_storage->setObjectName("ib_storage");
   ib_storage->setToolTip(infoText->text());
-  row2->addWidget(ib_storage, row2c++, 1, 1, 1);
-
-  // Lagerfach
+  storageLayout->addWidget(ib_storage);
   infoText = new AntiquaILabel(tr("Compartment"), this);
-  row2->addWidget(infoText, row2c, 0, 1, 1);
-  ib_storage_compartment = new LineEdit(this, true);
+  storageLayout->addWidget(infoText);
+  ib_storage_compartment = new LineEdit(this);
   ib_storage_compartment->setObjectName("ib_storage_compartment");
   ib_storage_compartment->setToolTip(tr("Storage compartment"));
-  row2->addWidget(ib_storage_compartment, row2c++, 1, 1, 1);
+  storageLayout->addWidget(ib_storage_compartment);
+  row2->addLayout(storageLayout, row2c++, 1, 1, 1);
+  // END:Storage
 
   infoText = new AntiquaILabel(tr("Keywords"), this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
@@ -603,7 +605,11 @@ void BookEditor::setPrintBookCard() {
   data.insert("year", getDataValue("ib_year"));
   data.insert("storage", getDataValue("ib_storage"));
   data.insert("since", getDataValue("ib_since"));
-  data.insert("keywords", getDataValue("ib_keyword"));
+  QString _compartment = getDataValue("ib_storage_compartment").toString();
+  if (_compartment.isEmpty())
+    _compartment = getDataValue("ib_keyword").toString();
+
+  data.insert("keywords", _compartment);
   m_d->exec(data);
 }
 
