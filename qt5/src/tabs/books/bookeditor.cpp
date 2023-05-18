@@ -667,7 +667,9 @@ bool BookEditor::openEditEntry(qint64 articleId) {
     }
     status = true;
   } else {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
+#endif
     status = false;
   }
 
