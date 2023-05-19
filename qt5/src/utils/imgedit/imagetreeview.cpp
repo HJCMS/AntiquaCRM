@@ -1,11 +1,11 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "imagelistview.h"
+#include "imagetreeview.h"
 
 #include <QDebug>
 
-ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
+ImageTreeView::ImageTreeView(QWidget *parent) : QTreeView{parent} {
   setWordWrap(false);
   setAlternatingRowColors(true);
   setAnimated(false);
@@ -38,7 +38,7 @@ ImageListView::ImageListView(QWidget *parent) : QTreeView{parent} {
           SLOT(targetChanged(const QString &)));
 }
 
-void ImageListView::currentChanged(const QModelIndex &current,
+void ImageTreeView::currentChanged(const QModelIndex &current,
                                    const QModelIndex &previous) {
   Q_UNUSED(previous);
   if (!current.isValid())
@@ -58,7 +58,7 @@ void ImageListView::currentChanged(const QModelIndex &current,
   }
 }
 
-void ImageListView::targetChanged(const QString &path) {
+void ImageTreeView::targetChanged(const QString &path) {
   p_rootIndex = m_model->index(path);
   if (!p_rootIndex.isValid())
     return;
@@ -67,16 +67,16 @@ void ImageListView::targetChanged(const QString &path) {
   expandTopLevel();
 }
 
-void ImageListView::folderChanged(const QModelIndex &index) {
+void ImageTreeView::folderChanged(const QModelIndex &index) {
   if (!index.isValid())
     return;
 
   resizeColumnToContents(p_rootIndex.column());
 }
 
-void ImageListView::expandTopLevel() { expand(p_rootIndex); }
+void ImageTreeView::expandTopLevel() { expand(p_rootIndex); }
 
-void ImageListView::setSourceImage(const SourceInfo &image) {
+void ImageTreeView::setSourceImage(const SourceInfo &image) {
   const QModelIndex _index = m_model->index(image.filePath());
   if (_index.isValid()) {
     scrollTo(_index, QAbstractItemView::EnsureVisible);
@@ -84,7 +84,7 @@ void ImageListView::setSourceImage(const SourceInfo &image) {
   }
 }
 
-bool ImageListView::setDirectory(const QDir &dir) {
+bool ImageTreeView::setDirectory(const QDir &dir) {
   if (!dir.exists())
     return false;
 
@@ -94,10 +94,10 @@ bool ImageListView::setDirectory(const QDir &dir) {
   return index.isValid();
 }
 
-const QStringList ImageListView::filter() const {
+const QStringList ImageTreeView::filter() const {
   return QStringList({"*.jpg", "*.JPG", "*.jpeg", "*.JPEG"});
 }
 
-const QDir ImageListView::directory() const {
+const QDir ImageTreeView::directory() const {
   return QDir(m_model->rootPath());
 }

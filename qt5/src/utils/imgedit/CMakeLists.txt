@@ -14,7 +14,8 @@ SET (subproject_SOURCES
   imageview.cpp
   imageactionsbar.cpp
   imageselecter.cpp
-  imagelistview.cpp
+  imagetreeview.cpp
+  imagelistfound.cpp
   rubberband.cpp
   sourceinfo.cpp
   imagetoolbar.cpp
@@ -25,7 +26,8 @@ SET (subproject_HEADERS
   imageview.h
   imageactionsbar.h
   imageselecter.h
-  imagelistview.h
+  imagetreeview.h
+  imagelistfound.h
   rubberband.h
   sourceinfo.h
   imagetoolbar.h
