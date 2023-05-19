@@ -32,8 +32,6 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
   layout->addWidget(m_pathFrame);
 
   m_listFound = new ImageListFound(this);
-  QStringList _headers({tr("Date"), tr("Article"), tr("Location")});
-  m_listFound->setVerticalHeaderLabels(_headers);
   layout->addWidget(m_listFound);
 
   m_treeView = new ImageTreeView(this);
@@ -60,6 +58,8 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
           SIGNAL(sendSelection(const SourceInfo &)));
   connect(m_treeView, SIGNAL(imageSelected(const SourceInfo &)),
           SIGNAL(sendSelection(const SourceInfo &)));
+  connect(m_treeView, SIGNAL(imageSelected(const SourceInfo &)), m_listFound,
+          SLOT(setSelected(const SourceInfo &)));
   connect(m_treeView, SIGNAL(sendTargetChanged(const QString &)), m_dirPathEdit,
           SLOT(setText(const QString &)));
   connect(ac_set_archive, SIGNAL(triggered()), SLOT(setDefaultTarget()));

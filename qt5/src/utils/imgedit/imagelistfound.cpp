@@ -6,6 +6,7 @@
 
 #include <AntiquaCRM>
 #include <QHeaderView>
+#include <QItemSelectionModel>
 
 ImageListFound::ImageListFound(QWidget *parent) : QTableWidget{parent} {
   setSortingEnabled(false);
@@ -21,9 +22,9 @@ ImageListFound::ImageListFound(QWidget *parent) : QTableWidget{parent} {
 
   AntiquaCRM::ASettings cfg(this);
   p_archivPath = cfg.value("dirs/images").toString();
-  p_archivUrn = tr("Archiv") + "://";
+  p_archivUrn = QString("Archive://");
 
-  QStringList _headers({tr("Date"), tr("Article"), tr("Location")});
+  QStringList _headers({tr("Date"), tr("Article"), tr("File")});
   setColumnCount(_headers.size());
 
   QHeaderView *m_header = horizontalHeader();
@@ -38,6 +39,22 @@ ImageListFound::ImageListFound(QWidget *parent) : QTableWidget{parent} {
   }
 
   connect(this, SIGNAL(itemSelectionChanged()), SLOT(findSelection()));
+}
+
+void ImageListFound::highlightRow(int row) {
+  if (row < 0)
+    return;
+
+  QItemSelectionModel *m_sm = selectionModel();
+  if (m_sm == nullptr)
+    return;
+
+  blockSignals(true);
+  for (int c = 0; c < columnCount(); c++) {
+    m_sm->setCurrentIndex(indexFromItem(item(row, c)),
+                          QItemSelectionModel::Select);
+  }
+  blockSignals(false);
 }
 
 void ImageListFound::findSelection() {
@@ -62,13 +79,27 @@ void ImageListFound::addSourceInfo(const SourceInfo &src) {
   _id->setData(Qt::DisplayRole, _name);
   setItem(_r, 1, _id);
 
-  QString _path = src.filePath().replace(p_archivPath, p_archivUrn);
-  setItem(_r, 2, new QTableWidgetItem(_path));
+  QTableWidgetItem *_path = new QTableWidgetItem(QTableWidgetItem::UserType);
+  QString _urn = src.filePath().replace(p_archivPath, p_archivUrn);
+  _path->setData(Qt::UserRole, src.filePath());
+  _path->setData(Qt::DisplayRole, _urn);
+  setItem(_r, 2, _path);
 }
 
 void ImageListFound::setSourceInfos(const QList<SourceInfo> &list) {
   QListIterator<SourceInfo> it(list);
   while (it.hasNext()) {
     addSourceInfo(it.next());
+  }
+}
+
+void ImageListFound::setSelected(const SourceInfo &src) {
+  clearSelection();
+  for (int _r = 0; _r < rowCount(); _r++) {
+    QFileInfo _source(item(_r, 2)->data(Qt::UserRole).toString());
+    if (src.filePath() == _source.filePath()) {
+      highlightRow(_r);
+      break;
+    }
   }
 }

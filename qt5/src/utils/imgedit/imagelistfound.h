@@ -22,6 +22,7 @@ class ImageListFound final : public QTableWidget {
 private:
   QString p_archivPath;
   QString p_archivUrn;
+  void highlightRow(int row = -1);
 
 Q_SIGNALS:
   void sendSelection(const SourceInfo &);
@@ -32,6 +33,7 @@ private Q_SLOTS:
 public Q_SLOTS:
   void addSourceInfo(const SourceInfo &);
   void setSourceInfos(const QList<SourceInfo> &);
+  void setSelected(const SourceInfo &);
 
 public:
   explicit ImageListFound(QWidget *parent = nullptr);

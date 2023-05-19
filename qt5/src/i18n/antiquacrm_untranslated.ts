@@ -727,12 +727,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+7"/>
         <source>Compartment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -742,7 +742,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+5"/>
         <source>Keywords</source>
         <translation type="unfinished"></translation>
     </message>
@@ -807,7 +807,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+65"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -829,12 +829,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-397"/>
+        <location line="-401"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-170"/>
+        <location line="-172"/>
         <source>Local Usage only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -844,7 +844,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+174"/>
+        <location line="+176"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3225,7 +3225,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+56"/>
         <source>&lt;p&gt;Do you want to copy this Image into the Picture Archiv?&lt;/p&gt;&lt;b&gt;Note:&lt;/b&gt; This will replace Images with identical Article Filename!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3287,9 +3287,27 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>ImageListFound</name>
+    <message>
+        <location filename="../utils/imgedit/imagelistfound.cpp" line="+26"/>
+        <source>Date</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>File</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ImageSelecter</name>
     <message>
-        <location filename="../utils/imgedit/imageselecter.cpp" line="+25"/>
+        <location filename="../utils/imgedit/imageselecter.cpp" line="+27"/>
         <source>Image Library</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3299,7 +3317,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Set Archive path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3314,7 +3332,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+27"/>
         <source>Archive path not found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7283,7 +7301,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+118"/>
         <source>Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>

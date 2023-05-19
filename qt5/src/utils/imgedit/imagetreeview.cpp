@@ -47,7 +47,11 @@ void ImageTreeView::currentChanged(const QModelIndex &current,
   if (m_model->isDir(current))
     return;
 
-  SourceInfo info(m_model->fileInfo(current));
+  // BUGFIX - QFileSystemModel gibt manchmal ungültige Pfade zurück!
+  const QFileInfo fileInfo = m_model->fileInfo(current);
+
+  SourceInfo info(m_model->rootPath());
+  info.setFile(fileInfo.absoluteDir(), fileInfo.fileName());
   if (info.isReadable()) {
     bool b;
     qint64 id = info.baseName().toInt(&b);
