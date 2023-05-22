@@ -42,13 +42,12 @@ const QString AUtil::ucFirst(const QString &str) {
 }
 
 const QRegExp AUtil::emailRegExp() {
-  const QString _addrspec("([\\d\\w]{1,}[\\-\\.]?[\\d\\w]{1,})");
+  const QString _recipient("([\\d\\w]+[\\-\\.]?[\\d\\w]+)");
   const QString _domain("([\\d\\w\\-\\.]{2,})");
   const QString _tld("\\.([a-z]{2,8})");
-
   QRegExp _reg;
   _reg.setCaseSensitivity(Qt::CaseInsensitive);
-  _reg.setPattern("^" + _addrspec + "@" + _domain + _tld + "$");
+  _reg.setPattern("^" + _recipient + "@" + _domain + _tld + "$");
   return _reg;
 }
 

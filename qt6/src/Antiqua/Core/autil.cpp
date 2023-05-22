@@ -49,11 +49,12 @@ const QString AUtil::ucFirst(const QString &str) {
 }
 
 const QRegularExpression AUtil::emailRegExp() {
-  QRegularExpression _reg;
-  _reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  const QString _recipient("([\\d\\w]{1,}[\\-\\.]?[\\d\\w]{1,})");
+  const QString _recipient("([\\d\\w]+[\\-\\.]?[\\d\\w]+)");
   const QString _domain("([\\d\\w\\-\\.]{2,})");
   const QString _tld("\\.([a-z]{2,6})");
+
+  QRegularExpression _reg;
+  _reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
   _reg.setPattern("^" + _recipient + "@" + _domain + _tld + "$");
   return _reg;
 }

@@ -62,10 +62,16 @@ bool MainWindow::loadTabInterfaces() {
     while (it.hasNext()) {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
-        QString _name = _iface->displayName();
-        // QString _id = _iface->interfaceName();
         AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
-        Q_CHECK_PTR(_tab);
+        QString _name = _iface->displayName();
+        QString _id = _iface->interfaceName();
+        if (_tab == nullptr) {
+          qWarning("Plugin '%s' TabsIndex failed.", qPrintable(_name));
+          qWarning("Unload '%s'", qPrintable(_id));
+          _iface->deleteLater();
+          continue;
+        }
+
         if (_iface->addIndexOnInit())
           m_tabWidget->registerTab(_tab, _name);
 
@@ -76,6 +82,9 @@ bool MainWindow::loadTabInterfaces() {
         QAction *_ac = _viewMenu->addAction(_tab->windowIcon(), _name);
         _ac->setObjectName(_tab->tabIndexId());
         connect(_ac, SIGNAL(triggered()), m_tabWidget, SLOT(setViewTab()));
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << _name;
+#endif
         p_tabs.append(_tab);
       }
     }
