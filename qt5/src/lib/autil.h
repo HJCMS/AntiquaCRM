@@ -36,7 +36,7 @@ public:
   static const QString ucFirst(const QString &);
 
   /**
-   * @brief Regular Expression for eMail
+   * @brief Regular Expression for eMail RFC2822
    */
   static const QRegExp emailRegExp();
 

@@ -42,10 +42,14 @@ const QString AUtil::ucFirst(const QString &str) {
 }
 
 const QRegExp AUtil::emailRegExp() {
-  QRegExp reg;
-  reg.setCaseSensitivity(Qt::CaseInsensitive);
-  reg.setPattern("^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$");
-  return reg;
+  const QString _addrspec("([\\d\\w]{1,}[\\-\\.]?[\\d\\w]{1,})");
+  const QString _domain("([\\d\\w\\-\\.]{2,})");
+  const QString _tld("\\.([a-z]{2,8})");
+
+  QRegExp _reg;
+  _reg.setCaseSensitivity(Qt::CaseInsensitive);
+  _reg.setPattern("^" + _addrspec + "@" + _domain + _tld + "$");
+  return _reg;
 }
 
 bool AUtil::checkMail(const QString &mail) {
@@ -79,7 +83,8 @@ const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
 }
 
-const QString AUtil::toMoney(double value, QLocale::CurrencySymbolFormat format) {
+const QString AUtil::toMoney(double value,
+                             QLocale::CurrencySymbolFormat format) {
   QLocale lc = QLocale::system();
   QString cs = lc.currencySymbol(format);
   return lc.toCurrencyString(value, cs, 2);
