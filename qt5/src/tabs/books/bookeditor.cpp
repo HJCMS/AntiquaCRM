@@ -181,7 +181,7 @@ BookEditor::BookEditor(QWidget *parent)
   storageLayout->addWidget(infoText);
   ib_storage_compartment = new LineEdit(this);
   ib_storage_compartment->setObjectName("ib_storage_compartment");
-  ib_storage_compartment->setToolTip(tr("Storage compartment"));
+  ib_storage_compartment->setToolTip(tr("Storage compartment or group"));
   storageLayout->addWidget(ib_storage_compartment);
   row2->addLayout(storageLayout, row2c++, 1, 1, 1);
   // END:Storage

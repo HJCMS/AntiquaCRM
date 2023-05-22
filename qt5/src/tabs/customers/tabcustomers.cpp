@@ -27,6 +27,8 @@ TabCustomers::TabCustomers(QWidget *parent)
   m_table = new CustomersTableView(m_mainPage);
   m_p1Layout->addWidget(m_table);
   m_statusBar = new CustomersStatusBar(m_mainPage);
+  // enable create customer button
+  m_statusBar->setCreateButtonEnabled(true);
   m_p1Layout->addWidget(m_statusBar);
   m_mainPage->setLayout(m_p1Layout);
   insertWidget(0, m_mainPage);
@@ -60,9 +62,6 @@ TabCustomers::TabCustomers(QWidget *parent)
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
-
-  connect(m_table, SIGNAL(sendResultExists(bool)), m_statusBar,
-          SLOT(setCreateButtonEnabled(bool)));
 
   connect(m_table, SIGNAL(sendDeleteEntry(qint64)),
           SLOT(setDeleteCustomer(qint64)));

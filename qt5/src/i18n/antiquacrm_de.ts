@@ -738,8 +738,8 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Storage compartment</source>
-        <translation>Lagerfach</translation>
+        <source>Storage compartment or group</source>
+        <translation>Lagerfach oder Gruppe</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -3293,7 +3293,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImageListFound</name>
     <message>
-        <location filename="../utils/imgedit/imagelistfound.cpp" line="+26"/>
+        <location filename="../utils/imgedit/imagelistfound.cpp" line="+27"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -3336,7 +3336,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild importieren</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+29"/>
         <source>Archive path not found!</source>
         <translation>Der Archivpfad wurde nicht gefunden!</translation>
     </message>
@@ -7413,7 +7413,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Kunden</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+70"/>
         <source>Cannot open Customers Editor.</source>
         <translation>Der Kundeneditor kann nicht geöffnet werden.</translation>
     </message>
