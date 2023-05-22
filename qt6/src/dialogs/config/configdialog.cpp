@@ -3,6 +3,7 @@
 
 #include "configdialog.h"
 #include "configgeneral.h"
+#include "configlookandfeel.h"
 #include "configpaths.h"
 #include "configprinting.h"
 #include "configtreewidget.h"
@@ -38,18 +39,21 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_central->setWidget(m_pageView);
 
   m_cfgGeneral = new ConfigGeneral(m_pageView);
-  m_treeWidget->addGeneral(0, m_cfgGeneral->getTitle(),
-                           m_cfgGeneral->getIcon());
+  m_treeWidget->addGeneral(0, m_cfgGeneral->getMenuEntry());
   m_pageView->insertWidget(0, m_cfgGeneral);
 
   m_cfgPaths = new ConfigPaths(m_pageView);
-  m_treeWidget->addGeneral(1, m_cfgPaths->getTitle(), m_cfgPaths->getIcon());
+  m_treeWidget->addGeneral(1, m_cfgPaths->getMenuEntry());
   m_pageView->insertWidget(1, m_cfgPaths);
 
   m_cfgPrinter = new ConfigPrinting(m_pageView);
-  m_treeWidget->addGeneral(2, m_cfgPrinter->getTitle(),
-                           m_cfgPrinter->getIcon());
+  m_treeWidget->addGeneral(2, m_cfgPrinter->getMenuEntry());
   m_pageView->insertWidget(2, m_cfgPrinter);
+
+  // ConfigLookAndFeel
+  m_cfgLookAndFeel = new ConfigLookAndFeel(m_pageView);
+  m_treeWidget->addGeneral(3, m_cfgLookAndFeel->getMenuEntry());
+  m_pageView->insertWidget(3, m_cfgLookAndFeel);
 
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);
@@ -109,7 +113,7 @@ bool ConfigDialog::loadTabPlugins() {
       AntiquaCRM::TabsConfigWidget *_w = _list.at(i)->configWidget(m_pageView);
       if (_w != nullptr) {
         m_pageView->insertWidget(_c, _w);
-        m_treeWidget->addTabPlugin(_c, _w->getTitle(), _w->getIcon());
+        m_treeWidget->addTabPlugin(_c, _w->getMenuEntry());
         _c++;
       }
     }
@@ -139,8 +143,13 @@ void ConfigDialog::setOpenPage(int index) {
   if (_page == nullptr)
     return;
 
-  QString _title(" (" + _page->getTitle() + ")");
-  setWindowTitle(tr("Configuration") + _title + " [*]");
+  QString _title(tr("Configuration"));
+  _title.append(" (");
+  _title.append(_page->getMenuEntry().value("title").toString());
+  _title.append(") [*]");
+
+  setWindowTitle(_title);
+
   m_pageView->setCurrentIndex(index);
 }
 

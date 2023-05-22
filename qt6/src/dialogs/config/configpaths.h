@@ -28,8 +28,7 @@ public Q_SLOTS:
 public:
   explicit ConfigPaths(QWidget *parent = nullptr);
   AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
-  const QIcon getIcon() const override;
-  const QString getTitle() const override;
+  const QJsonObject getMenuEntry() const override;
 };
 
 #endif // ANTIQUACRM_DIALOGS_CONFIGPATHS_H

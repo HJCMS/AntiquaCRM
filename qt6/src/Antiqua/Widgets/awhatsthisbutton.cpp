@@ -12,7 +12,7 @@ namespace AntiquaCRM {
 AWhatsThisButton::AWhatsThisButton(const QString &help, QWidget *parent)
     : QPushButton{parent}, p_text{help} {
   setContentsMargins(0, 0, 0, 0);
-  setIcon(AntiquaApplIcon("help-contents"));
+  setIcon(AntiquaCRM::AntiquaApplIcon("help-contents"));
   setToolTip(tr("Click here for Additional Information."));
   setStatusTip(toolTip());
   setStyleSheet("QPushButton {border:none;margin:0px;}");
@@ -23,6 +23,7 @@ void AWhatsThisButton::showWhatsThis() {
   if (p_text.isEmpty())
     return;
 
+  // qDebug() << Q_FUNC_INFO << pos();
   QWhatsThis::showText(pos(), p_text, this);
 }
 

@@ -10,7 +10,7 @@
 
 ConfigGeneral::ConfigGeneral(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"General", QString(), parent} {
-  setWindowTitle(getTitle());
+  setWindowTitle(getMenuEntry().value("title").toString());
   // Central Widget
   QWidget *m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
@@ -57,8 +57,10 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigGeneral::getType() const {
   return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
-const QIcon ConfigGeneral::getIcon() const {
-  return AntiquaCRM::AntiquaApplIcon("configure");
+const QJsonObject ConfigGeneral::getMenuEntry() const {
+  QJsonObject _o;
+  _o.insert("icon", "preferences-system");
+  _o.insert("title", tr("General"));
+  _o.insert("tooltip", tr("General configuration settings."));
+  return _o;
 }
-
-const QString ConfigGeneral::getTitle() const { return tr("General"); }

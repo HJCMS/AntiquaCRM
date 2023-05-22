@@ -51,23 +51,26 @@ protected:
   QList<AntiquaCRM::AbstractInput *> getInputList(QObject *parent);
 
 Q_SIGNALS:
+  /**
+   * @brief signal for notify changes
+   */
   void sendHasModified(bool);
 
 public Q_SLOTS:
   /**
-   * @brief Loading configuration for...
+   * @brief load operation
    */
   virtual void loadSectionConfig() = 0;
 
   /**
-   * @brief Save current settings.
+   * @brief save operation
    */
   virtual void saveSectionConfig() = 0;
 
 public:
   enum ConfigType {
-    CONFIG_SYSTEM = 0,  /**< @brief Default */
-    CONFIG_DATABASE = 1 /**< @brief stored in database */
+    CONFIG_SYSTEM = 0,  /**< @brief store in user config */
+    CONFIG_DATABASE = 1 /**< @brief store in database */
   };
 
   /**
@@ -105,14 +108,16 @@ public:
   virtual TabsConfigWidget::ConfigType getType() const = 0;
 
   /**
-   * @brief menu and widget icon
+   * @brief menu entry data
+   * @code
+   *  QJsonObject {
+   *   "icon" = QString,    // IconTheme baseName
+   *   "title" = QString,   // Menu and Widget titel
+   *   "tooltip" = QString  // Menu and Widget tooltip
+   *  }
+   * @endcode
    */
-  virtual const QIcon getIcon() const = 0;
-
-  /**
-   * @brief menu and widget title
-   */
-  virtual const QString getTitle() const = 0;
+  virtual const QJsonObject getMenuEntry() const = 0;
 };
 
 } // namespace AntiquaCRM

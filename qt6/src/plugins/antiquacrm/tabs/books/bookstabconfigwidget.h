@@ -26,8 +26,7 @@ public Q_SLOTS:
 public:
   explicit BooksTabConfigWidget(QWidget *parent = nullptr);
   AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
-  const QIcon getIcon() const override;
-  const QString getTitle() const override;
+  const QJsonObject getMenuEntry() const override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_BOOKS_CONFIGWIDGET_H

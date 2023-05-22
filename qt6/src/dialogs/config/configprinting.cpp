@@ -12,7 +12,7 @@
 
 ConfigPrinting::ConfigPrinting(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"General", "printer", parent} {
-  setWindowTitle(getTitle());
+  setWindowTitle(getMenuEntry().value("title").toString());
 
   QWidget *m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
@@ -77,8 +77,10 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigPrinting::getType() const {
   return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
-const QIcon ConfigPrinting::getIcon() const {
-  return AntiquaCRM::AntiquaApplIcon("printer");
+const QJsonObject ConfigPrinting::getMenuEntry() const {
+  QJsonObject _o;
+  _o.insert("icon", "preferences-devices-printer");
+  _o.insert("title", tr("Printer"));
+  _o.insert("tooltip", tr("Configure Printers and Layout."));
+  return _o;
 }
-
-const QString ConfigPrinting::getTitle() const { return tr("Printer"); }

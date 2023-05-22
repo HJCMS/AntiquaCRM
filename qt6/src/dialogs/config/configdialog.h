@@ -23,6 +23,7 @@ class ConfigTreeWidget;
 class ConfigGeneral;
 class ConfigPaths;
 class ConfigPrinting;
+class ConfigLookAndFeel;
 
 class ConfigDialog final : public QDialog {
   Q_OBJECT
@@ -37,6 +38,7 @@ private:
   ConfigGeneral *m_cfgGeneral;
   ConfigPaths *m_cfgPaths;
   ConfigPrinting *m_cfgPrinter;
+  ConfigLookAndFeel *m_cfgLookAndFeel;
 
   const QList<AntiquaCRM::TabsConfigWidget *> pages();
   AntiquaCRM::TabsConfigWidget *page(int);

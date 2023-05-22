@@ -3,8 +3,8 @@
 
 #include "tabbooks.h"
 #include "booksconfig.h"
-#include "bookswidget.h"
 #include "bookstabconfigwidget.h"
+#include "bookswidget.h"
 
 TabBooks::TabBooks(QObject *parent) : AntiquaCRM::TabsInterface{parent} {}
 
@@ -20,7 +20,6 @@ const QString TabBooks::sqlFieldPrefix() const {
 
 AntiquaCRM::TabsConfigWidget *TabBooks::configWidget(QWidget *parent) const {
   BooksTabConfigWidget *_widget = new BooksTabConfigWidget(parent);
-  _widget->setWindowTitle(_widget->getTitle() + " [*]");
   return _widget;
 }
 
@@ -28,7 +27,7 @@ bool TabBooks::addIndexOnInit() const { return BOOKS_ALWAYS_ADD_ONLOAD; }
 
 AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
   BooksWidget *_widget = new BooksWidget(parent);
-  _widget->setWindowTitle(_widget->getTitle() + " [*]");
+  Q_CHECK_PTR(_widget);
   return _widget;
 }
 

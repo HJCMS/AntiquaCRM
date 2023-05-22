@@ -15,6 +15,11 @@
 BooksTabConfigWidget::BooksTabConfigWidget(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"tabs", BOOKS_INTERFACE_NAME, parent} {
   setContentsMargins(0, 0, 0, 0);
+
+  QJsonObject _jobj = getMenuEntry();
+  setWindowTitle(_jobj.value("title").toString() + " [*]");
+  setToolTip(_jobj.value("tooltip").toString());
+
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(5, 5, 5, 5);
   // Price Limits Group
@@ -99,8 +104,10 @@ AntiquaCRM::TabsConfigWidget::ConfigType BooksTabConfigWidget::getType() const {
   return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
 }
 
-const QIcon BooksTabConfigWidget::getIcon() const {
-  return AntiquaCRM::AntiquaApplIcon("view-log");
+const QJsonObject BooksTabConfigWidget::getMenuEntry() const {
+  QJsonObject _o;
+  _o.insert("icon", "kjournal");
+  _o.insert("title", tr("Books"));
+  _o.insert("tooltip", tr("Additional Booktab settings."));
+  return _o;
 }
-
-const QString BooksTabConfigWidget::getTitle() const { return tr("Books"); }

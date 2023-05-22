@@ -43,17 +43,24 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
           SLOT(setItemSelected(QTreeWidgetItem *, int)));
 }
 
-void ConfigTreeWidget::addChild(QTreeWidgetItem *main, int page,
-                                const QString &title, const QIcon &icon) {
+QTreeWidgetItem *ConfigTreeWidget::childItem(QTreeWidgetItem *parent) const {
   QFont _font(font());
   _font.setItalic(true);
-  QTreeWidgetItem *_item = new QTreeWidgetItem(main, // toplevel
-                                               QTreeWidgetItem::UserType);
-  _item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
-                  Qt::ItemNeverHasChildren);
-  _item->setText(0, title);
-  _item->setFont(0, _font);
-  _item->setData(0, Qt::DecorationRole, icon);
+
+  QTreeWidgetItem *m = new QTreeWidgetItem(parent, QTreeWidgetItem::UserType);
+  m->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
+              Qt::ItemNeverHasChildren);
+  m->setFont(0, _font);
+  return m;
+}
+
+void ConfigTreeWidget::addChild(QTreeWidgetItem *main, int page,
+                                const QJsonObject &jso) {
+  const QIcon _icon = AntiquaCRM::AntiquaApplIcon(jso.value("icon").toString());
+  QTreeWidgetItem *_item = childItem(main);
+  _item->setText(0, jso.value("title").toString());
+  _item->setData(0, Qt::DecorationRole, _icon);
+  _item->setData(0, Qt::ToolTipRole, jso.value("tooltip").toString());
   _item->setData(1, Qt::UserRole, page);
   main->addChild(_item);
 }
@@ -72,18 +79,14 @@ void ConfigTreeWidget::setItemSelected(QTreeWidgetItem *item, int) {
   emit sendPageIndex(_page.toInt());
 }
 
-void ConfigTreeWidget::addGeneral(int page, const QString &title,
-                                  const QIcon &icon) {
-  addChild(m_mainIndex, page, title, icon);
+void ConfigTreeWidget::addGeneral(int page, const QJsonObject &jobj) {
+  addChild(m_mainIndex, page, jobj);
 }
 
-void ConfigTreeWidget::addTabPlugin(int page, const QString &title,
-                                    const QIcon &icon) {
-
-  addChild(m_tabsIndex, page, title, icon);
+void ConfigTreeWidget::addTabPlugin(int page, const QJsonObject &jobj) {
+  addChild(m_tabsIndex, page, jobj);
 }
 
-void ConfigTreeWidget::addProviderPlugin(int page, const QString &title,
-                                         const QIcon &icon) {
-  addChild(m_providerIndex, page, title, icon);
+void ConfigTreeWidget::addProviderPlugin(int page, const QJsonObject &jobj) {
+  addChild(m_providerIndex, page, jobj);
 }

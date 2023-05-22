@@ -8,7 +8,7 @@
 
 ConfigPaths::ConfigPaths(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"General", QString(), parent} {
-  setWindowTitle(getTitle());
+  setWindowTitle(getMenuEntry().value("title").toString());
   // Central Widget
   QWidget *m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
@@ -55,8 +55,10 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigPaths::getType() const {
   return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
-const QIcon ConfigPaths::getIcon() const {
-  return style()->standardIcon(QStyle::SP_DirOpenIcon);
+const QJsonObject ConfigPaths::getMenuEntry() const {
+  QJsonObject _o;
+  _o.insert("icon", "preferences-other");
+  _o.insert("title", tr("Directories & Programs"));
+  _o.insert("tooltip", tr("Directories and Application paths."));
+  return _o;
 }
-
-const QString ConfigPaths::getTitle() const { return tr("Directories"); }
