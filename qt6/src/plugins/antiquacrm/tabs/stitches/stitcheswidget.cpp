@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "stitcheswidget.h"
-#include "stitchesconfig.h"
 #include "stitcheseditor.h"
 #include "stitchessearchbar.h"
 #include "stitchesstatusbar.h"
@@ -14,7 +13,7 @@
 
 StitchesWidget::StitchesWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
-  setObjectName(STITCHES_SQL_TABLE_NAME);
+  setObjectName("inventory_prints");
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
   setClosable(false);
 

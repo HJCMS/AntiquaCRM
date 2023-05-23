@@ -41,29 +41,17 @@ private:
   /**
    * @brief Signed Book or not...
    */
-  AntiquaCRM::BoolBox *ip_signed;
+  AntiquaCRM::BoolBox *ip_views;
 
   /**
-   * @brief Restricted for local usage only?
+   * @brief Signed Book or not...
    */
-  AntiquaCRM::BoolBox *ip_restricted;
-
-  // Layout::Row 1
-  /**
-   * @brief Current book edition
-   */
-  AntiquaCRM::NumEdit *ip_edition;
+  AntiquaCRM::BoolBox *ip_kolorit;
 
   /**
-   * @brief number of pages in this book
+   * @brief Signed Book or not...
    */
-  AntiquaCRM::NumEdit *ip_pagecount;
-
-  /**
-   * @brief Book weight indication for sale
-   * The weight is stated including shipping packaging.
-   */
-  AntiquaCRM::NumEdit *ip_weight;
+  AntiquaCRM::BoolBox *ip_landscape;
 
   /**
    * @brief Year of publication of the book edition
@@ -71,12 +59,11 @@ private:
   AntiquaCRM::YearEdit *ip_year;
 
   /**
-   * @brief Bookvolume
-   * Is this book part of a volume or are there several volumes?
+   * @brief Restricted for local usage only?
    */
-  AntiquaCRM::NumEdit *ip_volume;
+  AntiquaCRM::BoolBox *ip_restricted;
 
-  // Layout::Row 2
+  // Layout::Row 1
   /**
    * @brief Splitter
    * @li Left side, Input fields
@@ -103,7 +90,7 @@ private:
   /**
    * @brief Book-Editor/Publisher
    */
-  AntiquaCRM::TextLine *ip_publisher;
+  AntiquaCRM::TextLine *ip_format;
 
   /**
    * @brief Main Language of this Book

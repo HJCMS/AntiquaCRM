@@ -17,7 +17,7 @@ const QString TabStitches::interfaceName() const {
 }
 
 const QString TabStitches::sqlTableName() const {
-  return STITCHES_SQL_TABLE_NAME;
+  return QString("inventory_prints");
 }
 
 const QString TabStitches::sqlFieldPrefix() const {

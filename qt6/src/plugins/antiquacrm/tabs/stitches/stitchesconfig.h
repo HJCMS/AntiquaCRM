@@ -24,10 +24,6 @@
 #define STITCHES_CONFIG_POINTER QString("CONFIG_PRINTS_STITCHES")
 #endif
 
-#ifndef STITCHES_SQL_TABLE_NAME
-#define STITCHES_SQL_TABLE_NAME "inventory_prints"
-#endif
-
 #ifndef STITCHES_SQL_FIELD_PREFIX
 #define STITCHES_SQL_FIELD_PREFIX "ip"
 #endif

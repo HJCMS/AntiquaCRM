@@ -35,32 +35,54 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_count = new AntiquaCRM::CrowdEdit(this);
   ip_count->setObjectName("ip_count");
   ip_count->setBuddyLabel(tr("Count"));
-  tempWhatsThis =
-      tr("The Article count is the main value for activating and deactivating "
-         "stitches in your inventory. If you set it to 0, it will be disabled on "
-         "your vendor pages and no longer visible for sale.\nNotes: These "
-         "updates are not done directly, however daily performed from "
-         "AntiquaCRM Server after working time.");
+  tempWhatsThis = tr(
+      "The Article count is the main value for activating and deactivating "
+      "stitches in your inventory. If you set it to 0, it will be disabled on "
+      "your vendor pages and no longer visible for sale.\nNotes: These "
+      "updates are not done directly, however daily performed from "
+      "AntiquaCRM Server after working time.");
   ip_count->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_count);
 
-  double minPrice = m_cfg->value("payment/min_price", 5.00).toDouble();
   ip_price = new AntiquaCRM::PriceEdit(this);
   ip_price->setObjectName("ip_price");
   ip_price->setBuddyLabel(tr("Price"));
-  ip_price->setMinimum(minPrice);
   tempWhatsThis =
       tr("The Book price you want to have for it.\nNotes: You can always set "
          "limits for Prices in the main Configuration dialog.");
   ip_price->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_price);
 
-  ip_signed = new AntiquaCRM::BoolBox(this);
-  ip_signed->setObjectName("ip_signed");
-  ip_signed->setBuddyLabel(tr("Signed Version"));
-  tempWhatsThis = tr("Is this Book signed by Authors?");
-  ip_signed->setWhatsThisText(tempWhatsThis);
-  row0->addWidget(ip_signed);
+  ip_views = new AntiquaCRM::BoolBox(this);
+  ip_views->setObjectName("ip_views");
+  ip_views->setBuddyLabel(tr("View"));
+  tempWhatsThis = tr("Is it a portrait or landscape print.");
+  ip_views->setWhatsThisText(tempWhatsThis);
+  row0->addWidget(ip_views);
+
+  ip_kolorit = new AntiquaCRM::BoolBox(this);
+  ip_kolorit->setObjectName("ip_kolorit");
+  ip_kolorit->setBuddyLabel(tr("kolorit"));
+  tempWhatsThis = tr("Is it a kolorit printing?");
+  ip_kolorit->setWhatsThisText(tempWhatsThis);
+  row0->addWidget(ip_kolorit);
+
+  ip_landscape = new AntiquaCRM::BoolBox(this);
+  ip_landscape->setObjectName("ip_landscape");
+  ip_landscape->setBuddyLabel(tr("Landscape"));
+  tempWhatsThis = tr("Is it a landscape format?");
+  ip_landscape->setWhatsThisText(tempWhatsThis);
+  row0->addWidget(ip_landscape);
+
+  ip_year = new AntiquaCRM::YearEdit(this);
+  ip_year->setObjectName("ip_year");
+  ip_year->setBuddyLabel(tr("Year"));
+  tempWhatsThis =
+      tr("The Book Year input mask starts with 1400 and ending one Year in the "
+         "future. If the Book edition Year is unknown, set an estimate and add "
+         "a note in the description section.");
+  ip_year->setWhatsThisText(tempWhatsThis);
+  row0->addWidget(ip_year);
 
   ip_restricted = new AntiquaCRM::BoolBox(this);
   ip_restricted->setObjectName("ip_restricted");
@@ -75,57 +97,6 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   mainLayout->addLayout(row0, 0);
 
   // Row 1
-  QHBoxLayout *row1 = new QHBoxLayout();
-  ip_edition = new AntiquaCRM::NumEdit(this);
-  ip_edition->setObjectName("ip_edition");
-  ip_edition->setBuddyLabel(tr("Edition"));
-  tempWhatsThis = tr("If known, set here the Book edition with "
-                     "digits.\nExample: „first edition“ is equal to 1.");
-  ip_edition->setWhatsThisText(tempWhatsThis);
-  row1->addWidget(ip_edition);
-
-  ip_pagecount = new AntiquaCRM::NumEdit(this);
-  ip_pagecount->setObjectName("ip_pagecount");
-  ip_pagecount->setContextMenuPolicy(Qt::DefaultContextMenu);
-  ip_pagecount->setRange(10, 99999);
-  ip_pagecount->setSingleStep(10);
-  ip_pagecount->setBuddyLabel(tr("Page count"));
-  tempWhatsThis = tr("Add here the Book page count.");
-  ip_pagecount->setWhatsThisText(tempWhatsThis);
-  row1->addWidget(ip_pagecount);
-
-  ip_weight = new AntiquaCRM::NumEdit(this);
-  ip_weight->setObjectName("ip_weight");
-  ip_weight->setRange(100, 9999999);
-  ip_weight->setSuffix(tr("g"));
-  ip_weight->setBuddyLabel(tr("Weight"));
-  tempWhatsThis = tr("Add here the Book weight in grams.");
-  ip_weight->setWhatsThisText(tempWhatsThis);
-  row1->addWidget(ip_weight);
-
-  ip_year = new AntiquaCRM::YearEdit(this);
-  ip_year->setObjectName("ip_year");
-  ip_year->setBuddyLabel(tr("Year"));
-  tempWhatsThis =
-      tr("The Book Year input mask starts with 1400 and ending one Year in the "
-         "future. If the Book edition Year is unknown, set an estimate and add "
-         "a note in the description section.");
-  ip_year->setWhatsThisText(tempWhatsThis);
-  row1->addWidget(ip_year);
-
-  ip_volume = new AntiquaCRM::NumEdit(this);
-  ip_volume->setObjectName("ip_volume");
-  ip_volume->setPrefix(tr("Bd."));
-  ip_volume->setInputToolTip(tr("Book volume"));
-  ip_volume->setBuddyLabel(tr("Volume"));
-  tempWhatsThis = tr("Is this Book a part of a Book volume or the Article "
-                     "contains one or more volumes? Then enter this here.");
-  ip_volume->setWhatsThisText(tempWhatsThis);
-  row1->addWidget(ip_volume);
-  row1->addStretch(1);
-  mainLayout->addLayout(row1);
-
-  // Row 2
   m_splitter = new AntiquaCRM::Splitter(this);
   QWidget *row2Widget = new QWidget(m_splitter);
   row2Widget->setContentsMargins(0, 0, 0, 0);
@@ -171,21 +142,21 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_author->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_author, row2c++, 1, 1, 1);
 
-  infoText = new AntiquaCRM::ALabel(tr("Publisher"), _lbAlign, this);
+  infoText = new AntiquaCRM::ALabel(tr("Format"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
-  ip_publisher = new AntiquaCRM::TextLine(this);
-  ip_publisher->setObjectName("ip_publisher");
-  ip_publisher->setInputToolTip(infoText->text());
-  tempWhatsThis = tr("This field is reserved to insert Book Publishers.\n"
-                     "Used Format is: „Publisher, Location“\n"
-                     "Example: J.F. Lehmanns Verlag, Munich\n"
-                     "AntiquaCRM suggests the most common publisher names, "
-                     "when editing this field.");
-  ip_publisher->setWhatsThisText(tempWhatsThis);
-  row2->addWidget(ip_publisher, row2c++, 1, 1, 1);
+  ip_format = new AntiquaCRM::TextLine(this);
+  ip_format->setObjectName("ip_format");
+  ip_format->setInputToolTip(infoText->text());
+  tempWhatsThis = tr("FORMAT __TODO__");
+  ip_format->setWhatsThisText(tempWhatsThis);
+  row2->addWidget(ip_format, row2c++, 1, 1, 1);
 
+  // Begin:Storage
   infoText = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
+
+  QHBoxLayout *storageLayout = new QHBoxLayout;
+
   ip_storage = new AntiquaCRM::SelectStorage(this);
   ip_storage->setObjectName("ip_storage");
   ip_storage->setInputToolTip(tr("Storage location"));
@@ -193,13 +164,13 @@ StitchesEditor::StitchesEditor(QWidget *parent)
                      "You need to Configure Storage locations first in your "
                      "Database Configuration Menu before you can use it.");
   ip_storage->setWhatsThisText(tempWhatsThis);
-  row2->addWidget(ip_storage, row2c++, 1, 1, 1);
+  ip_storage->appendStretch();
+  storageLayout->addWidget(ip_storage);
 
-  infoText = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, this);
-  row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_storage_compartment = new AntiquaCRM::TextLine(this);
   ip_storage_compartment->setObjectName("ip_storage_compartment");
   ip_storage_compartment->setInputToolTip(tr("Storage compartment"));
+  ip_storage_compartment->setValue(tr("Office"));
   ip_storage_compartment->setBuddyLabel(tr("compartment"));
   tempWhatsThis =
       tr("Define Storage compartment in this Input field. It depends on the "
@@ -207,8 +178,9 @@ StitchesEditor::StitchesEditor(QWidget *parent)
          "select Storage location first a completer will add for this input "
          "field.");
   ip_storage_compartment->setWhatsThisText(tempWhatsThis);
-  ip_storage_compartment->appendStretch();
-  row2->addWidget(ip_storage_compartment, row2c++, 1, 1, 1);
+  storageLayout->addWidget(ip_storage_compartment);
+  row2->addLayout(storageLayout, row2c++, 1, 1, 1);
+  // End:Storage
 
   infoText = new AntiquaCRM::ALabel(tr("Keywords"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
@@ -227,8 +199,8 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   row2->addWidget(ip_keyword, row2c++, 1, 1, 1);
   row2->setRowStretch(row2c++, 1);
 
-  //infoText = new AntiquaCRM::ALabel("ISBN/EAN", _lbAlign, this);
-  //row2->addWidget(infoText, row2c, 0, 1, 1);
+  // infoText = new AntiquaCRM::ALabel("ISBN/EAN", _lbAlign, this);
+  // row2->addWidget(infoText, row2c, 0, 1, 1);
   m_imageToolBar = new AntiquaCRM::ImageToolBar(this);
   row2->addWidget(m_imageToolBar, row2c++, 1, 1, 1);
 
@@ -319,7 +291,17 @@ void StitchesEditor::setInputFields() {
   ignoreFields << "ip_changed";
   ignoreFields << "ip_including_vat"; /**< @deprecated */
 
-  m_tableData = new AntiquaCRM::ASqlDataQuery(STITCHES_SQL_TABLE_NAME);
+  // Settings input defaults
+  const QJsonObject _jobj = loadSqlConfig(STITCHES_CONFIG_POINTER);
+  double _price_lowest = _jobj.value("stitches_price_lowest").toDouble();
+  double _price_default = _jobj.value("stitches_price_lowest").toDouble();
+  if (_price_lowest > 1.0)
+    ip_price->setMinimum(_price_lowest);
+
+  if (_price_default > 2.0)
+    ip_price->setValue(_price_default);
+
+  m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_prints");
   inputFields = m_tableData->columnNames();
   if (inputFields.isEmpty()) {
     QStringList warn(tr("An error has occurred!"));
@@ -338,10 +320,6 @@ void StitchesEditor::setInputFields() {
   AntiquaCRM::ASharedDataFiles _dataFiles;
   QStringList _completer_data;
 
-  // Herausgeber
-  _completer_data = _dataFiles.getCompleterList("publishers", "name");
-  ip_publisher->setCompleterList(_completer_data);
-
   // Lager
   ip_storage->initData();
 
@@ -352,7 +330,8 @@ void StitchesEditor::setInputFields() {
   _completer_data.clear();
 }
 
-bool StitchesEditor::setDataField(const QSqlField &field, const QVariant &value) {
+bool StitchesEditor::setDataField(const QSqlField &field,
+                                  const QVariant &value) {
   if (!field.isValid())
     return false;
 
@@ -513,7 +492,7 @@ void StitchesEditor::createSqlUpdate() {
     pushPluginOperation(obj);
   }
 
-  QString sql("UPDATE inventory_stitches SET ");
+  QString sql("UPDATE inventory_prints SET ");
   sql.append(set.join(","));
   sql.append(",ip_changed=CURRENT_TIMESTAMP WHERE ip_id=");
   sql.append(ip_id->getValue().toString());
@@ -535,7 +514,6 @@ void StitchesEditor::createSqlInsert() {
   ip_count->setRequired(true);
   ip_id->setRequired(false);
 
-  // Prüfung der Buchdaten Klasse
   // Die Initialisierung erfolgt in setInputFields!
   // Bei einem INSERT wird diese hier befüllt!
   if (m_tableData == nullptr || !m_tableData->isValid()) {
@@ -555,7 +533,7 @@ void StitchesEditor::createSqlInsert() {
       continue;
 
     QString field = it.key();
-    // Buchdaten einfügen
+    // druck einfügen
     m_tableData->setValue(field, it.value());
 
     column.append(field);
@@ -566,13 +544,13 @@ void StitchesEditor::createSqlInsert() {
     }
   }
 
-  QString sql("INSERT INTO inventory_stitches (");
+  QString sql("INSERT INTO inventory_prints (");
   sql.append(column.join(","));
   sql.append(",ip_changed) VALUES (");
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP) RETURNING ip_id;");
   if (sendSqlQuery(sql) && ip_id->getValue().toInt() >= 1) {
-    qInfo("SQL INSERT Inventory Stitches success!");
+    qInfo("SQL INSERT Inventory Prints & Stitches success!");
     // Zurücksetzen Knopf Aktivieren?
     m_actionBar->setRestoreable(m_tableData->isValid());
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!

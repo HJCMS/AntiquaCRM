@@ -20,7 +20,7 @@ SelectStorage::SelectStorage(QWidget *parent)
   layout->addWidget(m_select);
 
   m_edit = new AntiquaCRM::ALineEdit(this);
-  m_edit->setPlaceholderText(tr("Search Storage location"));
+  m_edit->setPlaceholderText(tr("Search location"));
   m_edit->setMinimumWidth(130);
   layout->addWidget(m_edit);
 

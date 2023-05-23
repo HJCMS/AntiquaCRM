@@ -46,7 +46,7 @@ protected:
    * The object names of the input data fields should be identical to the table
    * field names in @ref inputFields!
    * @code
-   *  Table "inventory_books" the field names always start with "ib_*"
+   *  In Table "inventory_books" the field prefix is "ib_*".
    *  This results in the following regular expression for the object search:
    *    ^ib_[a-z_]+\\b$
    * @endcode
@@ -60,7 +60,18 @@ protected:
   QStringList inputFields;
 
   /**
-   * @brief Put all input fields in @ref inputFields.
+   * @brief Function to load Database configurations for current Tab.
+   * @param group - Find SqlField „cfg_group“ from table „antiquacrm_configs“!
+   * @warning Please do not use this function within a constructor!
+   * The best way to call this function is in „setInputFields()“!
+   */
+  const QJsonObject loadSqlConfig(const QString &group);
+
+  /**
+   * @brief Prepare all inputs and fill @ref inputFields.
+   * @warning Please do not use this function within a constructor!
+   * The best way to call this function is in „openEditEntry“ and
+   * „createNewEntry“, before new data initialized!
    */
   virtual void setInputFields() = 0;
 

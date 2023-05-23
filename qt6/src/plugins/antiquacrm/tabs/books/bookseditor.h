@@ -85,13 +85,13 @@ private:
   AntiquaCRM::Splitter *m_splitter;
 
   /**
-   * @brief Booktitle
+   * @brief Title
    * @note Restricted to 80 chars
    */
   AntiquaCRM::TextLine *ib_title;
 
   /**
-   * @brief Expanded book title
+   * @brief Expanded extended title
    */
   AntiquaCRM::TextLine *ib_title_extended;
 
