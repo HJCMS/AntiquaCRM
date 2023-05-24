@@ -15,56 +15,59 @@ StitchesStatusBar::StitchesStatusBar(QWidget *parent)
 }
 
 void StitchesStatusBar::setHistoryAction(int index) {
-  AntiquaCRM::TabsStatusBar::History hist =
-      static_cast<AntiquaCRM::TabsStatusBar::History>(index);
-  QString q;
-  QString year("date_part('year',ip_changed)=date_part('year',CURRENT_DATE)");
-  QString stock = (SearchWithStock ? " AND ip_count>0" : "");
+  TabsStatusBar::History _history = static_cast<TabsStatusBar::History>(index);
+  QString _sql;
+  QString _stock = (SearchWithStock ? " AND ip_count>0" : "");
+  QString _year("DATE_PART('year',ip_changed)=");
+  _year.append("DATE_PART('year',CURRENT_DATE)");
 
-  switch (hist) {
-  case (AntiquaCRM::TabsStatusBar::History::Today): {
-    q.append("DATE(ip_changed)=CURRENT_DATE");
+  switch (_history) {
+  case (TabsStatusBar::History::Today): {
+    _sql.append("DATE(ip_changed)=CURRENT_DATE");
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::Yesterday): {
-    q.append("DATE(ip_changed)=(CURRENT_DATE -1)" + stock);
+  case (TabsStatusBar::History::Yesterday): {
+    _sql.append("DATE(ip_changed)=(CURRENT_DATE -1)" + _stock);
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::ThisWeek): {
-    q.append("date_part('week',ip_changed)=date_part('week',CURRENT_DATE)");
-    q.append(" AND " + year + stock);
+  case (TabsStatusBar::History::ThisWeek): {
+    _sql.append("DATE_PART('week',ip_changed)=");
+    _sql.append("DATE_PART('week',CURRENT_DATE)");
+    _sql.append(" AND " + _year + _stock);
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::LastWeek): {
-    q.append("date_part('week',ip_changed)=date_part('week',CURRENT_DATE -7)");
-    q.append(" AND " + year + stock);
+  case (TabsStatusBar::History::LastWeek): {
+    _sql.append("DATE_PART('week',ip_changed)=");
+    _sql.append("DATE_PART('week',CURRENT_DATE -7)");
+    _sql.append(" AND " + _year + _stock);
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::ThisMonth): {
-    q.append("date_part('month',ip_changed)=date_part('month',CURRENT_DATE)");
-    q.append(" AND " + year + stock);
+  case (TabsStatusBar::History::ThisMonth): {
+    _sql.append("DATE_PART('month',ip_changed)=");
+    _sql.append("DATE_PART('month',CURRENT_DATE)");
+    _sql.append(" AND " + _year + _stock);
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::LastMonth): {
-    q.append(
-        "date_part('month',ip_changed)=date_part('month',CURRENT_DATE - 31)");
-    q.append(" AND " + year + stock);
+  case (TabsStatusBar::History::LastMonth): {
+    _sql.append("DATE_PART('month',ip_changed)=");
+    _sql.append("DATE_PART('month',CURRENT_DATE - 31)");
+    _sql.append(" AND " + _year + _stock);
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::ThisYear): {
-    q.append(year + " AND ip_count>0");
+  case (TabsStatusBar::History::ThisYear): {
+    _sql.append(_year + " AND ip_count>0");
     break;
   }
 
-  case (AntiquaCRM::TabsStatusBar::History::NOIMAGE): {
-    q.append("DATE(ip_changed)>(CURRENT_DATE - 5) AND im_id IS NULL");
-    q.append(" AND ip_count>0");
+  case (TabsStatusBar::History::NOIMAGE): {
+    _sql.append("DATE(ip_changed)>(CURRENT_DATE - 14)");
+    _sql.append(" AND im_id IS NULL" + _stock);
     break;
   }
 
@@ -72,12 +75,14 @@ void StitchesStatusBar::setHistoryAction(int index) {
     showMessage("No History entry: " + QString::number(index), 5000);
   };
 
-  if (!q.isEmpty())
-    emit sendHistoryQuery(q);
+  if (!_sql.isEmpty())
+    emit sendHistoryQuery(_sql);
 }
 
 void StitchesStatusBar::setCreateButtonEnabled(bool b) {
   btn_create->setEnabled(b);
 }
 
-bool StitchesStatusBar::isCreateButtonEnabled() { return btn_create->isEnabled(); }
+bool StitchesStatusBar::isCreateButtonEnabled() {
+  return btn_create->isEnabled();
+}

@@ -3,6 +3,7 @@
 
 #include "bookstablemodel.h"
 #include "booksconfig.h"
+#include "abstractinput.h"
 
 BooksTableModel::BooksTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{BOOKS_SQL_TABLE_NAME, parent} {
@@ -53,7 +54,7 @@ QVariant BooksTableModel::data(const QModelIndex &item, int role) const {
 
   if (role == Qt::DecorationRole &&
       fieldName(item.column()).contains("image")) {
-    return QIcon(":icons/view_image.png");
+    return AntiquaCRM::AntiquaApplIcon("view-image");
   }
 
   return AntiquaCRM::ASqlQueryModel::data(item, role);

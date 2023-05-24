@@ -20,14 +20,6 @@ StitchesSearchBar::StitchesSearchBar(QWidget *parent)
   m_searchInput->setPlaceholderText(tr("Default search"));
   addWidget(m_searchInput);
 
-  QToolButton *m_icontb = new QToolButton(this);
-  m_icontb->setEnabled(false);
-  m_icontb->setIcon(getIcon("user-group"));
-  addWidget(m_icontb);
-
-  m_customSearch = new AntiquaCRM::ALineEdit(this);
-  addWidget(m_customSearch);
-
   addWidget(searchConfines());
   addSeparator();
   addWidget(stockCheckBox());
@@ -39,88 +31,54 @@ StitchesSearchBar::StitchesSearchBar(QWidget *parent)
           SLOT(setFilter(int)));
 
   connect(m_searchInput, SIGNAL(returnPressed()), SLOT(setSearch()));
-  connect(m_customSearch, SIGNAL(returnPressed()), SLOT(setSearch()));
-
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 
   setFilter(0);
 }
 
-const QString StitchesSearchBar::getTitleSearch(const QStringList &fields) {
+const QString StitchesSearchBar::getSearchString(const QStringList &fields) {
   QString query;
-  QString inputLeft = m_searchInput->text();
-  QString inputRight = m_customSearch->text();
+  QString _input = m_searchInput->text();
   // Standard Suchfeld
-  if (m_searchInput->length() >= getMinLength()) {
-    QStringList bufferLeft;
+  if (_input.length() >= getMinLength()) {
+    QStringList _bufLeft;
     foreach (QString f, fields) {
-      if (f != "ip_author") {
-        QString fset = prepareFieldSearch(f, inputLeft);
-        if (fset.isEmpty())
-          continue;
+      QString fset = prepareFieldSearch(f, _input);
+      if (fset.isEmpty())
+        continue;
 
-        bufferLeft << fset;
-      }
+      _bufLeft << fset;
     }
-    if (bufferLeft.count() > 0) {
+    if (_bufLeft.count() > 0) {
       query.append("(");
-      query.append(bufferLeft.join(" OR "));
+      query.append(_bufLeft.join(" OR "));
       query.append(")");
     }
-    bufferLeft.clear();
+    _bufLeft.clear();
   }
-  // Autoren Suchfeld
-  if (m_customSearch->isEnabled() &&
-      m_customSearch->length() >= getMinLength()) {
-    QStringList bufferRight;
-    if (m_customSearch->placeholderText().contains(tr("Keyword")))
-      bufferRight << prepareFieldSearch("ip_keyword", inputRight);
-    else
-      bufferRight << prepareFieldSearch("ip_author", inputRight);
 
-    if (query.isEmpty())
-      query.append("(");
-    else
-      query.append(" AND (");
-
-    query.append(bufferRight.join(" OR "));
-    query.append(")");
-    bufferRight.clear();
-  }
   if (query.length() < 1) {
-    // NOTE prevent empty where clauses
-    qWarning("INVALID_TITLE_SEARCH");
-    if (!inputLeft.isEmpty())
-      return QString("ip_title='" + inputLeft + "'");
-    else if (!inputRight.isEmpty())
-      return QString("ip_title='" + inputRight + "'");
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "INVALID_PRINTS_SEARCH_INPUT" << _input;
+#endif
+    if (!_input.isEmpty())
+      return QString("ip_title='" + _input + "'");
     else
-      return QString("ip_title='INVALID_TITLE_SEARCH'");
+      return QString("ip_title='INVALID_PRINTS_SEARCH_INPUT'");
   }
   return query;
 }
 
 bool StitchesSearchBar::lineInputsEnabled() {
-  return (m_searchInput->isEnabled() || m_customSearch->isEnabled());
-}
-
-void StitchesSearchBar::setCustomSearch(const QString &info) {
-  if (info.length() < 1) {
-    m_customSearch->clear();
-    m_customSearch->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::NOTHING);
-    m_customSearch->setEnabled(false);
-    m_customSearch->setPlaceholderText(QString());
-  } else {
-    m_customSearch->clear();
-    m_customSearch->setEnabled(true);
-    m_customSearch->setPlaceholderText(info);
-  }
+  return m_searchInput->isEnabled();
 }
 
 void StitchesSearchBar::setSearch() {
-  StitchesSelectFilter::Filter _filter = m_selectFilter->currentFilter();
-  if (_filter == StitchesSelectFilter::STITCHES_ARTICLE_ID) {
+  QString _filter = m_selectFilter->currentFilter();
+  if (_filter.isEmpty())
+    return;
+
+  if (_filter.contains("ip_id")) {
     emit sendSearchClicked();
   } else if (lineInputsEnabled() && requiredLengthExists()) {
     emit sendSearchClicked();
@@ -133,78 +91,19 @@ void StitchesSearchBar::setFilter(int index) {
   m_searchInput->clear();
   m_searchInput->setEnabled(true);
   m_searchInput->setToolTip(QString());
-  m_customSearch->setToolTip(QString());
 
-  switch (m_selectFilter->currentFilter(index)) {
-  case (StitchesSelectFilter::STITCHES_ARTICLE_ID): {
+  const QString _tip = m_selectFilter->currentToolTip(index);
+  const QString _filter = m_selectFilter->currentFilter(index);
+
+  if (_filter.contains("ip_id") || _filter.contains("ip_since")) {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
-    m_searchInput->setPlaceholderText(tr("Article number"));
-    m_searchInput->setToolTip(
-        tr("Multiple Articlenumbers separated by comma."));
-    setCustomSearch();
-    break;
-  }
-
-  case (StitchesSelectFilter::STITCHES_TITLE_KEYWORD): {
+  } else {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Booktitle"));
-    m_searchInput->setToolTip(
-        tr("Search Prints or Stitches title, text fields"));
-    setCustomSearch(tr("and Keyword."));
-    m_customSearch->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_customSearch->setToolTip(tr("and Keyword field."));
-    break;
   }
-
-  case (StitchesSelectFilter::STITCHES_TITLE_AUTHOR): {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Title and Author"));
-    m_searchInput->setToolTip(tr("Search Prints or Stitches title"));
-    setCustomSearch(tr("and Author."));
-    m_customSearch->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_customSearch->setToolTip(" " + tr("and Authors."));
-    break;
-  }
-
-  case (StitchesSelectFilter::STITCHES_STORAGE): {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("In Storages search"));
-    m_searchInput->setToolTip(
-        tr("Search with Keyword for Stitches in Storage locations."));
-    setCustomSearch();
-    break;
-  }
-
-  case (StitchesSelectFilter::STITCHES_AUTHORS): {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Authors search"));
-    setCustomSearch();
-    break;
-  }
-
-  case (StitchesSelectFilter::STITCHES_PUBLISHER): {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Publishers search"));
-    setCustomSearch();
-    break;
-  }
-
-  default: {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Unknown"));
-    setCustomSearch();
-    break;
-  }
-  };
+  m_searchInput->setToolTip(_tip);
+  m_searchInput->setPlaceholderText(_tip);
 
   emit sendFilterChanged(index);
 }
@@ -216,78 +115,76 @@ void StitchesSearchBar::setFilterFocus() {
 
 void StitchesSearchBar::setClearAndFocus() {
   m_searchInput->clear();
-  m_customSearch->clear();
   m_searchInput->setFocus();
 }
 
 void StitchesSearchBar::setSearchFocus() { setClearAndFocus(); }
 
-int StitchesSearchBar::searchLength() {
-  return (m_searchInput->length() + m_customSearch->length());
-}
+int StitchesSearchBar::searchLength() { return m_searchInput->length(); }
 
 bool StitchesSearchBar::requiredLengthExists() {
   return (searchLength() >= getMinLength());
 }
 
 const QString StitchesSearchBar::getSearchStatement() {
-  QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
-  QStringList fields = js.value("fields").toString().split(",");
-  QString sql(withStock() ? "ip_count>0 AND " : "");
-  QString operation = js.value("search").toString();
-
-  static const QRegularExpression stringListPattern("\\,\\s?$");
-  static const QRegularExpression numericPattern("\\D+");
-
-  if (operation.isEmpty())
+  QString _data = m_selectFilter->currentFilter();
+  if (_data.isEmpty()) {
+    qWarning("No filter found.");
     return QString();
-
-  // Title und Autorensuche
-  if (operation == "title_and_author") {
-    sql.append("(" + getTitleSearch(fields) + ")");
-    return sql;
   }
 
-  // Buch Titlesuche
-  if (operation == "title") {
-    sql.append("(" + getTitleSearch(fields) + ")");
-    return sql;
+  QStringList _fields = _data.split(",");
+  QString _sql(withStock() ? "ip_count>0 AND " : "");
+
+  if (_fields.contains("ip_title") || _fields.contains("ip_author")) {
+    _sql.append("(" + getSearchString(_fields) + ")");
+    return _sql;
   }
 
-  // Buch Autorensuche
-  if (operation == "author") {
-    sql.append("(" + getTitleSearch(fields) + ")");
-    return sql;
+  // Article search e.g.(104820,82490,43310)
+  static const QRegularExpression numberPattern("[\\D]+");
+  if (_fields.contains("ip_id")) {
+    QString _str = m_searchInput->text().trimmed();
+    _str.replace(numberPattern, ",");
+    if (_str.isEmpty())
+      return QString();
+
+    _sql.append("ip_id IN (" + _str + ")");
+    _str.clear();
+    return _sql;
   }
 
-  // Artikel Nummersuche (107368,115110)
-  if (operation == "articleId") {
-    QString s = m_searchInput->text();
-    s.replace(stringListPattern, "");
-    return "ip_id IN (" + s + ")";
+  // Since/Modified Year search
+  if (_fields.contains("ip_year")) {
+    QStringList _buf;
+    QString _str = m_searchInput->text().trimmed();
+    _str.replace(numberPattern, ",");
+    if (_str.isEmpty())
+      return QString();
+
+    _buf << "DATE_PART('YEAR',ip_since) IN (" + _str + ")";
+    _buf << "DATE_PART('YEAR',ip_changed) IN (" + _str + ")";
+    _sql.append(_buf.join(" OR "));
+    _str.clear();
+    return _sql;
   }
 
-  // Publisher
-  if (operation == "publisher") {
-    QString s = m_searchInput->text();
-    sql.append("(" + prepareFieldSearch("ip_publisher", s) + ")");
-    return sql;
+  // Storage search
+  if (_data.contains("ip_storage")) {
+    QString _str = m_searchInput->text();
+    _str.replace(jokerPattern, "%");
+    QStringList _buf;
+    _buf << prepareFieldSearch("sl_storage", _str);
+    _buf << prepareFieldSearch("ip_storage_compartment", _str);
+    _buf << prepareFieldSearch("sl_identifier", _str);
+    if (_fields.contains("ip_keyword"))
+      _buf << prepareFieldSearch("ip_keyword", _str);
+
+    _sql.append("(" + _buf.join(" OR ") + ")");
+    _str.clear();
+    return _sql;
   }
 
-  // Lager & Stichwortsuche
-  if (operation == "storage") {
-    QString s = m_searchInput->text();
-    s.replace(jokerPattern, "%");
-    QStringList buffer;
-    buffer << prepareFieldSearch("sl_storage", s);
-    buffer << prepareFieldSearch("sl_identifier", s);
-    buffer << prepareFieldSearch("ip_keyword", s);
-    sql.append("(" + buffer.join(" OR ") + ")");
-    return sql;
-  }
-
-  qWarning("Not Defined Search (%s)",
-           qPrintable(js.value("search").toString()));
-
+  qWarning("Not Defined Search (%s)", qPrintable(_data));
   return QString();
 }

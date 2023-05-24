@@ -7,85 +7,51 @@
 
 StitchesSelectFilter::StitchesSelectFilter(QWidget *parent)
     : QComboBox{parent} {
-  setWhatsThis(
-      tr("With this button you can optimize your search with some filters."));
+  setWhatsThis(tr("Select search filter."));
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  setMinimumWidth(204);
 
-  QString _prefix = tr("Search Book with") + " ";
+  QString _prefix = tr("Search Prints with") + " ";
   QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");
-  insertItem(0, _icon, tr("Title and Author"), STITCHES_TITLE_AUTHOR);
-  setItemData(0, _prefix + tr("Title and Author"), Qt::ToolTipRole);
 
-  insertItem(1, _icon, tr("Title and Keyword"), STITCHES_TITLE_KEYWORD);
-  setItemData(1, _prefix + tr("Title and Keyword"), Qt::ToolTipRole);
+  int _i = 0;
+  insertItem(_i, _icon, tr("Title"), // title
+             QString("ip_title,ip_title_extended"));
+  setItemData(_i++, _prefix + tr("Search with Title or extended Title!"), // tip
+              Qt::ToolTipRole);
 
-  insertItem(2, _icon, tr("Article Id"), STITCHES_ARTICLE_ID);
-  setItemData(2, tr("Multiple searches separated by commas!"), Qt::ToolTipRole);
+  insertItem(_i, _icon, tr("Keywords"), // title
+             QString("ip_keyword,ip_storage_compartment"));
+  setItemData(_i++, _prefix + tr("Search for Keyword or compartment!"), // tip
+              Qt::ToolTipRole);
 
-  insertItem(3, _icon, tr("Author"), STITCHES_AUTHORS);
-  setItemData(3, _prefix + tr("Author"), Qt::ToolTipRole);
+  insertItem(_i, _icon, tr("Article Id"), // title
+             QString("ip_id"));
+  setItemData(_i++, tr("Multiple article ids separated by comma!"), // tip
+              Qt::ToolTipRole);
 
-  insertItem(4, _icon, tr("Publisher"), STITCHES_PUBLISHER);
-  setItemData(4, _prefix + tr("Publisher"), Qt::ToolTipRole);
+  insertItem(_i, _icon, tr("Author or Artist"), // title
+             QString("ip_author"));
+  setItemData(_i++, _prefix + tr("Search for Author or Artist."), // tip
+              Qt::ToolTipRole);
 
-  insertItem(5, _icon, tr("Storage"), STITCHES_STORAGE);
-  setItemData(5, tr("In Storage location by Keyword"), Qt::ToolTipRole);
+  insertItem(_i, _icon, tr("Storage and Keyword"),          // title
+             QString("ip_storage,ip_storage_compartment")); // tip
+  setItemData(_i++, tr("In Storage location with Keyword or name."),
+              Qt::ToolTipRole);
+
+  insertItem(_i, _icon, tr("Created/Modified in Year"), // title
+             QString("ip_year"));
+  setItemData(_i++, tr("Search created or modified in Year!"), // tip
+              Qt::ToolTipRole);
 }
 
-StitchesSelectFilter::Filter StitchesSelectFilter::currentFilter(int index) {
-  qint8 _i = (index >= 0) ? index : currentIndex();
-  return qvariant_cast<StitchesSelectFilter::Filter>(
-      itemData(_i, Qt::UserRole));
+const QString StitchesSelectFilter::currentFilter(int index) {
+  int _index = (index < 0) ? currentIndex() : index;
+  return itemData(_index, Qt::UserRole).toString();
 }
 
-const QJsonObject StitchesSelectFilter::getFilter(int index) {
-  QJsonObject obj;
-  switch (currentFilter(index)) {
-  case (STITCHES_TITLE_AUTHOR): {
-    obj.insert("search", QJsonValue("title_and_author"));
-    obj.insert("fields", QJsonValue("ip_title,ip_title_extended,ip_author"));
-    break;
-  }
-
-  case (STITCHES_TITLE_KEYWORD): {
-    obj.insert("search", QJsonValue("title"));
-    obj.insert("fields", QJsonValue("ip_title,ip_title_extended,ip_keyword"));
-    break;
-  }
-
-  case (STITCHES_ARTICLE_ID): {
-    obj.insert("search", QJsonValue("articleId"));
-    obj.insert("fields", QJsonValue("ip_id"));
-    break;
-  }
-
-  case (STITCHES_AUTHORS): {
-    obj.insert("search", QJsonValue("author"));
-    obj.insert("fields", QJsonValue("ip_author"));
-    break;
-  }
-
-  case (STITCHES_PUBLISHER): {
-    obj.insert("search", QJsonValue("publisher"));
-    obj.insert("fields", QJsonValue("ip_publisher"));
-    break;
-  }
-
-  case (STITCHES_STORAGE): {
-    obj.insert("search", QJsonValue("storage"));
-    obj.insert("fields", QJsonValue("ip_storage"));
-    break;
-  }
-
-  default:
-    obj.insert("search", QJsonValue("title"));
-    obj.insert("fields", QJsonValue("ip_title,ip_title_extended"));
-    break;
-  };
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << obj;
-#endif
-
-  return obj;
+const QString StitchesSelectFilter::currentToolTip(int index) {
+  int _index = (index < 0) ? currentIndex() : index;
+  return itemData(_index, Qt::ToolTipRole).toString();
 }

@@ -25,25 +25,18 @@ class ANTIQUACRM_LIBRARY StitchesSearchBar final
 private:
   StitchesSelectFilter *m_selectFilter;
   AntiquaCRM::ALineEdit *m_searchInput;
-  AntiquaCRM::ALineEdit *m_customSearch;
   QPushButton *m_searchBtn;
 
   /**
    * @brief Prepare SQL-Titlesearch statement
    * @param fields - append Fields to WHERE clause
    */
-  const QString getTitleSearch(const QStringList &fields);
+  const QString getSearchString(const QStringList &fields);
 
   /**
    * @brief Check if one LineInput isEnabled
    */
   bool lineInputsEnabled();
-
-  /**
-   * @brief Custom Search Input
-   * @param info - QLineEdit::PlaceholderText
-   */
-  void setCustomSearch(const QString &info = QString());
 
 private Q_SLOTS:
   void setSearch() override;

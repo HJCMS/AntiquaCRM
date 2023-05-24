@@ -6,7 +6,9 @@
 #include "stitchesconfigwidget.h"
 #include "stitcheswidget.h"
 
-TabStitches::TabStitches(QObject *parent) : AntiquaCRM::TabsInterface{parent} {}
+TabStitches::TabStitches(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
+  setObjectName("stitches_plugin");
+}
 
 const QString TabStitches::displayName() const {
   return tr("Prints & Stitches");
@@ -20,24 +22,26 @@ const QString TabStitches::sqlTableName() const {
   return QString("inventory_prints");
 }
 
-const QString TabStitches::sqlFieldPrefix() const {
-  return STITCHES_SQL_FIELD_PREFIX;
-}
+const QString TabStitches::sqlFieldPrefix() const { return QString("ip"); }
 
 AntiquaCRM::TabsConfigWidget *TabStitches::configWidget(QWidget *parent) const {
-  StitchesConfigWidget *_widget = new StitchesConfigWidget(parent);
-  return _widget;
+  StitchesConfigWidget *_w = new StitchesConfigWidget(parent);
+  if (_w == nullptr)
+    qFatal("Unable to load StitchesConfigWidget!");
+
+  return _w;
 }
 
-bool TabStitches::addIndexOnInit() const { return STITCHES_ALWAYS_ADD_ONLOAD; }
+bool TabStitches::addIndexOnInit() const { return true; }
 
 AntiquaCRM::TabsIndex *TabStitches::indexWidget(QWidget *parent) const {
-  StitchesWidget *_widget = new StitchesWidget(parent);
-  Q_CHECK_PTR(_widget);
-  return _widget;
+  StitchesWidget *_w = new StitchesWidget(parent);
+  if (_w == nullptr)
+    qFatal("Unable to load StitchesWidget!");
+
+  return _w;
 }
 
 bool TabStitches::createInterface(QObject *parent) {
-  // TODO
   return (parent != nullptr);
 }

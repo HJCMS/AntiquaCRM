@@ -17,23 +17,15 @@
  * @{
  */
 #ifndef STITCHES_INTERFACE_NAME
-#define STITCHES_INTERFACE_NAME "stitches"
+#define STITCHES_INTERFACE_NAME QString("stitches")
 #endif
 
 #ifndef STITCHES_CONFIG_POINTER
 #define STITCHES_CONFIG_POINTER QString("CONFIG_PRINTS_STITCHES")
 #endif
 
-#ifndef STITCHES_SQL_FIELD_PREFIX
-#define STITCHES_SQL_FIELD_PREFIX "ip"
-#endif
-
 #ifndef STITCHES_SQL_EDITOR_PATTERN
 #define STITCHES_SQL_EDITOR_PATTERN "^ip_[a-z_]+\\b$"
-#endif
-
-#ifndef STITCHES_ALWAYS_ADD_ONLOAD
-#define STITCHES_ALWAYS_ADD_ONLOAD true
 #endif
 
 /**

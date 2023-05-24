@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchestablemodel.h"
+#include "abstractinput.h"
 
 StitchesTableModel::StitchesTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{"inventory_prints", parent} {
@@ -19,7 +20,6 @@ const QMap<int, QString> StitchesTableModel::headerList() const {
   map.insert(i++, tr("Storage"));
   map.insert(i++, tr("Changed"));
   map.insert(i++, tr("Author"));
-  map.insert(i++, tr("Publisher"));
   map.insert(i++, tr("Year"));
   map.insert(i++, tr("Since"));
   return map;
@@ -53,7 +53,7 @@ QVariant StitchesTableModel::data(const QModelIndex &item, int role) const {
 
   if (role == Qt::DecorationRole &&
       fieldName(item.column()).contains("image")) {
-    return QIcon(":icons/view_image.png");
+    return AntiquaCRM::AntiquaApplIcon("view-image");
   }
 
   return AntiquaCRM::ASqlQueryModel::data(item, role);

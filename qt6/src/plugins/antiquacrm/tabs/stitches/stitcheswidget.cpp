@@ -128,6 +128,7 @@ void StitchesWidget::createSearchQuery(const QString &history) {
     m_statusBar->setCreateButtonEnabled(false);
     return;
   }
+
   // Die Standardabfrage wird aufgerufen!
   QString _sql = m_searchBar->getSearchStatement();
   if (_sql.isEmpty()) {
