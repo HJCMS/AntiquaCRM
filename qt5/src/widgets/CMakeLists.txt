@@ -38,6 +38,7 @@ SET (projectLibrary_SOURCES
  boolbox.cpp
  conditionedit.cpp
  deliveryid.cpp
+ descripeedit.cpp
  opacityslider.cpp
  ecurrency.cpp
  editoractionbar.cpp
@@ -100,6 +101,7 @@ SET (projectLibrary_HEADERS
  boolbox.h
  conditionedit.h
  deliveryid.h
+ descripeedit.h
  opacityslider.h
  ecurrency.h
  editoractionbar.h

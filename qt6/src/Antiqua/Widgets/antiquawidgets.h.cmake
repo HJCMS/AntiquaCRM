@@ -27,6 +27,9 @@
 // AntiquaCRM::DateTimeInfo
 #include "datetimeinfo.h"
 
+// AntiquaCRM::DescripeEditor
+#include "descripeeditor.h"
+
 // AntiquaCRM::EMailEdit
 #include "emailedit.h"
 

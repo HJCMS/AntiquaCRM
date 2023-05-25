@@ -151,7 +151,7 @@ private:
   /**
    * @brief Book Description field
    */
-  AntiquaCRM::TextField *ib_description;
+  AntiquaCRM::DescripeEditor *ib_description;
 
   /**
    * @brief Internal Description, local usage only!

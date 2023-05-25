@@ -2756,6 +2756,59 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>DescripeEdit</name>
+    <message>
+        <location filename="../widgets/descripeedit.cpp" line="+21"/>
+        <source>Appends text blocks into the Description.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+24"/>
+        <source>Nice clean copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Clean copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy a bit dusty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Year may differ from entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Age-related traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>With bookplate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Richly illustrated</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>With ownership stamp</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+71"/>
+        <source>Description requires a valid input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DesignationEdit</name>
     <message>
         <location filename="../utils/designations/designationedit.cpp" line="+16"/>

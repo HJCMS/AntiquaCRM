@@ -320,7 +320,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   QIcon tabIcons = m_tabWidget->defaultIcon();
 
   // Description
-  ib_description = new AntiquaCRM::TextField(m_tabWidget);
+  ib_description = new AntiquaCRM::DescripeEditor(m_tabWidget);
   ib_description->setObjectName("ib_description");
   m_tabWidget->insertTab(0, ib_description, tabIcons, tr("Public Description"));
   // Internal Description

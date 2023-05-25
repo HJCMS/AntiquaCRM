@@ -223,7 +223,7 @@ BookEditor::BookEditor(QWidget *parent)
   m_tabWidget->setObjectName("tab_widget");
   QIcon tabIcons = m_tabWidget->defaultIcon();
   // Description
-  ib_description = new TextField(m_tabWidget);
+  ib_description = new DescripeEdit(m_tabWidget);
   ib_description->setObjectName("ib_description");
   m_tabWidget->insertTab(0, ib_description, tabIcons, tr("Public Description"));
   // Internal Description

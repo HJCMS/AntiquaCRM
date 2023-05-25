@@ -70,6 +70,7 @@ SET (_library_SOURCES
   conditionedit.cpp
   crowdedit.cpp
   datetimeinfo.cpp
+  descripeeditor.cpp
   emailedit.cpp
   genderedit.cpp
   imagefilesource.cpp
@@ -132,6 +133,7 @@ SET (_library_HEADERS
   conditionedit.h
   crowdedit.h
   datetimeinfo.h
+  descripeeditor.h
   emailedit.h
   genderedit.h
   imagefilesource.h
