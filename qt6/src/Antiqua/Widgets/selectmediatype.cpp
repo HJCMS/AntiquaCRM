@@ -53,9 +53,9 @@ void SelectMediaType::setValue(const QVariant &value) {
   if (value.metaType().id() != getType().id())
     return;
 
-  int index = m_edit->findData(value.toInt(), Qt::UserRole, Qt::MatchExactly);
-  if (index > 0)
-    m_edit->setCurrentIndex(index);
+  int _index = m_edit->findData(value.toInt(), Qt::UserRole, Qt::MatchExactly);
+  if (_index > 0)
+    m_edit->setCurrentIndex(_index);
 }
 
 void SelectMediaType::setFocus() { m_edit->setFocus(); }

@@ -57,15 +57,16 @@ void SelectStorage::filterChanged(const QString &filter) {
 
 void SelectStorage::setValue(const QVariant &value) {
   int _index = -1;
-  QMetaType _type = value.metaType();
-  switch (_type.id()) {
+  switch (value.metaType().id()) {
   case (QMetaType::Int):
-    _index = m_select->findData(value, Qt::UserRole);
+  case (QMetaType::LongLong):
+  case (QMetaType::Double):
+    _index = m_select->findData(value, Qt::UserRole, Qt::MatchExactly);
     break;
 
   case (QMetaType::QString): {
-    QString find = value.toString().trimmed();
-    const QRegularExpression pattern("\\b" + find.toLower() + "\\b",
+    QString _find = value.toString().trimmed();
+    const QRegularExpression pattern("\\b" + _find.toLower() + "\\b",
                                      QRegularExpression::CaseInsensitiveOption);
     _index = m_select->findData(pattern, Qt::DisplayRole, // Display
                                 Qt::MatchRegularExpression);

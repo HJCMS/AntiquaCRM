@@ -63,9 +63,9 @@ void SelectPaymentStatus::setValue(const QVariant &value) {
 
   AntiquaCRM::ProviderPaymentStatus status =
       static_cast<AntiquaCRM::ProviderPaymentStatus>(value.toInt());
-  int index = m_edit->findData(status, Qt::UserRole);
-  if (index > 0)
-    m_edit->setCurrentIndex(index);
+  int _index = m_edit->findData(status, Qt::UserRole);
+  if (_index > 0)
+    m_edit->setCurrentIndex(_index);
 }
 
 void SelectPaymentStatus::setFocus() { m_edit->setFocus(); }

@@ -27,7 +27,7 @@ private:
   void tabInserted(int) override;
 
 private Q_SLOTS:
-  void checkChanged(int);
+  void setEnterChanged(int);
 
 protected:
   AntiquaCRM::ASettings *m_cfg;

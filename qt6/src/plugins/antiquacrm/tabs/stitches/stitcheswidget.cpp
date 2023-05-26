@@ -100,20 +100,20 @@ void StitchesWidget::popupWarningTabInEditMode() {
 }
 
 void StitchesWidget::setDefaultTableView() {
+  if (currentIndex() != 0)
+    return;
+
   m_searchBar->setClearAndFocus();
   m_table->setQuery(m_table->defaultWhereClause());
   m_statusBar->setCreateButtonEnabled(false);
-  if (currentIndex() != 0)
-    setCurrentIndex(0);
 }
 
 void StitchesWidget::openStartPage() {
+  setCurrentIndex(0);
   if (m_table->isAutoRefreshEnabled()) {
     m_statusBar->setCreateButtonEnabled(false);
     m_table->setReloadView();
   }
-  if (currentIndex() != 0)
-    setCurrentIndex(0);
 
 #ifdef ANTIQUA_DEVELOPEMENT
   if (isWindowModified())
@@ -142,9 +142,14 @@ void StitchesWidget::createSearchQuery(const QString &history) {
 }
 
 void StitchesWidget::createNewEntry() {
-  if (m_editorWidget->createNewEntry()) {
+  if (currentIndex() == 0 && m_editorWidget->createNewEntry()) {
     setCurrentIndex(1);
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qWarning("Reject StitchesWidget::createNewEntry - no main page view!");
+  }
+#endif
 }
 
 void StitchesWidget::openEntry(qint64 articleId) {

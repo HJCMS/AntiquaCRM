@@ -49,9 +49,9 @@ void SelectLanguage::initData() {
 }
 
 void SelectLanguage::setValue(const QVariant &value) {
-  int index = m_edit->findData(value, Qt::UserRole, Qt::MatchExactly);
-  if (index > 0)
-    m_edit->setCurrentIndex(index);
+  int _index = m_edit->findData(value, Qt::UserRole, Qt::MatchExactly);
+  if (_index > 0)
+    m_edit->setCurrentIndex(_index);
 }
 
 void SelectLanguage::setFocus() { m_edit->setFocus(); }

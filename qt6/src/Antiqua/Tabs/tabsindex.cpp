@@ -24,17 +24,32 @@ void TabsIndex::addShortCutsAndSignals() {
 
   m_focusSearch = new QShortcut(tr("Ctrl+Shift+S", "Search"), this);
   m_focusSearch->setKey(_km | Qt::Key_S);
-  connect(m_focusSearch, SIGNAL(activated()), this,
-          SIGNAL(sendSetSearchFocus()));
+  connect(m_focusSearch, SIGNAL(activated()),
+          SLOT(prepareShortCutSearchFocus()));
 
   m_focusFilter = new QShortcut(tr("Ctrl+Shift+F", "Filter"), this);
   m_focusFilter->setKey(_km | Qt::Key_F);
-  connect(m_focusFilter, SIGNAL(activated()), this,
-          SIGNAL(sendSetSearchFilter()));
+  connect(m_focusFilter, SIGNAL(activated()),
+          SLOT(prepareShortCutSearchFilter()));
 
   m_createEntry = new QShortcut(tr("Ctrl+Shift+N", "New"), this);
   m_createEntry->setKey(_km | Qt::Key_N);
-  connect(m_createEntry, SIGNAL(activated()), this, SLOT(createNewEntry()));
+  connect(m_createEntry, SIGNAL(activated()), SLOT(prepareShortCutNewEntry()));
+}
+
+void TabsIndex::prepareShortCutSearchFocus() {
+  if (currentView() == TabsIndex::ViewPage::MainView)
+    emit sendSetSearchFocus();
+}
+
+void TabsIndex::prepareShortCutSearchFilter() {
+  if (currentView() == TabsIndex::ViewPage::MainView)
+    emit sendSetSearchFilter();
+}
+
+void TabsIndex::prepareShortCutNewEntry() {
+  if (currentView() == TabsIndex::ViewPage::MainView)
+    createNewEntry();
 }
 
 bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
@@ -54,13 +69,6 @@ void TabsIndex::setClosable(bool b) {
   closable = b;
   if (b)
     emit sendClosableChanged();
-}
-
-void TabsIndex::changeEvent(QEvent *event) {
-  if (event->type() == QEvent::EnabledChange)
-    emit sendEnabledStatus(isEnabled());
-
-  QStackedWidget::changeEvent(event);
 }
 
 void TabsIndex::copyToClipboard(const QString &data) {

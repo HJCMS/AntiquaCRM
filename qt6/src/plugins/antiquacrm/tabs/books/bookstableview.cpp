@@ -29,7 +29,9 @@ int BooksTableView::getArticleCount(const QModelIndex &index) {
 }
 
 bool BooksTableView::sqlModelQuery(const QString &query) {
-  // qDebug() << Q_FUNC_INFO << query;
+  // #ifdef ANTIQUA_DEVELOPEMENT
+  //   qDebug() << Q_FUNC_INFO << query;
+  // #endif
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);

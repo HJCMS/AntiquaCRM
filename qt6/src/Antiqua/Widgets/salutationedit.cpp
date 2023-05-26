@@ -54,7 +54,9 @@ void SalutationEdit::initData() {
   }
 }
 
-void SalutationEdit::setValue(const QVariant &) {}
+void SalutationEdit::setValue(const QVariant &) {
+  qDebug() << Q_FUNC_INFO << "__TODO__";
+}
 
 void SalutationEdit::setFocus() {
   m_edit->setFocus();

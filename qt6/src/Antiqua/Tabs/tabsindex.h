@@ -28,11 +28,46 @@ class ANTIQUACRM_LIBRARY TabsIndex : public QStackedWidget {
                  sendClosableChanged)
 
 private:
-  const QString tabIndex;   /**< @brief Uniq Tab Index Name */
-  QShortcut *m_focusSearch; /**< @brief Ctrl+Shift+S */
-  QShortcut *m_focusFilter; /**< @brief Ctrl+Shift+F */
-  QShortcut *m_createEntry; /**< @brief Ctrl+Shift+N */
+  /**
+   *  @brief Uniq Tab Index Name
+   */
+  const QString tabIndex;
+
+  /**
+   * @brief Searchline edit (Ctrl+Shift+S)!
+   */
+  QShortcut *m_focusSearch;
+
+  /**
+   * @brief Filter focus (Ctrl+Shift+F)!
+   */
+  QShortcut *m_focusFilter;
+
+  /**
+   * @brief Create new Entry Button (Ctrl+Shift+N)!
+   */
+  QShortcut *m_createEntry;
+
+  /**
+   * @brief registering all defined keyboard shortcuts
+   */
   void addShortCutsAndSignals();
+
+private Q_SLOTS:
+  /**
+   * @brief only emit sendSetSearchFocus when currentView() = MainView
+   */
+  void prepareShortCutSearchFocus();
+
+  /**
+   * @brief only emit sendSetSearchFilter when currentView() = MainView
+   */
+  void prepareShortCutSearchFilter();
+
+  /**
+   * @brief only call createNewEntry when currentView() = MainView
+   */
+  void prepareShortCutNewEntry();
 
 protected:
   /**
@@ -46,8 +81,8 @@ protected:
   bool closable = false;
 
   /**
-   * @brief Wenn Editor nicht gespeicherte Datensätze meldet!
-   * @note Muss mit obj->installEventFilter(this) Installiert sein!
+   * @brief Register signals, editor reports unsaved records!
+   * @note Must be installed with obj->installEventFilter(this)!
    */
   bool eventFilter(QObject *, QEvent *) override;
 
@@ -59,30 +94,28 @@ protected:
 
 protected Q_SLOTS:
   /**
-   * @brief Activ Widget or not ?
-   */
-  void changeEvent(QEvent *) override;
-
-  /**
    * @brief Copy String to System Clipboard
    */
   void copyToClipboard(const QString &data);
 
   /**
-   * @brief Statusnachricht senden.
+   * @brief Send a message to the internal socket.
    */
   void sendStatusMessage(const QString &message);
 
   /**
-   * @brief Befehl an den Socket
+   * @brief Send a operation to the internal socket.
    */
   void sendSocketOperation(const QJsonObject &obj);
 
   /**
-   * @brief Hinweisfenster öffnen!
+   * @brief Open customized QMessageBox::warning
    */
   void openWarningPopUp(const QString &title, const QString &message);
 
+  /**
+   * @brief Open QMessageBox::warning - Editor is in edit mode!
+   */
   virtual void popupWarningTabInEditMode() = 0;
 
   /**
@@ -115,14 +148,6 @@ Q_SIGNALS:
    * @brief Article Id
    */
   void sendArticleId(qint64 articleId);
-
-  /**
-   * @brief Emitted when Tab change to active!
-   * @code
-   *  (event->type() == QEvent::EnabledChange)
-   * @endcode
-   */
-  void sendEnabledStatus(bool);
 
 public Q_SLOTS:
   /**

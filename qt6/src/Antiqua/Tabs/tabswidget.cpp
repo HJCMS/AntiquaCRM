@@ -19,7 +19,7 @@ TabsWidget::TabsWidget(QWidget *parent) : QTabWidget{parent} {
   m_tabBar = new AntiquaCRM::TabsBar(this, _wheel_support);
   setTabBar(m_tabBar);
 
-  // connect(this, SIGNAL(currentChanged(int)), SLOT(checkChanged(int)));
+  connect(this, SIGNAL(currentChanged(int)), SLOT(setEnterChanged(int)));
 }
 
 void TabsWidget::tabInserted(int index) {
@@ -31,8 +31,18 @@ void TabsWidget::tabInserted(int index) {
   }
 }
 
-void TabsWidget::checkChanged(int) {
-  // TODO
+void TabsWidget::setEnterChanged(int index) {
+  AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
+  if (m_tab != nullptr) {
+    if (m_tab->currentView() == TabsIndex::ViewPage::MainView) {
+      m_tab->onEnterChanged();
+    }
+#ifdef ANTIQUA_DEVELOPEMENT
+    else {
+      qDebug() << Q_FUNC_INFO << m_tab->getTitle() << "no main view";
+    }
+#endif
+  }
 }
 
 void TabsWidget::setViewTab() {

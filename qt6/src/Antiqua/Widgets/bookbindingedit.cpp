@@ -40,24 +40,26 @@ void BookBindingEdit::initData() {
   m_edit->clear();
   m_edit->setWithoutDisclosures();
   QJsonArray arr = doc.object().value("bookbindings").toArray();
+  int _c = m_edit->count();
   for (int i = 0; i < arr.count(); i++) {
     QJsonObject obj = arr[i].toObject();
-    m_edit->addItem(obj.value("description").toString(),
-                    obj.value("id").toInt());
+    m_edit->insertItem(_c, obj.value("description").toString(),
+                       obj.value("id").toInt());
+    _c++;
   }
-
+  m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
 void BookBindingEdit::setValue(const QVariant &value) {
-  int index = 0;
+  int _index = 0;
   QMetaType _type = value.metaType();
   switch (_type.id()) {
   case (QMetaType::Int):
   case (QMetaType::Long):
   case (QMetaType::LongLong):
   case (QMetaType::Double): {
-    index = m_edit->findData(value.toInt(), Qt::UserRole, Qt::MatchExactly);
+    _index = m_edit->findData(value.toInt(), Qt::UserRole, Qt::MatchExactly);
   } break;
 
   default:
@@ -68,7 +70,8 @@ void BookBindingEdit::setValue(const QVariant &value) {
     break;
   };
 
-  m_edit->setCurrentIndex(index);
+  if (_index >= 0)
+    m_edit->setCurrentIndex(_index);
 }
 
 void BookBindingEdit::setFocus() {

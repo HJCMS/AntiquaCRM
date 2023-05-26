@@ -36,9 +36,10 @@ const QString AComboBox::withoutDisclosures() {
 }
 
 void AComboBox::setWithoutDisclosures(const QVariant &data) {
-  addItem(withoutDisclosures(), data);
+  int _i = count();
+  insertItem(_i, withoutDisclosures(), data);
   QIcon _icon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
-  setItemIcon(0, _icon);
+  setItemIcon(_i, _icon);
 }
 
 } // namespace AntiquaCRM
