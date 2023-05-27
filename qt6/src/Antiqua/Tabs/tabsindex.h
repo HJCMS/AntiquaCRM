@@ -19,7 +19,7 @@ namespace AntiquaCRM {
 
 /**
  * @class TabsIndex
- * @brief Tabs Inventory
+ * @brief Primary Tab Inventory class
  * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsIndex : public QStackedWidget {

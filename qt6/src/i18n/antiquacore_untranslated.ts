@@ -12,13 +12,64 @@
 <context>
     <name>AntiquaCRM::ALineEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+23"/>
+        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+24"/>
         <source>Show Completer Popup.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+6"/>
+        <source>Invalid content</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+121"/>
         <source>Max allowed length</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::APrintDialog</name>
+    <message>
+        <location filename="../Antiqua/Widgets/aprintdialog.cpp" line="+30"/>
+        <source>PDF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Generate PDF.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Print this view.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::APrintingPage</name>
+    <message>
+        <location filename="../Antiqua/Widgets/aprintingpage.cpp" line="+214"/>
+        <source>Invoice No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Order No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Costumer No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>on</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -56,7 +107,7 @@
 <context>
     <name>AntiquaCRM::BookBindingEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+114"/>
+        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+119"/>
         <source>A valid book binding is required for this input!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -77,9 +128,42 @@
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::BookCardPage</name>
+    <message>
+        <location filename="../Antiqua/Widgets/printbookcard.cpp" line="+74"/>
+        <source>Book Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Compartment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::BoolBox</name>
     <message>
-        <location filename="../Antiqua/Widgets/boolbox.cpp" line="+75"/>
+        <location filename="../Antiqua/Widgets/boolbox.cpp" line="+77"/>
         <source>is required must selected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -112,7 +196,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+93"/>
         <source>Missing Condition for this Article!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -122,7 +206,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>No Condition for this Article exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -130,7 +214,7 @@
 <context>
     <name>AntiquaCRM::CrowdEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/crowdedit.cpp" line="+84"/>
+        <location filename="../Antiqua/Widgets/crowdedit.cpp" line="+86"/>
         <source>This entry requires a valid article count!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -141,19 +225,53 @@
     </message>
 </context>
 <context>
-    <name>AntiquaCRM::CurrencySelector</name>
+    <name>AntiquaCRM::DateTimeInfo</name>
     <message>
-        <location filename="../Antiqua/Widgets/currencyselector.cpp" line="+94"/>
-        <location line="+5"/>
-        <source>__TODO__</source>
+        <location filename="../Antiqua/Widgets/datetimeinfo.cpp" line="+93"/>
+        <source>Date Time information required!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>AntiquaCRM::DateTimeInfo</name>
+    <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/datetimeinfo.cpp" line="+89"/>
-        <source>Date Time information required!</source>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+16"/>
+        <source>Predefined text blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+47"/>
+        <source>Nice clean copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Clean copy</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Copy a bit dusty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Year may differ from entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Age-related traces</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>With bookplate</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>This Description field requires a valid input.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -165,7 +283,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+41"/>
         <source>Please enter a valid EMail.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -201,7 +319,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+45"/>
         <source>__TODO__</source>
         <translation type="unfinished"></translation>
     </message>
@@ -229,7 +347,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+48"/>
         <source>Configurtion Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -457,7 +575,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+117"/>
         <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -516,7 +634,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+69"/>
         <source>And Restricted to a maximum %1 Characters length.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -542,7 +660,7 @@
 <context>
     <name>AntiquaCRM::NumEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/numedit.cpp" line="+95"/>
+        <location filename="../Antiqua/Widgets/numedit.cpp" line="+102"/>
         <source>A Numeric Input is requierd</source>
         <translation type="unfinished"></translation>
     </message>
@@ -555,7 +673,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+41"/>
         <source>Please enter a valid phone number.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -578,7 +696,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+251"/>
+        <location line="+255"/>
         <location line="+4"/>
         <source>a valid postal code is required!</source>
         <translation type="unfinished"></translation>
@@ -587,7 +705,7 @@
 <context>
     <name>AntiquaCRM::PostalCodeLocation</name>
     <message>
-        <location line="+158"/>
+        <location line="+166"/>
         <location line="+4"/>
         <source>Missing Location for Postalcode!</source>
         <translation type="unfinished"></translation>
@@ -596,7 +714,7 @@
 <context>
     <name>AntiquaCRM::PostalCodeState</name>
     <message>
-        <location line="-91"/>
+        <location line="-95"/>
         <location line="+4"/>
         <source>Missing Country/State for Postalcode!</source>
         <translation type="unfinished"></translation>
@@ -605,7 +723,7 @@
 <context>
     <name>AntiquaCRM::PriceEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/priceedit.cpp" line="+156"/>
+        <location filename="../Antiqua/Widgets/priceedit.cpp" line="+164"/>
         <source>This entry requires a valid price!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -617,6 +735,57 @@
     <message>
         <location line="+6"/>
         <source>Price is invalid or empty!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::PrintBookCard</name>
+    <message>
+        <location filename="../Antiqua/Widgets/printbookcard.cpp" line="+50"/>
+        <source>PDF Document created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Bookcard printed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::PrintDeliveryNote</name>
+    <message>
+        <location filename="../Antiqua/Widgets/printdeliverynote.cpp" line="+45"/>
+        <source>Delivery note - PDF created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Delivery note printed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location line="+2"/>
+        <source>Delivery note</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::PrintInvoice</name>
+    <message>
+        <location filename="../Antiqua/Widgets/printinvoice.cpp" line="+44"/>
+        <source>Invoice PDF created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Invoice printed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <location line="+2"/>
+        <source>Invoice</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -677,17 +846,116 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+96"/>
+        <location line="+102"/>
         <location line="+3"/>
         <source>Salutation __TODO__</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::SelectCurrency</name>
+    <message>
+        <location filename="../Antiqua/Widgets/selectcurrency.cpp" line="+155"/>
+        <source>A valid currency is required for this entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Please enter a valid currency.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>European Union</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Switzerland</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>United Kingdom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>United States</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>China</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Japan</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>India</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Australia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Brazil</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>South Africa</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>South Korea</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::SelectEUCountry</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+199"/>
+        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+203"/>
         <source>A valid Country selection is required!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::SelectEUCountryModel</name>
+    <message>
+        <location line="-126"/>
+        <source>Non European Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::SelectFile</name>
+    <message>
+        <location filename="../Antiqua/Widgets/selectfile.cpp" line="+14"/>
+        <source>set file path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Change file path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+92"/>
+        <source>This entry requires a file path specification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Required file or application path is missing!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -774,8 +1042,66 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+64"/>
         <source>Language field is required and must set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::SelectMediaType</name>
+    <message>
+        <location filename="../Antiqua/Widgets/selectmediatype.cpp" line="+16"/>
+        <source>Compact Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Mini Compact Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Video Compact Disc</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl single record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl longplay record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl Multi Groove</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl colored record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl video record</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Vinyl record and DISC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+70"/>
+        <source>Please select a valid Media type for this Input.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>A valid Media type is required!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -852,7 +1178,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+72"/>
         <source>a Valid payment method is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -890,7 +1216,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+66"/>
         <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -909,19 +1235,42 @@
     </message>
     <message>
         <location line="+4"/>
-        <source>Search Storage location</source>
+        <source>Search location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+173"/>
+        <location line="+199"/>
         <source>Storage location is required and must set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::SelectTargets</name>
+    <message>
+        <location filename="../Antiqua/Widgets/selecttargets.cpp" line="+25"/>
+        <source>Target directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Change target directory</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+112"/>
+        <source>This entry requires a directory specification.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Required directory is missing!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>AntiquaCRM::SerialId</name>
     <message>
-        <location filename="../Antiqua/Widgets/serialid.cpp" line="+88"/>
+        <location filename="../Antiqua/Widgets/serialid.cpp" line="+92"/>
         <source>A valid Serial Id is important!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1008,7 +1357,7 @@
 <context>
     <name>AntiquaCRM::TabsEditor</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabseditor.cpp" line="+259"/>
+        <location filename="../Antiqua/Tabs/tabseditor.cpp" line="+284"/>
         <source>Error</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1059,7 +1408,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+63"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1251,7 +1600,7 @@
 <context>
     <name>AntiquaCRM::TabsWidget</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+95"/>
+        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+105"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1259,7 +1608,7 @@
 <context>
     <name>AntiquaCRM::TextField</name>
     <message>
-        <location filename="../Antiqua/Widgets/textfield.cpp" line="+75"/>
+        <location filename="../Antiqua/Widgets/textfield.cpp" line="+79"/>
         <source>This Text field requires a valid input.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1272,7 +1621,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+35"/>
         <source>This text line is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1280,16 +1629,8 @@
 <context>
     <name>AntiquaCRM::YearEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/yearedit.cpp" line="+86"/>
+        <location filename="../Antiqua/Widgets/yearedit.cpp" line="+90"/>
         <source>A valid Year must set!</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QObject</name>
-    <message>
-        <location filename="../Antiqua/Core/aeucountries.cpp" line="+10"/>
-        <source>Non European Country</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -17,7 +17,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+78"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -45,7 +45,7 @@
 <context>
     <name>MenuBar</name>
     <message>
-        <location filename="../menubar.cpp" line="+15"/>
+        <location filename="../menubar.cpp" line="+16"/>
         <source>Application Quit</source>
         <translation type="unfinished"></translation>
     </message>

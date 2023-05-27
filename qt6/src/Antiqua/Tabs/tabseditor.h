@@ -26,7 +26,7 @@ namespace AntiquaCRM {
 
 /**
  * @class TabsEditor
- * @brief InventoryEditor
+ * @brief Current tab editor
  * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsEditor : public QWidget {

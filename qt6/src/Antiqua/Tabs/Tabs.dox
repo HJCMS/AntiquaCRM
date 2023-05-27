@@ -4,8 +4,8 @@
  *
  * @addtogroup AntiquaTabs
  * @{
- *  @defgroup TabsPlugin Tabs
- *     @brief Primary Tabs
+ *  @defgroup TabsInterface Tabs
+ *     @brief Primary Window tab widgets
  *
  *  @defgroup ProviderPlugin Provider
  *     @brief Provider Plugins

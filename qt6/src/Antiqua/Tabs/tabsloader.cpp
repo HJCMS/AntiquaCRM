@@ -47,11 +47,11 @@ const QString TabsLoader::getInterface(const QString &name) {
 }
 
 bool TabsLoader::setInterfaceName(const QString &name) {
-  QString _iface = getInterface(name);
-  if (_iface.isEmpty())
+  QString _plugin = getInterface(name);
+  if (_plugin.isEmpty())
     return false;
 
-  QPluginLoader::setFileName(_iface);
+  QPluginLoader::setFileName(_plugin);
   return true;
 }
 

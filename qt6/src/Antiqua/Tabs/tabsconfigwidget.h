@@ -68,6 +68,9 @@ public Q_SLOTS:
   virtual void saveSectionConfig() = 0;
 
 public:
+  /**
+   * @brief Enumeration to know, how to store configs.
+   */
   enum ConfigType {
     CONFIG_SYSTEM = 0,  /**< @brief store in user config */
     CONFIG_DATABASE = 1 /**< @brief store in database */

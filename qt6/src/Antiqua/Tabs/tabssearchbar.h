@@ -16,6 +16,11 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class TabsSearchBar
+ * @brief Abstract search tool bar widget
+ * @ingroup TabsInterface
+ */
 class ANTIQUACRM_LIBRARY TabsSearchBar : public QToolBar {
   Q_OBJECT
   Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY
@@ -44,12 +49,36 @@ private Q_SLOTS:
   void searchPatternChanged(int);
 
 protected:
+  /**
+   * @brief percent sign pattern matching
+   */
   const QRegularExpression jokerPattern = QRegularExpression("[\\%\\*]+");
+
+  /**
+   * @brief Avoid quotation marks
+   */
   const QRegularExpression quotePattern = QRegularExpression("[\\'\\\"]+");
+
+  /**
+   * @brief Normalize spaces, tabs, and line breaks
+   */
   const QRegularExpression trimPattern = QRegularExpression("[\\s\\t\\n\\r]+");
-  const QRegularExpression isbnPattern = QRegularExpression("[^0-9]+");
+
+  /**
+   * @brief Very simple numeric comparison pattern
+   */
+  const QRegularExpression numPattern = QRegularExpression("[^0-9]+");
+
+  /**
+   * @brief Article number[s] pattern
+   */
   const QRegularExpression articlePattern =
       QRegularExpression("^([0-9]+[\\,]?)+$");
+
+  /**
+   * @brief Year number pattern
+   */
+  const QRegularExpression yearPattern = QRegularExpression("^[0-9]{4}$");
 
   /**
    * @brief Predefined with Stock CheckBox
@@ -89,10 +118,29 @@ protected:
   const QString prepareFieldSearch(const QString &field, const QString &search);
 
 protected Q_SLOTS:
+  /**
+   * @brief prepare search
+   */
   virtual void setSearch() = 0;
+
+  /**
+   * @brief prepare filter
+   */
   virtual void setFilter(int) = 0;
+
+  /**
+   * @brief popup and focus filter combobox
+   */
   virtual void setFilterFocus() = 0;
+
+  /**
+   * @brief clear search input focus
+   */
   virtual void setClearAndFocus() = 0;
+
+  /**
+   * @brief set search input focus
+   */
   virtual void setSearchFocus() = 0;
 
 Q_SIGNALS:
