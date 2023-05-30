@@ -48,7 +48,7 @@ private:
   /**
    * @brief Paint a visual information text for SQL queries!
    */
-  void paintEvent(QPaintEvent *) override;
+  virtual void paintEvent(QPaintEvent *) override final;
 
 protected:
   AntiquaCRM::ASettings *m_cfg;

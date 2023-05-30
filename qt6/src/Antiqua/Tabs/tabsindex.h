@@ -84,7 +84,7 @@ protected:
    * @brief Register signals, editor reports unsaved records!
    * @note Must be installed with obj->installEventFilter(this)!
    */
-  bool eventFilter(QObject *, QEvent *) override;
+  virtual bool eventFilter(QObject *, QEvent *) override final;
 
   /**
    * @brief Set it Closable.

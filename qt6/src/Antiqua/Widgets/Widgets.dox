@@ -4,13 +4,16 @@
  *
  * @addtogroup AntiquaWidgets
  * @{
+ *  @defgroup IconTheme   Ressource Icons
+ *  @brief QResource icons loader
+ *
  *  @defgroup EditInputs  Main Inputs
- *     @brief Primary Input Edit Widgets
+ *  @brief Primary Input Edit Widgets
  *
  *  @defgroup EditWidgets Editor Widgets
- *     @brief Customized Selecters and Editor Widgets
+ *  @brief Customized Selecters and Editor Widgets
  *
- *  @defgroup IconTheme   Ressource Icons
- *     @brief QResource icons loader
+ *  @defgroup PrinterWidgets Printer Widgets
+ *  @brief Customized Printing Widgets
  * @}
  */

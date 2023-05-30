@@ -21,8 +21,8 @@ class APrintingPage;
 
 /**
  * @class APrintDialog
- * @brief Primary Printing Dialog
- * @ingroup EditWidgets
+ * @brief Abstract Printing Dialog
+ * @ingroup PrinterWidgets
  */
 class ANTIQUACRM_LIBRARY APrintDialog : public QDialog {
   Q_OBJECT
@@ -39,11 +39,27 @@ protected:
   void setPrintingPage(AntiquaCRM::APrintingPage *page);
 
 protected Q_SLOTS:
+  /**
+   * @brief render current page
+   * @param printer - initialed printer dialog
+   */
   virtual void renderPage(QPrinter *printer) = 0;
+
+  /**
+   * @brief create PDF ...
+   */
   virtual void createPDF() = 0;
+
+  /**
+   * @brief call printer dialog
+   */
   virtual void openPrintDialog() = 0;
 
 public Q_SLOTS:
+  /**
+   * @brief status bar messanger
+   * @param - Message
+   */
   void sendStatusMessage(const QString &);
 
 public:
@@ -57,7 +73,7 @@ public:
 
   /**
    * @brief execute with options
-   * @param options
+   * @param options - Json Object
    * @return QDialog::DialogCode
    */
   virtual int exec(const QJsonObject &options) = 0;

@@ -42,7 +42,7 @@ class ANTIQUACRM_LIBRARY BookCardPage final : public QWidget {
 
 private:
   const QJsonObject p_data;
-  void paintEvent(QPaintEvent *) override;
+  virtual void paintEvent(QPaintEvent *) override final;
 
 public:
   explicit BookCardPage(const QJsonObject &data, QWidget *parent = nullptr);

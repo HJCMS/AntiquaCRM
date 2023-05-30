@@ -21,8 +21,9 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Horizontal Table Header for InventoryTable
- * @ingroup widgets
+ * @class TabsTableHeader
+ * @brief Horizontal Table Header for TabsTable
+ * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsTableHeader final : public QHeaderView {
   Q_OBJECT
@@ -34,6 +35,11 @@ public:
   explicit TabsTableHeader(QWidget *parent = nullptr);
 };
 
+/**
+ * @class TabsTable
+ * @brief Abstract table view class
+ * @ingroup TabsInterface
+ */
 class ANTIQUACRM_LIBRARY TabsTable : public QTableView {
   Q_OBJECT
   Q_PROPERTY(int QueryLimit READ getQueryLimit WRITE setQueryLimit NOTIFY
@@ -57,9 +63,13 @@ private:
   /**
    * @brief Paint a visual information text for SQL queries!
    */
-  void paintEvent(QPaintEvent *) override;
+  virtual void paintEvent(QPaintEvent *) override;
 
 protected:
+  /**
+   * @brief Settings object
+   * Initialed in abstract class constructer
+   */
   AntiquaCRM::ASettings *m_cfg;
 
   /**
@@ -181,15 +191,18 @@ Q_SIGNALS:
   void sendCreateNewEntry();
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit TabsTable(QWidget *parent = nullptr);
 
   /**
-   * @brief get application theme/resource icon
+   * @brief application theme/resource icon
    */
   static const QIcon getIcon(const QString &name);
 
   /**
-   * @brief get QueryLimit property
+   * @brief query current view limit property
    */
   int getQueryLimit();
 
@@ -209,7 +222,6 @@ public:
 
   /**
    * @brief Required function to prepare SQL Queries.
-   * @param clause - WHERE CLAUSE: defaultWhereClause()
    * @code
       AntiquaCRM::ASqlFiles tpl("my_custon_query_from_sql_query_file");
       if (tpl.openTemplate()) {
@@ -221,6 +233,7 @@ public:
       }
       return sqlModelQuery(tpl.getQueryContent());
    * @endcode
+   * @param clause - WHERE CLAUSE: defaultWhereClause()
    */
   virtual bool setQuery(const QString &clause = QString()) = 0;
 

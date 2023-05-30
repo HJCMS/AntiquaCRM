@@ -45,23 +45,27 @@ void TabsWidget::setEnterChanged(int index) {
   }
 }
 
+void TabsWidget::setCurrentTab(const QString &objname) {
+  if (objname.isEmpty())
+    return;
+
+  setCurrentIndex(indexByName(objname));
+}
+
 void TabsWidget::setViewTab() {
   QString _id = sender()->objectName();
-  if (!_id.isEmpty())
-    setCurrentIndex(indexByName(_id));
+  if (_id.isEmpty())
+    return;
+
+  setCurrentIndex(indexByName(_id));
 }
 
-void TabsWidget::setCurrentTab(const QString &id) {
-  if (!id.isEmpty())
-    setCurrentIndex(indexByName(id));
-}
-
-int TabsWidget::indexByName(const QString &id) {
-  if (id.isEmpty())
+int TabsWidget::indexByName(const QString &objname) {
+  if (objname.isEmpty())
     return -1;
 
   for (int i = 0; i < count(); i++) {
-    if (widget(i)->objectName() == id) {
+    if (widget(i)->objectName() == objname) {
       return i;
     }
   }

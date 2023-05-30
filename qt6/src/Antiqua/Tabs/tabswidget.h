@@ -20,11 +20,16 @@ namespace AntiquaCRM {
 class TabsIndex;
 class TabsBar;
 
+/**
+ * @class TabsWidget
+ * @brief Toplevel Tab widget class
+ * @ingroup TabsInterface
+ */
 class ANTIQUACRM_LIBRARY TabsWidget final : public QTabWidget {
   Q_OBJECT
 
 private:
-  void tabInserted(int) override;
+  virtual void tabInserted(int) override final;
 
 private Q_SLOTS:
   void setEnterChanged(int);
@@ -37,23 +42,53 @@ Q_SIGNALS:
   void sendMessage(const QString &);
 
 public Q_SLOTS:
+  /**
+   * @brief Search Tab with objectName and call setCurrentIndex!
+   * @param id
+   */
+  void setCurrentTab(const QString &objname);
+
+  /**
+   * @brief overlaod function for setCurrentTab
+   */
   void setViewTab();
 
-  void setCurrentTab(const QString &id);
-
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit TabsWidget(QWidget *parent = nullptr);
 
-  int indexByName(const QString &);
+  /**
+   * @brief find tab by QObjectName
+   */
+  int indexByName(const QString &objname);
 
-  int registerTab(AntiquaCRM::TabsIndex *, const QString &title);
+  /**
+   * @brief overload function for addTab
+   * @param tab
+   * @param title
+   */
+  int registerTab(AntiquaCRM::TabsIndex *tab, const QString &title);
 
+  /**
+   * @brief fallback theme icon
+   */
   static const QIcon defaultIcon();
 
+  /**
+   * @brief overlaod function for QTabWidget::widget with object_cast
+   */
   AntiquaCRM::TabsIndex *tabWithIndex(int);
 
+  /**
+   * @brief overlaod function for tabWithIndex(int)
+   */
   AntiquaCRM::TabsIndex *tabWithName(const QString &);
 
+  /**
+   * @brief unload all loaded tab
+   */
   bool unloadTabs();
 };
 

@@ -20,18 +20,23 @@ namespace AntiquaCRM {
 /**
  * @class APrintingPage
  * @brief TextEdit Widgets with Watermark and Textformatings
- * @ingroup EditWidgets
+ * @ingroup PrinterWidgets
  */
 class ANTIQUACRM_LIBRARY APrintingPage : public QTextEdit {
   Q_OBJECT
 
-protected:
-  const QPageSize::PageSizeId p_pageSizeId;
-  AntiquaCRM::ASettings *cfg;
-
+private:
+  struct PrinterInfo {
+    QPrinterInfo dinA4; /**< @brief Primary printer info */
+    QPrinterInfo dinA6; /**< @brief Secundary printer info */
+  };
   /**
-   * @brief page margins
+   * @brief printer info class
+   * Called with @ref getPrinterInfo.
+   * Initialed in @ref initConfiguration()
    */
+  PrinterInfo p_printerInfo;
+
   struct PageMargins {
     qreal left = 20;   /**< @brief Document margin left */
     qreal right = 10;  /**< @brief Document margin right */
@@ -39,13 +44,29 @@ protected:
     qreal subject = 6; /**< @brief Subject margin top to Letter window */
     qreal body = 10;   /**< @brief Body margin top to Subject */
   };
-  PageMargins margin;
 
-  struct PrinterInfo {
-    QPrinterInfo dinA4;
-    QPrinterInfo dinA6;
-  };
-  PrinterInfo p_printerInfo;
+  /**
+   * @brief load configuration settings and company data
+   * @note This function is called in constructer
+   */
+  void initConfiguration();
+
+protected:
+  /**
+   * @brief Fixed page size
+   */
+  const QPageSize::PageSizeId p_pageSizeId;
+
+  /**
+   * @brief System settings
+   */
+  AntiquaCRM::ASettings *cfg;
+
+  /**
+   * @brief current page margins
+   * Initialed in @ref initConfiguration()
+   */
+  PageMargins margin;
 
   /**
    * @brief 1mm to point
@@ -71,15 +92,20 @@ protected:
   QTextTable *headingTable;
 
   /**
-   * @brief load configuration settings and company data
+   * @brief paint watermark and borders
+   * @short define DEBUG_DISPLAY_BORDERS before load this class
+   * if you want display painted borders
    */
-  void initConfiguration();
-
-  void paintEvent(QPaintEvent *) override;
+  virtual void paintEvent(QPaintEvent *) override;
 
 public:
+  /**
+   * @param parent - parent object
+   * @param id - current Printer page size id
+   */
   explicit APrintingPage(QWidget *parent = nullptr,
                          QPageSize::PageSizeId id = QPageSize::A4);
+
   virtual ~APrintingPage();
 
   /**
@@ -108,6 +134,11 @@ public:
    */
   const QMap<QString, QVariant> queryCustomerData(qint64 cId);
 
+  /**
+   * @brief  call Printer Info for PageSize Id
+   * @param id
+   * @return
+   */
   const QPrinterInfo getPrinterInfo(QPageSize::PageSizeId id = QPageSize::A4);
 
   /**

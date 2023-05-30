@@ -227,8 +227,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_binding->setObjectName("ib_binding");
   ib_binding->setInputToolTip(tr("Bookbinding"));
   tempWhatsThis =
-      tr("The Bookbinding selecter  contains the most prefinied Book bindings. "
-         "Please select the best Category for this Book.");
+      tr("The Bookbinding selecter contains the most predefined Book "
+         "bindings. Please select the best Category for this Book.");
   ib_binding->setWhatsThisText(tempWhatsThis);
   binding_layout->addWidget(ib_binding);
 
@@ -396,10 +396,10 @@ void BooksEditor::setInputFields() {
   const QJsonObject _jobj = loadSqlConfig(BOOKS_CONFIG_POINTER);
   double book_price_lowest = _jobj.value("book_price_lowest").toDouble();
   double book_price_default = _jobj.value("book_price_normal").toDouble();
-  if(book_price_lowest > 1.0)
+  if (book_price_lowest > 1.0)
     ib_price->setMinimum(book_price_lowest);
 
-  if(book_price_default > 2.0)
+  if (book_price_default > 2.0)
     ib_price->setValue(book_price_default);
 
   // Load default table data

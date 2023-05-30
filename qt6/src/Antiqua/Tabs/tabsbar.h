@@ -34,13 +34,13 @@ protected:
    * @brief some defaults when a tab has been add
    * @param index
    */
-  void tabInserted(int index) override;
+  virtual void tabInserted(int index) override;
 
   /**
    * @brief prevent wheel events, when enableWheel is true
    * @param event
    */
-  void wheelEvent(QWheelEvent *event) override;
+  virtual void wheelEvent(QWheelEvent *event) override;
 
 protected Q_SLOTS:
   /**
