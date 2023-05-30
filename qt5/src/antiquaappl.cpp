@@ -231,19 +231,23 @@ int AntiquaAppl::exec() {
   mutex.unlock();
 
   // Step 6 - create cache files
-  mutex.lock();
-  p_splashScreen.setMessage(tr("Creating Cachefiles."));
-  CacheBuilder *m_cache = new CacheBuilder(this);
-  connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splashScreen,
-          SLOT(setMessage(const QString &)));
+  if (m_sql->db().isOpen()) {
+    mutex.lock();
+    p_splashScreen.setMessage(tr("Creating Cachefiles."));
+    CacheBuilder *m_cache = new CacheBuilder(this);
+    connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splashScreen,
+            SLOT(setMessage(const QString &)));
 
-  if (m_cache->createCaches()) {
-    p_splashScreen.setMessage(tr("Cachefiles completed ..."));
+    if (m_cache->createCaches()) {
+      p_splashScreen.setMessage(tr("Cachefiles completed ..."));
+    } else {
+      p_splashScreen.setMessage(tr("Create Cachefile failed ..."));
+    }
+    m_cache->deleteLater();
+    mutex.unlock();
   } else {
-    p_splashScreen.setMessage(tr("Create Cachefile failed ..."));
+    qWarning("AntiquaCRM: cache update skipped!");
   }
-  m_cache->deleteLater();
-  mutex.unlock();
 
   // Step 7 - finish splash and unlock
   p_splashScreen.setMessage("Start Antiqua CRM");

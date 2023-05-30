@@ -21,13 +21,14 @@ namespace AntiquaCRM {
  * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
+
 public:
   explicit ASharedDataFiles(const QDir &d = ASettings::getUserDataDir());
 
   /**
-   * @brief Returns a list of writable files ... uses QDir::entryList
+   * @brief Returns a list of writable files ...
    */
-  const QStringList dataFiles();
+  const QFileInfoList listFileInfos() const;
 
   /**
    * @brief Default for search, By file extension.
@@ -55,6 +56,14 @@ public:
    * @note Only writable files are considered!
    */
   bool fileExists(const QString &basename,
+                  const QStringList &ext = fileSuffixes());
+
+  /**
+   * @brief Remove a file from destination
+   * @param basename
+   * @param ext
+   */
+  bool removeFile(const QString &basename,
                   const QStringList &ext = fileSuffixes());
 
   /**

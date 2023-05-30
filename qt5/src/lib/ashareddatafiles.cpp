@@ -16,8 +16,8 @@ ASharedDataFiles::ASharedDataFiles(const QDir &d) : QDir{d} {
   setNameFilters(fileSuffixes());
 }
 
-const QStringList ASharedDataFiles::dataFiles() {
-  return entryList((QDir::Files | QDir::Writable), QDir::Name);
+const QFileInfoList ASharedDataFiles::listFileInfos() const {
+  return entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
 }
 
 const QStringList ASharedDataFiles::fileSuffixes() {
@@ -35,8 +35,7 @@ bool ASharedDataFiles::needsUpdate(const QString &basename,
 
   bool _exists = false;
   QDate _fileDate;
-  QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
-  foreach (QFileInfo i, li) {
+  foreach (QFileInfo i, listFileInfos()) {
     if (i.baseName() == basename) {
       _exists = true;
       // When the file was most recently modified.
@@ -73,14 +72,28 @@ bool ASharedDataFiles::fileExists(const QString &basename,
     setNameFilters(ext);
 
   bool status = false;
-  QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
-  foreach (QFileInfo i, li) {
-    if (i.baseName() == basename) {
+  foreach (QFileInfo _fi, listFileInfos()) {
+    if (_fi.baseName() == basename) {
       status = true;
       break;
     }
   }
   setNameFilters(fileSuffixes());
+  return status;
+}
+
+bool ASharedDataFiles::removeFile(const QString &basename,
+                                  const QStringList &ext) {
+  if (ext.count() > 0)
+    setNameFilters(ext);
+
+  bool status = false;
+  foreach (QFileInfo _fi, listFileInfos()) {
+    if (_fi.baseName() == basename) {
+      status = remove(_fi.fileName());
+      break;
+    }
+  }
   return status;
 }
 

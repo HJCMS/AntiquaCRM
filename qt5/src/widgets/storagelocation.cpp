@@ -30,12 +30,14 @@ StorageLocation::StorageLocation(QWidget *parent) : InputEdit{parent} {
 }
 
 void StorageLocation::loadDataset() {
+  bool status = false; // is loaded?
   QString key("storagelocations");
   AntiquaCRM::ASharedDataFiles dataFile;
   if (dataFile.fileExists(key)) {
     QJsonDocument jdoc = dataFile.getJson(key);
     QJsonArray arr = jdoc.object().value(key).toArray();
-    if (arr.size() > 0) {
+    status = (arr.size() > 0);
+    if (status) {
       for (int i = 0; i < arr.size(); i++) {
         QJsonObject jo = arr[i].toObject();
         int index = jo.value("id").toInt();
@@ -47,9 +49,15 @@ void StorageLocation::loadDataset() {
         display.append(jo.value("identifier").toString());
         m_box->insertItem(index, display, index);
       }
+    } else {
+      // If no data, remove Json file from local storage
+      qWarning("Storage: Remove empty storagelocations file!");
+      dataFile.removeFile(key);
     }
-  } else {
-    qWarning("Storage:No storagelocations.json - fallback to SQL query!");
+  }
+  // SQL Fallback
+  if (!status) {
+    qWarning("Storage: No storagelocations.json - fallback to SQL query!");
     AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
     QString sql("SELECT * FROM ref_storage_location ORDER BY sl_id;");
     QSqlQuery q = m_sql->query(sql);
