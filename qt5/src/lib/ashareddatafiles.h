@@ -17,7 +17,7 @@ namespace AntiquaCRM {
 
 /**
  * @class ASharedDataFiles
- * @brief Data handling in the user directory
+ * @brief File handling for QStandardPaths::AppDataLocation
  * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
@@ -27,20 +27,19 @@ public:
 
   /**
    * @brief Returns a list of writable files ...
+   * Defined function call with QDir::entryInfoList
    */
   const QFileInfoList listFileInfos() const;
 
   /**
-   * @brief Default for search, By file extension.
-   * normally:
-   * @li *.xml
-   * @li *.sql
-   * @li *.json
+   * @brief List of file extension suffixes.
+   * @return QStringList({"*.xml","*.sql","*.json"})
    */
   static const QStringList fileSuffixes();
 
   /**
-   * @brief Basename list of Files which only updated once per week.
+   * @brief A basename list of Files which only updated once per week.
+   * @return QStringList({"postalcodes", "publishers", "storagelocations"})
    */
   static const QStringList weeklyFileUpdate();
 
@@ -52,7 +51,7 @@ public:
                    const QStringList &ext = fileSuffixes());
 
   /**
-   * @brief Search by base name and optional extension for availability!
+   * @brief File search with basename and file extension for availability!
    * @note Only writable files are considered!
    */
   bool fileExists(const QString &basename,
@@ -60,29 +59,38 @@ public:
 
   /**
    * @brief Remove a file from destination
-   * @param basename
-   * @param ext
+   * @param basename - search file basename in current target
+   * @param ext      - file extension for availability
+   * @return boolean - true if file has removed
    */
   bool removeFile(const QString &basename,
                   const QStringList &ext = fileSuffixes());
 
   /**
    * @brief Save json document.
+   * @param basename - file basename for current target
+   * @param doc      - json document
+   * @return boolean - true when success
    */
   bool storeJson(const QString &basename, const QJsonDocument &doc);
 
   /**
    * @brief Get json document from file.
+   * @param basename - find file basename in current target
    */
   const QJsonDocument getJson(const QString &basename);
 
   /**
    * @brief Save XML document.
+   * @param basename - file basename for current target
+   * @param xml      - dom document
+   * @return boolean - true when success
    */
   bool storeXml(const QString &basename, const QDomDocument &xml);
 
   /**
    * @brief Take XML document from file.
+   * @param basename - find file basename in current target
    */
   const QDomDocument getXML(const QString &basename);
 };
@@ -98,18 +106,21 @@ public:
 
   /**
    * @brief Save cache file.
-   * @note Conversion QTextStream
+   * @param filename - file name with extension
+   * @param data     - Converted to QTextStream
    */
   bool storeTempFile(const QString &filename, const QByteArray &data);
 
   /**
    * @brief Save cache file.
-   * @note QTextStream
+   * @param filename - file name with extension
+   * @param data     - QTextStream
    */
   bool storeTempFile(const QString &filename, const QString &data);
 
   /**
    * @brief Open cache file
+   * @param filename - file name in temporary target
    */
   const QString getTempFile(const QString &filename);
 
