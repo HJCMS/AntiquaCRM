@@ -52,7 +52,7 @@ SET (_stl_HEADERS
 )
 
 SET (_library_SOURCES
-  abstractinput.cpp
+  ainputwidget.cpp
   acolorluminance.cpp
   acombobox.cpp
   adatetimeedit.cpp
@@ -111,7 +111,7 @@ SET (_library_SOURCES
 )
 
 SET (_library_HEADERS
-  abstractinput.h
+  ainputwidget.h
   acolorluminance.h
   acombobox.h
   adatetimeedit.h

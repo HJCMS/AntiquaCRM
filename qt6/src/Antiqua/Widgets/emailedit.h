@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief eMail input Editor
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY EMailEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY EMailEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

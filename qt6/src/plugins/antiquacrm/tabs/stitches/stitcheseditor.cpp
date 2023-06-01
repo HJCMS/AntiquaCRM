@@ -338,8 +338,8 @@ bool StitchesEditor::setDataField(const QSqlField &field,
   QString key = field.name();
   // qDebug() << "setDataField:" << field.name() << value;
   bool required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AbstractInput *inp =
-      findChild<AntiquaCRM::AbstractInput *>(key, Qt::FindChildrenRecursively);
+  AntiquaCRM::AInputWidget *inp =
+      findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setRestrictions(field);
     // Muss nach setRestrictions kommen!
@@ -405,12 +405,12 @@ bool StitchesEditor::sendSqlQuery(const QString &query) {
 
 const QHash<QString, QVariant> StitchesEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  QList<AntiquaCRM::AbstractInput *> list =
-      findChildren<AntiquaCRM::AbstractInput *>(fieldPattern,
+  QList<AntiquaCRM::AInputWidget *> list =
+      findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
                                                 Qt::FindChildrenRecursively);
-  QList<AntiquaCRM::AbstractInput *>::Iterator it;
+  QList<AntiquaCRM::AInputWidget *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
-    AntiquaCRM::AbstractInput *cur = *it;
+    AntiquaCRM::AInputWidget *cur = *it;
     QString objName = cur->objectName();
     if (ignoreFields.contains(objName))
       continue;

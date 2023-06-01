@@ -21,7 +21,7 @@ namespace AntiquaCRM {
  * @brief The „SelectFile“ input edit class.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY SelectFile final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY SelectFile final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

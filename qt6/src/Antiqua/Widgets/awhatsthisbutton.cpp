@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "awhatsthisbutton.h"
-#include "abstractinput.h"
+#include "ainputwidget.h"
 
 #include <QIcon>
 #include <QWhatsThis>

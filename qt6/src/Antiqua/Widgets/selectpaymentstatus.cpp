@@ -9,7 +9,7 @@
 namespace AntiquaCRM {
 
 SelectPaymentStatus::SelectPaymentStatus(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
   initData();

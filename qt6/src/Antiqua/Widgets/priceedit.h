@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Price Input edit widget
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PriceEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY PriceEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

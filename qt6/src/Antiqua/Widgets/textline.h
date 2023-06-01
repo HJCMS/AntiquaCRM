@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Single Text input with LineEdit
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY TextLine final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY TextLine final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

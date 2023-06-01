@@ -1,14 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "abstractinput.h"
+#include "ainputwidget.h"
 #include "alabel.h"
 #include "awhatsthisbutton.h"
 
 namespace AntiquaCRM {
 
-// BEGIN::AbstractInput
-AbstractInput::AbstractInput(QWidget *parent)
+// BEGIN::AInputWidget
+AInputWidget::AInputWidget(QWidget *parent)
     : QWidget{parent}, required{false} {
   config = new AntiquaCRM::ASettings(this);
   displayToolTips =
@@ -25,18 +25,18 @@ AbstractInput::AbstractInput(QWidget *parent)
   setLayout(layout);
 }
 
-AbstractInput::~AbstractInput() {}
+AInputWidget::~AInputWidget() {}
 
-void AbstractInput::focusOutEvent(QFocusEvent *e) {
+void AInputWidget::focusOutEvent(QFocusEvent *e) {
   if (e->type() == QEvent::FocusOut)
     emit sendLeaveInput();
 
   QWidget::focusOutEvent(e);
 }
 
-void AbstractInput::setRequired(bool b) { required = b; }
+void AInputWidget::setRequired(bool b) { required = b; }
 
-AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
+AntiquaCRM::ALabel *AInputWidget::addTitleLabel(const QString &title) {
   ALabel *m_lb = new ALabel(title, this);
   m_lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
@@ -44,9 +44,9 @@ AntiquaCRM::ALabel *AbstractInput::addTitleLabel(const QString &title) {
   return m_lb;
 }
 
-bool AbstractInput::isRequired() { return required; }
+bool AInputWidget::isRequired() { return required; }
 
-void AbstractInput::setWhatsThisText(const QString &text) {
+void AInputWidget::setWhatsThisText(const QString &text) {
   if (text.isEmpty())
     return;
 
@@ -57,9 +57,9 @@ void AbstractInput::setWhatsThisText(const QString &text) {
   }
 }
 
-void AbstractInput::appendStretch(int expanding) {
+void AInputWidget::appendStretch(int expanding) {
   layout->addStretch(expanding);
 }
-// END::AbstractInput
+// END::AInputWidget
 
 } // namespace AntiquaCRM

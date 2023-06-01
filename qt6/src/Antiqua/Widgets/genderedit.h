@@ -21,7 +21,7 @@ namespace AntiquaCRM {
  * @brief Gender Selecter
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY GenderEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY GenderEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

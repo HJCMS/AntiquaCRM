@@ -11,7 +11,7 @@ TabStitches::TabStitches(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
 }
 
 const QString TabStitches::displayName() const {
-  return tr("Prints & Stitches");
+  return tr("Prints && Stitches");
 }
 
 const QString TabStitches::interfaceName() const {

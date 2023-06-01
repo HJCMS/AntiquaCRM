@@ -66,8 +66,8 @@ void StitchesConfigWidget::loadSectionConfig() {
   QJsonObject _jsObject = jsDocument.object();
   QJsonObject::const_iterator it;
   for (it = _jsObject.begin(); it != _jsObject.end(); ++it) {
-    AntiquaCRM::AbstractInput *inp =
-        findChild<AntiquaCRM::AbstractInput *>(it.key());
+    AntiquaCRM::AInputWidget *inp =
+        findChild<AntiquaCRM::AInputWidget *>(it.key());
     if (inp != nullptr)
       inp->setValue(it.value().toVariant());
   }
@@ -75,10 +75,10 @@ void StitchesConfigWidget::loadSectionConfig() {
 
 void StitchesConfigWidget::saveSectionConfig() {
   QJsonObject _jsObject;
-  QList<AntiquaCRM::AbstractInput *> _list =
-      findChildren<AntiquaCRM::AbstractInput *>(QString());
+  QList<AntiquaCRM::AInputWidget *> _list =
+      findChildren<AntiquaCRM::AInputWidget *>(QString());
   for (int i = 0; i < _list.size(); i++) {
-    AntiquaCRM::AbstractInput *m_inp = _list.at(i);
+    AntiquaCRM::AInputWidget *m_inp = _list.at(i);
     _jsObject.insert(m_inp->objectName(), m_inp->getValue().toJsonValue());
   }
 

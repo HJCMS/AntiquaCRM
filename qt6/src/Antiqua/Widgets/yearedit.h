@@ -19,7 +19,7 @@ namespace AntiquaCRM {
  * @ingroup AntiquaWidgets
  * @class YearEdit
  */
-class ANTIQUACRM_LIBRARY YearEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY YearEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

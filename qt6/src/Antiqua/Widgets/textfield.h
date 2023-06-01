@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Large Text inputs with QTextEdit
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY TextField final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY TextField final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

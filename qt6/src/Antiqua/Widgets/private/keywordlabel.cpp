@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordlabel.h"
-#include "abstractinput.h"
+#include "ainputwidget.h"
 
 #include <QHBoxLayout>
 #include <QIcon>

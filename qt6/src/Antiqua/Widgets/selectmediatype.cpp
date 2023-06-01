@@ -2,12 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "selectmediatype.h"
-#include "abstractinput.h"
+#include "ainputwidget.h"
 
 namespace AntiquaCRM {
 
 SelectMediaType::SelectMediaType(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   QIcon _warn = style()->standardIcon(QStyle::SP_MessageBoxWarning);
   QIcon _icon = style()->standardIcon(QStyle::SP_DriveCDIcon);
   m_edit = new AntiquaCRM::AComboBox(this);

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_INPUT_ABSTRACTINPUT_H
-#define ANTIQUACRM_INPUT_ABSTRACTINPUT_H
+#ifndef ANTIQUACRM_INPUT_AINPUTWIDGET_H
+#define ANTIQUACRM_INPUT_AINPUTWIDGET_H
 
 #include <AntiquaCRM>
 #include <QBoxLayout>
@@ -44,16 +44,20 @@ ANTIQUACRM_LIBRARY inline const QIcon AntiquaApplIcon(const QString &name) {
 class ALabel;
 
 /**
- * @class AbstractInput
+ * @class AInputWidget
  * @brief In this group all Antiqua CRM Widgets with Input masks defined.
  * This classes only used for Subclassing and not direct in the Interface.
  *
  * @ingroup EditInputs
  */
-class ANTIQUACRM_LIBRARY AbstractInput : public QWidget {
+class ANTIQUACRM_LIBRARY AInputWidget : public QWidget {
   Q_OBJECT
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY
-                 sendRequiredChanged)
+  Q_PROPERTY(
+    bool required
+    READ isRequired
+    WRITE setRequired
+    NOTIFY sendRequiredChanged
+  )
 
 private:
   bool required;
@@ -169,8 +173,8 @@ public:
    * @brief Abstract class for edit widgets
    * @param parent - Important, we need a valid handle for AntiquaCRM::ASettings
    */
-  explicit AbstractInput(QWidget *parent = nullptr);
-  virtual ~AbstractInput();
+  explicit AInputWidget(QWidget *parent = nullptr);
+  virtual ~AInputWidget();
 
   /**
    * @brief find data restriction with QSqlField
@@ -254,4 +258,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_INPUT_ABSTRACTINPUT_H
+#endif // ANTIQUACRM_INPUT_AINPUTWIDGET_H

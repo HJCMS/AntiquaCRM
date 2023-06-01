@@ -68,9 +68,9 @@ const QJsonObject TabsEditor::loadSqlConfig(const QString &group) {
 }
 
 bool TabsEditor::registerInputChanged() {
-  QList<AntiquaCRM::AbstractInput *> list = getInputEditList(fieldPattern);
+  QList<AntiquaCRM::AInputWidget *> list = getInputEditList(fieldPattern);
   for (int i = 0; i < list.size(); ++i) {
-    AntiquaCRM::AbstractInput *m_inp = list.at(i);
+    AntiquaCRM::AInputWidget *m_inp = list.at(i);
     if (m_inp == nullptr || m_inp->objectName().isEmpty())
       continue;
 
@@ -93,24 +93,24 @@ bool TabsEditor::isInputField(const QString &name) {
 }
 
 qint64 TabsEditor::getSerialID(const QString &name) {
-  AntiquaCRM::AbstractInput *obj = getInputEdit(name);
+  AntiquaCRM::AInputWidget *obj = getInputEdit(name);
   if (obj != nullptr)
     return obj->getValue().toInt();
 
   return -1;
 }
 
-AntiquaCRM::AbstractInput *TabsEditor::getInputEdit(const QString &name) {
-  return findChild<AntiquaCRM::AbstractInput *>(name, TABS_FIND_INPUT);
+AntiquaCRM::AInputWidget *TabsEditor::getInputEdit(const QString &name) {
+  return findChild<AntiquaCRM::AInputWidget *>(name, TABS_FIND_INPUT);
 }
 
-QList<AntiquaCRM::AbstractInput *>
+QList<AntiquaCRM::AInputWidget *>
 TabsEditor::getInputEditList(const QRegularExpression &pcre) {
-  return findChildren<AntiquaCRM::AbstractInput *>(pcre, TABS_FIND_INPUT);
+  return findChildren<AntiquaCRM::AInputWidget *>(pcre, TABS_FIND_INPUT);
 }
 
 const QVariant TabsEditor::getDataValue(const QString &name) {
-  AntiquaCRM::AbstractInput *obj = getInputEdit(name);
+  AntiquaCRM::AInputWidget *obj = getInputEdit(name);
   if (obj != nullptr)
     return obj->getValue();
 
@@ -174,7 +174,7 @@ void TabsEditor::setResetModified(const QStringList &objectList) {
     return;
   }
   foreach (QString name, objectList) {
-    AntiquaCRM::AbstractInput *child = getInputEdit(name);
+    AntiquaCRM::AInputWidget *child = getInputEdit(name);
     if (child != nullptr) {
       child->setWindowModified(false);
     }
@@ -186,7 +186,7 @@ void TabsEditor::setProperties(const QString &objectName, QSqlField &field) {
   if (objectName.isEmpty() || !field.isValid())
     return;
 
-  AntiquaCRM::AbstractInput *obj = getInputEdit(objectName);
+  AntiquaCRM::AInputWidget *obj = getInputEdit(objectName);
   if (obj != nullptr) {
     obj->setRestrictions(field);
   }
@@ -198,7 +198,7 @@ bool TabsEditor::checkIsModified() {
     return false;
   }
 
-  QList<AntiquaCRM::AbstractInput *> list = getInputEditList(fieldPattern);
+  QList<AntiquaCRM::AInputWidget *> list = getInputEditList(fieldPattern);
   for (int i = 0; i < list.size(); ++i) {
     if (list.at(i) != nullptr && list.at(i)->isWindowModified()) {
       setWindowModified(true);
@@ -211,7 +211,7 @@ bool TabsEditor::checkIsModified() {
 
 bool TabsEditor::isModifiedCompare(const QString &name,
                                    const QVariant &origin) {
-  AntiquaCRM::AbstractInput *_input = getInputEdit(name);
+  AntiquaCRM::AInputWidget *_input = getInputEdit(name);
   if (_input == nullptr)
     return false;
 
@@ -312,7 +312,7 @@ void TabsEditor::openNoticeMessage(const QString &info) {
 }
 
 void TabsEditor::checkInputModified(const QString &name) {
-  AntiquaCRM::AbstractInput *m_inp = getInputEdit(name);
+  AntiquaCRM::AInputWidget *m_inp = getInputEdit(name);
   if (m_inp == nullptr)
     return;
 
@@ -370,9 +370,9 @@ void TabsEditor::setResetInputFields() {
     return;
   }
 
-  QList<AntiquaCRM::AbstractInput *> list = getInputEditList(fieldPattern);
+  QList<AntiquaCRM::AInputWidget *> list = getInputEditList(fieldPattern);
   for (int i = 0; i < list.size(); ++i) {
-    AntiquaCRM::AbstractInput *obj = list.at(i);
+    AntiquaCRM::AInputWidget *obj = list.at(i);
     if (obj != nullptr)
       obj->reset();
   }

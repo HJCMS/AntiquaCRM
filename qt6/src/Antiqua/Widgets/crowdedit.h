@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Article count editor
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY CrowdEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY CrowdEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

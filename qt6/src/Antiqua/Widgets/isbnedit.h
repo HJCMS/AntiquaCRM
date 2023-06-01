@@ -22,7 +22,7 @@ namespace AntiquaCRM {
  * @brief Simple ISBN Editor based on EAN/ISO 2108
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY IsbnEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY IsbnEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 public:

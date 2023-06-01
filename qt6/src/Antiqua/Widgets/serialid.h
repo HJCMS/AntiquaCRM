@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Display Table Id's e.g. ArticleId etc.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY SerialId final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY SerialId final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

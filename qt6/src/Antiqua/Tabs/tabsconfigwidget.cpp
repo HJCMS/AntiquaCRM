@@ -24,10 +24,10 @@ TabsConfigWidget::~TabsConfigWidget() {
     pgsql->deleteLater();
 }
 
-QList<AntiquaCRM::AbstractInput *>
+QList<AntiquaCRM::AInputWidget *>
 TabsConfigWidget::getInputList(QObject *parent) {
   Q_CHECK_PTR(parent);
-  return parent->findChildren<AntiquaCRM::AbstractInput *>(
+  return parent->findChildren<AntiquaCRM::AInputWidget *>(
       QString(), Qt::FindChildrenRecursively);
 }
 

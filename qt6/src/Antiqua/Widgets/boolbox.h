@@ -21,7 +21,7 @@ namespace AntiquaCRM {
  * @brief Antiqua Checkbox
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY BoolBox final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY BoolBox final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

@@ -8,7 +8,7 @@
 
 namespace AntiquaCRM {
 
-SerialId::SerialId(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+SerialId::SerialId(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ASpinBox(this);
   m_edit->setReadOnly(true);
   m_edit->setMinimum(0);

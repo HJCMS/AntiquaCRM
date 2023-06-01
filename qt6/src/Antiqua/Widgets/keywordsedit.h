@@ -22,7 +22,7 @@ class KeywordListView;
  * @brief Add/Remove Article Keywords
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY KeywordsEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY KeywordsEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

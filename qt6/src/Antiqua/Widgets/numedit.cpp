@@ -7,7 +7,7 @@
 
 namespace AntiquaCRM {
 
-NumEdit::NumEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+NumEdit::NumEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ASpinBox(this);
   m_edit->setMinimum(0);
   layout->addWidget(m_edit);

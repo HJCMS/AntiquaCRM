@@ -1600,7 +1600,7 @@
 <context>
     <name>AntiquaCRM::TabsWidget</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+105"/>
+        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+109"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation type="unfinished"></translation>
     </message>

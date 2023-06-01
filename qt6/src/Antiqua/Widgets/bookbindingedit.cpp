@@ -8,7 +8,7 @@
 namespace AntiquaCRM {
 
 BookBindingEdit::BookBindingEdit(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
   connect(m_edit, SIGNAL(currentIndexChanged(int)), this,

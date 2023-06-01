@@ -126,7 +126,7 @@ void PostalCodeModel::initModel(const QString &country) {
 
 // BEGIN::PostalCodeEdit
 PostalCodeEdit::PostalCodeEdit(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_countries = new AComboBox(this);
   m_countries->setToolTip(tr("Supported countries"));
   layout->addWidget(m_countries);
@@ -397,7 +397,7 @@ const QString PostalCodeEdit::statusHints() {
 
 // BEGIN::PostalCodeState
 PostalCodeState::PostalCodeState(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
 }
@@ -476,7 +476,7 @@ const QString PostalCodeState::statusHints() {
 
 // BEGIN::PostalCodeLocation
 PostalCodeLocation::PostalCodeLocation(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
 }

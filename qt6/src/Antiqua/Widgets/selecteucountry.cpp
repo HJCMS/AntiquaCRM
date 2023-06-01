@@ -93,7 +93,7 @@ int SelectEUCountryModel::size() { return p_list.size(); }
 
 // BEGIN::SelectEUCountry
 SelectEUCountry::SelectEUCountry(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
 

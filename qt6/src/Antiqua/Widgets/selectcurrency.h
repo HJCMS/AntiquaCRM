@@ -23,7 +23,7 @@ namespace AntiquaCRM {
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY SelectCurrency final
-    : public AntiquaCRM::AbstractInput,
+    : public AntiquaCRM::AInputWidget,
       private QLocale {
   Q_OBJECT
 

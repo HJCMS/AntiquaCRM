@@ -45,10 +45,10 @@ protected:
   AntiquaCRM::ASqlCore *pgsql = nullptr;
 
   /**
-   * @brief get all AntiquaCRM::AbstractInput from Widget
+   * @brief get all AntiquaCRM::AInputWidget from Widget
    * @param parent
    */
-  QList<AntiquaCRM::AbstractInput *> getInputList(QObject *parent);
+  QList<AntiquaCRM::AInputWidget *> getInputList(QObject *parent);
 
 Q_SIGNALS:
   /**

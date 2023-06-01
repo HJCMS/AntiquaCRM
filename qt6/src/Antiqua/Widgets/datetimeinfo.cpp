@@ -8,7 +8,7 @@
 namespace AntiquaCRM {
 
 DateTimeInfo::DateTimeInfo(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ADateTimeEdit(this);
   m_edit->setReadOnlyMode();
   layout->addWidget(m_edit);

@@ -76,7 +76,7 @@ protected:
   virtual void setInputFields() = 0;
 
   /**
-   * @brief Register AbstractInput::sendInputChanged() from Inputs
+   * @brief Register AInputWidget::sendInputChanged() from Inputs
    */
   bool registerInputChanged();
 
@@ -94,17 +94,17 @@ protected:
    * @brief get Input edit class
    * @param name - objectName
    */
-  AntiquaCRM::AbstractInput *getInputEdit(const QString &name);
+  AntiquaCRM::AInputWidget *getInputEdit(const QString &name);
 
   /**
    * @brief get Input edit class list
    * @param pcre - pattern
    */
-  QList<AntiquaCRM::AbstractInput *>
+  QList<AntiquaCRM::AInputWidget *>
   getInputEditList(const QRegularExpression &pcre);
 
   /**
-   * @brief get data from AntiquaCRM::AbstractInput::objectName()
+   * @brief get data from AntiquaCRM::AInputWidget::objectName()
    */
   const QVariant getDataValue(const QString &name);
 

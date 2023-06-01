@@ -27,9 +27,9 @@ ConfigGeneral::ConfigGeneral(QWidget *parent)
 }
 
 void ConfigGeneral::loadSectionConfig() {
-  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
-    AntiquaCRM::AbstractInput *m_inp = it.next();
+    AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp->objectName().isEmpty())
       continue;
 
@@ -43,9 +43,9 @@ void ConfigGeneral::loadSectionConfig() {
 }
 
 void ConfigGeneral::saveSectionConfig() {
-  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
-    AntiquaCRM::AbstractInput *m_inp = it.next();
+    AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp->objectName().isEmpty())
       continue;
 

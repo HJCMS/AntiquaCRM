@@ -83,7 +83,7 @@ void PhoneCountryCodeModel::initModel() {
 }
 
 PhoneEdit::PhoneEdit(const QString &name, QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   setObjectName(name);
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setToolTip("DIN 5008/E.123");

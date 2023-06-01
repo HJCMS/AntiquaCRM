@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tabseditactionbar.h"
-#include "abstractinput.h"
+#include "ainputwidget.h"
 
 #include <QLayout>
 

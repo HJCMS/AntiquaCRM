@@ -106,7 +106,7 @@ public:
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY SelectEUCountry final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

@@ -8,7 +8,7 @@
 
 namespace AntiquaCRM {
 
-TextLine::TextLine(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+TextLine::TextLine(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   layout->addWidget(m_edit);
   initData();

@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Show Date time Information (no editor)
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY DateTimeInfo final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY DateTimeInfo final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

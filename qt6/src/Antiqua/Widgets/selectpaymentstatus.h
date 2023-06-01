@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @class SelectPaymentStatus
  */
 class ANTIQUACRM_LIBRARY SelectPaymentStatus final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

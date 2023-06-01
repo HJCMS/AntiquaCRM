@@ -11,7 +11,7 @@
 namespace AntiquaCRM {
 
 SelectStorage::SelectStorage(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_select = new AntiquaCRM::AComboBox(this);
   m_select->setToolTip(tr("Storage Location"));
   m_select->setWithoutDisclosures(QString());

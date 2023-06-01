@@ -64,7 +64,7 @@ public:
  * @brief Phone/Mobil number input edit
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PhoneEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY PhoneEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

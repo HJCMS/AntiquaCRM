@@ -8,7 +8,7 @@
 
 namespace AntiquaCRM {
 
-YearEdit::YearEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+YearEdit::YearEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ASpinBox(this);
   m_edit->setMinimum(1400);
   m_edit->setMaximum(QDate::currentDate().year() + 1);

@@ -21,7 +21,7 @@ namespace AntiquaCRM {
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY BookBindingEdit final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

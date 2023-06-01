@@ -20,7 +20,7 @@ namespace AntiquaCRM {
  * @brief Numeric Input Editor
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY NumEdit final : public AntiquaCRM::AbstractInput {
+class ANTIQUACRM_LIBRARY NumEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

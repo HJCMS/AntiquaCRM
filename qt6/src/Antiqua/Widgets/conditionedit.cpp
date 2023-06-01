@@ -8,7 +8,7 @@
 namespace AntiquaCRM {
 
 ConditionEdit::ConditionEdit(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setToolTip(tr("Condition"));
   m_edit->setWithoutDisclosures(AntiquaCRM::Condition::NO_CONDITION);

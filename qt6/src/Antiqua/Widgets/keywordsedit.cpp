@@ -16,7 +16,7 @@
 namespace AntiquaCRM {
 
 KeywordsEdit::KeywordsEdit(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   // ColumnList
   m_keywords = new KeywordListView(this);
   m_keywords->setFocusPolicy(Qt::NoFocus);

@@ -22,7 +22,7 @@ namespace AntiquaCRM {
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY SalutationEdit final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

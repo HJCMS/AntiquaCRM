@@ -7,7 +7,7 @@
 
 namespace AntiquaCRM {
 
-TextField::TextField(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+TextField::TextField(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ATextEdit(this);
   layout->addWidget(m_edit);
   connect(m_edit, SIGNAL(textChanged()), SLOT(valueChanged()));

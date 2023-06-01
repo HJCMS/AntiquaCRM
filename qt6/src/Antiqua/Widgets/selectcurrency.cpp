@@ -9,7 +9,7 @@
 namespace AntiquaCRM {
 
 SelectCurrency::SelectCurrency(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent}, QLocale{QLocale::system()} {
+    : AntiquaCRM::AInputWidget{parent}, QLocale{QLocale::system()} {
   m_box = new AntiquaCRM::AComboBox(this);
   m_edit = new ALineEdit(m_box);
   m_edit->setClearButtonEnabled(false);

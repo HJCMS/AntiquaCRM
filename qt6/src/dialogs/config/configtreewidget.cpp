@@ -2,7 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "configtreewidget.h"
-#include "abstractinput.h"
+
+#include <AntiquaInput>
 
 ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   setColumnCount(1);

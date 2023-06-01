@@ -11,9 +11,9 @@
 #include "aglobal.h"
 #endif
 
-// AntiquaCRM::AbstractInput
-#ifndef ANTIQUACRM_INPUT_ABSTRACTINPUT_H
-#include "abstractinput.h"
+// AntiquaCRM::AInputWidget
+#ifndef ANTIQUACRM_INPUT_AINPUTWIDGET_H
+#include "ainputwidget.h"
 #endif
 
 // AntiquaCRM::AComboBox

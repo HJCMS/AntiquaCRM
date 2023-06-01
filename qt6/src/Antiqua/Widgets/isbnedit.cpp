@@ -11,7 +11,7 @@
 namespace AntiquaCRM {
 
 IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
-    : AntiquaCRM::AbstractInput{parent}, p_codeType{ctype} {
+    : AntiquaCRM::AInputWidget{parent}, p_codeType{ctype} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setMaxLength(13);
   m_edit->setClearButtonEnabled(true);

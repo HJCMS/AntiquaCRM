@@ -3,7 +3,8 @@
 
 #include "bookstablemodel.h"
 #include "booksconfig.h"
-#include "abstractinput.h"
+
+#include <AntiquaInput>
 
 BooksTableModel::BooksTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{BOOKS_SQL_TABLE_NAME, parent} {

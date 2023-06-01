@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "systemtrayicon.h"
-#include "abstractinput.h"
 
+#include <AntiquaInput>
 #include <QMenu>
 
 SystemTrayIcon::SystemTrayIcon(const QIcon &icon, QObject *parent)

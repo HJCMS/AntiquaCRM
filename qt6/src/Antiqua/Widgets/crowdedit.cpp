@@ -5,7 +5,7 @@
 
 namespace AntiquaCRM {
 
-CrowdEdit::CrowdEdit(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+CrowdEdit::CrowdEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ASpinBox(this);
   m_edit->setMinimum(0);
   m_edit->setMaximum(999);

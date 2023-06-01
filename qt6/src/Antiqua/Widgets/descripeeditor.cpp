@@ -8,7 +8,7 @@
 namespace AntiquaCRM {
 
 DescripeEditor::DescripeEditor(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ATextEdit(this);
   layout->addWidget(m_edit);
 

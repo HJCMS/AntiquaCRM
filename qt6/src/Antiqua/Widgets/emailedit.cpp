@@ -10,7 +10,7 @@
 namespace AntiquaCRM {
 
 EMailEdit::EMailEdit(const QString &name, QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   setObjectName(name);
   m_edit = new AntiquaCRM::ALineEdit(this);
   layout->addWidget(m_edit);

@@ -95,7 +95,7 @@ public:
  *
  * QStringList inputs({"c_postalcode","c_location","c_country"});
  * foreach(QString n, inputs) {
- *  AbstractInput *obj = findChild<AbstractInput *>(n);
+ *  AInputWidget *obj = findChild<AInputWidget *>(n);
  *  if (obj != nullptr)
  *   qDebug() << obj->objectName() << obj->getValue();
  * }
@@ -104,7 +104,7 @@ public:
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PostalCodeEdit final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
@@ -216,7 +216,7 @@ public:
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PostalCodeState final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
@@ -275,7 +275,7 @@ public:
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PostalCodeLocation final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

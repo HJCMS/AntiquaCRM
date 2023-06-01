@@ -9,7 +9,7 @@
 
 namespace AntiquaCRM {
 
-SelectFile::SelectFile(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+SelectFile::SelectFile(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setPlaceholderText(tr("set file path"));
   layout->addWidget(m_edit);

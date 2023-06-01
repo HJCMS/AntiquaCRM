@@ -25,9 +25,9 @@ ConfigPaths::ConfigPaths(QWidget *parent)
 }
 
 void ConfigPaths::loadSectionConfig() {
-  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
-    AntiquaCRM::AbstractInput *m_inp = it.next();
+    AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp->objectName().isEmpty())
       continue;
 
@@ -41,9 +41,9 @@ void ConfigPaths::loadSectionConfig() {
 }
 
 void ConfigPaths::saveSectionConfig() {
-  QListIterator<AntiquaCRM::AbstractInput *> it(getInputList(widget()));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
-    AntiquaCRM::AbstractInput *m_inp = it.next();
+    AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp->objectName().isEmpty())
       continue;
 

@@ -20,7 +20,7 @@
 namespace AntiquaCRM {
 
 SelectTargets::SelectTargets(QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setPlaceholderText(tr("Target directory"));
   layout->addWidget(m_edit);

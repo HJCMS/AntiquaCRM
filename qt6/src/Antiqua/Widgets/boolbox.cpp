@@ -7,7 +7,7 @@
 
 namespace AntiquaCRM {
 
-BoolBox::BoolBox(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+BoolBox::BoolBox(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new QCheckBox(this);
   layout->addWidget(m_edit);
   initData();

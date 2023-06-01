@@ -12,7 +12,7 @@ namespace AntiquaCRM {
 constexpr qint64 price_maximum = 999999999;
 
 PriceEdit::PriceEdit(double min, double max, QWidget *parent)
-    : AntiquaCRM::AbstractInput{parent} {
+    : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ADoubleBox(this);
   m_edit->setMinimum(min);
   m_edit->setMaximum(max);
