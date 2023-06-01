@@ -88,7 +88,7 @@
         <translation>Datenbankverbindung erstellt!</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Creating Cachefiles.</source>
         <translation>Erstelle Temporäre Dateien.</translation>
     </message>
@@ -2784,7 +2784,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+1"/>
         <source>Year may differ from entry</source>
-        <translation>Jahr kann vom Eingabe abweichen</translation>
+        <translation>Jahr kann von Eingabe abweichen</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -7360,7 +7360,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Suche Lager Zuordnung</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+126"/>
         <source>Storage location is required and must set.</source>
         <translation>Der Lagerort ist Erforderlich und muss gesetzt sein.</translation>
     </message>
