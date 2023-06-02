@@ -12,7 +12,7 @@ TabsSearchBar::TabsSearchBar(QWidget *parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
   setFloatable(false);
   setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-  setContentsMargins(0, 0, 0, 0);
+  setStyleSheet("QToolBar {margin: 5px; spacing:3px;}");
 
   AntiquaCRM::ASettings cfg(this);
   p_minLength = cfg.value("search/startlength", 5).toInt();
@@ -167,7 +167,7 @@ const QString TabsSearchBar::prepareFieldSearch(const QString &field,
   backward.clear();
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("SEARCH:(%s)", qPrintable(sql.replace(jokerPattern, "%")));
+  qDebug() << Q_FUNC_INFO << sql.replace(jokerPattern, "%");
 #endif
 
   return sql.replace(jokerPattern, "%");

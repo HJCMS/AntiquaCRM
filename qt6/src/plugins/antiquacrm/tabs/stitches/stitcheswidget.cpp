@@ -136,6 +136,10 @@ void StitchesWidget::createSearchQuery(const QString &history) {
     return;
   }
 
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << _sql;
+#endif
+
   m_table->setQuery(_sql);
   // Nur Aktivieren wenn eine Suche ausgeführt wurde.
   m_statusBar->setCreateButtonEnabled(true);

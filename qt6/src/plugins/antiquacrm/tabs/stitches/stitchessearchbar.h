@@ -12,6 +12,8 @@
 #include <AntiquaInput>
 #include <AntiquaTabs>
 #include <QObject>
+#include <QCheckBox>
+#include <QComboBox>
 #include <QPushButton>
 #include <QWidget>
 
@@ -25,6 +27,8 @@ class ANTIQUACRM_LIBRARY StitchesSearchBar final
 private:
   StitchesSelectFilter *m_selectFilter;
   AntiquaCRM::ALineEdit *m_searchInput;
+  QCheckBox *m_views;
+  QComboBox *m_orientation;
   QPushButton *m_searchBtn;
 
   /**

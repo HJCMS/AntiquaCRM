@@ -12,16 +12,25 @@
 StitchesSearchBar::StitchesSearchBar(QWidget *parent)
     : AntiquaCRM::TabsSearchBar{parent} {
   m_selectFilter = new StitchesSelectFilter(this);
-  m_selectFilter->setToolTip(
-      tr("Press CTRL+Shift+F, to quickly open this Menu."));
   addWidget(m_selectFilter);
 
   m_searchInput = new AntiquaCRM::ALineEdit(this);
   m_searchInput->setPlaceholderText(tr("Default search"));
   addWidget(m_searchInput);
 
-  addWidget(searchConfines());
-  addSeparator();
+  // ip_landscape
+  m_orientation = new QComboBox(this);
+  m_orientation->insertItem(0, tr("Orientation"));
+  m_orientation->insertItem(1, tr("Vertical"));
+  m_orientation->insertItem(2, tr("Horizontal"));
+  m_orientation->setToolTip(tr("Orientation: Any, Portrait or Landscape"));
+  addWidget(m_orientation);
+
+  // ip_views
+  m_views = new QCheckBox(tr("Views"), this);
+  m_views->setToolTip(tr("With Views or not."));
+  addWidget(m_views);
+
   addWidget(stockCheckBox());
 
   m_searchBtn = startSearchButton();
@@ -37,8 +46,15 @@ StitchesSearchBar::StitchesSearchBar(QWidget *parent)
 }
 
 const QString StitchesSearchBar::getSearchString(const QStringList &fields) {
-  QString query;
-  QString _input = m_searchInput->text();
+  QString _sql;
+  QString _input = m_searchInput->text().trimmed();
+  if (_input.isEmpty() || fields.count() < 1) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "INVALID_PRINTS_SEARCH_INPUT";
+#endif
+    return QString("ip_title='INVALID_PRINTS_SEARCH_INPUT'");
+  }
+
   // Standard Suchfeld
   if (_input.length() >= getMinLength()) {
     QStringList _bufLeft;
@@ -50,23 +66,14 @@ const QString StitchesSearchBar::getSearchString(const QStringList &fields) {
       _bufLeft << fset;
     }
     if (_bufLeft.count() > 0) {
-      query.append("(");
-      query.append(_bufLeft.join(" OR "));
-      query.append(")");
+      _sql.append("(");
+      _sql.append(_bufLeft.join(" OR "));
+      _sql.append(")");
     }
     _bufLeft.clear();
   }
 
-  if (query.length() < 1) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "INVALID_PRINTS_SEARCH_INPUT" << _input;
-#endif
-    if (!_input.isEmpty())
-      return QString("ip_title='" + _input + "'");
-    else
-      return QString("ip_title='INVALID_PRINTS_SEARCH_INPUT'");
-  }
-  return query;
+  return _sql;
 }
 
 bool StitchesSearchBar::lineInputsEnabled() {
@@ -128,23 +135,39 @@ bool StitchesSearchBar::requiredLengthExists() {
 
 const QString StitchesSearchBar::getSearchStatement() {
   QString _data = m_selectFilter->currentFilter();
-  if (_data.isEmpty()) {
+  QString _input = m_searchInput->text().trimmed();
+  if (_data.isEmpty() || _input.isEmpty()) {
     qWarning("No filter found.");
+    emit sendNotify(tr("Invalid search input!"));
     return QString();
   }
 
-  QStringList _fields = _data.split(",");
+  // start SqlClause with or without stock
   QString _sql(withStock() ? "ip_count>0 AND " : "");
 
-  if (_fields.contains("ip_title") || _fields.contains("ip_author")) {
-    _sql.append("(" + getSearchString(_fields) + ")");
+  // ip_views
+  if (m_views->isChecked())
+    _sql.append("ip_views=true AND ");
+
+  // ip_landscape
+  if (m_orientation->currentIndex() == 2)
+    _sql.append("ip_landscape=true AND ");
+  else if (m_orientation->currentIndex() == 1)
+    _sql.append("ip_landscape=false AND ");
+
+  // table columns from filter
+  QStringList _cols = _data.split(",");
+
+  // default string search patterns
+  if (_cols.contains("ip_title") || _cols.contains("ip_author")) {
+    _sql.append(getSearchString(_cols));
     return _sql;
   }
 
-  // Article search e.g.(104820,82490,43310)
+  // article search e.g.(104820,82490,43310)
   static const QRegularExpression numberPattern("[\\D]+");
-  if (_fields.contains("ip_id")) {
-    QString _str = m_searchInput->text().trimmed();
+  if (_cols.contains("ip_id")) {
+    QString _str = _input;
     _str.replace(numberPattern, ",");
     if (_str.isEmpty())
       return QString();
@@ -154,30 +177,31 @@ const QString StitchesSearchBar::getSearchStatement() {
     return _sql;
   }
 
-  // Since/Modified Year search
-  if (_fields.contains("ip_year")) {
+  // year search - since and modified
+  if (_cols.contains("ip_year")) {
     QStringList _buf;
-    QString _str = m_searchInput->text().trimmed();
+    QString _str = _input;
     _str.replace(numberPattern, ",");
     if (_str.isEmpty())
       return QString();
 
     _buf << "DATE_PART('YEAR',ip_since) IN (" + _str + ")";
     _buf << "DATE_PART('YEAR',ip_changed) IN (" + _str + ")";
-    _sql.append(_buf.join(" OR "));
+    _sql.append("(" + _buf.join(" OR ") + ")");
     _str.clear();
     return _sql;
   }
 
-  // Storage search
+  // storage and keyword search
   if (_data.contains("ip_storage")) {
-    QString _str = m_searchInput->text();
+    QString _str = _input;
     _str.replace(jokerPattern, "%");
+
     QStringList _buf;
     _buf << prepareFieldSearch("sl_storage", _str);
     _buf << prepareFieldSearch("ip_storage_compartment", _str);
     _buf << prepareFieldSearch("sl_identifier", _str);
-    if (_fields.contains("ip_keyword"))
+    if (_cols.contains("ip_keyword"))
       _buf << prepareFieldSearch("ip_keyword", _str);
 
     _sql.append("(" + _buf.join(" OR ") + ")");
@@ -185,6 +209,6 @@ const QString StitchesSearchBar::getSearchStatement() {
     return _sql;
   }
 
-  qWarning("Not Defined Search (%s)", qPrintable(_data));
+  qWarning("No defined Search (%s)", qPrintable(_data));
   return QString();
 }

@@ -9,6 +9,7 @@ BooksSelectFilter::BooksSelectFilter(QWidget *parent) : QComboBox{parent} {
   setWhatsThis(
       tr("With this button you can optimize your search with some filters."));
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  setToolTip(tr("Press CTRL+Shift+F, to quickly open this Menu."));
 
   QString _prefix = tr("Search Book with") + " ";
   QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");

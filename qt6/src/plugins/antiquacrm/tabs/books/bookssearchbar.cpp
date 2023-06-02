@@ -12,8 +12,6 @@
 BooksSearchBar::BooksSearchBar(QWidget *parent)
     : AntiquaCRM::TabsSearchBar{parent} {
   m_selectFilter = new BooksSelectFilter(this);
-  m_selectFilter->setToolTip(
-      tr("Press CTRL+Shift+F, to quickly open this Menu."));
   addWidget(m_selectFilter);
 
   m_searchInput = new AntiquaCRM::ALineEdit(this);
@@ -43,6 +41,9 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
 
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 
+  // TODO
+  // sendSearchPattern(TabsSearchBar::SearchPattern)
+
   setFilter(0);
 }
 
@@ -50,6 +51,10 @@ const QString BooksSearchBar::getTitleSearch(const QStringList &fields) {
   QString query;
   QString inputLeft = m_searchInput->text();
   QString inputRight = m_customSearch->text();
+
+  TabsSearchBar::SearchPattern _pattern = searchPattern();
+  qDebug() << "BooksSearchBar SearchPattern" << _pattern;
+
   // Standard Suchfeld
   if (m_searchInput->length() >= getMinLength()) {
     QStringList bufferLeft;
