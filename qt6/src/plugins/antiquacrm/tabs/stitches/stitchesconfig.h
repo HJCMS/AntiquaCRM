@@ -24,6 +24,14 @@
 #define STITCHES_CONFIG_POINTER QString("CONFIG_PRINTS_STITCHES")
 #endif
 
+#ifndef STITCHES_TABLE_NAME
+#define STITCHES_TABLE_NAME QString("inventory_prints")
+#endif
+
+#ifndef STITCHES_INDEX_COLUMN
+#define STITCHES_INDEX_COLUMN QString("ip_id")
+#endif
+
 #ifndef STITCHES_SQL_EDITOR_PATTERN
 #define STITCHES_SQL_EDITOR_PATTERN "^ip_[a-z_]+\\b$"
 #endif

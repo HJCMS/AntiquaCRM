@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "stitcheswidget.h"
+#include "stitchesconfig.h"
 #include "stitcheseditor.h"
 #include "stitchessearchbar.h"
 #include "stitchesstatusbar.h"
@@ -13,7 +14,7 @@
 
 StitchesWidget::StitchesWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
-  setObjectName("inventory_prints");
+  setObjectName(STITCHES_TABLE_NAME);
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
   setClosable(false);
 
@@ -137,7 +138,7 @@ void StitchesWidget::createSearchQuery(const QString &history) {
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << _sql;
+  qDebug() << Q_FUNC_INFO << _sql;
 #endif
 
   m_table->setQuery(_sql);

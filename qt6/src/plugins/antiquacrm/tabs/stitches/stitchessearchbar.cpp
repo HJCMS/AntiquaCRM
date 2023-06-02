@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchessearchbar.h"
+#include "stitchesconfig.h"
 #include "stitchesselectfilter.h"
 
 #include <QIcon>
@@ -14,23 +15,36 @@ StitchesSearchBar::StitchesSearchBar(QWidget *parent)
   m_selectFilter = new StitchesSelectFilter(this);
   addWidget(m_selectFilter);
 
+  // _input
   m_searchInput = new AntiquaCRM::ALineEdit(this);
   m_searchInput->setPlaceholderText(tr("Default search"));
   addWidget(m_searchInput);
 
   // ip_landscape
   m_orientation = new QComboBox(this);
+  m_orientation->setObjectName("ip_landscape");
+  m_orientation->setToolTip(tr("Any, Portrait or Landscape"));
   m_orientation->insertItem(0, tr("Orientation"));
+  m_orientation->setItemData(0, tr("Portrait or Landscape"), Qt::ToolTipRole);
   m_orientation->insertItem(1, tr("Vertical"));
+  m_orientation->setItemData(1, tr("Portrait"), Qt::ToolTipRole);
   m_orientation->insertItem(2, tr("Horizontal"));
-  m_orientation->setToolTip(tr("Orientation: Any, Portrait or Landscape"));
+  m_orientation->setItemData(2, tr("Landscape"), Qt::ToolTipRole);
   addWidget(m_orientation);
+
+  // ip_kolorit
+  m_kolorit = new QCheckBox(tr("Kolorit"), this);
+  m_kolorit->setObjectName("ip_kolorit");
+  m_kolorit->setToolTip(tr("Coloring in painting."));
+  addWidget(m_kolorit);
 
   // ip_views
   m_views = new QCheckBox(tr("Views"), this);
+  m_views->setObjectName("ip_views");
   m_views->setToolTip(tr("With Views or not."));
   addWidget(m_views);
 
+  // isChecked() == "ip_count>0"
   addWidget(stockCheckBox());
 
   m_searchBtn = startSearchButton();
@@ -85,7 +99,7 @@ void StitchesSearchBar::setSearch() {
   if (_filter.isEmpty())
     return;
 
-  if (_filter.contains("ip_id")) {
+  if (_filter.contains(STITCHES_INDEX_COLUMN)) {
     emit sendSearchClicked();
   } else if (lineInputsEnabled() && requiredLengthExists()) {
     emit sendSearchClicked();
@@ -102,7 +116,7 @@ void StitchesSearchBar::setFilter(int index) {
   const QString _tip = m_selectFilter->currentToolTip(index);
   const QString _filter = m_selectFilter->currentFilter(index);
 
-  if (_filter.contains("ip_id") || _filter.contains("ip_since")) {
+  if (_filter.contains(STITCHES_INDEX_COLUMN) || _filter.contains("ip_since")) {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
   } else {
@@ -145,6 +159,10 @@ const QString StitchesSearchBar::getSearchStatement() {
   // start SqlClause with or without stock
   QString _sql(withStock() ? "ip_count>0 AND " : "");
 
+  // ip_kolorit
+  if (m_kolorit->isChecked())
+    _sql.append("ip_kolorit=true AND ");
+
   // ip_views
   if (m_views->isChecked())
     _sql.append("ip_views=true AND ");
@@ -166,7 +184,7 @@ const QString StitchesSearchBar::getSearchStatement() {
 
   // article search e.g.(104820,82490,43310)
   static const QRegularExpression numberPattern("[\\D]+");
-  if (_cols.contains("ip_id")) {
+  if (_cols.contains(STITCHES_INDEX_COLUMN)) {
     QString _str = _input;
     _str.replace(numberPattern, ",");
     if (_str.isEmpty())

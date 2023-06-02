@@ -27,7 +27,12 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
   addWidget(m_customSearch);
 
   addWidget(searchConfines());
-  addSeparator();
+
+  // ib_signed
+  m_signed = new QCheckBox(tr("Signed"), this);
+  m_signed->setToolTip(tr("Signed Version"));
+  addWidget(m_signed);
+
   addWidget(stockCheckBox());
 
   m_searchBtn = startSearchButton();
@@ -41,9 +46,6 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
 
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 
-  // TODO
-  // sendSearchPattern(TabsSearchBar::SearchPattern)
-
   setFilter(0);
 }
 
@@ -51,9 +53,6 @@ const QString BooksSearchBar::getTitleSearch(const QStringList &fields) {
   QString query;
   QString inputLeft = m_searchInput->text();
   QString inputRight = m_customSearch->text();
-
-  TabsSearchBar::SearchPattern _pattern = searchPattern();
-  qDebug() << "BooksSearchBar SearchPattern" << _pattern;
 
   // Standard Suchfeld
   if (m_searchInput->length() >= getMinLength()) {
@@ -244,73 +243,79 @@ bool BooksSearchBar::requiredLengthExists() {
 }
 
 const QString BooksSearchBar::getSearchStatement() {
-  QJsonObject js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
-  QStringList fields = js.value("fields").toString().split(",");
-  QString sql(withStock() ? "ib_count>0 AND " : "");
-  QString operation = js.value("search").toString();
-
   static const QRegularExpression stringListPattern("\\,\\s?$");
   static const QRegularExpression numericPattern("\\D+");
+  QJsonObject _js = m_selectFilter->getFilter(m_selectFilter->currentIndex());
+  QString _sql(withStock() ? "ib_count>0 AND " : "");
+  QStringList _columns = _js.value("fields").toString().split(",");
+  QString _operation = _js.value("search").toString();
+  QString _input;
 
-  if (operation.isEmpty())
+  // ib_signed
+  if (m_signed->isChecked()) {
+    _sql.append("ib_signed=true AND ");
+  }
+
+  if (_operation.isEmpty())
     return QString();
 
   // Title und Autorensuche
-  if (operation == "title_and_author") {
-    sql.append("(" + getTitleSearch(fields) + ")");
-    return sql;
+  if (_operation == "title_and_author") {
+    _sql.append("(" + getTitleSearch(_columns) + ")");
+    return _sql;
   }
 
   // Buch Titlesuche
-  if (operation == "title") {
-    sql.append("(" + getTitleSearch(fields) + ")");
-    return sql;
+  if (_operation == "title") {
+    _sql.append("(" + getTitleSearch(_columns) + ")");
+    return _sql;
   }
 
   // Buch Autorensuche
-  if (operation == "author") {
-    sql.append("(" + getTitleSearch(fields) + ")");
-    return sql;
+  if (_operation == "author") {
+    _sql.append("(" + getTitleSearch(_columns) + ")");
+    return _sql;
   }
 
   // Artikel Nummersuche (107368,115110)
-  if (operation == "articleId") {
-    QString s = m_searchInput->text();
-    s.replace(stringListPattern, "");
-    return "ib_id IN (" + s + ")";
+  if (_operation == "articleId") {
+    _input = m_searchInput->text();
+    _input.replace(stringListPattern, "");
+    return "ib_id IN (" + _input + ")";
   }
 
   // ISBN Suche
-  if (operation == "isbn") {
-    QString s = m_searchInput->text();
-    s.replace(numericPattern, "");
-    if (s.length() == 10 || s.length() == 13) {
-      sql.append("ib_isbn=" + s);
-      return sql;
+  if (_operation == "isbn") {
+    _input = m_searchInput->text();
+    _input.replace(numericPattern, "");
+    if (_input.length() == 10 || _input.length() == 13) {
+      _sql.append("ib_isbn=" + _input);
+      return _sql;
     }
   }
 
   // Publisher
-  if (operation == "publisher") {
-    QString s = m_searchInput->text();
-    sql.append("(" + prepareFieldSearch("ib_publisher", s) + ")");
-    return sql;
+  if (_operation == "publisher") {
+    _input = m_searchInput->text();
+    _sql.append("(" + prepareFieldSearch("ib_publisher", _input) + ")");
+    return _sql;
   }
 
   // Lager & Stichwortsuche
-  if (operation == "storage") {
-    QString s = m_searchInput->text();
-    s.replace(jokerPattern, "%");
-    QStringList buffer;
-    buffer << prepareFieldSearch("sl_storage", s);
-    buffer << prepareFieldSearch("sl_identifier", s);
-    buffer << prepareFieldSearch("ib_keyword", s);
-    sql.append("(" + buffer.join(" OR ") + ")");
-    return sql;
+  if (_operation == "storage") {
+    _input = m_searchInput->text();
+    _input.replace(jokerPattern, "%");
+    QStringList _buf;
+    _buf << prepareFieldSearch("sl_storage", _input);
+    _buf << prepareFieldSearch("sl_identifier", _input);
+    _buf << prepareFieldSearch("ib_keyword", _input);
+    _sql.append("(" + _buf.join(" OR ") + ")");
+    _buf.clear();
+    return _sql;
   }
 
   qWarning("Not Defined Search (%s)",
-           qPrintable(js.value("search").toString()));
+           qPrintable(_js.value("search").toString()));
 
   return QString();
 }

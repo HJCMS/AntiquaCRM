@@ -62,8 +62,9 @@ StitchesEditor::StitchesEditor(QWidget *parent)
 
   ip_kolorit = new AntiquaCRM::BoolBox(this);
   ip_kolorit->setObjectName("ip_kolorit");
-  ip_kolorit->setBuddyLabel(tr("kolorit"));
-  tempWhatsThis = tr("Is it a kolorit printing?");
+  ip_kolorit->setBuddyLabel(tr("Kolorit"));
+  tempWhatsThis = tr("In painting, color means the selection, harmony, shading "
+                     "and composition of the different colors in a painting.");
   ip_kolorit->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_kolorit);
 
@@ -407,7 +408,7 @@ const QHash<QString, QVariant> StitchesEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
   QList<AntiquaCRM::AInputWidget *> list =
       findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                                Qt::FindChildrenRecursively);
+                                               Qt::FindChildrenRecursively);
   QList<AntiquaCRM::AInputWidget *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     AntiquaCRM::AInputWidget *cur = *it;

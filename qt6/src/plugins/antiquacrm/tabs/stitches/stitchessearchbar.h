@@ -28,6 +28,7 @@ private:
   StitchesSelectFilter *m_selectFilter;
   AntiquaCRM::ALineEdit *m_searchInput;
   QCheckBox *m_views;
+  QCheckBox *m_kolorit;
   QComboBox *m_orientation;
   QPushButton *m_searchBtn;
 

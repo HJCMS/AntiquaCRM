@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "bookswidget.h"
-#include "booksconfig.h"
 #include "bookseditor.h"
 #include "bookssearchbar.h"
 #include "booksstatusbar.h"
@@ -14,7 +13,7 @@
 
 BooksWidget::BooksWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"books_tab", parent} {
-  setObjectName(BOOKS_SQL_TABLE_NAME);
+  setObjectName("books_tab_widget");
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
   setClosable(false);
 
@@ -135,6 +134,10 @@ void BooksWidget::createSearchQuery(const QString &history) {
     qWarning("BooksWidget::createSearchQuery „length()“, to small!");
     return;
   }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "Books:Search" << _sql;
+#endif
 
   m_table->setQuery(_sql);
   // Nur Aktivieren wenn eine Suche ausgeführt wurde.

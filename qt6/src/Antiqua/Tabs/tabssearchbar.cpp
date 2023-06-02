@@ -166,10 +166,6 @@ const QString TabsSearchBar::prepareFieldSearch(const QString &field,
   forward.clear();
   backward.clear();
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << sql.replace(jokerPattern, "%");
-#endif
-
   return sql.replace(jokerPattern, "%");
 }
 

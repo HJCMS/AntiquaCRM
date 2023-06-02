@@ -12,6 +12,7 @@
 #include <AntiquaInput>
 #include <AntiquaTabs>
 #include <QObject>
+#include <QCheckBox>
 #include <QPushButton>
 #include <QWidget>
 
@@ -26,6 +27,7 @@ private:
   BooksSelectFilter *m_selectFilter;
   AntiquaCRM::ALineEdit *m_searchInput;
   AntiquaCRM::ALineEdit *m_customSearch;
+  QCheckBox *m_signed;
   QPushButton *m_searchBtn;
 
   /**
