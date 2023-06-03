@@ -1,1 +1,9 @@
 Doxyfile
+aglobal.h
+antiquawidgets.h
+antiquainput.h
+antiquabuttons.h
+antiquaprinting.h
+antiquatabs.h
+antiquaproviders.h
+
