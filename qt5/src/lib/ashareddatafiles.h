@@ -16,65 +16,88 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Datenbehandlung im Benutzerverzeichnis
+ * @class ASharedDataFiles
+ * @brief File handling for QStandardPaths::AppDataLocation
  * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
+
 public:
   explicit ASharedDataFiles(const QDir &d = ASettings::getUserDataDir());
 
   /**
-   * @brief Gibt eine Liste der beschreibaren Dateien zurück ...
+   * @brief Returns a list of writable files ...
+   * Defined function call with QDir::entryInfoList
    */
-  const QStringList dataFiles();
+  const QFileInfoList listFileInfos() const;
 
   /**
-   * @brief Standard für Suche, Anhand der Dateierweiterrung.
-   * Üblicherweise:
-   * @li *.xml
-   * @li *.sql
-   * @li *.json
+   * @brief List of file extension suffixes.
+   * @return QStringList({"*.xml","*.sql","*.json"})
    */
-  static const QStringList defaultFilter();
+  static const QStringList fileSuffixes();
 
   /**
-   * @brief Vergleicht ob die an diesem tag schon erneuert wurde!
-   * Wenn dies der fall ist dann gibt die Methode false zurück!
+   * @brief A basename list of Files which only updated once per week.
+   * @return QStringList({"postalcodes", "publishers", "storagelocations"})
+   */
+  static const QStringList weeklyFileUpdate();
+
+  /**
+   * @brief Check whether this file is available and/or requires an update.
+   * @return true if update is required
    */
   bool needsUpdate(const QString &basename,
-                   const QStringList &ext = defaultFilter());
+                   const QStringList &ext = fileSuffixes());
 
   /**
-   * @brief Such mit dem Basisnamen und optionaler Erweiterung nach
-   * Verfügbarkeit!
-   * @note Nur Beschreibbare Dateien werden berücksichtigt!
+   * @brief File search with basename and file extension for availability!
+   * @note Only writable files are considered!
    */
   bool fileExists(const QString &basename,
-                  const QStringList &ext = defaultFilter());
+                  const QStringList &ext = fileSuffixes());
 
   /**
-   * @brief Json Dokument speichern.
+   * @brief Remove a file from destination
+   * @param basename - search file basename in current target
+   * @param ext      - file extension for availability
+   * @return boolean - true if file has removed
+   */
+  bool removeFile(const QString &basename,
+                  const QStringList &ext = fileSuffixes());
+
+  /**
+   * @brief Save json document.
+   * @param basename - file basename for current target
+   * @param doc      - json document
+   * @return boolean - true when success
    */
   bool storeJson(const QString &basename, const QJsonDocument &doc);
 
   /**
-   * @brief Nehme Json Dokument aus Datei.
+   * @brief Get json document from file.
+   * @param basename - find file basename in current target
    */
   const QJsonDocument getJson(const QString &basename);
 
   /**
-   * @brief XML Dokument speichern.
+   * @brief Save XML document.
+   * @param basename - file basename for current target
+   * @param xml      - dom document
+   * @return boolean - true when success
    */
   bool storeXml(const QString &basename, const QDomDocument &xml);
 
   /**
-   * @brief Nehme XML Dokument aus Datei.
+   * @brief Take XML document from file.
+   * @param basename - find file basename in current target
    */
   const QDomDocument getXML(const QString &basename);
 };
 
 /**
- * @brief Datenbehandlung im Benutzer Cache-/ Tempverzeichnis
+ * @class ASharedCacheFiles
+ * @brief Data handling in user cache/temp directory
  * @ingroup core
  */
 class ANTIQUACRM_LIBRARY ASharedCacheFiles : public QDir {
@@ -82,27 +105,30 @@ public:
   explicit ASharedCacheFiles(const QDir &d = ASettings::getUserTempDir());
 
   /**
-   * @brief Cache Datei speichern.
-   * @note Umwandlung QTextStream
+   * @brief Save cache file.
+   * @param filename - file name with extension
+   * @param data     - Converted to QTextStream
    */
   bool storeTempFile(const QString &filename, const QByteArray &data);
 
   /**
-   * @brief Cache Datei speichern.
-   * @note QTextStream
+   * @brief Save cache file.
+   * @param filename - file name with extension
+   * @param data     - QTextStream
    */
   bool storeTempFile(const QString &filename, const QString &data);
 
   /**
-   * @brief Öffne Cache Datei
+   * @brief Open cache file
+   * @param filename - file name in temporary target
    */
   const QString getTempFile(const QString &filename);
 
   /**
-   * @brief Öffne Cache Json Dokument
-   * @param md5sum - Der CacheBuilder speichert die Dateinamen mit md5 hash
+   * @brief Open Json Cache Document
+   * @param md5sum - The CacheBuilder stores the filenames with md5 hash
    */
-  const QJsonObject getTempJson(const QString &md5sum);
+  Q_DECL_DEPRECATED const QJsonObject getTempJson(const QString &md5sum);
 };
 
 }; // namespace AntiquaCRM

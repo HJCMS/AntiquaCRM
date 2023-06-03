@@ -13,15 +13,19 @@
 namespace AntiquaCRM {
 
 ASharedDataFiles::ASharedDataFiles(const QDir &d) : QDir{d} {
-  setNameFilters(defaultFilter());
+  setNameFilters(fileSuffixes());
 }
 
-const QStringList ASharedDataFiles::dataFiles() {
-  return entryList((QDir::Files | QDir::Writable), QDir::Name);
+const QFileInfoList ASharedDataFiles::listFileInfos() const {
+  return entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
 }
 
-const QStringList ASharedDataFiles::defaultFilter() {
+const QStringList ASharedDataFiles::fileSuffixes() {
   return QStringList({"*.xml", "*.sql", "*.json"});
+}
+
+const QStringList ASharedDataFiles::weeklyFileUpdate() {
+  return QStringList({"postalcodes", "publishers", "storagelocations"});
 }
 
 bool ASharedDataFiles::needsUpdate(const QString &basename,
@@ -29,33 +33,37 @@ bool ASharedDataFiles::needsUpdate(const QString &basename,
   if (ext.count() > 0)
     setNameFilters(ext);
 
-  // this files get only a weekly update
-  const QStringList _weekly({"postalcodes", "publishers", "storagelocations"});
-
   bool _exists = false;
-  QDate _date;
-  QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
-  foreach (QFileInfo i, li) {
+  QDate _fileDate;
+  foreach (QFileInfo i, listFileInfos()) {
     if (i.baseName() == basename) {
       _exists = true;
       // When the file was most recently modified.
-      _date = i.fileTime(QFileDevice::FileModificationTime).date();
+      _fileDate = i.fileTime(QFileDevice::FileModificationTime).date();
       break;
     }
   }
   // restore filter
   if (ext.count() > 0)
-    setNameFilters(defaultFilter());
+    setNameFilters(fileSuffixes());
 
-  if (_exists && _weekly.contains(basename)) {
-    // weekly update check
-    return (_date.daysTo(QDate::currentDate()) > 5);
-  } else if (_exists) {
-    // daily update check
-    return (_date == QDate::currentDate()) ? false : true;
-  }
   // need update
-  return true;
+  if (!_exists)
+    return true;
+
+  const QDate _curDate = QDate::currentDate();
+  // weekly update check
+  if (weeklyFileUpdate().contains(basename)) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    if (_fileDate.daysTo(_curDate) > 5) {
+      qDebug() << Q_FUNC_INFO << basename << Qt::endl
+               << _fileDate << _curDate << _fileDate.daysTo(_curDate);
+    }
+#endif
+    return (_fileDate.daysTo(_curDate) > 5);
+  }
+  // daily update check
+  return (_fileDate != _curDate);
 }
 
 bool ASharedDataFiles::fileExists(const QString &basename,
@@ -64,14 +72,28 @@ bool ASharedDataFiles::fileExists(const QString &basename,
     setNameFilters(ext);
 
   bool status = false;
-  QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
-  foreach (QFileInfo i, li) {
-    if (i.baseName() == basename) {
+  foreach (QFileInfo _fi, listFileInfos()) {
+    if (_fi.baseName() == basename) {
       status = true;
       break;
     }
   }
-  setNameFilters(defaultFilter());
+  setNameFilters(fileSuffixes());
+  return status;
+}
+
+bool ASharedDataFiles::removeFile(const QString &basename,
+                                  const QStringList &ext) {
+  if (ext.count() > 0)
+    setNameFilters(ext);
+
+  bool status = false;
+  foreach (QFileInfo _fi, listFileInfos()) {
+    if (_fi.baseName() == basename) {
+      status = remove(_fi.fileName());
+      break;
+    }
+  }
   return status;
 }
 

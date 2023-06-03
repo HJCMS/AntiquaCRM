@@ -87,6 +87,7 @@ bool ImageDialog::findSourceImage() {
     return false;
   }
 
+  bool _status = false;
   const QString _simple = QString::number(p_articleId);
   const QString _long = SourceInfo::imageBaseName(p_articleId);
   QStringList _search;
@@ -110,23 +111,27 @@ bool ImageDialog::findSourceImage() {
     }
   }
 
-  if (_map.size() < 1) {
-    return false;
-  } else if (_map.size() > 1) {
-    qWarning("Found '%d' image files!", _map.size());
+  if (_map.size() < 1)
+    return _status;
+
+  QMap<QString, QString>::const_iterator _it = _map.constBegin();
+  SourceInfo _si(p_archiv.path());
+  while (_it != _map.constEnd()) {
+    _si.setFile(_it.value());
+    _si.setFileId(p_articleId);
+    _si.setTarget(p_savePath);
+    if (_si.isValidSource())
+      m_imageSelecter->setSelection(_si);
+
+    ++_it;
   }
 
-  SourceInfo src(p_archiv.path());
-  src.setFile(_map.last());
-  src.setFileId(p_articleId);
-  src.setTarget(p_savePath);
-  if (src.isValidSource()) {
-    m_imageSelecter->setSelection(src);
-    m_view->setImageFile(src);
-    _map.clear();
-    return true;
+  if (_si.isValidSource()) {
+    m_view->setImageFile(_si);
+    _status = true;
   }
-  return false;
+  _map.clear();
+  return _status;
 }
 
 bool ImageDialog::isImageFromArchive(const SourceInfo &info) {

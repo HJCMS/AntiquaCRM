@@ -34,22 +34,22 @@ private:
   YearEdit *ib_year;        /**< @brief Jahr */
   IntSpinBox *ib_volume;    /**< @brief Band ? */
   // Row 2
-  AntiquaSplitter *m_splitter; /**< @brief Splitter */
-  LineEdit *ib_title;          /**< @brief Buch Titel */
-  LineEdit *ib_title_extended; /**< @brief Ereiterte Titel  */
-  LineEdit *ib_author;         /**< @brief Buchautor */
-  LineEdit *ib_publisher;      /**< @brief Herausgeber/Verlag */
-  ConditionEdit *ib_condition; /**< @brief Zustands beschreibung */
-  Language *ib_language;       /**< @brief Sprache */
-  BookBinding *ib_binding;     /**< @brief BuchEinband Kategorie */
-  LineEdit *ib_designation;    /**< @brief Umschreibung */
-  StorageLocation *ib_storage; /**< @brief Lager bestimmung */
+  AntiquaSplitter *m_splitter;      /**< @brief Splitter */
+  LineEdit *ib_title;               /**< @brief Buch Titel */
+  LineEdit *ib_title_extended;      /**< @brief Ereiterte Titel  */
+  LineEdit *ib_author;              /**< @brief Buchautor */
+  LineEdit *ib_publisher;           /**< @brief Herausgeber/Verlag */
+  ConditionEdit *ib_condition;      /**< @brief Zustands beschreibung */
+  Language *ib_language;            /**< @brief Sprache */
+  BookBinding *ib_binding;          /**< @brief BuchEinband Kategorie */
+  LineEdit *ib_designation;         /**< @brief Umschreibung */
+  StorageLocation *ib_storage;      /**< @brief Lager bestimmung */
   LineEdit *ib_storage_compartment; /**< @brief Lagerfach */
-  KeywordLineEdit *ib_keyword; /**< @brief Schlüsselwort */
-  IsbnEdit *ib_isbn;           /**< @brief ISBN */
+  KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
+  IsbnEdit *ib_isbn;                /**< @brief ISBN */
   // Row 3
   EditorTab *m_tabWidget;
-  TextField *ib_description;          /**< @brief Öffentliche Beschreibung */
+  DescripeEdit *ib_description;       /**< @brief Öffentliche Beschreibung */
   TextField *ib_internal_description; /**< @brief Interne Beschreibung */
   AntiquaDateInfo *ib_since;          /**< @brief Ersteller-Datum */
   AntiquaDateInfo *ib_changed;        /**< @brief Änderungs-Datum */

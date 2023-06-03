@@ -2,6 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "imageselecter.h"
+#include "imagelistfound.h"
+#include "imagetreeview.h"
 
 #include <ASettings>
 #include <QDebug>
@@ -29,8 +31,11 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
   m_pathFrame->setLayout(m_pathFrameLayout);
   layout->addWidget(m_pathFrame);
 
-  m_listView = new ImageListView(this);
-  layout->addWidget(m_listView);
+  m_listFound = new ImageListFound(this);
+  layout->addWidget(m_listFound);
+
+  m_treeView = new ImageTreeView(this);
+  layout->addWidget(m_treeView);
 
   m_toolbar = new QToolBar(this);
   m_toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -41,12 +46,21 @@ ImageSelecter::ImageSelecter(QWidget *parent) : QWidget{parent} {
   // Bild importieren
   ac_set_image = m_toolbar->addAction(openIcon, tr("Import Image"));
   layout->addWidget(m_toolbar);
+
+  // layout finalize
+  layout->setStretch(0, 0); // Path View
+  layout->setStretch(1, 0); // ImageListFound
+  layout->setStretch(2, 1); // ImageTreeView
   setLayout(layout);
 
   connect(m_fileDialogBtn, SIGNAL(clicked()), SLOT(selectImageTarget()));
-  connect(m_listView, SIGNAL(imageSelected(const SourceInfo &)),
+  connect(m_listFound, SIGNAL(sendSelection(const SourceInfo &)),
           SIGNAL(sendSelection(const SourceInfo &)));
-  connect(m_listView, SIGNAL(sendTargetChanged(const QString &)), m_dirPathEdit,
+  connect(m_treeView, SIGNAL(imageSelected(const SourceInfo &)),
+          SIGNAL(sendSelection(const SourceInfo &)));
+  connect(m_treeView, SIGNAL(imageSelected(const SourceInfo &)), m_listFound,
+          SLOT(setSelected(const SourceInfo &)));
+  connect(m_treeView, SIGNAL(sendTargetChanged(const QString &)), m_dirPathEdit,
           SLOT(setText(const QString &)));
   connect(ac_set_archive, SIGNAL(triggered()), SLOT(setDefaultTarget()));
   connect(ac_set_camera, SIGNAL(triggered()), SLOT(setImportTarget()));
@@ -123,16 +137,17 @@ void ImageSelecter::setDirectory(const QString &dirPath) {
   QFileInfo info(dirPath);
   if (info.isDir() && info.isReadable()) {
     p_dir.setPath(dirPath);
-    m_listView->setDirectory(p_dir);
+    m_treeView->setDirectory(p_dir);
     emit sendTargetChanged(p_dir);
   }
 }
 
-void ImageSelecter::setSelection(const SourceInfo &src) {
+void ImageSelecter::setSelection(SourceInfo &src) {
   if (!src.isValidSource())
     return;
 
-  m_listView->setSourceImage(src);
+  m_treeView->setSourceImage(src);
+  m_listFound->addSourceInfo(src);
 }
 
 #ifdef Q_OS_WIN

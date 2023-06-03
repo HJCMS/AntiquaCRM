@@ -16,21 +16,25 @@
 #include <QUrl>
 #include <QWidget>
 
-#include "imagelistview.h"
 #include "sourceinfo.h"
 
+class ImageTreeView;
+class ImageListFound;
+
 /**
+ * @class ImageSelecter
+ * @brief Group Widget for image selection
  * @ingroup _imgedit
- * @brief Image Selecter
  */
-class ImageSelecter : public QWidget {
+class ImageSelecter final : public QWidget {
   Q_OBJECT
 
 private:
   QDir p_dir;
   QLineEdit *m_dirPathEdit;
   QPushButton *m_fileDialogBtn;
-  ImageListView *m_listView;
+  ImageTreeView *m_treeView;
+  ImageListFound *m_listFound;
   QToolBar *m_toolbar;
   QAction *ac_set_archive;
   QAction *ac_set_camera;
@@ -50,7 +54,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void setDirectory(const QString &dirPath);
-  void setSelection(const SourceInfo &src);
+  void setSelection(SourceInfo &src);
 
 public:
   explicit ImageSelecter(QWidget *parent = nullptr);
