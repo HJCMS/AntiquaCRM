@@ -3,14 +3,12 @@
 
 #include "menubar.h"
 #include "dialogs/config/configdialog.h"
-#include "mainwindow.h"
 
 #include <AntiquaWidgets>
 
 MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   setObjectName("antiqua_ui_menubar");
   setNativeMenuBar(true);
-  setStyleSheet("");
 
   m_applMenu = addMenu("Antiqua CRM");
   QAction *ac_quit = m_applMenu->addAction(tr("Application Quit"));

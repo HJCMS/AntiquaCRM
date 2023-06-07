@@ -45,7 +45,7 @@
 <context>
     <name>MenuBar</name>
     <message>
-        <location filename="../menubar.cpp" line="+16"/>
+        <location filename="../menubar.cpp" line="+14"/>
         <source>Application Quit</source>
         <translation type="unfinished"></translation>
     </message>

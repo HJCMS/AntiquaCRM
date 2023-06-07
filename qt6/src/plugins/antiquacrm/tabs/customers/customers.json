@@ -1,0 +1,7 @@
+{
+  "Keys": [ "libCustomers" ],
+  "Name": "Customers",
+  "Title": "Customers Tab",
+  "Description": "Inventory Integration for Edit Customers.",
+  "Category": "tabs"
+}

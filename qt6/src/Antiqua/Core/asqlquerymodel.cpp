@@ -7,9 +7,9 @@
 #include <QDateTime>
 #include <QDebug>
 #include <QLocale>
+#include <QSqlError>
 #include <QSqlField>
 #include <QSqlQuery>
-#include <QSqlError>
 #include <QTime>
 
 namespace AntiquaCRM {
@@ -33,9 +33,9 @@ const QString ASqlQueryModel::displayDate(const QVariant &value) const {
 
 const QString ASqlQueryModel::verticalHeader(int row, int role) const {
   Q_UNUSED(role);
-  QString s = QString::number(query().size());
-  QString r = QString::number(row + 1);
-  return (s.length() > 1) ? r.rightJustified(s.length(), ' ') : r;
+  QString _s = QString::number(query().size());
+  QString _r = QString::number(row + 1);
+  return (_s.length() > 1) ? _r.rightJustified(_s.length(), ' ') : _r;
 }
 
 bool ASqlQueryModel::querySelect(const QString &sql) {

@@ -57,7 +57,7 @@ public:
 };
 
 /**
- * @brief The SqlToolBar class
+ * @brief The StatusToolBar class
  */
 class StatusToolBar final : public QToolBar {
   Q_OBJECT

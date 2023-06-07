@@ -17,7 +17,6 @@
 #include <QWidget>
 
 class BooksSelectFilter;
-class BooksSearchLine;
 
 class ANTIQUACRM_LIBRARY BooksSearchBar final
     : public AntiquaCRM::TabsSearchBar {

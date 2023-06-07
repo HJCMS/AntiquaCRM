@@ -49,7 +49,7 @@ StatusToolBar::StatusToolBar(QWidget *parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
   setToolButtonStyle(Qt::ToolButtonIconOnly);
   ac_status = addAction(tr("Database Status"));
-  ac_status->setIcon(QIcon(":/icons/antiquacrm.png"));
+  ac_status->setIcon(AntiquaCRM::AntiquaApplIcon("antiquacrm"));
   connect(ac_status, SIGNAL(triggered()), SLOT(databaseInfoDialog()));
 }
 
@@ -60,10 +60,10 @@ void StatusToolBar::databaseInfoDialog() {
 
 void StatusToolBar::setStatus(bool b) {
   if (b) {
-    ac_status->setIcon(QIcon(":/icons/database-comit.png"));
+    ac_status->setIcon(AntiquaCRM::AntiquaApplIcon("database-comit"));
     ac_status->setToolTip(tr("Database connected."));
   } else {
-    ac_status->setIcon(QIcon(":/icons/database-status.png"));
+    ac_status->setIcon(AntiquaCRM::AntiquaApplIcon("database-status"));
     ac_status->setToolTip(tr("Database not connected!"));
   }
 }
