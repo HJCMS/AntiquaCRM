@@ -90,6 +90,7 @@ void TextLine::setBuddyLabel(const QString &text) {
 
   ALabel *m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
+  layout->setStretch(1, 1);
 }
 
 bool TextLine::isValid() {

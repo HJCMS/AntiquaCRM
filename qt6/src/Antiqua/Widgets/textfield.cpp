@@ -8,8 +8,11 @@
 namespace AntiquaCRM {
 
 TextField::TextField(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+  layout->setDirection(QBoxLayout::TopToBottom);
+
   m_edit = new ATextEdit(this);
   layout->addWidget(m_edit);
+
   connect(m_edit, SIGNAL(textChanged()), SLOT(valueChanged()));
   initData();
 }
@@ -60,6 +63,7 @@ void TextField::setBuddyLabel(const QString &text) {
 
   ALabel *m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
+  m_lb->setAlignment(Qt::AlignLeft);
 }
 
 bool TextField::isValid() {

@@ -19,6 +19,7 @@ SET (plugin_FILES
 SET (plugin_HEADERS
   customersconfig.h
   customerseditor.h
+  customersdata.h
   customerssearchbar.h
   customersselectfilter.h
   customersstatusbar.h
@@ -31,6 +32,7 @@ SET (plugin_HEADERS
 
 SET (plugin_SOURCES
   customerseditor.cpp
+  customersdata.cpp
   customerssearchbar.cpp
   customersselectfilter.cpp
   customersstatusbar.cpp

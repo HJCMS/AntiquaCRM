@@ -11,7 +11,10 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
+#include <QLabel>
 #include <QObject>
+
+class CustomersData;
 
 /**
  * @class CustomersEditor
@@ -27,6 +30,14 @@ private:
    * @brief customers number
    */
   AntiquaCRM::SerialId *c_id;
+  QLabel *displayName;
+  AntiquaCRM::DateTimeInfo *c_since;
+  AntiquaCRM::DateTimeInfo *c_changed;
+
+  AntiquaCRM::TabsWidget *m_tabWidget;
+  CustomersData *m_dataWidget;
+
+  AntiquaCRM::TabsEditActionBar *m_actionBar;
 
   /**
    * @brief Prepare input fields and load the auto-completions.
@@ -118,22 +129,26 @@ private Q_SLOTS:
    * @brief This slot search, add Completers for Storage Compartments
    * The list will called by AntiquaCRM::SelectStorage::getCompartments();
    */
-  void setStorageCompartments() override { /* unused */ };
+  void setStorageCompartments() override{/* unused */};
 
   /**
    * @brief Create a AntiquaCRM::ImageFileSource from Article Id
    */
-  void setLoadThumbnail(qint64) override { /* unused */ };
+  void setLoadThumbnail(qint64) override{/* unused */};
 
   /**
    * @brief Remove Database Thumbnail action ...
    */
-  void setRemoveThumbnail(qint64) override { /* unused */ };
+  void setRemoveThumbnail(qint64) override{/* unused */};
 
   /**
    * @brief AntiquaCRM::ImageImportDialog caller
    */
-  void setImportEditImage() override { /* unused */ };
+  void setImportEditImage() override{/* unused */};
+
+  void setCreateOrderSignal();
+
+  void setCreateMailMessage(const QString &action);
 
 public Q_SLOTS:
   /**

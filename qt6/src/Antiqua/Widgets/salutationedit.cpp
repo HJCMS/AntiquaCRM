@@ -54,8 +54,16 @@ void SalutationEdit::initData() {
   }
 }
 
-void SalutationEdit::setValue(const QVariant &) {
-  qDebug() << Q_FUNC_INFO << "__TODO__";
+void SalutationEdit::setValue(const QVariant &val) {
+  const QString _str = val.toString().trimmed();
+  if (_str.isEmpty())
+    return;
+
+  int _index = m_edit->findText(_str);
+  if (_index > 0)
+    m_edit->setCurrentIndex(_index);
+  else
+    m_lineEdit->setText(_str);
 }
 
 void SalutationEdit::setFocus() {

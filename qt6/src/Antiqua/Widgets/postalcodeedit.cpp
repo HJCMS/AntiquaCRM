@@ -232,6 +232,7 @@ void PostalCodeEdit::setPostalCodeLeave() {
 }
 
 void PostalCodeEdit::setCountry(const QString &country) {
+
   QString search(country.trimmed());
   if (search.isEmpty())
     return;
@@ -248,6 +249,7 @@ void PostalCodeEdit::setCountry(const QString &country) {
 }
 
 void PostalCodeEdit::setValue(const QVariant &value) {
+  // qDebug() << Q_FUNC_INFO << value;
   switch (value.metaType().id()) {
   case (QMetaType::QString): {
     m_postalcode->setText(value.toString());

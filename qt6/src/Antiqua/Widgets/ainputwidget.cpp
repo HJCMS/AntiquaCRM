@@ -8,8 +8,7 @@
 namespace AntiquaCRM {
 
 // BEGIN::AInputWidget
-AInputWidget::AInputWidget(QWidget *parent)
-    : QWidget{parent}, required{false} {
+AInputWidget::AInputWidget(QWidget *parent) : QWidget{parent}, required{false} {
   config = new AntiquaCRM::ASettings(this);
   displayToolTips =
       config->groupValue("window_behavior", "display_tooltip_buttons", true)

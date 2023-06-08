@@ -36,9 +36,9 @@ void ATextEdit::keyReleaseEvent(QKeyEvent *event) {
   QTextEdit::keyReleaseEvent(event);
 }
 
-void ATextEdit::setText(const QString &txt) { setPlainText(strip(txt)); }
+void ATextEdit::setText(const QString &txt) { setPlainText(txt); }
 
-const QString ATextEdit::text() { return strip(toPlainText()); }
+const QString ATextEdit::text() { return toPlainText(); }
 
 const QString ATextEdit::strip(const QString &str) {
   QString _buf = str;

@@ -3,9 +3,11 @@
 
 #include "customerseditor.h"
 #include "customersconfig.h"
+#include "customersdata.h"
 
 #include <AntiquaCRM>
 #include <QDate>
+#include <QFrame>
 #include <QLayout>
 
 CustomersEditor::CustomersEditor(QWidget *parent)
@@ -13,14 +15,62 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   setWindowTitle(tr("Edit Book"));
   setObjectName("tab_customers_editor");
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setObjectName("customersedit_main_layout");
-  layout->setSizeConstraint(QLayout::SetMaximumSize);
+  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  mainLayout->setObjectName("customersedit_main_layout");
+  mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
+  setLayout(mainLayout);
 
-  c_id = new AntiquaCRM::SerialId(this);
-  layout->addWidget(c_id);
+  // Begin::row1 {
+  // Header Frame
+  QFrame *firstFrame = new QFrame(this);
+  QHBoxLayout *layout1 = new QHBoxLayout(firstFrame);
+  layout1->addWidget(new QLabel(tr("Customer Id:"), firstFrame));
+  c_id = new AntiquaCRM::SerialId(firstFrame);
+  c_id->setObjectName("c_id");
+  layout1->addWidget(c_id);
+  displayName = new QLabel(firstFrame);
+  layout1->addWidget(displayName);
+  layout1->addStretch(1);
+  c_since = new AntiquaCRM::DateTimeInfo(firstFrame);
+  c_since->setObjectName("c_since");
+  layout1->addWidget(c_since);
+  c_changed = new AntiquaCRM::DateTimeInfo(firstFrame);
+  c_changed->setObjectName("c_changed");
+  layout1->addWidget(c_changed);
+  firstFrame->setLayout(layout1);
+  mainLayout->addWidget(firstFrame);
+  // } End::row1;
 
-  setLayout(layout);
+  // Begin::row2 {
+  m_tabWidget = new AntiquaCRM::TabsWidget(this);
+  m_tabWidget->setObjectName("customers_data_tab");
+  m_dataWidget = new CustomersData(m_tabWidget);
+  m_tabWidget->insertTab(0, m_dataWidget, tr("Contact"));
+  mainLayout->addWidget(m_tabWidget);
+  // } End::row2;
+
+  // Begin::row3 {
+  m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
+  m_actionBar->setViewPrintButton(false);
+  m_actionBar->setViewMailButton(true);
+  m_actionBar->setViewActionAddButton(true, tr("Create Order"));
+  // ResetButton off
+  m_actionBar->setRestoreable(false);
+  m_actionBar->setViewRestoreButton(false);
+  mainLayout->addWidget(m_actionBar);
+  // } End::row3;
+
+  // Signals:ActionBar
+  connect(m_actionBar, SIGNAL(sendCancelClicked()),
+          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
+  connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()),
+          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
+          SLOT(setCreateMailMessage(const QString &)));
+  connect(m_actionBar, SIGNAL(sendAddCustomAction()),
+          SLOT(setCreateOrderSignal()));
 }
 
 CustomersEditor::~CustomersEditor() {
@@ -37,9 +87,11 @@ void CustomersEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "c_since";
   ignoreFields << "c_changed";
+  ignoreFields << "c_provider_import";
 
   // Settings input defaults
   const QJsonObject _jobj = loadSqlConfig(CUSTOMERS_CONFIG_POINTER);
+  qInfo("CustomersEditor::TODO loadSqlConfig");
 
   m_tableData = new AntiquaCRM::ASqlDataQuery("customers");
   inputFields = m_tableData->columnNames();
@@ -50,6 +102,11 @@ void CustomersEditor::setInputFields() {
                "Database connection!");
     openNoticeMessage(warn.join("\n"));
   }
+  // Completers
+  m_dataWidget->c_postalcode->initData();
+
+  // TODO Menübar SQL Abfrage starten
+  // m_actionBar->setMailMenu();
 }
 
 bool CustomersEditor::setDataField(const QSqlField &field,
@@ -278,6 +335,15 @@ void CustomersEditor::setFinalLeaveEditor(bool force) {
   emit sendLeaveEditor(); /**< Back to MainView */
 }
 
+void CustomersEditor::setCreateOrderSignal() {
+  qDebug() << Q_FUNC_INFO << "__TODO__";
+}
+
+void CustomersEditor::setCreateMailMessage(const QString &action) {
+  Q_UNUSED(action);
+  qDebug() << Q_FUNC_INFO << "__TODO__";
+}
+
 void CustomersEditor::setRestore() { importSqlResult(); }
 
 bool CustomersEditor::openEditEntry(qint64 articleId) {
@@ -289,18 +355,25 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
   if (c_id.isEmpty())
     return status;
 
+  AntiquaCRM::ASqlFiles _sf("query_customer_data");
+  if (!_sf.openTemplate()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "No Template found";
+#endif
+    return false;
+  }
+
   setInputFields();
-  QString table = m_tableData->tableName();
-  QString query("SELECT * FROM " + table + " WHERE c_id=" + c_id + ";");
-  QSqlQuery q = m_sql->query(query);
+  _sf.setWhereClause("c_id=" + c_id);
+  QSqlQuery q = m_sql->query(_sf.getQueryContent());
   if (q.size() != 0) {
     QSqlRecord r = m_tableData->record();
-    while (q.next()) {
-      foreach (QString key, inputFields) {
-        m_tableData->setValue(key, q.value(r.indexOf(key)));
-      }
+    q.next();
+    displayName->setText(q.value("c_fullname").toString());
+    m_dataWidget->c_postalcode->setCountry(q.value("c_country").toString());
+    foreach (QString key, inputFields) {
+      m_tableData->setValue(key, q.value(r.indexOf(key)));
     }
-    setLoadThumbnail(articleId);
     status = true;
   } else {
     qDebug() << Q_FUNC_INFO << m_sql->lastError();

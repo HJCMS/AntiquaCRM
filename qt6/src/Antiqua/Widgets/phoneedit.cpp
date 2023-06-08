@@ -85,14 +85,15 @@ void PhoneCountryCodeModel::initModel() {
 PhoneEdit::PhoneEdit(const QString &name, QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   setObjectName(name);
+
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setToolTip("DIN 5008/E.123");
+  layout->addWidget(m_edit);
 
   QRegularExpression simple("^(0\\d+[\\s?\\d]+)$");
   m_validator = new QRegularExpressionValidator(simple, m_edit);
   m_edit->setValidator(m_validator);
 
-  layout->addWidget(m_edit);
   initData();
 
   connect(m_edit, SIGNAL(textChanged(const QString &)),
@@ -189,21 +190,9 @@ void PhoneEdit::setRestrictions(const QSqlField &field) {
   QMetaType _type = field.metaType();
   if (_type.id() == QMetaType::QString && _length > 0) {
     m_edit->setMaxLength(_length);
-    QString _txt(tr("Max allowed length") + " ");
-    _txt.append(QString::number(_length));
-    _txt.append(".");
-    m_edit->setPlaceholderText(_txt);
   }
 
-  if (_length < 1)
-    return;
-
-  QString _telstr;
-  _telstr.append(_telstr.leftJustified(_length, QChar('0')));
-
-  QFontMetrics _m(m_edit->font());
-  qsizetype _w = _m.size(Qt::TextSingleLine, _telstr).width();
-  m_edit->setMaximumWidth(((_w < 80) ? _w : (_w / 2)));
+  m_edit->setPlaceholderText("DIN 5008/E.123");
 }
 
 void PhoneEdit::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
@@ -214,6 +203,7 @@ void PhoneEdit::setBuddyLabel(const QString &text) {
 
   ALabel *m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
+  layout->setStretch(1, 1);
 }
 
 bool PhoneEdit::isValid() {
