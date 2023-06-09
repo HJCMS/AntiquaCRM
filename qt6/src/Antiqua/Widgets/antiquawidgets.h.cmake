@@ -36,6 +36,9 @@
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
+// AntiquaCRM::GroupBoxEdit
+#include "groupboxedit.h"
+
 // AntiquaCRM::ImageFileSource
 #include "imagefilesource.h"
 

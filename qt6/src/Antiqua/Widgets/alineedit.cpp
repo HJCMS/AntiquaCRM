@@ -85,31 +85,27 @@ void ALineEdit::skipReturnPressed() {
     setModified(true);
 }
 
-void ALineEdit::resetVisualFeedback() { isValidContent(true); }
+void ALineEdit::resetVisualFeedback() { setValidContent(true); }
 
 void ALineEdit::setMinLength(int length) {
   minLength = length;
   emit sendMinLengthChanged(minLength);
 }
 
-void ALineEdit::isValidContent(bool b) {
-  QString _css;
-  if (b) {
-    ac_invalid->setEnabled(false);
-    ac_invalid->setVisible(false);
-    _css.clear();
-  } else {
-    ac_invalid->setEnabled(true);
-    ac_invalid->setVisible(true);
-    setClearButtonEnabled(false);
-    _css = "QLineEdit {selection-background-color:red;}";
-  }
+void ALineEdit::setIconWarning(bool b) {
+  ac_invalid->setEnabled(b);
+  ac_invalid->setVisible(b);
+  setClearButtonEnabled(!b);
+}
+
+void ALineEdit::setValidContent(bool b) {
+  QString _css = (b) ? "" : "QLineEdit {selection-background-color:red;}";
   setStyleSheet(_css);
 }
 
 void ALineEdit::setVisualFeedback(int timeout) {
   if (hasFocus())
-    isValidContent(false);
+    setValidContent(false);
 
   QTimer::singleShot(timeout, this, SLOT(resetVisualFeedback()));
 }

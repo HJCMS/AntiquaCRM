@@ -103,9 +103,14 @@ PhoneEdit::PhoneEdit(const QString &name, QWidget *parent)
 PhoneEdit::PhoneEdit(QWidget *parent) : PhoneEdit{"phone_edit", parent} {}
 
 bool PhoneEdit::validate(const QString &phone) const {
-  bool check = AntiquaCRM::AUtil::checkPhone(phone);
-  m_edit->isValidContent(check);
-  return check;
+  bool _b = (phone.length() > 3);
+  if (_b)
+    _b = AntiquaCRM::AUtil::checkPhone(phone);
+
+  if (phone.indexOf("+", 0) != -1)
+    return false;
+
+  return _b;
 }
 
 void PhoneEdit::initData() {
@@ -136,7 +141,11 @@ void PhoneEdit::initData() {
 }
 
 void PhoneEdit::valueChanged(const QString &phone) {
-  validate(phone);
+  bool _b = validate(phone);
+  m_edit->setValidContent(_b);
+  if (isRequired())
+    m_edit->setIconWarning(!_b);
+
   setWindowModified(true);
   emit sendInputChanged();
 }
@@ -145,11 +154,12 @@ void PhoneEdit::setValue(const QVariant &value) {
   if (value.metaType().id() != QMetaType::QString)
     return;
 
-  QString _phone = value.toString();
+  QString _phone = value.toString().trimmed();
   _phone.replace("+", "0");
   _phone.replace(" ", "");
 
-  if (!validate(_phone))
+  bool _b = validate(_phone);
+  if (!_b)
     return;
 
   if (_phone.length() > 10) {
@@ -166,6 +176,7 @@ void PhoneEdit::setValue(const QVariant &value) {
   }
 
   m_edit->setText(_phone);
+  setWindowModified(false);
 }
 
 void PhoneEdit::setFocus() { m_edit->setFocus(); }
@@ -176,20 +187,18 @@ void PhoneEdit::reset() {
 }
 
 void PhoneEdit::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required) {
-    setRequired(true);
-    m_edit->setClearButtonEnabled(false);
-  }
-  // Secundary phone ...
-  if (!objectName().contains("phone_0")) {
-    setRequired(false);
-    m_edit->setClearButtonEnabled(true);
-  }
-
   int _length = field.length();
   QMetaType _type = field.metaType();
   if (_type.id() == QMetaType::QString && _length > 0) {
     m_edit->setMaxLength(_length);
+  }
+
+  if (field.requiredStatus() == QSqlField::Required) {
+    setRequired(true);
+    m_edit->setClearButtonEnabled(false);
+  } else {
+    setRequired(false);
+    m_edit->setClearButtonEnabled(true);
   }
 
   m_edit->setPlaceholderText("DIN 5008/E.123");
@@ -206,18 +215,29 @@ void PhoneEdit::setBuddyLabel(const QString &text) {
   layout->setStretch(1, 1);
 }
 
-bool PhoneEdit::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
-    return false;
-
-  return validate(m_edit->text());
-}
+bool PhoneEdit::isValid() { return validate(m_edit->text()); }
 
 const QMetaType PhoneEdit::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant PhoneEdit::getValue() { return m_edit->text(); }
+const QVariant PhoneEdit::getValue() {
+  QString _phone = m_edit->text().trimmed();
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  // A phone number can only contain 2 leading zeros.
+  // https://de.wikipedia.org/wiki/E.123
+  qsizetype _c = 0;
+  while ((_c = _phone.indexOf("0", _c)) != -1) {
+    if (_c > 3) {
+      qWarning("Phone Number seems not valid!");
+    }
+    ++_c;
+  }
+#endif
+
+  return _phone;
+}
 
 const QString PhoneEdit::popUpHints() {
   return tr("Please enter a valid phone number.");

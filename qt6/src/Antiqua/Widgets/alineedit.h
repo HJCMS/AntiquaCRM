@@ -124,9 +124,14 @@ public Q_SLOTS:
   void setMinLength(int);
 
   /**
+   * @brief Enable Warn icon when unvalid content
+   */
+  void setIconWarning(bool);
+
+  /**
    * @brief Set border highlight when unvalid content
    */
-  void isValidContent(bool);
+  void setValidContent(bool);
 
   /**
    * @brief Set isValidContent, with timeout!

@@ -17,7 +17,6 @@ CustomersStatusBar::CustomersStatusBar(QWidget *parent)
 void CustomersStatusBar::setHistoryAction(int index) {
   TabsStatusBar::History _history = static_cast<TabsStatusBar::History>(index);
   QString _sql;
-  QString _stock = (SearchWithStock ? " AND c_count>0" : "");
   QString _year("DATE_PART('year',c_changed)=");
   _year.append("DATE_PART('year',CURRENT_DATE)");
 
@@ -28,51 +27,47 @@ void CustomersStatusBar::setHistoryAction(int index) {
   }
 
   case (TabsStatusBar::History::Yesterday): {
-    _sql.append("DATE(c_changed)=(CURRENT_DATE -1)" + _stock);
+    _sql.append("DATE(c_changed)=(CURRENT_DATE -1)");
     break;
   }
 
   case (TabsStatusBar::History::ThisWeek): {
     _sql.append("DATE_PART('week',c_changed)=");
     _sql.append("DATE_PART('week',CURRENT_DATE)");
-    _sql.append(" AND " + _year + _stock);
+    _sql.append(" AND " + _year);
     break;
   }
 
   case (TabsStatusBar::History::LastWeek): {
     _sql.append("DATE_PART('week',c_changed)=");
     _sql.append("DATE_PART('week',CURRENT_DATE -7)");
-    _sql.append(" AND " + _year + _stock);
+    _sql.append(" AND " + _year);
     break;
   }
 
   case (TabsStatusBar::History::ThisMonth): {
     _sql.append("DATE_PART('month',c_changed)=");
     _sql.append("DATE_PART('month',CURRENT_DATE)");
-    _sql.append(" AND " + _year + _stock);
+    _sql.append(" AND " + _year);
     break;
   }
 
   case (TabsStatusBar::History::LastMonth): {
     _sql.append("DATE_PART('month',c_changed)=");
     _sql.append("DATE_PART('month',CURRENT_DATE - 31)");
-    _sql.append(" AND " + _year + _stock);
+    _sql.append(" AND " + _year);
     break;
   }
 
   case (TabsStatusBar::History::ThisYear): {
-    _sql.append(_year + " AND c_count>0");
-    break;
-  }
-
-  case (TabsStatusBar::History::NOIMAGE): {
-    _sql.append("DATE(c_changed)>(CURRENT_DATE - 14)");
-    _sql.append(" AND im_id IS NULL" + _stock);
+    _sql.append(_year + " AND c_locked=false");
     break;
   }
 
   default:
-    showMessage("No History entry: " + QString::number(index), 5000);
+    showMessage(tr("Not implemented in this View!"), 5000);
+    _sql.clear();
+    break;
   };
 
   if (!_sql.isEmpty())

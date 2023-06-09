@@ -8,8 +8,8 @@
 
 set +x
 
-_script_base=${HOME}/Developement/antiqua/qt6/templates/widgets
-_source_base=${HOME}/Developement/antiqua/qt6/src/Antiqua/Widgets
+_script_base=${HOME}/Developement/antiquacrm/devel/qt6/templates/widgets
+_source_base=${HOME}/Developement/antiquacrm/devel/qt6/src/Antiqua/Widgets
 _classname=$1
 
 if [ $(basename ${_script_base}) != "widgets" ] ; then

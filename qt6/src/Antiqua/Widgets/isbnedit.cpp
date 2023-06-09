@@ -108,11 +108,11 @@ void IsbnEdit::valueChanged(const QString &data) {
   } else if (len >= 12 && isISBN13(data)) {
     valid = true;
   } else if (len == 0) {
-    m_edit->isValidContent(true);
+    m_edit->setValidContent(true);
     return;
   }
   // visual feedback
-  m_edit->isValidContent(valid);
+  m_edit->setValidContent(valid);
 
   if (valid) {
     setWindowModified(true);

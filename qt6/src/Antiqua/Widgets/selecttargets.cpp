@@ -52,10 +52,10 @@ bool SelectTargets::isAccessible() {
   }
 
   if (_ret) {
-    m_edit->isValidContent(true);
+    m_edit->setValidContent(true);
     return true;
   }
-  m_edit->isValidContent(false);
+  m_edit->setValidContent(false);
   return false;
 }
 

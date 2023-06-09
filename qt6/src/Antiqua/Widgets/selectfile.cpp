@@ -27,10 +27,10 @@ SelectFile::SelectFile(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
 bool SelectFile::isAccessible() {
   const QFileInfo _info(m_edit->text().trimmed());
   if (_info.isReadable()) {
-    m_edit->isValidContent(true);
+    m_edit->setValidContent(true);
     return true;
   }
-  m_edit->isValidContent(false);
+  m_edit->setValidContent(false);
   return false;
 }
 

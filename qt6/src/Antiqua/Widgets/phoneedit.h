@@ -74,6 +74,7 @@ private:
 
   /**
    * @brief „DIN 5008/E.123“ phone number validation
+   * @warning AntiquaCRM didn't support plus sign in Phone Numbers!
    */
   bool validate(const QString &) const;
 

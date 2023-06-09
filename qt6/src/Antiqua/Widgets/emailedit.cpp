@@ -22,9 +22,11 @@ EMailEdit::EMailEdit(const QString &name, QWidget *parent)
 EMailEdit::EMailEdit(QWidget *parent) : EMailEdit{"email_edit", parent} {}
 
 bool EMailEdit::validate(const QString &mail) const {
-  bool _check = AntiquaCRM::AUtil::checkMail(mail);
-  m_edit->isValidContent(_check);
-  return _check;
+  bool _b = (mail.length() > 3);
+  if (_b)
+    _b = AntiquaCRM::AUtil::checkMail(mail);
+
+  return _b;
 }
 
 void EMailEdit::initData() {
@@ -37,7 +39,11 @@ void EMailEdit::initData() {
 }
 
 void EMailEdit::valueChanged(const QString &email) {
-  validate(email);
+  bool _b = validate(email);
+  m_edit->setValidContent(_b);
+  if (isRequired())
+    m_edit->setIconWarning(!_b);
+
   setWindowModified(true);
   emit sendInputChanged();
 }
@@ -46,9 +52,9 @@ void EMailEdit::setValue(const QVariant &value) {
   if (value.metaType().id() != QMetaType::QString)
     return;
 
-  QString _email = value.toString();
-  validate(_email);
+  QString _email = value.toString().trimmed();
   m_edit->setText(_email);
+  setWindowModified(false);
 }
 
 void EMailEdit::setFocus() { m_edit->setFocus(); }
@@ -59,22 +65,20 @@ void EMailEdit::reset() {
 }
 
 void EMailEdit::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required) {
-    setRequired(true);
-    m_edit->setClearButtonEnabled(false);
-  }
-  // Secundary eMail ...
-  if (!objectName().contains("mail_0")) {
-    setRequired(false);
-    m_edit->setClearButtonEnabled(true);
-  }
-
   QMetaType _type = field.metaType();
   if (_type.id() == QMetaType::QString && field.length() > 0) {
     m_edit->setMaxLength(field.length());
   }
 
-  m_edit->setPlaceholderText(tr("f.lastname@domain.tld"));
+  if (field.requiredStatus() == QSqlField::Required) {
+    setRequired(true);
+    m_edit->setClearButtonEnabled(false);
+  } else {
+    setRequired(false);
+    m_edit->setClearButtonEnabled(true);
+  }
+
+  m_edit->setPlaceholderText(tr("a.name@domain.tld"));
 }
 
 void EMailEdit::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }

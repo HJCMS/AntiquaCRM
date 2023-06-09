@@ -7,7 +7,6 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
-#include <QGroupBox>
 #include <QObject>
 #include <QWidget>
 
@@ -37,7 +36,7 @@ public:
   AntiquaCRM::EMailEdit *c_email_0;             /**< E-Mail Adresse */
   AntiquaCRM::EMailEdit *c_email_1;             /**< E-Mail Adresse */
   AntiquaCRM::TextLine *c_website;              /**< Webseite */
-  QGroupBox *c_company; /**< Firma/Institut oder Organisation ? */
+  AntiquaCRM::GroupBoxEdit *c_company; /**< Firma/Institut oder Organisation ? */
   AntiquaCRM::TextLine *c_company_name;      /**< Firmen Name */
   AntiquaCRM::TextLine *c_company_employer;  /**< Ansprechpartner */
   AntiquaCRM::TextField *c_postal_address;   /**< Adresse */

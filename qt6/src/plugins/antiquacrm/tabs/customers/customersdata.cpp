@@ -44,6 +44,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   c_careof = new AntiquaCRM::TextLine(this);
   c_careof->setObjectName("c_careof");
   c_careof->setBuddyLabel(tr("c/o"));
+  c_careof->setToolTip(tr("care of"));
   row1->addWidget(c_careof);
 
   row1->addStretch(1);
@@ -136,20 +137,18 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
 
   // BEGIN #3
   /** CompanyBox */
-  c_company = new QGroupBox(this);
+  c_company = new AntiquaCRM::GroupBoxEdit(this);
   c_company->setObjectName("c_company");
-  // c_company->setBuddyLabel(tr("Company, Institute or Organisation"));
+  c_company->setBuddyLabel(tr("Company, Institute or Organisation"));
   layout->addWidget(c_company);
-  QHBoxLayout *groupBoxLayout = new QHBoxLayout(c_company);
-  groupBoxLayout->setContentsMargins(1, 1, 1, 1);
+  QBoxLayout *m_boxLayout = c_company->boxLayout();
   c_company_name = new AntiquaCRM::TextLine(c_company);
   c_company_name->setObjectName("c_company_name");
-  groupBoxLayout->addWidget(c_company_name);
+  m_boxLayout->addWidget(c_company_name);
   c_company_employer = new AntiquaCRM::TextLine(c_company);
   c_company_employer->setObjectName("c_company_employer");
   c_company_employer->setBuddyLabel(tr("Employer"));
-  groupBoxLayout->addWidget(c_company_employer);
-  c_company->setLayout(groupBoxLayout);
+  m_boxLayout->addWidget(c_company_employer);
   // END 3
 
   // BEGIN #4
@@ -159,20 +158,18 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   QPushButton *addressGen = new QPushButton(this);
   addressGen->setToolTip(tr("Generate Address with given Dataset."));
   addressGen->setText(tr("Generate Invoice address"));
-  addressGen->setIcon(QIcon(":icons/groups.png"));
+  addressGen->setIcon(AntiquaCRM::AntiquaApplIcon("groups"));
   row4->addWidget(addressGen, 0, 0, 1, 1);
 
   c_postal_address = new AntiquaCRM::TextField(this);
   c_postal_address->setObjectName("c_postal_address");
   c_postal_address->setRequired(true);
-  c_postal_address->setBuddyLabel(tr("Postal Address"));
-  c_postal_address->setFixedHeight(120);
+  c_postal_address->setBuddyLabel(tr("Invoice Address"));
   row4->addWidget(c_postal_address, 1, 0, 1, 1);
 
   c_shipping_address = new AntiquaCRM::TextField(this);
   c_shipping_address->setObjectName("c_shipping_address");
   c_shipping_address->setBuddyLabel(tr("Delivery Address"));
-  c_shipping_address->setFixedHeight(120);
   row4->addWidget(c_shipping_address, 1, 1, 1, 1);
 
   layout->addLayout(row4);
@@ -199,7 +196,7 @@ void CustomersData::generateAddressBody() {
   QString body;
   QStringList buffer;
   /* Company */
-  if (c_company->isChecked()) {
+  if (c_company->getValue().toBool()) {
     if (!c_company_name->getValue().toString().isEmpty()) {
       body.append(c_company_name->getValue().toString());
       body.append("\n");
@@ -246,6 +243,6 @@ void CustomersData::generateAddressBody() {
 
   if (!body.trimmed().isEmpty()) {
     c_postal_address->setValue(body);
-    // c_postal_address->setModified(true);
+    c_postal_address->setWindowModified(true);
   }
 }

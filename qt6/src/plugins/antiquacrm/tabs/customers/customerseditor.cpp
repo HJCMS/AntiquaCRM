@@ -159,9 +159,6 @@ void CustomersEditor::importSqlResult() {
 }
 
 bool CustomersEditor::sendSqlQuery(const QString &query) {
-  qDebug() << Q_FUNC_INFO << query;
-  return true;
-
   QSqlQuery q = m_sql->query(query);
   if (q.lastError().type() != QSqlError::NoError) {
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
@@ -192,8 +189,9 @@ const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
     if (ignoreFields.contains(objName))
       continue;
 
-    // qDebug() << objName << cur->isRequired() << cur->isValid() <<
-    // cur->getValue();
+    // qDebug() << Q_FUNC_INFO << fieldPattern << objName << Qt::endl
+    //     << "- " << cur->isRequired() << cur->isValid() << Qt::endl
+    //     << "- " << cur->getValue();
 
     if (cur->isRequired() && !cur->isValid()) {
       openNoticeMessage(cur->popUpHints());
@@ -242,7 +240,7 @@ void CustomersEditor::createSqlUpdate() {
     }
   }
 
-  if (changes == 0) {
+  if (changes < 1) {
     pushStatusMessage(tr("No Modifications found, Update aborted!"));
     setWindowModified(false);
     return;

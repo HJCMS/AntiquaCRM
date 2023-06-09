@@ -73,6 +73,7 @@ SET (_library_SOURCES
   descripeeditor.cpp
   emailedit.cpp
   genderedit.cpp
+  groupboxedit.cpp
   imagefilesource.cpp
   imageimportdialog.cpp
   imagethumbnail.cpp
@@ -136,6 +137,7 @@ SET (_library_HEADERS
   descripeeditor.h
   emailedit.h
   genderedit.h
+  groupboxedit.h
   imagefilesource.h
   imageimportdialog.h
   imagethumbnail.h
