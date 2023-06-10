@@ -292,6 +292,7 @@ namespace AntiquaCRM {
    QString plz;
    QString location;
    QString state;
+   QString country;
  };
 }
 Q_DECLARE_METATYPE(AntiquaCRM::PostalCode)

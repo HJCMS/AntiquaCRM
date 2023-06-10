@@ -24,9 +24,9 @@ public:
   AntiquaCRM::TextLine *c_lastname;             /**< Nachname */
   AntiquaCRM::TextLine *c_careof;               /**< Wohnhaft bei */
   AntiquaCRM::PostalCodeEdit *c_postalcode;     /**< Postleitzahl */
-  AntiquaCRM::TextLine *c_country;              /**< Land */
+  AntiquaCRM::PostalCodeState *c_country;       /**< Land */
+  AntiquaCRM::PostalCodeLocation *c_location;   /**< Wohnort */
   AntiquaCRM::SelectEUCountry *c_country_bcp47; /**< IETF BCP 47 */
-  AntiquaCRM::TextLine *c_location;             /**< Wohnort */
   AntiquaCRM::TextLine *c_street;               /**< Straße */
   AntiquaCRM::PhoneEdit *c_phone_0;             /**< Telefon Nummer 1 */
   AntiquaCRM::PhoneEdit *c_phone_1;             /**< Telefon Nummer 2 */
@@ -36,8 +36,8 @@ public:
   AntiquaCRM::EMailEdit *c_email_0;             /**< E-Mail Adresse */
   AntiquaCRM::EMailEdit *c_email_1;             /**< E-Mail Adresse */
   AntiquaCRM::TextLine *c_website;              /**< Webseite */
-  AntiquaCRM::GroupBoxEdit *c_company; /**< Firma/Institut oder Organisation ? */
-  AntiquaCRM::TextLine *c_company_name;      /**< Firmen Name */
+  AntiquaCRM::GroupBoxEdit *c_company;  /**< Firma, Institut, Organisation ? */
+  AntiquaCRM::TextLine *c_company_name; /**< Firmen Name */
   AntiquaCRM::TextLine *c_company_employer;  /**< Ansprechpartner */
   AntiquaCRM::TextField *c_postal_address;   /**< Adresse */
   AntiquaCRM::TextField *c_shipping_address; /**< Lieferadresse */
@@ -47,11 +47,17 @@ public:
    */
   explicit CustomersData(QWidget *parent = nullptr);
 
+  /**
+   * @brief Find country in Selecter and modify c_country if needed.
+   * @param country
+   */
+  void setCountry(const QString &country);
+
 private Q_SLOTS:
   /**
-   * @brief Wenn von c_postalcode ein editingFinished absetzt wird!
+   * @brief Suche nach EU Staaten angehörigkeit!
    */
-  void postalCodeComplite(const AntiquaCRM::PostalCode &);
+  void fetchEuropeanCountry(const AntiquaCRM::PostalCode &);
 
   /**
    * @brief Wenn Knopf generieren geklickt wird.

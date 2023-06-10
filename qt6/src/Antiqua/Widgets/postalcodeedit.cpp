@@ -15,7 +15,8 @@ namespace AntiquaCRM {
 void __postalcode_debug(const AntiquaCRM::PostalCode &code) {
   qDebug() << "PostalCode:" << code.plz << Qt::endl
            << "Location:" << code.location << Qt::endl
-           << "State:" << code.state;
+           << "State:" << code.state << Qt::endl
+           << "Country:" << code.country;
 }
 #endif
 
@@ -90,33 +91,45 @@ void PostalCodeModel::initModel(const QString &country) {
 
   beginResetModel();
   p_codes.clear();
+
   AntiquaCRM::ASharedDataFiles dataFile;
   if (dataFile.fileExists(QString("postalcodes"))) {
     QJsonDocument jdoc = dataFile.getJson("postalcodes");
-    QJsonArray arr = jdoc.object().value(country).toArray();
-    if (arr.size() > 0) {
-      for (int i = 0; i < arr.size(); i++) {
-        QJsonObject jobj = arr[i].toObject();
-        AntiquaCRM::PostalCode code;
-        code.plz = QString::number(jobj.value("plz").toInt());
-        code.location = jobj.value("location").toString();
-        code.state = jobj.value("state").toString();
-        p_codes.append(code);
+    QJsonObject _obj = jdoc.object();
+    QJsonArray _array = _obj.value(country).toArray();
+    QString _country = tr("Unknown");
+    if (_obj.contains("tables")) {
+      QJsonObject _tables = _obj.value("tables").toObject();
+      _country = _tables.value(country).toString();
+    }
+    if (_array.size() > 0) {
+      for (int i = 0; i < _array.size(); i++) {
+        QJsonObject _cobj = _array[i].toObject();
+        AntiquaCRM::PostalCode _pcode;
+        _pcode.plz = QString::number(_cobj.value("plz").toInt());
+        _pcode.location = _cobj.value("location").toString();
+        _pcode.state = _cobj.value("state").toString();
+        _pcode.country = _country;
+        p_codes.append(_pcode);
       }
     }
   } else {
     qWarning("PostalCodeEdit:No postalcodes.json - fallback to SQL query!");
     AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
-    QString fields("p_plz,p_location,p_state");
-    QSqlQuery q = m_sql->query("SELECT " + fields + " FROM " + country + ";");
+    QString _sql("SELECT p_plz,p_location,p_state,p_country");
+    _sql.append(" FROM " + country);
+    _sql.append(" LEFT JOIN ui_postalcodes ON p_table='" + country + "'");
+    _sql.append(" ORDER BY p_plz;");
+    QSqlQuery q = m_sql->query(_sql);
     if (q.size() > 0) {
       p_codes.clear();
       while (q.next()) {
-        AntiquaCRM::PostalCode code;
-        code.plz = QString::number(q.value("p_plz").toInt());
-        code.location = q.value("p_location").toString();
-        code.state = q.value("p_state").toString();
-        p_codes.append(code);
+        AntiquaCRM::PostalCode _pcode;
+        _pcode.plz = QString::number(q.value("p_plz").toInt());
+        _pcode.location = q.value("p_location").toString();
+        _pcode.state = q.value("p_state").toString();
+        _pcode.country = q.value("p_country").toString();
+        p_codes.append(_pcode);
       }
     }
   }
@@ -154,7 +167,6 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
 
   connect(m_countries, SIGNAL(currentIndexChanged(int)),
           SLOT(valueChanged(int)));
-
   connect(m_postalcode, SIGNAL(editingFinished()), SLOT(setPostalCodeLeave()));
   connect(m_postalcode, SIGNAL(sendFocusOut()), SLOT(setPostalCodeLeave()));
 }
@@ -216,6 +228,7 @@ void PostalCodeEdit::setPostalCodeLeave() {
         code.location = v_lo.toString();
         QVariant v_st = m->data(m->sibling(r, 2, mIndex), qrole);
         code.state = v_st.toString();
+        code.country = _country;
         if (code.state.length() > 1)
           code.state.prepend(_country + "/");
         else
@@ -232,7 +245,6 @@ void PostalCodeEdit::setPostalCodeLeave() {
 }
 
 void PostalCodeEdit::setCountry(const QString &country) {
-
   QString search(country.trimmed());
   if (search.isEmpty())
     return;
@@ -249,7 +261,6 @@ void PostalCodeEdit::setCountry(const QString &country) {
 }
 
 void PostalCodeEdit::setValue(const QVariant &value) {
-  // qDebug() << Q_FUNC_INFO << value;
   switch (value.metaType().id()) {
   case (QMetaType::QString): {
     m_postalcode->setText(value.toString());
@@ -265,6 +276,7 @@ void PostalCodeEdit::setValue(const QVariant &value) {
   default:
     return;
   };
+
   // @note Nur dann, wenn auch das Land gesetzt ist!
   if (m_countries->currentIndex() > 0)
     setPostalCodeLeave();
@@ -334,7 +346,7 @@ QCompleter *PostalCodeEdit::getLocations(QWidget *parent) {
 
   PostalCodeModel *_m = qobject_cast<PostalCodeModel *>(m_completer->model());
   if (_m == nullptr || _m->rowCount() < 1)
-    return nullptr;
+    return nullptr; // nothing todo
 
   for (int r = 0; r < _m->rowCount(); r++) {
     QModelIndex _index = _m->sibling(r, 0, QModelIndex());
@@ -485,15 +497,18 @@ PostalCodeLocation::PostalCodeLocation(QWidget *parent)
 
 void PostalCodeLocation::initData() {}
 
-void PostalCodeLocation::setLocation(const AntiquaCRM::PostalCode &code) {
+void PostalCodeLocation::setCompletion(const AntiquaCRM::PostalCode &code) {
   if (code.location.isEmpty())
     return;
-
-  m_edit->setText(code.location);
 
   PostalCodeEdit *o_pce = qobject_cast<AntiquaCRM::PostalCodeEdit *>(sender());
   if (o_pce == nullptr)
     return;
+
+  // WARNING - do not override it!
+  QString _str = m_edit->text();
+  if (_str.isEmpty())
+    m_edit->setText(code.location);
 
   QCompleter *m_cpl = o_pce->getLocations(this);
   if (m_cpl == nullptr)
@@ -518,6 +533,8 @@ void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
 
 void PostalCodeLocation::reset() {
   m_edit->clear();
+  m_edit->setCompleter(nullptr);
+  m_edit->setCompleterAction(false);
   setWindowModified(false);
 }
 

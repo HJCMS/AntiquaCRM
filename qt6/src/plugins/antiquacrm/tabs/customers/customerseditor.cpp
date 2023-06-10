@@ -368,7 +368,6 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
     QSqlRecord r = m_tableData->record();
     q.next();
     displayName->setText(q.value("c_fullname").toString());
-    m_dataWidget->c_postalcode->setCountry(q.value("c_country").toString());
     foreach (QString key, inputFields) {
       m_tableData->setValue(key, q.value(r.indexOf(key)));
     }
@@ -382,6 +381,10 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
     registerInputChanged();
+
+    QString _country = m_tableData->getValue("c_country").toString();
+    if (_country.length() > 3)
+      m_dataWidget->setCountry(_country);
   }
 
   return status;

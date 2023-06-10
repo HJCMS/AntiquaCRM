@@ -91,7 +91,7 @@ public:
  *         m_state, SLOT(setCountry(const PostalCode &)));
  *
  * connect(m_plz, SIGNAL(sendOnLeavePostalEdit(const PostalCode &)),
- *         m_location, SLOT(setLocation(const PostalCode &)));
+ *         m_location, SLOT(setCompletion(const PostalCode &)));
  *
  * QStringList inputs({"c_postalcode","c_location","c_country"});
  * foreach(QString n, inputs) {
@@ -286,10 +286,13 @@ private:
 public Q_SLOTS:
   /**
    * @brief Create Completer for edit locations with PostalCode
-   * This Slot is reserved to set Location and create completer from signal
+   * This Slot is reserved to set Location and creates QCompleter from signal
    * „PostalCodeEdit::sendOnLeavePostalEdit“ data.
+   * @warning This Slot uses QObject::sender() to fetch „PostalCodeEdit“ class
+   * with „qobject_cast“ to prepare the right parent for QCompleter. This
+   * procedure is needed to get „PostalCodeEdit::getLocations()“!
    */
-  void setLocation(const AntiquaCRM::PostalCode &);
+  void setCompletion(const AntiquaCRM::PostalCode &);
 
   /**
    * @brief set location string

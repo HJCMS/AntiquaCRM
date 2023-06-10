@@ -65,7 +65,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
 
   /** Land */
   QHBoxLayout *countryLayout = new QHBoxLayout();
-  c_country = new AntiquaCRM::TextLine(this);
+  c_country = new AntiquaCRM::PostalCodeState(this);
   c_country->setObjectName("c_country");
   c_country->setBuddyLabel(tr("Country"));
   c_country->setToolTip(tr("Country/State or Canton"));
@@ -80,7 +80,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   row2->addLayout(countryLayout, gridRow++, 1, 1, 1);
 
   /** Wohnort */
-  c_location = new AntiquaCRM::TextLine(this);
+  c_location = new AntiquaCRM::PostalCodeLocation(this);
   c_location->setObjectName("c_location");
   c_location->setBuddyLabel(tr("Location"));
   c_location->setRequired(true);
@@ -178,18 +178,33 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 
   connect(addressGen, SIGNAL(clicked()), SLOT(generateAddressBody()));
+
   connect(c_postalcode,
           SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-          SLOT(postalCodeComplite(const AntiquaCRM::PostalCode &)));
+          SLOT(fetchEuropeanCountry(const AntiquaCRM::PostalCode &)));
+
+  connect(c_postalcode,
+          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
+          c_country, SLOT(setCountry(const AntiquaCRM::PostalCode &)));
+
+  connect(c_postalcode,
+          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
+          c_location, SLOT(setCompletion(const AntiquaCRM::PostalCode &)));
 }
 
-void CustomersData::postalCodeComplite(const AntiquaCRM::PostalCode &code) {
+void CustomersData::fetchEuropeanCountry(const AntiquaCRM::PostalCode &) {
   QString _c = c_postalcode->getCountry();
   if (_c.isEmpty())
     return;
 
-  c_country->setValue(code.state);
   c_country_bcp47->setValue(_c);
+}
+
+void CustomersData::setCountry(const QString &country) {
+  c_postalcode->setCountry(country);
+  if (!c_country->getValue().toString().contains(country)) {
+    c_country->setValue(country);
+  }
 }
 
 void CustomersData::generateAddressBody() {
