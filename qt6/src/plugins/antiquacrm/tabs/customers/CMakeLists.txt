@@ -20,26 +20,32 @@ SET (plugin_HEADERS
   customersconfig.h
   customerseditor.h
   customersdata.h
+  customersfinancial.h
   customerssearchbar.h
   customersselectfilter.h
   customersstatusbar.h
   customerstabconfigwidget.h
   customerstablemodel.h
   customerstableview.h
+  customerstrustlevel.h
   customerswidget.h
+  customersorders.h
   tabcustomers.h
 )
 
 SET (plugin_SOURCES
   customerseditor.cpp
   customersdata.cpp
+  customersfinancial.cpp
   customerssearchbar.cpp
   customersselectfilter.cpp
   customersstatusbar.cpp
   customerstabconfigwidget.cpp
   customerstablemodel.cpp
   customerstableview.cpp
+  customerstrustlevel.cpp
   customerswidget.cpp
+  customersorders.cpp
   tabcustomers.cpp
 )
 

@@ -10,7 +10,8 @@
 #include <QPushButton>
 
 CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
-  setObjectName("CustomerContact");
+  setWindowTitle(tr("Contact data"));
+  setWindowIcon(AntiquaCRM::AntiquaApplIcon("system-users"));
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("contact_edit_layout");
@@ -177,34 +178,20 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   layout->addStretch(1);
   setLayout(layout);
 
+  // Signals
+  connect(c_postalcode,
+          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
+          SLOT(setPostalData(const AntiquaCRM::PostalCode &)));
   connect(addressGen, SIGNAL(clicked()), SLOT(generateAddressBody()));
-
-  connect(c_postalcode,
-          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-          SLOT(fetchEuropeanCountry(const AntiquaCRM::PostalCode &)));
-
-  connect(c_postalcode,
-          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-          c_country, SLOT(setCountry(const AntiquaCRM::PostalCode &)));
-
-  connect(c_postalcode,
-          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-          c_location, SLOT(setCompletion(const AntiquaCRM::PostalCode &)));
 }
 
-void CustomersData::fetchEuropeanCountry(const AntiquaCRM::PostalCode &) {
-  QString _c = c_postalcode->getCountry();
-  if (_c.isEmpty())
+void CustomersData::setPostalData(const AntiquaCRM::PostalCode &code) {
+  c_country->setCountry(code);
+  c_location->setCompletion(code);
+  if (code.country.isEmpty())
     return;
 
-  c_country_bcp47->setValue(_c);
-}
-
-void CustomersData::setCountry(const QString &country) {
-  c_postalcode->setCountry(country);
-  if (!c_country->getValue().toString().contains(country)) {
-    c_country->setValue(country);
-  }
+  c_country_bcp47->setValue(code.country);
 }
 
 void CustomersData::generateAddressBody() {
@@ -260,4 +247,15 @@ void CustomersData::generateAddressBody() {
     c_postal_address->setValue(body);
     c_postal_address->setWindowModified(true);
   }
+}
+
+void CustomersData::setCountry(const QString &country) {
+  c_postalcode->setCountry(country);
+  /*
+    Nur ersetzen wenn Land nicht enthalten ist!
+    Eigentlich nicht notwendig!
+  if (!c_country->getValue().toString().contains(country)) {
+    c_country->setValue(country);
+  }
+  */
 }

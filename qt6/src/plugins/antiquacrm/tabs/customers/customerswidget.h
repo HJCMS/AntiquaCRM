@@ -31,9 +31,11 @@ private:
   QScrollArea *m_editorPage;
   CustomersEditor *m_editorWidget;
 
+private Q_SLOTS:
   void popupWarningTabInEditMode() override;
-
   void setDefaultTableView() override;
+  void setDeleteCustomer(qint64 customerId = -1);
+  void createNewOrder(qint64 customerId = -1);
 
 public:
   explicit CustomersWidget(QWidget *parent = nullptr);

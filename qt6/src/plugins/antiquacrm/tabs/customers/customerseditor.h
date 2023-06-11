@@ -15,6 +15,8 @@
 #include <QObject>
 
 class CustomersData;
+class CustomersFinancial;
+class CustomersOrders;
 
 /**
  * @class CustomersEditor
@@ -36,6 +38,8 @@ private:
 
   AntiquaCRM::TabsWidget *m_tabWidget;
   CustomersData *m_dataWidget;
+  CustomersFinancial *m_financialData;
+  CustomersOrders *m_ordersTable;
 
   AntiquaCRM::TabsEditActionBar *m_actionBar;
 
@@ -99,6 +103,11 @@ private:
    * @brief Create PgSql INSERT Statement
    */
   void createSqlInsert() override;
+
+  /**
+   * @brief Einkäufe vom Kunden suchen und einfügen!
+   */
+  void findPurchases();
 
 private Q_SLOTS:
   /**

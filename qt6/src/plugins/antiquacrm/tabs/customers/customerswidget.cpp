@@ -14,7 +14,7 @@
 CustomersWidget::CustomersWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"Customers_tab", parent} {
   setObjectName("Customers_tab_widget");
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
+  setWindowIcon(AntiquaCRM::AntiquaApplIcon("system-users"));
   setClosable(false);
 
   // Begin MainPage layout
@@ -78,6 +78,8 @@ CustomersWidget::CustomersWidget(QWidget *parent)
 
   // Signals::CustomersEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
+  connect(m_editorWidget, SIGNAL(sendEditorAction(qint64)),
+          SLOT(createNewOrder(qint64)));
 
   // Signals::CustomerstatusBar
   connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
@@ -106,6 +108,14 @@ void CustomersWidget::setDefaultTableView() {
   m_searchBar->setClearAndFocus();
   m_table->setQuery(m_table->defaultWhereClause());
   m_statusBar->setCreateButtonEnabled(false);
+}
+
+void CustomersWidget::setDeleteCustomer(qint64 customerId) {
+  qDebug() << Q_FUNC_INFO << "__TODO__" << customerId;
+}
+
+void CustomersWidget::createNewOrder(qint64 customerId) {
+  qDebug() << Q_FUNC_INFO << "__TODO__" << customerId;
 }
 
 void CustomersWidget::openStartPage() {

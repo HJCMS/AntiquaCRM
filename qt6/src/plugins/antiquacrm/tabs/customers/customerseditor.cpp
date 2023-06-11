@@ -4,6 +4,8 @@
 #include "customerseditor.h"
 #include "customersconfig.h"
 #include "customersdata.h"
+#include "customersfinancial.h"
+#include "customersorders.h"
 
 #include <AntiquaCRM>
 #include <QDate>
@@ -45,7 +47,17 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   m_tabWidget = new AntiquaCRM::TabsWidget(this);
   m_tabWidget->setObjectName("customers_data_tab");
   m_dataWidget = new CustomersData(m_tabWidget);
-  m_tabWidget->insertTab(0, m_dataWidget, tr("Contact"));
+  // Adressdaten
+  m_tabWidget->insertTab(0, m_dataWidget, m_dataWidget->windowIcon(),
+                         m_dataWidget->windowTitle());
+  // Finanzdaten
+  m_financialData = new CustomersFinancial(m_tabWidget);
+  m_tabWidget->insertTab(1, m_financialData, m_financialData->windowIcon(),
+                         m_financialData->windowTitle());
+  // Bestellungen
+  m_ordersTable = new CustomersOrders(m_tabWidget);
+  m_tabWidget->insertTab(2, m_ordersTable, m_ordersTable->windowIcon(),
+                         m_ordersTable->windowTitle());
   mainLayout->addWidget(m_tabWidget);
   // } End::row2;
 
@@ -308,6 +320,46 @@ void CustomersEditor::createSqlInsert() {
   }
 }
 
+void CustomersEditor::findPurchases() {
+  qint64 c_id = getSerialID("c_id");
+  if (c_id < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles sfile("query_customer_orders_status");
+  if (sfile.openTemplate()) {
+    sfile.setWhereClause("c_id=" + QString::number(c_id));
+    QSqlQuery q = m_sql->query(sfile.getQueryContent());
+    if (q.size() > 0) {
+      m_ordersTable->clearContents();
+      m_ordersTable->setRowCount(q.size());
+      int row = 0;
+      while (q.next()) {
+        int col = 0;
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->paymentItem(q.value("payed")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->numidItem(q.value("orderid")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->numidItem(q.value("invoice")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->createItem(q.value("article")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->createItem(q.value("title")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->createItem(q.value("provider")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->createItem(q.value("prorder")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->createDate(q.value("since")));
+        m_ordersTable->setItem(row, col++,
+                               m_ordersTable->createDate(q.value("deliver")));
+
+        row++;
+      }
+    }
+  }
+}
+
 void CustomersEditor::setSaveData() {
   if (c_id->getValue().toString().isEmpty()) {
     createSqlInsert();
@@ -330,16 +382,28 @@ void CustomersEditor::setFinalLeaveEditor(bool force) {
     setWindowModified(false);
 
   setResetInputFields();
-  emit sendLeaveEditor(); /**< Back to MainView */
+  m_ordersTable->clearContents(); /**< Einkäufe entfernen */
+  m_ordersTable->setRowCount(0);  /**< Einkäufe entfernen */
+  emit sendLeaveEditor();         /**< Back to MainView */
 }
 
 void CustomersEditor::setCreateOrderSignal() {
-  qDebug() << Q_FUNC_INFO << "__TODO__";
+  qint64 id = getSerialID("c_id");
+  if (id > 0)
+    emit sendEditorAction(id);
 }
 
 void CustomersEditor::setCreateMailMessage(const QString &action) {
-  Q_UNUSED(action);
-  qDebug() << Q_FUNC_INFO << "__TODO__";
+  qint64 cid = getSerialID("c_id");
+  if (cid < 1)
+    return;
+
+  /*
+  MailForwardDialog *d = new MailForwardDialog(this);
+  d->exec(cid, action);
+  sendStatusMessage(tr("Send eMail finished!"));
+  */
+  qDebug() << Q_FUNC_INFO << "__TODO__" << action;
 }
 
 void CustomersEditor::setRestore() { importSqlResult(); }
@@ -385,8 +449,11 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
     QString _country = m_tableData->getValue("c_country").toString();
     if (_country.length() > 3)
       m_dataWidget->setCountry(_country);
+
+    findPurchases();
   }
 
+  m_tabWidget->setCurrentIndex(0);
   return status;
 }
 
@@ -401,5 +468,6 @@ bool CustomersEditor::createNewEntry() {
   }
   setResetModified(inputFields);
   registerInputChanged();
+  m_tabWidget->setCurrentIndex(0);
   return isEnabled();
 }

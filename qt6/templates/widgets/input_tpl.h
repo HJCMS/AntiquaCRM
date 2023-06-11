@@ -21,7 +21,7 @@ namespace AntiquaCRM {
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY @CLASSNAME@ final
-    : public AntiquaCRM::AbstractInput {
+    : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:

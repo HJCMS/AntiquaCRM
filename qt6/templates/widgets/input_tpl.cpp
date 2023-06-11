@@ -7,7 +7,7 @@
 
 namespace AntiquaCRM {
 
-@CLASSNAME@::@CLASSNAME@(QWidget *parent) : AntiquaCRM::AbstractInput{parent} {
+@CLASSNAME@::@CLASSNAME@(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   layout->addWidget(m_edit);
   initData();
