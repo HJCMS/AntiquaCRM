@@ -34,7 +34,7 @@ void CustomersOrders::openOrder() {
 
   qint64 o_id = item(p_model.row(), 1)->text().toInt();
   QJsonObject obj;
-  obj.insert("window_operation", "open_order");
+  obj.insert("OPERATION", "open_order");
   obj.insert("tab", "orders_tab");
   obj.insert("open_order", o_id);
 

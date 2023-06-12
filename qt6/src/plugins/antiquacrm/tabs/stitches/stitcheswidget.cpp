@@ -191,7 +191,7 @@ AntiquaCRM::TabsIndex::ViewPage StitchesWidget::currentView() {
 }
 
 bool StitchesWidget::customAction(const QJsonObject &obj) {
-  if (obj.isEmpty() || !obj.contains("window_operation"))
+  if (obj.isEmpty() || !obj.contains("OPERATION"))
     return false;
 
   // first call?
@@ -202,7 +202,7 @@ bool StitchesWidget::customAction(const QJsonObject &obj) {
     return false;
   }
 
-  QString op = obj.value("window_operation").toString();
+  QString op = obj.value("OPERATION").toString();
   if (!obj.contains(op))
     return false;
 

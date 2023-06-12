@@ -98,7 +98,7 @@ bool MainWindow::loadTabInterfaces() {
 void MainWindow::setTabsModified(bool b) { setWindowModified(b); }
 
 void MainWindow::setAction(const QJsonObject &obj) {
-  if (obj.contains("window_operation")) {
+  if (obj.contains("OPERATION")) {
     QString _name = obj.value("tab").toString();
     int _index = m_tabWidget->indexByName(_name);
     AntiquaCRM::TabsIndex *_widget = m_tabWidget->tabWithIndex(_index);

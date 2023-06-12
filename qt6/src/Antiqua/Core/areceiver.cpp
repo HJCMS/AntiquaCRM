@@ -19,34 +19,30 @@ AReceiver::AReceiver(QObject *parent) : QLocalServer{parent} {
 }
 
 void AReceiver::createAction(const QJsonObject &obj) {
-  if (obj.contains("window_status_message")) {
-    QString message = obj.value("window_status_message").toString();
-    message = message.trimmed();
-    if (message.isEmpty() || message.length() > 256) {
-      qWarning("Socket abort by policy rules!");
+  if (obj.contains("POSTMESSAGE")) {
+    const QString _msg = obj.value("POSTMESSAGE").toString();
+    const QString _type = obj.value("TYPE").toString();
+    if (_msg.isEmpty() || _type.isEmpty() || _msg.length() > 256) {
+      qWarning("Socket action aborted by policy rules!");
       return;
     }
-    emit sendInfoMessage(message);
+
+    if (_type.contains("WARNING"))
+      emit sendWarnMessage(_msg);
+    else
+      emit sendInfoMessage(_msg);
+
     return;
-  } else if (obj.contains("window_warn_message")) {
-    QString message = obj.value("window_warn_message").toString();
-    message = message.trimmed();
-    if (message.isEmpty() || message.length() > 256) {
-      qWarning("Socket abort by policy rules!");
+  }
+  if (obj.contains("OPERATION")) {
+    const QString _operation = obj.value("OPERATION").toString();
+    if (_operation == "tab") {
+      emit sendWindowOperation(obj);
+      return;
+    } else if (_operation == "provider") {
+      emit sendPluginOperation(obj);
       return;
     }
-    emit sendWarnMessage(message);
-    return;
-  }
-
-  if (obj.contains("window_operation") && obj.contains("tab")) {
-    emit sendWindowOperation(obj);
-    return;
-  }
-
-  if (obj.contains("plugin_operation")) {
-    emit sendPluginOperation(obj);
-    return;
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -55,26 +51,30 @@ void AReceiver::createAction(const QJsonObject &obj) {
 }
 
 void AReceiver::getTransmitterCaller() {
-  QLocalSocket *m_caller = nextPendingConnection();
-  if (m_caller == nullptr)
+  QLocalSocket *m_ls = nextPendingConnection();
+  if (m_ls == nullptr) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "no local socket exists!";
+#endif
     return;
+  }
 
-  connect(m_caller, SIGNAL(disconnected()), m_caller, SLOT(deleteLater()));
+  connect(m_ls, SIGNAL(disconnected()), m_ls, SLOT(deleteLater()));
 
-  if (m_caller->waitForReadyRead(ANTIQUACRM_SOCKET_TIMEOUT)) {
-    QByteArray data = m_caller->readAll();
-    QJsonParseError parser;
-    QJsonDocument jdoc = QJsonDocument::fromJson(data, &parser);
-    if (parser.error == QJsonParseError::NoError) {
-      QJsonObject jobj = jdoc.object();
-      if (jobj.isEmpty()) {
+  if (m_ls->waitForReadyRead(ANTIQUACRM_SOCKET_TIMEOUT)) {
+    QByteArray _data = m_ls->readAll();
+    QJsonParseError _parser;
+    QJsonDocument _doc = QJsonDocument::fromJson(_data, &_parser);
+    if (_parser.error == QJsonParseError::NoError) {
+      QJsonObject _obj = _doc.object();
+      if (_obj.isEmpty()) {
         qWarning("Socket abort by policy rules!");
         return;
       }
-      createAction(jobj);
+      createAction(_obj);
     } else {
       qWarning("Socketserver parse error: '%s'",
-               qPrintable(parser.errorString()));
+               qPrintable(_parser.errorString()));
     }
   }
 }

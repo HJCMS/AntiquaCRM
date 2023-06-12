@@ -118,16 +118,17 @@ bool ATransmitter::pushStatusBarMessage(const QString &message) {
   if (message.isEmpty())
     return false;
 
+  const QString _msg = message.toUpper().trimmed();
   QJsonObject obj;
-  obj.insert("window_status_message", QJsonValue(message));
+  obj.insert("POSTMESSAGE", QJsonValue(_msg));
+  obj.insert("TYPE", QJsonValue("STATUS"));
   return pushOperation(obj);
 }
 
 const QStringList ATransmitter::getOperations() const {
   QStringList l;
-  l << "window_status_message";
-  l << "window_operation";
-  l << "plugin_operation";
+  l << "POSTMESSAGE";
+  l << "OPERATION";
   return l;
 }
 

@@ -162,6 +162,11 @@ Q_SIGNALS:
   void sendOpenEntry(qint64 articleId);
 
   /**
+   * @brief Send remove/delete by Id
+   */
+  void sendDeleteEntry(qint64 id);
+
+  /**
    * @brief A Notify Id was called
    */
   void sendCurrentId(qint64 sectionId);

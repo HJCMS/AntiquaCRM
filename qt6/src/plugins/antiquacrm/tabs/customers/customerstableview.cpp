@@ -54,6 +54,7 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
       new AntiquaCRM::TableContextMenu(index, rows, this);
   m_menu->addOpenAction(tr("Open entry"));
   m_menu->addCreateAction(tr("Create entry"));
+  m_menu->addDeleteAction(tr("Delete selected Customer"));
   m_menu->addCopyAction(tr("Copy Article Id"));
   m_menu->addOrderAction(tr("Add Article to opened Order"));
   m_menu->addReloadAction(tr("Update"));
@@ -74,13 +75,17 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
 void CustomersTableView::contextMenuAction(
     AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
 
-  qint64 aid = getTableID(index);
-  if (aid < 1)
+  qint64 _id = getTableID(index);
+  if (_id < 1)
     return;
 
   switch (ac) {
   case (AntiquaCRM::TableContextMenu::Actions::Open):
-    emit sendOpenEntry(aid);
+    emit sendOpenEntry(_id);
+    break;
+
+  case (AntiquaCRM::TableContextMenu::Actions::Delete):
+    emit sendDeleteEntry(_id);
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Order):
@@ -88,7 +93,7 @@ void CustomersTableView::contextMenuAction(
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Copy):
-    emit sendCopyToClibboard(QString::number(aid));
+    emit sendCopyToClibboard(QString::number(_id));
     break;
 
   default:
@@ -142,7 +147,7 @@ void CustomersTableView::createSocketOperation(const QModelIndex &index) {
   qint64 aid = getTableID(index);
   if (aid >= 1 && getArticleCount(index) > 0) {
     QJsonObject obj;
-    obj.insert("window_operation", "new_order");
+    obj.insert("OPERATION", "new_order");
     obj.insert("tab", "customers_tab");
     obj.insert("new_order", QJsonValue(aid));
     emit sendSocketOperation(obj);
