@@ -58,7 +58,7 @@ void ATransmitter::getErrors(QLocalSocket::LocalSocketError error) {
     return;
 
   case QLocalSocket::UnsupportedSocketOperationError:
-    qWarning("UnsupportedSocketOperationError");
+    qWarning("Unsupported Socket Operation Error");
     return;
 
   case QLocalSocket::OperationError:
@@ -118,18 +118,11 @@ bool ATransmitter::pushStatusBarMessage(const QString &message) {
   if (message.isEmpty())
     return false;
 
-  const QString _msg = message.toUpper().trimmed();
   QJsonObject obj;
-  obj.insert("POSTMESSAGE", QJsonValue(_msg));
-  obj.insert("TYPE", QJsonValue("STATUS"));
+  obj.insert("ACTION", QJsonValue("status_message"));
+  obj.insert("TARGET", QJsonValue("current_tab"));
+  obj.insert("VALUE", QJsonValue(message));
   return pushOperation(obj);
-}
-
-const QStringList ATransmitter::getOperations() const {
-  QStringList l;
-  l << "POSTMESSAGE";
-  l << "OPERATION";
-  return l;
 }
 
 void ATransmitter::close() {

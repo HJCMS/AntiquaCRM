@@ -15,7 +15,32 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Application Socket Receiver
+ * @class AReceiver
+ * @brief This Socket Receiver is used in the Application Window class!
+ *
+ * This Local Socket Server receives all operation to AntiquaCRM::TabsIndex
+ * classes, which add to AntiquaCRM::TabsWidget class. It will search for opened
+ * Tab-Window and loaded plugins. If them exists and valid, it execute the
+ * operation!
+ *
+ * The following structure is expected.
+ * @code
+ *  // Example: Open a Order from „inventory_orders“ to „orders_tab“.
+ *  QJsonObject({
+ *    // Command from Operations List
+ *    "ACTION":"open_order",
+ *    // Destination objectName(), the „_tab“ suffix is important.
+ *    "TARGET":"orders_tab",
+ *    // QVariant Value
+ *    "VALUE":107
+ *  });
+ * @endcode
+ *
+ * @warning Some rules given for Parameter restrictions:
+ * @li ACTION - Must in AReceiver::operations() list!
+ * @li TARGET - Object/Destination name must exists or loaded!
+ * @li VALUE  - Restricted to 256 chars!
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AReceiver final : public QLocalServer {
@@ -23,36 +48,42 @@ class ANTIQUACRM_LIBRARY AReceiver final : public QLocalServer {
 
 private:
   /**
-   * @brief Aufarbeitung der Signale
+   * @brief It check current parameters and prepare the Signal from given
+   * JsonObject.
    */
-  void createAction(const QJsonObject &obj);
+  bool createAction(const QJsonObject &obj);
 
 private Q_SLOTS:
   /**
-   * @brief Wenn eine Neue Verbindung aufgebaut wird.
+   * @brief if a new connection is established.
+   * e.g. nextPendingConnection()
    */
-  void getTransmitterCaller();
+  void getTransmitter();
 
 Q_SIGNALS:
   /**
-   * @brief Nachrichten an die Fensterleiste senden!
+   * @brief Signal for Window StatusBar in Socket Listener!
    */
-  void sendInfoMessage(const QString &);
-  void sendWarnMessage(const QString &);
+  void sendMessage(const QString &);
 
   /**
-   * @brief Sende Aktion an Registerkarte ...
+   * @brief Operation signal to Socket Listener!
    */
-  void sendWindowOperation(const QJsonObject &);
-
-  /**
-   * @brief Send Aktion Plugins ...
-   */
-  void sendPluginOperation(const QJsonObject &);
+  void sendOperation(const QString &target, const QJsonObject &object);
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit AReceiver(QObject *parent = nullptr);
   virtual ~AReceiver();
+
+  /**
+   * @brief Usable operations.
+   *
+   * A static list of all allowed operations!
+   */
+  static const QStringList operations();
 };
 
 }; // namespace AntiquaCRM

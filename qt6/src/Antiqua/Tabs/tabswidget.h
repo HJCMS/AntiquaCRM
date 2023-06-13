@@ -44,7 +44,6 @@ Q_SIGNALS:
 public Q_SLOTS:
   /**
    * @brief Search Tab with objectName and call setCurrentIndex!
-   * @param id
    */
   void setCurrentTab(const QString &objname);
 

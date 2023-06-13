@@ -136,7 +136,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   QGridLayout *row2 = new QGridLayout(row2Widget);
   row2->setContentsMargins(0, 0, 0, 0);
 
-  AntiquaCRM::ALabel *infoText;
+  AntiquaCRM::ALabel *infoText; // multible
   // Book Title
   infoText = new AntiquaCRM::ALabel(tr("Title"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
@@ -517,7 +517,7 @@ const QHash<QString, QVariant> BooksEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
   QList<AntiquaCRM::AInputWidget *> list =
       findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                                Qt::FindChildrenRecursively);
+                                               Qt::FindChildrenRecursively);
   QList<AntiquaCRM::AInputWidget *>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
     AntiquaCRM::AInputWidget *cur = *it;
@@ -593,12 +593,15 @@ void BooksEditor::createSqlUpdate() {
     // Ab diesen Zeitpunkt ist das Zurücksetzen erst mal nicht mehr gültig!
     m_actionBar->setRestoreable(false);
     // Sende Bestands Mitteilung an den Socket
-    QJsonObject obj;
     QJsonObject action;
-    action.insert("type", QJsonValue("article_update"));
-    action.insert("articleId", QJsonValue(articleId));
+    action.insert("type", QJsonValue("article_count"));
+    action.insert("aid", QJsonValue(articleId));
     action.insert("count", QJsonValue(cur_count));
-    obj.insert("plugin_operation", QJsonValue(action));
+
+    QJsonObject obj;
+    obj.insert("ACTION", QJsonValue("provider_update"));
+    obj.insert("TARGET", QJsonValue("provider_tab"));
+    obj.insert("VALUE", QJsonValue(action));
     pushPluginOperation(obj);
   }
 
@@ -608,7 +611,7 @@ void BooksEditor::createSqlUpdate() {
   sql.append(ib_id->getValue().toString());
   sql.append(";");
   if (sendSqlQuery(sql)) {
-    qInfo("SQL UPDATE Inventory Books success!");
+    pushStatusMessage(tr("Update success!"));
     setWindowModified(false);
   }
 }
@@ -661,12 +664,12 @@ void BooksEditor::createSqlInsert() {
   sql.append(values.join(","));
   sql.append(",CURRENT_TIMESTAMP) RETURNING ib_id;");
   if (sendSqlQuery(sql) && ib_id->getValue().toInt() >= 1) {
-    qInfo("SQL INSERT Inventory Books success!");
     // Zurücksetzen Knopf Aktivieren?
     m_actionBar->setRestoreable(m_tableData->isValid());
     // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
     m_imageToolBar->setArticleId(ib_id->getValue().toInt());
     ib_id->setRequired(true);
+    pushStatusMessage(tr("Book entry created!"));
     setWindowModified(false);
   }
 }

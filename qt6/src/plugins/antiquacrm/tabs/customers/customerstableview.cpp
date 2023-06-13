@@ -147,8 +147,8 @@ void CustomersTableView::createSocketOperation(const QModelIndex &index) {
   qint64 aid = getTableID(index);
   if (aid >= 1 && getArticleCount(index) > 0) {
     QJsonObject obj;
-    obj.insert("OPERATION", "new_order");
-    obj.insert("tab", "customers_tab");
+    obj.insert("ACTION", "new_order");
+    obj.insert("TARGET", "customers_tab");
     obj.insert("new_order", QJsonValue(aid));
     emit sendSocketOperation(obj);
   } else {

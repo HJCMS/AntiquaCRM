@@ -34,9 +34,9 @@ void CustomersOrders::openOrder() {
 
   qint64 o_id = item(p_model.row(), 1)->text().toInt();
   QJsonObject obj;
-  obj.insert("OPERATION", "open_order");
-  obj.insert("tab", "orders_tab");
-  obj.insert("open_order", o_id);
+  obj.insert("ACTION", "open_order");
+  obj.insert("TARGET", "orders_tab");
+  obj.insert("VALUE", o_id);
 
   AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));

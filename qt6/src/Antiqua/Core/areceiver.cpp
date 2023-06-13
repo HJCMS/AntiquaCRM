@@ -15,49 +15,60 @@ AReceiver::AReceiver(QObject *parent) : QLocalServer{parent} {
   setObjectName("socket_notifier");
   setSocketOptions(QLocalServer::UserAccessOption);
   setMaxPendingConnections(100);
-  connect(this, SIGNAL(newConnection()), SLOT(getTransmitterCaller()));
+  connect(this, SIGNAL(newConnection()), SLOT(getTransmitter()));
 }
 
-void AReceiver::createAction(const QJsonObject &obj) {
-  if (obj.contains("POSTMESSAGE")) {
-    const QString _msg = obj.value("POSTMESSAGE").toString();
-    const QString _type = obj.value("TYPE").toString();
-    if (_msg.isEmpty() || _type.isEmpty() || _msg.length() > 256) {
+AReceiver::~AReceiver() {
+  if (hasPendingConnections()) {
+    qWarning("found pending connections");
+  }
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Shutdown and Close socket ...");
+#endif
+}
+
+bool AReceiver::createAction(const QJsonObject &obj) {
+  if (!obj.contains("ACTION") || !obj.contains("VALUE")) {
+    qInfo("Socket action aborted by policy rules!");
+    return false;
+  }
+
+  const QString _action = obj.value("ACTION").toString();
+  if (!operations().contains(_action)) {
+    qWarning("Unknown Socket action, aborted by policy rules!");
+    return false;
+  }
+
+  // Popup and Status messages
+  if (_action.contains("_message")) {
+    const QString _msg = obj.value("VALUE").toString();
+    if (_msg.isEmpty() || _msg.length() > 256) {
       qWarning("Socket action aborted by policy rules!");
-      return;
+      return false;
     }
 
-    if (_type.contains("WARNING"))
-      emit sendWarnMessage(_msg);
-    else
-      emit sendInfoMessage(_msg);
+    if (_action != "status_message")
+      qInfo("Socketinfo: %s", qPrintable(_msg));
 
-    return;
-  }
-  if (obj.contains("OPERATION")) {
-    const QString _operation = obj.value("OPERATION").toString();
-    if (_operation == "tab") {
-      emit sendWindowOperation(obj);
-      return;
-    } else if (_operation == "provider") {
-      emit sendPluginOperation(obj);
-      return;
-    }
+    emit sendMessage(_msg);
+    return true;
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "UNKNOWN OPERATION:" << obj;
-#endif
+  const QString _target = obj.value("TARGET").toString();
+  if (!_target.contains("_tab") || !obj.contains("VALUE")) {
+    qWarning("Unknown Socket target or value, aborted by policy rules!");
+    return false;
+  }
+
+  emit sendOperation(_target, obj);
+  return true;
 }
 
-void AReceiver::getTransmitterCaller() {
+void AReceiver::getTransmitter() {
   QLocalSocket *m_ls = nextPendingConnection();
-  if (m_ls == nullptr) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "no local socket exists!";
-#endif
+  if (m_ls == nullptr)
     return;
-  }
 
   connect(m_ls, SIGNAL(disconnected()), m_ls, SLOT(deleteLater()));
 
@@ -71,7 +82,14 @@ void AReceiver::getTransmitterCaller() {
         qWarning("Socket abort by policy rules!");
         return;
       }
-      createAction(_obj);
+
+      if (!createAction(_obj)) {
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << _obj;
+#else
+        qWarning("Operation rejected!");
+#endif
+      }
     } else {
       qWarning("Socketserver parse error: '%s'",
                qPrintable(_parser.errorString()));
@@ -79,14 +97,24 @@ void AReceiver::getTransmitterCaller() {
   }
 }
 
-AReceiver::~AReceiver() {
-  if (hasPendingConnections()) {
-    qWarning("found pending connections");
-  }
+const QStringList AReceiver::operations() {
+  QStringList _l;
+  // Open actions
+  _l << "open_order";
+  _l << "open_article";
+  _l << "open_customer";
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qInfo("Shutdown and Close socket ...");
-#endif
+  // Create actions
+  _l << "create_order";
+
+  // Send Customized Provider operation
+  _l << "provider_update";
+
+  // Messanger
+  _l << "status_message";
+  _l << "popup_message";
+
+  return _l;
 }
 
 }; // namespace AntiquaCRM

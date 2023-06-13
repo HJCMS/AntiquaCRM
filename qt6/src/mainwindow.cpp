@@ -41,11 +41,9 @@ MainWindow::~MainWindow() {
 
 bool MainWindow::createSocketListener() {
   m_rx = new AntiquaCRM::AReceiver(this);
-  connect(m_rx, SIGNAL(sendWindowOperation(const QJsonObject &)),
-          SLOT(setAction(const QJsonObject &)));
-  connect(m_rx, SIGNAL(sendInfoMessage(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
-  connect(m_rx, SIGNAL(sendWarnMessage(const QString &)), m_statusBar,
+  connect(m_rx, SIGNAL(sendOperation(const QString &, const QJsonObject &)),
+          SLOT(setAction(const QString &, const QJsonObject &)));
+  connect(m_rx, SIGNAL(sendMessage(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
@@ -97,17 +95,26 @@ bool MainWindow::loadTabInterfaces() {
 
 void MainWindow::setTabsModified(bool b) { setWindowModified(b); }
 
-void MainWindow::setAction(const QJsonObject &obj) {
-  if (obj.contains("OPERATION")) {
-    QString _name = obj.value("tab").toString();
-    int _index = m_tabWidget->indexByName(_name);
-    AntiquaCRM::TabsIndex *_widget = m_tabWidget->tabWithIndex(_index);
-    if (_widget == nullptr)
-      return;
-
-    if (_widget->customAction(obj))
-      m_tabWidget->setCurrentIndex(_index);
+void MainWindow::setAction(const QString &target, const QJsonObject &data) {
+  int _index = m_tabWidget->indexByName(target);
+  if (_index < 0) {
+    m_statusBar->showMessage(tr("Operation for unknown target canceled!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "!!! TODO FIND TABS !!!" << Qt::endl << data;
+#endif
+    return;
   }
+
+  AntiquaCRM::TabsIndex *_widget = m_tabWidget->tabWithIndex(_index);
+  if (_widget == nullptr)
+    return;
+
+  if (_widget->customAction(data))
+    m_tabWidget->setCurrentIndex(_index);
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << _index << target << data;
+#endif
 }
 
 void MainWindow::setToggleWindow() {

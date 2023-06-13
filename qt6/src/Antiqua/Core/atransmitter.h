@@ -31,7 +31,7 @@ public:
   explicit ATransmitter(QObject *parent = nullptr);
 
   /**
-   * @brief Sende Operationen an Registerkarte
+   * @brief Send operations to tab
    * @param obj
    */
   bool pushOperation(const QJsonObject &obj);
@@ -40,11 +40,6 @@ public:
    * @brief Send a Window StatusBar Message
    */
   bool pushStatusBarMessage(const QString &message);
-
-  /**
-   * @brief list of accepted Json keys
-   */
-  const QStringList getOperations() const;
 
   /**
    * @brief close socket connection

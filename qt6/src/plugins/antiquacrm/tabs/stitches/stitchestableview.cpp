@@ -142,8 +142,8 @@ void StitchesTableView::createSocketOperation(const QModelIndex &index) {
   qint64 aid = getTableID(index);
   if (aid >= 1 && getArticleCount(index) > 0) {
     QJsonObject obj;
-    obj.insert("OPERATION", "add_article");
-    obj.insert("tab", "orders_tab");
+    obj.insert("ACTION", "add_article");
+    obj.insert("TARGET", "orders_tab");
     obj.insert("add_article", QJsonValue(aid));
     emit sendSocketOperation(obj);
   } else {

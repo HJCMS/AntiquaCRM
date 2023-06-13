@@ -40,7 +40,7 @@ private:
 
 private Q_SLOTS:
   void setTabsModified(bool);
-  void setAction(const QJsonObject &obj);
+  void setAction(const QString &target, const QJsonObject &data);
 
 Q_SIGNALS:
   void sendApplicationQuit();

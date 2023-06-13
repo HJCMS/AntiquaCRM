@@ -151,7 +151,7 @@ void CustomersWidget::setCreateNewOrder(qint64 customerId) {
   if (customerId < 1)
     return;
 
-  // Prevent duplicate creation
+  // Prevent duplicate orders
   QString s("SELECT o_id, o_since FROM inventory_orders ");
   s.append(" WHERE o_customer_id=" + QString::number(customerId));
   s.append(" AND DATE(o_since)=CURRENT_DATE");
@@ -181,12 +181,9 @@ void CustomersWidget::setCreateNewOrder(qint64 customerId) {
 #endif
 
   QJsonObject obj;
-  obj.insert("OPERATION", "new_order");
-  obj.insert("tab", "orders_tab");
-  obj.insert("new_order", QJsonValue(customerId));
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "sendSocketOperation" << obj;
-#endif
+  obj.insert("ACTION", "create_order");
+  obj.insert("TARGET", "orders_tab");
+  obj.insert("VALUE", QJsonValue(customerId));
   sendSocketOperation(obj);
 }
 
@@ -271,7 +268,7 @@ AntiquaCRM::TabsIndex::ViewPage CustomersWidget::currentView() {
 }
 
 bool CustomersWidget::customAction(const QJsonObject &obj) {
-  if (obj.isEmpty() || !obj.contains("OPERATION"))
+  if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 
   // first call?
@@ -282,7 +279,7 @@ bool CustomersWidget::customAction(const QJsonObject &obj) {
     return false;
   }
 
-  QString op = obj.value("OPERATION").toString();
+  QString op = obj.value("ACTION").toString();
   if (!obj.contains(op))
     return false;
 
