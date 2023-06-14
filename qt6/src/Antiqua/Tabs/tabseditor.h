@@ -81,12 +81,14 @@ protected:
   bool registerInputChanged();
 
   /**
-   * @brief Searches for table field name in @ref inputFields
+   * @brief Searches for table field name in inputFields
+   * @param name - objectName
    */
   bool isInputField(const QString &name);
 
   /**
-   * @brief Find @ref SerialID values with object name.
+   * @brief Find SerialID values with object name.
+   * @param name - objectName
    */
   qint64 getSerialID(const QString &name);
 

@@ -12,7 +12,9 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Testclass for Network Interfaces
+ * @class ANetworkIface
+ * @brief Network Interfaces testings
+ *
  * @ingroup Network
  */
 class ANTIQUACRM_LIBRARY ANetworkIface : public QNetworkInterface {
@@ -21,7 +23,18 @@ private:
 
 public:
   explicit ANetworkIface();
+
+  /**
+   * @brief Simple check if connected interfaces exists
+   */
   bool connectedIfaceExists();
+
+  /**
+   * @brief Checks a specified remote port.
+   * @param host - hostname (FQDH)
+   * @param port - port
+   * @param wait - timeout
+   */
   bool checkRemotePort(const QString &host, int port = 5432, int wait = 5);
 };
 

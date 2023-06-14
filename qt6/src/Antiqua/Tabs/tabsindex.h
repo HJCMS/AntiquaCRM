@@ -71,12 +71,20 @@ private Q_SLOTS:
 
 protected:
   /**
-   * @brief is this tab already loaded and initialed?
+   * @brief Is this Tab already loaded and initialed?
+   *
+   * This property is used to verify if this Widget is already loaded or not.
+   *
+   * The primary goal is to prevent multiple functional initial calls.
+   *
+   * @note This have to be changed in virtual slot @ref onEnterChanged.
    */
   bool initialed = false;
 
   /**
    * @brief is this tab closeable?
+   *
+   * This property must set in Constructor and can not changed afterwards.
    */
   bool closable = false;
 
@@ -88,90 +96,139 @@ protected:
 
   /**
    * @brief Set it Closable.
-   * @ref closable
+   *
+   * WRITE Property from @ref closable
    */
   void setClosable(bool b = false);
 
 protected Q_SLOTS:
   /**
    * @brief Copy String to System Clipboard
+   * @param data - Clipboard data
+   *
+   * Call QApplication::clipboard
    */
   void copyToClipboard(const QString &data);
 
   /**
    * @brief Send a message to the internal socket.
+   *
+   * Create Socket call @ref AntiquaCRM::ATransmitter::pushStatusBarMessage
    */
   void sendStatusMessage(const QString &message);
 
   /**
    * @brief Send a operation to the internal socket.
+   *
+   * Create Socket call @ref AntiquaCRM::ATransmitter::pushOperation
    */
   void sendSocketOperation(const QJsonObject &obj);
 
   /**
-   * @brief Open customized QMessageBox::warning
+   * @brief Customized PopUp Warning
+   * @param title   - PopUp title
+   * @param message - Body
+   *
+   * Opens a predefined QMessageBox::warning dialog with title and body.
    */
   void openWarningPopUp(const QString &title, const QString &message);
 
   /**
-   * @brief Open QMessageBox::warning - Editor is in edit mode!
+   * @brief Open PopUp Warning - Editor is in edit mode!
+   *
+   * This Slot is reserved to do prepare PopUp Message if Editor is in use or
+   * unsaved changes exists.
    */
   virtual void popupWarningTabInEditMode() = 0;
 
   /**
-   * @brief Standard Tabellenabfrage aufrufen
+   * @brief Call standard table query
+   *
+   * This Slot is reserved to do prepare default Table views.
    */
   virtual void setDefaultTableView() = 0;
 
 Q_SIGNALS:
   /**
-   * @brief Speichernstände mitteilen
+   * @brief report Window modified statuses
+   *
+   * This Signal will emitted by eventFilter when WindowModified has changed.
    */
   void sendModifiedStatus(bool);
 
   /**
    * @brief Send Tab closeable changed
+   *
+   * NOTIFY Property from @ref closable
    */
   void sendClosableChanged();
 
   /**
-   * @brief signal from Shortcut m_focusSearch
+   * @brief If Shortcut m_focusSearch was triggered.
    */
   void sendSetSearchFocus();
 
   /**
-   * @brief signal from Shortcut m_focusFilter
+   * @brief If Shortcut from m_focusFilter was triggered.
    */
   void sendSetSearchFilter();
 
   /**
    * @brief Article Id
+   *
+   * Send selected ArticleId
    */
-  void sendArticleId(qint64 articleId);
+  void sendArticleId(qint64 id);
 
 public Q_SLOTS:
   /**
    * @brief open start page
+   *
+   * Reserved to set default page from this QStackedWidget.
    */
   virtual void openStartPage() = 0;
 
   /**
    * @brief prepare SQL Queries
+   *
+   * Reserved to prepare/check SQL Queries
    */
   virtual void createSearchQuery(const QString &query = QString()) = 0;
 
   /**
    * @brief create a new entry in this section
+   *
+   * Reserved to create new Entry.
    */
   virtual void createNewEntry() = 0;
 
   /**
    * @brief open Entry with Article ID
+   *
+   * Reserved to open a SerialId based Entry.
    */
-  virtual void openEntry(qint64 articleId) = 0;
+  virtual void openEntry(qint64 id) = 0;
 
   /**
    * @brief caller for tab has changed to visible
+   *
+   * This Slot is reserved to do some  initialisation on first start.
+   *
+   * For example - read configuration settings or call first database queries on
+   * start.
+   *
+   * See also @ref initialed
+   * @code
+   * void MyTabIndexClass::onEnterChanged() {
+   *  if (initialed)
+   *    return; // already initialed
+   *
+   *  // code example for first initial
+   *  setCurrentIndex(0);
+   *  setDefaultTableView();
+   *  initialed = true;
+   * }
+   * @endcode
    */
   virtual void onEnterChanged() = 0;
 
@@ -184,7 +241,7 @@ public:
 
   /**
    * @param index - Uniq tab Index Name
-   * @param parent
+   * @param parent - parent object
    */
   explicit TabsIndex(const char *index, QWidget *parent = nullptr);
 
@@ -195,21 +252,30 @@ public:
 
   /**
    * @brief Which Stacked index is currently in use?
-   * This allows widgets to be set variably
+   *
+   * This allows widgets indexes to be set variably.
    */
   virtual TabsIndex::ViewPage currentView() = 0;
 
   /**
    * @brief Create Custom Entries
+   *
+   * Reserved for customized operation calls.
+   *
+   * @return Accepted or Rejected
    */
   virtual bool customAction(const QJsonObject &obj) = 0;
 
   /**
    * @brief Uniq Tab Index Identifier
-   * @return Identifier
+   * @return configured Index in TabWidget.
    */
   const QString tabIndexId() const;
 
+  /**
+   * @brief Is this tab closable or not?
+   * @return Property from @ref closable
+   */
   bool isClosable();
 };
 

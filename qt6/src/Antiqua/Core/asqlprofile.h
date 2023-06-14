@@ -13,7 +13,11 @@
 namespace AntiquaCRM {
 
 /**
- * @brief it provides a temporary data profile to connect the database
+ * @class ASqlProfile
+ * @brief Configuration class for PostgreSQL Database profiles.
+ *
+ * it provides a temporary data profile to connect the database
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASqlProfile final {
@@ -34,83 +38,148 @@ private:
   QString ssl_root_cert;
 
 public:
+  /**
+   * @param profile - PgSQL connection profile
+   */
   explicit ASqlProfile(const QString &profile = QString("Default"));
 
   /**
-   * @brief List of all valid Configuration keys inside this profile.
+   * @brief profile keys
+   *
+   * All valid Configuration keys from this profile.
    */
   static const QStringList keys();
 
   /**
-   * @brief set/get SQL Connection Database
+   * @brief set PgSQL databasename
+   * @param database - database name
    */
   void setDatabaseName(const QString &database);
+
+  /**
+   * @brief get PgSQL databasename
+   */
   const QString getDatabaseName();
 
   /**
-   * @brief set/get SQL Connection Hostname
+   * @brief set PgSQL hostname
+   * @param host - hostname (FQDH)
    */
   void setHostname(const QString &host);
+
+  /**
+   * @brief get PgSQL hostname
+   */
   const QString getHostname();
 
   /**
-   * @brief set/get SQL Connection
+   * @brief set PgSQL username
+   * @param user - username
    */
   void setUsername(const QString &user);
+
+  /**
+   * @brief get PgSQL username
+   */
   const QString getUsername();
 
   /**
-   * @brief set/get SQL Connection Passsword
+   * @brief set PgSQL password
+   * @param pass - password
    */
   void setPassword(const QString &pass);
+
+  /**
+   * @brief get PgSQL password
+   */
   const QString getPassword();
 
   /**
-   * @brief set/get SQL Connection timeout
+   * @brief set PgSQL timeout
+   * @param timeout - timeout in seconds
    */
   void setTimeout(int timeout = 5);
+
+  /**
+   * @brief get PgSQL timeout
+   */
   int getTimeout();
 
   /**
-   * @brief set/get SQL Connection Port
+   * @brief set PgSQL Port
+   * @param port - port default 5432
    */
   void setPort(int port = 5432);
+
+  /**
+   * @brief get PgSQL Port
+   */
   int getPort();
 
   /**
-   * @brief set/get SQL SSL/TLS Support
+   * @brief set PgSQL SSL/TLS Support
+   * @param set - default Enabled
    */
   void setEnableSSL(bool set = true);
+
+  /**
+   * @brief get PgSQL SSL/TLS Support
+   */
   bool getEnableSSL();
 
   /**
-   * @brief set/get Certificate Issuer Name
+   * @brief set PgSQL Certificate Issuer (CA)
+   * @param name - CA Name
    */
   void setSslIssuer(const QString &name);
+
+  /**
+   * @brief get PgSQL Certificate Issuer Name
+   */
   const QString getSslIssuer();
 
   /**
-   * @brief set/get Certificate Common Name
+   * @brief set PgSQL Certificate Common Name
+   * @param name - common name
    */
   void setSslCommonName(const QString &name);
+
+  /**
+   * @brief get PgSQL Certificate Common Name
+   */
   const QString getSslCommonName();
 
   /**
-   * @brief set/get SSL Bundle Path
+   * @brief set PgSQL SSL Bundle Path
+   * @param filePath - absolute file path
    */
   void setSslBundle(const QString &filePath);
+
+  /**
+   * @brief get PgSQL SSL Bundle Path
+   */
   const QString getSslBundle();
 
   /**
-   * @brief set/get SSL Bundle Path
+   * @brief set PgSQL SSL mode
+   * @param mode - mode name
    */
   void setSslMode(const QString &mode = QString("require"));
+
+  /**
+   * @brief get PgSQL SSL mode
+   */
   const QString getSslMode();
 
   /**
-   * @brief set/get SSL Server Public Root Certificate
+   * @brief set PgSQL Server Public Root Certificate
+   * @param filePath - absolute file path
    */
   void setSslRootCert(const QString &filePath);
+
+  /**
+   * @brief get PgSQL SSL Server Public Root Certificate
+   */
   const QString getSslRootCert();
 };
 

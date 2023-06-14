@@ -58,11 +58,14 @@ protected Q_SLOTS:
 public Q_SLOTS:
   /**
    * @brief status bar messanger
-   * @param - Message
+   * @param message - body
    */
-  void sendStatusMessage(const QString &);
+  void sendStatusMessage(const QString &message);
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit APrintDialog(QWidget *parent = nullptr);
 
   /**

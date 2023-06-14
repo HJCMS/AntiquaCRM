@@ -32,13 +32,13 @@ private:
 protected:
   /**
    * @brief some defaults when a tab has been add
-   * @param index
+   * @param index - set index for this page
    */
   virtual void tabInserted(int index) override;
 
   /**
    * @brief prevent wheel events, when enableWheel is true
-   * @param event
+   * @param event - wheel event type
    */
   virtual void wheelEvent(QWheelEvent *event) override;
 
@@ -57,13 +57,13 @@ protected Q_SLOTS:
 Q_SIGNALS:
   /**
    * @brief tab has changed
-   * @param index
+   * @param index - index from internal signal
    */
   void sendTabChanged(int index);
 
   /**
    * @brief tab has to be closed
-   * @param index
+   * @param index - index from internal signal
    */
   void sendCloseTab(int index);
 

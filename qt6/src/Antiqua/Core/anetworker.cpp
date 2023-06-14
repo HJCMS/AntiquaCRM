@@ -31,6 +31,13 @@ ANetworker::ANetworker(AntiquaCRM::NetworkQueryType type, QObject *parent)
   transfer_timeout = cfg.value("transfer_timeout", 15).toInt();
 }
 
+ANetworker::~ANetworker() {
+  if (m_reply != nullptr) {
+    m_reply->close();
+    m_reply->deleteLater();
+  }
+}
+
 void ANetworker::slotError(QNetworkReply::NetworkError error) {
   switch (error) {
   case QNetworkReply::ConnectionRefusedError:
@@ -93,12 +100,12 @@ void ANetworker::slotReadResponse() {
   findText << "text/*";
   findText << "text/";
 
-//  QByteArray data;
-//  data = m_reply->readAll();
-//  if (data.isNull()) {
-//    qWarning("Network: No Data responsed!");
-//    return;
-//  }
+  //  QByteArray data;
+  //  data = m_reply->readAll();
+  //  if (data.isNull()) {
+  //    qWarning("Network: No Data responsed!");
+  //    return;
+  //  }
 
   QVector<char> buf;
   QByteArray data;
@@ -341,13 +348,6 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
 
   return m_reply;
-}
-
-ANetworker::~ANetworker() {
-  if (m_reply != nullptr) {
-    m_reply->close();
-    m_reply->deleteLater();
-  }
 }
 
 }; // namespace AntiquaCRM

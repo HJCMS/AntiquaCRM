@@ -48,7 +48,10 @@ class ANTIQUACRM_LIBRARY AReceiver final : public QLocalServer {
 
 private:
   /**
-   * @brief It check current parameters and prepare the Signal from given
+   * @brief prepare socket operation
+   * @param obj - Json Object
+   *
+   * It check current parameters and prepare the Signal from given
    * JsonObject.
    */
   bool createAction(const QJsonObject &obj);
@@ -56,6 +59,7 @@ private:
 private Q_SLOTS:
   /**
    * @brief if a new connection is established.
+   *
    * e.g. nextPendingConnection()
    */
   void getTransmitter();
@@ -63,11 +67,14 @@ private Q_SLOTS:
 Q_SIGNALS:
   /**
    * @brief Signal for Window StatusBar in Socket Listener!
+   * @param message - notification message
    */
-  void sendMessage(const QString &);
+  void sendMessage(const QString &message);
 
   /**
    * @brief Operation signal to Socket Listener!
+   * @param target - operation target
+   * @param object - operation object
    */
   void sendOperation(const QString &target, const QJsonObject &object);
 
@@ -81,7 +88,7 @@ public:
   /**
    * @brief Usable operations.
    *
-   * A static list of all allowed operations!
+   * This static function present a list of all allowed socket operations!
    */
   static const QStringList operations();
 };

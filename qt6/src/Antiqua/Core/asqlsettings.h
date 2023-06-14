@@ -17,7 +17,12 @@ namespace AntiquaCRM {
 class ASqlProfile;
 
 /**
+ * @class ASqlSettings
  * @brief This class provides sql settings functions
+ *
+ * This class is used to Read Database Configuration Profiles on Application
+ * start up.
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASqlSettings final : public ASettings {
@@ -26,49 +31,84 @@ class ANTIQUACRM_LIBRARY ASqlSettings final : public ASettings {
                  sendProfileChanged)
 
 private:
+  /**
+   * @brief profile
+   */
   QString profile;
+
+  /**
+   * @brief profilpath
+   */
   const QString groupPath();
+
+  /**
+   * @param pass - password
+   */
   const QByteArray toRealm(const QString &pass);
+
+  /**
+   * @param array - realm
+   */
   const QString fromRealm(const QByteArray &array);
 
 Q_SIGNALS:
+  /**
+   * @brief NOTIFY profile
+   *
+   * This Signal is emitted when Profile has changed.
+   */
   void sendProfileChanged();
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit ASqlSettings(QObject *parent = nullptr);
 
   /**
    * @brief Global Connectionname.
+   * @return @ref ANTIQUACRM_CONNECTION_DOMAIN
    */
   static const QString connectionName();
 
   /**
    * @brief get current Connection Profile
+   *
+   * This function returns the current Database configuration @ref
+   * AntiquaCRM::ASqlProfile.
    */
-  const ASqlProfile connectionProfile();
+  const AntiquaCRM::ASqlProfile connectionProfile();
 
   /**
-   * @brief set Connection Profile.
+   * @brief WRITE profile property
+   * @param name  - Profile name
+   *
+   * This function is used to change profile Property.
    */
   void setProfile(const QString &name);
 
   /**
-   * @brief get current Connection Profile.
+   * @brief READ profile property
+   *
+   * This function is used to read current profile Property.
    */
   const QString getProfile();
 
   /**
-   * @brief the List from all configured Profiles
+   * @brief A List from all configured Profiles
    */
   const QStringList profiles();
 
   /**
-   * @brief set Value with Section-Key to current Profile.
+   * @brief Write value with Key to current selected Profile.
+   * @param key   - Key in Database profile config group
+   * @param value - Value
    */
   void setParam(const QString &key, const QVariant &value);
 
   /**
-   * @brief get Value with Section-Key from current Profile.
+   * @brief Read value with Key from current selected Profile.
+   * @param key - Key in Database profile config group
    */
   const QVariant getParam(const QString &key);
 };

@@ -58,8 +58,8 @@ void APrintDialog::setPrintingPage(AntiquaCRM::APrintingPage *page) {
   viewPort->update();
 }
 
-void APrintDialog::sendStatusMessage(const QString &msg) {
-  m_statusBar->showMessage(msg, 5000);
+void APrintDialog::sendStatusMessage(const QString &message) {
+  m_statusBar->showMessage(message, 5000);
 }
 
 int APrintDialog::exec() {

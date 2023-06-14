@@ -40,7 +40,7 @@ const QString ASqlSettings::connectionName() {
   return QString(ANTIQUACRM_CONNECTION_DOMAIN);
 }
 
-const ASqlProfile ASqlSettings::connectionProfile() {
+const AntiquaCRM::ASqlProfile ASqlSettings::connectionProfile() {
   ASqlProfile cp(profile);
   cp.setDatabaseName(getParam("pg_database").toString());
   cp.setHostname(getParam("pg_hostname").toString());

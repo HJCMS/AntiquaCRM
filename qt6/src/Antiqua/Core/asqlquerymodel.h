@@ -19,7 +19,11 @@ namespace AntiquaCRM {
 class ASqlCore;
 
 /**
- * @brief Standard SqlQueryModel für Tabellenansichten
+ * @class ASqlQueryModel
+ * @brief Standard SqlQueryModel for table views
+ *
+ * Abstract SQL query model class for all SQL table views.
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASqlQueryModel : public QSqlQueryModel {
@@ -27,80 +31,97 @@ class ANTIQUACRM_LIBRARY ASqlQueryModel : public QSqlQueryModel {
 
 private:
   /**
-   * @brief Tabellenname
+   * @brief table name
    */
   const QString p_table;
 
 protected:
+  /**
+   * @brief Database Connection class
+   */
   AntiquaCRM::ASqlCore *m_sql;
 
   /**
-   * @brief Standard Formatierung für die Spaltenköpfe!
+   * @brief Standard formatting for the column headers!
+   * @param text - Title
    */
   const QString setHeaderTitle(const QString &text) const;
 
   /**
-   * @brief Datum in ein lesbares Format konvertieren!
+   * @brief Convert date to readable format!
+   * @param value
    */
   const QString displayDate(const QVariant &value) const;
 
   /**
-   * @brief Standard Formatierung für die Zeilennummern
+   * @brief Standard formatting for line numbers
+   * @param row
+   * @param role
    */
   const QString verticalHeader(int row, int role = Qt::DisplayRole) const;
 
 Q_SIGNALS:
   /**
-   * @brief Bei SQL Fehlern wird hiermit die Nachricht übermittelt!
-   * @note Die Signalbehandlung muss in der Tabellenansicht erfolgen!
+   * @brief In the case of SQL errors, the message is hereby transmitted!
+   * @note The signal handling must be done in the table view!
+   * @param table
+   * @param message
    */
   void sqlErrorMessage(const QString &table, const QString &message);
 
 public:
+  /**
+   * @param table  - table name
+   * @param parent - parent object
+   */
   explicit ASqlQueryModel(const QString &table, QObject *parent = nullptr);
 
   /**
-   * @brief Vordefinierte Tabellenspalten Titel
+   * @brief Predefined table columns title
    */
   virtual const QMap<int, QString> headerList() const = 0;
 
   /**
-   * @brief SQL abfrage ...
+   * @brief SQL query ...
    */
   bool querySelect(const QString &sql);
 
   /**
-   * @brief Tabellenname - Siehe Konstruktor und p_table
+   * @brief Current used table name
    */
   const QString tableName() const;
 
   /**
-   * @brief SqlRecord der Abfrage
-   */
-  const QSqlRecord queryRecord() const;
-
-  /**
-   * @brief SqlRecord Tabellenrecord
+   * @brief SqlRecord from table
    */
   const QSqlRecord tableRecord() const;
 
   /**
-   * @brief Feldname/Aliasname der Abfrage!
+   * @brief SqlRecord of the query
+   */
+  const QSqlRecord queryRecord() const;
+
+  /**
+   * @brief Query field name/alias name!
+   * @param column
    */
   const QString fieldName(int column = 0) const;
 
   /**
-   * @brief Spalten Nummer der abfrage!
+   * @brief Column number of the query!
+   * @param fieldName
    */
   int column(const QString &fieldName) const;
 
   /**
-   * @brief Datensatz abfragen
+   * @brief Query record
+   * @param item
+   * @param role
    */
   QVariant data(const QModelIndex &item, int role = Qt::DisplayRole) const;
 
   /**
-   * @brief Gibt eine Infozeile mit Uhrzeit und Ergebnisgröße zurück!
+   * @brief Returns an info line with time and result size!
    */
   const QString queryResultInfo();
 };

@@ -17,11 +17,14 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Standard Klasse für Netzwerkabfragen.
- * @ingroup CoreLibrary
+ * @class ANetworker
+ * @brief Standard class for network queries.
  *
- * Hier werden Sprache, Zeichensatz und Fehlermeldungen verabeitet.
- * Die Netzwerk antworten müssen in den Abfrage-Klassen verarbeitet werden!
+ * Language, character set and error messages are processed here.
+ *
+ * The network answers must be processed in the query classes!
+ *
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ANetworker final : public QNetworkAccessManager {
   Q_OBJECT
@@ -48,53 +51,81 @@ private Q_SLOTS:
   void slotSslErrors(const QList<QSslError> &list);
 
 Q_SIGNALS:
+  /**
+   * @brief The signal is emitted if the query responses with errors.
+   */
   void sendFinishedWithErrors();
+
+  /**
+   * @brief The signal is emitted if valid Json data responses.
+   */
   void sendJsonResponse(const QJsonDocument &);
+
+  /**
+   * @brief The signal is emitted if valid Soap data responses.
+   */
   void sendXmlResponse(const QDomDocument &);
 
 public:
+  /**
+   * @param type   - NetworkQueryType
+   * @param parent - parent object
+   */
   explicit ANetworker(AntiquaCRM::NetworkQueryType type,
                       QObject *parent = nullptr);
+  virtual ~ANetworker();
 
+  /**
+   * @brief Create a Login Request
+   * @param url
+   * @param data
+   */
   QNetworkReply *loginRequest(const QUrl &url, const QByteArray &data);
 
   /**
-   * @brief Erstelle eine HTTP_POST Anfrage
-   * @note Wenn es eine https Verbindung ist und der
-   *    Host mit QUrl:setHost() in der URL gesetzt ist.
-   *    Wird SSL Verschlüsselung verwendet (sonst nicht)!
-   * @param url   Anfrage URL
+   * @brief Create a Json HTTP_POST request
+   * @param url
    * @param body  HTTP_FORM_DATA_BODY
-   * @return NetworkReply
+   *
+   * If it's an https connection and the host is set with QUrl:setHost() in the
+   * URL. Is SSL encryption used (otherwise not)!
    */
   QNetworkReply *jsonPostRequest(const QUrl &url, const QJsonDocument &body);
+
+  /**
+   * @brief Create a Soap HTTP_POST request
+   * @param url
+   * @param body  HTTP_FORM_DATA_BODY
+   *
+   * If it's an https connection and the host is set with QUrl:setHost() in the
+   * URL. Is SSL encryption used (otherwise not)!
+   */
   QNetworkReply *xmlPostRequest(const QUrl &url, const QDomDocument &body);
 
+  /**
+   * @brief Create a Multipart request
+   * @param url
+   * @param name
+   * @param body
+   */
   QNetworkReply *jsonMultiPartRequest(const QUrl &url, const QString &name,
                                       const QJsonDocument &body);
 
   /**
-   * @brief Standard PUT Senden
+   * @brief Default PUT send
    * @param url
    * @param data
-   * @return
    */
   QNetworkReply *putRequest(const QUrl &url, const QByteArray &data);
 
   /**
-   * @brief Standard GET Anfrage
-   * @note Wenn es eine https Verbindung ist und der
-   *    Host mit QUrl:setHost() in der URL gesetzt ist.
-   *    Wird SSL Verschlüsselung verwendet (sonst nicht)!
+   * @brief Default GET request
    * @param url
-   * @return
+   *
+   * If it's an https connection and the host is set with QUrl:setHost() in the
+   * URL. Is SSL encryption used (otherwise not)!
    */
   QNetworkReply *getRequest(const QUrl &url);
-
-  /**
-   * @brief Aufräumen
-   */
-  virtual ~ANetworker();
 };
 }; // namespace AntiquaCRM
 

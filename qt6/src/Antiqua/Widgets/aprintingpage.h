@@ -64,7 +64,7 @@ protected:
 
   /**
    * @brief current page margins
-   * Initialed in @ref initConfiguration()
+   * Initialed in initConfiguration()
    */
   PageMargins margin;
 

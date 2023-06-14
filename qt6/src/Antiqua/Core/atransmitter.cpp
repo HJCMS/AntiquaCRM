@@ -96,7 +96,7 @@ void ATransmitter::getState(QLocalSocket::LocalSocketState state) {
 #endif
 }
 
-bool ATransmitter::pushOperation(const QJsonObject &obj) {
+bool ATransmitter::pushOperation(const QJsonObject &json) {
   if (!connected) {
     connectToServer(ANTIQUACRM_TRANSMITTER_MODE);
     if (!waitForConnected(ANTIQUACRM_SOCKET_TIMEOUT)) {
@@ -105,8 +105,8 @@ bool ATransmitter::pushOperation(const QJsonObject &obj) {
     }
   }
 
-  QByteArray data = QJsonDocument(obj).toJson(QJsonDocument::Compact);
-  write(data, qstrlen(data));
+  QByteArray _data = QJsonDocument(json).toJson(QJsonDocument::Compact);
+  write(_data, qstrlen(_data));
 #ifdef Q_OS_WIN
   return flush();
 #else

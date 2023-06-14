@@ -25,34 +25,9 @@ namespace AntiquaCRM {
  * - It supports Binding for Country and Location classes.
  *
  * @code
- *
- * using namespace AntiquaCRM;
- *
- * QGridLayout *layout = new QGridLayout(parent);
- * PostalCodeEdit *m_plz = new PostalCodeEdit(parent);
- * m_plz->setObjectName("c_postalcode");
- * layout->addWidget(m_plz, 0, 0, 1, 2);
- *
- * PostalCodeState *m_state = new PostalCodeState(parent);
- * m_state->setObjectName("c_country");
- * layout->addWidget(m_state, 1, 0, 1, 1);
- *
- * PostalCodeLocation *m_location = new PostalCodeLocation(parent);
- * m_location->setObjectName("c_location");
- * layout->addWidget(m_location, 1, 1, 1, 1);
- *
+ * AntiquaCRM::PostalCodeEdit *m_plz = new AntiquaCRM::PostalCodeEdit(my_class);
  * connect(m_plz, SIGNAL(sendOnLeavePostalEdit(const PostalCode &)),
- *         m_state, SLOT(setCountry(const PostalCode &)));
- *
- * connect(m_plz, SIGNAL(sendOnLeavePostalEdit(const PostalCode &)),
- *         m_location, SLOT(setCompletion(const PostalCode &)));
- *
- * QStringList inputs({"c_postalcode","c_location","c_country"});
- * foreach(QString n, inputs) {
- *  AInputWidget *obj = findChild<AInputWidget *>(n);
- *  if (obj != nullptr)
- *   qDebug() << obj->objectName() << obj->getValue();
- * }
+ *         my_class, SLOT(setPostalCodes(const PostalCode &)));
  * @endcode
  *
  * @ingroup EditWidgets
@@ -66,7 +41,10 @@ private:
   ALineEdit *m_postalcode; /**< @brief Current Postalcode */
   QCompleter *m_completer; /**< @brief zip code Completer */
 
-  const AntiquaCRM::PostalCode dummyCode() const;
+  /**
+   * @brief Multible usage for empty AntiquaCRM::Postalcode
+   */
+  static const AntiquaCRM::PostalCode dummyCode();
 
   /**
    * @brief Compare postal code with the auto-completion!
@@ -90,6 +68,7 @@ private Q_SLOTS:
    * submission.
    * This function only determines with the current country selection!
    * It does NOT go through all postcode countries!
+   *
    * @note Make sure a valid country is selected first, otherwise it doesn't
    * executed!
    */
@@ -136,6 +115,15 @@ public Q_SLOTS:
 public:
   explicit PostalCodeEdit(QWidget *parent = nullptr);
 
+  /**
+   * @brief Load Postalcode data from Local:Json:File or Database.
+   *
+   * For performance tweaks and preventing application startup freezes.
+   * This function must called behind class Initialisation, not in Constructors!
+   * Best practice to use it, when Widget is visible and enabled.
+   *
+   * See also @ref AntiquaCRM::TabsIndex::onEnterChanged
+   */
   void initData() override;
 
   /**

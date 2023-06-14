@@ -20,6 +20,7 @@ namespace AntiquaCRM {
 /**
  * @class AEUCountries
  * @brief European Countries data map
+ *
  * @code
  *  QMap<
  *      KEY,  // ISO 3166-1 alpha-2
@@ -32,6 +33,9 @@ class ANTIQUACRM_LIBRARY AEUCountries final : private QLocale,
                                               public QMap<QString, QString> {
 
 public:
+  /**
+   * @param locale - set QLocale for this query
+   */
   explicit AEUCountries(const QLocale &locale = QLocale::c());
 
   /**

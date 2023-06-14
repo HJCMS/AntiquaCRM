@@ -90,6 +90,7 @@ public Q_SLOTS:
 public:
   /**
    * @param parent - parent widget
+   * @param ctype - GTIN Type
    */
   explicit IsbnEdit(QWidget *parent = nullptr,
                     IsbnEdit::CodeType ctype = IsbnEdit::CodeType::ISBN);

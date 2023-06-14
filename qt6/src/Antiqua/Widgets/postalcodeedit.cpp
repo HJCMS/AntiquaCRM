@@ -52,10 +52,9 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
   connect(m_countries, SIGNAL(currentIndexChanged(int)),
           SLOT(valueChanged(int)));
   connect(m_postalcode, SIGNAL(editingFinished()), SLOT(setPostalCodeLeave()));
-  connect(m_postalcode, SIGNAL(sendFocusOut()), SLOT(setPostalCodeLeave()));
 }
 
-const AntiquaCRM::PostalCode PostalCodeEdit::dummyCode() const {
+const AntiquaCRM::PostalCode PostalCodeEdit::dummyCode() {
   AntiquaCRM::PostalCode _t;
   _t.plz = QString();
   _t.location = QString();
@@ -105,8 +104,7 @@ void PostalCodeEdit::setPostalCodeLeave() {
   AntiquaCRM::PostalCode _pcode = getPostalCode(t_plz);
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  if (_pcode.plz.isEmpty())
-    __postalcode_debug(_pcode);
+  __postalcode_debug(_pcode);
 #endif
 
   emit sendOnLeavePostalEdit(_pcode);

@@ -17,7 +17,12 @@
 namespace AntiquaCRM {
 
 /**
+ * @class ASettings
  * @brief AntiquaCRM Configuration Class
+ *
+ * This is the Primary Configuration class to get Targets and Configuration Keys
+ * and grouped Sections.
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASettings : public QSettings {
@@ -27,10 +32,14 @@ private:
   QHash<QString, QVariant> p_hash;
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit ASettings(QObject *parent = nullptr);
 
   /**
    * @brief AntiquaCRM Configuration Domain
+   *
    * This is needed to Describe the Configuration path on Linux and Windows
    * Registry, to prevent mistakes with older Versions.
    */
@@ -38,15 +47,24 @@ public:
 
   /**
    * @brief Config test for if exists and a value is set!
-   * @param configPath
+   * @param pkey - absolute path to key
+   *
+   * This function is a extended call from QSettings::contains
    */
-  bool check(const QString &configPath);
+  bool check(const QString &pkey);
 
+  /**
+   * @brief Get value with given Path and MetaType.
+   * @param path - config path to key
+   * @param type - required Meta type
+   */
   const QVariant getValue(const QString &path, const QMetaType &type) const;
 
   /**
    * @brief Returns Directory from Section[dirs]
+   *
    * if required Directory not exists, a „QStandardPaths“ returned!
+   *
    * @code
    *   AntiquaCRM::ASettings config(this);
    *   // ANTIQUACRM_ARCHIVE_IMAGES or QStandardPaths::PicturesLocation
@@ -56,7 +74,7 @@ public:
   const QDir getArchivPath(const QString &section);
 
   /**
-   * @brief get value from group
+   * @brief get value from group and key
    * @param group - section group
    * @param key   - key from group
    * @param fallback - what it says
@@ -65,56 +83,86 @@ public:
                             const QVariant &fallback = QVariant());
 
   /**
-   * @brief Read all Keys from Group
+   * @brief All Configs from Group
+   * @param group - section group
    */
   const QHash<QString, QVariant> &readGroupConfig(const QString &group);
 
   /**
-   * @brief Read all Keys from Section in Group
+   * @brief All Configs from Group and „Subsection“
+   * @param group - section group
+   * @param section - sub section
    */
   const QHash<QString, QVariant> &readGroupSection(const QString &group,
                                                    const QString &section);
 
   /**
-   * @brief Write all Keys in Group
+   * @brief Write all Keys in to Group
+   * @param group - section group
+   * @param dataset - section data
    */
-  void writeGroupConfig(const QString &, const QHash<QString, QVariant> &);
+  void writeGroupConfig(const QString &group,
+                        const QHash<QString, QVariant> &dataset);
 
   /**
    * @brief Default Filter for all Dir requests!
+   *
+   * Default filter is:
+   *  @li QDir::Dirs
+   *  @li QDir::Files
+   *  @li QDir::NoSymLinks
+   *  @li QDir::NoDotAndDotDot
    */
   static QDir::Filters directoryFilter();
 
   /**
-   * @brief Default Plugin Namefilters
+   * @brief Default Plugin Search filter extension.
+   *
+   * Default filter is:
+   * @li Windows: *.dll
+   * @li Linux: *.so
    */
   static const QStringList pluginSearchFilter();
 
   /**
    * @brief Application Plugin Directory
+   * @param target - plugin sub category
+   *
+   * Creates a search target from Install Plugin Directory.
    */
-  static const QDir getPluginDir(const QString &subTarget = QString());
+  static const QDir getPluginDir(const QString &target = QString());
 
   /**
    * @brief Translations Target
+   *
+   * Search Translation directory in @ref ANTIQUACRM_TRANSLATION_TARGET
    */
   static const QDir getTranslationDir();
 
   /**
-   * @brief Application Data Directory
-   * @li Linux ${install_prefix}/share/antiquacrm
-   * @li Windows ${binary_target}/data
-   * @see aglobal.h
+   * @brief Get Application data directory
+   *
+   * Search Datafiles directory in @ref ANTIQUACRM_DATA_TARGET
    */
   static const QDir getDataDir(const QString &name = QString());
 
   /**
-   * @brief get/create Users Data Directory
+   * @brief Users Data Directory
+   *
+   * Generate QDir from QStandardPaths::AppLocalDataLocation
+   *
+   * @note Creates it when not exists and grandet permissions exists.
+   * @return QDir filtered by @ref directoryFilter
    */
   static const QDir getUserDataDir();
 
   /**
-   * @brief get Users Temporary Directory
+   * @brief Temporary User Directory
+   *
+   * Generate QDir from QStandardPaths::CacheLocation
+   *
+   * @note Creates it when not exists and grandet permissions exists.
+   * @return QDir filtered by @ref directoryFilter
    */
   static const QDir getUserTempDir();
 };

@@ -25,7 +25,7 @@ namespace AntiquaCRM {
 /**
  * @ingroup IconTheme
  * @brief Icon from Theme or Application Resource file ...
- * Load qrc://icons/<image> from icon QResource.
+ * Load qrc://icons/&lt;image&gt; from icon QResource.
  * @note The QResource must initialed in application first!
  * @param name  - Iconname
  * @return QIcon

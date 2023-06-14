@@ -25,9 +25,9 @@ const QString ASettings::configDomain() {
   return str;
 }
 
-bool ASettings::check(const QString &configPath) {
-  if (contains(configPath)) {
-    return (!value(configPath).isNull());
+bool ASettings::check(const QString &pkey) {
+  if (contains(pkey)) {
+    return (!value(pkey).isNull());
   }
   return false;
 }
@@ -143,6 +143,20 @@ const QStringList ASettings::pluginSearchFilter() {
 #endif
 }
 
+const QDir ASettings::getPluginDir(const QString &target) {
+  QString _path(ANTIQUACRM_PLUGIN_TARGET);
+  if (!target.isEmpty()) {
+    _path.append(QDir::separator());
+    _path.append(target);
+  }
+
+  QDir t(_path);
+  t.setFilter(directoryFilter());
+  t.setSorting(QDir::Name);
+  t.setNameFilters(pluginSearchFilter());
+  return t;
+}
+
 const QDir ASettings::getTranslationDir() {
   QDir t(ANTIQUACRM_TRANSLATION_TARGET);
   t.setFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
@@ -161,20 +175,6 @@ const QDir ASettings::getDataDir(const QString &name) {
   t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);
   return t.isReadable() ? t : QDir(ANTIQUACRM_DATA_TARGET);
-}
-
-const QDir ASettings::getPluginDir(const QString &subTarget) {
-  QString pluginDir(ANTIQUACRM_PLUGIN_TARGET);
-  if (!subTarget.isEmpty()) {
-    pluginDir.append(QDir::separator());
-    pluginDir.append(subTarget);
-  }
-
-  QDir t(pluginDir);
-  t.setFilter(directoryFilter());
-  t.setSorting(QDir::Name);
-  t.setNameFilters(pluginSearchFilter());
-  return t;
 }
 
 const QDir ASettings::getUserDataDir() {
