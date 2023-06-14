@@ -52,11 +52,11 @@ SET (_stl_HEADERS
 )
 
 SET (_library_SOURCES
-  ainputwidget.cpp
   acolorluminance.cpp
   acombobox.cpp
   adatetimeedit.cpp
   adoublebox.cpp
+  ainputwidget.cpp
   alabel.cpp
   alineedit.cpp
   aprintdialog.cpp
@@ -85,6 +85,9 @@ SET (_library_SOURCES
   numedit.cpp
   phoneedit.cpp
   postalcodeedit.cpp
+  postalcodelocation.cpp
+  postalcodemodel.cpp
+  postalcodestate.cpp
   priceedit.cpp
   printbookcard.cpp
   printdeliverynote.cpp
@@ -149,6 +152,9 @@ SET (_library_HEADERS
   numedit.h
   phoneedit.h
   postalcodeedit.h
+  postalcodelocation.h
+  postalcodemodel.h
+  postalcodestate.h
   priceedit.h
   printbookcard.h
   printdeliverynote.h

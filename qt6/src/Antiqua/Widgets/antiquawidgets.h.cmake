@@ -72,6 +72,12 @@
 // AntiquaCRM::PostalCodeEdit
 #include "postalcodeedit.h"
 
+// AntiquaCRM::PostalCodeLocation
+#include "postalcodelocation.h"
+
+// AntiquaCRM::PostalCodeState
+#include "postalcodestate.h"
+
 // AntiquaCRM::SalutationEdit
 #include "salutationedit.h"
 

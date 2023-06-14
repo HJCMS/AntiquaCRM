@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "postalcodeedit.h"
+#include "postalcodemodel.h"
 
 #include <AntiquaCRM>
 #include <QAbstractItemView>
@@ -19,123 +20,6 @@ void __postalcode_debug(const AntiquaCRM::PostalCode &code) {
            << "Country:" << code.country;
 }
 #endif
-
-// BEGIN::PostalCodeModel
-PostalCodeModel::PostalCodeModel(QObject *parent) : QAbstractListModel{parent} {
-  p_palette = qApp->palette();
-}
-
-int PostalCodeModel::rowCount(const QModelIndex &parent) const {
-  Q_UNUSED(parent);
-  return p_codes.size();
-}
-
-int PostalCodeModel::columnCount(const QModelIndex &parent) const {
-  Q_UNUSED(parent);
-  return 3;
-}
-
-QVariant PostalCodeModel::data(const QModelIndex &index, int role) const {
-  const QVariant _empty;
-  if (!index.isValid())
-    return _empty;
-
-  int _row = index.row();
-  const AntiquaCRM::PostalCode _code = p_codes[_row];
-  if (_code.plz.isEmpty())
-    return _empty;
-
-  switch (role) {
-  case (Qt::UserRole):
-  case (Qt::EditRole): {
-    if (index.column() == 1)
-      return _code.location;
-    else if (index.column() == 2)
-      return _code.state;
-    else
-      return _code.plz;
-  } break;
-
-  case (Qt::DisplayRole): {
-    QString _v(_code.plz);
-    _v.append(" ");
-    _v.append(_code.location);
-    return _v;
-  } break;
-
-  case (Qt::ToolTipRole): {
-    QString _v(_code.plz);
-    _v.append(" (");
-    _v.append(_code.location);
-    QString st = _code.state;
-    if (!st.isEmpty()) {
-      _v.append("," + st);
-    }
-    _v.append(")");
-    return _v;
-  } break;
-
-  case (Qt::BackgroundRole):
-    return ((_row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
-
-  default:
-    return _empty;
-  };
-
-  return _empty;
-}
-
-void PostalCodeModel::initModel(const QString &country) {
-  if (country.isEmpty())
-    return;
-
-  beginResetModel();
-  p_codes.clear();
-
-  AntiquaCRM::ASharedDataFiles dataFile;
-  if (dataFile.fileExists(QString("postalcodes"))) {
-    QJsonDocument jdoc = dataFile.getJson("postalcodes");
-    QJsonObject _obj = jdoc.object();
-    QJsonArray _array = _obj.value(country).toArray();
-    QString _country = tr("Unknown");
-    if (_obj.contains("tables")) {
-      QJsonObject _tables = _obj.value("tables").toObject();
-      _country = _tables.value(country).toString();
-    }
-    if (_array.size() > 0) {
-      for (int i = 0; i < _array.size(); i++) {
-        QJsonObject _cobj = _array[i].toObject();
-        AntiquaCRM::PostalCode _pcode;
-        _pcode.plz = QString::number(_cobj.value("plz").toInt());
-        _pcode.location = _cobj.value("location").toString();
-        _pcode.state = _cobj.value("state").toString();
-        _pcode.country = _country;
-        p_codes.append(_pcode);
-      }
-    }
-  } else {
-    qWarning("PostalCodeEdit:No postalcodes.json - fallback to SQL query!");
-    AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
-    QString _sql("SELECT p_plz,p_location,p_state,p_country");
-    _sql.append(" FROM " + country);
-    _sql.append(" LEFT JOIN ui_postalcodes ON p_table='" + country + "'");
-    _sql.append(" ORDER BY p_plz;");
-    QSqlQuery q = m_sql->query(_sql);
-    if (q.size() > 0) {
-      p_codes.clear();
-      while (q.next()) {
-        AntiquaCRM::PostalCode _pcode;
-        _pcode.plz = QString::number(q.value("p_plz").toInt());
-        _pcode.location = q.value("p_location").toString();
-        _pcode.state = q.value("p_state").toString();
-        _pcode.country = q.value("p_country").toString();
-        p_codes.append(_pcode);
-      }
-    }
-  }
-  endResetModel();
-}
-// END::PostalCodeModel
 
 // BEGIN::PostalCodeEdit
 PostalCodeEdit::PostalCodeEdit(QWidget *parent)
@@ -169,6 +53,15 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
           SLOT(valueChanged(int)));
   connect(m_postalcode, SIGNAL(editingFinished()), SLOT(setPostalCodeLeave()));
   connect(m_postalcode, SIGNAL(sendFocusOut()), SLOT(setPostalCodeLeave()));
+}
+
+const AntiquaCRM::PostalCode PostalCodeEdit::dummyCode() const {
+  AntiquaCRM::PostalCode _t;
+  _t.plz = QString();
+  _t.location = QString();
+  _t.country = QString();
+  _t.state = QString();
+  return _t;
 }
 
 bool PostalCodeEdit::comparePostalcode(const QString &source,
@@ -209,39 +102,14 @@ void PostalCodeEdit::setPostalCodeLeave() {
   if (m_countries->currentIndex() == 0)
     return;
 
-  // Selected country
-  const QString _country = m_countries->currentText();
-
-  PostalCodeModel *m = qobject_cast<PostalCodeModel *>(m_completer->model());
-  if (m != nullptr) {
-    Qt::ItemDataRole qrole = Qt::EditRole;
-    for (int r = 0; r < m->rowCount(); r++) {
-      QModelIndex mIndex = m->sibling(r, 0, QModelIndex());
-      QVariant var = m->data(mIndex, qrole);
-      if (!var.isValid())
-        continue;
-
-      if (comparePostalcode(var.toString(), t_plz)) {
-        AntiquaCRM::PostalCode code;
-        code.plz = var.toString();
-        QVariant v_lo = m->data(m->sibling(r, 1, mIndex), qrole);
-        code.location = v_lo.toString();
-        QVariant v_st = m->data(m->sibling(r, 2, mIndex), qrole);
-        code.state = v_st.toString();
-        code.country = _country;
-        if (code.state.length() > 1)
-          code.state.prepend(_country + "/");
-        else
-          code.state = _country;
+  AntiquaCRM::PostalCode _pcode = getPostalCode(t_plz);
 
 #ifdef ANTIQUA_DEVELOPEMENT
-        __postalcode_debug(code);
+  if (_pcode.plz.isEmpty())
+    __postalcode_debug(_pcode);
 #endif
-        emit sendOnLeavePostalEdit(code);
-        break;
-      }
-    }
-  }
+
+  emit sendOnLeavePostalEdit(_pcode);
 }
 
 void PostalCodeEdit::setCountry(const QString &country) {
@@ -274,12 +142,9 @@ void PostalCodeEdit::setValue(const QVariant &value) {
   } break;
 
   default:
-    return;
+    qWarning("Invalid PostalCodeEdit::setValue usage!");
+    break;
   };
-
-  // @note Nur dann, wenn auch das Land gesetzt ist!
-  if (m_countries->currentIndex() > 0)
-    setPostalCodeLeave();
 }
 
 void PostalCodeEdit::setFocus() {
@@ -335,7 +200,49 @@ const QString PostalCodeEdit::getCountry() {
   return QString();
 }
 
-QCompleter *PostalCodeEdit::getLocations(QWidget *parent) {
+const AntiquaCRM::PostalCode PostalCodeEdit::getPostalCode(const QString &plz) {
+  if (plz.isEmpty()) {
+    qWarning("Invalid usage for PostalCodeEdit::getPostalCode!");
+    return dummyCode();
+  }
+
+  QString _country = getCountry();
+  if (_country.isEmpty()) {
+    qWarning("PostalCodeEdit::getPostalCode - no country selected!");
+    return dummyCode();
+  }
+
+  PostalCodeModel *m = qobject_cast<PostalCodeModel *>(m_completer->model());
+  if (m == nullptr)
+    return dummyCode();
+
+  Qt::ItemDataRole qrole = Qt::EditRole;
+  for (int r = 0; r < m->rowCount(); r++) {
+    QModelIndex mIndex = m->sibling(r, 0, QModelIndex());
+    QVariant var = m->data(mIndex, qrole);
+    if (!var.isValid())
+      continue;
+
+    if (comparePostalcode(var.toString(), plz)) {
+      AntiquaCRM::PostalCode _pcode;
+      _pcode.plz = var.toString();
+      QVariant v_lo = m->data(m->sibling(r, 1, mIndex), qrole);
+      _pcode.location = v_lo.toString();
+      QVariant v_st = m->data(m->sibling(r, 2, mIndex), qrole);
+      _pcode.state = v_st.toString();
+      _pcode.country = _country;
+      if (_pcode.state.length() > 1)
+        _pcode.state.prepend(_country + "/");
+      else
+        _pcode.state = _country;
+
+      return _pcode;
+    }
+  }
+  return dummyCode();
+}
+
+QCompleter *PostalCodeEdit::getCompleter(QLineEdit *editor) {
   QStringList _buffer;
   if (getCountry().isEmpty())
     return nullptr; // nothing todo
@@ -360,7 +267,12 @@ QCompleter *PostalCodeEdit::getLocations(QWidget *parent) {
     }
   }
 
-  QCompleter *m_cpl = new QCompleter(_buffer, parent);
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (_buffer.size() < 1)
+    qDebug() << "PostalCodeEdit::Completer::Size" << _buffer.size();
+#endif
+
+  QCompleter *m_cpl = new QCompleter(_buffer, editor);
   m_cpl->setCaseSensitivity(Qt::CaseInsensitive);
   m_cpl->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
   return m_cpl;
@@ -409,179 +321,4 @@ const QString PostalCodeEdit::statusHints() {
 }
 // END::PostalCodeEdit
 
-// BEGIN::PostalCodeState
-PostalCodeState::PostalCodeState(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
-  m_edit = new ALineEdit(this);
-  layout->addWidget(m_edit);
-}
-
-void PostalCodeState::initData() {
-  // unused in this
-}
-
-void PostalCodeState::setCountry(const AntiquaCRM::PostalCode &code) {
-  if (code.state.isEmpty())
-    return;
-
-  m_edit->setText(code.state);
-}
-
-void PostalCodeState::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  if (_type.id() == QMetaType::QString) {
-    m_edit->setText(value.toString());
-    return;
-  }
-  QString str = QString::number(value.toInt());
-  m_edit->setText(str);
-}
-
-void PostalCodeState::setFocus() { m_edit->setFocus(); }
-
-void PostalCodeState::reset() {
-  m_edit->clear();
-  setWindowModified(false);
-}
-
-void PostalCodeState::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
-
-  if (field.metaType().id() != getType().id())
-    return;
-
-  m_edit->setLineEditProperties(field);
-}
-
-bool PostalCodeState::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
-    return false;
-
-  return true;
-}
-
-void PostalCodeState::setInputToolTip(const QString &tip) {
-  m_edit->setToolTip(tip);
-}
-
-void PostalCodeState::setBuddyLabel(const QString &text) {
-  if (text.isEmpty())
-    return;
-
-  ALabel *m_lb = addTitleLabel(text + ":");
-  m_lb->setBuddy(m_edit);
-}
-
-const QMetaType PostalCodeState::getType() const {
-  return QMetaType(QMetaType::QString);
-}
-
-const QVariant PostalCodeState::getValue() { return m_edit->text().trimmed(); }
-
-const QString PostalCodeState::popUpHints() {
-  return tr("Missing Country/State for Postalcode!");
-}
-
-const QString PostalCodeState::statusHints() {
-  return tr("Missing Country/State for Postalcode!");
-}
-// END::PostalCodeState
-
-// BEGIN::PostalCodeLocation
-PostalCodeLocation::PostalCodeLocation(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
-  m_edit = new ALineEdit(this);
-  layout->addWidget(m_edit);
-}
-
-void PostalCodeLocation::initData() {}
-
-void PostalCodeLocation::setCompletion(const AntiquaCRM::PostalCode &code) {
-  if (code.location.isEmpty())
-    return;
-
-  PostalCodeEdit *o_pce = qobject_cast<AntiquaCRM::PostalCodeEdit *>(sender());
-  if (o_pce == nullptr)
-    return;
-
-  // WARNING - do not override it!
-  QString _str = m_edit->text();
-  if (_str.isEmpty())
-    m_edit->setText(code.location);
-
-  QCompleter *m_cpl = o_pce->getLocations(this);
-  if (m_cpl == nullptr)
-    return;
-
-  m_edit->setClearButtonEnabled(true);
-  m_edit->setCompleter(m_cpl);
-  m_edit->setCompleterAction(true);
-}
-
-void PostalCodeLocation::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  if (_type.id() == QMetaType::QString) {
-    m_edit->setText(value.toString());
-    return;
-  }
-  QString str = QString::number(value.toInt());
-  m_edit->setText(str);
-}
-
-void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
-
-void PostalCodeLocation::reset() {
-  m_edit->clear();
-  m_edit->setCompleter(nullptr);
-  m_edit->setCompleterAction(false);
-  setWindowModified(false);
-}
-
-void PostalCodeLocation::setRestrictions(const QSqlField &field) {
-  if (field.requiredStatus() == QSqlField::Required)
-    setRequired(true);
-
-  if (field.metaType().id() != QMetaType::QString)
-    return;
-
-  m_edit->setLineEditProperties(field);
-}
-
-bool PostalCodeLocation::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
-    return false;
-
-  return true;
-}
-
-void PostalCodeLocation::setInputToolTip(const QString &tip) {
-  m_edit->setToolTip(tip);
-}
-
-void PostalCodeLocation::setBuddyLabel(const QString &text) {
-  if (text.isEmpty())
-    return;
-
-  ALabel *m_lb = addTitleLabel(text + ":");
-  m_lb->setBuddy(m_edit);
-}
-
-const QMetaType PostalCodeLocation::getType() const {
-  return QMetaType(QMetaType::QString);
-}
-
-const QVariant PostalCodeLocation::getValue() {
-  return m_edit->text().trimmed();
-}
-
-const QString PostalCodeLocation::popUpHints() {
-  return tr("Missing Location for Postalcode!");
-}
-
-const QString PostalCodeLocation::statusHints() {
-  return tr("Missing Location for Postalcode!");
-}
-
-// END::PostalCodeLocation
 } // namespace AntiquaCRM

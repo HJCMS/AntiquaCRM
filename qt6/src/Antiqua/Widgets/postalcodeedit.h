@@ -10,58 +10,12 @@
 #define ANTIQUACRM_WIDGETS_POSTALCODEEDIT_H
 
 #include <AntiquaInput>
-#include <QAbstractListModel>
 #include <QCompleter>
-#include <QList>
+#include <QLineEdit>
 #include <QObject>
-#include <QPalette>
 #include <QWidget>
 
 namespace AntiquaCRM {
-
-/**
- * @class PostalCodeModel
- * @brief Postalcode Completer Model
- * This model class prevents a network performance issue.
- * The Database file get updated at Application start and has a large size.
- * @ingroup EditWidgets
- */
-class ANTIQUACRM_LIBRARY PostalCodeModel final : public QAbstractListModel {
-  Q_OBJECT
-
-private:
-  QList<AntiquaCRM::PostalCode> p_codes;
-  QPalette p_palette;
-
-public:
-  /**
-   * @param parent
-   */
-  explicit PostalCodeModel(QObject *parent = nullptr);
-
-  /**
-   * @brief Rows from current country zip codes.
-   */
-  int rowCount(const QModelIndex &parent = QModelIndex()) const;
-
-  /**
-   * @brief return a fixed column count 3
-   */
-  int columnCount(const QModelIndex &parent) const;
-
-  /**
-   * @brief returning sections from AntiquaCRM::PostalCode
-   */
-  QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const;
-
-  /**
-   * @brief Init Model data
-   * It using „postalcodes.json“ File from User Interface shared data location.
-   * @note If Json file not exists a SQL fallback will done.
-   * @param country - state or country from database
-   */
-  void initModel(const QString &country);
-};
 
 /**
  * @class PostalCodeEdit
@@ -111,6 +65,8 @@ private:
   AComboBox *m_countries;  /**< @brief Country Selecter */
   ALineEdit *m_postalcode; /**< @brief Current Postalcode */
   QCompleter *m_completer; /**< @brief zip code Completer */
+
+  const AntiquaCRM::PostalCode dummyCode() const;
 
   /**
    * @brief Compare postal code with the auto-completion!
@@ -188,126 +144,16 @@ public:
   const QString getCountry();
 
   /**
+   * @brief Get AntiquaCRM::PostalCode by country and postalcode
+   * @param plz - postalcode
+   */
+  const AntiquaCRM::PostalCode getPostalCode(const QString &plz);
+
+  /**
    * @brief get locations list from current zip code
    * It will return QCompleter for location list.
    */
-  QCompleter *getLocations(QWidget *parent);
-
-  void setRestrictions(const QSqlField &) override;
-
-  void setInputToolTip(const QString &) override;
-
-  void setBuddyLabel(const QString &) override;
-
-  bool isValid() override;
-
-  const QMetaType getType() const override;
-
-  const QVariant getValue() override;
-
-  const QString popUpHints() override;
-
-  const QString statusHints() override;
-};
-
-/**
- * @class PostalCodeState
- * @brief Display Postalcode country/state
- * @ingroup EditWidgets
- */
-class ANTIQUACRM_LIBRARY PostalCodeState final
-    : public AntiquaCRM::AInputWidget {
-  Q_OBJECT
-
-private:
-  ALineEdit *m_edit;
-  void initData() override;
-
-public Q_SLOTS:
-  /**
-   * @brief Set Country and State from signal.
-   * This Slot is reserved to set Country and State from Signal
-   * AntiquaCRM::PostalCodeEdit::sendOnLeavePostalEdit
-   */
-  void setCountry(const AntiquaCRM::PostalCode &);
-
-  /**
-   * @brief Set value to Country/State.
-   * @code
-   *  Different output formats are used:
-   *    Österreich
-   *    Deutschland/Schleswig-Holstein
-   * @endcode
-   * The gradations will be needed later for statistic charts.
-   */
-  void setValue(const QVariant &) override;
-
-  void setFocus() override;
-
-  void reset() override;
-
-public:
-  /**
-   * @param parent - parent Object
-   */
-  explicit PostalCodeState(QWidget *parent = nullptr);
-
-  void setRestrictions(const QSqlField &) override;
-
-  void setInputToolTip(const QString &) override;
-
-  void setBuddyLabel(const QString &) override;
-
-  bool isValid() override;
-
-  const QMetaType getType() const override;
-
-  const QVariant getValue() override;
-
-  const QString popUpHints() override;
-
-  const QString statusHints() override;
-};
-
-/**
- * @class PostalCodeLocation
- * @brief Display Postalcode locations
- * @ingroup EditWidgets
- */
-class ANTIQUACRM_LIBRARY PostalCodeLocation final
-    : public AntiquaCRM::AInputWidget {
-  Q_OBJECT
-
-private:
-  ALineEdit *m_edit;       /**< @brief location */
-  QCompleter *m_completer; /**< @brief location Completer */
-  void initData() override;
-
-public Q_SLOTS:
-  /**
-   * @brief Create Completer for edit locations with PostalCode
-   * This Slot is reserved to set Location and creates QCompleter from signal
-   * „PostalCodeEdit::sendOnLeavePostalEdit“ data.
-   * @warning This Slot uses QObject::sender() to fetch „PostalCodeEdit“ class
-   * with „qobject_cast“ to prepare the right parent for QCompleter. This
-   * procedure is needed to get „PostalCodeEdit::getLocations()“!
-   */
-  void setCompletion(const AntiquaCRM::PostalCode &);
-
-  /**
-   * @brief set location string
-   */
-  void setValue(const QVariant &value) override;
-
-  void setFocus() override;
-
-  void reset() override;
-
-public:
-  /**
-   * @param parent - parent Object
-   */
-  explicit PostalCodeLocation(QWidget *parent = nullptr);
+  QCompleter *getCompleter(QLineEdit *editor);
 
   void setRestrictions(const QSqlField &) override;
 

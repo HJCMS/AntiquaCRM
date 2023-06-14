@@ -182,15 +182,13 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   connect(c_postalcode,
           SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
           SLOT(setPostalData(const AntiquaCRM::PostalCode &)));
+
   connect(addressGen, SIGNAL(clicked()), SLOT(generateAddressBody()));
 }
 
 void CustomersData::setPostalData(const AntiquaCRM::PostalCode &code) {
   c_country->setCountry(code);
-  c_location->setCompletion(code);
-  if (code.country.isEmpty())
-    return;
-
+  c_location->setCompletion(c_postalcode, code);
   c_country_bcp47->setValue(code.country);
 }
 
@@ -250,12 +248,11 @@ void CustomersData::generateAddressBody() {
 }
 
 void CustomersData::setCountry(const QString &country) {
-  c_postalcode->setCountry(country);
-  /*
-    Nur ersetzen wenn Land nicht enthalten ist!
-    Eigentlich nicht notwendig!
-  if (!c_country->getValue().toString().contains(country)) {
-    c_country->setValue(country);
+  if (c_postalcode->isValid()) {
+    c_postalcode->setCountry(country);
+    AntiquaCRM::PostalCode _code =
+        c_postalcode->getPostalCode(c_postalcode->getValue().toString());
+
+    c_location->setCompletion(c_postalcode, _code);
   }
-  */
 }

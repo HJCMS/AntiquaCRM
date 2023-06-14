@@ -33,16 +33,8 @@ void TabsWidget::tabInserted(int index) {
 
 void TabsWidget::setEnterChanged(int index) {
   AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
-  if (m_tab != nullptr) {
-    if (m_tab->currentView() == TabsIndex::ViewPage::MainView) {
-      m_tab->onEnterChanged();
-    }
-#ifdef ANTIQUA_DEVELOPEMENT
-    else {
-      qDebug() << Q_FUNC_INFO << m_tab->getTitle() << "no main view";
-    }
-#endif
-  }
+  if (m_tab != nullptr && m_tab->currentView() == TabsIndex::ViewPage::MainView)
+    m_tab->onEnterChanged();
 }
 
 void TabsWidget::setCurrentTab(const QString &objname) {
