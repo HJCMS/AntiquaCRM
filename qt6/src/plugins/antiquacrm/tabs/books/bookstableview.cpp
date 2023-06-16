@@ -94,7 +94,7 @@ void BooksTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
     break;
 
   default:
-    qWarning("Unknown %s", Q_FUNC_INFO);
+    qWarning("Unknown Menu context request!");
     return;
   };
 }
@@ -146,10 +146,10 @@ void BooksTableView::createSocketOperation(const QModelIndex &index) {
     QJsonObject obj;
     obj.insert("ACTION", "add_article");
     obj.insert("TARGET", "orders_tab");
-    obj.insert("add_article", QJsonValue(aid));
+    obj.insert("VALUE", QJsonValue(aid));
     emit sendSocketOperation(obj);
   } else {
-    qInfo("Socket operation ignored!");
+    qInfo("Socket operation ignored (%lld)!", aid);
   }
 }
 

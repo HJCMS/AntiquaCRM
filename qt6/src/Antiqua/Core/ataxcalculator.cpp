@@ -9,12 +9,6 @@ namespace AntiquaCRM {
 
 ATaxCalculator::ATaxCalculator(double price) : p_origin{price} {}
 
-const QString ATaxCalculator::money(double price) {
-  QLocale lc = QLocale::system();
-  QString cs = lc.currencySymbol(QLocale::CurrencySymbol);
-  return lc.toCurrencyString(price, cs, 2);
-}
-
 qreal ATaxCalculator::toAdd(qreal vat) const {
   return ((p_origin / (100)) * vat);
 }
@@ -29,6 +23,13 @@ double ATaxCalculator::plus(qreal vat) const {
 
 double ATaxCalculator::minus(qreal vat) const {
   return (p_origin - getIncl(vat));
+}
+
+const QString ATaxCalculator::money(double  value,
+                             QLocale::CurrencySymbolFormat format) {
+  QLocale _l = QLocale::system();
+  QString _s = _l.currencySymbol(format);
+  return _l.toCurrencyString(value, _s, 2);
 }
 
 }; // namespace AntiquaCRM

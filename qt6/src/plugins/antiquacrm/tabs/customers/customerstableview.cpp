@@ -25,7 +25,11 @@ qint64 CustomersTableView::getTableID(const QModelIndex &index, int column) {
 }
 
 int CustomersTableView::getArticleCount(const QModelIndex &index) {
-  return getTableID(index, 1);
+  Q_UNUSED(index);
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "unused - always returns -1!";
+#endif
+  return -1;
 }
 
 bool CustomersTableView::sqlModelQuery(const QString &query) {
@@ -56,7 +60,7 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->addCreateAction(tr("Create entry"));
   m_menu->addDeleteAction(tr("Delete selected Customer"));
   m_menu->addCopyAction(tr("Copy Article Id"));
-  m_menu->addOrderAction(tr("Add Article to opened Order"));
+  m_menu->addOrderAction(tr("Create new Order for this Customer"));
   m_menu->addReloadAction(tr("Update"));
 
   connect(m_menu,
@@ -97,7 +101,7 @@ void CustomersTableView::contextMenuAction(
     break;
 
   default:
-    qWarning("Unknown %s", Q_FUNC_INFO);
+    qWarning("Unknown Menu context request!");
     return;
   };
 }
@@ -144,15 +148,15 @@ void CustomersTableView::getSelectedItem(const QModelIndex &index) {
 }
 
 void CustomersTableView::createSocketOperation(const QModelIndex &index) {
-  qint64 aid = getTableID(index);
-  if (aid >= 1 && getArticleCount(index) > 0) {
+  qint64 cid = getTableID(index);
+  if (cid >= 1) {
     QJsonObject obj;
-    obj.insert("ACTION", "new_order");
-    obj.insert("TARGET", "customers_tab");
-    obj.insert("new_order", QJsonValue(aid));
+    obj.insert("ACTION", "create_order");
+    obj.insert("TARGET", "orders_tab");
+    obj.insert("VALUE", QJsonValue(cid));
     emit sendSocketOperation(obj);
   } else {
-    qInfo("Socket operation ignored!");
+    qInfo("Socket operation ignored (%lld)!", cid);
   }
 }
 

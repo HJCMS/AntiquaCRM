@@ -5,7 +5,8 @@
 
 CustomersStatusBar::CustomersStatusBar(QWidget *parent)
     : AntiquaCRM::TabsStatusBar{parent} {
-  btn_create = createButton();
+  btn_create = createButton(tr("Create order"),
+                            tr("Create a new Order for this Customer."));
   setCreateButtonEnabled(false);
 
   defaultViewButton();

@@ -26,7 +26,25 @@ class ANTIQUACRM_LIBRARY PostalCodeState final
 
 private:
   ALineEdit *m_edit;
+
+  /**
+   * @brief History variable
+   */
+  QString p_history = QString();
+
   void initData() override;
+
+private Q_SLOTS:
+  /**
+   * @brief Check history and compare with current entry
+   *
+   * This slot is triggerd by editingFinished and check changes from History.
+   * if current data not equal set Window Modified and sendInputChanged emitted!
+   *
+   * The @ref p_history Variable is set in @ref setValue and cleared in @ref
+   * reset function.
+   */
+  void updateChanged();
 
 public Q_SLOTS:
   /**

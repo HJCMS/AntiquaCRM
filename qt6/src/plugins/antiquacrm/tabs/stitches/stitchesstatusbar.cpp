@@ -5,7 +5,8 @@
 
 StitchesStatusBar::StitchesStatusBar(QWidget *parent)
     : AntiquaCRM::TabsStatusBar{parent} {
-  btn_create = createButton();
+  btn_create = createButton(tr("New entry"),
+                            tr("Create a new Print or Stitches entry."));
   setCreateButtonEnabled(false);
 
   defaultViewButton();

@@ -29,9 +29,34 @@ class ANTIQUACRM_LIBRARY PostalCodeLocation final
   Q_OBJECT
 
 private:
-  ALineEdit *m_edit;       /**< @brief location */
-  QCompleter *m_completer; /**< @brief location Completer */
+  /**
+   * @brief location
+   */
+  ALineEdit *m_edit;
+
+  /**
+   * @brief location Completer
+   */
+  QCompleter *m_completer;
+
+  /**
+   * @brief History variable
+   */
+  QString p_history = QString();
+
   void initData() override;
+
+private Q_SLOTS:
+  /**
+   * @brief Check history and compare with current entry
+   *
+   * This slot is triggerd by editingFinished and check changes from History.
+   * if current data not equal set Window Modified and sendInputChanged emitted!
+   *
+   * The @ref p_history Variable is set in @ref setValue and cleared in @ref
+   * reset function.
+   */
+  void updateChanged();
 
 public Q_SLOTS:
   /**
@@ -39,8 +64,14 @@ public Q_SLOTS:
    */
   void setValue(const QVariant &value) override;
 
+  /**
+   * @brief Focused the cursor to the Line editor
+   */
   void setFocus() override;
 
+  /**
+   * @brief Clears all inputs and reset internal changes to initialisation.
+   */
   void reset() override;
 
 public:

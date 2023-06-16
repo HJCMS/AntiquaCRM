@@ -5,7 +5,7 @@
 
 BooksStatusBar::BooksStatusBar(QWidget *parent)
     : AntiquaCRM::TabsStatusBar{parent} {
-  btn_create = createButton();
+  btn_create = createButton(tr("New entry"), tr("Create a new Book entry."));
   setCreateButtonEnabled(false);
 
   defaultViewButton();

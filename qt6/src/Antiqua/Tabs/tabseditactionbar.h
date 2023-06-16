@@ -17,6 +17,12 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class TabsEditActionBar
+ * @brief Tab Editor Actionsbar
+ *
+ * @ingroup TabsInterface
+ */
 class ANTIQUACRM_LIBRARY TabsEditActionBar final : public QWidget {
   Q_OBJECT
 
@@ -76,28 +82,17 @@ public Q_SLOTS:
    */
   void setRestoreable(bool);
 
-  /**
-   * @brief Set focus to a QPushButton!
-   * @param suffix
-   * Available Suffixes:
-   *  @li cancel
-   *  @li restore
-   *  @li article
-   *  @li save
-   *  @li back
-   * @code
-   *  setFocusButton("article");
-   * @endcode
-   */
-  void setFocusButton(const QString &suffix);
-
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit TabsEditActionBar(QWidget *parent = nullptr);
 
   /**
    * @brief Drucken anzeigen/ausblenden
+   * @param view  - set visible and enabled
    */
-  void setViewPrintButton(bool b = false);
+  void setViewPrintButton(bool view = false);
 
   /**
    * @brief Druckerdialog Menü festlegen
@@ -106,24 +101,28 @@ public:
 
   /**
    * @brief E-Mail Knopf anzeigen/ausblenden
+   * @param view  - set visible and enabled
    */
-  void setViewMailButton(bool b = false);
+  void setViewMailButton(bool view = false);
 
   /**
    * @brief E-Mail Nachrichten Menü festlegen
    */
-  void setMailMenu(const QMap<QString,QString> &);
+  void setMailMenu(AntiquaCRM::MailGroups group = MailGroup::NO_MAIL_GROUP);
 
   /**
    * @brief Article Einfügen Anzeigen
+   * @param view  - set visible and enabled
+   * @param title - custom title
    */
-  void setViewActionAddButton(bool b = false,
-                              const QString &customTitle = QString());
+  void setViewActionAddButton(bool view = false,
+                              const QString &title = QString());
 
   /**
    * @brief Zurücksetzen anzeigen/ausblenden
+   * @param view  - set visible and enabled
    */
-  void setViewRestoreButton(bool b = false);
+  void setViewRestoreButton(bool view = false);
 
   /**
    * @brief Abfrage auf Zurücksetzen Knopf

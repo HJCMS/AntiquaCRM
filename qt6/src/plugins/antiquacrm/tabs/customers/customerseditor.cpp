@@ -64,11 +64,13 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   // Begin::row3 {
   m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
   m_actionBar->setViewPrintButton(false);
+  m_actionBar->setPrinterMenu(AntiquaCRM::PrinterGroup::PRINT_NOBUTTON);
   m_actionBar->setViewMailButton(true);
+  m_actionBar->setMailMenu(AntiquaCRM::MailGroup::MAIL_CUSTOMER_GROUP);
   m_actionBar->setViewActionAddButton(true, tr("Create Order"));
   // ResetButton off
-  m_actionBar->setRestoreable(false);
-  m_actionBar->setViewRestoreButton(false);
+  m_actionBar->setViewRestoreButton(true);
+  m_actionBar->setRestoreable(true);
   mainLayout->addWidget(m_actionBar);
   // } End::row3;
 
@@ -116,9 +118,6 @@ void CustomersEditor::setInputFields() {
   }
   // Completers
   m_dataWidget->c_postalcode->initData();
-
-  // TODO Menübar SQL Abfrage starten
-  // m_actionBar->setMailMenu();
 }
 
 bool CustomersEditor::setDataField(const QSqlField &field,

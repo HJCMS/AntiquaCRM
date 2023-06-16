@@ -25,8 +25,8 @@ const QString TabCustomers::sqlFieldPrefix() const {
 
 AntiquaCRM::TabsConfigWidget *
 TabCustomers::configWidget(QWidget *parent) const {
-  CustomersTabConfigWidget *_widget = new CustomersTabConfigWidget(parent);
-  return _widget;
+  CustomersTabConfigWidget *_w = new CustomersTabConfigWidget(parent);
+  return _w;
 }
 
 bool TabCustomers::addIndexOnInit() const {
@@ -34,9 +34,8 @@ bool TabCustomers::addIndexOnInit() const {
 }
 
 AntiquaCRM::TabsIndex *TabCustomers::indexWidget(QWidget *parent) const {
-  CustomersWidget *_widget = new CustomersWidget(parent);
-  Q_CHECK_PTR(_widget);
-  return _widget;
+  CustomersWidget *_w = new CustomersWidget(parent);
+  return _w;
 }
 
 bool TabCustomers::createInterface(QObject *parent) {

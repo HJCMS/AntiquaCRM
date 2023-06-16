@@ -10,23 +10,46 @@ PostalCodeLocation::PostalCodeLocation(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
+  initData();
+  connect(m_edit, SIGNAL(editingFinished()), SLOT(updateChanged()));
 }
 
-void PostalCodeLocation::initData() {}
+void PostalCodeLocation::initData() {
+  // psql -c "\d customers" | grep c_location
+  QSqlField _f;
+  _f.setMetaType(getType());
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setLength(80);
+  setRestrictions(_f);
+  setWindowModified(false);
+}
+
+void PostalCodeLocation::updateChanged() {
+  if (!isValid())
+    return;
+
+  if (p_history.compare(m_edit->text(), Qt::CaseSensitive) != 0) {
+    setWindowModified(true);
+    emit sendInputChanged();
+  }
+}
 
 void PostalCodeLocation::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  if (_type.id() == QMetaType::QString) {
-    m_edit->setText(value.toString());
+  QString _location;
+  if (value.metaType().id() == QMetaType::QString) {
+    _location = value.toString().trimmed();
+  } else {
+    qWarning("Invalid location input!");
     return;
   }
-  QString str = QString::number(value.toInt());
-  m_edit->setText(str);
+  p_history = _location;
+  m_edit->setText(_location);
 }
 
 void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
 
 void PostalCodeLocation::reset() {
+  p_history.clear();
   m_edit->clear();
   m_edit->setCompleter(nullptr);
   m_edit->setCompleterAction(false);
@@ -94,11 +117,13 @@ const QVariant PostalCodeLocation::getValue() {
 }
 
 const QString PostalCodeLocation::popUpHints() {
-  return tr("Missing Location for Postalcode!");
+  QStringList _l(tr("Missing location in this dataset!"));
+  _l << tr("A Postal location is very important to write valid invoices.");
+  return _l.join("<br>");
 }
 
 const QString PostalCodeLocation::statusHints() {
-  return tr("Missing Location for Postalcode!");
+  return tr("Missing a valid Postal location!");
 }
 
 } // namespace AntiquaCRM

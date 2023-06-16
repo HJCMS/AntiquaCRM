@@ -97,11 +97,4 @@ const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
 }
 
-const QString AUtil::toMoney(double value,
-                             QLocale::CurrencySymbolFormat format) {
-  QLocale _lc = QLocale::system();
-  QString _cs = _lc.currencySymbol(format);
-  return _lc.toCurrencyString(value, _cs, 2);
-}
-
 }; // namespace AntiquaCRM

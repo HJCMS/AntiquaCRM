@@ -90,6 +90,7 @@ void PostalCodeEdit::valueChanged(int index) {
     m_postalcode->setCompleter(m_completer);
     emit sendResetDependencies();
   }
+  setWindowModified(true);
   emit sendInputChanged();
 }
 
@@ -145,10 +146,7 @@ void PostalCodeEdit::setValue(const QVariant &value) {
   };
 }
 
-void PostalCodeEdit::setFocus() {
-  // focus lineedit
-  m_postalcode->setFocus();
-}
+void PostalCodeEdit::setFocus() { m_postalcode->setFocus(); }
 
 void PostalCodeEdit::reset() {
   m_countries->setCurrentIndex(0);

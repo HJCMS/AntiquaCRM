@@ -76,7 +76,8 @@ protected:
   /**
    * @brief optinal - create button
    */
-  QPushButton *createButton(const QString &title = QString());
+  QPushButton *createButton(const QString &title = QString(),
+                            const QString &tip = QString());
 
   /**
    * @brief optinal - history button

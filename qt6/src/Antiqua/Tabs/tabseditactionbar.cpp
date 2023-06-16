@@ -91,44 +91,38 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
 void TabsEditActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
 
-void TabsEditActionBar::setFocusButton(const QString &suffix) {
-  QString search("editor_action_button_" + suffix.toLower());
-  QPushButton *btn = findChild<QPushButton *>(search);
-  if (btn != nullptr && btn->isVisible()) {
-    btn->setFocus();
-  }
-}
-
-void TabsEditActionBar::setViewPrintButton(bool b) {
-  m_printerButton->setEnabled(b);
-  m_printerButton->setVisible(b);
+void TabsEditActionBar::setViewPrintButton(bool view) {
+  m_printerButton->setEnabled(view);
+  m_printerButton->setVisible(view);
 }
 
 void TabsEditActionBar::setPrinterMenu(AntiquaCRM::PrinterGroups buttons) {
   m_printerButton->setButtons(buttons);
 }
 
-void TabsEditActionBar::setViewMailButton(bool b) {
-  m_mailButton->setEnabled(b);
-  m_mailButton->setVisible(b);
+void TabsEditActionBar::setViewMailButton(bool view) {
+  m_mailButton->setEnabled(view);
+  m_mailButton->setVisible(view);
 }
 
-void TabsEditActionBar::setMailMenu(const QMap<QString, QString> &map) {
-  qDebug() << Q_FUNC_INFO << map.size();
+void TabsEditActionBar::setMailMenu(AntiquaCRM::MailGroups group) {
+  m_mailButton->setSections(group);
 }
 
-void TabsEditActionBar::setViewActionAddButton(bool b,
-                                               const QString &customTitle) {
-  if (!customTitle.isEmpty())
-    m_addArticle->setText(customTitle);
+void TabsEditActionBar::setViewActionAddButton(bool view,
+                                               const QString &title) {
+  if (!title.isEmpty()) {
+    m_addArticle->setText(title);
+    m_addArticle->setToolTip(title);
+  }
 
-  m_addArticle->setEnabled(b);
-  m_addArticle->setVisible(b);
+  m_addArticle->setEnabled(view);
+  m_addArticle->setVisible(view);
 }
 
-void TabsEditActionBar::setViewRestoreButton(bool b) {
-  m_restoreBtn->setEnabled(b);
-  m_restoreBtn->setVisible(b);
+void TabsEditActionBar::setViewRestoreButton(bool view) {
+  m_restoreBtn->setEnabled(view);
+  m_restoreBtn->setVisible(view);
 }
 
 bool TabsEditActionBar::isRestoreable() { return m_restoreBtn->isEnabled(); }

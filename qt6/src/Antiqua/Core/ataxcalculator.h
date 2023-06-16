@@ -6,11 +6,14 @@
 #define ANTIQUACRM_ATAXCALCULATOR_H
 
 #include <AGlobal>
+#include <QLocale>
 #include <QString>
 
 namespace AntiquaCRM {
 /**
+ * @class ATaxCalculator
  * @brief Sales Tax calculator
+ *
  * @code
   qreal vat = 19.0;
   double salePrice = 143.45;
@@ -25,47 +28,50 @@ namespace AntiquaCRM {
     << "incl" << vat << "% VAT:" << calcTax.getIncl(vat)
     << "Total Price:" << calcTax.money(nettoPrice);
  * @endcode
+ *
+ * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ATaxCalculator final {
 private:
   const double p_origin;
 
 public:
-  explicit ATaxCalculator(double price);
-
   /**
-   * @brief Convert price to currency string
-   * @param price
+   * @param price - money
    */
-  const QString money(double price);
+  explicit ATaxCalculator(double price);
 
   /**
    * @brief calculate sales tax for current price
    * @param vat - sales tax rate
-   * @return Sales tax value to be add ...
    */
   qreal toAdd(qreal vat) const;
 
   /**
    * @brief get included sales tax from current price
    * @param vat - sales tax rate
-   * @return Included sales tax value ...
    */
   qreal getIncl(qreal vat) const;
 
   /**
    * @brief add sales tax to current price
    * @param vat - sales tax rate
-   * @return Price plus sales tax
    */
   double plus(qreal vat) const;
 
   /**
    * @brief Calculate out sales tax from current price
    * @param vat - sales tax rate
-   * @return Price minus sales tax
    */
   double minus(qreal vat) const;
+
+  /**
+   * @brief Convert price to currency string
+   * @param value - price
+   * @param format
+   */
+  static const QString money(double value,
+        QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);
 };
 
 };     // namespace AntiquaCRM

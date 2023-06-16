@@ -46,10 +46,11 @@ const QMap<TabsStatusBar::History, QString> TabsStatusBar::historyItems() {
 
 void TabsStatusBar::addButton(QPushButton *btn) { layout->addWidget(btn); }
 
-QPushButton *TabsStatusBar::createButton(const QString &title) {
+QPushButton *TabsStatusBar::createButton(const QString &title,
+                            const QString &tip) {
   QPushButton *btn = new QPushButton(m_frame);
   btn->setIcon(AntiquaApplIcon("database-add"));
-  btn->setToolTip(tr("Create a new entry."));
+  btn->setToolTip(tip);
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
     btn->setText(tr("Create"));

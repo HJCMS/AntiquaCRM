@@ -11,10 +11,27 @@ PostalCodeState::PostalCodeState(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
+  initData();
+  connect(m_edit, SIGNAL(editingFinished()), SLOT(updateChanged()));
 }
 
 void PostalCodeState::initData() {
-  // unused in this
+  QSqlField _f;
+  _f.setMetaType(getType());
+  _f.setRequiredStatus(QSqlField::Required);
+  _f.setLength(100);
+  setRestrictions(_f);
+  setWindowModified(false);
+}
+
+void PostalCodeState::updateChanged() {
+  if (!isValid())
+    return;
+
+  if (p_history.compare(m_edit->text(), Qt::CaseSensitive) != 0) {
+    setWindowModified(true);
+    emit sendInputChanged();
+  }
 }
 
 void PostalCodeState::setCountry(const AntiquaCRM::PostalCode &code) {
@@ -25,18 +42,21 @@ void PostalCodeState::setCountry(const AntiquaCRM::PostalCode &code) {
 }
 
 void PostalCodeState::setValue(const QVariant &value) {
-  QMetaType _type = value.metaType();
-  if (_type.id() == QMetaType::QString) {
-    m_edit->setText(value.toString());
+  QString _country;
+  if (value.metaType().id() == QMetaType::QString) {
+    _country = value.toString().trimmed();
+  } else {
+    qWarning("Invalid country input!");
     return;
   }
-  QString str = QString::number(value.toInt());
-  m_edit->setText(str);
+  p_history = _country;
+  m_edit->setText(_country);
 }
 
 void PostalCodeState::setFocus() { m_edit->setFocus(); }
 
 void PostalCodeState::reset() {
+  p_history.clear();
   m_edit->clear();
   setWindowModified(false);
 }
@@ -77,7 +97,9 @@ const QMetaType PostalCodeState::getType() const {
 const QVariant PostalCodeState::getValue() { return m_edit->text().trimmed(); }
 
 const QString PostalCodeState::popUpHints() {
-  return tr("Missing Country/State for Postalcode!");
+  QStringList _l(tr("Missing Country/State in this dataset!"));
+  _l << tr("Country/State is very important to write valid invoices.");
+  return _l.join("<br>");
 }
 
 const QString PostalCodeState::statusHints() {

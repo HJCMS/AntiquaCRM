@@ -9,6 +9,8 @@
 #include <QJsonObject>
 #include <QLocalServer>
 #include <QLocalSocket>
+#include <QMap>
+#include <QMetaType>
 #include <QObject>
 #include <QString>
 
@@ -90,7 +92,7 @@ public:
    *
    * This static function present a list of all allowed socket operations!
    */
-  static const QStringList operations();
+  static const QMap<QString, QMetaType> operations();
 };
 
 }; // namespace AntiquaCRM
