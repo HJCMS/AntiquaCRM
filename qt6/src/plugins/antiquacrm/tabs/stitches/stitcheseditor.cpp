@@ -11,11 +11,11 @@
 
 StitchesEditor::StitchesEditor(QWidget *parent)
     : AntiquaCRM::TabsEditor{STITCHES_SQL_EDITOR_PATTERN, parent} {
-  setWindowTitle(tr("Edit Book"));
+  setWindowTitle(tr("Edit entry"));
   setObjectName("tab_stitches_editor");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
-  mainLayout->setObjectName("bookeditor_main_layout");
+  mainLayout->setObjectName("printseditor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
 
   QString tempWhatsThis;
@@ -28,7 +28,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_id->setBuddyLabel(tr("Article ID"));
   tempWhatsThis = tr("Probably the most important parameter for the article "
                      "processing and is generated automatically when creating "
-                     "a book. AntiquaCRM use a running numbering system.");
+                     "a entry. AntiquaCRM use a running numbering system.");
   ip_id->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_id);
 
@@ -48,7 +48,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_price->setObjectName("ip_price");
   ip_price->setBuddyLabel(tr("Price"));
   tempWhatsThis =
-      tr("The Book price you want to have for it.\nNotes: You can always set "
+      tr("The price you want to have for it.\nNotes: You can always set "
          "limits for Prices in the main Configuration dialog.");
   ip_price->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_price);
@@ -79,8 +79,8 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_year->setObjectName("ip_year");
   ip_year->setBuddyLabel(tr("Year"));
   tempWhatsThis =
-      tr("The Book Year input mask starts with 1400 and ending one Year in the "
-         "future. If the Book edition Year is unknown, set an estimate and add "
+      tr("The Article Year input mask starts with 1400 and ending one Year in "
+         "the future. If the Edition Year is unknown, set an estimate and add "
          "a note in the description section.");
   ip_year->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_year);
@@ -110,13 +110,13 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_title = new AntiquaCRM::TextLine(this);
   ip_title->setObjectName("ip_title");
-  ip_title->setInputToolTip(tr("Book title"));
+  ip_title->setInputToolTip(tr("Title"));
   tempWhatsThis =
-      tr("A Book title is restricted to 80 Characters. Some Online Providers "
-         "only support this title length. Other Providers allowing more "
-         "characters in Book titles. To get around this, the following "
-         "Subtitle field will appended seperated by „-“ to the Book title when "
-         "exporting the stitches data to your online shop providers.");
+      tr("A Title is restricted to 80 Characters. Some Online Providers only "
+         "support this title length. Other Providers allowing more characters. "
+         "To get around this, the following Subtitle field will appended "
+         "seperated by „-“ to the title when exporting the article data to "
+         "your online shop providers.");
   ip_title->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_title, row2c++, 1, 1, 1);
 
@@ -124,7 +124,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_title_extended = new AntiquaCRM::TextLine(this);
   ip_title_extended->setObjectName("ip_title_extended");
-  ip_title_extended->setInputToolTip(tr("Book subtitle"));
+  ip_title_extended->setInputToolTip(tr("Subtitle"));
   // Warnung: Verwende „tempWhatsThis“ von ip_title!
   ip_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_title_extended, row2c++, 1, 1, 1);
@@ -133,13 +133,11 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_author = new AntiquaCRM::TextLine(this);
   ip_author->setObjectName("ip_author");
-  ip_author->setInputToolTip(tr("Book Authors"));
-  tempWhatsThis = tr("This field is reserved for Book Authors.\n"
-                     "You can add more separated by comma.\n"
-                     "e.g.: Karl Valentin, Franz Kafka\n"
-                     "Some provider Platforms supporting spezial Keywords.\n"
-                     "AntiquaCRM suggests the most common author group names, "
-                     "when editing this field.");
+  ip_author->setInputToolTip(tr("Authors"));
+  tempWhatsThis = tr("This field is reserved for Authors.\nYou can add more "
+                     "separated by comma.\nSome provider Platforms supporting "
+                     "spezial Keywords.\nAntiquaCRM suggests the most common "
+                     "author group names, when editing this field.");
   ip_author->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_author, row2c++, 1, 1, 1);
 
@@ -161,7 +159,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_storage = new AntiquaCRM::SelectStorage(this);
   ip_storage->setObjectName("ip_storage");
   ip_storage->setInputToolTip(tr("Storage location"));
-  tempWhatsThis = tr("The Storage location where this Book has been stored. "
+  tempWhatsThis = tr("The Storage location where this Article has been stored. "
                      "You need to Configure Storage locations first in your "
                      "Database Configuration Menu before you can use it.");
   ip_storage->setWhatsThisText(tempWhatsThis);
@@ -175,7 +173,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_storage_compartment->setBuddyLabel(tr("compartment"));
   tempWhatsThis =
       tr("Define Storage compartment in this Input field. It depends on the "
-         "Storage location and will printed on top of the Book card. If you "
+         "Storage location and will printed on top of the id card. If you "
          "select Storage location first a completer will add for this input "
          "field.");
   ip_storage_compartment->setWhatsThisText(tempWhatsThis);
@@ -203,13 +201,14 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   // infoText = new AntiquaCRM::ALabel("ISBN/EAN", _lbAlign, this);
   // row2->addWidget(infoText, row2c, 0, 1, 1);
   m_imageToolBar = new AntiquaCRM::ImageToolBar(this);
-  row2->addWidget(m_imageToolBar, row2c++, 1, 1, 1);
+  row2->addWidget(m_imageToolBar, row2c++, 1, 1, 1, Qt::AlignRight);
 
   // Image Viewer
   QSize _max_size = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_thumbnail = new AntiquaCRM::ImageThumbnail(this);
   m_thumbnail->setMinimumWidth(100);
   m_thumbnail->setMaximumWidth(_max_size.width());
+
   m_splitter->addLeft(row2Widget);
   m_splitter->addRight(m_thumbnail);
   mainLayout->addWidget(m_splitter);
@@ -399,7 +398,7 @@ bool StitchesEditor::sendSqlQuery(const QString &query) {
     }
   }
 
-  openSuccessMessage(tr("Bookdata saved successfully!"));
+  openSuccessMessage(tr("Data saved successfully!"));
   setResetModified(inputFields);
   return true;
 }
@@ -576,7 +575,7 @@ bool StitchesEditor::realyDeactivateEntry() {
   body << tr("Are you sure to finish this operation?");
   body << QString("</p>");
 
-  int ret = QMessageBox::question(this, tr("Book deactivation"), body.join(""));
+  int ret = QMessageBox::question(this, tr("Entry deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);

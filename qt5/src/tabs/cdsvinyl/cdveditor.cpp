@@ -160,9 +160,9 @@ CDVEditor::CDVEditor(QWidget *parent)
   btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
   btn_cdread->setIcon(QIcon("://icons/view_search.png"));
   btn_cdread->setToolTip(tr("Opens a Metadata readout Dialog for Music CD."));
-#ifdef Q_OS_WIN
+#ifndef ANTIQUA_HAVE_CDTRACKING
   btn_cdread->setEnabled(false);
-  btn_cdread->setToolTip("Currently only supported by Linux systems!");
+  btn_cdread->setToolTip("Not supported in this Installation!");
 #endif
   tbfLayout->addWidget(btn_cdread);
   tbfLayout->addStretch(1);
