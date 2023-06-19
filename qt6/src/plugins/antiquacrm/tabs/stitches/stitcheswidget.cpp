@@ -14,9 +14,9 @@
 
 StitchesWidget::StitchesWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
-  setObjectName(STITCHES_TABLE_NAME);
+  setObjectName("stitches_tab_widget");
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
-  setClosable(false);
+  setClosable(true);
 
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
@@ -179,16 +179,6 @@ void StitchesWidget::onEnterChanged() {
 }
 
 const QString StitchesWidget::getTitle() const { return tr("Stitches"); }
-
-AntiquaCRM::TabsIndex::ViewPage StitchesWidget::currentView() {
-  switch (currentIndex()) {
-  case 1:
-    return AntiquaCRM::TabsIndex::EditorView;
-
-  default:
-    return AntiquaCRM::TabsIndex::MainView;
-  }
-}
 
 bool StitchesWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))

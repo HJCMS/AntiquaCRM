@@ -79,7 +79,7 @@ bool MainWindow::loadTabInterfaces() {
 
         QAction *_ac = _viewMenu->addAction(_tab->windowIcon(), _name);
         _ac->setObjectName(_tab->tabIndexId());
-        connect(_ac, SIGNAL(triggered()), m_tabWidget, SLOT(setViewTab()));
+        connect(_ac, SIGNAL(triggered()), m_tabWidget, SLOT(setCurrentTab()));
 #ifdef ANTIQUA_DEVELOPEMENT
         qDebug() << Q_FUNC_INFO << _name;
 #endif

@@ -12,8 +12,8 @@
 #include <QMessageBox>
 
 CustomersWidget::CustomersWidget(QWidget *parent)
-    : AntiquaCRM::TabsIndex{"Customers_tab", parent} {
-  setObjectName("Customers_tab_widget");
+    : AntiquaCRM::TabsIndex{"customers_tab", parent} {
+  setObjectName("customers_tab_widget");
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("system-users"));
   setClosable(false);
 
@@ -256,16 +256,6 @@ void CustomersWidget::onEnterChanged() {
 }
 
 const QString CustomersWidget::getTitle() const { return tr("Customers"); }
-
-AntiquaCRM::TabsIndex::ViewPage CustomersWidget::currentView() {
-  switch (currentIndex()) {
-  case 1:
-    return AntiquaCRM::TabsIndex::EditorView;
-
-  default:
-    return AntiquaCRM::TabsIndex::MainView;
-  }
-}
 
 bool CustomersWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))

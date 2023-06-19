@@ -178,16 +178,6 @@ void BooksWidget::onEnterChanged() {
 
 const QString BooksWidget::getTitle() const { return tr("Books"); }
 
-AntiquaCRM::TabsIndex::ViewPage BooksWidget::currentView() {
-  switch (currentIndex()) {
-  case 1:
-    return AntiquaCRM::TabsIndex::EditorView;
-
-  default:
-    return AntiquaCRM::TabsIndex::MainView;
-  }
-}
-
 bool BooksWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;

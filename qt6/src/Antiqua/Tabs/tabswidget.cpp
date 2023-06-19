@@ -19,7 +19,24 @@ TabsWidget::TabsWidget(QWidget *parent) : QTabWidget{parent} {
   m_tabBar = new AntiquaCRM::TabsBar(this, _wheel_support);
   setTabBar(m_tabBar);
 
-  connect(this, SIGNAL(currentChanged(int)), SLOT(setEnterChanged(int)));
+  connect(m_tabBar, SIGNAL(currentChanged(int)), SLOT(setTabChanged(int)));
+  connect(m_tabBar, SIGNAL(tabCloseRequested(int)), SLOT(setTabClosed(int)));
+}
+
+bool TabsWidget::removeIndex(int index) {
+  AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
+  if (m_tab != nullptr && m_tab->isClosable()) {
+    if (!m_tab->isWindowModified()) {
+      removeTab(index);
+      return true;
+    }
+    QString title = m_tab->windowTitle();
+    emit sendMessage(tr("Unsaved changes for tab '%1'!").arg(title));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "Can't close this tab, unsaved changes!" << title;
+#endif
+  }
+  return false;
 }
 
 void TabsWidget::tabInserted(int index) {
@@ -31,33 +48,42 @@ void TabsWidget::tabInserted(int index) {
   }
 }
 
-void TabsWidget::setEnterChanged(int index) {
+void TabsWidget::setTabChanged(int index) {
   AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
   if (m_tab != nullptr && m_tab->currentView() == TabsIndex::ViewPage::MainView)
     m_tab->onEnterChanged();
 }
 
-void TabsWidget::setCurrentTab(const QString &objname) {
-  if (objname.isEmpty())
-    return;
-
-  setCurrentIndex(indexByName(objname));
+void TabsWidget::setTabClosed(int index) {
+  if (removeIndex(index)) {
+    //
+  }
 }
 
-void TabsWidget::setViewTab() {
-  QString _id = sender()->objectName();
-  if (_id.isEmpty())
+void TabsWidget::setCurrentTab(const QString &name) {
+  QString _id = name.trimmed();
+  if (name.isEmpty() && sender() != nullptr) {
+    _id = sender()->objectName();
+  }
+
+  if (_id.isEmpty()) {
+    qWarning("Missing tab name, setCurrentTab aborted!");
     return;
+  }
 
   setCurrentIndex(indexByName(_id));
 }
 
-int TabsWidget::indexByName(const QString &objname) {
-  if (objname.isEmpty())
+int TabsWidget::indexByName(const QString &name) {
+  if (name.isEmpty())
     return -1;
 
-  for (int i = 0; i < count(); i++) {
-    if (widget(i)->objectName() == objname) {
+  for (int i = 0; i < m_tabBar->count(); i++) {
+    AntiquaCRM::TabsIndex *m_t = tabWithIndex(i);
+    if (m_t == nullptr)
+      continue;
+
+    if (m_t->tabIndexId() == name) {
       return i;
     }
   }

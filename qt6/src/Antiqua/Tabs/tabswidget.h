@@ -29,28 +29,50 @@ class ANTIQUACRM_LIBRARY TabsWidget final : public QTabWidget {
   Q_OBJECT
 
 private:
+  /**
+   * @brief Read properties after insert and set changes.
+   */
   virtual void tabInserted(int) override final;
 
+  /**
+   * @brief close tab by index
+   */
+  bool removeIndex(int index);
+
 private Q_SLOTS:
-  void setEnterChanged(int);
+  /**
+   * @brief Check for TabsIndex::ViewPage
+   * @param index - current index
+   *
+   * If currentIndex() == TabsIndex::ViewPage::MainView call onEnterChanged()
+   */
+  void setTabChanged(int index);
+
+  /**
+   * @brief close tab by index
+   * @param index - current index
+   */
+  void setTabClosed(int index);
 
 protected:
   AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::TabsBar *m_tabBar;
 
 Q_SIGNALS:
-  void sendMessage(const QString &);
+  /**
+   * @brief Notify status messages
+   * @param msg
+   *
+   * e.g. Current tab is in edit mode ...
+   */
+  void sendMessage(const QString &msg);
 
 public Q_SLOTS:
   /**
-   * @brief Search Tab with objectName and call setCurrentIndex!
+   * @brief overload function for setCurrentIndex(int)
+   * @param name = objectName()
    */
-  void setCurrentTab(const QString &objname);
-
-  /**
-   * @brief overlaod function for setCurrentTab
-   */
-  void setViewTab();
+  void setCurrentTab(const QString &name = QString());
 
 public:
   /**
@@ -60,8 +82,9 @@ public:
 
   /**
    * @brief find tab by QObjectName
+   * @param name = objectName()
    */
-  int indexByName(const QString &objname);
+  int indexByName(const QString &name);
 
   /**
    * @brief overload function for addTab

@@ -47,12 +47,12 @@ protected Q_SLOTS:
    * @brief tab changed with index
    * @param index
    */
-  void tabIndexChanged(int);
+  void setIndexChanged(int index);
 
   /**
    * @brief is this tabe closeable
    */
-  void checkToClose();
+  void setCheckToClose();
 
 Q_SIGNALS:
   /**

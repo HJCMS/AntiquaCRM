@@ -252,10 +252,8 @@ public:
 
   /**
    * @brief Which Stacked index is currently in use?
-   *
-   * This allows widgets indexes to be set variably.
    */
-  virtual TabsIndex::ViewPage currentView() = 0;
+  TabsIndex::ViewPage currentView();
 
   /**
    * @brief Create Custom Entries

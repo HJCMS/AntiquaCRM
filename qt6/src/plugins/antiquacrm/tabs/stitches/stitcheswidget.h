@@ -50,8 +50,6 @@ public:
 
   const QString getTitle() const override;
 
-  AntiquaCRM::TabsIndex::ViewPage currentView() override;
-
   bool customAction(const QJsonObject &obj) override;
 };
 

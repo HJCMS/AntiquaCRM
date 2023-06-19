@@ -98,6 +98,19 @@ void TabsIndex::openWarningPopUp(const QString &title, const QString &message) {
   QMessageBox::warning(this, tr("Warning"), _info);
 }
 
+AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentView() {
+  switch (currentIndex()) {
+  case 0:
+    return AntiquaCRM::TabsIndex::MainView;
+
+  case 1:
+    return AntiquaCRM::TabsIndex::EditorView;
+
+  default:
+    return AntiquaCRM::TabsIndex::CustomView;
+  }
+}
+
 const QString TabsIndex::tabIndexId() const { return tabIndex; }
 
 bool TabsIndex::isClosable() { return closable; }

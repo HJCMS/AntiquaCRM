@@ -16,7 +16,7 @@ TabsBar::TabsBar(QWidget *parent, bool wheelEvents)
   setMovable(true);
   setExpanding(true);
   setTabsClosable(true);
-  connect(this, SIGNAL(currentChanged(int)), SLOT(tabIndexChanged(int)));
+  connect(this, SIGNAL(currentChanged(int)), SLOT(setIndexChanged(int)));
 }
 
 void TabsBar::tabInserted(int index) {
@@ -31,9 +31,11 @@ void TabsBar::wheelEvent(QWheelEvent *event) {
     QTabBar::wheelEvent(event);
 }
 
-void TabsBar::tabIndexChanged(int index) { emit sendTabChanged(index); }
+void TabsBar::setIndexChanged(int index) {
+    emit sendTabChanged(index);
+}
 
-void TabsBar::checkToClose() {
+void TabsBar::setCheckToClose() {
   if (index >= 0)
     emit sendCloseTab(index);
 }
