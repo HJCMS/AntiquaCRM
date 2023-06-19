@@ -77,6 +77,7 @@ bool MainWindow::loadTabInterfaces() {
         connect(_tab, SIGNAL(sendModifiedStatus(bool)),
                 SLOT(setTabsModified(bool)));
 
+        // WARNING - action::objectName() must equal to tab->tabIndexId()!
         QAction *_ac = _viewMenu->addAction(_tab->windowIcon(), _name);
         _ac->setObjectName(_tab->tabIndexId());
         connect(_ac, SIGNAL(triggered()), m_tabWidget, SLOT(setCurrentTab()));

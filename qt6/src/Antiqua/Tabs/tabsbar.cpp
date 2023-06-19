@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tabsbar.h"
+#include "ainputwidget.h"
 
 #include <QAction>
 #include <QDebug>
@@ -16,12 +17,12 @@ TabsBar::TabsBar(QWidget *parent, bool wheelEvents)
   setMovable(true);
   setExpanding(true);
   setTabsClosable(true);
-  connect(this, SIGNAL(currentChanged(int)), SLOT(setIndexChanged(int)));
+  connect(this, SIGNAL(currentChanged(int)), SLOT(setChangedIndex(int)));
 }
 
 void TabsBar::tabInserted(int index) {
   if (tabIcon(index).isNull())
-    setTabIcon(index, QIcon("://icons/tab.png"));
+    setTabIcon(index, AntiquaCRM::AntiquaApplIcon("tab-new"));
 
   QTabBar::tabInserted(index);
 }
@@ -31,14 +32,17 @@ void TabsBar::wheelEvent(QWheelEvent *event) {
     QTabBar::wheelEvent(event);
 }
 
-void TabsBar::setIndexChanged(int index) {
-    emit sendTabChanged(index);
+void TabsBar::setChangedIndex(int index) {
+  changedIndex = index;
+  emit sendTabChanged(index);
 }
 
 void TabsBar::setCheckToClose() {
-  if (index >= 0)
-    emit sendCloseTab(index);
+  if (changedIndex >= 0)
+    emit sendCloseTab(changedIndex);
 }
+
+int TabsBar::getChangedIndex() { return changedIndex; }
 
 void TabsBar::setTabCloseable(int index, bool closeable) {
   setTabData(index, closeable);
@@ -46,6 +50,9 @@ void TabsBar::setTabCloseable(int index, bool closeable) {
     setTabButton(index, QTabBar::RightSide, new QLabel(this));
 }
 
-TabsBar::~TabsBar() {}
+TabsBar::~TabsBar() {
+  // restore
+  changedIndex = -1;
+}
 
 } // namespace AntiquaCRM

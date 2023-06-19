@@ -27,7 +27,7 @@ class ANTIQUACRM_LIBRARY TabsBar final : public QTabBar {
 
 private:
   bool enableWheel;
-  int index = -1;
+  int changedIndex = -1;
 
 protected:
   /**
@@ -47,7 +47,7 @@ protected Q_SLOTS:
    * @brief tab changed with index
    * @param index
    */
-  void setIndexChanged(int index);
+  void setChangedIndex(int index);
 
   /**
    * @brief is this tabe closeable
@@ -74,12 +74,15 @@ public:
    */
   explicit TabsBar(QWidget *parent = nullptr, bool wheelEvents = false);
 
+  int getChangedIndex();
+
   /**
    * @brief Modify properties
    * @param index     - use index
    * @param closeable - is it closeable?
    */
   void setTabCloseable(int index, bool closeable = false);
+
   virtual ~TabsBar();
 };
 

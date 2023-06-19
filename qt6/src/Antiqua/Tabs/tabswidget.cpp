@@ -54,15 +54,11 @@ void TabsWidget::setTabChanged(int index) {
     m_tab->onEnterChanged();
 }
 
-void TabsWidget::setTabClosed(int index) {
-  if (removeIndex(index)) {
-    //
-  }
-}
+void TabsWidget::setTabClosed(int index) { removeIndex(index); }
 
 void TabsWidget::setCurrentTab(const QString &name) {
   QString _id = name.trimmed();
-  if (name.isEmpty() && sender() != nullptr) {
+  if (_id.isEmpty() && sender() != nullptr) {
     _id = sender()->objectName();
   }
 
@@ -96,12 +92,13 @@ int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab, const QString &title) {
     qWarning("Invalid tab „IndexId“ - rejected!");
     return -1;
   }
-  int index = addTab(tab, tab->windowIcon(), title);
-  if (index >= 0) {
-    m_tabBar->setTabCloseable(index, tab->isClosable());
+
+  int _index = addTab(tab, tab->windowIcon(), title);
+  if (_index >= 0) {
+    m_tabBar->setTabCloseable(_index, tab->isClosable());
     tab->onEnterChanged();
   }
-  return index;
+  return _index;
 }
 
 const QIcon TabsWidget::defaultIcon() {
@@ -127,7 +124,9 @@ bool TabsWidget::unloadTabs() {
       emit sendMessage(tr("'%1' Editor is open!").arg(m_tab->getTitle()));
       return false;
     }
-    removeTab(t);
+
+    if (!removeIndex(t))
+      qWarning("Tab %s not removed!", qPrintable(m_tab->tabIndexId()));
   }
   return true;
 }

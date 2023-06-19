@@ -70,7 +70,10 @@ Q_SIGNALS:
 public Q_SLOTS:
   /**
    * @brief overload function for setCurrentIndex(int)
-   * @param name = objectName()
+   * @param name = TabsIndex::tabIndexId()
+   *
+   * This slot search for TabsIndex::tabIndexId() and make it visible!
+   * if name isEmpty then it will search for QObject::sender()->objectName()
    */
   void setCurrentTab(const QString &name = QString());
 
