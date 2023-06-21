@@ -33,6 +33,9 @@
 // AntiquaCRM::TabsBar
 #include "tabsbar.h"
 
+// AntiquaCRM::TabsMenu
+#include "tabsmenu.h"
+
 // AntiquaCRM::TabsTable
 #include "tabstable.h"
 

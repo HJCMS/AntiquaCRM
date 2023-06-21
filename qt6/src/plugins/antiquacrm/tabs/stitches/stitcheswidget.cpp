@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "stitcheswidget.h"
-#include "stitchesconfig.h"
 #include "stitcheseditor.h"
 #include "stitchessearchbar.h"
 #include "stitchesstatusbar.h"
@@ -16,6 +15,7 @@ StitchesWidget::StitchesWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
   setObjectName("stitches_tab_widget");
   setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
+  setWindowTitle(getTitle());
   setClosable(true);
 
   // Begin MainPage layout
@@ -178,7 +178,9 @@ void StitchesWidget::onEnterChanged() {
   }
 }
 
-const QString StitchesWidget::getTitle() const { return tr("Stitches"); }
+const QString StitchesWidget::getTitle() const {
+    return tr("Prints && Stitches");
+}
 
 bool StitchesWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))

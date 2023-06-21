@@ -21,6 +21,7 @@ class TabsConfigWidget;
 /**
  * @class TabsInterface
  * @brief Primary Interface class for Tabs.
+ *
  * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsInterface : public QObject {
@@ -38,32 +39,44 @@ public:
 
   /**
    * @brief Interface Title and Display name
+   *
+   * This is called in Menu entries
    */
   virtual const QString displayName() const = 0;
 
   /**
    * @brief Interface name
+   *
    * Identifier name in ASCII, lowercase and no spaces.
    */
   virtual const QString interfaceName() const = 0;
 
   /**
    * @brief Used SQL Table name in Database
+   *
+   * SQL Table name, used in TableView models.
    */
   virtual const QString sqlTableName() const = 0;
 
   /**
    * @brief Table column prefix without underscore
+   *
+   * All AntiquaCRM SQL Table Field Names must have a prefix!
+   * This make it easier to use SQL JOIN Statements without Aliases.
+   * Hints:
+   *  @li To Prevent duplicates in the SQL Database system, this Field prefix
+   * must unique.
+   *  @li This field prefix can only contain alphanumeric characters.
+   *  @li An underscore is appended automatically!
    */
   virtual const QString sqlFieldPrefix() const = 0;
 
   /**
    * @brief Configuration Widget ...
-   *
-   * for AntiquaCRM application configuration Dialog
-   *
    * @sa @ref AntiquaCRM::TabsConfigWidget
    * @param parent - parent object
+   *
+   * Widget for AntiquaCRM Configuration system.
    */
   virtual AntiquaCRM::TabsConfigWidget *configWidget(QWidget *parent) const = 0;
 
@@ -74,18 +87,18 @@ public:
 
   /**
    * @brief load the TabsIndex widget
-   *
    * @sa @ref AntiquaCRM::TabsIndex
    * @param parent - parent object
+   *
+   * Used in AntiquaCRM MainWindow » AntiquaCRM::TabsWidget
    */
   virtual AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const = 0;
 
   /**
    * @brief Initial this interface
-   *
-   * reserved for configuration and object initialisation
-   *
    * @param parent - parent object
+   *
+   * Reserved for Interface initialisation
    */
   virtual bool createInterface(QObject *parent) = 0;
 };

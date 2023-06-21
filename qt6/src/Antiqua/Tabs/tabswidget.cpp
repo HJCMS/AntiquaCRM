@@ -24,13 +24,13 @@ TabsWidget::TabsWidget(QWidget *parent) : QTabWidget{parent} {
 }
 
 bool TabsWidget::removeIndex(int index) {
-  AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
-  if (m_tab != nullptr && m_tab->isClosable()) {
-    if (!m_tab->isWindowModified()) {
+  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (m_ti != nullptr && m_ti->isClosable()) {
+    if (!m_ti->isWindowModified()) {
       removeTab(index);
       return true;
     }
-    QString title = m_tab->windowTitle();
+    QString title = m_ti->windowTitle();
     emit sendMessage(tr("Unsaved changes for tab '%1'!").arg(title));
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << "Can't close this tab, unsaved changes!" << title;
@@ -40,21 +40,36 @@ bool TabsWidget::removeIndex(int index) {
 }
 
 void TabsWidget::tabInserted(int index) {
-  AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
-  if (m_tab != nullptr) {
-    m_tabBar->setTabCloseable(index, m_tab->isClosable());
+  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (m_ti != nullptr) {
+    m_tabBar->setTabCloseable(index, m_ti->isClosable());
   } else {
     m_tabBar->setTabCloseable(index, false);
   }
 }
 
-void TabsWidget::setTabChanged(int index) {
-  AntiquaCRM::TabsIndex *m_tab = tabWithIndex(index);
-  if (m_tab != nullptr && m_tab->currentView() == TabsIndex::ViewPage::MainView)
-    m_tab->onEnterChanged();
+void TabsWidget::tabRemoved(int index) {
+  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (m_ti != nullptr) {
+    qDebug() << Q_FUNC_INFO << "Tab not closed:" << index << count();
+  }
 }
 
-void TabsWidget::setTabClosed(int index) { removeIndex(index); }
+void TabsWidget::setTabChanged(int index) {
+  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (m_ti != nullptr && m_ti->currentView() == TabsIndex::ViewPage::MainView)
+    m_ti->onEnterChanged();
+}
+
+void TabsWidget::setTabClosed(int index) {
+  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (m_ti->currentView() != TabsIndex::ViewPage::MainView) {
+    setCurrentIndex(index);
+    emit sendMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
+    return;
+  }
+  removeIndex(index);
+}
 
 void TabsWidget::setCurrentTab(const QString &name) {
   QString _id = name.trimmed();
@@ -70,30 +85,29 @@ void TabsWidget::setCurrentTab(const QString &name) {
   setCurrentIndex(indexByName(_id));
 }
 
-int TabsWidget::indexByName(const QString &name) {
+int TabsWidget::indexByName(const QString &name) const {
   if (name.isEmpty())
     return -1;
 
   for (int i = 0; i < m_tabBar->count(); i++) {
-    AntiquaCRM::TabsIndex *m_t = tabWithIndex(i);
-    if (m_t == nullptr)
+    AntiquaCRM::TabsIndex *m_ti = tabIndex(i);
+    if (m_ti == nullptr)
       continue;
 
-    if (m_t->tabIndexId() == name) {
+    if (m_ti->tabIndexId() == name) {
       return i;
     }
   }
   return -1;
 }
 
-int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab, const QString &title) {
-  QString _id = tab->tabIndexId();
-  if (_id.isEmpty()) {
+int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab) {
+  if (tab->tabIndexId().isEmpty()) {
     qWarning("Invalid tab „IndexId“ - rejected!");
     return -1;
   }
 
-  int _index = addTab(tab, tab->windowIcon(), title);
+  int _index = addTab(tab, tab->windowIcon(), tab->getTitle());
   if (_index >= 0) {
     m_tabBar->setTabCloseable(_index, tab->isClosable());
     tab->onEnterChanged();
@@ -105,28 +119,28 @@ const QIcon TabsWidget::defaultIcon() {
   return AntiquaApplIcon("action-edit-document");
 }
 
-AntiquaCRM::TabsIndex *TabsWidget::tabWithIndex(int index) {
+AntiquaCRM::TabsIndex *TabsWidget::tabIndex(int index) const {
   return qobject_cast<AntiquaCRM::TabsIndex *>(widget(index));
 }
 
-AntiquaCRM::TabsIndex *TabsWidget::tabWithName(const QString &name) {
-  return tabWithIndex(indexByName(name));
+AntiquaCRM::TabsIndex *TabsWidget::tabIndex(const QString &name) const {
+  return qobject_cast<AntiquaCRM::TabsIndex *>(widget(indexByName(name)));
 }
 
 bool TabsWidget::unloadTabs() {
   for (int t = 0; t < count(); t++) {
-    TabsIndex *m_tab = tabWithIndex(t);
-    if (m_tab == nullptr)
+    TabsIndex *m_ti = tabIndex(t);
+    if (m_ti == nullptr)
       continue;
 
-    if (m_tab->currentView() != TabsIndex::ViewPage::MainView) {
+    if (m_ti->currentView() != TabsIndex::ViewPage::MainView) {
       setCurrentIndex(t);
-      emit sendMessage(tr("'%1' Editor is open!").arg(m_tab->getTitle()));
+      emit sendMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
       return false;
     }
 
     if (!removeIndex(t))
-      qWarning("Tab %s not removed!", qPrintable(m_tab->tabIndexId()));
+      qWarning("Tab %s not removed!", qPrintable(m_ti->tabIndexId()));
   }
   return true;
 }

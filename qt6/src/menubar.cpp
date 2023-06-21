@@ -4,6 +4,7 @@
 #include "menubar.h"
 #include "dialogs/config/configdialog.h"
 
+#include <AntiquaTabs>
 #include <AntiquaWidgets>
 
 MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
@@ -17,7 +18,7 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   connect(ac_quit, SIGNAL(triggered()), SIGNAL(sendApplicationQuit()));
   addMenu(m_applMenu);
 
-  m_viewsMenu = new QMenu(tr("Views"), this);
+  m_viewsMenu = new AntiquaCRM::TabsMenu(this);
   addMenu(m_viewsMenu);
 
   m_configMenu = new QMenu(tr("Configuration"), this);
@@ -32,7 +33,7 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   addMenu(m_aboutMenu);
 }
 
-void MenuBar::setViewsMenu(QMenu *menu) {
+void MenuBar::setViewsMenu(AntiquaCRM::TabsMenu *menu) {
   if (menu == nullptr)
     return;
 

@@ -32,6 +32,7 @@ SET (_library_SOURCE
  tabsbar.cpp
  tabsinterface.cpp
  tabsindex.cpp
+ tabsmenu.cpp
  tabstable.cpp
  tabssearchbar.cpp
  tabsstatusbar.cpp
@@ -46,6 +47,7 @@ SET (_library_HEADERS
  tabsbar.h
  tabsinterface.h
  tabsindex.h
+ tabsmenu.h
  tabstable.h
  tabssearchbar.h
  tabsstatusbar.h

@@ -9,17 +9,21 @@
 #ifndef ANTIQUA_UI_MENUBAR_H
 #define ANTIQUA_UI_MENUBAR_H
 
-#include <QMenuBar>
 #include <QIcon>
+#include <QMenuBar>
 #include <QObject>
 #include <QWidget>
+
+namespace AntiquaCRM {
+class TabsMenu;
+}
 
 class MenuBar final : public QMenuBar {
   Q_OBJECT
 
 private:
   QMenu *m_applMenu;
-  QMenu *m_viewsMenu;
+  AntiquaCRM::TabsMenu *m_viewsMenu;
   QMenu *m_configMenu;
   QMenu *m_aboutMenu;
 
@@ -31,7 +35,7 @@ public Q_SLOTS:
 
 public:
   explicit MenuBar(QWidget *parent = nullptr);
-  void setViewsMenu(QMenu *);
+  void setViewsMenu(AntiquaCRM::TabsMenu *);
 
   static const QIcon tabIcon(const QString &name = QString());
 };

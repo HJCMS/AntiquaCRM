@@ -35,6 +35,11 @@ private:
   virtual void tabInserted(int) override final;
 
   /**
+   * @brief remove from model
+   */
+  virtual void tabRemoved(int) override final;
+
+  /**
    * @brief close tab by index
    */
   bool removeIndex(int index);
@@ -87,14 +92,14 @@ public:
    * @brief find tab by QObjectName
    * @param name = objectName()
    */
-  int indexByName(const QString &name);
+  int indexByName(const QString &name) const;
 
   /**
    * @brief overload function for addTab
    * @param tab
    * @param title
    */
-  int registerTab(AntiquaCRM::TabsIndex *tab, const QString &title);
+  int registerTab(AntiquaCRM::TabsIndex *tab);
 
   /**
    * @brief fallback theme icon
@@ -103,13 +108,15 @@ public:
 
   /**
    * @brief overlaod function for QTabWidget::widget with object_cast
+   * @param index
    */
-  AntiquaCRM::TabsIndex *tabWithIndex(int);
+  AntiquaCRM::TabsIndex *tabIndex(int index) const;
 
   /**
    * @brief overlaod function for tabWithIndex(int)
+   * @param name - objectName
    */
-  AntiquaCRM::TabsIndex *tabWithName(const QString &);
+  AntiquaCRM::TabsIndex *tabIndex(const QString &name) const;
 
   /**
    * @brief unload all loaded tab
