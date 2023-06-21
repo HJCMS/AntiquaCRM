@@ -22,22 +22,13 @@ CustomersTabConfigWidget::CustomersTabConfigWidget(QWidget *parent)
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(5, 5, 5, 5);
-  // Price Limits Group
+
+  // Main Group
   QGroupBox *m_group0 = new QGroupBox(this);
-  m_group0->setTitle(tr("Customer price limits"));
+  m_group0->setTitle(tr("Customer Settings"));
   QGridLayout *grLayout2 = new QGridLayout(m_group0);
   grLayout2->setContentsMargins(5, 5, 5, 5);
-  m_minPrice = new AntiquaCRM::PriceEdit(m_group0);
-  m_minPrice->setObjectName("customer_price_lowest");
-  m_minPrice->setToolTip(tr("Underlimit for Customer prices."));
-  m_minPrice->setBuddyLabel(tr("Price underlimit"));
-  grLayout2->addWidget(m_minPrice, 1, 0, 1, 1);
-  m_normalPrice = new AntiquaCRM::PriceEdit(m_group0);
-  m_normalPrice->setObjectName("customer_price_normal");
-  m_normalPrice->setToolTip(tr("Default Customer price when a new created."));
-  m_normalPrice->setBuddyLabel(tr("Default on create"));
-  m_normalPrice->appendStretch(1);
-  grLayout2->addWidget(m_normalPrice, 1, 1, 1, 1);
+
   m_group0->setLayout(grLayout2);
   layout->addWidget(m_group0);
 

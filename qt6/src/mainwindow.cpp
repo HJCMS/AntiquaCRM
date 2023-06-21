@@ -79,8 +79,7 @@ bool MainWindow::loadTabInterfaces() {
           m_tabWidget->registerTab(_tab);
 
         // SIGNALS
-        connect(_tab, SIGNAL(sendModifiedStatus(bool)),
-                SLOT(setTabsModified(bool)));
+        connect(_tab, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
 
         p_tabsIndexList.append(_tab);
       }
@@ -91,7 +90,7 @@ bool MainWindow::loadTabInterfaces() {
   return false;
 }
 
-void MainWindow::setTabsModified(bool b) { setWindowModified(b); }
+void MainWindow::setChanges(bool b) { setWindowModified(b); }
 
 bool MainWindow::tabViewAction(const QString &id) {
   bool _status = false;

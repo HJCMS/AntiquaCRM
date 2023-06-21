@@ -148,13 +148,16 @@ const QIcon AntiquaAppl::applIcon() {
 
 void AntiquaAppl::initDefaultTheme() {
   setStyle(QStyleFactory::create("Fusion"));
+  QStringList customCSS;
 #ifdef Q_OS_WIN
-  // qDebug() << QStyleFactory::keys();
   QFont font = qApp->font();
-  qDebug() << font.toString();
   QString fontdef = m_cfg->value("font", font.toString()).toString();
   if (!fontdef.isEmpty() && font.fromString(fontdef)) {
-    qApp->setFont(font);
+    QString cssFont("* {"); // AllFonts
+    cssFont.append("font-family:" + font.family() + "; ");
+    cssFont.append("font-size:" + QString::number(font.pointSize()) + ";");
+    cssFont.append("}");
+    customCSS << cssFont;
   }
   // @short QStyle::Windows::Fusion
   QPalette p = qApp->palette();
@@ -162,10 +165,11 @@ void AntiquaAppl::initDefaultTheme() {
   p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);
   qApp->setPalette(p);
 #endif
-  QStringList customCSS;
+
   customCSS << "QTabBar::tab:selected {color: palette(highlight);}";
   customCSS << "QPushButton:hover {color:palette(highlight);}";
   customCSS << "QRadioButton:checked {color:palette(highlight);}";
+
 #ifdef Q_OS_LINUX
   // @bug KDE Layout
   customCSS << "QGroupBox::title{padding-right:10px;}";

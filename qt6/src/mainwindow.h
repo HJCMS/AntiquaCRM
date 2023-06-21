@@ -90,9 +90,14 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief Slot for AntiquaCRM::TabsIndex::sendModifiedStatus
+   * @brief Set property, window or children has unsaved changes.
+   *
+   * Forwarding to MainWindow::setWindowModified(bool)
+   *
+   * Caused by:
+   *  @li AntiquaCRM::TabsIndex::sendModifiedStatus
    */
-  void setTabsModified(bool);
+  void setChanges(bool);
 
   /**
    * @brief Slot to View/Open tabs

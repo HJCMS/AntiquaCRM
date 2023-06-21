@@ -150,9 +150,9 @@ protected Q_SLOTS:
 
 Q_SIGNALS:
   /**
-   * @brief report Window modified statuses
+   * @brief report Window modified status
    *
-   * This Signal will emitted by eventFilter when WindowModified has changed.
+   * Propagate child set Window Modified to parent.
    */
   void sendModifiedStatus(bool);
 

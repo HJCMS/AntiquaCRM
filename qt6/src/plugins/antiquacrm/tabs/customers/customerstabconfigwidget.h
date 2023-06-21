@@ -16,8 +16,7 @@ class CustomersTabConfigWidget final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::PriceEdit *m_minPrice;
-  AntiquaCRM::PriceEdit *m_normalPrice;
+  //
 
 public Q_SLOTS:
   void loadSectionConfig() override;
