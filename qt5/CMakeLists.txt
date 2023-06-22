@@ -53,6 +53,9 @@ IF (CMAKE_CXX_COMPILER MATCHES ".*clang")
   SET (CMAKE_COMPILER_IS_CLANGXX 1)
 ENDIF ()
 
+## User customization file
+INCLUDE ("user-config.cmake" OPTIONAL)
+
 ## https://ccache.dev/
 FIND_PROGRAM (CCACHE_EXECUTABLE NAMES ccache)
 IF (CCACHE_EXECUTABLE)
