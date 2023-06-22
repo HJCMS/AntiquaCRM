@@ -148,34 +148,32 @@ const QIcon AntiquaAppl::applIcon() {
 
 void AntiquaAppl::initDefaultTheme() {
   setStyle(QStyleFactory::create("Fusion"));
-  QStringList customCSS;
+
 #ifdef Q_OS_WIN
-  QFont font = qApp->font();
-  QString fontdef = m_cfg->value("font", font.toString()).toString();
-  if (!fontdef.isEmpty() && font.fromString(fontdef)) {
-    QString cssFont("* {"); // AllFonts
-    cssFont.append("font-family:" + font.family() + "; ");
-    cssFont.append("font-size:" + QString::number(font.pointSize()) + ";");
-    cssFont.append("}");
-    customCSS << cssFont;
-  }
-  // @short QStyle::Windows::Fusion
+  // Colors
   QPalette p = qApp->palette();
   QColor lightYellow(255, 255, 127);
   p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);
   qApp->setPalette(p);
 #endif
 
+  // Stylesheet must already set before Font changes!
+  QStringList customCSS;
   customCSS << "QTabBar::tab:selected {color: palette(highlight);}";
   customCSS << "QPushButton:hover {color:palette(highlight);}";
   customCSS << "QRadioButton:checked {color:palette(highlight);}";
-
-#ifdef Q_OS_LINUX
-  // @bug KDE Layout
+#ifdef Q_OS_LINUX // Workaround KDE
   customCSS << "QGroupBox::title{padding-right:10px;}";
 #endif
-
   setStyleSheet(customCSS.join("\n"));
+
+  // finally change font
+#ifdef Q_OS_WIN
+  QFont font = qApp->font();
+  QString fontdef = m_cfg->value("font", font.toString()).toString();
+  if (!fontdef.isEmpty() && font.fromString(fontdef))
+    qApp->setFont(font);
+#endif
 }
 
 bool AntiquaAppl::isRunning() {

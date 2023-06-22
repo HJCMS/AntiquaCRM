@@ -52,6 +52,15 @@ int main(int argc, char *argv[]) {
 #endif
 #endif
 
+#ifdef Q_OS_WIN64
+  // https://doc.qt.io/qt-5/highdpi.html
+  if (!qEnvironmentVariableIsSet("QT_SCALE_FACTOR")) {
+    qputenv("QT_SCALE_FACTOR", "1.075");
+  } else {
+    qputenv("QT_ENABLE_HIGHDPI_SCALING", "1");
+  }
+#endif
+
   AntiquaAppl *antiqua = new AntiquaAppl(argc, argv);
   antiqua->setQuitOnLastWindowClosed(false);
   antiqua->initDefaultTheme();
