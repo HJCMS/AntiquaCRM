@@ -15,6 +15,7 @@
 
 Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
   setApplicationName(ANTIQUACRM_NAME);
+  setDesktopFileName(ANTIQUACRM_NAME);
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
   // WARNING - Do not init Database Connections in constructors!
@@ -108,42 +109,38 @@ const QIcon Application::applIcon() {
 }
 
 void Application::initTheme() {
+  // Required for System Desktop changes
+  const QString _platform = platformName().toLower().trimmed();
+
   setStyle(QStyleFactory::create("Fusion"));
-  // Color Pallete for some hacks
-  QPalette _p = palette();
 
-// Bugfix: Qt6 and Linux Fusion Theme
-#ifdef Q_OS_LINUX
-  QColor _rgb = _p.color(QPalette::PlaceholderText).toRgb();
-  if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb))
-    _p.setColor(QPalette::PlaceholderText, Qt::darkGray);
-#endif
+  QStringList _csslist;
+  _csslist << "QTabBar::tab:selected{color:palette(highlight);}";
+  _csslist << "QPushButton:hover{color:palette(highlight);}";
+  _csslist << "QRadioButton:checked{color:palette(highlight);}";
 
-// Bugfix Qt6 Windows fonts and highlight style
-#ifdef Q_OS_WIN
-  QFont _font = font();
-  QString _fontdef = m_cfg->value("font", _font.toString()).toString();
-  if (!_fontdef.isEmpty() && _font.fromString(_fontdef)) {
-    setFont(_fontdef);
+  QPalette _palette = palette();
+  // @fixme KDE Fusion theme
+  if (_platform.startsWith("xcb")) {
+    QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
+    if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
+      _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
+    }
+    _csslist << "QGroupBox::title {padding-right:10px;}";
   }
-  QColor lightYellow(255, 255, 127);
-  _p.setColor(QPalette::Inactive, QPalette::Highlight, lightYellow);
-#endif
-
-  setPalette(_p);
-
-  QStringList customCSS;
-  customCSS << "QTabBar::tab:selected {color: palette(highlight);}";
-  customCSS << "QPushButton:hover {color:palette(highlight);}";
-  customCSS << "QRadioButton:checked {color:palette(highlight);}";
-#ifdef Q_OS_LINUX
-  // Bugfix: KDE Themes-Layout
-  customCSS << "QGroupBox::title{padding-right:10px;}";
-#endif
-
-  // qDebug() << Q_FUNC_INFO << QStyleFactory::keys() << font().toString();
-
-  setStyleSheet(customCSS.join("\n"));
+  // @fixme Windows theme
+  if (_platform.startsWith("windows")) {
+    QFont _font = font();
+    QString _fontdef = m_cfg->value("font", _font.toString()).toString();
+    if (!_fontdef.isEmpty() && _font.fromString(_fontdef)) {
+      setFont(_fontdef);
+    }
+    QColor _highlight(255, 255, 127);
+    _palette.setColor(QPalette::Inactive, QPalette::Highlight, _highlight);
+  }
+  // Now set Color and Style settings.
+  setPalette(_palette);
+  setStyleSheet(_csslist.join("\n"));
 }
 
 bool Application::isRunning() {

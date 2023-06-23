@@ -5,7 +5,9 @@
 //
 
 #include <AntiquaCRM>
+#include <QByteArray>
 #include <QResource>
+#include <QString>
 #include <QtGlobal>
 
 #include "application.h"
@@ -13,11 +15,6 @@
 #ifdef Q_OS_LINUX
 #include <cstdio>
 #include <syslog.h>
-
-const char *functionInfo(const QMessageLogContext &context) {
-  QString b = QString::asprintf("’%s’", context.function);
-  return b.toLocal8Bit().constData();
-}
 
 void SyslogMessageHandler(QtMsgType type, // Message Type
                           const QMessageLogContext &context,
@@ -33,9 +30,13 @@ void SyslogMessageHandler(QtMsgType type, // Message Type
     break;
 
   case QtCriticalMsg:
-  case QtFatalMsg:
-    syslog(LOG_ERR, "%s %s", localMsg.constData(), functionInfo(context));
+  case QtFatalMsg: {
+    QString _context = QString::asprintf("’%s’", context.function);
+    syslog(LOG_ERR, "%s %s", localMsg.constData(),
+           _context.toLocal8Bit().constData());
+
     abort();
+  } break;
 
   default:
     break;
@@ -50,29 +51,36 @@ int main(int argc, char *argv[]) {
 #endif
 #endif
 
+#ifdef Q_OS_WIN64
+  /*
+   * Is the attempt to display the selected font a little better if the font
+   * scaling is faulty.
+   *
+   * Detailed information at https://doc.qt.io/qt-5/highdpi.html
+   *
+   * @warning Not do this on XCB Desktop systems!
+   */
+  qputenv("QT_ENABLE_HIGHDPI_SCALING", "1");
+  if (!qEnvironmentVariableIsSet("QT_SCALE_FACTOR")) {
+    qputenv("QT_SCALE_FACTOR", "1.075");
+    QApplication::setHighDpiScaleFactorRoundingPolicy(
+        Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
+  }
+#endif
+  // We use a custom session manager
   QApplication::setAttribute(Qt::AA_DisableSessionManager, true);
+  // Ensure that color palettes and font propagation are not inherited.
+  QApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles,
+                             false);
 
-  Application *_app = new Application(argc, argv);
-  _app->initTheme();
-
-  // if (argc > 0) {
-  //   for (int i = 0; i <= argc; i++) {
-  //     QString arg = QString(argv[i]).toLower();
-  //     arg.replace("-", "");
-  //     arg.replace(" ", "");
-  //     if (arg.trimmed() == "assistant") {
-  //       QProcess::execute("antiquacrm_assistant", QStringList());
-  //       return 0;
-  //     }
-  //   }
-  // }
-
-  if (_app->isRunning()) {
+  Application *m_app = new Application(argc, argv);
+  if (m_app->isRunning()) {
     qWarning("AntiquaCRM is already up!");
     return 0;
   }
 
-  Q_INIT_RESOURCE(applicons);
+  Q_INIT_RESOURCE(application);
 
-  return _app->exec();
+  m_app->initTheme();
+  return m_app->exec();
 }
