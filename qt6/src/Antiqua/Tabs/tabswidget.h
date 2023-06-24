@@ -96,8 +96,7 @@ public:
 
   /**
    * @brief overload function for addTab
-   * @param tab
-   * @param title
+   * @param tab - object to insert
    */
   int registerTab(AntiquaCRM::TabsIndex *tab);
 

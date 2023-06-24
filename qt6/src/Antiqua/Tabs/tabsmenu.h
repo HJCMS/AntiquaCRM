@@ -17,8 +17,6 @@
 #include <QMenuBar>
 #include <QSignalMapper>
 
-#include "tabsinterface.h"
-
 namespace AntiquaCRM {
 
 /**
@@ -38,13 +36,24 @@ Q_SIGNALS:
 public Q_SLOTS:
   /**
    * @brief Create insert Action entry
-   * @param action
+   * @param jo - json object
+   *
+   * QJsonObject structure described in @ref TabsInterface::menuEntry
    */
   void addAction(const QJsonObject &);
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit TabsMenu(QMenuBar *parent);
+
+  /**
+   * @brief Action entry exist in Menu?
+   * @param id - identifier and mapper:id
+   */
   bool exists(const QString &id);
+
   virtual ~TabsMenu();
 };
 

@@ -22,6 +22,7 @@ class TabsConfigWidget;
 /**
  * @class TabsInterface
  * @brief Primary Interface class for Tabs.
+ * @note Every tab interface plugin must have a menu item!
  *
  * @ingroup TabsInterface
  */
@@ -88,11 +89,14 @@ public:
 
   /**
    * @brief Menu entry ...
+   *
+   * This important function defines the entry for application menu views.
+   * The Json object schema is restricted and is described in the code block.
    * @code
    *  QJsonObject {
-   *    title:"<QString>",
-   *    id:"<QString>",
-   *    icon:"<QString>"
+   *    title:"<QString>", // Menue title
+   *    id:"<QString>",    // AntiquaCRM::TabsIndex::objectName()
+   *    icon:"<QString>"   // Icon name without extension
    *  }
    * @endcode
    */
