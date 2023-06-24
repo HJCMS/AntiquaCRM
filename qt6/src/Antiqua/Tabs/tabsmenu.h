@@ -10,15 +10,16 @@
 #define ANTIQUACRM_TABS_MENU_H
 
 #include <AGlobal>
+#include <QAction>
 #include <QIcon>
 #include <QList>
 #include <QMenu>
 #include <QMenuBar>
 #include <QSignalMapper>
 
-namespace AntiquaCRM {
+#include "tabsinterface.h"
 
-class TabsIndex;
+namespace AntiquaCRM {
 
 /**
  * @class TabsMenu
@@ -35,10 +36,15 @@ Q_SIGNALS:
   void sendOpenTab(const QString &);
 
 public Q_SLOTS:
-  void addAction(AntiquaCRM::TabsIndex *);
+  /**
+   * @brief Create insert Action entry
+   * @param action
+   */
+  void addAction(const QJsonObject &);
 
 public:
   explicit TabsMenu(QMenuBar *parent);
+  bool exists(const QString &id);
   virtual ~TabsMenu();
 };
 

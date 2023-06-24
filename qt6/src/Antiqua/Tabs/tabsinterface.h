@@ -10,6 +10,7 @@
 #define ANTIQUACRM_TABS_INTERFACE_H
 
 #include <AGlobal>
+#include <QJsonObject>
 #include <QObject>
 #include <QWidget>
 
@@ -84,6 +85,18 @@ public:
    * @brief if true - load this interface on application start into main
    */
   virtual bool addIndexOnInit() const = 0;
+
+  /**
+   * @brief Menu entry ...
+   * @code
+   *  QJsonObject {
+   *    title:"<QString>",
+   *    id:"<QString>",
+   *    icon:"<QString>"
+   *  }
+   * @endcode
+   */
+  virtual const QJsonObject menuEntry() const = 0;
 
   /**
    * @brief load the TabsIndex widget

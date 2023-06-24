@@ -16,7 +16,6 @@
 #include <QPair>
 
 class MenuBar;
-class TabsWidget;
 class StatusBar;
 
 /**
@@ -47,7 +46,7 @@ private:
   /**
    * @brief Tabs Interfaces list
    */
-  QList<AntiquaCRM::TabsIndex *> p_tabsIndexList;
+  QList<AntiquaCRM::TabsInterface *> tabInterfaces;
 
   /**
    * @brief Central Tab widget for all operations!

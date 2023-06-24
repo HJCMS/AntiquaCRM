@@ -25,6 +25,14 @@ AntiquaCRM::TabsConfigWidget *TabBooks::configWidget(QWidget *parent) const {
 
 bool TabBooks::addIndexOnInit() const { return BOOKS_ALWAYS_ADD_ONLOAD; }
 
+const QJsonObject TabBooks::menuEntry() const {
+  QJsonObject _jo;
+  _jo.insert("title", tr("Books"));
+  _jo.insert("id", tr("books_tab"));
+  _jo.insert("icon", tr("kjournal"));
+  return _jo;
+}
+
 AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
   BooksWidget *_widget = new BooksWidget(parent);
   Q_CHECK_PTR(_widget);

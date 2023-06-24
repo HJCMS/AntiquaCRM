@@ -18,9 +18,7 @@ const QString TabStitches::interfaceName() const {
   return STITCHES_INTERFACE_NAME;
 }
 
-const QString TabStitches::sqlTableName() const {
-  return STITCHES_TABLE_NAME;
-}
+const QString TabStitches::sqlTableName() const { return STITCHES_TABLE_NAME; }
 
 const QString TabStitches::sqlFieldPrefix() const { return QString("ip"); }
 
@@ -32,7 +30,15 @@ AntiquaCRM::TabsConfigWidget *TabStitches::configWidget(QWidget *parent) const {
   return _w;
 }
 
-bool TabStitches::addIndexOnInit() const { return true; }
+bool TabStitches::addIndexOnInit() const { return false; }
+
+const QJsonObject TabStitches::menuEntry() const {
+  QJsonObject _jo;
+  _jo.insert("title", tr("Prints && Stitches"));
+  _jo.insert("id", tr("stitches_tab"));
+  _jo.insert("icon", tr("kjournal"));
+  return _jo;
+}
 
 AntiquaCRM::TabsIndex *TabStitches::indexWidget(QWidget *parent) const {
   StitchesWidget *_w = new StitchesWidget(parent);

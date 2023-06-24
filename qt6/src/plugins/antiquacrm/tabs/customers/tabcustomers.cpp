@@ -33,6 +33,14 @@ bool TabCustomers::addIndexOnInit() const {
   return CUSTOMERS_ALWAYS_ADD_ONLOAD;
 }
 
+const QJsonObject TabCustomers::menuEntry() const {
+  QJsonObject _jo;
+  _jo.insert("title", tr("Customers"));
+  _jo.insert("id", tr("customers_tab"));
+  _jo.insert("icon", tr("system-users"));
+  return _jo;
+}
+
 AntiquaCRM::TabsIndex *TabCustomers::indexWidget(QWidget *parent) const {
   CustomersWidget *_w = new CustomersWidget(parent);
   return _w;

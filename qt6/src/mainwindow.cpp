@@ -55,36 +55,30 @@ bool MainWindow::createSocketListener() {
 
 bool MainWindow::loadTabInterfaces() {
   AntiquaCRM::TabsLoader loader(this);
-  QList<AntiquaCRM::TabsInterface *> _list = loader.interfaces(this);
-  if (_list.size() > 0) {
-    QListIterator<AntiquaCRM::TabsInterface *> it(_list);
+  tabInterfaces = loader.interfaces(this);
+  if (tabInterfaces.size() > 0) {
+    QListIterator<AntiquaCRM::TabsInterface *> it(tabInterfaces);
     while (it.hasNext()) {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
-        AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
         QString _name = _iface->displayName();
         QString _id = _iface->interfaceName();
+        m_viewsMenu->addAction(_iface->menuEntry());
+        if (!_iface->addIndexOnInit())
+          continue;
+
+        AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
         if (_tab == nullptr) {
           qWarning("Plugin '%s' TabsIndex failed.", qPrintable(_name));
           qWarning("Unload '%s'", qPrintable(_id));
           _iface->deleteLater();
           continue;
         }
-
-        // create menu
-        m_viewsMenu->addAction(_tab);
-
-        // load tab on start
-        if (_iface->addIndexOnInit())
-          m_tabWidget->registerTab(_tab);
-
+        m_tabWidget->registerTab(_tab);
         // SIGNALS
         connect(_tab, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
-
-        p_tabsIndexList.append(_tab);
       }
     }
-    _list.clear();
     return true;
   }
   return false;
@@ -93,27 +87,23 @@ bool MainWindow::loadTabInterfaces() {
 void MainWindow::setChanges(bool b) { setWindowModified(b); }
 
 bool MainWindow::tabViewAction(const QString &id) {
-  bool _status = false;
-  QAction *m_ac = m_viewsMenu->findChild<QAction *>(id);
-  if (m_ac == nullptr) {
-    qWarning("Views tab %s not found in Menu!!", qPrintable(id));
-    return _status;
-  }
+  if (!m_viewsMenu->exists(id))
+    return false;
 
-  if (m_tabWidget->indexByName(id) < 0) {
-    QListIterator<AntiquaCRM::TabsIndex *> it(p_tabsIndexList);
-    while (it.hasNext()) {
-      AntiquaCRM::TabsIndex *_t = it.next();
-      if (_t->objectName().startsWith(id)) {
-        m_tabWidget->registerTab(_t);
-        _status = true;
-        break;
-      }
+  // tab already open?
+  if (m_tabWidget->indexByName(id) >= 0)
+    return true;
+
+  QListIterator<AntiquaCRM::TabsInterface *> it(tabInterfaces);
+  while (it.hasNext()) {
+    AntiquaCRM::TabsInterface *_iface = it.next();
+    if (_iface->menuEntry().value("id").toString() == id) {
+      AntiquaCRM::TabsIndex *m_tab = _iface->indexWidget(m_tabWidget);
+      m_tabWidget->registerTab(m_tab);
+      return true;
     }
-  } else {
-    _status = true;
   }
-  return _status;
+  return false;
 }
 
 void MainWindow::setViewTab(const QString &name) {
@@ -161,7 +151,8 @@ void MainWindow::setToggleFullScreen() {
 }
 
 bool MainWindow::openWindow() {
-  p_tabsIndexList.clear();
+  tabInterfaces.clear();
+
   config = new AntiquaCRM::ASettings(this);
 
   createSocketListener();
@@ -206,11 +197,11 @@ MainWindow::~MainWindow() {
   if (config != nullptr)
     config->deleteLater();
 
-  // Destroy Tabs list, tabs already closed in closeWindow().
-  if (p_tabsIndexList.size() > 0) {
-    for (int i = 0; i < p_tabsIndexList.size(); i++) {
-      p_tabsIndexList.takeAt(i)->deleteLater();
+  // Destroy tab interfaces, tabs already closed in closeWindow().
+  if (tabInterfaces.size() > 0) {
+    for (int i = 0; i < tabInterfaces.size(); i++) {
+      tabInterfaces.takeAt(i)->deleteLater();
     }
-    p_tabsIndexList.clear();
+    tabInterfaces.clear();
   }
 }

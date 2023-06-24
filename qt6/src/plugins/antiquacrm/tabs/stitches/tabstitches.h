@@ -33,6 +33,8 @@ public:
 
   bool addIndexOnInit() const override;
 
+  const QJsonObject menuEntry() const override;
+
   AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
 
   bool createInterface(QObject *parent) override;
