@@ -37,8 +37,7 @@ public Q_SLOTS:
   /**
    * @brief Create insert Action entry
    * @param jo - json object
-   *
-   * QJsonObject structure described in @ref TabsInterface::menuEntry
+   * @sa @ref TabsInterface::menuEntry for QJsonObject structure describtion.
    */
   void addAction(const QJsonObject &);
 

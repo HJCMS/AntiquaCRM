@@ -54,9 +54,9 @@ public:
   virtual const QString interfaceName() const = 0;
 
   /**
-   * @brief Used SQL Table name in Database
+   * @brief Which SQL Tablename in current Database
    *
-   * SQL Table name, used in TableView models.
+   * SQL Table name, always used in @ref AntiquaCRM::ASqlQueryModel
    */
   virtual const QString sqlTableName() const = 0;
 
@@ -65,11 +65,13 @@ public:
    *
    * All AntiquaCRM SQL Table Field Names must have a prefix!
    * This make it easier to use SQL JOIN Statements without Aliases.
-   * Hints:
+   *
+   * <b>Current Value Restrictions for this:</b>
    *  @li To Prevent duplicates in the SQL Database system, this Field prefix
    * must unique.
    *  @li This field prefix can only contain alphanumeric characters.
-   *  @li An underscore is appended automatically!
+   *
+   * @note An underscore is appended automatically!
    */
   virtual const QString sqlFieldPrefix() const = 0;
 
@@ -88,10 +90,11 @@ public:
   virtual bool addIndexOnInit() const = 0;
 
   /**
-   * @brief Menu entry ...
+   * @brief Required Menu entry parameters.
    *
-   * This important function defines the entry for application menu views.
+   * This important function defines the entry for application menu views.<br/>
    * The Json object schema is restricted and is described in the code block.
+   *
    * @code
    *  QJsonObject {
    *    title:"<QString>", // Menue title
@@ -103,19 +106,20 @@ public:
   virtual const QJsonObject menuEntry() const = 0;
 
   /**
-   * @brief load the TabsIndex widget
+   * @brief Initial AntiquaCRM::TabsIndex widget.
    * @sa @ref AntiquaCRM::TabsIndex
    * @param parent - parent object
    *
-   * Used in AntiquaCRM MainWindow » AntiquaCRM::TabsWidget
+   * Used in AntiquaCRM MainWindow @ref AntiquaCRM::TabsWidget::registerTab
    */
   virtual AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const = 0;
 
   /**
    * @brief Initial this interface
    * @param parent - parent object
+   * @return boolean - true = create all additional function
    *
-   * Reserved for Interface initialisation
+   * Reserved for interface initialization optimizations
    */
   virtual bool createInterface(QObject *parent) = 0;
 };

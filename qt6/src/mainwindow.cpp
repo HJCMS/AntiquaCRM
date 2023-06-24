@@ -75,7 +75,7 @@ bool MainWindow::loadTabInterfaces() {
           continue;
         }
         m_tabWidget->registerTab(_tab);
-        // SIGNALS
+        // windowModified
         connect(_tab, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
       }
     }
@@ -90,7 +90,6 @@ bool MainWindow::tabViewAction(const QString &id) {
   if (!m_viewsMenu->exists(id))
     return false;
 
-  // tab already open?
   if (m_tabWidget->indexByName(id) >= 0)
     return true;
 
@@ -114,7 +113,7 @@ void MainWindow::setViewTab(const QString &name) {
 void MainWindow::setAction(const QString &name, const QJsonObject &data) {
   if (!tabViewAction(name)) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "!!! UNKNOWN TAB CALL !!!" << data;
+    qDebug() << Q_FUNC_INFO << "Invalid call" << data;
 #endif
     return;
   }
@@ -152,9 +151,7 @@ void MainWindow::setToggleFullScreen() {
 
 bool MainWindow::openWindow() {
   tabInterfaces.clear();
-
   config = new AntiquaCRM::ASettings(this);
-
   createSocketListener();
 
   if (!loadTabInterfaces())
@@ -165,7 +162,6 @@ bool MainWindow::openWindow() {
 
   showNormal();
   m_statusBar->showMessage(tr("Window opened"));
-
   return true;
 }
 

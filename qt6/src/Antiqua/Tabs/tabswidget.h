@@ -22,7 +22,9 @@ class TabsBar;
 
 /**
  * @class TabsWidget
- * @brief Toplevel Tab widget class
+ * @brief Primary Tab.
+ * Class member to handle AntiquaCRM::TabIndex childs.
+ *
  * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsWidget final : public QTabWidget {
