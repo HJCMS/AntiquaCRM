@@ -8,12 +8,15 @@
 
 TextField::TextField(QWidget *parent) : InputEdit{parent} {
   m_edit = new QTextEdit(this);
+  m_edit->setObjectName("TextField");
   m_edit->setAcceptDrops(false);
   m_edit->setAcceptRichText(false);
   m_edit->setTextInteractionFlags(Qt::TextEditorInteraction);
   m_edit->setAutoFormatting(QTextEdit::AutoNone);
   m_layout->addWidget(m_edit);
+
   setRequired(false);
+
   connect(m_edit, SIGNAL(textChanged()), SLOT(dataChanged()));
 }
 

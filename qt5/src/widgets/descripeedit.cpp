@@ -11,6 +11,7 @@ DescripeEdit::DescripeEdit(QWidget *parent) : InputEdit{parent} {
   QSplitter *m_splitter = new QSplitter(Qt::Horizontal, this);
 
   m_edit = new QTextEdit(m_splitter);
+  m_edit->setObjectName("TextField");
   m_edit->setAcceptDrops(false);
   m_edit->setAcceptRichText(false);
   m_edit->setTextInteractionFlags(Qt::TextEditorInteraction);

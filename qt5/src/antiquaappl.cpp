@@ -162,6 +162,8 @@ void AntiquaAppl::initDefaultTheme() {
   customCSS << "QTabBar::tab:selected {color: palette(highlight);}";
   customCSS << "QPushButton:hover {color:palette(highlight);}";
   customCSS << "QRadioButton:checked {color:palette(highlight);}";
+  customCSS << "#TextField {border: 1px inset palette(base);}";
+  customCSS << "#TextField:focus {border: 1px solid palette(highlight);}";
 #ifdef Q_OS_LINUX // Workaround KDE
   customCSS << "QGroupBox::title{padding-right:10px;}";
 #endif
