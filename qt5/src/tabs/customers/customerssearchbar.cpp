@@ -34,13 +34,10 @@ void CustomersSearchBar::setSearch() {
 }
 
 void CustomersSearchBar::setFilter(int index) {
-  QVariant val = m_selectFilter->itemData(index, Qt::UserRole);
-  CustomersSelectFilter::Filter filter =
-      qvariant_cast<CustomersSelectFilter::Filter>(val);
-  switch (filter) {
+  switch (m_selectFilter->filterIndex(index)) {
   case (CustomersSelectFilter::CustomerId): {
     m_searchEdit->setPlaceholderText(tr("Search with customer id"));
-    m_searchEdit->setValidation(SearchLineEdit::Numeric);
+    m_searchEdit->setValidation(SearchLineEdit::Article);
     break;
   }
 
@@ -55,6 +52,8 @@ void CustomersSearchBar::setFilter(int index) {
     m_searchEdit->setValidation(SearchLineEdit::Strings);
     break;
   };
+
+  setClearAndFocus();
 }
 
 void CustomersSearchBar::setFilterFocus() {
@@ -74,44 +73,43 @@ int CustomersSearchBar::searchLength() {
 }
 
 const QString CustomersSearchBar::getSearchStatement() {
-  CustomersSelectFilter::Filter filter = m_selectFilter->currentFilter();
-  QJsonObject js = m_selectFilter->getFilter(filter);
-  QString searchLine = m_searchEdit->getSearch();
-  QStringList fields = js.value("fields").toString().split(",");
-  QStringList buffer;
+  QString _input = m_searchEdit->getSearch();
+  QJsonObject _js = m_selectFilter->getFilter(m_selectFilter->filterIndex());
+  QStringList _fields = _js.value("fields").toString().split(",");
+  QString _search = _js.value("search").toString();
 
   // Kunden Nummernsuche
-  if (js.value("search").toString() == "customer_id") {
-    searchLine.replace(QRegExp("\\,\\s?$"), "");
-    return "c_id IN (" + searchLine + ")";
+  if (_search == "customer_id") {
+    _input.replace(QRegExp("\\,\\s?$"), "");
+    return "c_id IN (" + _input + ")";
   }
 
-  QStringList words(searchLine);
-  QRegExp spaces("[\\s\\t]+");
-  if (searchLine.contains(spaces)) {
-    words = searchLine.split(spaces);
+  QStringList _buffer;
+  QStringList _statement(_input);
+  if (_input.contains(m_searchEdit->spacePattern())) {
+    _statement = _input.split(m_searchEdit->spacePattern());
   }
 
   // Unternehmen oder Organisation
-  if (js.value("search").toString() == "customer_company_name") {
-    foreach (QString f, fields) {
-      if (words.size() > 1) {
-        foreach (QString s, words) {
-          buffer << f + " ILIKE '" + s + "%'";
+  if (_search == "customer_company_name") {
+    foreach (QString f, _fields) {
+      if (_statement.size() > 1) {
+        foreach (QString s, _statement) {
+          _buffer << f + " ILIKE '" + s + "%'";
         }
       } else {
-        buffer << f + " ILIKE '%" + searchLine + "%'";
+        _buffer << f + " ILIKE '%" + _input + "%'";
       }
     }
-    return buffer.join(" OR ");
+    return _buffer.join(" OR ");
   }
 
   // Kundensuche
-  foreach (QString f, fields) {
-    foreach (QString s, words) {
-      buffer << f + " ILIKE '" + s + "%'";
+  foreach (QString f, _fields) {
+    foreach (QString s, _statement) {
+      _buffer << f + " ILIKE '" + s + "%'";
     }
   }
 
-  return buffer.join(" OR ");
+  return _buffer.join(" OR ");
 }

@@ -6,6 +6,7 @@
 #define ANTIQUACRM_SEARCH_LINEEDIT_H
 
 #include <QLineEdit>
+#include <QRegExp>
 #include <QMetaType>
 #include <QObject>
 #include <QRegExpValidator>
@@ -25,13 +26,15 @@ protected:
 
 public:
   enum Validator {
-    Strings = 0x1, /**< Strings */
-    Numeric = 0x2, /**< Numeric Input */
-    Article = 0x4  /**< Article ID */
+    Strings = 0x1, /**< @brief Strings */
+    Numeric = 0x2, /**< @brief Numeric Input */
+    Article = 0x4  /**< @brief Numeric and , list */
   };
   explicit SearchLineEdit(QWidget *parent = nullptr);
 
   void setValidation(SearchLineEdit::Validator);
+
+  static const QRegExp spacePattern();
 
   int getLength();
 

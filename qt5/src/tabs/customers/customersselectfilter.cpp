@@ -20,8 +20,9 @@ CustomersSelectFilter::CustomersSelectFilter(QWidget *parent)
   setItemData(2, tr("Search only companies"), Qt::ToolTipRole);
 }
 
-CustomersSelectFilter::Filter CustomersSelectFilter::currentFilter() {
-  QVariant val = itemData(currentIndex(), Qt::UserRole);
+CustomersSelectFilter::Filter CustomersSelectFilter::filterIndex(int index) {
+  int _index = (index != -1) ? index : currentIndex();
+  QVariant val = itemData(_index, Qt::UserRole);
   return qvariant_cast<CustomersSelectFilter::Filter>(val);
 }
 

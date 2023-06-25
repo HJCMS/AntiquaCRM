@@ -9,17 +9,17 @@ SearchLineEdit::SearchLineEdit(QWidget *parent) : QLineEdit{parent} {
 }
 
 const QRegExpValidator *SearchLineEdit::setTextValidator() {
-  QRegExp pattern("^\\S{2}.+");
+  static const QRegExp pattern("^\\S{2}.+");
   return (new QRegExpValidator(pattern, this));
 }
 
 const QRegExpValidator *SearchLineEdit::setNumericValidator() {
-  QRegExp pattern("^[0-9]+$");
+  static const QRegExp pattern("^[0-9]+$");
   return (new QRegExpValidator(pattern, this));
 }
 
 const QRegExpValidator *SearchLineEdit::setArticleValidator() {
-  QRegExp pattern("^([0-9]{1,9}[\\,]?)+$");
+  static const QRegExp pattern("^([0-9]{1,9}[\\,]?)+$");
   return (new QRegExpValidator(pattern, this));
 }
 
@@ -32,6 +32,6 @@ void SearchLineEdit::setValidation(SearchLineEdit::Validator v) {
     setValidator(setTextValidator());
 }
 
-int SearchLineEdit::getLength() {
-  return text().length();
-}
+const QRegExp SearchLineEdit::spacePattern() { return QRegExp("[\\s\\t]+"); }
+
+int SearchLineEdit::getLength() { return text().length(); }

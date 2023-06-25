@@ -25,7 +25,7 @@ public:
 
   explicit CustomersSelectFilter(QWidget *parent = nullptr);
 
-  CustomersSelectFilter::Filter currentFilter();
+  CustomersSelectFilter::Filter filterIndex(int index = -1);
 
   /**
    * @brief Nehme aktuellen Suchfilter
