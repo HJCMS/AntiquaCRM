@@ -23,8 +23,8 @@ class ANTIQUACRM_LIBRARY CustomersSearchBar final
   Q_OBJECT
 
 private:
-  CustomersSelectFilter *m_selectFilter;
-  AntiquaCRM::ALineEdit *m_searchInput;
+  CustomersSelectFilter *m_filter;
+  AntiquaCRM::ALineEdit *m_input;
   QPushButton *m_searchBtn;
 
   const QString getSearchString(const QStringList &fields);

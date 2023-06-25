@@ -35,24 +35,12 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
 }
 
-const QRegularExpression ALineEdit::textPattern() {
-  return QRegularExpression("^\\S{2}.+");
-}
-
 void ALineEdit::setTextValidator() {
   setValidator(new QRegularExpressionValidator(textPattern(), this));
 }
 
-const QRegularExpression ALineEdit::digitPattern() {
-  return QRegularExpression("^\\d+$");
-}
-
 void ALineEdit::setNumericValidator() {
   setValidator(new QRegularExpressionValidator(digitPattern(), this));
-}
-
-const QRegularExpression ALineEdit::articlePattern() {
-  return QRegularExpression("^(\\d{1,9}[\\,]?)+$");
 }
 
 void ALineEdit::setArticleValidator() {
@@ -108,6 +96,22 @@ void ALineEdit::setVisualFeedback(int timeout) {
     setValidContent(false);
 
   QTimer::singleShot(timeout, this, SLOT(resetVisualFeedback()));
+}
+
+const QRegularExpression ALineEdit::textPattern() {
+  return QRegularExpression("^\\S{2}.+");
+}
+
+const QRegularExpression ALineEdit::digitPattern() {
+  return QRegularExpression("^\\d+$");
+}
+
+const QRegularExpression ALineEdit::articlePattern() {
+  return QRegularExpression("^(\\d{1,9}[\\,]?)+$");
+}
+
+const QRegularExpression ALineEdit::spacePattern() {
+  return QRegularExpression("[\\s\\t]+");
 }
 
 int ALineEdit::getMinLength() { return minLength; }

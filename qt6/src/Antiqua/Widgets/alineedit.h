@@ -50,34 +50,8 @@ private:
    * @brief Action icon to note invalid content!
    */
   QAction *ac_invalid;
-
-  /**
-   * @short Simple text validator
-   * @code
-   *  "^\\S{2}.+"
-   * @endcode
-   */
-  static const QRegularExpression textPattern();
   void setTextValidator();
-
-  /**
-   * @short Simple numeric validator
-   * @code
-   *  "^\\d+$"
-   * @endcode
-   */
-  static const QRegularExpression digitPattern();
   void setNumericValidator();
-
-  /**
-   * @short AntiquaCRM Articlenumber validator
-   * The item number system in Antiqua CRM consists of consecutive numbers.
-   * When searching, these may also be entered separated by commas.
-   * @code
-   *  "^(\\d{1,9}[\\,]?)+$"
-   * @endcode
-   */
-  static const QRegularExpression articlePattern();
   void setArticleValidator();
 
 private Q_SLOTS:
@@ -156,6 +130,41 @@ public:
    * @param parent - parent Widget
    */
   explicit ALineEdit(QWidget *parent = nullptr);
+
+  /**
+   * @short Simple Text validator
+   * @code
+   *  "^\\S{2}.+"
+   * @endcode
+   */
+  static const QRegularExpression textPattern();
+
+  /**
+   * @short Simple Numeric validator
+   * @code
+   *  "^\\d+$"
+   * @endcode
+   */
+  static const QRegularExpression digitPattern();
+
+  /**
+   * @short AntiquaCRM Article number validation
+   *
+   * The item number system in Antiqua CRM consists of consecutive numbers.
+   * When searching, these may also be entered separated by commas.
+   * @code
+   *  "^(\\d{1,9}[\\,]?)+$"
+   * @endcode
+   */
+  static const QRegularExpression articlePattern();
+
+  /**
+   * @short AntiquaCRM find TABs and SPACEs
+   * @code
+   *  "[\\s\\t]+"
+   * @endcode
+   */
+  static const QRegularExpression spacePattern();
 
   /**
    * @brief the minimum acceptable Characters length.

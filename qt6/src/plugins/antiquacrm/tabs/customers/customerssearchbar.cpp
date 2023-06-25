@@ -11,29 +11,27 @@
 
 CustomersSearchBar::CustomersSearchBar(QWidget *parent)
     : AntiquaCRM::TabsSearchBar{parent} {
-  m_selectFilter = new CustomersSelectFilter(this);
-  addWidget(m_selectFilter);
+  m_filter = new CustomersSelectFilter(this);
+  addWidget(m_filter);
 
-  m_searchInput = new AntiquaCRM::ALineEdit(this);
-  m_searchInput->setPlaceholderText(tr("Default search"));
-  addWidget(m_searchInput);
+  m_input = new AntiquaCRM::ALineEdit(this);
+  m_input->setPlaceholderText(tr("Default search"));
+  addWidget(m_input);
 
   addWidget(searchConfines());
 
   m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
-  connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
-          SLOT(setFilter(int)));
-
-  connect(m_searchInput, SIGNAL(returnPressed()), SLOT(setSearch()));
+  connect(m_filter, SIGNAL(currentIndexChanged(int)), SLOT(setFilter(int)));
+  connect(m_input, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 
   setFilter(0);
 }
 
 const QString CustomersSearchBar::getSearchString(const QStringList &fields) {
-  QString _search = m_searchInput->text();
+  QString _search = m_input->text();
   if (_search.length() < 1) {
     // NOTE prevent empty where clauses
     qWarning("INVALID_CUSTOMER_SEARCH");
@@ -64,12 +62,12 @@ const QString CustomersSearchBar::getSearchString(const QStringList &fields) {
 }
 
 void CustomersSearchBar::setSearch() {
-  QString _filter = m_selectFilter->currentFilter();
+  QString _filter = m_filter->getFilter();
   if (_filter.isEmpty())
     return;
 
   if (!_filter.contains("c_id") &&
-      (m_searchInput->length() <= m_searchInput->getMinLength())) {
+      (m_input->length() <= m_input->getMinLength())) {
     emit sendNotify(tr("Your input is too short, increase your search!"));
     return;
   }
@@ -78,47 +76,45 @@ void CustomersSearchBar::setSearch() {
 }
 
 void CustomersSearchBar::setFilter(int index) {
-  m_searchInput->clear();
-  m_searchInput->setEnabled(true);
-  m_searchInput->setToolTip(QString());
+  m_input->clear();
+  m_input->setEnabled(true);
+  m_input->setToolTip(QString());
 
-  const QString _tip = m_selectFilter->currentToolTip(index);
-  const QString _filter = m_selectFilter->currentFilter(index);
+  const QString _tip = m_filter->getToolTip(index);
+  const QString _filter = m_filter->getFilter(index);
 
   if (_filter.contains("c_id") || _filter.contains("c_since")) {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
+    m_input->setValidation(AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
   } else {
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_input->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
   }
-  m_searchInput->setToolTip(_tip);
-  m_searchInput->setPlaceholderText(_tip);
+  m_input->setToolTip(_tip);
+  m_input->setPlaceholderText(_tip);
 
   emit sendFilterChanged(index);
 }
 
 void CustomersSearchBar::setFilterFocus() {
-  m_selectFilter->setFocus();
-  m_selectFilter->showPopup();
+  m_filter->setFocus();
+  m_filter->showPopup();
 }
 
 void CustomersSearchBar::setClearAndFocus() {
-  m_searchInput->clear();
-  m_searchInput->setFocus();
+  m_input->clear();
+  m_input->setFocus();
 }
 
 void CustomersSearchBar::setSearchFocus() { setClearAndFocus(); }
 
-int CustomersSearchBar::searchLength() { return m_searchInput->length(); }
+int CustomersSearchBar::searchLength() { return m_input->length(); }
 
 bool CustomersSearchBar::requiredLengthExists() {
   return (searchLength() >= getMinLength());
 }
 
 const QString CustomersSearchBar::getSearchStatement() {
-  QString _data = m_selectFilter->currentFilter();
-  QString _input = m_searchInput->text();
+  QString _data = m_filter->getFilter();
+  QString _input = m_input->text();
   if (_data.isEmpty() || _input.isEmpty()) {
     qWarning("No filter found.");
     emit sendNotify(tr("Invalid search input!"));
@@ -127,10 +123,10 @@ const QString CustomersSearchBar::getSearchStatement() {
 
   QString _sql;
   QStringList _cols = _data.split(",");
-  static const QRegularExpression numberPattern("[\\D]+");
+  static const QRegularExpression _no_digits("\\D+");
   if (_cols.contains("c_id")) {
     QString _str = _input;
-    _str.replace(numberPattern, ",");
+    _str.replace(_no_digits, ",");
     _sql = QString("c_id IN (" + _str + ")");
     _str.clear();
     return _sql;

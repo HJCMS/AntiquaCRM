@@ -31,12 +31,12 @@ CustomersSelectFilter::CustomersSelectFilter(QWidget *parent)
               Qt::ToolTipRole);
 }
 
-const QString CustomersSelectFilter::currentFilter(int index) {
+const QString CustomersSelectFilter::getFilter(int index) {
   int _index = (index < 0) ? currentIndex() : index;
   return itemData(_index, Qt::UserRole).toString();
 }
 
-const QString CustomersSelectFilter::currentToolTip(int index) {
+const QString CustomersSelectFilter::getToolTip(int index) {
   int _index = (index < 0) ? currentIndex() : index;
   return itemData(_index, Qt::ToolTipRole).toString();
 }

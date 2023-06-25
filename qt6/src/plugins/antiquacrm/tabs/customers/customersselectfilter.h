@@ -19,8 +19,8 @@ class ANTIQUACRM_LIBRARY CustomersSelectFilter final : public QComboBox {
 
 public:
   explicit CustomersSelectFilter(QWidget *parent = nullptr);
-  const QString currentFilter(int index = -1);
-  const QString currentToolTip(int index = -1);
+  const QString getFilter(int index = -1);
+  const QString getToolTip(int index = -1);
 };
 
 #endif // ANTIQUACRM_PLUGIN_CUSTOMERSSELECTFILTER_H
