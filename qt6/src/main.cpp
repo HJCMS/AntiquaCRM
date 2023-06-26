@@ -81,6 +81,5 @@ int main(int argc, char *argv[]) {
 
   Q_INIT_RESOURCE(application);
 
-  m_app->initTheme();
   return m_app->exec();
 }

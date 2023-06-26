@@ -20,16 +20,6 @@ Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
   m_cfg = new AntiquaCRM::ASettings(this);
 }
 
-bool Application::initTranslations() {
-  QString _p = m_cfg->getTranslationDir().path();
-  QTranslator *m_qtr = new QTranslator(this);
-  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _p, ".qm")) {
-    installTranslator(m_qtr);
-    return true;
-  }
-  return false;
-}
-
 bool Application::checkInterfaces() {
   AntiquaCRM::ANetworkIface iface;
   if (iface.connectedIfaceExists())
@@ -64,7 +54,62 @@ bool Application::openDatabase() {
   return false;
 }
 
-void Application::initGui() {
+void Application::initTheme() {
+  // Required for System Desktop changes
+  const QString _platform = platformName().toLower().trimmed();
+
+  setStyle(QStyleFactory::create("Fusion"));
+
+  QPalette _palette = palette();
+  // @fixme KDE Fusion theme
+  if (_platform.startsWith("xcb")) {
+    QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
+    if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
+      _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
+    }
+  }
+
+  // @fixme Windows theme
+  if (_platform.startsWith("windows")) {
+    QFont _font = font();
+    QString _fontdef = m_cfg->value("font", _font.toString()).toString();
+    if (!_fontdef.isEmpty() && _font.fromString(_fontdef)) {
+      setFont(_fontdef);
+    }
+    QColor _highlight(255, 255, 127);
+    _palette.setColor(QPalette::Inactive, QPalette::Highlight, _highlight);
+  }
+  setPalette(_palette);
+
+  QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
+  if (_info.isReadable()) {
+    QFile _fp(_info.filePath());
+    if (_fp.exists() && _fp.open(QFile::ReadOnly)) {
+      QString buffer;
+      QTextStream in(&_fp);
+      while (!in.atEnd()) {
+          buffer.append(in.readLine());
+      }
+      _fp.close();
+      setStyleSheet(buffer);
+    }
+  }
+}
+
+bool Application::initTranslations() {
+  qInfo("Translation is not activated!");
+  return true;
+
+  QString _p = m_cfg->getTranslationDir().path();
+  QTranslator *m_qtr = new QTranslator(this);
+  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _p, ".qm")) {
+    installTranslator(m_qtr);
+    return true;
+  }
+  return false;
+}
+
+void Application::initInterface() {
   // Window
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
@@ -106,45 +151,6 @@ const QIcon Application::applIcon() {
   return QIcon(QString("://icons/antiquacrm.png"));
 }
 
-void Application::initTheme() {
-  // Required for System Desktop changes
-  const QString _platform = platformName().toLower().trimmed();
-
-  setStyle(QStyleFactory::create("Fusion"));
-
-  QPalette _palette = palette();
-  // @fixme KDE Fusion theme
-  if (_platform.startsWith("xcb")) {
-    QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
-    if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
-      _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
-    }
-  }
-
-  // @fixme Windows theme
-  if (_platform.startsWith("windows")) {
-    QFont _font = font();
-    QString _fontdef = m_cfg->value("font", _font.toString()).toString();
-    if (!_fontdef.isEmpty() && _font.fromString(_fontdef)) {
-      setFont(_fontdef);
-    }
-    QColor _highlight(255, 255, 127);
-    _palette.setColor(QPalette::Inactive, QPalette::Highlight, _highlight);
-  }
-  setPalette(_palette);
-
-  QFile _fp("://application.qcss");
-  if (_fp.exists() && _fp.open(QFile::ReadOnly)) {
-    QString buffer;
-    QTextStream in(&_fp);
-    while (!in.atEnd()) {
-      buffer.append(in.readLine());
-    }
-    _fp.close();
-    setStyleSheet(buffer);
-  }
-}
-
 bool Application::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(AntiquaCRM::AUtil::socketName());
@@ -158,9 +164,14 @@ bool Application::isRunning() {
 
 int Application::exec() {
   QMutex mutex;
-  // mutex.lock();
-  // initTranslations();
-  // mutex.unlock();
+
+  mutex.lock();
+  initTheme();
+  mutex.unlock();
+
+  mutex.lock();
+  initTranslations();
+  mutex.unlock();
 
   mutex.lock();
   checkInterfaces();
@@ -175,7 +186,7 @@ int Application::exec() {
   mutex.unlock();
 
   mutex.lock();
-  initGui();
+  initInterface();
   if (m_window == nullptr) {
     qFatal("failed to initital window");
     return 2;

@@ -1,6 +1,5 @@
 <RCC>
     <qresource prefix="/">
-        <file>application.qcss</file>
         <file>icons/action-add.png</file>
         <file>icons/action-clear.png</file>
         <file>icons/action-cut.png</file>

@@ -27,11 +27,6 @@ private:
   SystemTrayIcon *m_systray = nullptr;   /**< @brief UI SystemTray */
 
   /**
-   * @brief Search Qt based translation files „*.qm“ and load it.
-   */
-  bool initTranslations();
-
-  /**
    * @brief Network Interfaces and connection check.
    */
   bool checkInterfaces();
@@ -47,9 +42,20 @@ private:
   bool openDatabase();
 
   /**
+   * @brief Initial Stylesheet
+   * Loading Default Window Stylesheet theme and make some changes.
+   */
+  void initTheme();
+
+  /**
+   * @brief Search Qt based translation files „*.qm“ and load it.
+   */
+  bool initTranslations();
+
+  /**
    * @brief Load and initial components.
    */
-  void initGui();
+  void initInterface();
 
 Q_SIGNALS:
   /**
@@ -70,12 +76,6 @@ public:
    * @brief default application icon
    */
   static const QIcon applIcon();
-
-  /**
-   * @brief Initial Stylesheet
-   * Loading Default Window Stylesheet theme and make some changes.
-   */
-  void initTheme();
 
   /**
    * @brief Check if Application is already up and running
