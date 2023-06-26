@@ -6,9 +6,7 @@
 #include "systemtrayicon.h"
 
 #include <AntiquaWidgets>
-#include <QJsonObject>
-#include <QList>
-#include <QMutex>
+#include <QtCore>
 #include <QScreen>
 #include <QStyle>
 #include <QStyleFactory>
@@ -114,11 +112,6 @@ void Application::initTheme() {
 
   setStyle(QStyleFactory::create("Fusion"));
 
-  QStringList _csslist;
-  _csslist << "QTabBar::tab:selected{color:palette(highlight);}";
-  _csslist << "QPushButton:hover{color:palette(highlight);}";
-  _csslist << "QRadioButton:checked{color:palette(highlight);}";
-
   QPalette _palette = palette();
   // @fixme KDE Fusion theme
   if (_platform.startsWith("xcb")) {
@@ -126,8 +119,8 @@ void Application::initTheme() {
     if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
       _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
     }
-    _csslist << "QGroupBox::title {padding-right:10px;}";
   }
+
   // @fixme Windows theme
   if (_platform.startsWith("windows")) {
     QFont _font = font();
@@ -138,9 +131,18 @@ void Application::initTheme() {
     QColor _highlight(255, 255, 127);
     _palette.setColor(QPalette::Inactive, QPalette::Highlight, _highlight);
   }
-  // Now set Color and Style settings.
   setPalette(_palette);
-  setStyleSheet(_csslist.join("\n"));
+
+  QFile _fp("://application.qcss");
+  if (_fp.exists() && _fp.open(QFile::ReadOnly)) {
+    QString buffer;
+    QTextStream in(&_fp);
+    while (!in.atEnd()) {
+      buffer.append(in.readLine());
+    }
+    _fp.close();
+    setStyleSheet(buffer);
+  }
 }
 
 bool Application::isRunning() {

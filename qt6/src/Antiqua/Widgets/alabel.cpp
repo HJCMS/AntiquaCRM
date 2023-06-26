@@ -6,6 +6,7 @@
 namespace AntiquaCRM {
 
 ALabel::ALabel(QWidget *parent) : QLabel{parent} {
+  setObjectName("ALabel");
   setIndent(2);
   setTextFormat(Qt::PlainText);
   setTextInteractionFlags(Qt::NoTextInteraction);

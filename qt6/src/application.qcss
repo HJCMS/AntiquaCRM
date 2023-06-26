@@ -1,0 +1,15 @@
+QTabBar::tab:selected, QRadioButton:checked, QPushButton:hover:!pressed {
+  color:palette(highlight);
+}
+
+QGroupBox::title {padding-right:10px;}
+
+QTextEdit#ATextEdit {border:1px inset palette(dark);}
+
+QTextEdit#ATextEdit:focus {
+  border:1px solid palette(highlight);
+}
+
+QDateTimeEdit#ADateTimeEdit:no-frame {
+  background:transparent;
+}

@@ -6,7 +6,9 @@
 namespace AntiquaCRM {
 
 ASpinBox::ASpinBox(QWidget *parent, bool mouseEvents)
-    : QSpinBox{parent}, wheel_support{mouseEvents} {}
+    : QSpinBox{parent}, wheel_support{mouseEvents} {
+  setObjectName("ASpinBox");
+}
 
 void ASpinBox::wheelEvent(QWheelEvent *e) {
   if (wheel_support) {

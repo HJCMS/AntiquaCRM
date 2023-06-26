@@ -7,6 +7,7 @@ namespace AntiquaCRM {
 
 ASlider::ASlider(QWidget *parent, bool mouseEvents)
     : QSlider{Qt::Horizontal, parent}, wheel_support{mouseEvents} {
+  setObjectName("ASlider");
   setMinimum(0);
   setTickPosition(QSlider::TicksAbove);
 }

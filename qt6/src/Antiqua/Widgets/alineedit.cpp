@@ -17,6 +17,7 @@
 namespace AntiquaCRM {
 
 ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
+  setObjectName("ALineEdit");
   setClearButtonEnabled(true);
   setFocusPolicy(Qt::StrongFocus);
   ac_completer = addAction(AntiquaApplIcon("view-list-details"),

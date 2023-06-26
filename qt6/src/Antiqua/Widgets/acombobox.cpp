@@ -11,6 +11,7 @@ namespace AntiquaCRM {
 
 AComboBox::AComboBox(QWidget *parent, bool mouseEvents)
     : QComboBox{parent}, wheel_support{mouseEvents} {
+  setObjectName("AComboBox");
   setSizeAdjustPolicy(QComboBox::AdjustToContentsOnFirstShow);
   setInsertPolicy(QComboBox::NoInsert);
   setEditable(false);

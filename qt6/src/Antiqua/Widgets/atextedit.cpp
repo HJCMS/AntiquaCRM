@@ -8,6 +8,7 @@
 namespace AntiquaCRM {
 
 ATextEdit::ATextEdit(QWidget *parent) : QTextEdit{parent} {
+  setObjectName("ATextEdit");
   setTextInteractionFlags(Qt::TextEditorInteraction);
   setAutoFormatting(QTextEdit::AutoNone);
   setFocusPolicy(Qt::ClickFocus);

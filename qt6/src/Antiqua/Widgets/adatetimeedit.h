@@ -50,8 +50,19 @@ public:
   explicit ADateTimeEdit(QWidget *parent = nullptr, bool mouseEvents = false);
 
   /**
-   * @brief Switch to setReadOnly(true) and ...
-   * remove all InputMethods, disable borderstyle and make bg transparent.
+   * @brief Turn on read-only display mode.
+   *
+   * This will changed following things:
+   *  @li QDateTimeEdit::setInputMethodHints to Qt::ImhNone
+   *  @li QDateTimeEdit::setButtonSymbols to QAbstractSpinBox::NoButtons
+   *  @li QDateTimeEdit::setReadOnly to true
+   *  @li QDateTimeEdit::setFrame to false
+   *
+   * For Display changes you can use the pseudo state <i>:no-frame</i> or
+   * <i>:read-only</i> in Stylesheets.
+   * @code
+   *  #ADateTimeEdit:no-frame { background:transparent; }
+   * @endcode
    */
   void setReadOnlyMode();
 };

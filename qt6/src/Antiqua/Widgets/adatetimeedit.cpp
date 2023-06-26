@@ -13,6 +13,7 @@ namespace AntiquaCRM {
 
 ADateTimeEdit::ADateTimeEdit(QWidget *parent, bool mouseEvents)
     : QDateTimeEdit{parent}, wheel_support{mouseEvents} {
+  setObjectName("ADateTimeEdit");
   setDisplayFormat(ANTIQUACRM_DATETIME_DISPLAY);
 }
 
@@ -40,7 +41,7 @@ void ADateTimeEdit::setReadOnlyMode() {
   setInputMethodHints(Qt::ImhNone);
   setButtonSymbols(QAbstractSpinBox::NoButtons);
   setReadOnly(true);
-  setStyleSheet("QDateTimeEdit {border:none;background:transparent;}");
+  setFrame(false);
   update();
 }
 
