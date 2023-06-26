@@ -1,6 +1,16 @@
-QTabBar::tab:selected, QRadioButton:checked, QPushButton:hover:!pressed {
+/**
+ * -*- coding: utf-8 -*-
+ * vim: set fileencoding=utf-8
+ *
+ * SPDX-FileCopyrightText: 2023 Juergen Heinemann <nospam@hjcms.de>
+ *
+ * SPDX-License-Identifier: LGPL-3.0-or-later
+ */
+QTabBar::tab:selected, QCheckBox:hover, QRadioButton:hover, QPushButton:hover:!pressed {
   color:palette(highlight);
 }
+
+QRadioButton:checked {color:palette(highlight);}
 
 QGroupBox::title {padding-right:10px;}
 

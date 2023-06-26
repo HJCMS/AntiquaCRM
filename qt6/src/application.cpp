@@ -47,7 +47,7 @@ bool Application::openDatabase() {
     return true;
   }
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << m_sql->lastError();
+  qDebug() << Q_FUNC_INFO << m_sql->lastError();
 #else
   qFatal("No Database connection!");
 #endif
@@ -55,20 +55,20 @@ bool Application::openDatabase() {
 }
 
 void Application::initTheme() {
+  // AntiquaCRM using Fusion theme
+  setStyle(QStyleFactory::create("Fusion"));
+
   // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
 
-  setStyle(QStyleFactory::create("Fusion"));
-
   QPalette _palette = palette();
-  // @fixme KDE Fusion theme
+  // @fixme KDE theme
   if (_platform.startsWith("xcb")) {
     QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
     if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
       _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
     }
   }
-
   // @fixme Windows theme
   if (_platform.startsWith("windows")) {
     QFont _font = font();
@@ -81,6 +81,7 @@ void Application::initTheme() {
   }
   setPalette(_palette);
 
+  // Loading stylesheet
   QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
   if (_info.isReadable()) {
     QFile _fp(_info.filePath());
