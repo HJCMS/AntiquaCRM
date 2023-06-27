@@ -1,20 +1,20 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "stitcheswidget.h"
-#include "stitcheseditor.h"
-#include "stitchessearchbar.h"
-#include "stitchesstatusbar.h"
-#include "stitchestableview.h"
+#include "cdsvinylwidget.h"
+#include "cdsvinyleditor.h"
+#include "cdsvinylsearchbar.h"
+#include "cdsvinylstatusbar.h"
+#include "cdsvinyltableview.h"
 
 #include <QDebug>
 #include <QLayout>
 #include <QMessageBox>
 
-StitchesWidget::StitchesWidget(QWidget *parent)
-    : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
-  setObjectName("stitches_tab_widget");
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
+CDsVinylWidget::CDsVinylWidget(QWidget *parent)
+    : AntiquaCRM::TabsIndex{"cdsvinyl_tab", parent} {
+  setObjectName("cdsvinyl_tab_widget");
+  setWindowIcon(AntiquaCRM::AntiquaApplIcon("media-optical-dvd-video"));
   setWindowTitle(getTitle());
   setClosable(true);
 
@@ -24,16 +24,16 @@ StitchesWidget::StitchesWidget(QWidget *parent)
   m_p1Layout->setContentsMargins(0, 0, 0, 0);
 
   // Searchbar
-  m_searchBar = new StitchesSearchBar(m_mainPage);
+  m_searchBar = new CDsVinylSearchBar(m_mainPage);
   m_searchBar->setMinLength(3);
   m_p1Layout->addWidget(m_searchBar);
 
   // TableView
-  m_table = new StitchesTableView(m_mainPage);
+  m_table = new CDsVinylTableView(m_mainPage);
   m_p1Layout->addWidget(m_table);
 
   // StatusBar
-  m_statusBar = new StitchesStatusBar(m_mainPage);
+  m_statusBar = new CDsVinylStatusBar(m_mainPage);
   m_p1Layout->addWidget(m_statusBar);
 
   m_mainPage->setLayout(m_p1Layout);
@@ -42,9 +42,9 @@ StitchesWidget::StitchesWidget(QWidget *parent)
 
   // Begin Editor
   m_editorPage = new QScrollArea(this);
-  m_editorPage->setObjectName("stitches_editor_scrollarea");
+  m_editorPage->setObjectName("CDsVinyl_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
-  m_editorWidget = new StitchesEditor(this);
+  m_editorWidget = new CDsVinylEditor(this);
   m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
@@ -52,7 +52,7 @@ StitchesWidget::StitchesWidget(QWidget *parent)
 
   setCurrentIndex(0);
 
-  // Signals::StitchesSearchBar
+  // Signals::CDsVinylSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
@@ -63,7 +63,7 @@ StitchesWidget::StitchesWidget(QWidget *parent)
   connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
-  // Signals::StitchesTableView
+  // Signals::CDsVinylTableView
   connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
@@ -77,10 +77,10 @@ StitchesWidget::StitchesWidget(QWidget *parent)
   connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
           SLOT(sendSocketOperation(const QJsonObject &)));
 
-  // Signals::StitchesEditor
+  // Signals::CDsVinylEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
-  // Signals::StitchestatusBar
+  // Signals::CDsVinyltatusBar
   connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
   connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
           SLOT(createSearchQuery(const QString &)));
@@ -90,17 +90,17 @@ StitchesWidget::StitchesWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void StitchesWidget::popupWarningTabInEditMode() {
+void CDsVinylWidget::popupWarningTabInEditMode() {
   QString info(tr("Can't open this Article"));
   info.append("<p>");
-  info.append(tr("Because Stitches tab is in edit mode."));
+  info.append(tr("Because CDs && Vinyl tab is in edit mode."));
   info.append("</p><p>");
   info.append(tr("You need to save and close this tab first."));
   info.append("</p>");
   QMessageBox::information(this, windowTitle(), info);
 }
 
-void StitchesWidget::setDefaultTableView() {
+void CDsVinylWidget::setDefaultTableView() {
   if (currentIndex() != 0)
     return;
 
@@ -109,7 +109,7 @@ void StitchesWidget::setDefaultTableView() {
   m_statusBar->setCreateButtonEnabled(false);
 }
 
-void StitchesWidget::openStartPage() {
+void CDsVinylWidget::openStartPage() {
   setCurrentIndex(0);
   if (m_table->isAutoRefreshEnabled()) {
     m_statusBar->setCreateButtonEnabled(false);
@@ -122,7 +122,7 @@ void StitchesWidget::openStartPage() {
 #endif
 }
 
-void StitchesWidget::createSearchQuery(const QString &history) {
+void CDsVinylWidget::createSearchQuery(const QString &history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
     m_table->setQuery(history);
@@ -133,7 +133,7 @@ void StitchesWidget::createSearchQuery(const QString &history) {
   // Die Standardabfrage wird aufgerufen!
   QString _sql = m_searchBar->getSearchStatement();
   if (_sql.isEmpty()) {
-    qWarning("StitchesWidget::createSearchQuery „length()“, to small!");
+    qWarning("CDsVinylWidget::createSearchQuery „length()“, to small!");
     return;
   }
 
@@ -146,18 +146,18 @@ void StitchesWidget::createSearchQuery(const QString &history) {
   m_statusBar->setCreateButtonEnabled(true);
 }
 
-void StitchesWidget::createNewEntry() {
+void CDsVinylWidget::createNewEntry() {
   if (currentIndex() == 0 && m_editorWidget->createNewEntry()) {
     setCurrentIndex(1);
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
-    qWarning("Reject StitchesWidget::createNewEntry - no main page view!");
+    qWarning("Reject CDsVinylWidget::createNewEntry - no main page view!");
   }
 #endif
 }
 
-void StitchesWidget::openEntry(qint64 articleId) {
+void CDsVinylWidget::openEntry(qint64 articleId) {
   if (articleId < 1)
     return;
 
@@ -171,18 +171,16 @@ void StitchesWidget::openEntry(qint64 articleId) {
   }
 }
 
-void StitchesWidget::onEnterChanged() {
+void CDsVinylWidget::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
   }
 }
 
-const QString StitchesWidget::getTitle() const {
-    return tr("Prints && Stitches");
-}
+const QString CDsVinylWidget::getTitle() const { return tr("CDs && Vinyl"); }
 
-bool StitchesWidget::customAction(const QJsonObject &obj) {
+bool CDsVinylWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 

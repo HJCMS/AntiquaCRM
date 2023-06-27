@@ -6,13 +6,13 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_STITCHESCONFIGWIDGET_H
-#define ANTIQUACRM_PLUGIN_STITCHESCONFIGWIDGET_H
+#ifndef ANTIQUACRM_PLUGIN_CDSVINYLCONFIGWIDGET_H
+#define ANTIQUACRM_PLUGIN_CDSVINYLCONFIGWIDGET_H
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 
-class ANTIQUACRM_LIBRARY StitchesConfigWidget final
+class ANTIQUACRM_LIBRARY CDsVinylConfigWidget final
     : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
@@ -25,9 +25,9 @@ public Q_SLOTS:
   void saveSectionConfig() override;
 
 public:
-  explicit StitchesConfigWidget(QWidget *parent = nullptr);
+  explicit CDsVinylConfigWidget(QWidget *parent = nullptr);
   AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_STITCHESCONFIGWIDGET_H
+#endif // ANTIQUACRM_PLUGIN_CDSVINYLCONFIGWIDGET_H

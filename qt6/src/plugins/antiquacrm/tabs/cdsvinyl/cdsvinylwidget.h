@@ -6,36 +6,37 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_STITCHESWIDGET_H
-#define ANTIQUACRM_PLUGIN_STITCHESWIDGET_H
+#ifndef ANTIQUACRM_PLUGIN_CDSVINYLWIDGET_H
+#define ANTIQUACRM_PLUGIN_CDSVINYLWIDGET_H
 
 #include <AntiquaTabs>
 #include <QObject>
 #include <QScrollArea>
 #include <QWidget>
 
-class StitchesSearchBar;
-class StitchesTableView;
-class StitchesStatusBar;
-class StitchesEditor;
+class CDsVinylSearchBar;
+class CDsVinylTableView;
+class CDsVinylStatusBar;
+class CDsVinylEditor;
 
-class ANTIQUACRM_LIBRARY StitchesWidget final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_LIBRARY CDsVinylWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
   QWidget *m_mainPage;
-  StitchesSearchBar *m_searchBar;
-  StitchesTableView *m_table;
-  StitchesStatusBar *m_statusBar;
+  CDsVinylSearchBar *m_searchBar;
+  CDsVinylTableView *m_table;
+  CDsVinylStatusBar *m_statusBar;
+
   QScrollArea *m_editorPage;
-  StitchesEditor *m_editorWidget;
+  CDsVinylEditor *m_editorWidget;
 
   void popupWarningTabInEditMode() override;
 
   void setDefaultTableView() override;
 
 public:
-  explicit StitchesWidget(QWidget *parent = nullptr);
+  explicit CDsVinylWidget(QWidget *parent = nullptr);
 
   void openStartPage() override;
 
@@ -52,4 +53,4 @@ public:
   bool customAction(const QJsonObject &obj) override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_STITCHESWIDGET_H
+#endif // ANTIQUACRM_PLUGIN_CDSVINYLWIDGET_H

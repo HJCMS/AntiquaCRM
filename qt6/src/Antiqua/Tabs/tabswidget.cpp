@@ -48,13 +48,6 @@ void TabsWidget::tabInserted(int index) {
   }
 }
 
-void TabsWidget::tabRemoved(int index) {
-  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
-  if (m_ti != nullptr) {
-    qDebug() << Q_FUNC_INFO << "Tab not closed:" << index << count();
-  }
-}
-
 void TabsWidget::setTabChanged(int index) {
   AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
   if (m_ti != nullptr && m_ti->currentView() == TabsIndex::ViewPage::MainView)
@@ -65,7 +58,7 @@ void TabsWidget::setTabClosed(int index) {
   AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
   if (m_ti->currentView() != TabsIndex::ViewPage::MainView) {
     setCurrentIndex(index);
-    emit sendMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
+    emit sendMessage(tr("The tab cannot be closed in Edit mode!"));
     return;
   }
   removeIndex(index);
@@ -78,7 +71,9 @@ void TabsWidget::setCurrentTab(const QString &name) {
   }
 
   if (_id.isEmpty()) {
-    qWarning("Missing tab name, setCurrentTab aborted!");
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Missing tab parameter - aborted!";
+#endif
     return;
   }
 

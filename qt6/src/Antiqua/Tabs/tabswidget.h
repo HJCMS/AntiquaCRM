@@ -37,11 +37,6 @@ private:
   virtual void tabInserted(int) override final;
 
   /**
-   * @brief remove from model
-   */
-  virtual void tabRemoved(int) override final;
-
-  /**
    * @brief close tab by index
    */
   bool removeIndex(int index);
