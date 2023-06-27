@@ -122,8 +122,8 @@ void IsbnEdit::valueChanged(const QString &data) {
 
 void IsbnEdit::initData() {
   QString _info =
-      tr("ISBN 10/13 (ISO 2108) for Books are EAN/GTIN-10 or EAN/GTIN-13. "
-         "This Code only represent digits 0-9 with a length of 10 or 13. For "
+      tr("EAN/GTIN-10 or EAN/GTIN-13.\n"
+         "This Code only represent digits 0-9 with  a length of 10 or 13. For "
          "detailed description visit www.gs1.org. AntiquaCRM contains a calc "
          "based Validator to check the Input. Invalid EAN’s will not saved.");
   setWhatsThisText(_info);

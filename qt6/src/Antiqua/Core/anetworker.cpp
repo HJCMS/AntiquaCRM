@@ -245,9 +245,6 @@ QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
 
   m_reply = post(request, data);
 
-  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
-          SLOT(slotError(QNetworkReply::NetworkError)));
-
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
@@ -284,9 +281,6 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   m_reply = post(request, m_form);
   m_form->setParent(m_reply);
 
-  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
-          SLOT(slotError(QNetworkReply::NetworkError)));
-
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
@@ -308,9 +302,6 @@ QNetworkReply *ANetworker::putRequest(const QUrl &url, const QByteArray &data) {
   request.setTransferTimeout((transfer_timeout * 1000));
 
   m_reply = put(request, data);
-
-  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
-          SLOT(slotError(QNetworkReply::NetworkError)));
 
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
@@ -336,9 +327,6 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   request.setHeaderCacheControl();
 
   m_reply = get(request);
-  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
-          SLOT(slotError(QNetworkReply::NetworkError)));
-
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 

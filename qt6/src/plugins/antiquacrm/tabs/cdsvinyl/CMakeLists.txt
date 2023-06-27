@@ -10,8 +10,12 @@ INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_BINARY_DIR}/dialog
+  ${CMAKE_CURRENT_SOURCE_DIR}/dialog
   ${DISCID_INCLUDE_DIRS}
 )
+
+ADD_SUBDIRECTORY(dialog)
 
 SET (plugin_FILES
  cdsvinyl.json
@@ -65,7 +69,7 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
-  ${CDTRACKING_LIBRARIES}
+  CDTracking
 )
 
 INSTALL (TARGETS ${_pluginTarget}
