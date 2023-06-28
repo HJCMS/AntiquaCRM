@@ -289,41 +289,35 @@ void StitchesEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ip_since";
   ignoreFields << "ip_changed";
-  ignoreFields << "ip_including_vat"; /**< @deprecated */
+  ignoreFields << "ip_including_vat"; /* DEPRECATED */
 
-  // Settings input defaults
+  m_tableData = initTableData(STITCHES_TABLE_NAME);
+  if (m_tableData == nullptr)
+    return;
+
+  // Set input defaults
+  AntiquaCRM::ASharedDataFiles _dataFiles;
+  QStringList _completer_data;
+
   const QJsonObject _jobj = loadSqlConfig(STITCHES_CONFIG_POINTER);
   double _price_lowest = _jobj.value("stitches_price_lowest").toDouble();
-  double _price_default = _jobj.value("stitches_price_lowest").toDouble();
   if (_price_lowest > 1.0)
     ip_price->setMinimum(_price_lowest);
 
+  double _price_default = _jobj.value("stitches_price_normal").toDouble();
   if (_price_default > 2.0)
     ip_price->setValue(_price_default);
 
-  m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_prints");
-  inputFields = m_tableData->columnNames();
-  if (inputFields.isEmpty()) {
-    QStringList warn(tr("An error has occurred!"));
-    warn << tr("Can't load input datafields!");
-    warn << tr("When getting this Message, please check your Network and "
-               "Database connection!");
-    openNoticeMessage(warn.join("\n"));
-  }
-
-  // Autoren
+  // authors
   QStringList authors(tr("Authors group"));
   authors << tr("Authors team");
   authors << tr("Various authors");
   ip_author->setCompleterList(authors);
 
-  AntiquaCRM::ASharedDataFiles _dataFiles;
-  QStringList _completer_data;
-
-  // Lager
+  // storage
   ip_storage->initData();
 
-  // Schlüsselwörter
+  // keywords
   _completer_data = _dataFiles.getCompleterList("keywords", "name");
   ip_keyword->setCompleterList(_completer_data);
 
@@ -575,7 +569,8 @@ bool StitchesEditor::realyDeactivateEntry() {
   body << tr("Are you sure to finish this operation?");
   body << QString("</p>");
 
-  int ret = QMessageBox::question(this, tr("Entry deactivation"), body.join(""));
+  int ret =
+      QMessageBox::question(this, tr("Entry deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);

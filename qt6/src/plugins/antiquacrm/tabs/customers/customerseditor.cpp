@@ -8,6 +8,7 @@
 #include "customersorders.h"
 
 #include <AntiquaCRM>
+#include <AntiquaMail>
 #include <QDate>
 #include <QFrame>
 #include <QLayout>
@@ -25,7 +26,9 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   // Begin::row1 {
   // Header Frame
   QFrame *firstFrame = new QFrame(this);
+  firstFrame->setContentsMargins(2, 0, 2, 0);
   QHBoxLayout *layout1 = new QHBoxLayout(firstFrame);
+  layout1->setContentsMargins(0, 0, 0, 0);
   layout1->addWidget(new QLabel(tr("Customer Id:"), firstFrame));
   c_id = new AntiquaCRM::SerialId(firstFrame);
   c_id->setObjectName("c_id");
@@ -74,6 +77,8 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
   // } End::row3;
 
+  mainLayout->setStretch(1, 1); // row2
+
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));
@@ -103,19 +108,11 @@ void CustomersEditor::setInputFields() {
   ignoreFields << "c_changed";
   ignoreFields << "c_provider_import";
 
-  // Settings input defaults
-  const QJsonObject _jobj = loadSqlConfig(CUSTOMERS_CONFIG_POINTER);
-  qInfo("CustomersEditor::TODO loadSqlConfig");
+  // Load default table data
+  m_tableData = initTableData(CUSTOMERS_SQL_TABLE_NAME);
+  if (m_tableData == nullptr)
+    return;
 
-  m_tableData = new AntiquaCRM::ASqlDataQuery("customers");
-  inputFields = m_tableData->columnNames();
-  if (inputFields.isEmpty()) {
-    QStringList warn(tr("An error has occurred!"));
-    warn << tr("Can't load input datafields!");
-    warn << tr("When getting this Message, please check your Network and "
-               "Database connection!");
-    openNoticeMessage(warn.join("\n"));
-  }
   // Completers
   m_dataWidget->c_postalcode->initData();
 }
@@ -162,9 +159,6 @@ void CustomersEditor::importSqlResult() {
     setDataField(field, it.value());
   }
   blockSignals(false);
-
-  // Suche Bilddaten
-  // qint64 id = c_id->getValue().toLongLong();
 
   setResetModified(inputFields);
 }
@@ -397,12 +391,16 @@ void CustomersEditor::setCreateMailMessage(const QString &action) {
   if (cid < 1)
     return;
 
-  /*
-  MailForwardDialog *d = new MailForwardDialog(this);
-  d->exec(cid, action);
-  sendStatusMessage(tr("Send eMail finished!"));
-  */
-  qDebug() << Q_FUNC_INFO << "__TODO__" << action;
+  QJsonObject _obj;
+  _obj.insert("tb_tab", "CUSTOMER");
+  _obj.insert("tb_caller", action.toUpper());
+  _obj.insert("CRM_CUSTOMER_ID", cid);
+
+  AntiquaCRM::MailDialog *d = new AntiquaCRM::MailDialog(this);
+  if (d->exec(_obj))
+    pushStatusMessage(tr("Send eMail finished!"));
+  else
+    pushStatusMessage(tr("Send eMail canceled!"));
 }
 
 void CustomersEditor::setRestore() { importSqlResult(); }

@@ -47,10 +47,8 @@ StitchesConfigWidget::StitchesConfigWidget(QWidget *parent)
 
 void StitchesConfigWidget::loadSectionConfig() {
   QJsonDocument jsDocument;
-  QString sql("SELECT cfg_jsconfig FROM antiquacrm_configs");
-  sql.append(" WHERE cfg_group='");
-  sql.append(STITCHES_CONFIG_POINTER);
-  sql.append("';");
+  QString sql("SELECT cfg_jsconfig FROM antiquacrm_configs ");
+  sql.append("WHERE cfg_group='" + STITCHES_CONFIG_POINTER + "';");
   AntiquaCRM::ASqlCore dbsql(this);
   QSqlQuery q = dbsql.query(sql);
   if (q.size() > 0) {

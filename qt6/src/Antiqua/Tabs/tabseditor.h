@@ -55,9 +55,33 @@ protected:
   const QRegularExpression fieldPattern;
 
   /**
-   * @brief Eingabe Felder
+   * @brief All existing Input fields
    */
   QStringList inputFields;
+
+  /**
+   * @brief List of data fields contained in @ref inputFields.
+   * However, should not be included in SQL::{UPDATE|INSERT}s!
+   */
+  QStringList ignoreFields;
+
+  /**
+   * @brief This container class contains all sql item data.
+   */
+  AntiquaCRM::ASqlDataQuery *m_tableData;
+
+  /**
+   * @brief Initial container class from table
+   *
+   * This function initialize and load SQL table data for current tab.
+   *
+   * Additionally it fills the @ref inputFields Variable.
+   *
+   * If error occurred, a PopUp  message displayed.
+   *
+   * @param tablename - Sql Tablename
+   */
+  AntiquaCRM::ASqlDataQuery *initTableData(const QString &tablename);
 
   /**
    * @brief Function to load Database configurations for current Tab.
@@ -111,20 +135,9 @@ protected:
   const QVariant getDataValue(const QString &name);
 
   /**
-   * @brief List of data fields contained in @ref inputFields.
-   * However, should not be included in SQL::{UPDATE|INSERT}s!
-   */
-  QStringList ignoreFields;
-
-  /**
    * @brief Searches for table field name in @ref ignoreFields.
    */
   bool isIgnoredField(const QString &fieldName);
-
-  /**
-   * @brief This container class contains all sql item data.
-   */
-  AntiquaCRM::ASqlDataQuery *m_tableData;
 
   /**
    * @brief Set default input field options onLoad.

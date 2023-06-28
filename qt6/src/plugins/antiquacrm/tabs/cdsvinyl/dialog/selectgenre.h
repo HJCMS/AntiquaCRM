@@ -33,6 +33,7 @@ public Q_SLOTS:
 public:
   explicit SelectGenre(QWidget *parent = nullptr);
   static const QJsonObject id3Tags();
+  static const QStringList completer();
   const QString getName();
   int getId();
 };

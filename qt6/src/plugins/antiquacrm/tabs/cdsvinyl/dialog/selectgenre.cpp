@@ -57,6 +57,20 @@ const QJsonObject SelectGenre::id3Tags() {
   return QJsonObject();
 }
 
+const QStringList SelectGenre::completer() {
+  static const QRegularExpression _regexp("[\\s\\t\\+\\-\\/]");
+  QStringList _list;
+  foreach (QString _g, id3Tags().keys()) {
+    if (_regexp.match(_g).hasMatch())
+      continue;
+
+    _list << _g;
+  }
+  _list.removeDuplicates();
+  _list.sort(Qt::CaseSensitive);
+  return _list;
+}
+
 const QString SelectGenre::getName() {
   QString current = currentText();
   if (current.length() < 3)

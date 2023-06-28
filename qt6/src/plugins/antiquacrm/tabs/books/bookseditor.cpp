@@ -390,51 +390,45 @@ void BooksEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
-  ignoreFields << "ib_including_vat"; /**< @deprecated */
+  ignoreFields << "ib_including_vat"; /* DEPRECATED */
 
-  // Settings input defaults
+  // Load default table data
+  m_tableData = initTableData(BOOKS_SQL_TABLE_NAME);
+  if (m_tableData == nullptr)
+    return;
+
+  // set input defaults
+  AntiquaCRM::ASharedDataFiles _dataFiles;
+  QStringList _completer_data;
+
   const QJsonObject _jobj = loadSqlConfig(BOOKS_CONFIG_POINTER);
   double book_price_lowest = _jobj.value("book_price_lowest").toDouble();
-  double book_price_default = _jobj.value("book_price_normal").toDouble();
   if (book_price_lowest > 1.0)
     ib_price->setMinimum(book_price_lowest);
 
+  double book_price_default = _jobj.value("book_price_normal").toDouble();
   if (book_price_default > 2.0)
     ib_price->setValue(book_price_default);
 
-  // Load default table data
-  m_tableData = new AntiquaCRM::ASqlDataQuery(BOOKS_SQL_TABLE_NAME);
-  inputFields = m_tableData->columnNames();
-  if (inputFields.isEmpty()) {
-    QStringList warn(tr("An error has occurred!"));
-    warn << tr("Can't load input datafields!");
-    warn << tr("When getting this Message, please check your Network and "
-               "Database connection!");
-    openNoticeMessage(warn.join("\n"));
-  }
-
-  // Completer data for Authors
+  // authors
   QStringList authors(tr("Authors group"));
   authors << tr("Authors team");
   authors << tr("Various authors");
   ib_author->setCompleterList(authors);
 
-  AntiquaCRM::ASharedDataFiles _dataFiles;
-  QStringList _completer_data;
-
-  // Completer data for publishers
+  // publishers
   _completer_data = _dataFiles.getCompleterList("publishers", "name");
   ib_publisher->setCompleterList(_completer_data);
 
-  // Completer data for designations
+  // designations
   ib_binding->initData();
   _completer_data = _dataFiles.getCompleterList("designations", "name");
   ib_designation->setCompleterList(_completer_data);
 
-  // init Storage data
+  // storage
   ib_storage->initData();
 
-  // Completer data for keywords
+  // keywords
   _completer_data = _dataFiles.getCompleterList("keywords", "name");
   ib_keyword->setCompleterList(_completer_data);
 

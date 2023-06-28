@@ -19,6 +19,9 @@ SET (_subWidgetLibrary_SOURCES
  imagetreeview.cpp
  imageviewtoolbar.cpp
  imagetreepathview.cpp
+ mailtemplatekeys.cpp
+ mailcommand.cpp
+ mailattachments.cpp
 )
 
 SET (_subWidgetLibrary_HEADERS
@@ -28,6 +31,9 @@ SET (_subWidgetLibrary_HEADERS
  imagetreeview.h
  imageviewtoolbar.h
  imagetreepathview.h
+ mailtemplatekeys.h
+ mailcommand.h
+ mailattachments.h
 )
 
 ADD_LIBRARY (${_subWidgetLibrary} STATIC

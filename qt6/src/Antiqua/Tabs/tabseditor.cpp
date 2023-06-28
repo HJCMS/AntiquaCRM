@@ -43,6 +43,25 @@ TabsEditor::~TabsEditor() {
     m_signalMapper->deleteLater();
 }
 
+AntiquaCRM::ASqlDataQuery *TabsEditor::initTableData(const QString &tablename) {
+  QString _table = tablename.trimmed().toLower();
+  if (_table.isEmpty()) {
+    qWarning("Can't load Table data, invalid Table name!");
+    return nullptr;
+  }
+
+  m_tableData = new AntiquaCRM::ASqlDataQuery(tablename);
+  inputFields = m_tableData->columnNames();
+  if (inputFields.isEmpty()) {
+    QStringList warn(tr("An error has occurred!"));
+    warn << tr("Can't load input datafields!");
+    warn << tr("When getting this Message, please check your Network and "
+               "Database connection!");
+    openNoticeMessage(warn.join("\n"));
+  }
+  return m_tableData;
+}
+
 const QJsonObject TabsEditor::loadSqlConfig(const QString &group) {
   if (group.isEmpty())
     return QJsonObject();
@@ -61,7 +80,7 @@ const QJsonObject TabsEditor::loadSqlConfig(const QString &group) {
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    qDebug() << Q_FUNC_INFO << group << m_sql->lastError();
   }
 #endif
   return QJsonObject();

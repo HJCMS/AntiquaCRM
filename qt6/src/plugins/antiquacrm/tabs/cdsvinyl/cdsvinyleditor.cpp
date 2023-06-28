@@ -4,6 +4,7 @@
 #include "cdsvinyleditor.h"
 #include "cdsvinylconfig.h"
 #include "dialog/cdreaddialog.h"
+#include "dialog/selectgenre.h"
 
 #include <AntiquaCRM>
 #include <AntiquaPrinting>
@@ -259,27 +260,21 @@ void CDsVinylEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "cv_since";
   ignoreFields << "cv_changed";
-  ignoreFields << "cv_including_vat"; // DEPRECATED
+  ignoreFields << "cv_including_vat"; /* DEPRECATED */
+
+  m_tableData = initTableData(CDSVINYL_TABLE_NAME);
+  if (m_tableData == nullptr)
+    return;
 
   // Settings input defaults
   const QJsonObject _jobj = loadSqlConfig(CDSVINYL_CONFIG_POINTER);
   double _price_lowest = _jobj.value("media_price_lowest").toDouble();
-  double _price_default = _jobj.value("media_price_lowest").toDouble();
   if (_price_lowest > 1.0)
     cv_price->setMinimum(_price_lowest);
 
-  if (_price_default > 2.0)
+  double _price_default = _jobj.value("media_price_normal").toDouble();
+  if (_price_default > 1.5)
     cv_price->setValue(_price_default);
-
-  m_tableData = new AntiquaCRM::ASqlDataQuery(CDSVINYL_TABLE_NAME);
-  inputFields = m_tableData->columnNames();
-  if (inputFields.isEmpty()) {
-    QStringList warn(tr("An error has occurred!"));
-    warn << tr("Can't load input datafields!");
-    warn << tr("When getting this Message, please check your Network and "
-               "Database connection!");
-    openNoticeMessage(warn.join("\n"));
-  }
 
   // Standards für CD Import einstellen.
   cv_mtype->setValue(AntiquaCRM::MediaType::MEDIA_DISC_COMPACT);
@@ -287,18 +282,18 @@ void CDsVinylEditor::setInputFields() {
   if (cv_count->getValue().toInt() == 0)
     cv_count->setValue(QVariant(1));
 
-  AntiquaCRM::ASharedDataFiles _dataFiles;
-  QStringList _completer_data;
   // Schlüsselwörter
-  _completer_data = _dataFiles.getCompleterList("keywords", "name");
-  cv_keyword->setCompleterList(_completer_data);
+  QStringList genres = SelectGenre::completer();
+  if (genres.size() > 5) {
+    cv_keyword->setCompleterList(genres);
+  }
 
   // Lager
   cv_storage->reset();
   cv_storage->initData();
-  cv_storage->setValue("CD");
-  // TODO
-  _completer_data.clear();
+  int _storage_id = _jobj.value("media_storage_location").toInt();
+  if (_storage_id > 0)
+    cv_storage->setValue(_storage_id);
 }
 
 bool CDsVinylEditor::setDataField(const QSqlField &field,

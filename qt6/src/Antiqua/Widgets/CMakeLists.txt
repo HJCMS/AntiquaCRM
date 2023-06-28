@@ -16,11 +16,12 @@ INCLUDE_DIRECTORIES (
 ADD_SUBDIRECTORY (private)
 
 SET (_library_FILES
- Widgets.dox
- antiquainput.h.cmake
- antiquawidgets.h.cmake
- antiquabuttons.h.cmake
- antiquaprinting.h.cmake
+  Widgets.dox
+  antiquabuttons.h.cmake
+  antiquainput.h.cmake
+  antiquamail.h.cmake
+  antiquaprinting.h.cmake
+  antiquawidgets.h.cmake
 )
 
 CONFIGURE_FILE (antiquawidgets.h.cmake
@@ -39,6 +40,10 @@ CONFIGURE_FILE (antiquaprinting.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
 )
 
+CONFIGURE_FILE (antiquamail.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquamail.h
+)
+
 SET (_stl_HEADERS
  AntiquaInput
  antiquainput.h
@@ -49,6 +54,8 @@ SET (_stl_HEADERS
  AntiquaPrintDialog
  AntiquaPrinting
  antiquaprinting.h
+ AntiquaMail
+ antiquamail.h
 )
 
 SET (_library_SOURCES
@@ -82,6 +89,7 @@ SET (_library_SOURCES
   isbnedit.cpp
   keywordsedit.cpp
   mailbutton.cpp
+  maildialog.cpp
   numedit.cpp
   phoneedit.cpp
   postalcodeedit.cpp
@@ -149,6 +157,7 @@ SET (_library_HEADERS
   isbnedit.h
   keywordsedit.h
   mailbutton.h
+  maildialog.h
   numedit.h
   phoneedit.h
   postalcodeedit.h

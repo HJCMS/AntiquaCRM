@@ -19,6 +19,7 @@ class ANTIQUACRM_LIBRARY CDsVinylConfigWidget final
 private:
   AntiquaCRM::PriceEdit *m_minPrice;
   AntiquaCRM::PriceEdit *m_normalPrice;
+  AntiquaCRM::SelectStorage *m_storage;
 
 public Q_SLOTS:
   void loadSectionConfig() override;
