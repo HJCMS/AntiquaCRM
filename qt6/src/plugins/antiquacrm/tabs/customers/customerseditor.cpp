@@ -122,24 +122,22 @@ bool CustomersEditor::setDataField(const QSqlField &field,
   if (!field.isValid())
     return false;
 
-  QString key = field.name();
+  QString _key = field.name();
   // qDebug() << "setDataField:" << field.name() << value;
-  bool required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AInputWidget *inp =
-      findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);
-  if (inp != nullptr) {
-    inp->setRestrictions(field);
+  AntiquaCRM::AInputWidget *m_w = findChild<AntiquaCRM::AInputWidget *>(_key);
+  if (m_w != nullptr) {
+    m_w->setRestrictions(field);
     // Muss nach setRestrictions kommen!
-    inp->setValue(value);
+    m_w->setValue(value);
     return true;
   }
 
-  if (ignoreFields.contains(key))
+  if (ignoreFields.contains(_key))
     return true;
 
-  if (required) {
+  if (field.requiredStatus() == QSqlField::Required) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
+    qDebug() << Q_FUNC_INFO << "Unknown:" << _key << "|" << value;
 #else
     qWarning("Unknown Key (%s) found.", qPrintable(key));
 #endif
@@ -155,25 +153,25 @@ void CustomersEditor::importSqlResult() {
   blockSignals(true);
   while (it.hasNext()) {
     it.next();
-    QSqlField field = m_tableData->getProperties(it.key());
-    setDataField(field, it.value());
+    setDataField(m_tableData->getProperties(it.key()), it.value());
   }
   blockSignals(false);
-
   setResetModified(inputFields);
 }
 
 bool CustomersEditor::sendSqlQuery(const QString &query) {
-  QSqlQuery q = m_sql->query(query);
-  if (q.lastError().type() != QSqlError::NoError) {
+  QSqlQuery _q = m_sql->query(query);
+  if (_q.lastError().type() != QSqlError::NoError) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
+#endif
     return false;
   }
 
-  if (q.next()) {
-    if (!q.isNull("c_id")) {
-      QSqlField field = m_tableData->getProperties("c_id");
-      setDataField(field, q.value("c_id"));
+  if (_q.next()) {
+    if (!_q.isNull("c_id")) {
+      QSqlField _field = m_tableData->getProperties("c_id");
+      setDataField(_field, _q.value("c_id"));
     }
   }
 
@@ -183,32 +181,32 @@ bool CustomersEditor::sendSqlQuery(const QString &query) {
 }
 
 const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
-  QHash<QString, QVariant> data;
-  QList<AntiquaCRM::AInputWidget *> list =
+  QHash<QString, QVariant> _data;
+  QList<AntiquaCRM::AInputWidget *> _list =
       findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
                                                Qt::FindChildrenRecursively);
   QList<AntiquaCRM::AInputWidget *>::Iterator it;
-  for (it = list.begin(); it != list.end(); ++it) {
-    AntiquaCRM::AInputWidget *cur = *it;
-    QString objName = cur->objectName();
-    if (ignoreFields.contains(objName))
+  for (it = _list.begin(); it != _list.end(); ++it) {
+    AntiquaCRM::AInputWidget *m_w = *it;
+    QString _name = m_w->objectName();
+    if (ignoreFields.contains(_name))
       continue;
 
     // qDebug() << Q_FUNC_INFO << fieldPattern << objName << Qt::endl
     //     << "- " << cur->isRequired() << cur->isValid() << Qt::endl
     //     << "- " << cur->getValue();
 
-    if (cur->isRequired() && !cur->isValid()) {
-      openNoticeMessage(cur->popUpHints());
-      cur->setFocus();
-      data.clear();
-      return data;
+    if (m_w->isRequired() && !m_w->isValid()) {
+      openNoticeMessage(m_w->popUpHints());
+      m_w->setFocus();
+      _data.clear();
+      return _data;
     }
-    data.insert(objName, cur->getValue());
+    _data.insert(_name, m_w->getValue());
   }
-  list.clear();
+  _list.clear();
 
-  return data;
+  return _data;
 }
 
 void CustomersEditor::createSqlUpdate() {
@@ -220,14 +218,14 @@ void CustomersEditor::createSqlUpdate() {
   // UPDATE Anforderungen
   c_id->setRequired(true);
 
-  QHash<QString, QVariant> data = createSqlDataset();
-  if (data.size() < 1)
+  QHash<QString, QVariant> _data = createSqlDataset();
+  if (_data.size() < 1)
     return;
 
-  QStringList set;
+  QStringList _list;
+  qint32 _changes = 0;
   QHash<QString, QVariant>::iterator it;
-  int changes = 0;
-  for (it = data.begin(); it != data.end(); ++it) {
+  for (it = _data.begin(); it != _data.end(); ++it) {
     if (it.key() == "c_id")
       continue;
 
@@ -237,34 +235,34 @@ void CustomersEditor::createSqlUpdate() {
       continue;
 
     if (m_tableData->getType(_key).id() == QMetaType::QString) {
-      set.append(_key + "='" + it.value().toString() + "'");
-      changes++;
+      _list.append(_key + "='" + it.value().toString() + "'");
+      _changes++;
     } else {
-      set.append(_key + "=" + it.value().toString());
-      changes++;
+      _list.append(_key + "=" + it.value().toString());
+      _changes++;
     }
   }
 
-  if (changes < 1) {
+  if (_changes < 1) {
     pushStatusMessage(tr("No Modifications found, Update aborted!"));
     setWindowModified(false);
     return;
   }
 
-  QString sql("UPDATE customers SET ");
-  sql.append(set.join(","));
-  sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=");
-  sql.append(c_id->getValue().toString());
-  sql.append(";");
-  if (sendSqlQuery(sql)) {
+  QString _sql("UPDATE customers SET ");
+  _sql.append(_list.join(","));
+  _sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=");
+  _sql.append(c_id->getValue().toString());
+  _sql.append(";");
+  if (sendSqlQuery(_sql)) {
     qInfo("SQL UPDATE Inventory Customers success!");
     setWindowModified(false);
   }
 }
 
 void CustomersEditor::createSqlInsert() {
-  int articleId = c_id->getValue().toInt();
-  if (articleId >= 1) {
+  int _aid = c_id->getValue().toInt();
+  if (_aid >= 1) {
     qWarning("Skip INSERT, switch to UPDATE with (ArticleID > 0)!");
     createSqlUpdate();
     return;
@@ -279,48 +277,46 @@ void CustomersEditor::createSqlInsert() {
     return;
   }
 
-  QHash<QString, QVariant> data = createSqlDataset();
-  if (data.size() < 1)
+  QHash<QString, QVariant> _data = createSqlDataset();
+  if (_data.size() < 1)
     return;
 
-  QStringList column; // SQL Columns
-  QStringList values; // SQL Values
+  QStringList _columns; // SQL Columns
+  QStringList _values;  // SQL Values
   QHash<QString, QVariant>::iterator it;
-  for (it = data.begin(); it != data.end(); ++it) {
+  for (it = _data.begin(); it != _data.end(); ++it) {
     if (it.value().isNull())
       continue;
 
-    QString field = it.key();
-    // druck einfügen
-    m_tableData->setValue(field, it.value());
-
-    column.append(field);
-    if (m_tableData->getType(field).id() == QMetaType::QString) {
-      values.append("'" + it.value().toString() + "'");
+    QString _field = it.key();
+    m_tableData->setValue(_field, it.value());
+    _columns.append(_field);
+    if (m_tableData->getType(_field).id() == QMetaType::QString) {
+      _values.append("'" + it.value().toString() + "'");
     } else {
-      values.append(it.value().toString());
+      _values.append(it.value().toString());
     }
   }
 
-  QString sql("INSERT INTO customers (");
-  sql.append(column.join(","));
-  sql.append(",c_changed) VALUES (");
-  sql.append(values.join(","));
-  sql.append(",CURRENT_TIMESTAMP) RETURNING c_id;");
-  if (sendSqlQuery(sql) && c_id->getValue().toInt() >= 1) {
+  QString _sql("INSERT INTO customers (");
+  _sql.append(_columns.join(","));
+  _sql.append(",c_changed) VALUES (");
+  _sql.append(_values.join(","));
+  _sql.append(",CURRENT_TIMESTAMP) RETURNING c_id;");
+  if (sendSqlQuery(_sql) && getSerialID("c_id") >= 1) {
     c_id->setRequired(true);
     setWindowModified(false);
   }
 }
 
 void CustomersEditor::findPurchases() {
-  qint64 c_id = getSerialID("c_id");
-  if (c_id < 1)
+  qint64 _cid = getSerialID("c_id");
+  if (_cid < 1)
     return;
 
   AntiquaCRM::ASqlFiles sfile("query_customer_orders_status");
   if (sfile.openTemplate()) {
-    sfile.setWhereClause("c_id=" + QString::number(c_id));
+    sfile.setWhereClause("c_id=" + QString::number(_cid));
     QSqlQuery q = m_sql->query(sfile.getQueryContent());
     if (q.size() > 0) {
       m_ordersTable->clearContents();
@@ -381,20 +377,20 @@ void CustomersEditor::setFinalLeaveEditor(bool force) {
 }
 
 void CustomersEditor::setCreateOrderSignal() {
-  qint64 id = getSerialID("c_id");
-  if (id > 0)
-    emit sendEditorAction(id);
+  qint64 _cid = getSerialID("c_id");
+  if (_cid > 0)
+    emit sendEditorAction(_cid);
 }
 
 void CustomersEditor::setCreateMailMessage(const QString &action) {
-  qint64 cid = getSerialID("c_id");
-  if (cid < 1)
+  qint64 _cid = getSerialID("c_id");
+  if (_cid < 1)
     return;
 
   QJsonObject _obj;
   _obj.insert("tb_tab", "CUSTOMER");
   _obj.insert("tb_caller", action.toUpper());
-  _obj.insert("CRM_CUSTOMER_ID", cid);
+  _obj.insert("CRM_CUSTOMER_ID", _cid);
 
   AntiquaCRM::MailDialog *d = new AntiquaCRM::MailDialog(this);
   if (d->exec(_obj))
@@ -406,13 +402,12 @@ void CustomersEditor::setCreateMailMessage(const QString &action) {
 void CustomersEditor::setRestore() { importSqlResult(); }
 
 bool CustomersEditor::openEditEntry(qint64 articleId) {
-  bool status = false;
   if (articleId < 1)
-    return status;
+    return false;
 
-  QString c_id = QString::number(articleId);
-  if (c_id.isEmpty())
-    return status;
+  QString _cid = QString::number(articleId);
+  if (_cid.isEmpty())
+    return false;
 
   AntiquaCRM::ASqlFiles _sf("query_customer_data");
   if (!_sf.openTemplate()) {
@@ -423,35 +418,40 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
   }
 
   setInputFields();
-  _sf.setWhereClause("c_id=" + c_id);
-  QSqlQuery q = m_sql->query(_sf.getQueryContent());
-  if (q.size() != 0) {
-    QSqlRecord r = m_tableData->record();
-    q.next();
-    displayName->setText(q.value("c_fullname").toString());
+
+  _sf.setWhereClause("c_id=" + _cid);
+
+  bool _status = false;
+  QSqlQuery _q = m_sql->query(_sf.getQueryContent());
+  if (_q.size() != 0) {
+    QSqlRecord _r = m_tableData->record();
+    _q.next();
+    displayName->setText(_q.value("c_fullname").toString());
     foreach (QString key, inputFields) {
-      m_tableData->setValue(key, q.value(r.indexOf(key)));
+      m_tableData->setValue(key, _q.value(_r.indexOf(key)));
     }
-    status = true;
+    _status = true;
   } else {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    status = false;
+#endif
+    _status = false;
   }
 
-  if (status) {
+  if (_status) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
     registerInputChanged();
 
-    QString _country = m_tableData->getValue("c_country").toString();
-    if (_country.length() > 3)
-      m_dataWidget->setCountry(_country);
+    QString _co = m_tableData->getValue("c_country").toString();
+    if (_co.length() > 3)
+      m_dataWidget->setCountry(_co);
 
     findPurchases();
   }
 
   m_tabWidget->setCurrentIndex(0);
-  return status;
+  return _status;
 }
 
 bool CustomersEditor::createNewEntry() {
