@@ -29,6 +29,9 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   m_tabsIndex->setFlags(Qt::ItemIsEnabled);
   m_tabsIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("tab-new"));
   m_tabsIndex->setText(0, tr("Tabs"));
+  m_tabsIndex->setData(0, Qt::ToolTipRole,
+                       tr("Configure accessibility of tabs."));
+  m_tabsIndex->setData(1, Qt::UserRole, QString("config_tabs"));
   m_tabsIndex->setExpanded(true);
   addTopLevelItem(m_tabsIndex);
 
@@ -37,6 +40,9 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   m_providerIndex->setFlags(Qt::ItemIsEnabled);
   m_providerIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("folder-remote"));
   m_providerIndex->setText(0, tr("Provider"));
+  m_providerIndex->setData(0, Qt::ToolTipRole,
+                           tr("Configure accessibility of providers."));
+  m_providerIndex->setData(1, Qt::UserRole, QString("config_providers"));
   m_providerIndex->setExpanded(true);
   addTopLevelItem(m_providerIndex);
 
@@ -67,8 +73,13 @@ void ConfigTreeWidget::addChild(QTreeWidgetItem *main, int page,
 }
 
 void ConfigTreeWidget::setItemSelected(QTreeWidgetItem *item, int) {
-  if (item->type() != QTreeWidgetItem::UserType)
+  if (item->type() != QTreeWidgetItem::UserType) {
+    const QString _id = item->data(1, Qt::UserRole).toString();
+    if (_id.startsWith("config_"))
+      emit sendConfigGroup(_id);
+
     return;
+  }
 
   if (item->flags() == Qt::NoItemFlags)
     return;

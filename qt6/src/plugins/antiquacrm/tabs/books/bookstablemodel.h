@@ -12,14 +12,10 @@
 #include <AntiquaCRM>
 #include <QModelIndex>
 #include <QObject>
-#include <QSqlRecord>
 
 class ANTIQUACRM_LIBRARY BooksTableModel final
     : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
-
-private:
-  QSqlRecord queryRecord;
 
 public:
   explicit BooksTableModel(QObject *parent = nullptr);

@@ -51,6 +51,11 @@ Q_SIGNALS:
    */
   void sendPageIndex(int);
 
+  /**
+   * @brief open root path section
+   */
+  void sendConfigGroup(const QString &section);
+
 public Q_SLOTS:
   /**
    * @brief append entry into general Settings Category

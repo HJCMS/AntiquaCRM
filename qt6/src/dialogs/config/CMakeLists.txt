@@ -15,6 +15,8 @@ SET (_library_HEADERS
  configpaths.cpp
  configprinting.cpp
  configlookandfeel.cpp
+ configprovidersview.cpp
+ configtabsview.cpp
  paymentsettingsgroup.cpp
  pathsettingsgroup.cpp
  printerfonts.cpp
@@ -32,6 +34,8 @@ SET (_library_SOURCES
  configpaths.h
  configprinting.h
  configlookandfeel.h
+ configprovidersview.h
+ configtabsview.h
  paymentsettingsgroup.h
  pathsettingsgroup.h
  printerfonts.h

@@ -73,8 +73,12 @@ const QString ASqlQueryModel::fieldName(int column) const {
 
 int ASqlQueryModel::column(const QString &fieldName) const {
   QSqlRecord _record = query().record();
-  if (_record.isEmpty())
+  if (_record.isEmpty()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Empty Record";
+#endif
     return -1;
+  }
 
   for (int i = 0; i < _record.count(); i++) {
     if (_record.field(i).name() == fieldName)

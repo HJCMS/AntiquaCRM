@@ -24,6 +24,7 @@ class ConfigGeneral;
 class ConfigPaths;
 class ConfigPrinting;
 class ConfigLookAndFeel;
+class ConfigTabsView;
 
 class ConfigDialog final : public QDialog {
   Q_OBJECT
@@ -40,6 +41,8 @@ private:
   ConfigPrinting *m_cfgPrinter;
   ConfigLookAndFeel *m_cfgLookAndFeel;
 
+  ConfigTabsView *m_cfgTabs;
+
   const QList<AntiquaCRM::TabsConfigWidget *> pages();
   AntiquaCRM::TabsConfigWidget *page(int);
 
@@ -47,12 +50,13 @@ private:
 
   bool loadTabPlugins();
 
-  void loadProviderPlugins();
+  bool loadProviderPlugins();
 
   void loadConfigs();
 
 private Q_SLOTS:
-  void statusMessage(const QString &);
+  void statusMessage(const QString &message);
+  void openConfigGroup(const QString &name);
 
 public Q_SLOTS:
   void setOpenPage(int);

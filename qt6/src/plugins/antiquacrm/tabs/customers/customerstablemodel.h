@@ -13,14 +13,12 @@
 #include <QIcon>
 #include <QModelIndex>
 #include <QObject>
-#include <QSqlRecord>
 
 class ANTIQUACRM_LIBRARY CustomersTableModel final
     : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 
 private:
-  QSqlRecord queryRecord;
   const QIcon headerIcon(int column) const;
   const QIcon trustIcon(int status) const;
   const QIcon lockIcon(bool locked = false) const;

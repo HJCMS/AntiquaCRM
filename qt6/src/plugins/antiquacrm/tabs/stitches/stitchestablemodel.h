@@ -12,14 +12,10 @@
 #include <AntiquaCRM>
 #include <QModelIndex>
 #include <QObject>
-#include <QSqlRecord>
 
 class ANTIQUACRM_LIBRARY StitchesTableModel final
     : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
-
-private:
-  QSqlRecord queryRecord;
 
 public:
   explicit StitchesTableModel(QObject *parent = nullptr);

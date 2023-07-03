@@ -6,6 +6,8 @@
 #include "configlookandfeel.h"
 #include "configpaths.h"
 #include "configprinting.h"
+#include "configprovidersview.h"
+#include "configtabsview.h"
 #include "configtreewidget.h"
 
 #include <QMessageBox>
@@ -38,22 +40,27 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_pageView = new QStackedWidget(m_central);
   m_central->setWidget(m_pageView);
 
+  int _pindex = m_pageView->count();
   m_cfgGeneral = new ConfigGeneral(m_pageView);
-  m_treeWidget->addGeneral(0, m_cfgGeneral->getMenuEntry());
-  m_pageView->insertWidget(0, m_cfgGeneral);
+  m_treeWidget->addGeneral(_pindex, m_cfgGeneral->getMenuEntry());
+  m_pageView->insertWidget(_pindex++, m_cfgGeneral);
 
   m_cfgPaths = new ConfigPaths(m_pageView);
-  m_treeWidget->addGeneral(1, m_cfgPaths->getMenuEntry());
-  m_pageView->insertWidget(1, m_cfgPaths);
+  m_treeWidget->addGeneral(_pindex, m_cfgPaths->getMenuEntry());
+  m_pageView->insertWidget(_pindex++, m_cfgPaths);
 
   m_cfgPrinter = new ConfigPrinting(m_pageView);
-  m_treeWidget->addGeneral(2, m_cfgPrinter->getMenuEntry());
-  m_pageView->insertWidget(2, m_cfgPrinter);
+  m_treeWidget->addGeneral(_pindex, m_cfgPrinter->getMenuEntry());
+  m_pageView->insertWidget(_pindex++, m_cfgPrinter);
 
   // ConfigLookAndFeel
   m_cfgLookAndFeel = new ConfigLookAndFeel(m_pageView);
-  m_treeWidget->addGeneral(3, m_cfgLookAndFeel->getMenuEntry());
-  m_pageView->insertWidget(3, m_cfgLookAndFeel);
+  m_treeWidget->addGeneral(_pindex, m_cfgLookAndFeel->getMenuEntry());
+  m_pageView->insertWidget(_pindex++, m_cfgLookAndFeel);
+
+  // NOTE The Tabs interface section is a fixed TreeWidget entry!
+  m_cfgTabs = new ConfigTabsView(m_pageView);
+  m_pageView->insertWidget(_pindex++, m_cfgTabs);
 
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);
@@ -72,7 +79,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
 
   setLayout(layout);
 
+  connect(m_treeWidget, SIGNAL(sendConfigGroup(const QString &)),
+          SLOT(openConfigGroup(const QString &)));
   connect(m_treeWidget, SIGNAL(sendPageIndex(int)), SLOT(setOpenPage(int)));
+
   connect(btn_save, SIGNAL(clicked()), this, SLOT(aboutToSave()));
   connect(btn_close, SIGNAL(clicked()), this, SLOT(aboutToClose()));
 }
@@ -105,8 +115,7 @@ void ConfigDialog::closeEvent(QCloseEvent *e) {
 }
 
 bool ConfigDialog::loadTabPlugins() {
-  AntiquaCRM::TabsLoader _loader(this);
-  QList<AntiquaCRM::TabsInterface *> _list = _loader.interfaces(this);
+  QList<AntiquaCRM::TabsInterface *> _list = m_cfgTabs->viewableTabs();
   if (_list.size() > 0) {
     int _c = m_pageView->count();
     for (int i = 0; i < _list.size(); i++) {
@@ -122,9 +131,12 @@ bool ConfigDialog::loadTabPlugins() {
   return false;
 }
 
-void ConfigDialog::loadProviderPlugins() {
+bool ConfigDialog::loadProviderPlugins() {
   // AntiquaCRM::ProvidersLoader _loader(this);
   // QList<AntiquaCRM::ProviderInterface *> _list = _loader.interfaces(this);
+  int _c = m_pageView->count();
+  m_pageView->insertWidget(_c++, new ConfigProvidersView(m_pageView));
+  return true;
 }
 
 void ConfigDialog::loadConfigs() {
@@ -136,6 +148,18 @@ void ConfigDialog::loadConfigs() {
 
 void ConfigDialog::statusMessage(const QString &message) {
   m_statusbar->showMessage(message, 5000);
+}
+
+void ConfigDialog::openConfigGroup(const QString &name) {
+  if (!name.startsWith("config_"))
+    return;
+
+  for (int i = 0; i < m_pageView->count(); i++) {
+    if (m_pageView->widget(i)->objectName() == name) {
+      setOpenPage(i);
+      return;
+    }
+  }
 }
 
 void ConfigDialog::setOpenPage(int index) {
