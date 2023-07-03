@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "configtabsview.h"
+#include "pluginlistwidget.h"
 
 #include <QLabel>
 #include <QLayout>
@@ -14,9 +15,9 @@ ConfigTabsView::ConfigTabsView(QWidget *parent)
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
-  // layout->setContentsMargins(0, 0, 0, 0);
-  layout->addWidget(new QLabel("__TODO__", this));
-  layout->addStretch(1);
+  m_view = new PluginListWidget(this);
+  layout->addWidget(m_view);
+  layout->setStretch(0, 1);
   setLayout(layout);
 }
 
@@ -30,17 +31,17 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigTabsView::getType() const {
 
 QList<AntiquaCRM::TabsInterface *> ConfigTabsView::viewableTabs() {
   AntiquaCRM::TabsLoader _loader(this);
-  QList<AntiquaCRM::TabsInterface *> _list = _loader.interfaces(this);
-  /*
-   * TODO TABS Configuration
-  QList<QJsonObject> _jsl;
-  for (int i = 0; i < _list.size(); i++) {
-    AntiquaCRM::TabsInterface *m_tab = _list.at(i);
-    if (m_tab != nullptr)
-      _jsl.append(m_tab->menuEntry());
+  foreach (QString path, _loader.getInterfaceList()) {
+    if (!_loader.setInterfaceName(path))
+      continue;
+
+    QJsonObject _jso = _loader.metaData().value("MetaData").toObject();
+    if (_jso.isEmpty())
+      continue;
+
+    m_view->insertPlugin(_jso);
   }
-  */
-  return _list;
+  return _loader.interfaces(this);
 }
 
 const QJsonObject ConfigTabsView::getMenuEntry() const {

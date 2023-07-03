@@ -13,8 +13,13 @@
 #include <QList>
 #include <QWidget>
 
+class PluginListWidget;
+
 class ConfigTabsView final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
+
+private:
+  PluginListWidget *m_view;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

@@ -19,6 +19,7 @@ SET (_library_HEADERS
  configtabsview.cpp
  paymentsettingsgroup.cpp
  pathsettingsgroup.cpp
+ pluginlistwidget.cpp
  printerfonts.cpp
  printerattachments.cpp
  printersetborder.cpp
@@ -38,6 +39,7 @@ SET (_library_SOURCES
  configtabsview.h
  paymentsettingsgroup.h
  pathsettingsgroup.h
+ pluginlistwidget.h
  printerfonts.h
  printerattachments.h
  printersetborder.h
