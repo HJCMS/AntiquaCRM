@@ -5,13 +5,6 @@
 #include "ainputwidget.h"
 
 #include <QAbstractItemView>
-#include <QCheckBox>
-#include <QDrag>
-#include <QLabel>
-#include <QLayout>
-#include <QMimeData>
-#include <QRect>
-#include <QStandardItem>
 
 PluginListWidgetItem::PluginListWidgetItem(const QString id,
                                            QListWidget *parent)

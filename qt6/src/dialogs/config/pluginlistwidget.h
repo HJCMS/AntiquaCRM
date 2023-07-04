@@ -10,7 +10,7 @@
 #define ANTIQUACRM_PLUGIN_LISTVIEW_H
 
 #include <QJsonObject>
-#include <QList>
+#include <QMap>
 #include <QListWidget>
 #include <QListWidgetItem>
 #include <QString>

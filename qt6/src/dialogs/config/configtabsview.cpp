@@ -33,15 +33,7 @@ ConfigTabsView::ConfigTabsView(QWidget *parent)
   setLayout(layout);
 }
 
-void ConfigTabsView::loadSectionConfig() { qDebug() << Q_FUNC_INFO << "TODO"; }
-
-void ConfigTabsView::saveSectionConfig() { qDebug() << Q_FUNC_INFO << "TODO"; }
-
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigTabsView::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
-}
-
-QList<AntiquaCRM::TabsInterface *> ConfigTabsView::viewableTabs() {
+void ConfigTabsView::loadSectionConfig() {
   AntiquaCRM::TabsLoader _loader(this);
   foreach (QString path, _loader.getInterfaceList()) {
     if (!_loader.setInterfaceName(path))
@@ -53,6 +45,38 @@ QList<AntiquaCRM::TabsInterface *> ConfigTabsView::viewableTabs() {
 
     m_view->addListWidgetItem(_jso);
   }
+
+  config->beginGroup("plugin/tabs/enable");
+  QMap<QString, bool> _m;
+  foreach (QString k, config->childKeys()) {
+    _m.insert(k, config->value(k).toBool());
+  }
+  m_view->setStatus(_m);
+  config->endGroup();
+  // TODO Sorting
+}
+
+void ConfigTabsView::saveSectionConfig() {
+  config->beginGroup("plugin/tabs");
+  QMapIterator<QString, bool> it1(m_view->getStatus());
+  while (it1.hasNext()) {
+    it1.next();
+    config->setValue("enable/" + it1.key(), it1.value());
+  }
+  QMapIterator<QString, int> it2(m_view->getSort());
+  while (it2.hasNext()) {
+    it2.next();
+    config->setValue("sort/" + it2.key(), it2.value());
+  }
+  config->endGroup();
+}
+
+AntiquaCRM::TabsConfigWidget::ConfigType ConfigTabsView::getType() const {
+  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
+}
+
+QList<AntiquaCRM::TabsInterface *> ConfigTabsView::viewableTabs() {
+  AntiquaCRM::TabsLoader _loader(this);
   return _loader.interfaces(this);
 }
 
