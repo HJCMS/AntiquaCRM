@@ -2,65 +2,102 @@
 // vim: set fileencoding=utf-8
 
 #include "pluginlistwidget.h"
+#include "ainputwidget.h"
 
 #include <QAbstractItemView>
+#include <QCheckBox>
+#include <QDrag>
+#include <QLabel>
+#include <QLayout>
 #include <QMimeData>
 #include <QRect>
 #include <QStandardItem>
 
+PluginListWidgetItem::PluginListWidgetItem(const QString id,
+                                           QListWidget *parent)
+    : QListWidgetItem{parent, QListWidgetItem::UserType}, p_id{id} {}
+
+void PluginListWidgetItem::setChecked(bool b) {
+  setData(Qt::CheckStateRole, ((b) ? Qt::Checked : Qt::Unchecked));
+}
+
+bool PluginListWidgetItem::getChecked() {
+  // enum Qt::CheckState
+  return (data(Qt::CheckStateRole).toInt() == Qt::Checked);
+}
+
 PluginListWidget::PluginListWidget(QWidget *parent) : QListWidget{parent} {
-  setSpacing(5);
+  setSpacing(10);
   setFlow(QListView::TopToBottom);
   setResizeMode(QListView::Adjust);
   setSelectionMode(QAbstractItemView::SingleSelection);
   setWrapping(false);
   setDragEnabled(true);
   setAcceptDrops(true);
+  setDragDropMode(QAbstractItemView::InternalMove);
   setMovement(QListView::Snap);
 
-  connect(this, SIGNAL(indexesMoved(const QModelIndexList &)),
-          SLOT(setPluginSort(const QModelIndexList &)));
+  connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem *)),
+          SLOT(switchItemState(QListWidgetItem *)));
 }
 
-void PluginListWidget::mousePressEvent(QMouseEvent *event) {
-  if (event->button() != Qt::LeftButton)
-    return;
-
-//  QModelIndex index;
-//  p_moveStartPosi = event->pos();
-//  QDrag drag(index);
+PluginListWidgetItem *PluginListWidget::rowItem(int r) const {
+  return static_cast<PluginListWidgetItem *>(item(r));
 }
 
-void PluginListWidget::dragEnterEvent(QDragEnterEvent *event) {
-  if (event->source() == this) {
-    event->setDropAction(Qt::MoveAction);
-    event->accept();
+void PluginListWidget::switchItemState(QListWidgetItem *item) {
+  PluginListWidgetItem *_item = static_cast<PluginListWidgetItem *>(item);
+  if (_item->checkState() == Qt::Checked) {
+    item->setData(Qt::CheckStateRole, Qt::Unchecked);
   } else {
-    event->acceptProposedAction();
+    item->setData(Qt::CheckStateRole, Qt::Checked);
   }
 }
 
-void PluginListWidget::dropEvent(QDropEvent *event) {
-  if (event->source() != this) {
-    event->ignore();
-    return;
-  } else if (event->possibleActions() & Qt::MoveAction) {
-    qDebug() << Q_FUNC_INFO << p_moveStartPosi << event->position();
-    event->accept();
+void PluginListWidget::addListWidgetItem(const QJsonObject &jso) {
+  QString _serial = jso.value("SerialId").toString().trimmed();
+  QString _toolTip = jso.value("Description").toString();
+  QString _display = jso.value("Title").toString();
+  _display.append(" - " + _toolTip);
+
+  // Prevent duplicates
+  for (int r = 0; r < count(); r++) {
+    if (item(r)->text() == _display)
+      return;
   }
-}
 
-void PluginListWidget::setPluginSort(const QModelIndexList &indexes) {
-  qDebug() << Q_FUNC_INFO << indexes.size();
-}
-
-void PluginListWidget::insertPlugin(const QJsonObject &jso) {
-  QListWidgetItem *item = new QListWidgetItem(this, QListWidgetItem::UserType);
-  item->setData(Qt::UserRole, jso.value("Name").toString());
-  item->setData(Qt::DisplayRole, jso.value("Title").toString());
-  item->setData(Qt::ToolTipRole, jso.value("Description").toString());
-  item->setData(Qt::DecorationRole, QIcon(":/icons/bookmark.png"));
+  PluginListWidgetItem *item = new PluginListWidgetItem(_serial, this);
+  item->setData(Qt::DisplayRole, _display);
+  item->setData(Qt::ToolTipRole, _toolTip);
+  item->setData(Qt::CheckStateRole, Qt::Checked);
+  item->setData(Qt::DecorationRole, AntiquaCRM::AntiquaApplIcon("bookmark"));
   item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsDragEnabled |
-                 Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+                 Qt::ItemIsEnabled | Qt::ItemNeverHasChildren |
+                 Qt::ItemIsUserCheckable);
+
   insertItem(count(), item);
+}
+
+void PluginListWidget::setStatus(const QMap<QString, bool> &map) {
+  for (int r = 0; r < count(); r++) {
+    PluginListWidgetItem *_item = rowItem(r);
+    _item->setChecked(map.value(_item->id()));
+  }
+}
+
+const QMap<QString, bool> PluginListWidget::getStatus() {
+  QMap<QString, bool> _m;
+  for (int r = 0; r < count(); r++) {
+    PluginListWidgetItem *_item = rowItem(r);
+    _m.insert(_item->id(), _item->getChecked());
+  }
+  return _m;
+}
+
+const QMap<QString, int> PluginListWidget::getSort() {
+  QMap<QString, int> _m;
+  for (int r = 0; r < count(); r++) {
+    _m.insert(rowItem(r)->id(), r);
+  }
+  return _m;
 }

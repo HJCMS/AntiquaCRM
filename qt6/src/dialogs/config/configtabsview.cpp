@@ -11,13 +11,25 @@ ConfigTabsView::ConfigTabsView(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"tabs", "config_tabs", parent} {
   setWindowTitle(tr("Tabs"));
   setObjectName("config_tabs");
-  setContentsMargins(5, 5, 5, 0);
+  setContentsMargins(0, 0, 0, 0);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setContentsMargins(0, 0, 0, 0);
   m_view = new PluginListWidget(this);
   layout->addWidget(m_view);
   layout->setStretch(0, 1);
+
+  QString _info =
+      tr("You can click move and drop to sort the listed plugins here.\n"
+         "In addition, a selection box is used to enable and disable loading.\n"
+         "Hint: This changes require a restart.");
+
+  QLabel *m_lb = new QLabel(_info, this);
+  m_lb->setIndent(5);
+  m_lb->setWordWrap(true);
+  layout->addWidget(m_lb);
+
   setLayout(layout);
 }
 
@@ -39,7 +51,7 @@ QList<AntiquaCRM::TabsInterface *> ConfigTabsView::viewableTabs() {
     if (_jso.isEmpty())
       continue;
 
-    m_view->insertPlugin(_jso);
+    m_view->addListWidgetItem(_jso);
   }
   return _loader.interfaces(this);
 }

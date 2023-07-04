@@ -28,7 +28,7 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   m_tabsIndex->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   m_tabsIndex->setFlags(Qt::ItemIsEnabled);
   m_tabsIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("tab-new"));
-  m_tabsIndex->setText(0, tr("Tabs"));
+  m_tabsIndex->setText(0, tr("Tab - Plugins"));
   m_tabsIndex->setData(0, Qt::ToolTipRole,
                        tr("Configure accessibility of tabs."));
   m_tabsIndex->setData(1, Qt::UserRole, QString("config_tabs"));

@@ -9,35 +9,54 @@
 #ifndef ANTIQUACRM_PLUGIN_LISTVIEW_H
 #define ANTIQUACRM_PLUGIN_LISTVIEW_H
 
-#include <QDragEnterEvent>
-#include <QDropEvent>
 #include <QJsonObject>
 #include <QList>
 #include <QListWidget>
 #include <QListWidgetItem>
-#include <QMouseEvent>
 #include <QString>
 #include <QWidget>
 
-class PluginListWidget;
+class PluginListWidgetItem final : public QListWidgetItem {
+private:
+  const QString p_id;
+
+public:
+  explicit PluginListWidgetItem(const QString id, QListWidget *parent);
+  inline const QString id() { return p_id; }
+  void setChecked(bool b = false);
+  bool getChecked();
+};
 
 class PluginListWidget final : public QListWidget {
   Q_OBJECT
 
 private:
-  QPoint p_moveStartPosi;
-  void mousePressEvent(QMouseEvent *event) override;
-  void dragEnterEvent(QDragEnterEvent *event) override;
-  void dropEvent(QDropEvent *event) override;
+  PluginListWidgetItem *rowItem(int r) const;
 
 private Q_SLOTS:
-  void setPluginSort(const QModelIndexList &);
+  void switchItemState(QListWidgetItem *);
 
 public Q_SLOTS:
-  void insertPlugin(const QJsonObject &jso);
+  void addListWidgetItem(const QJsonObject &jso);
 
 public:
   explicit PluginListWidget(QWidget *parent = nullptr);
+
+  /**
+   * @brief set Plugins CheckStateRole with SerialId
+   * @param map - <SerialId,Status>
+   */
+  void setStatus(const QMap<QString, bool> &map);
+
+  /**
+   * @brief get Plugins with SerialId and isChecked
+   */
+  const QMap<QString, bool> getStatus();
+
+  /**
+   * @brief get Plugins sortings with SerialId
+   */
+  const QMap<QString, int> getSort();
 };
 
 #endif // ANTIQUACRM_PLUGIN_LISTVIEW_H
