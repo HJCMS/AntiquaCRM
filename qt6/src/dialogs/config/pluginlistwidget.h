@@ -31,13 +31,14 @@ class PluginListWidget final : public QListWidget {
   Q_OBJECT
 
 private:
-  PluginListWidgetItem *rowItem(int r) const;
+  PluginListWidgetItem *rowItem(int r);
+  PluginListWidgetItem *removeItem(int r);
 
 private Q_SLOTS:
   void switchItemState(QListWidgetItem *);
 
 public Q_SLOTS:
-  void addListWidgetItem(const QJsonObject &jso);
+  void addListItem(const QJsonObject &jso);
 
 public:
   explicit PluginListWidget(QWidget *parent = nullptr);
@@ -46,7 +47,7 @@ public:
    * @brief set Plugins CheckStateRole with SerialId
    * @param map - <SerialId,Status>
    */
-  void setStatus(const QMap<QString, bool> &map);
+  bool setStatus(const QMap<QString, bool> &map);
 
   /**
    * @brief get Plugins with SerialId and isChecked
@@ -56,7 +57,7 @@ public:
   /**
    * @brief get Plugins sortings with SerialId
    */
-  const QMap<QString, int> getSort();
+  const QMap<int, QString> getSort();
 };
 
 #endif // ANTIQUACRM_PLUGIN_LISTVIEW_H

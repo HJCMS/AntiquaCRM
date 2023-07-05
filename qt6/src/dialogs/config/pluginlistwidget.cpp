@@ -29,13 +29,23 @@ PluginListWidget::PluginListWidget(QWidget *parent) : QListWidget{parent} {
   setAcceptDrops(true);
   setDragDropMode(QAbstractItemView::InternalMove);
   setMovement(QListView::Snap);
+  setSortingEnabled(false);
 
   connect(this, SIGNAL(itemDoubleClicked(QListWidgetItem *)),
           SLOT(switchItemState(QListWidgetItem *)));
 }
 
-PluginListWidgetItem *PluginListWidget::rowItem(int r) const {
+PluginListWidgetItem *PluginListWidget::rowItem(int r) {
   return static_cast<PluginListWidgetItem *>(item(r));
+}
+
+PluginListWidgetItem *PluginListWidget::removeItem(int r) {
+  QListWidgetItem *_item = takeItem(r);
+  if (_item == nullptr) {
+    qWarning("Unknown Plugin ListItem");
+    return nullptr;
+  }
+  return static_cast<PluginListWidgetItem *>(_item);
 }
 
 void PluginListWidget::switchItemState(QListWidgetItem *item) {
@@ -47,7 +57,7 @@ void PluginListWidget::switchItemState(QListWidgetItem *item) {
   }
 }
 
-void PluginListWidget::addListWidgetItem(const QJsonObject &jso) {
+void PluginListWidget::addListItem(const QJsonObject &jso) {
   QString _serial = jso.value("SerialId").toString().trimmed();
   QString _toolTip = jso.value("Description").toString();
   QString _display = jso.value("Title").toString();
@@ -68,14 +78,18 @@ void PluginListWidget::addListWidgetItem(const QJsonObject &jso) {
                  Qt::ItemIsEnabled | Qt::ItemNeverHasChildren |
                  Qt::ItemIsUserCheckable);
 
-  insertItem(count(), item);
+  addItem(item);
 }
 
-void PluginListWidget::setStatus(const QMap<QString, bool> &map) {
+bool PluginListWidget::setStatus(const QMap<QString, bool> &map) {
+  if (map.size() < 0 || count() < 1)
+    return false; // nothing todo
+
   for (int r = 0; r < count(); r++) {
     PluginListWidgetItem *_item = rowItem(r);
     _item->setChecked(map.value(_item->id()));
   }
+  return true;
 }
 
 const QMap<QString, bool> PluginListWidget::getStatus() {
@@ -87,10 +101,10 @@ const QMap<QString, bool> PluginListWidget::getStatus() {
   return _m;
 }
 
-const QMap<QString, int> PluginListWidget::getSort() {
-  QMap<QString, int> _m;
+const QMap<int, QString> PluginListWidget::getSort() {
+  QMap<int, QString> _m;
   for (int r = 0; r < count(); r++) {
-    _m.insert(rowItem(r)->id(), r);
+    _m.insert(r, rowItem(r)->id());
   }
   return _m;
 }

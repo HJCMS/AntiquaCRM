@@ -43,32 +43,38 @@ void ConfigTabsView::loadSectionConfig() {
     if (_jso.isEmpty())
       continue;
 
-    m_view->addListWidgetItem(_jso);
+    m_view->addListItem(_jso);
   }
 
+  QMap<QString, bool> _vmap;
   config->beginGroup("plugin/tabs/enable");
-  QMap<QString, bool> _m;
   foreach (QString k, config->childKeys()) {
-    _m.insert(k, config->value(k).toBool());
+    _vmap.insert(k, config->value(k).toBool());
   }
-  m_view->setStatus(_m);
   config->endGroup();
-  // TODO Sorting
+  m_view->setStatus(_vmap);
 }
 
 void ConfigTabsView::saveSectionConfig() {
-  config->beginGroup("plugin/tabs");
-  QMapIterator<QString, bool> it1(m_view->getStatus());
-  while (it1.hasNext()) {
-    it1.next();
-    config->setValue("enable/" + it1.key(), it1.value());
-  }
-  QMapIterator<QString, int> it2(m_view->getSort());
-  while (it2.hasNext()) {
-    it2.next();
-    config->setValue("sort/" + it2.key(), it2.value());
+  QMapIterator<QString, bool> _status(m_view->getStatus());
+  config->beginGroup("plugin/tabs/enable");
+  while (_status.hasNext()) {
+    _status.next();
+    config->setValue(_status.key(), _status.value());
   }
   config->endGroup();
+
+  /*
+   * Currently unused!
+  QMapIterator<int, QString> _sort(m_view->getSort());
+  config->beginWriteArray("plugin/tabs/sort");
+  while (_sort.hasNext()) {
+    _sort.next();
+    config->setArrayIndex(_sort.key());
+    config->setValue("id", _sort.value());
+  }
+  config->endArray();
+  */
 }
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigTabsView::getType() const {
