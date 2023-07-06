@@ -6,31 +6,27 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_DIALOGS_CONFIGTABSVIEW_H
-#define ANTIQUACRM_DIALOGS_CONFIGTABSVIEW_H
+#ifndef ANTIQUACRM_DIALOGS_CONFIGDATABASE_H
+#define ANTIQUACRM_DIALOGS_CONFIGDATABASE_H
 
 #include <AntiquaTabs>
-#include <QList>
-#include <QWidget>
+#include <AntiquaWidgets>
+#include <QObject>
 
-class PluginListWidget;
-
-class ConfigTabsView final : public AntiquaCRM::TabsConfigWidget {
+class ConfigDatabase final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
 private:
-  PluginListWidget *m_view;
+    //
 
 public Q_SLOTS:
   void loadSectionConfig() override;
   void saveSectionConfig() override;
 
 public:
-  explicit ConfigTabsView(QWidget *parent = nullptr);
-
+  explicit ConfigDatabase(QWidget *parent = nullptr);
   AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
-
   const QJsonObject getMenuEntry() const override;
 };
 
-#endif // ANTIQUACRM_DIALOGS_CONFIGTABSVIEW_H
+#endif // ANTIQUACRM_DIALOGS_CONFIGDATABASE_H

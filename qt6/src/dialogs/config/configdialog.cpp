@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "configdialog.h"
+#include "configdatabase.h"
 #include "configgeneral.h"
 #include "configlookandfeel.h"
 #include "configpaths.h"
@@ -44,6 +45,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_cfgGeneral = new ConfigGeneral(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgGeneral->getMenuEntry());
   m_pageView->insertWidget(_pindex++, m_cfgGeneral);
+
+  m_cfgDatabase = new ConfigDatabase(m_pageView);
+  m_treeWidget->addGeneral(_pindex, m_cfgDatabase->getMenuEntry());
+  m_pageView->insertWidget(_pindex++, m_cfgDatabase);
 
   m_cfgPaths = new ConfigPaths(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgPaths->getMenuEntry());
@@ -114,28 +119,25 @@ void ConfigDialog::closeEvent(QCloseEvent *e) {
   QDialog::closeEvent(e);
 }
 
-bool ConfigDialog::loadTabPlugins() {
-  QList<AntiquaCRM::TabsInterface *> _list = m_cfgTabs->viewableTabs();
-  if (_list.size() > 0) {
-    int _c = m_pageView->count();
-    for (int i = 0; i < _list.size(); i++) {
-      AntiquaCRM::TabsConfigWidget *_w = _list.at(i)->configWidget(m_pageView);
-      if (_w != nullptr) {
-        m_pageView->insertWidget(_c, _w);
-        m_treeWidget->addTabPlugin(_c, _w->getMenuEntry());
-        _c++;
-      }
-    }
-    return true;
-  }
-  return false;
-}
+bool ConfigDialog::loadConfigWidget() {
+  AntiquaCRM::TabsLoader _loader(this);
+  const QList<AntiquaCRM::TabsInterface *> _li = _loader.interfaces(this);
+  if (_li.size() < 1)
+    return false;
 
-bool ConfigDialog::loadProviderPlugins() {
-  // AntiquaCRM::ProvidersLoader _loader(this);
-  // QList<AntiquaCRM::ProviderInterface *> _list = _loader.interfaces(this);
-  int _c = m_pageView->count();
-  m_pageView->insertWidget(_c++, new ConfigProvidersView(m_pageView));
+  int _count = m_pageView->count();
+  QListIterator<AntiquaCRM::TabsInterface *> t_it(_li);
+  while (t_it.hasNext()) {
+    AntiquaCRM::TabsInterface *m_iface = t_it.next();
+    if (m_iface) {
+      AntiquaCRM::TabsConfigWidget *m_w = m_iface->configWidget(m_pageView);
+      m_pageView->insertWidget(_count, m_w);
+      m_treeWidget->addTabPlugin(_count, m_w->getMenuEntry());
+      _count++;
+    }
+  }
+
+  m_pageView->insertWidget(_count++, new ConfigProvidersView(m_pageView));
   return true;
 }
 
@@ -205,10 +207,9 @@ int ConfigDialog::exec() {
     restoreGeometry(config->value("geometry").toByteArray());
   config->endGroup();
 
-  if (!loadTabPlugins())
-    return QDialog::Rejected;
+  if (!loadConfigWidget())
+    qWarning("Can't load Configuration plugins!");
 
-  loadProviderPlugins();
   loadConfigs();
   setWindowModified(false);
   return QDialog::exec();

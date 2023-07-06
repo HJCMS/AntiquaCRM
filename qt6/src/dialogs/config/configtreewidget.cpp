@@ -39,7 +39,7 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   m_providerIndex->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   m_providerIndex->setFlags(Qt::ItemIsEnabled);
   m_providerIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("folder-remote"));
-  m_providerIndex->setText(0, tr("Provider"));
+  m_providerIndex->setText(0, tr("Provider - Plugins"));
   m_providerIndex->setData(0, Qt::ToolTipRole,
                            tr("Configure accessibility of providers."));
   m_providerIndex->setData(1, Qt::UserRole, QString("config_providers"));

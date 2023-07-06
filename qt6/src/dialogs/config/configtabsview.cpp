@@ -81,11 +81,6 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigTabsView::getType() const {
   return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
 }
 
-QList<AntiquaCRM::TabsInterface *> ConfigTabsView::viewableTabs() {
-  AntiquaCRM::TabsLoader _loader(this);
-  return _loader.interfaces(this);
-}
-
 const QJsonObject ConfigTabsView::getMenuEntry() const {
   QJsonObject _o;
   _o.insert("icon", "tab-detach");

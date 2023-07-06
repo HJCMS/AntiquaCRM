@@ -21,6 +21,7 @@
 
 class ConfigTreeWidget;
 class ConfigGeneral;
+class ConfigDatabase;
 class ConfigPaths;
 class ConfigPrinting;
 class ConfigLookAndFeel;
@@ -37,6 +38,7 @@ private:
   QDialogButtonBox *m_buttonBox;
 
   ConfigGeneral *m_cfgGeneral;
+  ConfigDatabase *m_cfgDatabase;
   ConfigPaths *m_cfgPaths;
   ConfigPrinting *m_cfgPrinter;
   ConfigLookAndFeel *m_cfgLookAndFeel;
@@ -48,9 +50,7 @@ private:
 
   void closeEvent(QCloseEvent *) override;
 
-  bool loadTabPlugins();
-
-  bool loadProviderPlugins();
+  bool loadConfigWidget();
 
   void loadConfigs();
 

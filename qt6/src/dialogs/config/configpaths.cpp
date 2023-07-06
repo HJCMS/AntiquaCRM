@@ -58,7 +58,7 @@ AntiquaCRM::TabsConfigWidget::ConfigType ConfigPaths::getType() const {
 const QJsonObject ConfigPaths::getMenuEntry() const {
   QJsonObject _o;
   _o.insert("icon", "preferences-other");
-  _o.insert("title", tr("Directories & Programs"));
+  _o.insert("title", tr("Path settings"));
   _o.insert("tooltip", tr("Directories and Application paths."));
   return _o;
 }

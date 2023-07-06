@@ -10,6 +10,7 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 
 SET (_library_HEADERS
  configdialog.cpp
+ configdatabase.cpp
  configtreewidget.cpp
  configgeneral.cpp
  configpaths.cpp
@@ -30,6 +31,7 @@ SET (_library_HEADERS
 
 SET (_library_SOURCES
  configdialog.h
+ configdatabase.h
  configtreewidget.h
  configgeneral.h
  configpaths.h

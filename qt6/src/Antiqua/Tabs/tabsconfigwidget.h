@@ -22,6 +22,9 @@ namespace AntiquaCRM {
 /**
  * @class TabsConfigWidget
  * @brief Abstract System Configuration Widget
+ *
+ * This Widget is used to configure loaded Plugins in "Configuration Dialogs".
+ *
  * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsConfigWidget : public QScrollArea {
