@@ -31,9 +31,15 @@ void TextLine::initData() {
 
 void TextLine::setValue(const QVariant &value) {
   QMetaType _type = value.metaType();
+  QString _data;
   switch (_type.id()) {
   case (QMetaType::QString):
-    m_edit->setText(value.toString().trimmed());
+    _data = value.toString().trimmed();
+    break;
+
+  case (QMetaType::QByteArray): // Password
+    _data = QByteArray::fromBase64(value.toByteArray(),
+                                   QByteArray::Base64UrlEncoding);
     break;
 
   default:
@@ -43,6 +49,8 @@ void TextLine::setValue(const QVariant &value) {
 #endif
     break;
   };
+
+  m_edit->setText(_data);
 }
 
 void TextLine::setFocus() { m_edit->setFocus(); }
@@ -60,6 +68,14 @@ void TextLine::setCompleterList(const QStringList &list) {
   m_edit->setCompleter(_completer);
 }
 
+void TextLine::setPasswordInput(bool b) {
+  if (b) {
+    m_edit->setEchoMode(QLineEdit::PasswordEchoOnEdit);
+  } else {
+    m_edit->setEchoMode(QLineEdit::Normal);
+  }
+}
+
 void TextLine::setRestrictions(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required) {
     m_edit->setClearButtonEnabled(false);
@@ -75,6 +91,9 @@ void TextLine::setRestrictions(const QSqlField &field) {
     _txt.append(QString::number(field.length()));
     _txt.append(".");
     m_edit->setPlaceholderText(_txt);
+    m_edit->setEchoMode(QLineEdit::Normal);
+  } else if (_type.id() == QMetaType::QByteArray && field.length() > 0) {
+    m_edit->setMaxLength(field.length());
   }
 
   QString _default = field.defaultValue().toString();
@@ -82,7 +101,11 @@ void TextLine::setRestrictions(const QSqlField &field) {
     m_edit->setText(_default);
 }
 
-void TextLine::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
+void TextLine::setInputToolTip(const QString &tip) {
+  m_edit->setToolTip(tip);
+  if (m_edit->placeholderText().isEmpty())
+    m_edit->setPlaceholderText(tip);
+}
 
 void TextLine::setBuddyLabel(const QString &text) {
   if (text.isEmpty())
@@ -101,10 +124,20 @@ bool TextLine::isValid() {
 }
 
 const QMetaType TextLine::getType() const {
+  if (m_edit->echoMode() == QLineEdit::PasswordEchoOnEdit)
+    return QMetaType(QMetaType::QByteArray);
+
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant TextLine::getValue() { return m_edit->text().trimmed(); }
+const QVariant TextLine::getValue() {
+  QString _data = m_edit->text().trimmed();
+  if (getType().id() == QMetaType::QByteArray) {
+    QByteArray _pw = _data.toLocal8Bit().toBase64(QByteArray::Base64Encoding);
+    return _pw;
+  }
+  return _data;
+}
 
 const QString TextLine::popUpHints() {
   return tr("This text line is required!");

@@ -27,6 +27,8 @@ SET (_library_HEADERS
  printerpaperlayout.cpp
  printerqrcode.cpp
  printerdevices.cpp
+ sslcaselecter.cpp
+ sslmode.cpp
 )
 
 SET (_library_SOURCES
@@ -48,6 +50,8 @@ SET (_library_SOURCES
  printerpaperlayout.h
  printerqrcode.h
  printerdevices.h
+ sslcaselecter.h
+ sslmode.h
 )
 
 INCLUDE_DIRECTORIES (
