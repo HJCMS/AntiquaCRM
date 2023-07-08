@@ -15,6 +15,7 @@
 #include <QMetaType>
 #include <QObject>
 #include <QScrollArea>
+#include <QSignalMapper>
 #include <QWidget>
 
 namespace AntiquaCRM {
@@ -31,7 +32,11 @@ class ANTIQUACRM_LIBRARY TabsConfigWidget : public QScrollArea {
   Q_OBJECT
 
 private:
+  QSignalMapper *signalMapper;
   const QString p_gid;
+
+private Q_SLOTS:
+  void setInputEditChanged(QObject *);
 
 protected:
   /**
@@ -53,11 +58,16 @@ protected:
    */
   QList<AntiquaCRM::AInputWidget *> getInputList(QObject *parent);
 
-Q_SIGNALS:
   /**
-   * @brief signal for notify changes
+   * @brief Add AntiquaCRM::AInputWidget to SignalMapper
+   *
+   * This function register from all AntiquaCRM::AInputWidget the
+   * sendInputChanged Signal.
+   *
+   * You must call this manually!
+   * For example in loadSectionConfig when all AntiquaCRM::AInputWidget filled!
    */
-  void sendHasModified(bool);
+  void registerInputChangeSignals();
 
 public Q_SLOTS:
   /**

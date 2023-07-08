@@ -28,8 +28,8 @@ class ConfigLookAndFeel final : public AntiquaCRM::TabsConfigWidget {
 
 private:
   LookAndFeelLayout *layout;
-  QCheckBox *m_toolTipIcons;
-  QCheckBox *m_wheelSupport;
+  AntiquaCRM::BoolBox *m_toolTipIcons;
+  AntiquaCRM::BoolBox *m_wheelSupport;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

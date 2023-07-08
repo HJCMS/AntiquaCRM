@@ -18,6 +18,8 @@ SET (_library_HEADERS
  configlookandfeel.cpp
  configprovidersview.cpp
  configtabsview.cpp
+ configpageswidget.cpp
+ databaseprofile.cpp
  paymentsettingsgroup.cpp
  pathsettingsgroup.cpp
  pluginlistwidget.cpp
@@ -41,6 +43,8 @@ SET (_library_SOURCES
  configlookandfeel.h
  configprovidersview.h
  configtabsview.h
+ configpageswidget.h
+ databaseprofile.h
  paymentsettingsgroup.h
  pathsettingsgroup.h
  pluginlistwidget.h

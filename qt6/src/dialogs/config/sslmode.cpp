@@ -6,6 +6,7 @@
 SslMode::SslMode(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setWithoutDisclosures();
+  m_edit->setMinimumWidth(200);
   layout->addWidget(m_edit);
   initData();
 

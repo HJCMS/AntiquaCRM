@@ -51,14 +51,14 @@ public:
    *
    * This function is a extended call from QSettings::contains
    */
-  bool check(const QString &pkey);
+  bool check(const QString &pkey) const;
 
   /**
    * @brief Get value with given Path and MetaType.
-   * @param path - config path to key
+   * @param key - config path to key
    * @param type - required Meta type
    */
-  const QVariant getValue(const QString &path, const QMetaType &type) const;
+  const QVariant getValue(const QString &key, const QMetaType &type) const;
 
   /**
    * @brief Returns Directory from Section[dirs]

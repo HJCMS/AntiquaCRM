@@ -82,6 +82,8 @@ public:
    * @param length - fill length
    */
   static const QString zerofill(qint64 number, int length = 7);
+
+  static const QString md5sum(const QString &data);
 };
 
 }; // namespace AntiquaCRM

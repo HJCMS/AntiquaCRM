@@ -151,6 +151,26 @@ void SslCaSelecter::setBundle(const QString &path) {
 
 const QString SslCaSelecter::getBundle() { return p_ca_bundle; }
 
+const QSslCertificate SslCaSelecter::getCert() {
+  QSslCertificate cert;
+  if (p_ca_bundle.isEmpty() || getValue().isNull())
+    return cert;
+
+  QSslConfiguration sslConfig;
+  QList<QSslCertificate> list = sslConfig.caCertificates();
+  if (list.size() < 1)
+    return cert;
+
+  QString _issuer = getValue().toString();
+  for (int i = 0; i < list.size(); i++) {
+    QSslCertificate pem = list.at(i);
+    if (!pem.isNull() && (pem.issuerDisplayName() == _issuer)) {
+      return pem;
+    }
+  }
+  return cert;
+}
+
 void SslCaSelecter::setRestrictions(const QSqlField &field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }

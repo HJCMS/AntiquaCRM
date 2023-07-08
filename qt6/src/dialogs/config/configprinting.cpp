@@ -55,6 +55,7 @@ void ConfigPrinting::loadSectionConfig() {
   m_qrCode->loadSection(config);
   // end
   config->endGroup();
+  registerInputChangeSignals();
 }
 
 void ConfigPrinting::saveSectionConfig() {
@@ -71,6 +72,7 @@ void ConfigPrinting::saveSectionConfig() {
   m_qrCode->saveSection(config);
   // end
   config->endGroup();
+  setWindowModified(false);
 }
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigPrinting::getType() const {

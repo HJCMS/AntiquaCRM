@@ -13,6 +13,7 @@
 #include <AntiquaWidgets>
 #include <QObject>
 
+class DatabaseProfile;
 class SslCaSelecter;
 class SslMode;
 
@@ -21,7 +22,7 @@ class ConfigDatabase final : public AntiquaCRM::TabsConfigWidget {
 
 private:
   // Connection Settings
-  AntiquaCRM::AComboBox *m_profil;
+  DatabaseProfile *m_profil;
   AntiquaCRM::TextLine *pg_hostname;
   AntiquaCRM::TextLine *pg_database;
   AntiquaCRM::TextLine *pg_username;
@@ -36,6 +37,14 @@ private:
   SslMode *ssl_mode;
 
   static const QUrl pgsqlClientAuthDocUrl();
+
+  bool resetInput();
+
+  bool loadProfile(const QString &id);
+
+private Q_SLOTS:
+  void testConnection();
+  void updateProfile();
 
 public Q_SLOTS:
   void loadSectionConfig() override;

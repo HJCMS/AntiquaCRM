@@ -14,6 +14,9 @@ TabsConfigWidget::TabsConfigWidget(const QString &group, const QString &id,
   setWidgetResizable(true);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
   config = new AntiquaCRM::ASettings(this);
+  signalMapper = new QSignalMapper(this);
+  connect(signalMapper, SIGNAL(mappedObject(QObject *)),
+          SLOT(setInputEditChanged(QObject *)));
 }
 
 TabsConfigWidget::~TabsConfigWidget() {
@@ -22,6 +25,14 @@ TabsConfigWidget::~TabsConfigWidget() {
 
   if (pgsql != nullptr)
     pgsql->deleteLater();
+
+  if (signalMapper != nullptr)
+    signalMapper->deleteLater();
+}
+
+void TabsConfigWidget::setInputEditChanged(QObject *object) {
+  if (signalMapper->mapping(object) != nullptr)
+    setWindowModified(true);
 }
 
 QList<AntiquaCRM::AInputWidget *>
@@ -29,6 +40,16 @@ TabsConfigWidget::getInputList(QObject *parent) {
   Q_CHECK_PTR(parent);
   return parent->findChildren<AntiquaCRM::AInputWidget *>(
       QString(), Qt::FindChildrenRecursively);
+}
+
+void TabsConfigWidget::registerInputChangeSignals() {
+  QListIterator<AntiquaCRM::AInputWidget *> it(
+      findChildren<AntiquaCRM::AInputWidget *>(QString()));
+  while (it.hasNext()) {
+    AntiquaCRM::AInputWidget *inp = it.next();
+    connect(inp, SIGNAL(sendInputChanged()), signalMapper, SLOT(map()));
+    signalMapper->setMapping(inp, this);
+  }
 }
 
 const QString TabsConfigWidget::getGroup() const {

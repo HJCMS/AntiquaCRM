@@ -25,31 +25,34 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
   QWidget *m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
 
-  QString info;
+  QString _info;
   int _row = 0;
   layout = new LookAndFeelLayout(m_central);
 
-  info = tr("All settings in this area require a restart of the application.");
-  layout->addWidget(new QLabel(info, m_central), _row++, 0, 1, 1);
+  _info = tr("All settings in this area require a restart of the application.");
+  layout->addWidget(new QLabel(_info, m_central), _row++, 0, 1, 1);
 
-  info = tr("Show tooltip symbols after input fields.");
-  m_toolTipIcons = new QCheckBox(info, m_central);
+  _info = tr("Show tooltip symbols after input fields.");
+  m_toolTipIcons = new AntiquaCRM::BoolBox(m_central);
   m_toolTipIcons->setObjectName("display_tooltip_buttons");
+  m_toolTipIcons->setBuddyLabel(_info);
   layout->addWidget(m_toolTipIcons, _row, 0, 1, 1);
 
-  info = tr("If enabled, it will append to all supported input fields a "
-            "clickable icon with additional popup information.");
-  layout->addToolTip(_row++, 1, info);
+  _info = tr("If enabled, it will append to all supported input fields a "
+             "clickable icon with additional popup information.");
+  layout->addToolTip(_row++, 1, _info);
 
-  info = tr("Enable mouse wheel support for input fields and register tabs.");
-  m_wheelSupport = new QCheckBox(info, m_central);
+  _info = tr("Enable mouse wheel support for input fields and register tabs.");
+  m_wheelSupport = new AntiquaCRM::BoolBox(m_central);
   m_wheelSupport->setObjectName("mouse_wheel_support");
+  m_wheelSupport->setBuddyLabel(_info);
   layout->addWidget(m_wheelSupport, _row, 0, 1, 1);
 
-  info = tr("If switched off, unintentional changing of entries with scrolling "
-            "is prevented.<br>Experience has shown that older people in "
-            "particular have problems with large input masks.");
-  layout->addToolTip(_row++, 1, info);
+  _info =
+      tr("If switched off, unintentional changing of entries with scrolling "
+         "is prevented.<br>Experience has shown that older people in "
+         "particular have problems with large input masks.");
+  layout->addToolTip(_row++, 1, _info);
 
   layout->setRowStretch(_row, 1);
   m_central->setLayout(layout);
@@ -58,18 +61,20 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
 
 void ConfigLookAndFeel::loadSectionConfig() {
   config->beginGroup("window_behavior");
-  m_toolTipIcons->setChecked(
+  m_toolTipIcons->setValue(
       config->value("display_tooltip_buttons", true).toBool());
-  m_wheelSupport->setChecked(
+  m_wheelSupport->setValue(
       config->value("mouse_wheel_support", false).toBool());
   config->endGroup();
+  registerInputChangeSignals();
 }
 
 void ConfigLookAndFeel::saveSectionConfig() {
   config->beginGroup("window_behavior");
-  config->setValue("display_tooltip_buttons", m_toolTipIcons->isChecked());
-  config->setValue("mouse_wheel_support", m_wheelSupport->isChecked());
+  config->setValue("display_tooltip_buttons", m_toolTipIcons->getValue());
+  config->setValue("mouse_wheel_support", m_wheelSupport->getValue());
   config->endGroup();
+  setWindowModified(false);
 }
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigLookAndFeel::getType() const {

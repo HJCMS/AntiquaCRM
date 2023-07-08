@@ -38,6 +38,7 @@ void ConfigPaths::loadSectionConfig() {
 
     m_inp->setValue(_val);
   }
+  registerInputChangeSignals();
 }
 
 void ConfigPaths::saveSectionConfig() {
@@ -49,6 +50,7 @@ void ConfigPaths::saveSectionConfig() {
 
     config->setValue(m_inp->objectName(), m_inp->getValue());
   }
+  setWindowModified(false);
 }
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigPaths::getType() const {

@@ -2,16 +2,20 @@
 // vim: set fileencoding=utf-8
 
 #include "configdatabase.h"
+#include "databaseprofile.h"
 #include "sslcaselecter.h"
 #include "sslmode.h"
 
 #include <QLabel>
 #include <QLocale>
 #include <QMetaType>
+#include <QSqlDatabase>
+#include <QSslConfiguration>
 #include <QtWidgets>
 
 ConfigDatabase::ConfigDatabase(QWidget *parent)
     : AntiquaCRM::TabsConfigWidget{"database", QString(), parent} {
+  setObjectName("configdatabase");
   setWindowTitle(getMenuEntry().value("title").toString());
   // Central Widget
   QWidget *m_central = new QWidget(this);
@@ -26,10 +30,8 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   lb_title->setText(_info);
   layout->addWidget(lb_title);
 
-  m_profil = new AntiquaCRM::AComboBox(this);
-  m_profil->setObjectName("database_profile");
-  m_profil->setWithoutDisclosures("default");
-  m_profil->setToolTip(tr("Database profile"));
+  // DatabaseProfile
+  m_profil = new DatabaseProfile(config, m_central);
   layout->addWidget(m_profil);
 
   // Primary Connection Settings
@@ -112,6 +114,7 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   // https://www.postgresql.org/docs/current/libpq-ssl.html
   // https://www.postgresql.org/docs/current/ssl-tcp.html
   pg_ssl = new AntiquaCRM::GroupBoxEdit(this);
+  pg_ssl->setObjectName("pg_ssl");
   pg_ssl->setBuddyLabel(tr("SSL/TLS Connection"));
   pg_ssl->setValue(true);
 
@@ -187,6 +190,9 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   m_central->setLayout(layout);
   layout->addStretch(1);
   setWidget(m_central);
+
+  connect(m_profil, SIGNAL(sendUpdateProfile()), SLOT(updateProfile()));
+  connect(m_profil, SIGNAL(sendStartTest()), SLOT(testConnection()));
 }
 
 const QUrl ConfigDatabase::pgsqlClientAuthDocUrl() {
@@ -197,18 +203,25 @@ const QUrl ConfigDatabase::pgsqlClientAuthDocUrl() {
   return url;
 }
 
-void ConfigDatabase::loadSectionConfig() {
-  QString _profile = config->value("database_profile", "Default").toString();
-  config->beginGroup("database");
-  foreach (QString _group, config->childGroups()) {
-    m_profil->addItem(_group, _group);
-    if (_group == _profile)
-      m_profil->setCurrentText(_profile);
+bool ConfigDatabase::resetInput() {
+  QListIterator<AntiquaCRM::AInputWidget *> it(
+      findChildren<AntiquaCRM::AInputWidget *>(QString()));
+  while (it.hasNext()) {
+    AntiquaCRM::AInputWidget *inp = it.next();
+    if (inp != nullptr)
+      inp->reset();
   }
-  config->endGroup();
-  // Update
-  _profile = m_profil->currentData().toString();
-  config->beginGroup("database/" + _profile);
+  return true;
+}
+
+bool ConfigDatabase::loadProfile(const QString &id) {
+  if (config->contains("database/" + id)) {
+    qWarning("Profile:'database/%s' not exists!", qPrintable(id));
+    return false;
+  }
+
+  config->beginGroup("database/" + id);
+  // qInfo("Profile:'database/%s'!", qPrintable(id));
   QList<AntiquaCRM::AInputWidget *> _l =
       findChildren<AntiquaCRM::AInputWidget *>(QString());
   for (int i = 0; i < _l.count(); i++) {
@@ -216,34 +229,100 @@ void ConfigDatabase::loadSectionConfig() {
     if (m_inp != nullptr && !m_inp->objectName().isEmpty()) {
       const QString _key = m_inp->objectName();
       QVariant _value = config->getValue(_key, m_inp->getType());
-      if (!_value.isValid())
+      if (!_value.isValid()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+        qDebug() << Q_FUNC_INFO << id << _key << _value;
+#endif
         continue;
+      }
 
       m_inp->setValue(_value);
     }
   }
 
-  QFileInfo _f(config->getValue("ssl_bundle", ssl_CA->getType()).toString());
-  if (_f.isReadable())
-    ssl_CA->setBundle(_f.filePath());
+  if (ssl_CA->getBundle().isEmpty()) {
+    QFileInfo _f(config->getValue("ssl_bundle", ssl_CA->getType()).toString());
+    if (_f.isReadable())
+      ssl_CA->setBundle(_f.filePath());
+  }
 
   config->endGroup();
+  return true;
+}
+
+void ConfigDatabase::testConnection() {
+  QSqlDatabase _db = QSqlDatabase::addDatabase("QPSQL", "antiquacrm-test");
+  _db.setHostName(pg_hostname->getValue().toString());
+  _db.setDatabaseName(pg_database->getValue().toString());
+  _db.setPort(pg_port->getValue().toInt());
+
+  // Append to global ca-bundle
+  QSslConfiguration _ssl;
+  _ssl.addCaCertificate(ssl_CA->getCert());
+
+  QStringList _o; // Options
+  _o << QString("connect_timeout=%1").arg(pg_timeout->getValue().toString());
+  _o << QString("sslmode=%1").arg(ssl_mode->getValue().toString());
+  QString _rcert = ssl_root_cert->getValue().toString();
+  if (!_rcert.isEmpty())
+    _o << QString("sslrootcert=%1").arg(_rcert);
+
+  _o << QString("ssl_min_protocol_version=TLSv1.2");
+  _db.setConnectOptions(_o.join(";"));
+
+  const QString _user = pg_username->getValue().toString();
+  const QString _pass = QByteArray::fromBase64(
+      pg_password->getValue().toByteArray(), QByteArray::Base64UrlEncoding);
+
+  QStringList _ret;
+  if (_db.open(_user, _pass)) {
+    _ret << "<b>" + tr("Connection successfully!") + "</b>";
+  } else {
+    _ret << "<b>" + tr("Connection failed!") + "</b>";
+    _ret << "<blockquote>" + _db.lastError().text() + "</blockquote>";
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << _user << _pass << _db.connectOptions();
+#endif
+  }
+  QMessageBox::information(this, tr("Connection test"), _ret.join("<br>"));
+}
+
+void ConfigDatabase::updateProfile() {
+  const QString _id = m_profil->currentIdentifier();
+  if (_id.isEmpty())
+    return;
+
+  if (resetInput())
+    pg_hostname->setFocus();
+
+  loadProfile(_id);
+  setWindowModified(true);
+}
+
+void ConfigDatabase::loadSectionConfig() {
+  m_profil->loadEntries();
+  loadProfile(m_profil->currentIdentifier());
+  registerInputChangeSignals();
 }
 
 void ConfigDatabase::saveSectionConfig() {
-  QString _profile = m_profil->currentData().toString();
-  if (_profile.isEmpty())
-    _profile = QString("Default");
-
-  config->setValue("database_profile", _profile);
-  config->beginGroup("database/" + _profile);
+  const QString _profile_id = m_profil->currentIdentifier();
+  config->setValue("database_profile", _profile_id);
+  config->beginGroup("database/" + _profile_id);
+  config->setValue("profile", m_profil->currentProfile());
   QList<AntiquaCRM::AInputWidget *> _l =
       findChildren<AntiquaCRM::AInputWidget *>(QString());
   for (int i = 0; i < _l.count(); i++) {
     AntiquaCRM::AInputWidget *m_inp = _l.at(i);
-    if (m_inp != nullptr && !m_inp->objectName().isEmpty()) {
+    if (m_inp != nullptr) {
       const QString _key = m_inp->objectName();
       QVariant _value = m_inp->getValue();
+#ifdef ANTIQUA_DEVELOPEMENT
+      if (_key.isEmpty()) {
+        qDebug() << Q_FUNC_INFO << "Missing objectName!" << _value;
+        continue;
+      }
+#endif
       if (!_value.isValid())
         config->remove(_key);
       else
@@ -252,6 +331,7 @@ void ConfigDatabase::saveSectionConfig() {
   }
   config->setValue("ssl_bundle", ssl_CA->getBundle());
   config->endGroup();
+  setWindowModified(false);
 }
 
 AntiquaCRM::TabsConfigWidget::ConfigType ConfigDatabase::getType() const {

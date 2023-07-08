@@ -11,7 +11,7 @@ BoolBox::BoolBox(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new QCheckBox(this);
   layout->addWidget(m_edit);
   initData();
-  // connect(m_edit, SIGNAL(), SLOT(valueChanged()));
+  connect(m_edit, SIGNAL(clicked()), SLOT(valueChanged()));
 }
 
 void BoolBox::valueChanged() {

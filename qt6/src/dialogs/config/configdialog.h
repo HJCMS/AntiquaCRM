@@ -19,6 +19,7 @@
 #include <QVBoxLayout>
 #include <QWidget>
 
+class ConfigPagesWidget;
 class ConfigTreeWidget;
 class ConfigGeneral;
 class ConfigDatabase;
@@ -33,7 +34,7 @@ class ConfigDialog final : public QDialog {
 private:
   AntiquaCRM::ASettings *config;
   ConfigTreeWidget *m_treeWidget;
-  QStackedWidget *m_pageView;
+  ConfigPagesWidget *m_pageView;
   QStatusBar *m_statusbar;
   QDialogButtonBox *m_buttonBox;
 
@@ -45,9 +46,6 @@ private:
 
   ConfigTabsView *m_cfgTabs;
 
-  const QList<AntiquaCRM::TabsConfigWidget *> pages();
-  AntiquaCRM::TabsConfigWidget *page(int);
-
   void closeEvent(QCloseEvent *) override;
 
   bool loadConfigWidget();
@@ -55,11 +53,12 @@ private:
   void loadConfigs();
 
 private Q_SLOTS:
+  void setModified(bool);
+  void updateTitle(const QString &);
   void statusMessage(const QString &message);
   void openConfigGroup(const QString &name);
 
 public Q_SLOTS:
-  void setOpenPage(int);
   void aboutToSave();
   void aboutToClose();
 

@@ -25,22 +25,19 @@ const QString ASettings::configDomain() {
   return str;
 }
 
-bool ASettings::check(const QString &pkey) {
+bool ASettings::check(const QString &pkey) const {
   if (contains(pkey)) {
     return (!value(pkey).isNull());
   }
   return false;
 }
 
-const QVariant ASettings::getValue(const QString &path,
+const QVariant ASettings::getValue(const QString &key,
                                    const QMetaType &type) const {
-  if (path.isEmpty())
+  if (key.isEmpty())
     return QVariant();
 
-  QVariant _value = value(path);
-  if (_value.metaType().id() == type.id())
-    return _value;
-
+  QVariant _value = QSettings::value(key);
   switch (type.id()) {
   case (QMetaType::Bool):
     return _value.toBool();
@@ -59,6 +56,7 @@ const QVariant ASettings::getValue(const QString &path,
   default:
     break;
   };
+
   return _value;
 }
 

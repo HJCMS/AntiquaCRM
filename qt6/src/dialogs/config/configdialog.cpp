@@ -5,6 +5,7 @@
 #include "configdatabase.h"
 #include "configgeneral.h"
 #include "configlookandfeel.h"
+#include "configpageswidget.h"
 #include "configpaths.h"
 #include "configprinting.h"
 #include "configprovidersview.h"
@@ -38,34 +39,35 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_treeWidget = new ConfigTreeWidget(m_splitter);
   m_splitter->addRight(m_treeWidget);
 
-  m_pageView = new QStackedWidget(m_central);
+  // Pages
+  m_pageView = new ConfigPagesWidget(m_central);
   m_central->setWidget(m_pageView);
 
   int _pindex = m_pageView->count();
   m_cfgGeneral = new ConfigGeneral(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgGeneral->getMenuEntry());
-  m_pageView->insertWidget(_pindex++, m_cfgGeneral);
+  m_pageView->insert(_pindex++, m_cfgGeneral);
 
   m_cfgDatabase = new ConfigDatabase(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgDatabase->getMenuEntry());
-  m_pageView->insertWidget(_pindex++, m_cfgDatabase);
+  m_pageView->insert(_pindex++, m_cfgDatabase);
 
   m_cfgPaths = new ConfigPaths(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgPaths->getMenuEntry());
-  m_pageView->insertWidget(_pindex++, m_cfgPaths);
+  m_pageView->insert(_pindex++, m_cfgPaths);
 
   m_cfgPrinter = new ConfigPrinting(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgPrinter->getMenuEntry());
-  m_pageView->insertWidget(_pindex++, m_cfgPrinter);
+  m_pageView->insert(_pindex++, m_cfgPrinter);
 
   // ConfigLookAndFeel
   m_cfgLookAndFeel = new ConfigLookAndFeel(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgLookAndFeel->getMenuEntry());
-  m_pageView->insertWidget(_pindex++, m_cfgLookAndFeel);
+  m_pageView->insert(_pindex++, m_cfgLookAndFeel);
 
   // NOTE The Tabs interface section is a fixed TreeWidget entry!
   m_cfgTabs = new ConfigTabsView(m_pageView);
-  m_pageView->insertWidget(_pindex++, m_cfgTabs);
+  m_pageView->insert(_pindex++, m_cfgTabs);
 
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);
@@ -84,26 +86,21 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
 
   setLayout(layout);
 
+  connect(m_pageView, SIGNAL(sendModified(bool)), SLOT(setModified(bool)));
+  connect(m_pageView, SIGNAL(sendPageTitle(const QString &)),
+          SLOT(updateTitle(const QString &)));
+
+  connect(m_treeWidget, SIGNAL(sendPageIndex(int)), m_pageView,
+          SLOT(setPage(int)));
+
   connect(m_treeWidget, SIGNAL(sendConfigGroup(const QString &)),
           SLOT(openConfigGroup(const QString &)));
-  connect(m_treeWidget, SIGNAL(sendPageIndex(int)), SLOT(setOpenPage(int)));
 
   connect(btn_save, SIGNAL(clicked()), this, SLOT(aboutToSave()));
   connect(btn_close, SIGNAL(clicked()), this, SLOT(aboutToClose()));
 }
 
 ConfigDialog::~ConfigDialog() {}
-
-const QList<AntiquaCRM::TabsConfigWidget *> ConfigDialog::pages() {
-  return m_pageView->findChildren<AntiquaCRM::TabsConfigWidget *>(
-      QString(), Qt::FindChildrenRecursively);
-}
-
-AntiquaCRM::TabsConfigWidget *ConfigDialog::page(int index) {
-  AntiquaCRM::TabsConfigWidget *_w = nullptr;
-  _w = qobject_cast<AntiquaCRM::TabsConfigWidget *>(m_pageView->widget(index));
-  return _w;
-}
 
 void ConfigDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
@@ -131,21 +128,34 @@ bool ConfigDialog::loadConfigWidget() {
     AntiquaCRM::TabsInterface *m_iface = t_it.next();
     if (m_iface) {
       AntiquaCRM::TabsConfigWidget *m_w = m_iface->configWidget(m_pageView);
-      m_pageView->insertWidget(_count, m_w);
+      m_pageView->insert(_count, m_w);
       m_treeWidget->addTabPlugin(_count, m_w->getMenuEntry());
       _count++;
     }
   }
 
-  m_pageView->insertWidget(_count++, new ConfigProvidersView(m_pageView));
+  m_pageView->insert(_count++, new ConfigProvidersView(m_pageView));
   return true;
 }
 
 void ConfigDialog::loadConfigs() {
-  QListIterator<AntiquaCRM::TabsConfigWidget *> it(pages());
+  QListIterator<AntiquaCRM::TabsConfigWidget *> it(m_pageView->pages());
   while (it.hasNext()) {
     it.next()->loadSectionConfig();
   }
+}
+
+void ConfigDialog::setModified(bool b) {
+  setWindowModified(b);
+  // qDebug() << Q_FUNC_INFO << isWindowModified();
+}
+
+void ConfigDialog::updateTitle(const QString &title) {
+  QString _title(tr("Configuration"));
+  _title.append(" (");
+  _title.append(title);
+  _title.append(") [*]");
+  setWindowTitle(_title);
 }
 
 void ConfigDialog::statusMessage(const QString &message) {
@@ -158,29 +168,14 @@ void ConfigDialog::openConfigGroup(const QString &name) {
 
   for (int i = 0; i < m_pageView->count(); i++) {
     if (m_pageView->widget(i)->objectName() == name) {
-      setOpenPage(i);
+      m_pageView->setPage(i);
       return;
     }
   }
 }
 
-void ConfigDialog::setOpenPage(int index) {
-  AntiquaCRM::TabsConfigWidget *_page = page(index);
-  if (_page == nullptr)
-    return;
-
-  QString _title(tr("Configuration"));
-  _title.append(" (");
-  _title.append(_page->getMenuEntry().value("title").toString());
-  _title.append(") [*]");
-
-  setWindowTitle(_title);
-
-  m_pageView->setCurrentIndex(index);
-}
-
 void ConfigDialog::aboutToSave() {
-  QListIterator<AntiquaCRM::TabsConfigWidget *> it(pages());
+  QListIterator<AntiquaCRM::TabsConfigWidget *> it(m_pageView->pages());
   while (it.hasNext()) {
     it.next()->saveSectionConfig();
   }

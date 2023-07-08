@@ -13,6 +13,7 @@
 #include <QObject>
 #include <QLineEdit>
 #include <QPushButton>
+#include <QSslCertificate>
 #include <QRegularExpression>
 
 class SslCaSelecter final : public AntiquaCRM::AInputWidget {
@@ -40,6 +41,7 @@ public:
   explicit SslCaSelecter(QWidget *parent = nullptr);
   void setBundle(const QString &path);
   const QString getBundle();
+  const QSslCertificate getCert();
   void initData() override;
   void setRestrictions(const QSqlField &) override;
   void setInputToolTip(const QString &) override;

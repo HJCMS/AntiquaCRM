@@ -3,6 +3,7 @@
 
 #include "autil.h"
 
+#include <QCryptographicHash>
 #include <QLocale>
 #include <QRegularExpressionMatch>
 #include <QStringList>
@@ -95,6 +96,13 @@ const QRegularExpression AUtil::keywordRegExp() {
 
 const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
+}
+
+const QString AUtil::md5sum(const QString &data) {
+  const QByteArray _buff = data.trimmed().toLocal8Bit();
+  QCryptographicHash _hash(QCryptographicHash::Md5);
+  _hash.addData(_buff);
+  return QString::fromLocal8Bit(_hash.result().toHex());
 }
 
 }; // namespace AntiquaCRM
