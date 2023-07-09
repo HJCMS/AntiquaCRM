@@ -107,7 +107,6 @@ void DatabaseProfile::setProfile(int index) {
   if (_id.isEmpty())
     return;
 
-  cfg->setValue("database_profile", _id);
   emit sendUpdateProfile();
 }
 

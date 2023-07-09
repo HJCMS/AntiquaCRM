@@ -21,6 +21,7 @@ class ConfigDatabase final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
 private:
+  const QString p_connection_id;
   // Connection Settings
   DatabaseProfile *m_profil;
   AntiquaCRM::TextLine *pg_hostname;
@@ -30,13 +31,12 @@ private:
   AntiquaCRM::NumEdit *pg_port;
   AntiquaCRM::NumEdit *pg_timeout;
   // SSL/TLS Settings
-  AntiquaCRM::GroupBoxEdit *pg_ssl;
   SslCaSelecter *ssl_CA;
   AntiquaCRM::TextLine *ssl_CN;
   AntiquaCRM::SelectFile *ssl_root_cert;
   SslMode *ssl_mode;
 
-  static const QUrl pgsqlClientAuthDocUrl();
+  static const QUrl pgSqlAuthDocUrl();
 
   bool resetInput();
 
@@ -52,6 +52,7 @@ public Q_SLOTS:
 
 public:
   explicit ConfigDatabase(QWidget *parent = nullptr);
+  virtual ~ConfigDatabase();
   AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };

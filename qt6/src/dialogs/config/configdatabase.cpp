@@ -6,6 +6,7 @@
 #include "sslcaselecter.h"
 #include "sslmode.h"
 
+#include <QGroupBox>
 #include <QLabel>
 #include <QLocale>
 #include <QMetaType>
@@ -14,10 +15,11 @@
 #include <QtWidgets>
 
 ConfigDatabase::ConfigDatabase(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"database", QString(), parent} {
+    : AntiquaCRM::TabsConfigWidget{"database", QString(), parent},
+      p_connection_id{"antiquacrm_db_connection_test"} {
   setObjectName("configdatabase");
   setWindowTitle(getMenuEntry().value("title").toString());
-  // Central Widget
+
   QWidget *m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
 
@@ -111,23 +113,19 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   layout->addWidget(connectionGroup);
 
   // BEGIN:SSL/TLS Settings
-  // https://www.postgresql.org/docs/current/libpq-ssl.html
-  // https://www.postgresql.org/docs/current/ssl-tcp.html
-  pg_ssl = new AntiquaCRM::GroupBoxEdit(this);
-  pg_ssl->setObjectName("pg_ssl");
-  pg_ssl->setBuddyLabel(tr("SSL/TLS Connection"));
-  pg_ssl->setValue(true);
+  QGroupBox *m_sslGroup = new QGroupBox(this);
+  m_sslGroup->setObjectName("pg_ssl");
+  m_sslGroup->setTitle(tr("Required SSL/TLS Settings"));
 
-  QBoxLayout *m_sslLayout = pg_ssl->boxLayout();
+  QBoxLayout *m_sslLayout = new QBoxLayout(QBoxLayout::TopToBottom, m_sslGroup);
   m_sslLayout->setContentsMargins(5, 5, 5, 5);
-  m_sslLayout->setDirection(QBoxLayout::TopToBottom);
 
   _info = tr(
       "Certification Authority (CA) contains root or intermediate certificate. "
       "Together with your server certificate (issued specifically for your "
       "domain), these certificates complete the SSL chain of trust. The chain "
       "is required to verify the Authentication with the main application.");
-  ssl_CA = new SslCaSelecter(pg_ssl);
+  ssl_CA = new SslCaSelecter(m_sslGroup);
   ssl_CA->setObjectName("ssl_CA");
   ssl_CA->setBuddyLabel(tr("Certification Authority"));
   ssl_CA->setInputToolTip(tr("CA Bundle listing"));
@@ -138,7 +136,7 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
              "Normally the Hostname of the SQL Server or from connected "
              "Dynamic DNS Client. It is important that this Name is equal "
              "to the Server certificate.");
-  ssl_CN = new AntiquaCRM::TextLine(pg_ssl);
+  ssl_CN = new AntiquaCRM::TextLine(m_sslGroup);
   ssl_CN->setObjectName("ssl_CN");
   ssl_CN->setBuddyLabel(tr("Common Name"));
   ssl_CN->setInputToolTip(tr("Common Name (CN)"));
@@ -146,10 +144,10 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   ssl_CN->appendStretch(0);
   m_sslLayout->addWidget(ssl_CN);
 
-  _info = tr("Exhibitor Certificate from SQL Server. "
-             "This is needed for Certification Handshake mechanism. "
-             "It depends to CA Issuers.");
-  ssl_root_cert = new AntiquaCRM::SelectFile(pg_ssl);
+  _info = tr("Exhibitor Certificate from SQL Server. This is needed for "
+             "Certification Handshake mechanism. It depends to CA Issuers. If "
+             "not know, add Alternative the CA-Issuer Certificate.");
+  ssl_root_cert = new AntiquaCRM::SelectFile(m_sslGroup);
   ssl_root_cert->setObjectName("ssl_root_cert");
   ssl_root_cert->setBuddyLabel(tr("Exhibitor Certificate"));
   ssl_root_cert->setInputToolTip(tr("Exhibitor Certificate from Server"));
@@ -163,7 +161,7 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
              "knowing that the server requires high security. In this case, "
              "secure connections can be guaranteed by setting the SSL "
              "connection to „Required“, „Verify full“ or „Verify-CA“.");
-  ssl_mode = new SslMode(pg_ssl);
+  ssl_mode = new SslMode(m_sslGroup);
   ssl_mode->setObjectName("ssl_mode");
   ssl_mode->setBuddyLabel(tr("SSL Mode"));
   ssl_mode->setInputToolTip(tr("SSL Protection Provided in Different Modes."));
@@ -171,20 +169,31 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   ssl_mode->appendStretch(0);
   m_sslLayout->addWidget(ssl_mode);
 
-  layout->addWidget(pg_ssl);
+  layout->addWidget(m_sslGroup);
 
-  _info = tr("Information about Secure SQL Connection you can found on ");
-  _info.append("<a href='" + pgsqlClientAuthDocUrl().toString());
-  _info.append("' target='_blank'>PostgreSQL - ");
+  // PgSQL Connection Info
+  _info =
+      tr("For more Information about Secure SQL Connection visit PostgreSQL");
+  _info.prepend("<p>");
+  _info.append(" - <a href='" + pgSqlAuthDocUrl().toString());
+  _info.append("' target='_blank'>");
   _info.append(tr("Client Authentication Documentation"));
-  _info.append("</a>.");
+  _info.append("</a>.</p>");
+  // GDPR https://gdpr.eu/
+  _info.append("<p>");
+  _info.append(tr("As part of the GDPR (General Data Protection Regulation), "
+                  "SSL/TLS is always active."));
+  _info.append(" ");
+  _info.append(tr("Complete guide to <a href='https://gdpr.eu/' "
+                  "target='_blank'>GDPR</a> compliance."));
+  _info.append("</p>");
 
-  QLabel *infolink = new QLabel(this);
-  infolink->setIndent(5);
-  infolink->setWordWrap(true);
-  infolink->setOpenExternalLinks(true);
-  infolink->setText(_info);
-  layout->addWidget(infolink);
+  QLabel *m_info_link = new QLabel(this);
+  m_info_link->setIndent(5);
+  m_info_link->setWordWrap(true);
+  m_info_link->setOpenExternalLinks(true);
+  m_info_link->setText(_info);
+  layout->addWidget(m_info_link);
 
   layout->addStretch(1);
   m_central->setLayout(layout);
@@ -195,7 +204,12 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   connect(m_profil, SIGNAL(sendStartTest()), SLOT(testConnection()));
 }
 
-const QUrl ConfigDatabase::pgsqlClientAuthDocUrl() {
+ConfigDatabase::~ConfigDatabase() {
+  if (QSqlDatabase::contains(p_connection_id))
+    QSqlDatabase::removeDatabase(p_connection_id);
+}
+
+const QUrl ConfigDatabase::pgSqlAuthDocUrl() {
   QUrl url;
   url.setScheme("https");
   url.setHost("www.postgresql.org");
@@ -250,26 +264,42 @@ bool ConfigDatabase::loadProfile(const QString &id) {
   return true;
 }
 
+/*
+ * https://www.postgresql.org/docs/current/libpq-ssl.html
+ * https://www.postgresql.org/docs/current/ssl-tcp.html
+ */
 void ConfigDatabase::testConnection() {
-  QSqlDatabase _db = QSqlDatabase::addDatabase("QPSQL", "antiquacrm-test");
+  QSqlDatabase _db;
+  if (QSqlDatabase::contains(p_connection_id)) {
+    _db = QSqlDatabase::database(p_connection_id, false);
+  } else {
+    _db = QSqlDatabase::addDatabase("QPSQL", p_connection_id);
+  }
   _db.setHostName(pg_hostname->getValue().toString());
   _db.setDatabaseName(pg_database->getValue().toString());
   _db.setPort(pg_port->getValue().toInt());
 
-  // Append to global ca-bundle
-  QSslConfiguration _ssl;
-  _ssl.addCaCertificate(ssl_CA->getCert());
-
   QStringList _o; // Options
   _o << QString("connect_timeout=%1").arg(pg_timeout->getValue().toString());
-  _o << QString("sslmode=%1").arg(ssl_mode->getValue().toString());
-  QString _rcert = ssl_root_cert->getValue().toString();
-  if (!_rcert.isEmpty())
-    _o << QString("sslrootcert=%1").arg(_rcert);
-
-  _o << QString("ssl_min_protocol_version=TLSv1.2");
+  _o << QString("application_name=%1").arg(p_connection_id);
+  _o << QString("target_session_attrs=read-write");
+  QString _root_cert = ssl_root_cert->getValue().toString();
+  if (!_root_cert.isEmpty()) {
+    _o << QString("sslsni=1");
+    _o << QString("sslmode=%1").arg(ssl_mode->getValue().toString());
+    _o << QString("ssl_min_protocol_version=%1").arg("TLSv1.2");
+    _o << QString("sslrootcert=%1").arg(_root_cert);
+  } else {
+    qWarning("Missing SSL/TLS Configuration!");
+  }
   _db.setConnectOptions(_o.join(";"));
 
+  // Append to global ca-bundle
+  QSslConfiguration _ssl = QSslConfiguration::defaultDtlsConfiguration();
+  _ssl.addCaCertificate(ssl_CA->getCert());
+  _ssl.setProtocol(QSsl::TlsV1_2OrLater);
+
+  // Realm
   const QString _user = pg_username->getValue().toString();
   const QString _pass = QByteArray::fromBase64(
       pg_password->getValue().toByteArray(), QByteArray::Base64UrlEncoding);
@@ -284,6 +314,9 @@ void ConfigDatabase::testConnection() {
     qDebug() << Q_FUNC_INFO << _user << _pass << _db.connectOptions();
 #endif
   }
+  // cleanup Connection
+  _db.close();
+  // push Message
   QMessageBox::information(this, tr("Connection test"), _ret.join("<br>"));
 }
 
@@ -310,6 +343,7 @@ void ConfigDatabase::saveSectionConfig() {
   config->setValue("database_profile", _profile_id);
   config->beginGroup("database/" + _profile_id);
   config->setValue("profile", m_profil->currentProfile());
+  config->setValue("pg_ssl", true); // Always true!
   QList<AntiquaCRM::AInputWidget *> _l =
       findChildren<AntiquaCRM::AInputWidget *>(QString());
   for (int i = 0; i < _l.count(); i++) {

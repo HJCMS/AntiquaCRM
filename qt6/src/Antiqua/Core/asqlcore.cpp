@@ -42,6 +42,7 @@ bool ASqlCore::initDatabase() {
   options << QString("target_session_attrs=read-write");
 
   if (profile.getEnableSSL()) {
+    options << QString("sslsni=1");
     options << QString("sslmode=%1").arg(profile.getSslMode());
     options << QString("sslrootcert=%1").arg(profile.getSslRootCert());
     options << QString("ssl_min_protocol_version=%1").arg("TLSv1.2");
