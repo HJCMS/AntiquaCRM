@@ -75,6 +75,9 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   QPushButton *btn_save = m_buttonBox->addButton(QDialogButtonBox::Save);
   btn_save->setText(tr("&Save"));
 
+  QPushButton *btn_cancel = m_buttonBox->addButton(QDialogButtonBox::Cancel);
+  btn_cancel->setText(tr("Cancel"));
+
   QPushButton *btn_close = m_buttonBox->addButton(QDialogButtonBox::Close);
   btn_close->setText(tr("Quit"));
 
@@ -96,8 +99,9 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   connect(m_treeWidget, SIGNAL(sendConfigGroup(const QString &)),
           SLOT(openConfigGroup(const QString &)));
 
-  connect(btn_save, SIGNAL(clicked()), this, SLOT(aboutToSave()));
-  connect(btn_close, SIGNAL(clicked()), this, SLOT(aboutToClose()));
+  connect(btn_save, SIGNAL(clicked()), SLOT(aboutToSave()));
+  connect(btn_cancel, SIGNAL(clicked()), SLOT(reject()));
+  connect(btn_close, SIGNAL(clicked()), SLOT(aboutToClose()));
 }
 
 ConfigDialog::~ConfigDialog() {}

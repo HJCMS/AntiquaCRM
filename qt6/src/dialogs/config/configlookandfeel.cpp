@@ -66,7 +66,7 @@ void ConfigLookAndFeel::loadSectionConfig() {
   m_wheelSupport->setValue(
       config->value("mouse_wheel_support", false).toBool());
   config->endGroup();
-  registerInputChangeSignals();
+  registerInputChangeSignals(this);
 }
 
 void ConfigLookAndFeel::saveSectionConfig() {

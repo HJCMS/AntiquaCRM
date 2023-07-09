@@ -27,6 +27,9 @@ private:
 
   QLabel *label(const QString &title);
 
+private Q_SLOTS:
+  void setInputChanges(bool);
+
 public Q_SLOTS:
   void loadSection(AntiquaCRM::ASettings *);
   void saveSection(AntiquaCRM::ASettings *);

@@ -28,7 +28,10 @@ PrinterSetBorder::PrinterSetBorder(const QString &info, QWidget *parent)
   connect(m_slider, SIGNAL(valueChanged(int)), SLOT(sliderChanged(int)));
 }
 
-void PrinterSetBorder::sliderChanged(int i) { m_value->setValue(i); }
+void PrinterSetBorder::sliderChanged(int i) {
+  m_value->setValue(i);
+  emit updateChanged(true);
+}
 
 void PrinterSetBorder::setValue(int d) {
   m_slider->setValue(d);

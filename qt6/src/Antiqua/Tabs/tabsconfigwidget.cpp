@@ -42,11 +42,15 @@ TabsConfigWidget::getInputList(QObject *parent) {
       QString(), Qt::FindChildrenRecursively);
 }
 
-void TabsConfigWidget::registerInputChangeSignals() {
+void TabsConfigWidget::registerInputChangeSignals(QObject *base) {
   QListIterator<AntiquaCRM::AInputWidget *> it(
-      findChildren<AntiquaCRM::AInputWidget *>(QString()));
+      base->findChildren<AntiquaCRM::AInputWidget *>(QString()));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *inp = it.next();
+    if (inp == nullptr)
+      continue;
+
+    // qDebug() << inp->objectName();
     connect(inp, SIGNAL(sendInputChanged()), signalMapper, SLOT(map()));
     signalMapper->setMapping(inp, this);
   }

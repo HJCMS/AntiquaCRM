@@ -28,7 +28,14 @@ PrinterDevices::PrinterDevices(QWidget *parent) : QGroupBox{parent} {
                     1);
 
   setLayout(layout);
+
+  connect(m_mainPrinter, SIGNAL(currentIndexChanged(int)),
+          SLOT(setDeviceChanged(int)));
+  connect(m_slavePrinter, SIGNAL(currentIndexChanged(int)),
+          SLOT(setDeviceChanged(int)));
 }
+
+void PrinterDevices::setDeviceChanged(int) { setWindowModified(true); }
 
 QLabel *PrinterDevices::label(const QString &title) {
   QLabel *m_lb = new QLabel(this);

@@ -39,8 +39,12 @@ PrinterAttachments::PrinterAttachments(QWidget *parent) : QGroupBox{parent} {
 
   setLayout(layout);
 
+  connect(m_path, SIGNAL(sendInputChanged()), SLOT(subWidgetChanged()));
+  connect(m_watermark, SIGNAL(sendInputChanged()), SLOT(subWidgetChanged()));
   connect(m_opacity, SIGNAL(valueChanged(int)), SLOT(opacityChanged(int)));
 }
+
+void PrinterAttachments::subWidgetChanged() { setWindowModified(true); }
 
 void PrinterAttachments::opacityChanged(int i) {
   if (i == m_opacity->minimum()) {
@@ -51,6 +55,7 @@ void PrinterAttachments::opacityChanged(int i) {
     QString _val = QString::asprintf("0.%d", i);
     m_opacityLabel->setText(_val);
   }
+  subWidgetChanged();
 }
 
 void PrinterAttachments::loadSection(AntiquaCRM::ASettings *config) {

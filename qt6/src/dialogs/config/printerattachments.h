@@ -23,6 +23,7 @@ private:
   AntiquaCRM::ASlider *m_opacity;
 
 private Q_SLOTS:
+  void subWidgetChanged();
   void opacityChanged(int);
 
 public Q_SLOTS:

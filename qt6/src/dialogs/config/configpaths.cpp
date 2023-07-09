@@ -38,7 +38,7 @@ void ConfigPaths::loadSectionConfig() {
 
     m_inp->setValue(_val);
   }
-  registerInputChangeSignals();
+  registerInputChangeSignals(this);
 }
 
 void ConfigPaths::saveSectionConfig() {

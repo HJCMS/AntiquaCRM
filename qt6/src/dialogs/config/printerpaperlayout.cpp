@@ -61,6 +61,17 @@ PrinterPaperLayout::PrinterPaperLayout(QWidget *parent) : QGroupBox{parent} {
 
   layout->setRowStretch(row, 1);
   setLayout(layout);
+
+  connect(m_marginLeft, SIGNAL(updateChanged(bool)),
+          SLOT(setInputChanges(bool)));
+  connect(m_marginRight, SIGNAL(updateChanged(bool)),
+          SLOT(setInputChanges(bool)));
+  connect(m_marginSubject, SIGNAL(updateChanged(bool)),
+          SLOT(setInputChanges(bool)));
+  connect(m_marginRecipient, SIGNAL(updateChanged(bool)),
+          SLOT(setInputChanges(bool)));
+  connect(m_marginBody, SIGNAL(updateChanged(bool)),
+          SLOT(setInputChanges(bool)));
 }
 
 QLabel *PrinterPaperLayout::label(const QString &title) {
@@ -69,6 +80,10 @@ QLabel *PrinterPaperLayout::label(const QString &title) {
   m_lb->setText(title + ":");
   m_lb->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
   return m_lb;
+}
+
+void PrinterPaperLayout::setInputChanges(bool b) {
+  setWindowModified(b);
 }
 
 void PrinterPaperLayout::loadSection(AntiquaCRM::ASettings *config) {

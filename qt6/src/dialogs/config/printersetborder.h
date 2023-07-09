@@ -22,6 +22,9 @@ private:
 private Q_SLOTS:
   void sliderChanged(int);
 
+Q_SIGNALS:
+  void updateChanged(bool);
+
 public Q_SLOTS:
   void setValue(int);
 

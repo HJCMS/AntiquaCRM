@@ -31,7 +31,7 @@ private:
   bool isAccessible();
 
 private Q_SLOTS:
-  void valueChanged();
+  void valueChanged(const QString &data = QString());
   void setFile();
 
 protected:

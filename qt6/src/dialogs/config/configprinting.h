@@ -11,6 +11,7 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
+#include <QEvent>
 #include <QObject>
 
 class PrinterDevices;
@@ -28,6 +29,11 @@ private:
   PrinterAttachments *m_attachmentGroup;
   PrinterPaperLayout *m_paperLayout;
   PrinterQRCode *m_qrCode;
+
+  /**
+   * @brief find edit changes
+   */
+  bool eventFilter(QObject *, QEvent *) override;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

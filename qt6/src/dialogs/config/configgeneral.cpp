@@ -40,7 +40,7 @@ void ConfigGeneral::loadSectionConfig() {
 
     m_inp->setValue(_val);
   }
-  registerInputChangeSignals();
+  registerInputChangeSignals(this);
 }
 
 void ConfigGeneral::saveSectionConfig() {

@@ -41,6 +41,17 @@ ConfigPrinting::ConfigPrinting(QWidget *parent)
   setWidget(m_central);
 }
 
+bool ConfigPrinting::eventFilter(QObject *obj, QEvent *event) {
+  if (event->type() == QEvent::ModifiedChange) {
+    QWidget *m_te = qobject_cast<QWidget *>(obj);
+    if (m_te != nullptr && m_te->isWindowModified()) {
+      setWindowModified(true);
+      return true;
+    }
+  }
+  return AntiquaCRM::TabsConfigWidget::eventFilter(obj, event);
+}
+
 void ConfigPrinting::loadSectionConfig() {
   config->beginGroup("printer");
   // Printers
@@ -55,7 +66,11 @@ void ConfigPrinting::loadSectionConfig() {
   m_qrCode->loadSection(config);
   // end
   config->endGroup();
-  registerInputChangeSignals();
+
+  QListIterator<QGroupBox *> it(findChildren<QGroupBox *>(QString()));
+  while (it.hasNext()) {
+    it.next()->installEventFilter(this);
+  }
 }
 
 void ConfigPrinting::saveSectionConfig() {

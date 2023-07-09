@@ -59,12 +59,14 @@ bool SelectTargets::isAccessible() {
   return false;
 }
 
-void SelectTargets::valueChanged() {
-  setWindowModified(true);
-  if (isAccessible())
+void SelectTargets::valueChanged(const QString &data) {
+  Q_UNUSED(data);
+  if (isAccessible()) {
+    setWindowModified(true);
     emit sendInputChanged();
-  else
-    setFocus();
+    return;
+  }
+  setFocus();
 }
 
 void SelectTargets::setTarget() {

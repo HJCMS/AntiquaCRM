@@ -60,14 +60,14 @@ protected:
 
   /**
    * @brief Add AntiquaCRM::AInputWidget to SignalMapper
-   *
+   * @param base - Read QObject::base
    * This function register from all AntiquaCRM::AInputWidget the
    * sendInputChanged Signal.
    *
    * You must call this manually!
    * For example in loadSectionConfig when all AntiquaCRM::AInputWidget filled!
    */
-  void registerInputChangeSignals();
+  void registerInputChangeSignals(QObject *base);
 
 public Q_SLOTS:
   /**

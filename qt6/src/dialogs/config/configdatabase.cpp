@@ -36,7 +36,7 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   m_profil = new DatabaseProfile(config, m_central);
   layout->addWidget(m_profil);
 
-  // Primary Connection Settings
+  // BEGIN:Primary Connection Settings
   QGroupBox *connectionGroup = new QGroupBox(this);
   connectionGroup->setTitle(tr("Access Configuration"));
   QVBoxLayout *m_groupLayout1 = new QVBoxLayout(connectionGroup);
@@ -111,6 +111,7 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
 
   connectionGroup->setLayout(m_groupLayout1);
   layout->addWidget(connectionGroup);
+  // END:Primary Connection Settings
 
   // BEGIN:SSL/TLS Settings
   QGroupBox *m_sslGroup = new QGroupBox(this);
@@ -168,10 +169,10 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   ssl_mode->setWhatsThisText(_info);
   ssl_mode->appendStretch(0);
   m_sslLayout->addWidget(ssl_mode);
-
   layout->addWidget(m_sslGroup);
+  // END:SSL/TLS Settings
 
-  // PgSQL Connection Info
+  // Final Info Widgets
   _info =
       tr("For more Information about Secure SQL Connection visit PostgreSQL");
   _info.prepend("<p>");
@@ -335,7 +336,7 @@ void ConfigDatabase::updateProfile() {
 void ConfigDatabase::loadSectionConfig() {
   m_profil->loadEntries();
   loadProfile(m_profil->currentIdentifier());
-  registerInputChangeSignals();
+  registerInputChangeSignals(this);
 }
 
 void ConfigDatabase::saveSectionConfig() {
@@ -343,7 +344,8 @@ void ConfigDatabase::saveSectionConfig() {
   config->setValue("database_profile", _profile_id);
   config->beginGroup("database/" + _profile_id);
   config->setValue("profile", m_profil->currentProfile());
-  config->setValue("pg_ssl", true); // Always true!
+  // SSL/TLS is always enabled!
+  config->setValue("pg_ssl", true);
   QList<AntiquaCRM::AInputWidget *> _l =
       findChildren<AntiquaCRM::AInputWidget *>(QString());
   for (int i = 0; i < _l.count(); i++) {

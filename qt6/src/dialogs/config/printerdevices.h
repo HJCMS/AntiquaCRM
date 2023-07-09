@@ -24,6 +24,9 @@ private:
 
   const QIcon icon() const;
 
+private Q_SLOTS:
+  void setDeviceChanged(int);
+
 public Q_SLOTS:
   void loadSection(AntiquaCRM::ASettings *);
   void saveSection(AntiquaCRM::ASettings *);

@@ -21,8 +21,7 @@ namespace AntiquaCRM {
  * @brief The „SelectTargets“ input edit class.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY SelectTargets final
-    : public AntiquaCRM::AInputWidget {
+class ANTIQUACRM_LIBRARY SelectTargets final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
@@ -32,7 +31,7 @@ private:
   bool isAccessible();
 
 private Q_SLOTS:
-  void valueChanged();
+  void valueChanged(const QString &data = QString());
   void setTarget();
 
 protected:

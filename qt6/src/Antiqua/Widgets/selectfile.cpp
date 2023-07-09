@@ -19,9 +19,11 @@ SelectFile::SelectFile(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_open->setToolTip(tr("Change file path"));
   layout->addWidget(m_open);
 
-  connect(m_open, SIGNAL(clicked()), SLOT(setFile()));
-
   initData();
+
+  connect(m_open, SIGNAL(clicked()), SLOT(setFile()));
+  connect(m_edit, SIGNAL(textChanged(const QString &)),
+          SLOT(valueChanged(const QString &)));
 }
 
 bool SelectFile::isAccessible() {
@@ -34,12 +36,14 @@ bool SelectFile::isAccessible() {
   return false;
 }
 
-void SelectFile::valueChanged() {
-  setWindowModified(true);
-  if (isAccessible())
+void SelectFile::valueChanged(const QString &data) {
+  Q_UNUSED(data);
+  if (isAccessible()) {
+    setWindowModified(true);
     emit sendInputChanged();
-  else
-    setFocus();
+    return;
+  }
+  setFocus();
 }
 
 void SelectFile::setFile() {
@@ -65,7 +69,6 @@ void SelectFile::setValue(const QVariant &value) {
     return;
 
   m_edit->setText(value.toString());
-  valueChanged();
 }
 
 void SelectFile::setFocus() { m_edit->setFocus(); }
