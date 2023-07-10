@@ -13,7 +13,7 @@ CDsVinylSelectFilter::CDsVinylSelectFilter(QWidget *parent)
   setMinimumWidth(204);
 
   QString _prefix = tr("Search Media with") + " ";
-  QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");
+  QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
 
   int _i = 0;
   insertItem(_i, _icon, tr("Title"), // title search

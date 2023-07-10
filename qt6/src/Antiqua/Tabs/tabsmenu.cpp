@@ -18,7 +18,7 @@ TabsMenu::TabsMenu(QMenuBar *parent) : QMenu{parent} {
 void TabsMenu::addAction(const QJsonObject &jo) {
   const QString _id = jo.value("id").toString();
   const QString _title = jo.value("title").toString();
-  const QIcon _icon = AntiquaCRM::AntiquaApplIcon(jo.value("icon").toString());
+  const QIcon _icon = AntiquaCRM::antiquaIcon(jo.value("icon").toString());
   QAction *_ac = QMenu::addAction(_icon, _title);
   _ac->setObjectName(_id);
   connect(_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));

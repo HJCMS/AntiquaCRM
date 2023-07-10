@@ -8,7 +8,7 @@ CustomersFinancial::CustomersFinancial(QWidget *parent)
     : QWidget{parent}
 {
   setWindowTitle(tr("Payment details"));
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("office-chart-bar"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("office-chart-bar"));
   setContentsMargins(0, 0, 0, 0);
 
   QVBoxLayout *layout = new QVBoxLayout(this);

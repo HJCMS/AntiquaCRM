@@ -45,7 +45,7 @@ void SelectPaymentStatus::initData() {
                      AntiquaCRM::BUYER_NO_REACTION);
   m_edit->insertItem(c++, tr("order canceled"), AntiquaCRM::ORDER_CANCELED);
 
-  const QIcon _icon = AntiquaApplIcon("view-loan-asset");
+  const QIcon _icon = antiquaIcon("view-loan-asset");
   for (int i = 1; i < m_edit->count(); i++) {
     m_edit->setItemIcon(i, _icon);
   }

@@ -21,9 +21,9 @@ void CustomersTrustLevel::initData() {
   _f.setRequiredStatus(QSqlField::Optional);
   _f.setDefaultValue(0);
 
-  QIcon green = AntiquaCRM::AntiquaApplIcon("flag-green");
-  QIcon yellow = AntiquaCRM::AntiquaApplIcon("flag-yellow");
-  QIcon red = AntiquaCRM::AntiquaApplIcon("flag-red");
+  QIcon green = AntiquaCRM::antiquaIcon("flag-green");
+  QIcon yellow = AntiquaCRM::antiquaIcon("flag-yellow");
+  QIcon red = AntiquaCRM::antiquaIcon("flag-red");
   // Keine Vertrauensebene festgelegt
   m_edit->setWithoutDisclosures(AntiquaCRM::NO_TRUST_LEVEL);
   // Zahlt Pünktlich

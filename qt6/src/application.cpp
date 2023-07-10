@@ -6,10 +6,10 @@
 #include "systemtrayicon.h"
 
 #include <AntiquaWidgets>
-#include <QtCore>
 #include <QScreen>
 #include <QStyle>
 #include <QStyleFactory>
+#include <QtCore>
 
 Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
   setApplicationName(ANTIQUACRM_NAME);
@@ -54,9 +54,20 @@ bool Application::openDatabase() {
   return false;
 }
 
+void Application::initIconTheme() {
+  const QString _platform = platformName().toLower().trimmed();
+  if (_platform.startsWith("xcb")) {
+    QString _fallback("oxygen");
+    QIcon::setFallbackThemeName(_fallback);
+    QString _theme = m_cfg->value("icon_theme", _fallback).toString();
+    QIcon::setThemeName(_theme);
+  }
+}
+
 void Application::initTheme() {
   // AntiquaCRM using Fusion theme
   setStyle(QStyleFactory::create("Fusion"));
+  initIconTheme();
 
   // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
@@ -89,7 +100,7 @@ void Application::initTheme() {
       QString buffer;
       QTextStream in(&_fp);
       while (!in.atEnd()) {
-          buffer.append(in.readLine());
+        buffer.append(in.readLine());
       }
       _fp.close();
       setStyleSheet(buffer);

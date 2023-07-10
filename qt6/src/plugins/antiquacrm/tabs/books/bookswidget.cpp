@@ -14,7 +14,7 @@
 BooksWidget::BooksWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"books_tab", parent} {
   setObjectName("books_tab_widget");
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("kjournal"));
   setClosable(false);
 
   // Begin MainPage layout

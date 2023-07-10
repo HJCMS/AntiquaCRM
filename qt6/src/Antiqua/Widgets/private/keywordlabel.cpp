@@ -39,7 +39,7 @@ KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
 
   QToolButton *m_close = new QToolButton(this);
   m_close->setObjectName("keyword::button");
-  m_close->setIcon(AntiquaCRM::AntiquaApplIcon("edit-delete"));
+  m_close->setIcon(AntiquaCRM::antiquaIcon("edit-delete"));
   m_close->setToolButtonStyle(Qt::ToolButtonIconOnly);
   m_close->setToolTip(tr("Remove this keyword"));
   layout->addWidget(m_close);

@@ -20,11 +20,7 @@ ConfigTabsView::ConfigTabsView(QWidget *parent)
   layout->addWidget(m_view);
   layout->setStretch(0, 1);
 
-  QString _info =
-      tr("You can click move and drop to sort the listed plugins here.\n"
-         "In addition, a selection box is used to enable and disable loading.\n"
-         "Hint: This changes require a restart.");
-
+  QString _info = tr("a Selection Box is used to enable and disable loading.");
   QLabel *m_lb = new QLabel(_info, this);
   m_lb->setIndent(5);
   m_lb->setWordWrap(true);

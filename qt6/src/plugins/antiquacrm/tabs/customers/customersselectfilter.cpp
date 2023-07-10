@@ -12,7 +12,7 @@ CustomersSelectFilter::CustomersSelectFilter(QWidget *parent)
   setToolTip(tr("Press CTRL+Shift+F, to quickly open this Menu."));
   setMinimumWidth(204);
 
-  QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");
+  QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
 
   int _i = 0;
   insertItem(_i, _icon, tr("Customer"), // customer search

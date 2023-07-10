@@ -30,7 +30,7 @@ namespace AntiquaCRM {
  * @param name  - Iconname
  * @return QIcon
  */
-ANTIQUACRM_LIBRARY inline const QIcon AntiquaApplIcon(const QString &name) {
+ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString &name) {
   QIcon _back(":/icons/" + name + ".png");
   QIcon _icon = QIcon::fromTheme(name, _back);
 #ifdef ANTIQUA_DEVELOPEMENT

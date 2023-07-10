@@ -26,7 +26,7 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
     : QDialog{parent}, p_article_id{articleId}, p_category{category} {
   setObjectName("image_import_dialog");
   setWindowTitle(tr("Import Edit Source Images") + "[*]");
-  setWindowIcon(AntiquaApplIcon("antiquacrm"));
+  setWindowIcon(antiquaIcon("antiquacrm"));
   setMinimumSize(700, 500);
   setSizeGripEnabled(true);
   setContentsMargins(2, 2, 2, 0);
@@ -67,11 +67,11 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   // ButtonBox
   buttonBox = new QDialogButtonBox(this);
   QPushButton *btn_save = buttonBox->addButton(QDialogButtonBox::Save);
-  btn_save->setIcon(AntiquaApplIcon("action-save"));
+  btn_save->setIcon(antiquaIcon("action-save"));
   btn_save->setToolTip(tr("Save image to database."));
   btn_save->setStatusTip(btn_save->toolTip());
   QPushButton *btn_close = buttonBox->addButton(QDialogButtonBox::Close);
-  btn_close->setIcon(AntiquaApplIcon("action-quit"));
+  btn_close->setIcon(antiquaIcon("action-quit"));
   btn_close->setToolTip(tr("End dialog and process data."));
   btn_close->setStatusTip(btn_close->toolTip());
   layout->addWidget(buttonBox);

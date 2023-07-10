@@ -15,7 +15,7 @@ namespace AntiquaCRM {
 TabsIndex::TabsIndex(const char *index, QWidget *parent)
     : QStackedWidget{parent}, tabIndex{index} {
   setContentsMargins(0, 0, 0, 0);
-  setWindowIcon(AntiquaApplIcon("antiquacrm"));
+  setWindowIcon(antiquaIcon("antiquacrm"));
   addShortCutsAndSignals();
 }
 

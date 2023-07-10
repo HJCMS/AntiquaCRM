@@ -29,11 +29,11 @@ void GenderEdit::initData() {
 
   m_edit->setWithoutDisclosures(AntiquaCRM::NO_GENDER);
   m_edit->insertItem(1, tr("Male"), AntiquaCRM::MALE);
-  m_edit->setItemIcon(1, AntiquaApplIcon("gender-male"));
+  m_edit->setItemIcon(1, antiquaIcon("gender-male"));
   m_edit->insertItem(2, tr("Female"), AntiquaCRM::FEMALE);
-  m_edit->setItemIcon(2, AntiquaApplIcon("gender-female"));
+  m_edit->setItemIcon(2, antiquaIcon("gender-female"));
   m_edit->insertItem(3, tr("Various"), AntiquaCRM::VARIOUS);
-  m_edit->setItemIcon(3, AntiquaApplIcon("gender-various"));
+  m_edit->setItemIcon(3, antiquaIcon("gender-various"));
   m_edit->setCurrentIndex(0);
 }
 

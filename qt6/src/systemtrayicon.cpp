@@ -12,12 +12,12 @@ SystemTrayIcon::SystemTrayIcon(const QIcon &icon, QObject *parent)
   setToolTip(tr("Database connected."));
 
   QMenu *m_menu = new QMenu();
-  ac_show = m_menu->addAction(AntiquaCRM::AntiquaApplIcon("window-fullscreen"),
+  ac_show = m_menu->addAction(AntiquaCRM::antiquaIcon("window-fullscreen"),
                               tr("Window show"));
   ac_hide = m_menu->addAction(
-      AntiquaCRM::AntiquaApplIcon("window-nofullscreen"), tr("Window hide"));
+      AntiquaCRM::antiquaIcon("window-nofullscreen"), tr("Window hide"));
   m_menu->addSeparator();
-  ac_quit = m_menu->addAction(AntiquaCRM::AntiquaApplIcon("action-quit"),
+  ac_quit = m_menu->addAction(AntiquaCRM::antiquaIcon("action-quit"),
                               tr("Application Quit"));
   setContextMenu(m_menu);
 
@@ -38,10 +38,10 @@ void SystemTrayIcon::actionReason(QSystemTrayIcon::ActivationReason r) {
 void SystemTrayIcon::setConnectionStatus(bool b) {
   if (b) {
     setToolTip(tr("Database connected."));
-    setIcon(AntiquaCRM::AntiquaApplIcon("database-update"));
+    setIcon(AntiquaCRM::antiquaIcon("database-update"));
   } else {
     setToolTip(tr("No Database conenction!"));
-    setIcon(AntiquaCRM::AntiquaApplIcon("database-status"));
+    setIcon(AntiquaCRM::antiquaIcon("database-status"));
   }
 }
 

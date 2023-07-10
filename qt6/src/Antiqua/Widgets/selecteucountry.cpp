@@ -19,8 +19,8 @@ EUCountry::EUCountry(int ro, QString is, QString na) {
 // BEGIN::SelectEUCountryModel
 SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
     : QAbstractListModel{parent}, p_palette{parent->palette()},
-      euIcon(AntiquaApplIcon("european-flag")),
-      nonIcon(AntiquaApplIcon("dialog-warning")) {
+      euIcon(antiquaIcon("european-flag")),
+      nonIcon(antiquaIcon("dialog-warning")) {
   p_list.clear();
 }
 

@@ -12,7 +12,7 @@ BooksSelectFilter::BooksSelectFilter(QWidget *parent) : QComboBox{parent} {
   setToolTip(tr("Press CTRL+Shift+F, to quickly open this Menu."));
 
   QString _prefix = tr("Search Book with") + " ";
-  QIcon _icon = AntiquaCRM::AntiquaApplIcon("view-search");
+  QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
   insertItem(0, _icon, tr("Title and Author"), BOOK_TITLE_AUTHOR);
   setItemData(0, _prefix + tr("Title and Author"), Qt::ToolTipRole);
 

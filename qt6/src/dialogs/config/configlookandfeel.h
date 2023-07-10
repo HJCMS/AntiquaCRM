@@ -23,6 +23,8 @@ public:
   void addToolTip(int row, int column, const QString &text);
 };
 
+class IconThemes;
+
 class ConfigLookAndFeel final : public AntiquaCRM::TabsConfigWidget {
   Q_OBJECT
 
@@ -30,6 +32,7 @@ private:
   LookAndFeelLayout *layout;
   AntiquaCRM::BoolBox *m_toolTipIcons;
   AntiquaCRM::BoolBox *m_wheelSupport;
+  IconThemes *m_iconThemes;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

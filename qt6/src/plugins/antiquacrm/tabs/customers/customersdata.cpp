@@ -11,7 +11,7 @@
 
 CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   setWindowTitle(tr("Contact data"));
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("system-users"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("system-users"));
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setObjectName("contact_edit_layout");
@@ -159,7 +159,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   QPushButton *addressGen = new QPushButton(this);
   addressGen->setToolTip(tr("Generate Address with given Dataset."));
   addressGen->setText(tr("Generate Invoice address"));
-  addressGen->setIcon(AntiquaCRM::AntiquaApplIcon("groups"));
+  addressGen->setIcon(AntiquaCRM::antiquaIcon("groups"));
   row4->addWidget(addressGen, 0, 0, 1, 1);
 
   c_postal_address = new AntiquaCRM::TextField(this);

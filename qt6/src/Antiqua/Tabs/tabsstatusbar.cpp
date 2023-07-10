@@ -22,7 +22,7 @@ TabsStatusBar::TabsStatusBar(QWidget *parent) : QStatusBar{parent} {
   insertPermanentWidget(0, m_frame, 0);
 
   btn_refresh = new QPushButton(this);
-  btn_refresh->setIcon(AntiquaApplIcon("action-reload"));
+  btn_refresh->setIcon(antiquaIcon("action-reload"));
   btn_refresh->setText(tr("Update"));
   btn_refresh->setToolTip(tr("Update current View"));
   btn_refresh->setWhatsThis(tr("When pressed the table query will reloaded."));
@@ -49,7 +49,7 @@ void TabsStatusBar::addButton(QPushButton *btn) { layout->addWidget(btn); }
 QPushButton *TabsStatusBar::createButton(const QString &title,
                             const QString &tip) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(AntiquaApplIcon("database-add"));
+  btn->setIcon(antiquaIcon("database-add"));
   btn->setToolTip(tip);
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -64,7 +64,7 @@ QPushButton *TabsStatusBar::createButton(const QString &title,
 
 QPushButton *TabsStatusBar::historyButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(AntiquaApplIcon("view-list"));
+  btn->setIcon(antiquaIcon("view-list"));
   btn->setToolTip(tr("History menue"));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -79,7 +79,7 @@ QPushButton *TabsStatusBar::historyButton(const QString &title) {
 
 QPushButton *TabsStatusBar::defaultViewButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(AntiquaApplIcon("spreadsheet"));
+  btn->setIcon(antiquaIcon("spreadsheet"));
   btn->setToolTip(tr("Push to load the Standard view."));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -96,7 +96,7 @@ void TabsStatusBar::setHistoryActionMenu(QPushButton *parent) {
   // Mapper für Verlaufssignale
   QSignalMapper *m_mapper = new QSignalMapper(parent);
   QMenu *m_menu = new QMenu(parent);
-  QIcon icon = AntiquaApplIcon("view-books");
+  QIcon icon = antiquaIcon("view-books");
   QStringList entries;
   QMapIterator<TabsStatusBar::History, QString> it(historyItems());
   while (it.hasNext()) {

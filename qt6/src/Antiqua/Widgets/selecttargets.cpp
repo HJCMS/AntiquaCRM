@@ -26,7 +26,7 @@ SelectTargets::SelectTargets(QWidget *parent)
   layout->addWidget(m_edit);
 
   m_open = new QPushButton(this);
-  m_open->setIcon(AntiquaCRM::AntiquaApplIcon("archive-insert-directory"));
+  m_open->setIcon(AntiquaCRM::antiquaIcon("archive-insert-directory"));
   m_open->setToolTip(tr("Change target directory"));
   layout->addWidget(m_open);
 

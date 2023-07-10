@@ -111,7 +111,7 @@ int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab) {
 }
 
 const QIcon TabsWidget::defaultIcon() {
-  return AntiquaApplIcon("action-edit-document");
+  return antiquaIcon("action-edit-document");
 }
 
 AntiquaCRM::TabsIndex *TabsWidget::tabIndex(int index) const {

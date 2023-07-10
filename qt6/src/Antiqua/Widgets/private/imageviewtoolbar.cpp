@@ -27,19 +27,19 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
   layout->addWidget(lbar);
 
   ac_cut = lbar->addAction(tr("Cutting"));
-  ac_cut->setIcon(AntiquaApplIcon("action-cut"));
+  ac_cut->setIcon(antiquaIcon("action-cut"));
   ac_cut->setToolTip(tr("Cut image to Rubberband."));
   ac_cut->setStatusTip(ac_cut->toolTip());
   connect(ac_cut, SIGNAL(triggered()), SIGNAL(sendCutting()));
 
   ac_scale = lbar->addAction(tr("Scale"));
-  ac_scale->setIcon(AntiquaApplIcon("view-scale"));
+  ac_scale->setIcon(antiquaIcon("view-scale"));
   ac_scale->setToolTip(tr("Scale image to view."));
   ac_scale->setStatusTip(ac_scale->toolTip());
   connect(ac_scale, SIGNAL(triggered()), SIGNAL(sendAdjust()));
 
   ac_rotate = lbar->addAction(tr("Rotate"));
-  ac_rotate->setIcon(AntiquaApplIcon("view-rotate-right"));
+  ac_rotate->setIcon(antiquaIcon("view-rotate-right"));
   ac_rotate->setToolTip(tr("Rotate image clockwise."));
   ac_rotate->setStatusTip(ac_rotate->toolTip());
   connect(ac_rotate, SIGNAL(triggered()), SIGNAL(sendRotate()));
@@ -47,7 +47,7 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
   lbar->addSeparator();
 
   ac_reset = lbar->addAction(tr("Reset to default"));
-  ac_reset->setIcon(AntiquaApplIcon("action-redo"));
+  ac_reset->setIcon(antiquaIcon("action-redo"));
   ac_reset->setToolTip(tr("Revert the view back to the original."));
   ac_reset->setStatusTip(ac_reset->toolTip());
   connect(ac_reset, SIGNAL(triggered()), SIGNAL(sendReset()));
@@ -57,7 +57,7 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
 
   // Search
   QPushButton *ac_search = new QPushButton(tr("Search"), lbar);
-  ac_search->setIcon(AntiquaApplIcon("action-search"));
+  ac_search->setIcon(antiquaIcon("action-search"));
   ac_search->setToolTip(tr("Search picture with article number."));
   ac_search->setStatusTip(ac_search->toolTip());
   connect(ac_search, SIGNAL(clicked()), SLOT(searchArticleImage()));
@@ -65,35 +65,35 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
 
   // Tree Actions
   btn_targets = new QPushButton(tr("Open Directory"), this);
-  btn_targets->setIcon(AntiquaApplIcon("inode-directory"));
+  btn_targets->setIcon(antiquaIcon("inode-directory"));
   btn_targets->setToolTip(tr("Open a directory in the tree view."));
   btn_targets->setStatusTip(btn_targets->toolTip());
   layout->addWidget(btn_targets);
 
   QAction *ac = nullptr;
   QMenu *tm = new QMenu(btn_targets);
-  ac = tm->addAction(AntiquaApplIcon("folder-documents"), tr("Documents"));
+  ac = tm->addAction(antiquaIcon("folder-documents"), tr("Documents"));
   ac->setObjectName("documents");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 
-  ac = tm->addAction(AntiquaApplIcon("folder-documents"), tr("Archiv"));
+  ac = tm->addAction(antiquaIcon("folder-documents"), tr("Archiv"));
   ac->setObjectName("archiv");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 
-  ac = tm->addAction(AntiquaApplIcon("folder-image"), tr("Import"));
+  ac = tm->addAction(antiquaIcon("folder-image"), tr("Import"));
   ac->setObjectName("import");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 
-  ac = tm->addAction(AntiquaApplIcon("folder-downloads"), tr("Downloads"));
+  ac = tm->addAction(antiquaIcon("folder-downloads"), tr("Downloads"));
   ac->setObjectName("downloads");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 
-  ac = tm->addAction(AntiquaApplIcon("folder-pictures"), tr("Pictures"));
+  ac = tm->addAction(antiquaIcon("folder-pictures"), tr("Pictures"));
   ac->setObjectName("pictures");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 
 #ifdef Q_OS_LINUX
-  ac = tm->addAction(AntiquaApplIcon("folder-public"), tr("Public"));
+  ac = tm->addAction(antiquaIcon("folder-public"), tr("Public"));
   ac->setObjectName("public");
   connect(ac, SIGNAL(triggered()), SLOT(prepareTargetChange()));
 #endif

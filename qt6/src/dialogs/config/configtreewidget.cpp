@@ -14,12 +14,12 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
 
   QTreeWidgetItem *m_header = headerItem();
   m_header->setText(0, tr("Configuration Menu"));
-  m_header->setIcon(0, AntiquaCRM::AntiquaApplIcon("antiquacrm"));
+  m_header->setIcon(0, AntiquaCRM::antiquaIcon("antiquacrm"));
 
   m_mainIndex = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
   m_mainIndex->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   m_mainIndex->setFlags(Qt::ItemIsEnabled);
-  m_mainIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("configure"));
+  m_mainIndex->setIcon(0, AntiquaCRM::antiquaIcon("configure"));
   m_mainIndex->setText(0, tr("General"));
   m_mainIndex->setExpanded(true);
   addTopLevelItem(m_mainIndex);
@@ -27,7 +27,7 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   m_tabsIndex = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
   m_tabsIndex->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   m_tabsIndex->setFlags(Qt::ItemIsEnabled);
-  m_tabsIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("tab-new"));
+  m_tabsIndex->setIcon(0, AntiquaCRM::antiquaIcon("tab-new"));
   m_tabsIndex->setText(0, tr("Tab - Plugins"));
   m_tabsIndex->setData(0, Qt::ToolTipRole,
                        tr("Configure accessibility of tabs."));
@@ -38,7 +38,7 @@ ConfigTreeWidget::ConfigTreeWidget(QWidget *parent) : QTreeWidget{parent} {
   m_providerIndex = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
   m_providerIndex->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   m_providerIndex->setFlags(Qt::ItemIsEnabled);
-  m_providerIndex->setIcon(0, AntiquaCRM::AntiquaApplIcon("folder-remote"));
+  m_providerIndex->setIcon(0, AntiquaCRM::antiquaIcon("folder-remote"));
   m_providerIndex->setText(0, tr("Provider - Plugins"));
   m_providerIndex->setData(0, Qt::ToolTipRole,
                            tr("Configure accessibility of providers."));
@@ -63,7 +63,7 @@ QTreeWidgetItem *ConfigTreeWidget::childItem(QTreeWidgetItem *parent) const {
 
 void ConfigTreeWidget::addChild(QTreeWidgetItem *main, int page,
                                 const QJsonObject &jso) {
-  const QIcon _icon = AntiquaCRM::AntiquaApplIcon(jso.value("icon").toString());
+  const QIcon _icon = AntiquaCRM::antiquaIcon(jso.value("icon").toString());
   QTreeWidgetItem *_item = childItem(main);
   _item->setText(0, jso.value("title").toString());
   _item->setData(0, Qt::DecorationRole, _icon);

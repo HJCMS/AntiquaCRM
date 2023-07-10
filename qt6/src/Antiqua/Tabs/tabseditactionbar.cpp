@@ -13,7 +13,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_cancelBtn = new QPushButton(tr("Cancel"), this);
   m_cancelBtn->setObjectName("editor_action_button_cancel");
-  m_cancelBtn->setIcon(AntiquaApplIcon("dialog-cancel"));
+  m_cancelBtn->setIcon(antiquaIcon("dialog-cancel"));
   m_cancelBtn->setShortcut(QKeySequence::Cancel);
   QString sc_cancel = m_cancelBtn->shortcut().toString();
   m_cancelBtn->setToolTip(tr("Exit without saving.") + " " + sc_cancel);
@@ -23,7 +23,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_restoreBtn = new QPushButton(tr("Restore"), this);
   m_restoreBtn->setObjectName("editor_action_button_restore");
-  m_restoreBtn->setIcon(AntiquaApplIcon("action-restore"));
+  m_restoreBtn->setIcon(antiquaIcon("action-restore"));
   m_restoreBtn->setShortcut(QKeySequence::Undo);
   QString sc_undo = tr("Restore dataset to last save operation.");
   sc_undo.append(" " + m_restoreBtn->shortcut().toString());
@@ -45,7 +45,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_addArticle = new QPushButton(tr("Add Article"), this);
   m_addArticle->setObjectName("editor_action_button_article");
-  m_addArticle->setIcon(AntiquaApplIcon("action-add"));
+  m_addArticle->setIcon(antiquaIcon("action-add"));
   m_addArticle->setToolTip(tr("Create a new article"));
   m_addArticle->setWhatsThis(m_addArticle->toolTip());
   m_addArticle->setEnabled(false);
@@ -55,7 +55,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_saveBtn = new QPushButton(tr("Save"), this);
   m_saveBtn->setObjectName("editor_action_button_save");
-  m_saveBtn->setIcon(AntiquaApplIcon("action-save"));
+  m_saveBtn->setIcon(antiquaIcon("action-save"));
   m_saveBtn->setShortcut(QKeySequence::Save);
   QString sc_save = m_saveBtn->shortcut().toString();
   m_saveBtn->setToolTip(tr("Save current dataset") + " " + sc_save);
@@ -65,7 +65,7 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
 
   m_readyBtn = new QPushButton(tr("Back to Mainview"), this);
   m_readyBtn->setObjectName("editor_action_button_back");
-  m_readyBtn->setIcon(AntiquaApplIcon("action-undo"));
+  m_readyBtn->setIcon(antiquaIcon("action-undo"));
   m_readyBtn->setShortcut(QKeySequence::Back);
   QString sc_ready = m_readyBtn->shortcut().toString();
   m_readyBtn->setToolTip(tr("Go back to Mainview") + " " + sc_ready);

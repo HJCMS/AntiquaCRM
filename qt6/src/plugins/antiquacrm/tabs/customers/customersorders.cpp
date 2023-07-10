@@ -12,7 +12,7 @@
 
 CustomersOrders::CustomersOrders(QWidget *parent) : QTableWidget{parent} {
   setWindowTitle(tr("Orders"));
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("view-financial-payment-mode"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("view-financial-payment-mode"));
   restore();
   setSelectionBehavior(QAbstractItemView::SelectRows);
 }
@@ -67,41 +67,41 @@ QTableWidgetItem *CustomersOrders::paymentItem(const QVariant &data) {
   switch (static_cast<AntiquaCRM::OrderPayment>(data.toInt())) {
   case AntiquaCRM::OrderPayment::NOTPAID:
     title = tr("Not paid");
-    icon = AntiquaCRM::AntiquaApplIcon("dialog-warning");
+    icon = AntiquaCRM::antiquaIcon("dialog-warning");
     break;
 
   case AntiquaCRM::OrderPayment::PAYED:
     title = tr("Payed");
-    icon = AntiquaCRM::AntiquaApplIcon("dialog-ok");
+    icon = AntiquaCRM::antiquaIcon("dialog-ok");
     break;
 
   // Erinnert
   case AntiquaCRM::OrderPayment::REMIND:
     title = tr("Remindet");
-    icon = AntiquaCRM::AntiquaApplIcon("flag-yellow");
+    icon = AntiquaCRM::antiquaIcon("flag-yellow");
     break;
 
   // Mahnung
   case AntiquaCRM::OrderPayment::ADMONISH:
     title = tr("Admonished");
-    icon = AntiquaCRM::AntiquaApplIcon("flag-yellow");
+    icon = AntiquaCRM::antiquaIcon("flag-yellow");
     break;
 
   // Retour
   case AntiquaCRM::OrderPayment::RETURN:
     title = tr("Returning");
-    icon = AntiquaCRM::AntiquaApplIcon("action_redo");
+    icon = AntiquaCRM::antiquaIcon("action_redo");
     break;
 
   // Collection procedures/Inkassoverfahren
   case AntiquaCRM::OrderPayment::COLLPROC:
     title = tr("Collection procedures");
-    icon = AntiquaCRM::AntiquaApplIcon("flag-red");
+    icon = AntiquaCRM::antiquaIcon("flag-red");
     break;
 
   default:
     title = tr("Not paid");
-    icon = AntiquaCRM::AntiquaApplIcon("dialog-cancel");
+    icon = AntiquaCRM::antiquaIcon("dialog-cancel");
     break;
   };
 

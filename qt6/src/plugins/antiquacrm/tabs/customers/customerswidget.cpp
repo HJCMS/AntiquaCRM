@@ -14,7 +14,7 @@
 CustomersWidget::CustomersWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"customers_tab", parent} {
   setObjectName("customers_tab_widget");
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("system-users"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("system-users"));
   setClosable(false);
 
   // Begin MainPage layout

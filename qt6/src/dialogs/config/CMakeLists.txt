@@ -20,6 +20,7 @@ SET (_library_HEADERS
  configtabsview.cpp
  configpageswidget.cpp
  databaseprofile.cpp
+ iconthemes.cpp
  paymentsettingsgroup.cpp
  pathsettingsgroup.cpp
  pluginlistwidget.cpp
@@ -45,6 +46,7 @@ SET (_library_SOURCES
  configtabsview.h
  configpageswidget.h
  databaseprofile.h
+ iconthemes.h
  paymentsettingsgroup.h
  pathsettingsgroup.h
  pluginlistwidget.h

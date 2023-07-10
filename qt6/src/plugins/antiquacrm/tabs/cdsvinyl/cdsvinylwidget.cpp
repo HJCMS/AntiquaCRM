@@ -14,7 +14,7 @@
 CDsVinylWidget::CDsVinylWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"cdsvinyl_tab", parent} {
   setObjectName("cdsvinyl_tab_widget");
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("media-optical-dvd-video"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("media-optical-dvd-video"));
   setWindowTitle(getTitle());
   setClosable(true);
 

@@ -80,7 +80,7 @@ void TableView::setQueryLimit(int limit) {
 }
 
 const QIcon TableView::cellIcon(const QString &name) {
-  return AntiquaCRM::AntiquaApplIcon(name);
+  return AntiquaCRM::antiquaIcon(name);
 }
 
 int TableView::getQueryLimit() { return QueryLimit; }

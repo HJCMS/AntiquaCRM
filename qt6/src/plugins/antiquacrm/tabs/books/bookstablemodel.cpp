@@ -55,7 +55,7 @@ QVariant BooksTableModel::data(const QModelIndex &item, int role) const {
 
   if (role == Qt::DecorationRole &&
       fieldName(item.column()).contains("image")) {
-    return AntiquaCRM::AntiquaApplIcon("view-image");
+    return AntiquaCRM::antiquaIcon("view-image");
   }
 
   return AntiquaCRM::ASqlQueryModel::data(item, role);

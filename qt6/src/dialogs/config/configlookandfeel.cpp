@@ -3,6 +3,7 @@
 
 #include "configlookandfeel.h"
 #include "awhatsthisbutton.h"
+#include "iconthemes.h"
 
 #include <QLabel>
 
@@ -54,6 +55,11 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
          "particular have problems with large input masks.");
   layout->addToolTip(_row++, 1, _info);
 
+  m_iconThemes = new IconThemes(this);
+  m_iconThemes->setBuddyLabel(tr("Set application icon theme"));
+  m_iconThemes->appendStretch(0);
+  layout->addWidget(m_iconThemes, _row++, 0, 1, 2);
+
   layout->setRowStretch(_row, 1);
   m_central->setLayout(layout);
   setWidget(m_central);
@@ -66,6 +72,8 @@ void ConfigLookAndFeel::loadSectionConfig() {
   m_wheelSupport->setValue(
       config->value("mouse_wheel_support", false).toBool());
   config->endGroup();
+  m_iconThemes->setValue(
+      config->value("icon_theme", QIcon::fallbackThemeName()).toString());
   registerInputChangeSignals(this);
 }
 
@@ -74,6 +82,7 @@ void ConfigLookAndFeel::saveSectionConfig() {
   config->setValue("display_tooltip_buttons", m_toolTipIcons->getValue());
   config->setValue("mouse_wheel_support", m_wheelSupport->getValue());
   config->endGroup();
+  config->setValue("icon_theme", m_iconThemes->getValue());
   setWindowModified(false);
 }
 

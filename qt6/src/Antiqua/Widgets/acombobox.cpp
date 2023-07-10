@@ -44,7 +44,7 @@ void AComboBox::setWithoutDisclosures(const QVariant &data) {
   else
     insertItem(_i, withoutDisclosures(), QString());
 
-  setItemIcon(_i, AntiquaApplIcon("dialog-warning"));
+  setItemIcon(_i, antiquaIcon("dialog-warning"));
 }
 
 } // namespace AntiquaCRM

@@ -26,7 +26,7 @@ class ANTIQUACRM_LIBRARY ASqlDataQuery final {
 
 private:
   const QSqlRecord p_record;
-  QHash<QString, QVariant> p_data;
+  mutable QHash<QString, QVariant> p_data;
 
 public:
   explicit ASqlDataQuery(const QString &tableName);

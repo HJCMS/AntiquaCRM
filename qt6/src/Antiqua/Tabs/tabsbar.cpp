@@ -22,7 +22,7 @@ TabsBar::TabsBar(QWidget *parent, bool wheelEvents)
 
 void TabsBar::tabInserted(int index) {
   if (tabIcon(index).isNull())
-    setTabIcon(index, AntiquaCRM::AntiquaApplIcon("tab-new"));
+    setTabIcon(index, AntiquaCRM::antiquaIcon("tab-new"));
 
   QTabBar::tabInserted(index);
 }

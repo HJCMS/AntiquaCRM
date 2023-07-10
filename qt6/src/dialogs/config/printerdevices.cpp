@@ -46,7 +46,7 @@ QLabel *PrinterDevices::label(const QString &title) {
 }
 
 const QIcon PrinterDevices::icon() const {
-  return AntiquaCRM::AntiquaApplIcon("printer");
+  return AntiquaCRM::antiquaIcon("printer");
 }
 
 void PrinterDevices::loadSection(AntiquaCRM::ASettings *config) {

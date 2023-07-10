@@ -42,6 +42,11 @@ private:
   bool openDatabase();
 
   /**
+   * @brief Initial Icon Theme
+   */
+  void initIconTheme();
+
+  /**
    * @brief Initial Stylesheet
    * Loading Default Window Stylesheet theme and make some changes.
    */

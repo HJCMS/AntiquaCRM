@@ -10,7 +10,7 @@
 namespace AntiquaCRM {
 
 MailButton::MailButton(QWidget *parent) : QPushButton{parent} {
-  setIcon(AntiquaApplIcon("mail-message"));
+  setIcon(antiquaIcon("mail-message"));
   setText(tr("Mail Messages"));
   setToolTip(tr("Selection for different eMail messages."));
   setEnabled(false);

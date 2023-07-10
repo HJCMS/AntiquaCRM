@@ -12,7 +12,7 @@ namespace AntiquaCRM {
 
 PrinterButton::PrinterButton(QWidget *parent, AntiquaCRM::PrinterGroups flags)
     : QPushButton{parent} {
-  QIcon _icon = AntiquaApplIcon("printer");
+  QIcon _icon = antiquaIcon("printer");
   setIcon(_icon);
   setText(tr("Printing"));
   setEnabled(false);

@@ -25,17 +25,17 @@ DatabaseProfile::DatabaseProfile(AntiquaCRM::ASettings *config, QWidget *parent)
 
   m_test = new QPushButton(tr("Test"), this);
   m_test->setToolTip(tr("Create connection test."));
-  m_test->setIcon(AntiquaCRM::AntiquaApplIcon("debug-run"));
+  m_test->setIcon(AntiquaCRM::antiquaIcon("debug-run"));
   layout->addWidget(m_test);
 
   m_create = new QPushButton(tr("Create"), this);
   m_create->setToolTip(tr("Create a new Profile entry."));
-  m_create->setIcon(AntiquaCRM::AntiquaApplIcon("action-add"));
+  m_create->setIcon(AntiquaCRM::antiquaIcon("action-add"));
   layout->addWidget(m_create);
 
   m_remove = new QPushButton(tr("Remove"), this);
   m_remove->setToolTip(tr("Remove Selected Profile."));
-  m_remove->setIcon(AntiquaCRM::AntiquaApplIcon("action-remove"));
+  m_remove->setIcon(AntiquaCRM::antiquaIcon("action-remove"));
   m_remove->setEnabled(false);
   layout->addWidget(m_remove);
 
@@ -47,7 +47,7 @@ DatabaseProfile::DatabaseProfile(AntiquaCRM::ASettings *config, QWidget *parent)
 }
 
 const QIcon DatabaseProfile::entryIcon() {
-  return AntiquaCRM::AntiquaApplIcon("server-database");
+  return AntiquaCRM::antiquaIcon("server-database");
 }
 
 void DatabaseProfile::actionCreate() {

@@ -20,7 +20,7 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setObjectName("ALineEdit");
   setClearButtonEnabled(true);
   setFocusPolicy(Qt::StrongFocus);
-  ac_completer = addAction(AntiquaApplIcon("view-list-details"),
+  ac_completer = addAction(antiquaIcon("view-list-details"),
                            QLineEdit::TrailingPosition);
   ac_completer->setToolTip(tr("Show Completer Popup."));
   ac_completer->setEnabled(false);

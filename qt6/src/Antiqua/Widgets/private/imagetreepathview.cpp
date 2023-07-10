@@ -24,7 +24,7 @@ ImageTreePathView::ImageTreePathView(QWidget *parent) : QFrame{parent} {
   layout->addWidget(m_edit);
 
   m_ac = new QPushButton(this);
-  m_ac->setIcon(AntiquaApplIcon("folder-pictures"));
+  m_ac->setIcon(antiquaIcon("folder-pictures"));
   layout->addWidget(m_ac);
 
   setLayout(layout);

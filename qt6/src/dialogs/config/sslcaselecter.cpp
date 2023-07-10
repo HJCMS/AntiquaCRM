@@ -19,7 +19,7 @@ SslCaSelecter::SslCaSelecter(QWidget *parent)
 
   // Open FileDialog
   m_open = new QPushButton(this);
-  m_open->setIcon(AntiquaCRM::AntiquaApplIcon("archive-insert-directory"));
+  m_open->setIcon(AntiquaCRM::antiquaIcon("archive-insert-directory"));
   m_open->setToolTip(tr("Set CA Bundle file"));
   m_open->setSizePolicy(QSizePolicy::Minimum, QSizePolicy::Preferred);
   layout->addWidget(m_open);

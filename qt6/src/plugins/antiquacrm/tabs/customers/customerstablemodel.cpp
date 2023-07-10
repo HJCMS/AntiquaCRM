@@ -12,26 +12,26 @@ CustomersTableModel::CustomersTableModel(QObject *parent)
 
 const QIcon CustomersTableModel::headerIcon(int column) const {
   QMap<int, QIcon> map;
-  map.insert(1, AntiquaCRM::AntiquaApplIcon("view-statistics"));
-  map.insert(2, AntiquaCRM::AntiquaApplIcon("document-decrypt"));
+  map.insert(1, AntiquaCRM::antiquaIcon("view-statistics"));
+  map.insert(2, AntiquaCRM::antiquaIcon("document-decrypt"));
   return map.value(column);
 }
 
 const QIcon CustomersTableModel::trustIcon(int status) const {
   if (status < 3)
-    return AntiquaCRM::AntiquaApplIcon("flag-green");
+    return AntiquaCRM::antiquaIcon("flag-green");
 
   if (status == 3)
-    return AntiquaCRM::AntiquaApplIcon("flag-yellow");
+    return AntiquaCRM::antiquaIcon("flag-yellow");
 
-  return AntiquaCRM::AntiquaApplIcon("flag-red");
+  return AntiquaCRM::antiquaIcon("flag-red");
 }
 
 const QIcon CustomersTableModel::lockIcon(bool locked) const {
   if (locked)
-    return AntiquaCRM::AntiquaApplIcon("document-encrypt");
+    return AntiquaCRM::antiquaIcon("document-encrypt");
 
-  return AntiquaCRM::AntiquaApplIcon("document-decrypt");
+  return AntiquaCRM::antiquaIcon("document-decrypt");
 }
 
 const QString CustomersTableModel::toolTip(int column) const {

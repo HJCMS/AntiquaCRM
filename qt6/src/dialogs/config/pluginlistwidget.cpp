@@ -69,11 +69,12 @@ void PluginListWidget::addListItem(const QJsonObject &jso) {
       return;
   }
 
+  const QIcon _icon = AntiquaCRM::antiquaIcon("bookmark");
   PluginListWidgetItem *item = new PluginListWidgetItem(_serial, this);
   item->setData(Qt::DisplayRole, _display);
   item->setData(Qt::ToolTipRole, _toolTip);
   item->setData(Qt::CheckStateRole, Qt::Checked);
-  item->setData(Qt::DecorationRole, AntiquaCRM::AntiquaApplIcon("bookmark"));
+  item->setData(Qt::DecorationRole, _icon);
   item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsDragEnabled |
                  Qt::ItemIsEnabled | Qt::ItemNeverHasChildren |
                  Qt::ItemIsUserCheckable);

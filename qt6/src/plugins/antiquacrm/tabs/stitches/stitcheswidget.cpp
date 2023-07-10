@@ -14,7 +14,7 @@
 StitchesWidget::StitchesWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
   setObjectName("stitches_tab_widget");
-  setWindowIcon(AntiquaCRM::AntiquaApplIcon("kjournal"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("kjournal"));
   setWindowTitle(getTitle());
   setClosable(true);
 

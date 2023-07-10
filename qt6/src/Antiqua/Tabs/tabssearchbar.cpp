@@ -177,7 +177,7 @@ void TabsSearchBar::setMinLength(int l) {
 }
 
 const QIcon TabsSearchBar::getIcon(const QString &name) {
-  return AntiquaCRM::AntiquaApplIcon(name);
+  return AntiquaCRM::antiquaIcon(name);
 }
 
 TabsSearchBar::SearchPattern TabsSearchBar::searchPattern() const {
