@@ -2,21 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "configlookandfeel.h"
-#include "awhatsthisbutton.h"
 #include "iconthemes.h"
 
 #include <QLabel>
-
-LookAndFeelLayout::LookAndFeelLayout(QWidget *parent) : QGridLayout{parent} {
-  setContentsMargins(5, 5, 5, 5);
-}
-
-void LookAndFeelLayout::addToolTip(int row, int column, const QString &text) {
-  AntiquaCRM::AWhatsThisButton *m_tbn =
-      new AntiquaCRM::AWhatsThisButton(text, parentWidget());
-  m_tbn->setFocusPolicy(Qt::NoFocus);
-  addWidget(m_tbn, row, column, 1, 1, Qt::AlignRight);
-}
 
 ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
     : AntiquaCRM::PluginConfigWidget{"General", "window_behavior", parent} {
@@ -28,7 +16,8 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
 
   QString _info;
   int _row = 0;
-  LookAndFeelLayout *layout = new LookAndFeelLayout(m_central);
+  AntiquaCRM::ConfigGridLayout *layout =
+      new AntiquaCRM::ConfigGridLayout(m_central);
 
   _info = tr("All settings in this area require a restart of the application.");
   layout->addWidget(new QLabel(_info, m_central), _row++, 0, 1, 1);

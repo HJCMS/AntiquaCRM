@@ -22,6 +22,7 @@ SET (plugin_SOURCES
 )
 
 SET (plugin_HEADERS
+ abebooksconfig.h
  abebooks.h
  abebooksconfigwidget.h
 )

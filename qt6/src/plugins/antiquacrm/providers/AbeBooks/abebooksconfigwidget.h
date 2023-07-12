@@ -10,11 +10,22 @@
 #define ANTIQUACRM_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
 
 #include <AntiquaProviders>
+#include <AntiquaWidgets>
+#include <QUrl>
+#include <QLabel>
 #include <QWidget>
 
 class ANTIQUACRM_LIBRARY AbeBooksConfigWidget final
     : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
+
+private:
+  AntiquaCRM::TextLine *m_api_user;
+  AntiquaCRM::TextLine *m_api_host;
+  AntiquaCRM::TextLine *m_api_key;
+  AntiquaCRM::NumEdit *m_api_port;
+  inline QLabel *label(const QString &text);
+  const QUrl apiUrl() const;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

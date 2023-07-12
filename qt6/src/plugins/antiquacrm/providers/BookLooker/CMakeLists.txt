@@ -23,6 +23,7 @@ SET (plugin_SOURCES
 
 SET (plugin_HEADERS
  booklooker.h
+ booklookerconfig.h
  booklookerconfigwidget.h
 )
 

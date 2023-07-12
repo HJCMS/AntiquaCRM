@@ -76,6 +76,7 @@ SET (_library_SOURCES
   bookbindingedit.cpp
   boolbox.cpp
   conditionedit.cpp
+  configgridlayout.cpp
   crowdedit.cpp
   datetimeinfo.cpp
   descripeeditor.cpp
@@ -141,6 +142,7 @@ SET (_library_HEADERS
   bookbindingedit.h
   boolbox.h
   conditionedit.h
+  configgridlayout.h
   crowdedit.h
   datetimeinfo.h
   descripeeditor.h

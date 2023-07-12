@@ -29,6 +29,9 @@
 // AntiquaCRM::ConditionEdit
 #include "conditionedit.h"
 
+// AntiquaCRM::ConfigGridLayout
+#include "configgridlayout.h"
+
 // AntiquaCRM::DateTimeInfo
 #include "datetimeinfo.h"
 

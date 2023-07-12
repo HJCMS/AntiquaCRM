@@ -11,18 +11,9 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
-#include <QGridLayout>
 #include <QObject>
 
 class IconThemes;
-
-class LookAndFeelLayout final : public QGridLayout {
-  Q_OBJECT
-
-public:
-  explicit LookAndFeelLayout(QWidget *parent);
-  void addToolTip(int row, int column, const QString &text);
-};
 
 class ConfigLookAndFeel final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
