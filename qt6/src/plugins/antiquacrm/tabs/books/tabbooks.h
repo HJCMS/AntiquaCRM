@@ -29,7 +29,7 @@ public:
 
   const QString sqlFieldPrefix() const override;
 
-  AntiquaCRM::TabsConfigWidget *configWidget(QWidget *parent) const override;
+  AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const override;
 
   bool addIndexOnInit() const override;
 

@@ -8,7 +8,7 @@
 #include <QLayout>
 
 ConfigTabsView::ConfigTabsView(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"tabs", "config_tabs", parent} {
+    : AntiquaCRM::PluginConfigWidget{"tabs", "config_tabs", parent} {
   setWindowTitle(tr("Tabs"));
   setObjectName("config_tabs");
   setContentsMargins(0, 0, 0, 0);
@@ -73,8 +73,8 @@ void ConfigTabsView::saveSectionConfig() {
   */
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigTabsView::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
+AntiquaCRM::PluginConfigWidget::ConfigType ConfigTabsView::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject ConfigTabsView::getMenuEntry() const {

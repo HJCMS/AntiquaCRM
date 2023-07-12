@@ -3,7 +3,10 @@
 
 #include "iconthemes.h"
 
-#include <QtCore>
+#include <QDir>
+#include <QFileInfo>
+#include <QSettings>
+#include <QStringList>
 
 IconThemes::IconThemes(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent}, QIcon{} {
@@ -26,13 +29,10 @@ const QString IconThemes::getName(const QString &path) const {
   if (!_cache.isReadable())
     return _out;
 
-  QString _lcName("Name[");
-  _lcName.append(QLocale::system().bcp47Name());
-  _lcName.append("]");
-
+  QString _name = QString("Name[%1]").arg(QLocale::system().bcp47Name());
   QSettings _tcfg(_index.filePath(), QSettings::IniFormat);
   _tcfg.beginGroup("Icon Theme");
-  const QString _key(_tcfg.contains(_lcName) ? _lcName : "Name");
+  const QString _key(_tcfg.contains(_name) ? _name : "Name");
   _out = _tcfg.value(_key).toString();
   _tcfg.endGroup();
   return _out;

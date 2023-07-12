@@ -25,6 +25,7 @@ namespace AntiquaCRM {
  * Some extended Functions with SQL-Field properties, predefined Validators,
  * Completer and visual feedback functions. Also includes the minLength property
  * for SQL table field constraints.
+ *
  * @ingroup EditInputs
  */
 class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {

@@ -13,7 +13,7 @@
 #include <QLayout>
 
 StitchesConfigWidget::StitchesConfigWidget(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"tabs", STITCHES_INTERFACE_NAME, parent} {
+    : AntiquaCRM::PluginConfigWidget{"tabs", STITCHES_INTERFACE_NAME, parent} {
   setContentsMargins(0, 0, 0, 0);
 
   QJsonObject _jobj = getMenuEntry();
@@ -98,8 +98,8 @@ void StitchesConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType StitchesConfigWidget::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
+AntiquaCRM::PluginConfigWidget::ConfigType StitchesConfigWidget::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject StitchesConfigWidget::getMenuEntry() const {

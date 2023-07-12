@@ -66,6 +66,7 @@ SET (_library_SOURCES
   ainputwidget.cpp
   alabel.cpp
   alineedit.cpp
+  apluginconfigwidget.cpp
   aprintdialog.cpp
   aprintingpage.cpp
   aslider.cpp
@@ -123,17 +124,14 @@ SET (_library_SOURCES
 )
 
 SET (_library_HEADERS
-  ainputwidget.h
   acolorluminance.h
   acombobox.h
   adatetimeedit.h
   adoublebox.h
+  ainputwidget.h
   alabel.h
   alineedit.h
-  antiquabuttons.h
-  antiquainput.h
-  antiquaprinting.h
-  antiquawidgets.h
+  apluginconfigwidget.h
   aprintdialog.h
   aprintingpage.h
   aslider.h

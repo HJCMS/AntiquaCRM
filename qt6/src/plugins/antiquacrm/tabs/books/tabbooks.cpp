@@ -18,7 +18,7 @@ const QString TabBooks::sqlFieldPrefix() const {
   return BOOKS_SQL_FIELD_PREFIX;
 }
 
-AntiquaCRM::TabsConfigWidget *TabBooks::configWidget(QWidget *parent) const {
+AntiquaCRM::PluginConfigWidget *TabBooks::configWidget(QWidget *parent) const {
   BooksTabConfigWidget *_widget = new BooksTabConfigWidget(parent);
   return _widget;
 }

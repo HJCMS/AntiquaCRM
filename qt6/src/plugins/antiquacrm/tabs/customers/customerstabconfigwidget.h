@@ -12,11 +12,8 @@
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 
-class CustomersTabConfigWidget final : public AntiquaCRM::TabsConfigWidget {
+class CustomersTabConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
-
-private:
-  //
 
 public Q_SLOTS:
   void loadSectionConfig() override;
@@ -24,7 +21,7 @@ public Q_SLOTS:
 
 public:
   explicit CustomersTabConfigWidget(QWidget *parent = nullptr);
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

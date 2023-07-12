@@ -12,6 +12,9 @@
 #include "configtabsview.h"
 #include "configtreewidget.h"
 
+#include <AntiquaProviders>
+#include <AntiquaTabs>
+
 #include <QMessageBox>
 #include <QMetaObject>
 #include <QScrollArea>
@@ -69,6 +72,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_cfgTabs = new ConfigTabsView(m_pageView);
   m_pageView->insert(_pindex++, m_cfgTabs);
 
+  // NOTE The Providers interface section is a fixed TreeWidget entry!
+  m_cfgProviders = new ConfigProvidersView(m_pageView);
+  m_pageView->insert(_pindex++, m_cfgProviders);
+
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);
 
@@ -121,17 +128,17 @@ void ConfigDialog::closeEvent(QCloseEvent *e) {
 }
 
 bool ConfigDialog::loadConfigWidget() {
-  AntiquaCRM::TabsLoader _loader(this);
-  const QList<AntiquaCRM::TabsInterface *> _li = _loader.interfaces(this);
-  if (_li.size() < 1)
+  AntiquaCRM::TabsLoader _pl_tabs(this);
+  const QList<AntiquaCRM::TabsInterface *> _ti = _pl_tabs.interfaces(this);
+  if (_ti.size() < 1)
     return false;
 
   int _count = m_pageView->count();
-  QListIterator<AntiquaCRM::TabsInterface *> t_it(_li);
-  while (t_it.hasNext()) {
-    AntiquaCRM::TabsInterface *m_iface = t_it.next();
+  QListIterator<AntiquaCRM::TabsInterface *> t_ti(_ti);
+  while (t_ti.hasNext()) {
+    AntiquaCRM::TabsInterface *m_iface = t_ti.next();
     if (m_iface) {
-      AntiquaCRM::TabsConfigWidget *m_w = m_iface->configWidget(m_pageView);
+      AntiquaCRM::PluginConfigWidget *m_w = m_iface->configWidget(m_pageView);
       m_pageView->insert(_count, m_w);
       m_treeWidget->addTabPlugin(_count, m_w->getMenuEntry());
       _count++;
@@ -139,11 +146,28 @@ bool ConfigDialog::loadConfigWidget() {
   }
 
   m_pageView->insert(_count++, new ConfigProvidersView(m_pageView));
+
+  AntiquaCRM::ProvidersLoader _pl_providers(this);
+  const QList<AntiquaCRM::ProviderInterface *> _pi = _pl_providers.interfaces(this);
+  if (_pi.size() < 1)
+    return false;
+
+  QListIterator<AntiquaCRM::ProviderInterface *> t_pi(_pi);
+  while (t_pi.hasNext()) {
+    AntiquaCRM::ProviderInterface *m_iface = t_pi.next();
+    if (m_iface) {
+      AntiquaCRM::PluginConfigWidget *m_w = m_iface->configWidget(m_pageView);
+      m_pageView->insert(_count, m_w);
+      m_treeWidget->addProviderPlugin(_count, m_w->getMenuEntry());
+      _count++;
+    }
+  }
+
   return true;
 }
 
 void ConfigDialog::loadConfigs() {
-  QListIterator<AntiquaCRM::TabsConfigWidget *> it(m_pageView->pages());
+  QListIterator<AntiquaCRM::PluginConfigWidget *> it(m_pageView->pages());
   while (it.hasNext()) {
     it.next()->loadSectionConfig();
   }
@@ -179,7 +203,7 @@ void ConfigDialog::openConfigGroup(const QString &name) {
 }
 
 void ConfigDialog::aboutToSave() {
-  QListIterator<AntiquaCRM::TabsConfigWidget *> it(m_pageView->pages());
+  QListIterator<AntiquaCRM::PluginConfigWidget *> it(m_pageView->pages());
   while (it.hasNext()) {
     it.next()->saveSectionConfig();
   }

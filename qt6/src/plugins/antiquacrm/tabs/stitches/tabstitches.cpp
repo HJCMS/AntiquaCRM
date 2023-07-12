@@ -22,7 +22,7 @@ const QString TabStitches::sqlTableName() const { return STITCHES_TABLE_NAME; }
 
 const QString TabStitches::sqlFieldPrefix() const { return QString("ip"); }
 
-AntiquaCRM::TabsConfigWidget *TabStitches::configWidget(QWidget *parent) const {
+AntiquaCRM::PluginConfigWidget *TabStitches::configWidget(QWidget *parent) const {
   StitchesConfigWidget *_w = new StitchesConfigWidget(parent);
   if (_w == nullptr)
     qFatal("Unable to load StitchesConfigWidget!");

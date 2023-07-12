@@ -12,7 +12,7 @@
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 
-class BooksTabConfigWidget final : public AntiquaCRM::TabsConfigWidget {
+class BooksTabConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
@@ -25,7 +25,7 @@ public Q_SLOTS:
 
 public:
   explicit BooksTabConfigWidget(QWidget *parent = nullptr);
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

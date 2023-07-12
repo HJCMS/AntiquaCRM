@@ -11,25 +11,23 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
-#include <QCheckBox>
 #include <QGridLayout>
 #include <QObject>
+
+class IconThemes;
 
 class LookAndFeelLayout final : public QGridLayout {
   Q_OBJECT
 
 public:
-  explicit LookAndFeelLayout(QWidget *parent = nullptr);
+  explicit LookAndFeelLayout(QWidget *parent);
   void addToolTip(int row, int column, const QString &text);
 };
 
-class IconThemes;
-
-class ConfigLookAndFeel final : public AntiquaCRM::TabsConfigWidget {
+class ConfigLookAndFeel final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
-  LookAndFeelLayout *layout;
   AntiquaCRM::BoolBox *m_toolTipIcons;
   AntiquaCRM::BoolBox *m_wheelSupport;
   IconThemes *m_iconThemes;
@@ -40,7 +38,7 @@ public Q_SLOTS:
 
 public:
   explicit ConfigLookAndFeel(QWidget *parent = nullptr);
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

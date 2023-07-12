@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 
 CustomersTabConfigWidget::CustomersTabConfigWidget(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"tabs", CUSTOMERS_INTERFACE_NAME, parent} {
+    : AntiquaCRM::PluginConfigWidget{"tabs", CUSTOMERS_INTERFACE_NAME, parent} {
   setContentsMargins(0, 0, 0, 0);
 
   QJsonObject _jobj = getMenuEntry();
@@ -33,9 +33,9 @@ void CustomersTabConfigWidget::loadSectionConfig() { /* UNUSED */
 void CustomersTabConfigWidget::saveSectionConfig() { /* UNUSED */
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType
+AntiquaCRM::PluginConfigWidget::ConfigType
 CustomersTabConfigWidget::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject CustomersTabConfigWidget::getMenuEntry() const {

@@ -28,9 +28,13 @@ SET (_stl_HEADERS
 )
 
 SET (_library_SOURCES
+  profiderinterface.cpp
+  providersloader.cpp
 )
 
 SET (_library_HEADERS
+  profiderinterface.h
+  providersloader.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED
@@ -41,6 +45,7 @@ ADD_LIBRARY (${_sharedLibrary} SHARED
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
+ADD_DEFINITIONS (-DANTIQUACRM_PROVIDER_INTERFACE="${CMAKE_ANTIQUA_PROVIDER_INTERFACE}")
 
 SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
   VERSION ${ANTIQUACRM_VERSION_STRING}

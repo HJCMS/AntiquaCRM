@@ -4,6 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-# ADD_SUBDIRECTORY(AbeBooks)
+ADD_SUBDIRECTORY(AbeBooks)
+ADD_SUBDIRECTORY(BookLooker)
 
 ##EOF

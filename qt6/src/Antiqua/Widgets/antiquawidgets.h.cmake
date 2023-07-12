@@ -9,6 +9,11 @@
 #ifndef ANTIQUACRM_WIDGETS_LIB_H
 #define ANTIQUACRM_WIDGETS_LIB_H
 
+// AntiquaCRM::PluginConfigWidget
+#ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
+#include "apluginconfigwidget.h"
+#endif
+
 // AntiquaCRM::AColorLuminance
 #include "acolorluminance.h"
 

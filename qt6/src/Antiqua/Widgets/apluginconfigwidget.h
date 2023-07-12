@@ -6,10 +6,10 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_TABS_CONFIGWIDGET_H
-#define ANTIQUACRM_TABS_CONFIGWIDGET_H
+#ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
+#define ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
 
-#include <AntiquaWidgets>
+#include <AntiquaInput>
 #include <QIcon>
 #include <QMap>
 #include <QMetaType>
@@ -21,14 +21,14 @@
 namespace AntiquaCRM {
 
 /**
- * @class TabsConfigWidget
- * @brief Abstract System Configuration Widget
+ * @class PluginConfigWidget
+ * @brief Abstract Interface Configuration Widget
  *
  * This Widget is used to configure loaded Plugins in "Configuration Dialogs".
  *
- * @ingroup TabsInterface
+ * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY TabsConfigWidget : public QScrollArea {
+class ANTIQUACRM_LIBRARY PluginConfigWidget : public QScrollArea {
   Q_OBJECT
 
 private:
@@ -60,7 +60,7 @@ protected:
 
   /**
    * @brief Add AntiquaCRM::AInputWidget to SignalMapper
-   * @param base - Read QObject::base
+   * @param base - Read ANTIQUACRM_TABS_CONFIGWIDGET_HQObject::base
    * This function register from all AntiquaCRM::AInputWidget the
    * sendInputChanged Signal.
    *
@@ -94,11 +94,11 @@ public:
    * @param id     - Configuration Identifier group
    * @param parent - Parent Widget
    */
-  explicit TabsConfigWidget(const QString &group, // config group
-                            const QString &id,    // config id
-                            QWidget *parent = nullptr);
+  explicit PluginConfigWidget(const QString &group, // config group
+                               const QString &id,    // config id
+                               QWidget *parent = nullptr);
 
-  ~TabsConfigWidget();
+  ~PluginConfigWidget();
 
   /**
    * @brief configuration group path
@@ -121,7 +121,7 @@ public:
   /**
    * @brief where this configuration will saved?
    */
-  virtual TabsConfigWidget::ConfigType getType() const = 0;
+  virtual PluginConfigWidget::ConfigType getType() const = 0;
 
   /**
    * @brief menu entry data
@@ -138,4 +138,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_TABS_CONFIGWIDGET_H
+#endif // ANTIQUACRM_PLUGIN_CONFIGWIDGET_H

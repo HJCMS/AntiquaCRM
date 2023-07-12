@@ -9,7 +9,7 @@
 #include <QtWidgets>
 
 ConfigGeneral::ConfigGeneral(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"General", QString(), parent} {
+    : AntiquaCRM::PluginConfigWidget{"General", QString(), parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
   // Central Widget
   QWidget *m_central = new QWidget(this);
@@ -55,8 +55,8 @@ void ConfigGeneral::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigGeneral::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::PluginConfigWidget::ConfigType ConfigGeneral::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigGeneral::getMenuEntry() const {

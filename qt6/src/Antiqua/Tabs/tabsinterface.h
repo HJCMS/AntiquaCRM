@@ -17,7 +17,7 @@
 namespace AntiquaCRM {
 
 class TabsIndex;
-class TabsConfigWidget;
+class PluginConfigWidget;
 
 /**
  * @class TabsInterface
@@ -82,7 +82,7 @@ public:
    *
    * Widget for AntiquaCRM Configuration system.
    */
-  virtual AntiquaCRM::TabsConfigWidget *configWidget(QWidget *parent) const = 0;
+  virtual AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const = 0;
 
   /**
    * @brief if true - load this interface on application start into main
@@ -126,6 +126,6 @@ public:
 
 } // namespace AntiquaCRM
 
-Q_DECLARE_INTERFACE(AntiquaCRM::TabsInterface, ANTIQUACRM_TABS_INTERFACE)
+Q_DECLARE_INTERFACE(AntiquaCRM::TabsInterface, ANTIQUACRM_TABS_INTERFACE);
 
 #endif // ANTIQUACRM_TABS_INTERFACE_H

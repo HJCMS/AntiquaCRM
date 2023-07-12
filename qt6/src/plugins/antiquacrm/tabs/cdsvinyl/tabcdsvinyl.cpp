@@ -22,7 +22,7 @@ const QString TabCDsVinyl::sqlTableName() const { return CDSVINYL_TABLE_NAME; }
 
 const QString TabCDsVinyl::sqlFieldPrefix() const { return QString("cv"); }
 
-AntiquaCRM::TabsConfigWidget *TabCDsVinyl::configWidget(QWidget *parent) const {
+AntiquaCRM::PluginConfigWidget *TabCDsVinyl::configWidget(QWidget *parent) const {
   CDsVinylConfigWidget *_w = new CDsVinylConfigWidget(parent);
   if (_w == nullptr)
     qFatal("Unable to load CDsVinylConfigWidget!");

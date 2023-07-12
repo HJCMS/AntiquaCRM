@@ -1,15 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "tabsconfigwidget.h"
+#include "apluginconfigwidget.h"
 
-#include <QBoxLayout>
 #include <QDate>
 
 namespace AntiquaCRM {
 
-TabsConfigWidget::TabsConfigWidget(const QString &group, const QString &id,
-                                   QWidget *parent)
+PluginConfigWidget::PluginConfigWidget(const QString &group, const QString &id,
+                                       QWidget *parent)
     : QScrollArea{parent}, p_gid{group + "/" + id} {
   setWidgetResizable(true);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
@@ -19,7 +18,7 @@ TabsConfigWidget::TabsConfigWidget(const QString &group, const QString &id,
           SLOT(setInputEditChanged(QObject *)));
 }
 
-TabsConfigWidget::~TabsConfigWidget() {
+PluginConfigWidget::~PluginConfigWidget() {
   if (config != nullptr)
     config->deleteLater();
 
@@ -30,19 +29,19 @@ TabsConfigWidget::~TabsConfigWidget() {
     signalMapper->deleteLater();
 }
 
-void TabsConfigWidget::setInputEditChanged(QObject *object) {
+void PluginConfigWidget::setInputEditChanged(QObject *object) {
   if (signalMapper->mapping(object) != nullptr)
     setWindowModified(true);
 }
 
 QList<AntiquaCRM::AInputWidget *>
-TabsConfigWidget::getInputList(QObject *parent) {
+PluginConfigWidget::getInputList(QObject *parent) {
   Q_CHECK_PTR(parent);
   return parent->findChildren<AntiquaCRM::AInputWidget *>(
       QString(), Qt::FindChildrenRecursively);
 }
 
-void TabsConfigWidget::registerInputChangeSignals(QObject *base) {
+void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
   QListIterator<AntiquaCRM::AInputWidget *> it(
       base->findChildren<AntiquaCRM::AInputWidget *>(QString()));
   while (it.hasNext()) {
@@ -56,7 +55,7 @@ void TabsConfigWidget::registerInputChangeSignals(QObject *base) {
   }
 }
 
-const QString TabsConfigWidget::getGroup() const {
+const QString PluginConfigWidget::getGroup() const {
   if (!config->contains(p_gid)) {
     config->beginGroup(p_gid);
     config->setValue("registered", QDate::currentDate().toString(Qt::ISODate));
@@ -65,7 +64,7 @@ const QString TabsConfigWidget::getGroup() const {
   return p_gid;
 }
 
-const QStringList TabsConfigWidget::getCurrentKeys() {
+const QStringList PluginConfigWidget::getCurrentKeys() {
   QStringList _keys;
   config->beginGroup(getGroup());
   _keys = config->childKeys();
@@ -73,7 +72,7 @@ const QStringList TabsConfigWidget::getCurrentKeys() {
   return _keys;
 }
 
-const QMap<QString, QMetaType::Type> TabsConfigWidget::getProviderApiKeys() {
+const QMap<QString, QMetaType::Type> PluginConfigWidget::getProviderApiKeys() {
   QMap<QString, QMetaType::Type> _m;
   _m.insert("host", QMetaType::QString);
   _m.insert("key", QMetaType::QString);

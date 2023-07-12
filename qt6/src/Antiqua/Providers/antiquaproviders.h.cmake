@@ -18,6 +18,16 @@
 #include "aglobal.h"
 #endif
 
-// TODO
+// AntiquaCRM::PluginConfigWidget
+#ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
+// Note: This class is a part of AntiquaWidgets library.
+#include "apluginconfigwidget.h"
+#endif
+
+// AntiquaCRM::ProviderInterface
+#include "profiderinterface.h"
+
+// AntiquaCRM::ProvidersLoader
+#include "providersloader.h"
 
 #endif

@@ -9,14 +9,16 @@
 #ifndef ANTIQUACRM_DIALOGS_CONFIGPROVIDERSVIEW_H
 #define ANTIQUACRM_DIALOGS_CONFIGPROVIDERSVIEW_H
 
-#include <AntiquaTabs>
+#include <AntiquaProviders>
 #include <QWidget>
 
-class ConfigProvidersView final : public AntiquaCRM::TabsConfigWidget {
+class PluginListWidget;
+
+class ConfigProvidersView final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
-  // QStringList p_list;
+  PluginListWidget *m_view;
 
 public Q_SLOTS:
   void loadSectionConfig() override;
@@ -24,7 +26,7 @@ public Q_SLOTS:
 
 public:
   explicit ConfigProvidersView(QWidget *parent = nullptr);
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

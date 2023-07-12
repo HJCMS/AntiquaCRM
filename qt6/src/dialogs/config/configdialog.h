@@ -9,7 +9,6 @@
 #ifndef ANTIQUACRM_DIALOGS_CONFIGDIALOG_H
 #define ANTIQUACRM_DIALOGS_CONFIGDIALOG_H
 
-#include <AntiquaTabs>
 #include <AntiquaWidgets>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -27,6 +26,7 @@ class ConfigPaths;
 class ConfigPrinting;
 class ConfigLookAndFeel;
 class ConfigTabsView;
+class ConfigProvidersView;
 
 class ConfigDialog final : public QDialog {
   Q_OBJECT
@@ -45,6 +45,7 @@ private:
   ConfigLookAndFeel *m_cfgLookAndFeel;
 
   ConfigTabsView *m_cfgTabs;
+  ConfigProvidersView *m_cfgProviders;
 
   void closeEvent(QCloseEvent *) override;
 

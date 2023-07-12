@@ -85,5 +85,6 @@ TARGET_LINK_LIBRARIES (${_library} PRIVATE
  Qt6::Xml
  AntiquaCRM
  AntiquaTabs
+ AntiquaProviders
  AntiquaWidgets
 )

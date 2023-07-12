@@ -32,13 +32,13 @@ public Q_SLOTS:
 public:
   explicit ConfigPagesWidget(QWidget *parent = nullptr);
 
-  int insert(int index, AntiquaCRM::TabsConfigWidget *widget);
+  int insert(int index, AntiquaCRM::PluginConfigWidget *widget);
 
-  const QList<AntiquaCRM::TabsConfigWidget *> pages();
+  const QList<AntiquaCRM::PluginConfigWidget *> pages();
 
-  AntiquaCRM::TabsConfigWidget *page(int index);
+  AntiquaCRM::PluginConfigWidget *page(int index);
 
-  AntiquaCRM::TabsConfigWidget *page(QObject *);
+  AntiquaCRM::PluginConfigWidget *page(QObject *);
 };
 
 #endif // ANTIQUACRM_DIALOGS_CONFIGPAGESWIDGET_H

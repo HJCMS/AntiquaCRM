@@ -20,7 +20,7 @@ class PrinterAttachments;
 class PrinterPaperLayout;
 class PrinterQRCode;
 
-class ConfigPrinting final : public AntiquaCRM::TabsConfigWidget {
+class ConfigPrinting final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
@@ -41,7 +41,7 @@ public Q_SLOTS:
 
 public:
   explicit ConfigPrinting(QWidget *parent = nullptr);
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

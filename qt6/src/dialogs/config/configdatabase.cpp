@@ -15,7 +15,7 @@
 #include <QtWidgets>
 
 ConfigDatabase::ConfigDatabase(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"database", QString(), parent},
+    : AntiquaCRM::PluginConfigWidget{"database", QString(), parent},
       p_connection_id{"antiquacrm_db_connection_test"} {
   setObjectName("configdatabase");
   setWindowTitle(getMenuEntry().value("title").toString());
@@ -370,8 +370,8 @@ void ConfigDatabase::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigDatabase::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::PluginConfigWidget::ConfigType ConfigDatabase::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigDatabase::getMenuEntry() const {

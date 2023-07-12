@@ -5,6 +5,6 @@
 #
 
 ADD_SUBDIRECTORY(tabs)
-ADD_SUBDIRECTORY(provider)
+ADD_SUBDIRECTORY(providers)
 
 ##EOF

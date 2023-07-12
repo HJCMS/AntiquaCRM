@@ -18,11 +18,14 @@
 #include "aglobal.h"
 #endif
 
+// AntiquaCRM::PluginConfigWidget
+#ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
+// Note: This class is a part of AntiquaWidgets library.
+#include "apluginconfigwidget.h"
+#endif
+
 // AntiquaCRM::TabsInterface
 #include "tabsinterface.h"
-
-// AntiquaCRM::TabsConfigWidget
-#include "tabsconfigwidget.h"
 
 // AntiquaCRM::TabsLoader
 #include "tabsloader.h"

@@ -23,7 +23,7 @@ const QString TabCustomers::sqlFieldPrefix() const {
   return CUSTOMERS_SQL_FIELD_PREFIX;
 }
 
-AntiquaCRM::TabsConfigWidget *
+AntiquaCRM::PluginConfigWidget *
 TabCustomers::configWidget(QWidget *parent) const {
   CustomersTabConfigWidget *_w = new CustomersTabConfigWidget(parent);
   return _w;

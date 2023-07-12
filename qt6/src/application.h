@@ -50,7 +50,7 @@ private:
    * @brief Initial Stylesheet
    * Loading Default Window Stylesheet theme and make some changes.
    */
-  void initTheme();
+  void initStyleTheme();
 
   /**
    * @brief Search Qt based translation files „*.qm“ and load it.

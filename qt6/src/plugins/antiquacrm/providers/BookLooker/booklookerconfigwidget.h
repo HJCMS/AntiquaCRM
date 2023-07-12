@@ -6,31 +6,24 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_DIALOGS_CONFIGTABSVIEW_H
-#define ANTIQUACRM_DIALOGS_CONFIGTABSVIEW_H
+#ifndef ANTIQUACRM_PLUGIN_BOOKLOOKER_CONFIGWIDGET_H
+#define ANTIQUACRM_PLUGIN_BOOKLOOKER_CONFIGWIDGET_H
 
-#include <AntiquaTabs>
-#include <QList>
+#include <AntiquaProviders>
 #include <QWidget>
 
-class PluginListWidget;
-
-class ConfigTabsView final : public AntiquaCRM::PluginConfigWidget {
+class ANTIQUACRM_LIBRARY BookLookerConfigWidget final
+    : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
-
-private:
-  PluginListWidget *m_view;
 
 public Q_SLOTS:
   void loadSectionConfig() override;
   void saveSectionConfig() override;
 
 public:
-  explicit ConfigTabsView(QWidget *parent = nullptr);
-
+  explicit BookLookerConfigWidget(QWidget *parent = nullptr);
   AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
-
   const QJsonObject getMenuEntry() const override;
 };
 
-#endif // ANTIQUACRM_DIALOGS_CONFIGTABSVIEW_H
+#endif // ANTIQUACRM_PLUGIN_BOOKLOOKER_CONFIGWIDGET_H

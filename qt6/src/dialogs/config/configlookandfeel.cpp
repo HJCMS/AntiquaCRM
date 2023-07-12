@@ -19,7 +19,7 @@ void LookAndFeelLayout::addToolTip(int row, int column, const QString &text) {
 }
 
 ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"General", "window_behavior", parent} {
+    : AntiquaCRM::PluginConfigWidget{"General", "window_behavior", parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
 
   // Central Widget for Scrollarea
@@ -28,7 +28,7 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
 
   QString _info;
   int _row = 0;
-  layout = new LookAndFeelLayout(m_central);
+  LookAndFeelLayout *layout = new LookAndFeelLayout(m_central);
 
   _info = tr("All settings in this area require a restart of the application.");
   layout->addWidget(new QLabel(_info, m_central), _row++, 0, 1, 1);
@@ -58,8 +58,10 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
   m_iconThemes = new IconThemes(this);
   m_iconThemes->setBuddyLabel(tr("Set application icon theme"));
   m_iconThemes->appendStretch(0);
+#ifdef Q_OS_WIN
+  m_iconThemes->setEnabled(false);
+#endif
   layout->addWidget(m_iconThemes, _row++, 0, 1, 2);
-
   layout->setRowStretch(_row, 1);
   m_central->setLayout(layout);
   setWidget(m_central);
@@ -86,8 +88,8 @@ void ConfigLookAndFeel::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigLookAndFeel::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::PluginConfigWidget::ConfigType ConfigLookAndFeel::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigLookAndFeel::getMenuEntry() const {

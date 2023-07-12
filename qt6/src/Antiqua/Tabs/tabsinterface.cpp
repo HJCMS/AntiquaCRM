@@ -7,8 +7,8 @@
 #include "tabsindex.h"
 #endif
 
-#ifndef ANTIQUACRM_TABS_CONFIGWIDGET_H
-#include "tabsconfigwidget.h"
+#ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
+#include "apluginconfigwidget.h"
 #endif
 
 #include <QDebug>

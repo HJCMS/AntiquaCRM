@@ -61,7 +61,7 @@ public Q_SLOTS:
    * @brief append entry into general Settings Category
    * @param page - page index
    * @param jobj - JsonObject
-   * @see AntiquaCRM::TabsConfigWidget::getMenuEntry()
+   * @see AntiquaCRM::PluginConfigWidget::getMenuEntry()
    */
   void addGeneral(int page, const QJsonObject &jobj);
 
@@ -69,7 +69,7 @@ public Q_SLOTS:
    * @brief append plugin config entry to Tabs category
    * @param page - page index
    * @param jobj - JsonObject
-   * @see AntiquaCRM::TabsConfigWidget::getMenuEntry()
+   * @see AntiquaCRM::PluginConfigWidget::getMenuEntry()
    */
   void addTabPlugin(int page, const QJsonObject &jobj);
 
@@ -77,7 +77,7 @@ public Q_SLOTS:
    * @brief append plugin config entry to Provider category
    * @param page - page index
    * @param jobj - JsonObject
-   * @see AntiquaCRM::TabsConfigWidget::getMenuEntry()
+   * @see AntiquaCRM::PluginConfigWidget::getMenuEntry()
    */
   void addProviderPlugin(int page, const QJsonObject &jobj);
 

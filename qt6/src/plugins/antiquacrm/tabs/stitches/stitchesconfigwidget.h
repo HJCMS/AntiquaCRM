@@ -13,7 +13,7 @@
 #include <AntiquaWidgets>
 
 class ANTIQUACRM_LIBRARY StitchesConfigWidget final
-    : public AntiquaCRM::TabsConfigWidget {
+    : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
@@ -26,7 +26,7 @@ public Q_SLOTS:
 
 public:
   explicit StitchesConfigWidget(QWidget *parent = nullptr);
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

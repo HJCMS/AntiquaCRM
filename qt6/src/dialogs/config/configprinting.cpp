@@ -11,7 +11,7 @@
 #include <QtWidgets>
 
 ConfigPrinting::ConfigPrinting(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"General", "printer", parent} {
+    : AntiquaCRM::PluginConfigWidget{"General", "printer", parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
 
   QWidget *m_central = new QWidget(this);
@@ -49,7 +49,7 @@ bool ConfigPrinting::eventFilter(QObject *obj, QEvent *event) {
       return true;
     }
   }
-  return AntiquaCRM::TabsConfigWidget::eventFilter(obj, event);
+  return AntiquaCRM::PluginConfigWidget::eventFilter(obj, event);
 }
 
 void ConfigPrinting::loadSectionConfig() {
@@ -90,8 +90,8 @@ void ConfigPrinting::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigPrinting::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::PluginConfigWidget::ConfigType ConfigPrinting::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigPrinting::getMenuEntry() const {

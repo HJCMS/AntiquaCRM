@@ -55,19 +55,14 @@ bool Application::openDatabase() {
 }
 
 void Application::initIconTheme() {
-  const QString _platform = platformName().toLower().trimmed();
-  if (_platform.startsWith("xcb")) {
-    QString _fallback("oxygen");
-    QIcon::setFallbackThemeName(_fallback);
-    QString _theme = m_cfg->value("icon_theme", _fallback).toString();
-    QIcon::setThemeName(_theme);
-  }
+  const QString _fallback("oxygen");
+  QIcon::setFallbackThemeName(_fallback);
+  QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
 }
 
-void Application::initTheme() {
+void Application::initStyleTheme() {
   // AntiquaCRM using Fusion theme
   setStyle(QStyleFactory::create("Fusion"));
-  initIconTheme();
 
   // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
@@ -126,7 +121,7 @@ void Application::initInterface() {
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
-
+  // SysTray
   m_systray = new SystemTrayIcon(applIcon(), this);
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
@@ -178,7 +173,8 @@ int Application::exec() {
   QMutex mutex;
 
   mutex.lock();
-  initTheme();
+  initStyleTheme();
+  initIconTheme();
   mutex.unlock();
 
   mutex.lock();

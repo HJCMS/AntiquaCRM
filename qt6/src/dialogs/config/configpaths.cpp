@@ -7,7 +7,7 @@
 #include <QtWidgets>
 
 ConfigPaths::ConfigPaths(QWidget *parent)
-    : AntiquaCRM::TabsConfigWidget{"General", QString(), parent} {
+    : AntiquaCRM::PluginConfigWidget{"General", QString(), parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
   // Central Widget
   QWidget *m_central = new QWidget(this);
@@ -53,8 +53,8 @@ void ConfigPaths::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::TabsConfigWidget::ConfigType ConfigPaths::getType() const {
-  return AntiquaCRM::TabsConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::PluginConfigWidget::ConfigType ConfigPaths::getType() const {
+  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigPaths::getMenuEntry() const {

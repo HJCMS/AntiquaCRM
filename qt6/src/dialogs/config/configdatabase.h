@@ -17,7 +17,7 @@ class DatabaseProfile;
 class SslCaSelecter;
 class SslMode;
 
-class ConfigDatabase final : public AntiquaCRM::TabsConfigWidget {
+class ConfigDatabase final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
@@ -53,7 +53,7 @@ public Q_SLOTS:
 public:
   explicit ConfigDatabase(QWidget *parent = nullptr);
   virtual ~ConfigDatabase();
-  AntiquaCRM::TabsConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 
