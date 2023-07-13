@@ -28,9 +28,6 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY ASettings : public QSettings {
   Q_OBJECT
 
-private:
-  QHash<QString, QVariant> p_hash;
-
 public:
   /**
    * @param parent - parent object
@@ -83,26 +80,9 @@ public:
                             const QVariant &fallback = QVariant());
 
   /**
-   * @brief All Configs from Group
-   * @param group - section group
+   * @brief Payment Settings with Default values.
    */
-  const QHash<QString, QVariant> &readGroupConfig(const QString &group);
-
-  /**
-   * @brief All Configs from Group and „Subsection“
-   * @param group - section group
-   * @param section - sub section
-   */
-  const QHash<QString, QVariant> &readGroupSection(const QString &group,
-                                                   const QString &section);
-
-  /**
-   * @brief Write all Keys in to Group
-   * @param group - section group
-   * @param dataset - section data
-   */
-  void writeGroupConfig(const QString &group,
-                        const QHash<QString, QVariant> &dataset);
+  const QHash<QString, QVariant> payment();
 
   /**
    * @brief Default Filter for all Dir requests!

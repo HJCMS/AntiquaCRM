@@ -14,6 +14,7 @@ PluginConfigWidget::PluginConfigWidget(const QString &group, const QString &id,
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
   config = new AntiquaCRM::ASettings(this);
   signalMapper = new QSignalMapper(this);
+
   connect(signalMapper, SIGNAL(mappedObject(QObject *)),
           SLOT(setInputEditChanged(QObject *)));
 }
@@ -34,6 +35,14 @@ void PluginConfigWidget::setInputEditChanged(QObject *object) {
     setWindowModified(true);
 }
 
+AntiquaCRM::AInputWidget *PluginConfigWidget::inputWidget(QWidget *parent,
+                                                          const QString &name) {
+  Q_CHECK_PTR(parent);
+  Q_ASSERT_X(name.isEmpty() != true, "name", "objectName is empty");
+  return parent->findChild<AntiquaCRM::AInputWidget *>(
+      name, Qt::FindDirectChildrenOnly);
+}
+
 QList<AntiquaCRM::AInputWidget *>
 PluginConfigWidget::getInputList(QObject *parent) {
   Q_CHECK_PTR(parent);
@@ -42,6 +51,7 @@ PluginConfigWidget::getInputList(QObject *parent) {
 }
 
 void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
+  Q_CHECK_PTR(base);
   QListIterator<AntiquaCRM::AInputWidget *> it(
       base->findChildren<AntiquaCRM::AInputWidget *>(QString()));
   while (it.hasNext()) {
@@ -56,29 +66,21 @@ void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
 }
 
 const QString PluginConfigWidget::getGroup() const {
-  if (!config->contains(p_gid)) {
-    config->beginGroup(p_gid);
-    config->setValue("registered", QDate::currentDate().toString(Qt::ISODate));
-    config->endGroup();
-  }
+  if (getType() == ConfigType::CONFIG_DATABASE)
+    qWarning("Invalid usage with ConfigType::CONFIG_DATABASE.");
+
   return p_gid;
 }
 
 const QStringList PluginConfigWidget::getCurrentKeys() {
+  if (getType() == ConfigType::CONFIG_DATABASE)
+    qWarning("Invalid usage with ConfigType::CONFIG_DATABASE.");
+
   QStringList _keys;
   config->beginGroup(getGroup());
   _keys = config->childKeys();
   config->endGroup();
   return _keys;
-}
-
-const QMap<QString, QMetaType::Type> PluginConfigWidget::getProviderApiKeys() {
-  QMap<QString, QMetaType::Type> _m;
-  _m.insert("host", QMetaType::QString);
-  _m.insert("key", QMetaType::QString);
-  _m.insert("port", QMetaType::Int);
-  _m.insert("user", QMetaType::QString);
-  return _m;
 }
 
 } // namespace AntiquaCRM

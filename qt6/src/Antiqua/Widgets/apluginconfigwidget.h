@@ -22,9 +22,24 @@ namespace AntiquaCRM {
 
 /**
  * @class PluginConfigWidget
- * @brief Abstract Interface Configuration Widget
+ * @brief Abstract Plugin Configuration Widget
  *
- * This Widget is used to configure loaded Plugins in "Configuration Dialogs".
+ * This Abstract Widget is used to configure Plugins in "Configuration Dialogs".
+ *
+ * There are currently two ways to specify saving with Enumeration "ConfigType".
+ *
+ * This can do manually in virtual Slots loadSectionConfig and
+ * saveSectionConfig.
+ *
+ * When using Database the PostgreSQL Table "antiquacrm_configs" is used. Field
+ * "cfg_group" must a unique Key, the field "cfg_jsconfig" requires a
+ * QJsonDokument to store the data.
+ *
+ * The class constructor need a "config group" and "config id".
+ * This will create the config group Section.
+ * You can use getGroup() to get the current Group Section and getCurrentKeys()
+ * to get all Group Section keys and only usable if ConfigType::CONFIG_SYSTEM
+ * is set. All keys and values are without restrictions for Plugin Developers.
  *
  * @ingroup AntiquaWidgets
  */
@@ -51,6 +66,13 @@ protected:
    * @warning Do not initialize SQL Connections in Constructors!
    */
   AntiquaCRM::ASqlCore *pgsql = nullptr;
+
+  /**
+   * @brief get InputWidget from Child widget
+   * @param parent - parent Widget
+   * @param name  - objectName
+   */
+  AntiquaCRM::AInputWidget *inputWidget(QWidget *parent, const QString &name);
 
   /**
    * @brief get all AntiquaCRM::AInputWidget from Widget
@@ -90,33 +112,28 @@ public:
   };
 
   /**
-   * @param group  - Configuration TreeView group
-   * @param id     - Configuration Identifier group
+   * @param group  - Configuration Group Section
+   * @param id     - Configuration Identifier
    * @param parent - Parent Widget
    */
   explicit PluginConfigWidget(const QString &group, // config group
-                               const QString &id,    // config id
-                               QWidget *parent = nullptr);
+                              const QString &id,    // config id
+                              QWidget *parent = nullptr);
 
   ~PluginConfigWidget();
 
   /**
    * @brief configuration group path
+   * @note Not usable with ConfigType::CONFIG_DATABASE!
    */
   const QString getGroup() const;
 
   /**
    * @brief returning current configuration keys from this section!
    * Equal to QSettings::childKeys(), but beginGroup(getGroup()) is set!
-   * @note Not usable with Database configuration keys!
+   * @note Not usable with ConfigType::CONFIG_DATABASE!
    */
   const QStringList getCurrentKeys();
-
-  /**
-   * @brief Provider API Configuration Keys
-   * Predefined configuration parameters for API connections.
-   */
-  static const QMap<QString, QMetaType::Type> getProviderApiKeys();
 
   /**
    * @brief where this configuration will saved?

@@ -26,7 +26,20 @@ ConfigGeneral::ConfigGeneral(QWidget *parent)
   setWidget(m_central);
 }
 
+void ConfigGeneral::setPaymentDefaults() {
+  QHashIterator<QString, QVariant> _it(config->payment());
+  while (_it.hasNext()) {
+    _it.next();
+    AntiquaCRM::AInputWidget *m_inp = inputWidget(m_paymentGroup, _it.key());
+    if (m_inp == nullptr)
+      continue;
+
+    m_inp->setValue(_it.value());
+  }
+}
+
 void ConfigGeneral::loadSectionConfig() {
+  setPaymentDefaults();
   QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *m_inp = it.next();

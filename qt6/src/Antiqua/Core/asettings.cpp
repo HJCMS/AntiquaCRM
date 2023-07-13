@@ -5,6 +5,7 @@
 #include "aglobal.h"
 
 #include <QCoreApplication>
+#include <QLocale>
 #include <QStandardPaths>
 
 namespace AntiquaCRM {
@@ -93,40 +94,25 @@ const QVariant ASettings::groupValue(const QString &group, const QString &key,
   return _retval;
 }
 
-const QHash<QString, QVariant> &
-ASettings::readGroupConfig(const QString &group) {
-  p_hash.clear();
-  beginGroup(group);
-  foreach (QString key, allKeys()) {
-    p_hash.insert(key, value(key));
+const QHash<QString, QVariant> ASettings::payment() {
+  QLocale _lc = QLocale::system();
+  QHash<QString, QVariant> _d; // defaults
+  _d.insert("currency", _lc.currencySymbol(QLocale::CurrencySymbol));
+  _d.insert("price_limit_lowest", 1.00); // 1,- €
+  _d.insert("price_limit_normal", 5.00); // 5,- €
+  _d.insert("vat_normal", 19.00);        // 19%
+  _d.insert("vat_reduced", 7.00);        // 7%
+
+  QHash<QString, QVariant> _hash;
+  beginGroup("payment");
+  QHashIterator<QString, QVariant> it(_d);
+  while (it.hasNext()) {
+    it.next();
+    _hash.insert(it.key(), value(it.key(), it.value()));
   }
   endGroup();
-  return p_hash;
-}
-
-const QHash<QString, QVariant> &
-ASettings::readGroupSection(const QString &group, const QString &section) {
-  p_hash.clear();
-  beginGroup(group + "/" + section);
-  foreach (QString key, allKeys()) {
-    p_hash.insert(key, value(key));
-  }
-  endGroup();
-  return p_hash;
-}
-
-void ASettings::writeGroupConfig(const QString &group,
-                                 const QHash<QString, QVariant> &dataset) {
-  if (group.isEmpty())
-    return;
-
-  beginGroup(group);
-  QHashIterator<QString, QVariant> i(dataset);
-  while (i.hasNext()) {
-    i.next();
-    setValue(i.key(), i.value());
-  }
-  endGroup();
+  _d.clear();
+  return _hash;
 }
 
 QDir::Filters ASettings::directoryFilter() {

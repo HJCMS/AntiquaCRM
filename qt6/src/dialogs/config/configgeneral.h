@@ -20,6 +20,7 @@ class ConfigGeneral final : public AntiquaCRM::PluginConfigWidget {
 
 private:
   PaymentSettingsGroup *m_paymentGroup;
+  void setPaymentDefaults();
 
 public Q_SLOTS:
   void loadSectionConfig() override;
