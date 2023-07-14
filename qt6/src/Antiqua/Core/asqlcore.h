@@ -40,6 +40,12 @@ private:
    */
   bool isConnected();
 
+private Q_SLOTS:
+  void prepareSqlError(const QSqlError &);
+
+Q_SIGNALS:
+  void sendStatementError(const QSqlError &);
+
 public:
   /**
    * @param parent - parent object

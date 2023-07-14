@@ -98,8 +98,12 @@ void AbeBooksConfigWidget::loadSectionConfig() {
   if (_q.size() > 0) {
     _q.next();
     jsDocument = QJsonDocument::fromJson(_q.value(0).toByteArray());
-  } else {
+  } else if (!dbsql.lastError().isEmpty()) {
+#ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << dbsql.lastError();
+#else
+    qWarning("SQL Query-Error: %s", __FUNCTION__);
+#endif
   }
 
   if (jsDocument.isNull())

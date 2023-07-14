@@ -20,6 +20,10 @@
 #define CDSVINYL_INTERFACE_NAME QString("cdsvinyl")
 #endif
 
+#ifndef CDSVINYL_INVENTORY_TABID
+#define CDSVINYL_INVENTORY_TABID "cdsvinyl_tab"
+#endif
+
 #ifndef CDSVINYL_CONFIG_POINTER
 #define CDSVINYL_CONFIG_POINTER QString("CONFIG_CDVINYL_TAB")
 #endif

@@ -69,34 +69,6 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   setLayout(layout);
 }
 
-void BookLookerConfigWidget::loadSectionConfig() {
-  QJsonDocument jsDocument;
-  AntiquaCRM::ASqlCore dbsql(this);
-  QString _sql("SELECT cfg_jsconfig FROM antiquacrm_configs ");
-  _sql.append(" WHERE cfg_group='");
-  _sql.append(BOOKLOOKER_CONFIG_POINTER);
-  _sql.append("';");
-  QSqlQuery _q = dbsql.query(_sql);
-  if (_q.size() > 0) {
-    _q.next();
-    jsDocument = QJsonDocument::fromJson(_q.value(0).toByteArray());
-  } else {
-    qDebug() << Q_FUNC_INFO << dbsql.lastError();
-  }
-
-  if (jsDocument.isNull())
-    return;
-
-  QJsonObject _jsObject = jsDocument.object();
-  QJsonObject::const_iterator it;
-  for (it = _jsObject.begin(); it != _jsObject.end(); ++it) {
-    AntiquaCRM::AInputWidget *inp =
-        findChild<AntiquaCRM::AInputWidget *>(it.key());
-    if (inp != nullptr)
-      inp->setValue(it.value().toVariant());
-  }
-}
-
 QLabel *BookLookerConfigWidget::label(const QString &text) {
   QLabel *lb = new QLabel(this);
   lb->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
@@ -111,6 +83,38 @@ const QUrl BookLookerConfigWidget::apiUrl() const {
   _url.setPort(443);
   _url.setPath("/");
   return _url;
+}
+
+void BookLookerConfigWidget::loadSectionConfig() {
+  QJsonDocument jsDocument;
+  AntiquaCRM::ASqlCore dbsql(this);
+  QString _sql("SELECT cfg_jsconfig FROM antiquacrm_configs ");
+  _sql.append(" WHERE cfg_group='");
+  _sql.append(BOOKLOOKER_CONFIG_POINTER);
+  _sql.append("';");
+  QSqlQuery _q = dbsql.query(_sql);
+  if (_q.size() > 0) {
+    _q.next();
+    jsDocument = QJsonDocument::fromJson(_q.value(0).toByteArray());
+  } else if (!dbsql.lastError().isEmpty()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << dbsql.lastError();
+#else
+    qWarning("SQL Query-Error: %s", __FUNCTION__);
+#endif
+  }
+
+  if (jsDocument.isNull())
+    return;
+
+  QJsonObject _jsObject = jsDocument.object();
+  QJsonObject::const_iterator it;
+  for (it = _jsObject.begin(); it != _jsObject.end(); ++it) {
+    AntiquaCRM::AInputWidget *inp =
+        findChild<AntiquaCRM::AInputWidget *>(it.key());
+    if (inp != nullptr)
+      inp->setValue(it.value().toVariant());
+  }
 }
 
 void BookLookerConfigWidget::saveSectionConfig() {

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "bookswidget.h"
+#include "booksconfig.h"
 #include "bookseditor.h"
 #include "bookssearchbar.h"
 #include "booksstatusbar.h"
@@ -12,7 +13,7 @@
 #include <QMessageBox>
 
 BooksWidget::BooksWidget(QWidget *parent)
-    : AntiquaCRM::TabsIndex{"books_tab", parent} {
+    : AntiquaCRM::TabsIndex{BOOKS_INTERFACE_TABID, parent} {
   setObjectName("books_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("kjournal"));
   setClosable(false);

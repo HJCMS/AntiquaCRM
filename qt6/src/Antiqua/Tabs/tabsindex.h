@@ -29,7 +29,7 @@ class ANTIQUACRM_LIBRARY TabsIndex : public QStackedWidget {
 
 private:
   /**
-   *  @brief Uniq Tab Index Name
+   *  @brief Uniq Tab Index and Object Name
    */
   const QString tabIndex;
 
@@ -233,10 +233,21 @@ public Q_SLOTS:
   virtual void onEnterChanged() = 0;
 
 public:
+  /**
+   * @brief Enumeration to find the right Stacked page.
+   * @sa currentView
+   *
+   * Used to find the right Page on load and exit.
+   * The Application will reject close functions, if current index is in
+   * ViewPage::EditorView mode.
+   *
+   * Only "MainView" and "EditorView" will called from the Application, other
+   * Pages not known by the System and only useable from current plugin.
+   */
   enum ViewPage {
-    MainView = 0,   /**< @brief index page Index:0 */
-    EditorView = 1, /**< @brief editor page Index:1 */
-    CustomView = 2  /**< @brief additional page index:2+ */
+    MainView = 0,   /**< @brief Main page Normally Index:0 */
+    EditorView = 1, /**< @brief Editor page Normally Index:1 */
+    CustomView = 2  /**< @brief Additional pages Index:2 and greater! */
   };
 
   /**
@@ -251,14 +262,14 @@ public:
   virtual const QString getTitle() const = 0;
 
   /**
-   * @brief Which Stacked index is currently in use?
+   * @brief Which Page is currently in use?
    */
   TabsIndex::ViewPage currentView();
 
   /**
    * @brief Create Custom Entries
    *
-   * Reserved for customized operation calls.
+   * Reserved to create customized operation socket calls.
    *
    * @return Accepted or Rejected
    */
@@ -266,13 +277,14 @@ public:
 
   /**
    * @brief Uniq Tab Index Identifier
-   * @return configured Index in TabWidget.
+   * @note The Index Identifier is equal to "objectName"!
    */
   const QString tabIndexId() const;
 
   /**
    * @brief Is this tab closable or not?
-   * @return Property from @ref closable
+   *
+   * READ Property from @ref closable
    */
   bool isClosable();
 };

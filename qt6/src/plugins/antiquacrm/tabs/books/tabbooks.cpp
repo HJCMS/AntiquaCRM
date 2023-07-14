@@ -28,7 +28,8 @@ bool TabBooks::addIndexOnInit() const { return BOOKS_ALWAYS_ADD_ONLOAD; }
 const QJsonObject TabBooks::menuEntry() const {
   QJsonObject _jo;
   _jo.insert("title", tr("Books"));
-  _jo.insert("id", tr("books_tab"));
+  _jo.insert("id", QString(BOOKS_INTERFACE_TABID));
+  _jo.insert("tip", tr("Inventory Books"));
   _jo.insert("icon", tr("kjournal"));
   return _jo;
 }

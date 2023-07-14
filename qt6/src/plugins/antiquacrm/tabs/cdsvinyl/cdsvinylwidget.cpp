@@ -1,6 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+#include "cdsvinylconfig.h"
 #include "cdsvinylwidget.h"
 #include "cdsvinyleditor.h"
 #include "cdsvinylsearchbar.h"
@@ -12,7 +13,7 @@
 #include <QMessageBox>
 
 CDsVinylWidget::CDsVinylWidget(QWidget *parent)
-    : AntiquaCRM::TabsIndex{"cdsvinyl_tab", parent} {
+    : AntiquaCRM::TabsIndex{CDSVINYL_INVENTORY_TABID, parent} {
   setObjectName("cdsvinyl_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("media-optical-dvd-video"));
   setWindowTitle(getTitle());

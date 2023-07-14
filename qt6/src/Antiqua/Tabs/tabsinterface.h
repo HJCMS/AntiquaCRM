@@ -90,18 +90,29 @@ public:
   virtual bool addIndexOnInit() const = 0;
 
   /**
-   * @brief Required Menu entry parameters.
+   * @brief Json Menu Object
    *
-   * This important function defines the entry for application menu views.<br/>
-   * The Json object schema is restricted and is described in the code block.
+   * Predefined Menu Object for @ref menuEntry function.
+   *
+   * The Object schema is restricted and is described in the code block.
    *
    * @code
    *  QJsonObject {
-   *    title:"<QString>", // Menue title
-   *    id:"<QString>",    // AntiquaCRM::TabsIndex::objectName()
-   *    icon:"<QString>"   // Icon name without extension
+   *    id: QJsonValue::String,    // Required "objectName" from TabsIndex
+   *    title: QJsonValue::String, // Entry Title
+   *    tip: QJsonValue::String,   // Statusbar Tool Tip
+   *    icon: QJsonValue::String   // Icontheme name, without extension!
    *  }
    * @endcode
+   */
+  static const QJsonObject menuObject();
+
+  /**
+   * @brief Required Menu entry parameters.
+   *
+   * This important function defines the entry for application menu views.
+   *
+   * @sa menuObject
    */
   virtual const QJsonObject menuEntry() const = 0;
 
@@ -117,9 +128,11 @@ public:
   /**
    * @brief Initial this interface
    * @param parent - parent object
-   * @return boolean - true = create all additional function
    *
-   * Reserved for interface initialization optimizations
+   * Reserved for plugin owned load and config procedures.
+   *
+   * The return value must "true" for "is loadable", otherwise the plugin will
+   * rejected and destroyed.
    */
   virtual bool createInterface(QObject *parent) = 0;
 };

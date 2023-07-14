@@ -72,11 +72,29 @@ bool ASqlCore::isConnected() {
 
   qWarning("Can't open Database Connection!");
   QSqlError err = database->lastError();
-#ifdef ANTIQUA_DEVELOPEMENT
   if (err.isValid())
-    qDebug() << err.driverText() << err.databaseText();
-#endif
+    prepareSqlError(err);
+
   return false;
+}
+
+void ASqlCore::prepareSqlError(const QSqlError &error) {
+  const QSqlError::ErrorType _type = error.type();
+  if (_type == QSqlError::NoError)
+    return;
+
+  // Only send statement errors
+  if (_type == QSqlError::StatementError)
+    emit sendStatementError(error);
+
+// Developement verbose
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << Qt::endl
+           << "Database: " << error.databaseText() << Qt::endl
+           << "Driver: " << error.driverText() << Qt::endl
+           << "Code: " << error.nativeErrorCode() << Qt::endl
+           << "Text: " << error.text();
+#endif
 }
 
 bool ASqlCore::status() {
@@ -138,17 +156,21 @@ const QSqlQuery ASqlCore::query(const QString &statement) {
   if (!isConnected())
     return QSqlQuery();
 
-  QSqlQuery qr;
+  QSqlQuery _query;
   p_mutex.lock();
-  qr = database->exec(statement);
+  _query = database->exec(statement);
   p_mutex.unlock();
-  return qr;
+
+  if (_query.lastError().isValid())
+    prepareSqlError(_query.lastError());
+
+  return _query;
 }
 
 const QString ASqlCore::lastError() {
-  QSqlError err = database->lastError();
-  if (err.isValid())
-    return err.text();
+  QSqlError _error = database->lastError();
+  if (_error.isValid())
+    return _error.text();
 
   return QString();
 }

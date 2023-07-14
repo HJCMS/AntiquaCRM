@@ -17,6 +17,15 @@ namespace AntiquaCRM {
 
 TabsInterface::TabsInterface(QObject *parent) : QObject{parent} {}
 
+const QJsonObject TabsInterface::menuObject() {
+  QJsonObject _jo;
+  _jo.insert("id", QJsonValue(QJsonValue::String));
+  _jo.insert("title", QJsonValue(QJsonValue::String));
+  _jo.insert("tip", QJsonValue(QJsonValue::String));
+  _jo.insert("icon", QJsonValue(QJsonValue::String));
+  return _jo;
+}
+
 bool TabsInterface::createInterface(QObject *parent) {
   Q_UNUSED(parent);
   return false;

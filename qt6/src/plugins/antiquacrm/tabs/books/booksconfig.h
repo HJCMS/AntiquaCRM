@@ -20,6 +20,10 @@
 #define BOOKS_INTERFACE_NAME "books"
 #endif
 
+#ifndef BOOKS_INTERFACE_TABID
+#define BOOKS_INTERFACE_TABID "books_tab"
+#endif
+
 #ifndef BOOKS_CONFIG_POINTER
 #define BOOKS_CONFIG_POINTER QString("CONFIG_BOOK_TAB")
 #endif
