@@ -12,6 +12,22 @@
 
 namespace AntiquaCRM {
 
+const QString AUtil::recipientPattern() {
+  return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
+}
+
+const QString AUtil::domainPattern() {
+  return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+){2,}");
+}
+
+const QString AUtil::tldPattern() { return QString(("\\.([a-z]{2,8})")); }
+
+const QString AUtil::fqdnPattern() {
+  QString _fqdn(domainPattern());
+  _fqdn.append(tldPattern());
+  return _fqdn;
+}
+
 const QString AUtil::socketName() {
   QString _name(ANTIQUACRM_CONNECTION_DOMAIN);
   _name.append("-");
@@ -26,11 +42,14 @@ const QString AUtil::socketName() {
   return _name;
 }
 
+const QRegularExpression AUtil::lineBreakRegExp() {
+  return QRegularExpression("[\\n\\r]+", QRegularExpression::NoPatternOption);
+}
+
 const QString AUtil::trim(const QString &str) {
   QString _str = str.trimmed();
-  static const QRegularExpression pcr1("[\\n\\r]+",
-                                       QRegularExpression::NoPatternOption);
-  _str.replace(pcr1, " ");
+
+  _str.replace(lineBreakRegExp(), " ");
 
   static const QRegularExpression pcr2("(\\b[\\s\\t]+\\b)",
                                        QRegularExpression::NoPatternOption);
@@ -39,6 +58,14 @@ const QString AUtil::trim(const QString &str) {
   _str.squeeze();
 
   return _str.trimmed();
+}
+
+const QString AUtil::trimBody(const QString &str) {
+  QStringList _list;
+  foreach (QString _line, str.split(lineBreakRegExp())) {
+    _list << AUtil::trim(_line.trimmed());
+  }
+  return _list.join("\n");
 }
 
 const QString AUtil::ucFirst(const QString &str) {
@@ -50,13 +77,11 @@ const QString AUtil::ucFirst(const QString &str) {
 }
 
 const QRegularExpression AUtil::emailRegExp() {
-  const QString _recipient("([\\d\\w]+[\\-\\.]?[\\d\\w]+)");
-  const QString _domain("([\\d\\w\\-\\.]{2,})");
-  const QString _tld("\\.([a-z]{2,6})");
-
+  const QString _recipient = recipientPattern();
+  const QString _fqdn = fqdnPattern();
   QRegularExpression _reg;
   _reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  _reg.setPattern("^" + _recipient + "@" + _domain + _tld + "$");
+  _reg.setPattern("^" + _recipient + "@" + _fqdn + "$");
   return _reg;
 }
 
@@ -82,9 +107,21 @@ const QRegularExpression AUtil::phoneRegExp() {
 }
 
 bool AUtil::checkPhone(const QString &phone) {
-  QString _str = phone.trimmed().toLower();
+  QString _str = phone.trimmed();
   QRegularExpressionMatch _match = phoneRegExp().match(_str);
   return _match.hasMatch();
+}
+
+bool AUtil::checkUrl(const QUrl &url) {
+  QUrl _url(url.toString(), QUrl::StrictMode);
+  if (!url.host().isEmpty()) {
+    const QRegularExpression _reg(fqdnPattern(),
+                                  QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch _match = _reg.match(url.host());
+    if (!_match.hasMatch())
+      return false;
+  }
+  return _url.isValid();
 }
 
 const QRegularExpression AUtil::keywordRegExp() {

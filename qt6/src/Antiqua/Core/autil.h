@@ -10,6 +10,7 @@
 #include <QRegularExpression>
 #include <QString>
 #include <QTime>
+#include <QUrl>
 
 namespace AntiquaCRM {
 
@@ -20,11 +21,37 @@ namespace AntiquaCRM {
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AUtil final {
+
 public:
+  /**
+   * @brief eMail recipient pattern
+   */
+  static const QString recipientPattern();
+
+  /**
+   * @brief Domain pattern
+   */
+  static const QString domainPattern();
+
+  /**
+   * @brief Top Level Domain pattern
+   */
+  static const QString tldPattern();
+
+  /**
+   * @brief Full qualified domain name pattern
+   */
+  static const QString fqdnPattern();
+
   /**
    * @brief AntiquaCRM Socket Identifier
    */
   static const QString socketName();
+
+  /**
+   * @brief Simple Regular Expression for line breaks
+   */
+  static const QRegularExpression lineBreakRegExp();
 
   /**
    * @brief prepare and normalize single strings
@@ -34,6 +61,12 @@ public:
   static const QString trim(const QString &str);
 
   /**
+   * @brief prepare and normalize multiline text body
+   * @param str - string
+   */
+  static const QString trimBody(const QString &str);
+
+  /**
    * @brief uppercase first letter
    * @param str - string
    */
@@ -41,9 +74,6 @@ public:
 
   /**
    * @brief Simple Regular Expression for eMail
-   * @code
-   *  ^([\\d\\w\\-\\.]{3,})@([\\d\\w\\-\\.]{2,})\\.([a-z]{2,6})$
-   * @endcode
    */
   static const QRegularExpression emailRegExp();
 
@@ -67,6 +97,12 @@ public:
    * @param phone - phone number
    */
   static bool checkPhone(const QString &phone);
+
+  /**
+   * @brief Simple Url check
+   * @param url - Url
+   */
+  static bool checkUrl(const QUrl &url);
 
   /**
    * @brief Regular expression to match keywords with UTF8 characters.
