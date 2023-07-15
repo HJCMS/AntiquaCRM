@@ -44,6 +44,7 @@ private Q_SLOTS:
   void prepareSqlError(const QSqlError &);
 
 Q_SIGNALS:
+  void sendConnectionError(const QSqlError &);
   void sendStatementError(const QSqlError &);
 
 public:

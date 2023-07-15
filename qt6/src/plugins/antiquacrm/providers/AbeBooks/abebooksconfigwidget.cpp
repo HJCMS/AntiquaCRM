@@ -8,7 +8,7 @@
 #include <QLayout>
 
 AbeBooksConfigWidget::AbeBooksConfigWidget(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"providers", "abebooks", parent} {
+    : AntiquaCRM::PluginConfigWidget{"abebooks", parent} {
   setObjectName("config_abebooks");
 
   QJsonObject _jobj = getMenuEntry();
@@ -66,6 +66,11 @@ AbeBooksConfigWidget::AbeBooksConfigWidget(QWidget *parent)
   gbox->setLayout(gb1_layout);
 
   layout->addWidget(gbox);
+
+  _info = tr("As part of GDPR, %1 only supports secure connections.")
+              .arg(ANTIQUACRM_DISPLAYNAME);
+  layout->addWidget(new QLabel(_info, this));
+
   layout->addStretch(1);
 
   setLayout(layout);

@@ -13,7 +13,7 @@
 #include <QLayout>
 
 CDsVinylConfigWidget::CDsVinylConfigWidget(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"tabs", CDSVINYL_INTERFACE_NAME, parent} {
+    : AntiquaCRM::PluginConfigWidget{CDSVINYL_INTERFACE_NAME, parent} {
   setContentsMargins(0, 0, 0, 0);
 
   QJsonObject _jobj = getMenuEntry();

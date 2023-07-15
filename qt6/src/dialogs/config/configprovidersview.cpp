@@ -8,7 +8,7 @@
 #include <QLayout>
 
 ConfigProvidersView::ConfigProvidersView(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"tabs", "config_providers", parent} {
+    : AntiquaCRM::PluginConfigWidget{"config_providers", parent} {
   setWindowTitle(tr("Providers"));
   setObjectName("config_providers");
   setContentsMargins(5, 5, 5, 0);

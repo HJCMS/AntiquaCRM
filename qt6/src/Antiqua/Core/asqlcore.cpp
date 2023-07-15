@@ -56,7 +56,7 @@ bool ASqlCore::initDatabase() {
     database = new QSqlDatabase(db);
 
   if (database->isOpenError()) {
-    qWarning("Missing SQL::Connection");
+    prepareSqlError(database->lastError());
     return false;
   }
   qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
@@ -70,7 +70,6 @@ bool ASqlCore::isConnected() {
   if (database->open())
     return true;
 
-  qWarning("Can't open Database Connection!");
   QSqlError err = database->lastError();
   if (err.isValid())
     prepareSqlError(err);
@@ -79,17 +78,29 @@ bool ASqlCore::isConnected() {
 }
 
 void ASqlCore::prepareSqlError(const QSqlError &error) {
-  const QSqlError::ErrorType _type = error.type();
-  if (_type == QSqlError::NoError)
+  switch (error.type()) {
+  case QSqlError::NoError:
     return;
 
-  // Only send statement errors
-  if (_type == QSqlError::StatementError)
+  case QSqlError::StatementError:
+    qWarning("SqlError::Statement");
     emit sendStatementError(error);
+    break;
+
+  case QSqlError::ConnectionError:
+    qWarning("SqlError::Connection");
+    emit sendConnectionError(error);
+    break;
+
+  // case QSqlError::TransactionError:
+  // case QSqlError::UnknownError:
+  default:
+    break;
+  };
 
 // Developement verbose
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << Qt::endl
+  qDebug() << Q_FUNC_INFO << "Type:" << error.type() << Qt::endl
            << "Database: " << error.databaseText() << Qt::endl
            << "Driver: " << error.driverText() << Qt::endl
            << "Code: " << error.nativeErrorCode() << Qt::endl

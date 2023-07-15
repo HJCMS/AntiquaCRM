@@ -7,8 +7,9 @@
 #include <QtWidgets>
 
 ConfigPaths::ConfigPaths(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"General", QString(), parent} {
+    : AntiquaCRM::PluginConfigWidget{"dirs", parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
+
   // Central Widget
   QWidget *m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
@@ -25,6 +26,7 @@ ConfigPaths::ConfigPaths(QWidget *parent)
 }
 
 void ConfigPaths::loadSectionConfig() {
+  config->beginGroup("dirs");
   QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *m_inp = it.next();
@@ -38,10 +40,12 @@ void ConfigPaths::loadSectionConfig() {
 
     m_inp->setValue(_val);
   }
+  config->endGroup();
   registerInputChangeSignals(this);
 }
 
 void ConfigPaths::saveSectionConfig() {
+  config->beginGroup("dirs");
   QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *m_inp = it.next();
@@ -50,6 +54,7 @@ void ConfigPaths::saveSectionConfig() {
 
     config->setValue(m_inp->objectName(), m_inp->getValue());
   }
+  config->endGroup();
   setWindowModified(false);
 }
 

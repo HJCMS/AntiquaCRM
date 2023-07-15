@@ -7,7 +7,7 @@
 #include <QLabel>
 
 ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"General", "window_behavior", parent} {
+    : AntiquaCRM::PluginConfigWidget{"window_behavior", parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
 
   // Central Widget for Scrollarea

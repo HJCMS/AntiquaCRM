@@ -21,6 +21,7 @@ class ConfigDatabase final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
+  // Database connectionName
   const QString p_connection_id;
   // Connection Settings
   DatabaseProfile *m_profil;

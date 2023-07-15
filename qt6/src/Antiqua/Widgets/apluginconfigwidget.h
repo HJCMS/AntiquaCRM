@@ -48,7 +48,7 @@ class ANTIQUACRM_LIBRARY PluginConfigWidget : public QScrollArea {
 
 private:
   QSignalMapper *signalMapper;
-  const QString p_gid;
+  const QString p_identifier;
 
 private Q_SLOTS:
   void setInputEditChanged(QObject *);
@@ -112,28 +112,27 @@ public:
   };
 
   /**
-   * @param group  - Configuration Group Section
    * @param id     - Configuration Identifier
    * @param parent - Parent Widget
    */
-  explicit PluginConfigWidget(const QString &group, // config group
-                              const QString &id,    // config id
-                              QWidget *parent = nullptr);
+  explicit PluginConfigWidget(const QString &id, QWidget *parent = nullptr);
 
-  ~PluginConfigWidget();
+  virtual ~PluginConfigWidget();
 
   /**
-   * @brief configuration group path
-   * @note Not usable with ConfigType::CONFIG_DATABASE!
+   * @brief configuration id for config section pointer
    */
-  const QString getGroup() const;
+  const QString getIdentifier();
 
   /**
    * @brief returning current configuration keys from this section!
+   * @param path - complete group path
+   *
    * Equal to QSettings::childKeys(), but beginGroup(getGroup()) is set!
+   *
    * @note Not usable with ConfigType::CONFIG_DATABASE!
    */
-  const QStringList getCurrentKeys();
+  const QStringList getCurrentKeys(const QString &path);
 
   /**
    * @brief where this configuration will saved?

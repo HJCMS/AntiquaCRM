@@ -9,7 +9,7 @@
 #include <QVBoxLayout>
 
 CustomersTabConfigWidget::CustomersTabConfigWidget(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"tabs", CUSTOMERS_INTERFACE_NAME, parent} {
+    : AntiquaCRM::PluginConfigWidget{CUSTOMERS_INTERFACE_NAME, parent} {
   setContentsMargins(0, 0, 0, 0);
 
   QJsonObject _jobj = getMenuEntry();

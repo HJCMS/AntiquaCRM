@@ -11,7 +11,7 @@
 #include <QtWidgets>
 
 ConfigPrinting::ConfigPrinting(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"General", "printer", parent} {
+    : AntiquaCRM::PluginConfigWidget{"printer", parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
 
   QWidget *m_central = new QWidget(this);

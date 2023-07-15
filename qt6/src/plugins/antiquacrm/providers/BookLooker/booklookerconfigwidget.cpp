@@ -8,7 +8,7 @@
 #include <QLayout>
 
 BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"providers", "booklooker", parent} {
+    : AntiquaCRM::PluginConfigWidget{"booklooker", parent} {
   setObjectName("config_booklooker");
 
   QJsonObject _jobj = getMenuEntry();
@@ -36,14 +36,6 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   _info = tr("API Hostname. Default: orderupdate.abebooks.com");
   gb1_layout->addToolTip(_row++, 2, _info);
 
-  m_api_user = new AntiquaCRM::TextLine(this);
-  m_api_user->setObjectName("api_user");
-  m_api_user->setInputToolTip(tr("User Account"));
-  gb1_layout->addWidget(label(tr("User")), _row, 0, 1, 1);
-  gb1_layout->addWidget(m_api_user, _row, 1, 1, 1);
-  _info = tr("Connection API Username");
-  gb1_layout->addToolTip(_row++, 2, _info);
-
   m_api_key = new AntiquaCRM::TextLine(this);
   m_api_key->setObjectName("api_key");
   m_api_key->setInputToolTip(tr("API Key"));
@@ -64,6 +56,11 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   gb1_layout->addToolTip(_row++, 2, _info);
   gbox->setLayout(gb1_layout);
   layout->addWidget(gbox);
+
+  _info = tr("As part of GDPR, %1 only supports secure connections.")
+              .arg(ANTIQUACRM_DISPLAYNAME);
+  layout->addWidget(new QLabel(_info, this));
+
   layout->addStretch(1);
 
   setLayout(layout);

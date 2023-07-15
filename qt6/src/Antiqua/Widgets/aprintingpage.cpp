@@ -42,11 +42,14 @@ APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
 }
 
 APrintingPage::~APrintingPage() {
-  cfg->endGroup();
+  if (!cfg->group().isEmpty())
+    cfg->endGroup();
+
   cfg->deleteLater();
 }
 
 void APrintingPage::initConfiguration() {
+  // NOTE: do not close this group here!
   cfg->beginGroup("printer");
   margin.left = cfg->value("page_margin_left", 20.0).toReal();
   margin.right = cfg->value("page_margin_right", 20.0).toReal();

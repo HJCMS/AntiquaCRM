@@ -10,7 +10,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.20)
 ##  \Section project main info
 ###
 SET (PROJECTNAME "antiquacrm")
-SET (DISPLAYNAME "Antiqua CRM")
+SET (DISPLAYNAME "AntiquaCRM")
 SET (DESCRIPTION "Application for Managing antiquarian Books")
 SET (HOMEPAGEURL "https://www.hjcms.de")
 SET (ANTIQUACRM_DOMAIN_SCOPE "de.hjcms.${PROJECTNAME}")

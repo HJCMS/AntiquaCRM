@@ -13,7 +13,7 @@
 #include <QLayout>
 
 BooksTabConfigWidget::BooksTabConfigWidget(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"tabs", BOOKS_INTERFACE_NAME, parent} {
+    : AntiquaCRM::PluginConfigWidget{BOOKS_INTERFACE_NAME, parent} {
   setContentsMargins(0, 0, 0, 0);
 
   QJsonObject _jobj = getMenuEntry();

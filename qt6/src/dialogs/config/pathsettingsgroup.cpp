@@ -22,43 +22,43 @@ PathSettingsGroup::PathSettingsGroup(QWidget *parent) : QFrame{parent} {
   grLayout1->setContentsMargins(5, 5, 5, 5);
 
   m_setDelivery = new AntiquaCRM::SelectTargets(m_group1);
-  m_setDelivery->setObjectName(configPath(ANTIQUACRM_ARCHIVE_DELIVERY));
+  m_setDelivery->setObjectName(ANTIQUACRM_ARCHIVE_DELIVERY);
   m_setDelivery->setToolTip(tr("delivery notes"));
   m_setDelivery->setBuddyLabel(tr("Delivery"));
   grLayout1->addWidget(m_setDelivery);
 
   m_setInvoices = new AntiquaCRM::SelectTargets(m_group1);
-  m_setInvoices->setObjectName(configPath(ANTIQUACRM_ARCHIVE_INVOICES));
+  m_setInvoices->setObjectName(ANTIQUACRM_ARCHIVE_INVOICES);
   m_setInvoices->setToolTip(tr("invoice printouts"));
   m_setInvoices->setBuddyLabel(tr("Invoice"));
   grLayout1->addWidget(m_setInvoices);
 
   m_setReminder = new AntiquaCRM::SelectTargets(m_group1);
-  m_setReminder->setObjectName(configPath(ANTIQUACRM_ARCHIVE_REMINDERS));
+  m_setReminder->setObjectName(ANTIQUACRM_ARCHIVE_REMINDERS);
   m_setReminder->setToolTip(tr("payment reminders"));
   m_setReminder->setBuddyLabel(tr("Reminders"));
   grLayout1->addWidget(m_setReminder);
 
   m_setReports = new AntiquaCRM::SelectTargets(m_group1);
-  m_setReports->setObjectName(configPath(ANTIQUACRM_ARCHIVE_REPORTS));
+  m_setReports->setObjectName(ANTIQUACRM_ARCHIVE_REPORTS);
   m_setReports->setToolTip(tr("monthly reports"));
   m_setReports->setBuddyLabel(tr("Reports"));
   grLayout1->addWidget(m_setReports);
 
   m_setCards = new AntiquaCRM::SelectTargets(m_group1);
-  m_setCards->setObjectName(configPath(ANTIQUACRM_ARCHIVE_CARDS));
+  m_setCards->setObjectName(ANTIQUACRM_ARCHIVE_CARDS);
   m_setCards->setToolTip(tr("book cards"));
   m_setCards->setBuddyLabel(tr("Cards"));
   grLayout1->addWidget(m_setCards);
 
   m_setImageArchive = new AntiquaCRM::SelectTargets(m_group1);
-  m_setImageArchive->setObjectName(configPath(ANTIQUACRM_ARCHIVE_IMAGES));
+  m_setImageArchive->setObjectName(ANTIQUACRM_ARCHIVE_IMAGES);
   m_setImageArchive->setToolTip(tr("image archive"));
   m_setImageArchive->setBuddyLabel(tr("Images"));
   grLayout1->addWidget(m_setImageArchive);
 
   m_setImageImport = new AntiquaCRM::SelectTargets(m_group1);
-  m_setImageImport->setObjectName(configPath(ANTIQUACRM_ARCHIVE_IMPORT));
+  m_setImageImport->setObjectName(ANTIQUACRM_ARCHIVE_IMPORT);
   m_setImageImport->setToolTip(tr("image import"));
   m_setImageImport->setBuddyLabel(tr("Import"));
   grLayout1->addWidget(m_setImageImport);
@@ -84,7 +84,7 @@ PathSettingsGroup::PathSettingsGroup(QWidget *parent) : QFrame{parent} {
   grLayout2->addWidget(m_info2);
 
   m_setMailBinary = new AntiquaCRM::SelectFile(m_group2);
-  m_setMailBinary->setObjectName(configPath("appl_mailler"));
+  m_setMailBinary->setObjectName("appl_mailler");
   m_setMailBinary->setToolTip(tr("Mail Application"));
   m_setMailBinary->setBuddyLabel(m_setMailBinary->toolTip());
   grLayout2->addWidget(m_setMailBinary);
@@ -95,11 +95,4 @@ PathSettingsGroup::PathSettingsGroup(QWidget *parent) : QFrame{parent} {
 
   // final
   setLayout(layout);
-}
-
-const QString PathSettingsGroup::configPath(const QString &section) const {
-  QString _p(ANTIQUACRM_ARCHIVE_CONFIG_DIRS);
-  _p.append("/");
-  _p.append(section);
-  return _p;
 }

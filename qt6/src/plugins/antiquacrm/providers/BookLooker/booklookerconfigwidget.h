@@ -20,7 +20,6 @@ class ANTIQUACRM_LIBRARY BookLookerConfigWidget final
   Q_OBJECT
 
 private:
-  AntiquaCRM::TextLine *m_api_user;
   AntiquaCRM::TextLine *m_api_host;
   AntiquaCRM::TextLine *m_api_key;
   AntiquaCRM::NumEdit *m_api_port;

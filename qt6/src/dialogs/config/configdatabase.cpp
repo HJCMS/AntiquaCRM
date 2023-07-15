@@ -15,7 +15,7 @@
 #include <QtWidgets>
 
 ConfigDatabase::ConfigDatabase(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"database", QString(), parent},
+    : AntiquaCRM::PluginConfigWidget{QString(), parent},
       p_connection_id{"antiquacrm_db_connection_test"} {
   setObjectName("configdatabase");
   setWindowTitle(getMenuEntry().value("title").toString());
@@ -230,12 +230,8 @@ bool ConfigDatabase::resetInput() {
 }
 
 bool ConfigDatabase::loadProfile(const QString &id) {
-  if (config->contains("database/" + id)) {
-    qWarning("Profile:'database/%s' not exists!", qPrintable(id));
-    return false;
-  }
-
-  config->beginGroup("database/" + id);
+  QString _group = QString("database/%1").arg(id);
+  config->beginGroup(_group);
   // qInfo("Profile:'database/%s'!", qPrintable(id));
   QList<AntiquaCRM::AInputWidget *> _l =
       findChildren<AntiquaCRM::AInputWidget *>(QString());

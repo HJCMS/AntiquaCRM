@@ -7,9 +7,8 @@
 
 namespace AntiquaCRM {
 
-PluginConfigWidget::PluginConfigWidget(const QString &group, const QString &id,
-                                       QWidget *parent)
-    : QScrollArea{parent}, p_gid{group + "/" + id} {
+PluginConfigWidget::PluginConfigWidget(const QString &id, QWidget *parent)
+    : QScrollArea{parent}, p_identifier{id} {
   setWidgetResizable(true);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
   config = new AntiquaCRM::ASettings(this);
@@ -65,19 +64,19 @@ void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
   }
 }
 
-const QString PluginConfigWidget::getGroup() const {
+const QString PluginConfigWidget::getIdentifier() {
   if (getType() == ConfigType::CONFIG_DATABASE)
     qWarning("Invalid usage with ConfigType::CONFIG_DATABASE.");
 
-  return p_gid;
+  return p_identifier;
 }
 
-const QStringList PluginConfigWidget::getCurrentKeys() {
+const QStringList PluginConfigWidget::getCurrentKeys(const QString &path) {
   if (getType() == ConfigType::CONFIG_DATABASE)
     qWarning("Invalid usage with ConfigType::CONFIG_DATABASE.");
 
   QStringList _keys;
-  config->beginGroup(getGroup());
+  config->beginGroup(path);
   _keys = config->childKeys();
   config->endGroup();
   return _keys;

@@ -9,7 +9,7 @@
 #include <QtWidgets>
 
 ConfigGeneral::ConfigGeneral(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"General", QString(), parent} {
+    : AntiquaCRM::PluginConfigWidget{"", parent} {
   setWindowTitle(getMenuEntry().value("title").toString());
   // Central Widget
   QWidget *m_central = new QWidget(this);

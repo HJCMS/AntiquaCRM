@@ -8,7 +8,7 @@
 #include <QLayout>
 
 ConfigTabsView::ConfigTabsView(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"tabs", "config_tabs", parent} {
+    : AntiquaCRM::PluginConfigWidget{"config_tabs", parent} {
   setWindowTitle(tr("Tabs"));
   setObjectName("config_tabs");
   setContentsMargins(0, 0, 0, 0);
@@ -59,18 +59,6 @@ void ConfigTabsView::saveSectionConfig() {
     config->setValue(_status.key(), _status.value());
   }
   config->endGroup();
-
-  /*
-   * Currently unused!
-  QMapIterator<int, QString> _sort(m_view->getSort());
-  config->beginWriteArray("plugin/tabs/sort");
-  while (_sort.hasNext()) {
-    _sort.next();
-    config->setArrayIndex(_sort.key());
-    config->setValue("id", _sort.value());
-  }
-  config->endArray();
-  */
 }
 
 AntiquaCRM::PluginConfigWidget::ConfigType ConfigTabsView::getType() const {
