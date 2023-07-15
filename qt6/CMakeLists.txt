@@ -36,9 +36,9 @@ PROJECT(${PROJECTNAME}
   LANGUAGES CXX
 )
 
-#CONFIGURE_FILE (version.txt.cmake
-#  ${CMAKE_CURRENT_SOURCE_DIR}/version.txt
-#)
+CONFIGURE_FILE (version.txt.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/version.txt
+)
 
 ###
 ## \Section Build System
@@ -142,11 +142,6 @@ IF (CMAKE_HOST_WIN32)
 ENDIF (CMAKE_HOST_WIN32)
 
 FIND_PACKAGE(Qt6 REQUIRED COMPONENTS ${PROJECT_BINDINGS})
-
-## Required by src/i18n and CREATE_TRANSLATION
-SET (LUPDATE_SCANDIRS
-  ${CMAKE_CURRENT_BINARY_DIR}/src
-)
 
 ###
 ## \Section Includes

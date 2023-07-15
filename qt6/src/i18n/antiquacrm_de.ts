@@ -4,7 +4,7 @@
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+86"/>
+        <location filename="../application.cpp" line="+137"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,12 +12,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+58"/>
-        <source>Tabs</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+78"/>
+        <location filename="../mainwindow.cpp" line="+158"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -27,7 +22,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Save request</source>
         <translation type="unfinished"></translation>
     </message>
@@ -45,17 +40,12 @@
 <context>
     <name>MenuBar</name>
     <message>
-        <location filename="../menubar.cpp" line="+14"/>
+        <location filename="../menubar.cpp" line="+15"/>
         <source>Application Quit</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Views</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
+        <location line="+9"/>
         <location line="+2"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>

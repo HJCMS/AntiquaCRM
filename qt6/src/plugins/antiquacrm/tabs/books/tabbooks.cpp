@@ -30,7 +30,7 @@ const QJsonObject TabBooks::menuEntry() const {
   _jo.insert("title", tr("Books"));
   _jo.insert("id", QString(BOOKS_INTERFACE_TABID));
   _jo.insert("tip", tr("Inventory Books"));
-  _jo.insert("icon", tr("kjournal"));
+  _jo.insert("icon", "kjournal");
   return _jo;
 }
 
