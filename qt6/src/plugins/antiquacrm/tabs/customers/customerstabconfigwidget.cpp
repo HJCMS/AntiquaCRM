@@ -33,9 +33,9 @@ void CustomersTabConfigWidget::loadSectionConfig() { /* UNUSED */
 void CustomersTabConfigWidget::saveSectionConfig() { /* UNUSED */
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 CustomersTabConfigWidget::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject CustomersTabConfigWidget::getMenuEntry() const {

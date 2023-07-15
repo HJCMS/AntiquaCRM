@@ -82,7 +82,7 @@ protected:
 
   /**
    * @brief Add AntiquaCRM::AInputWidget to SignalMapper
-   * @param base - Read ANTIQUACRM_TABS_CONFIGWIDGET_HQObject::base
+   * @param base - Read ANTIQUACRM_TABS_CONFIGWIDGET_H QObject::base
    * This function register from all AntiquaCRM::AInputWidget the
    * sendInputChanged Signal.
    *
@@ -103,14 +103,6 @@ public Q_SLOTS:
   virtual void saveSectionConfig() = 0;
 
 public:
-  /**
-   * @brief Enumeration to know, how to store configs.
-   */
-  enum ConfigType {
-    CONFIG_SYSTEM = 0,  /**< @brief store in user config */
-    CONFIG_DATABASE = 1 /**< @brief store in database */
-  };
-
   /**
    * @param id     - Configuration Identifier
    * @param parent - Parent Widget
@@ -137,7 +129,7 @@ public:
   /**
    * @brief where this configuration will saved?
    */
-  virtual PluginConfigWidget::ConfigType getType() const = 0;
+  virtual AntiquaCRM::ConfigType getType() const = 0;
 
   /**
    * @brief menu entry data

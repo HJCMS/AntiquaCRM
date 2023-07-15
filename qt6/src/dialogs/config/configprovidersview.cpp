@@ -56,9 +56,9 @@ void ConfigProvidersView::saveSectionConfig() {
   config->endGroup();
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 ConfigProvidersView::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject ConfigProvidersView::getMenuEntry() const {

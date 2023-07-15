@@ -54,7 +54,7 @@ public Q_SLOTS:
 public:
   explicit ConfigDatabase(QWidget *parent = nullptr);
   virtual ~ConfigDatabase();
-  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

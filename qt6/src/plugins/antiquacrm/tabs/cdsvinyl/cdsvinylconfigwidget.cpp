@@ -108,9 +108,9 @@ void CDsVinylConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 CDsVinylConfigWidget::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject CDsVinylConfigWidget::getMenuEntry() const {

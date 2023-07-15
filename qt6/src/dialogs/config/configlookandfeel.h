@@ -29,7 +29,7 @@ public Q_SLOTS:
 
 public:
   explicit ConfigLookAndFeel(QWidget *parent = nullptr);
-  AntiquaCRM::PluginConfigWidget::ConfigType getType() const override;
+  AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
 

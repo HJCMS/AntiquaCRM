@@ -151,9 +151,9 @@ void AbeBooksConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 AbeBooksConfigWidget::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject AbeBooksConfigWidget::getMenuEntry() const {

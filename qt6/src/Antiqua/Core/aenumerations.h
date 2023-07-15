@@ -186,6 +186,15 @@ namespace AntiquaCRM {
   Q_ENUM_NS(AntiquaCRM::Condition)
 
   /**
+   * @brief Enumeration to know, how to store configs.
+   */
+  enum ConfigType {
+    CONFIG_SYSTEM = 0,  /**< @brief store in user config */
+    CONFIG_DATABASE = 1 /**< @brief store in database */
+  };
+  Q_ENUM_NS(AntiquaCRM::ConfigType);
+
+  /**
    * @brief Mailler buttons
    */
   enum MailGroup {

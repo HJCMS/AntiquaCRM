@@ -98,9 +98,9 @@ void StitchesConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 StitchesConfigWidget::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject StitchesConfigWidget::getMenuEntry() const {

@@ -77,8 +77,8 @@ void ConfigLookAndFeel::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType ConfigLookAndFeel::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::ConfigType ConfigLookAndFeel::getType() const {
+  return AntiquaCRM::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigLookAndFeel::getMenuEntry() const {

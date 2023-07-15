@@ -90,8 +90,8 @@ void ConfigPrinting::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType ConfigPrinting::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::ConfigType ConfigPrinting::getType() const {
+  return AntiquaCRM::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigPrinting::getMenuEntry() const {

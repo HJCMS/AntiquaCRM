@@ -100,9 +100,9 @@ void BooksTabConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 BooksTabConfigWidget::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject BooksTabConfigWidget::getMenuEntry() const {

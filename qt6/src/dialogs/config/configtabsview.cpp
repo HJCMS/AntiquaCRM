@@ -61,8 +61,8 @@ void ConfigTabsView::saveSectionConfig() {
   config->endGroup();
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType ConfigTabsView::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::ConfigType ConfigTabsView::getType() const {
+  return AntiquaCRM::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigTabsView::getMenuEntry() const {

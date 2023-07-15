@@ -141,9 +141,9 @@ void BookLookerConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType
+AntiquaCRM::ConfigType
 BookLookerConfigWidget::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_DATABASE;
+  return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject BookLookerConfigWidget::getMenuEntry() const {

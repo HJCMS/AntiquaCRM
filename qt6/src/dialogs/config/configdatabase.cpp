@@ -366,8 +366,8 @@ void ConfigDatabase::saveSectionConfig() {
   setWindowModified(false);
 }
 
-AntiquaCRM::PluginConfigWidget::ConfigType ConfigDatabase::getType() const {
-  return AntiquaCRM::PluginConfigWidget::ConfigType::CONFIG_SYSTEM;
+AntiquaCRM::ConfigType ConfigDatabase::getType() const {
+  return AntiquaCRM::ConfigType::CONFIG_SYSTEM;
 }
 
 const QJsonObject ConfigDatabase::getMenuEntry() const {
