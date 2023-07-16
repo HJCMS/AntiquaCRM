@@ -25,6 +25,7 @@ private:
   qint64 getTableID(const QModelIndex &index, int column = 0) override;
   bool sqlModelQuery(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
+  void createOrderReturning(qint64 oid);
 
 private Q_SLOTS:
   void contextMenuAction(AntiquaCRM::TableContextMenu::Actions,

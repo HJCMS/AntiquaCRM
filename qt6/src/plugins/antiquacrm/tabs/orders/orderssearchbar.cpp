@@ -31,6 +31,11 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
   addWidget(m_searchInput);
 
+  QLabel *m_area = new QLabel(this);
+  m_area->setText(tr("Area") + ":");
+  m_area->setIndent(2);
+  addWidget(m_area);
+
   m_datePart = new AntiquaCRM::AComboBox(this);
   m_datePart->setToolTip(tr("Restrict search to current to selection."));
   m_datePart->addItem(_icon, tr("Year"), "year");
@@ -41,6 +46,14 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_datePart->setCurrentIndex(0);
   addWidget(m_datePart);
 
+  int _y = QDate::currentDate().year();
+  m_year = new AntiquaCRM::NumEdit(this);
+  m_year->setToolTip(tr("Year"));
+  m_year->setRange((_y - 20), _y);
+  m_year->setBuddyLabel(tr("Year"));
+  m_year->setValue(_y);
+  addWidget(m_year);
+
   m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
@@ -49,15 +62,16 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 }
 
-const QString OrdersSearchBar::getDatePart() const {
-  QString _sql("(");
+const QString OrdersSearchBar::getDatePart() {
+  const QString _year = QString::number(getYear());
   QString _dp = m_datePart->itemData(m_datePart->currentIndex()).toString();
+  if (_dp == "year") {
+    return QString("DATE_PART('year',o_since)=" + _year);
+  }
+
+  QString _sql("(");
   _sql.append("DATE_PART('" + _dp + "',o_since)=");
   _sql.append("DATE_PART('" + _dp + "',CURRENT_DATE)");
-  if (_dp == "year") {
-    _sql.append(")");
-    return _sql;
-  }
   // append month to day query
   if (_dp == "day") {
     _sql.append(" AND ");
@@ -65,8 +79,8 @@ const QString OrdersSearchBar::getDatePart() const {
     _sql.append("DATE_PART('month',CURRENT_DATE)");
   }
   // append always year
-  _sql.append(" AND ");
-  _sql.append("DATE_PART('year',o_since)=DATE_PART('year',CURRENT_DATE)");
+  _sql.append(" AND DATE_PART('year',o_since)=");
+  _sql.append(_year);
   _sql.append(")");
   return _sql;
 }
@@ -129,6 +143,8 @@ void OrdersSearchBar::setClearAndFocus() {
 
 void OrdersSearchBar::setSearchFocus() { m_searchInput->setFocus(); }
 
+int OrdersSearchBar::getYear() { return m_year->getValue().toInt(); }
+
 int OrdersSearchBar::searchLength() {
   const QString _search = m_searchInput->text().trimmed();
   return _search.length();
@@ -166,7 +182,6 @@ const QString OrdersSearchBar::getSearchStatement() {
     _sql.clear();
     break;
   }
-
-  qDebug() << Q_FUNC_INFO << _sql;
+  // qDebug() << Q_FUNC_INFO << _sql;
   return _sql;
 }

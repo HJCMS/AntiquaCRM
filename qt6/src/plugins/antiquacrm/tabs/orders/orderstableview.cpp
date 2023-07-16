@@ -19,15 +19,15 @@ OrdersTableView::OrdersTableView(QWidget *parent)
 }
 
 qint64 OrdersTableView::getTableID(const QModelIndex &index, int column) {
-  QModelIndex id(index);
-  if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
-    return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
+  const QModelIndex _sibling = index.sibling(index.row(), column);
+  if (m_model->data(_sibling, Qt::EditRole).toInt() >= 1) {
+    return m_model->data(_sibling, Qt::EditRole).toInt();
   }
   return -1;
 }
 
 bool OrdersTableView::sqlModelQuery(const QString &query) {
-  // qDebug() << Q_FUNC_INFO << query;
+  // qDebug() << Q_FUNC_INFO << query << Qt::endl;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -39,9 +39,9 @@ bool OrdersTableView::sqlModelQuery(const QString &query) {
     return true;
   }
   emit sendQueryReport(m_model->queryResultInfo());
-  bool status = (m_model->rowCount() > 0);
-  emit sendResultExists(status);
-  return status;
+  bool _status = (m_model->rowCount() > 0);
+  emit sendResultExists(_status);
+  return _status;
 }
 
 void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
@@ -49,18 +49,18 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   qint64 rows = m_model->rowCount();
   AntiquaCRM::TableContextMenu *m_menu =
       new AntiquaCRM::TableContextMenu(index, rows, this);
-  m_menu->addOpenAction(tr("Open entry"));
-  //m_menu->addCreateAction(tr("Create entry"));
+  m_menu->addOpenAction(tr("Open order"));
+  m_menu->addCopyAction(tr("Copy Order Id"));
+  QAction *ac_customer = m_menu->addOrderAction(tr("View Customer"));
+  ac_customer->setIcon(AntiquaCRM::antiquaIcon("user-group"));
+  m_menu->addUndoAction(tr("Create a return from this order."));
   m_menu->addReloadAction(tr("Update"));
-  /*
   connect(m_menu,
           SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
                             const QModelIndex &)),
           SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
                                  const QModelIndex &)));
-  */
 
-  //connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
   m_menu->exec(event->globalPos());
   delete m_menu;
@@ -68,17 +68,17 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
 
 void OrdersTableView::contextMenuAction(
     AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
-  qint64 _id = getTableID(index);
-  if (_id < 1)
+  qint64 _oid = getTableID(index);
+  if (_oid < 1)
     return;
 
   switch (ac) {
   case (AntiquaCRM::TableContextMenu::Actions::Open):
-    emit sendOpenEntry(_id);
+    emit sendOpenEntry(_oid);
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Delete):
-    emit sendDeleteEntry(_id);
+    emit sendDeleteEntry(_oid);
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Order):
@@ -86,13 +86,26 @@ void OrdersTableView::contextMenuAction(
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Copy):
-    emit sendCopyToClibboard(QString::number(_id));
+    emit sendCopyToClibboard(QString::number(_oid));
+    break;
+
+  case (AntiquaCRM::TableContextMenu::Actions::Undo):
+    createOrderReturning(_oid);
     break;
 
   default:
-    qWarning("Unknown Menu context request!");
-    return;
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << "Unknown OrderView::ContextMenu request:" << _oid;
+#endif
+    break;
   };
+}
+
+void OrdersTableView::createOrderReturning(qint64 oid) {
+  qDebug() << Q_FUNC_INFO << oid;
+  // ReturnOrder *d = new ReturnOrder(this);
+  // if (d->exec(oid) == QDialog::Accepted) { setReloadView(); }
+  // d->deleteLater();
 }
 
 void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {
@@ -138,7 +151,14 @@ void OrdersTableView::getSelectedItem(const QModelIndex &index) {
 
 void OrdersTableView::createSocketOperation(const QModelIndex &index) {
   qint64 _oid = getTableID(index);
-  qDebug() << Q_FUNC_INFO << _oid << "TODO";
+  if (_oid < 1)
+    return;
+
+  QJsonObject obj;
+  obj.insert("ACTION", "open_entry");
+  obj.insert("TARGET", "customers_tab");
+  obj.insert("VALUE", QJsonValue(_oid));
+  emit sendSocketOperation(obj);
 }
 
 void OrdersTableView::setReloadView() {
@@ -160,11 +180,10 @@ bool OrdersTableView::setQuery(const QString &clause) {
 }
 
 const QString OrdersTableView::defaultWhereClause() {
-  QDate _d = QDate::currentDate();
-  QString _sql("(");
-  _sql.append("DATE_PART('YEAR', o_modified)=" + QString::number(_d.year()));
-  //_sql.append(" AND ");
-  //_sql.append("DATE_PART('MONTH', o_modified)=" + QString::number(_d.month()));
+  QString _sql("o_order_status<4 AND (");
+  _sql.append("DATE_PART('year',o_since)=DATE_PART('year',CURRENT_DATE) OR ");
+  _sql.append("DATE_PART('month',o_modified)=DATE_PART('year',CURRENT_DATE)");
   _sql.append(")");
+  // qDebug() << Q_FUNC_INFO << _sql << Qt::endl;
   return _sql;
 }

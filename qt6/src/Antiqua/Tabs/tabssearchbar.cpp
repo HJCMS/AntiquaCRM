@@ -33,7 +33,7 @@ QPushButton *TabsSearchBar::startSearchButton(const QString &text) {
   btn->setToolTip(tr("Push to start search."));
 
   if (text.isEmpty())
-    btn->setText(tr("start search"));
+    btn->setText(tr("Search"));
   else
     btn->setText(text);
 

@@ -23,8 +23,9 @@ private:
   AntiquaCRM::AComboBox *m_filter;
   AntiquaCRM::ALineEdit *m_searchInput;
   AntiquaCRM::AComboBox *m_datePart;
+  AntiquaCRM::NumEdit *m_year;
   QPushButton *m_searchBtn;
-  const QString getDatePart() const;
+  const QString getDatePart();
 
 public Q_SLOTS:
   void setSearch() override;
@@ -35,9 +36,8 @@ public Q_SLOTS:
 
 public:
   explicit OrdersSearchBar(QWidget *patent = nullptr);
-
+  int getYear();
   int searchLength() override;
-
   const QString getSearchStatement() override;
 };
 

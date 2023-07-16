@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "ordersstatusbar.h"
+#include "orderssearchbar.h"
 
 OrdersStatusBar::OrdersStatusBar(QWidget *parent)
     : AntiquaCRM::TabsStatusBar{parent} {
@@ -12,9 +13,12 @@ OrdersStatusBar::OrdersStatusBar(QWidget *parent)
 }
 
 const QString OrdersStatusBar::yearStatement() const {
-  const QString _year("DATE_PART('year',CURRENT_DATE)");
-  QString _sql("(DATE_PART('year',o_since)=" + _year + " OR ");
-  _sql.append("DATE_PART('year',o_modified)=" + _year + ")");
+  OrdersSearchBar *m_sbar = parentWidget()->findChild<OrdersSearchBar *>();
+  QString _year("DATE_PART('year',CURRENT_DATE)");
+  if (m_sbar != nullptr)
+    _year = QString::number(m_sbar->getYear());
+
+  QString _sql("DATE_PART('year',o_since)=" + _year);
   return _sql;
 }
 
@@ -45,13 +49,13 @@ void OrdersStatusBar::setHistoryActionMenu(QPushButton *parent) {
   m_mapper->setMapping(ac4, OrdersStatusBar::QF_PAYMENT_REMINDED);
   connect(ac4, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
-  QAction *ac5 = m->addAction(historyIcon(), tr("Completed this Year."));
-  ac5->setStatusTip(tr("Completed orders from this Year."));
+  QAction *ac5 = m->addAction(historyIcon(), tr("Completed from Year."));
+  ac5->setStatusTip(tr("Completed orders from Year."));
   m_mapper->setMapping(ac5, OrdersStatusBar::QF_COMPLETED);
   connect(ac5, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
-  QAction *ac6 = m->addAction(historyIcon(), tr("Canceled this Year."));
-  ac6->setStatusTip(tr("Canceled orders from this Year."));
+  QAction *ac6 = m->addAction(historyIcon(), tr("Canceled from Year."));
+  ac6->setStatusTip(tr("Canceled orders from Year."));
   m_mapper->setMapping(ac6, OrdersStatusBar::QF_CANCELED);
   connect(ac6, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
@@ -61,8 +65,7 @@ void OrdersStatusBar::setHistoryActionMenu(QPushButton *parent) {
 
 void OrdersStatusBar::setHistoryAction(int index) {
   FilterQuery _filter = static_cast<FilterQuery>(index);
-  QString _status;
-  QString _sql;
+  QString _status, _sql;
   switch (_filter) {
   case QF_DEFAULT: {
     // Zeige alle Nicht bezahlten
@@ -73,17 +76,17 @@ void OrdersStatusBar::setHistoryAction(int index) {
   case QF_NOT_PAID: {
     // Zeige "nicht Bezahlt" und "nicht Storniert"
     _status = QString::number(AntiquaCRM::OrderPayment::PAYED);
-    _sql = "o_payment_status!=" + _status;
+    _sql = "(o_payment_status!=" + _status;
     _status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
-    _sql.append(" AND o_order_status!=" + _status);
+    _sql.append(" AND o_order_status!=" + _status + ")");
   } break;
 
   case QF_DELIVERED_NOT_PAID: {
     // Zeige geliefert und Nicht bezahlt
     _status = QString::number(AntiquaCRM::OrderPayment::PAYED);
-    _sql = "o_payment_status!=" + _status;
+    _sql = "(o_payment_status!=" + _status;
     _status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    _sql.append(" AND o_order_status=" + _status);
+    _sql.append(" AND o_order_status=" + _status + ")");
   } break;
 
   case QF_PAYMENT_REMINDED: {
@@ -104,17 +107,21 @@ void OrdersStatusBar::setHistoryAction(int index) {
     _sql = "(o_payment_status=" + _status;
     _status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
     _sql.append(" AND o_order_status=" + _status + ")");
-    _sql.append(" AND " + yearStatement());
   } break;
 
   case QF_CANCELED: {
     // Zeige stornierte
     _status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
-    _sql = "o_order_status=" + _status + " AND " + yearStatement();
+    _sql = "o_order_status=" + _status;
   } break;
 
   default:
     break;
   }
+
+  if (_sql.isEmpty())
+    return;
+
+  _sql.append(" AND " + yearStatement());
   emit sendHistoryQuery(_sql);
 }
