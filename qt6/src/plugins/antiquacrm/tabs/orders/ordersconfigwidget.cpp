@@ -37,7 +37,7 @@ AntiquaCRM::ConfigType OrdersConfigWidget::getType() const {
 
 const QJsonObject OrdersConfigWidget::getMenuEntry() const {
   QJsonObject _o;
-  _o.insert("icon", "antiquacrm");
+  _o.insert("icon", "view-financial-transfer");
   _o.insert("title", tr("Orders"));
   _o.insert("tooltip", tr("Additional Orders settings."));
   return _o;

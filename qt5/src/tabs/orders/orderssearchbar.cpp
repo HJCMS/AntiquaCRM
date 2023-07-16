@@ -36,7 +36,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent) : TabSearchBar{parent} {
   connect(m_selectFilter, SIGNAL(currentIndexChanged(int)),
           SLOT(setFilter(int)));
   connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
-  connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
+  // ??? connect(m_lineEdit, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 
   m_selectFilter->setCurrentIndex(1);

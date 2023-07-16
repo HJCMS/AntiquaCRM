@@ -13,18 +13,21 @@
 #include <AntiquaWidgets>
 #include <QObject>
 
+class OrdersSearchBar;
 class OrdersTableView;
+class OrdersStatusBar;
+class OrdersEditor;
 
 class ANTIQUACRM_LIBRARY OrdersWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
   QWidget *m_mainPage;
-  // OrdersSearchBar *m_searchBar;
+  OrdersSearchBar *m_searchBar;
   OrdersTableView *m_table;
-  // OrdersStatusBar *m_statusBar;
+  OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
-  //OrdersEditor *m_editorWidget;
+  OrdersEditor *m_editorWidget;
 
   void popupWarningTabInEditMode() override;
 

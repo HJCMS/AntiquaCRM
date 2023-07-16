@@ -3,6 +3,9 @@
 
 #include "orderswidget.h"
 #include "ordersconfig.h"
+#include "orderseditor.h"
+#include "orderssearchbar.h"
+#include "ordersstatusbar.h"
 #include "orderstableview.h"
 
 #include <AntiquaCRM>
@@ -11,19 +14,22 @@
 OrdersWidget::OrdersWidget(QWidget *parent)
     : AntiquaCRM::TabsIndex{ORDERS_INTERFACE_TABID, parent} {
   setObjectName("orders_tab_widget");
-  setWindowIcon(AntiquaCRM::antiquaIcon("kjournal"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("view-financial-transfer"));
   setClosable(false);
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
   QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);
   m_p1Layout->setContentsMargins(0, 0, 0, 0);
 
-  m_p1Layout->addWidget(new QLabel("TODO", this));
+  m_searchBar = new OrdersSearchBar(m_mainPage);
+  m_p1Layout->addWidget(m_searchBar);
 
   m_table = new OrdersTableView(m_mainPage);
   m_p1Layout->addWidget(m_table);
+  m_p1Layout->setStretch(1, 1);
 
-  m_p1Layout->addWidget(new QLabel("TODO", this));
+  m_statusBar = new OrdersStatusBar(m_mainPage);
+  m_p1Layout->addWidget(m_statusBar);
 
   m_mainPage->setLayout(m_p1Layout);
   insertWidget(0, m_mainPage);
@@ -33,17 +39,28 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   m_editorPage = new QScrollArea(this);
   m_editorPage->setObjectName("CDsVinyl_editor_scrollarea");
   m_editorPage->setWidgetResizable(true);
-  QWidget *m_editorWidget = new QWidget(this);
-  // m_editorWidget->installEventFilter(this);
+  m_editorWidget = new OrdersEditor(this);
+  m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
   insertWidget(1, m_editorPage);
   // End
 
   setCurrentIndex(0);
 
+  // Signals::OrdersSearchBar
+  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
+          SLOT(setSearchFocus()));
+  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
+          SLOT(setFilterFocus()));
+  connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+  connect(m_searchBar, SIGNAL(sendStockEnabled(bool)), m_statusBar,
+          SLOT(setStockEnabled(bool)));
+  connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
+
   // Signals::OrdersTableView
-  // connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
-  //       SLOT(showMessage(const QString &)));
+  connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
+          SLOT(showMessage(const QString &)));
 
   connect(m_table, SIGNAL(sendCopyToClibboard(const QString &)),
           SLOT(copyToClipboard(const QString &)));
@@ -54,6 +71,16 @@ OrdersWidget::OrdersWidget(QWidget *parent)
 
   connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
           SLOT(sendSocketOperation(const QJsonObject &)));
+
+  // Signals::OrdersEditor
+  connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
+
+  // Signals::OrdersStatusBar
+  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
+          SLOT(createSearchQuery(const QString &)));
+  connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
+  connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
+          SLOT(setReloadView()));
 }
 
 void OrdersWidget::popupWarningTabInEditMode() {
@@ -67,7 +94,7 @@ void OrdersWidget::popupWarningTabInEditMode() {
 }
 
 void OrdersWidget::setDefaultTableView() {
-  // m_searchBar->setClearAndFocus();
+  m_searchBar->setClearAndFocus();
   setCurrentIndex(0);
   m_table->setQuery(m_table->defaultWhereClause());
 }
@@ -81,17 +108,21 @@ void OrdersWidget::openStartPage() {
 
 void OrdersWidget::createSearchQuery(const QString &history) {
   if (!history.isEmpty()) {
+    qDebug() << "QUERY:" << history;
     m_table->setQuery(history);
     return;
   }
 
-  //  QString w_sql = m_searchBar->getSearchStatement();
-  //  if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
-  //    m_table->setQuery(w_sql);
-  //  }
+  QString w_sql = m_searchBar->getSearchStatement();
+  if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
+    m_table->setQuery(w_sql);
+  }
 }
 
-void OrdersWidget::createNewEntry() { qDebug() << Q_FUNC_INFO << "__TODO__"; }
+void OrdersWidget::createNewEntry() {
+  //
+  qDebug() << Q_FUNC_INFO << "__TODO__";
+}
 
 void OrdersWidget::openEntry(qint64 articleId) {
   qDebug() << Q_FUNC_INFO << "__TODO__" << articleId;

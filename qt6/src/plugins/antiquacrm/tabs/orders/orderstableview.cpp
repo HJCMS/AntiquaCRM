@@ -50,7 +50,7 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   AntiquaCRM::TableContextMenu *m_menu =
       new AntiquaCRM::TableContextMenu(index, rows, this);
   m_menu->addOpenAction(tr("Open entry"));
-  m_menu->addCreateAction(tr("Create entry"));
+  //m_menu->addCreateAction(tr("Create entry"));
   m_menu->addReloadAction(tr("Update"));
   /*
   connect(m_menu,
@@ -60,7 +60,7 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
                                  const QModelIndex &)));
   */
 
-  connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
+  //connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
   m_menu->exec(event->globalPos());
   delete m_menu;

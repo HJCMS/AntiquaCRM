@@ -16,6 +16,7 @@
 #include <QMap>
 #include <QMenu>
 #include <QPushButton>
+#include <QSignalMapper>
 #include <QStatusBar>
 
 namespace AntiquaCRM {
@@ -37,12 +38,17 @@ public:
   explicit TabsStatusBar(QWidget *parent = nullptr);
 
   /**
-   * @brief Erstellen Knopf abfragen
+   * Search and destroy - History Menues and SignalMapper - if exists!
+   */
+  virtual ~TabsStatusBar();
+
+  /**
+   * @brief Initial Create button
    */
   virtual bool isCreateButtonEnabled() = 0;
 
   /**
-   * @brief Menüeinträge mit den TabStatusBar::History werten!
+   * @brief Default TabStatusBar::History Menu entries.
    */
   static const QMap<TabsStatusBar::History, QString> historyItems();
 
@@ -63,6 +69,11 @@ private:
   QPushButton *btn_refresh;
 
 protected:
+  /**
+   * @brief Predifined Signal Mapper for History Menu
+   */
+  QSignalMapper *m_mapper = nullptr;
+
   /**
    * @brief Search only With Stock
    */
@@ -90,16 +101,24 @@ protected:
   QPushButton *defaultViewButton(const QString &title = QString());
 
   /**
-   * @brief Erstellt aus @ref historyItems() Menüeinträge
-   * @note  Einträge lösen den SLOT @ref setHistoryAction(int) aus!
+   * @brief Default icon for History menu entries.
    */
-  void setHistoryActionMenu(QPushButton *parent);
+  const QIcon historyIcon() const;
+
+  /**
+   * @brief Create History action menu for History Button.
+   *
+   * In this function you can create customized History Action Menu.
+   * There is also a predefined SignalMapper to create the @ref
+   * setHistoryAction slot!
+   */
+  virtual void setHistoryActionMenu(QPushButton *parent) = 0;
 
 protected Q_SLOTS:
   /**
-   * @brief Auswahl von Menüeinträgen verarbeiten!
-   * Es wird "TabStatusBar::History" übergeben.
-   * @note Wegen SignalMapper ist der Parameter ein INT!
+   * @brief History actions Slot
+   * @note Because of SignalMapper the parameter is an integer!
+   * @sa setHistoryActionMenu
    */
   virtual void setHistoryAction(int) = 0;
 

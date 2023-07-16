@@ -15,6 +15,24 @@ CustomersStatusBar::CustomersStatusBar(QWidget *parent)
   setHistoryActionMenu(btn_history);
 }
 
+void CustomersStatusBar::setHistoryActionMenu(QPushButton *parent) {
+  // Mapper für Verlaufssignale
+  m_mapper = new QSignalMapper(parent);
+  QMenu *m_menu = new QMenu(parent);
+  QMapIterator<TabsStatusBar::History, QString> it(historyItems());
+  while (it.hasNext()) {
+    it.next();
+    if (it.key() == TabsStatusBar::History::NOIMAGE)
+      continue;
+
+    QAction *ac = m_menu->addAction(historyIcon(), it.value());
+    connect(ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
+    m_mapper->setMapping(ac, it.key());
+  }
+  parent->setMenu(m_menu);
+  connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
+}
+
 void CustomersStatusBar::setHistoryAction(int index) {
   TabsStatusBar::History _history = static_cast<TabsStatusBar::History>(index);
   QString _sql;

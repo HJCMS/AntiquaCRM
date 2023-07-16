@@ -18,6 +18,7 @@ class ANTIQUACRM_LIBRARY CustomersStatusBar final
 private:
   QPushButton *btn_create;
   QPushButton *btn_history;
+  void setHistoryActionMenu(QPushButton *parent) override;
 
 private Q_SLOTS:
   void setHistoryAction(int) override;

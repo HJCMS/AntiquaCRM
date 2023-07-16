@@ -31,7 +31,7 @@ const QJsonObject TabOrders::menuEntry() const {
   _jo.insert("title", tr("Orders"));
   _jo.insert("id", QString(ORDERS_INTERFACE_TABID));
   _jo.insert("tip", tr("Inventory orders"));
-  _jo.insert("icon", "antiquacrm");
+  _jo.insert("icon", "view-financial-transfer");
   return _jo;
 }
 

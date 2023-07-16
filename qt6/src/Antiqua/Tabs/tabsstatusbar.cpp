@@ -31,6 +31,19 @@ TabsStatusBar::TabsStatusBar(QWidget *parent) : QStatusBar{parent} {
   connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(sendReloadView()));
 }
 
+TabsStatusBar::~TabsStatusBar() {
+  // destroy history menues
+  QListIterator<QPushButton *> it(findChildren<QPushButton *>());
+  while (it.hasNext()) {
+    QPushButton *btn = it.next();
+    if (btn->menu() != nullptr)
+      btn->menu()->deleteLater();
+  }
+  // destroy signal mapper
+  if (m_mapper != nullptr)
+    m_mapper->deleteLater();
+}
+
 const QMap<TabsStatusBar::History, QString> TabsStatusBar::historyItems() {
   QMap<TabsStatusBar::History, QString> items;
   items.insert(History::Today, tr("Today"));
@@ -47,7 +60,7 @@ const QMap<TabsStatusBar::History, QString> TabsStatusBar::historyItems() {
 void TabsStatusBar::addButton(QPushButton *btn) { layout->addWidget(btn); }
 
 QPushButton *TabsStatusBar::createButton(const QString &title,
-                            const QString &tip) {
+                                         const QString &tip) {
   QPushButton *btn = new QPushButton(m_frame);
   btn->setIcon(antiquaIcon("database-add"));
   btn->setToolTip(tip);
@@ -64,7 +77,7 @@ QPushButton *TabsStatusBar::createButton(const QString &title,
 
 QPushButton *TabsStatusBar::historyButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(antiquaIcon("view-list"));
+  btn->setIcon(historyIcon());
   btn->setToolTip(tr("History menue"));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -79,7 +92,7 @@ QPushButton *TabsStatusBar::historyButton(const QString &title) {
 
 QPushButton *TabsStatusBar::defaultViewButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(antiquaIcon("spreadsheet"));
+  btn->setIcon(AntiquaCRM::antiquaIcon("spreadsheet"));
   btn->setToolTip(tr("Push to load the Standard view."));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
@@ -92,21 +105,8 @@ QPushButton *TabsStatusBar::defaultViewButton(const QString &title) {
   return btn;
 }
 
-void TabsStatusBar::setHistoryActionMenu(QPushButton *parent) {
-  // Mapper für Verlaufssignale
-  QSignalMapper *m_mapper = new QSignalMapper(parent);
-  QMenu *m_menu = new QMenu(parent);
-  QIcon icon = antiquaIcon("view-books");
-  QStringList entries;
-  QMapIterator<TabsStatusBar::History, QString> it(historyItems());
-  while (it.hasNext()) {
-    it.next();
-    QAction *ac = m_menu->addAction(icon, it.value());
-    connect(ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
-    m_mapper->setMapping(ac, it.key());
-  }
-  parent->setMenu(m_menu);
-  connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
+const QIcon TabsStatusBar::historyIcon() const {
+  return AntiquaCRM::antiquaIcon("view-history");
 }
 
 void TabsStatusBar::setStockEnabled(bool b) { SearchWithStock = b; }

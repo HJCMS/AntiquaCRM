@@ -14,6 +14,21 @@ BooksStatusBar::BooksStatusBar(QWidget *parent)
   setHistoryActionMenu(btn_history);
 }
 
+void BooksStatusBar::setHistoryActionMenu(QPushButton *parent) {
+  // Mapper für Verlaufssignale
+  m_mapper = new QSignalMapper(parent);
+  QMenu *m_menu = new QMenu(parent);
+  QMapIterator<TabsStatusBar::History, QString> it(historyItems());
+  while (it.hasNext()) {
+    it.next();
+    QAction *ac = m_menu->addAction(historyIcon(), it.value());
+    connect(ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
+    m_mapper->setMapping(ac, it.key());
+  }
+  parent->setMenu(m_menu);
+  connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
+}
+
 void BooksStatusBar::setHistoryAction(int index) {
   TabsStatusBar::History _history = static_cast<TabsStatusBar::History>(index);
   QString _sql;

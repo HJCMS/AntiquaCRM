@@ -17,20 +17,26 @@ SET (plugin_FILES
 )
 
 SET (plugin_SOURCES
- orderswidget.cpp
- ordersconfigwidget.cpp
- orderstablemodel.cpp
- orderstableview.cpp
- taborders.cpp
+  ordersconfigwidget.cpp
+  orderseditor.cpp
+  orderstablemodel.cpp
+  orderstableview.cpp
+  orderswidget.cpp
+  orderssearchbar.cpp
+  ordersstatusbar.cpp
+  taborders.cpp
 )
 
 SET (plugin_HEADERS
- ordersconfig.h
- orderswidget.h
- ordersconfigwidget.h
- orderstablemodel.h
- orderstableview.h
- taborders.h
+  ordersconfig.h
+  ordersconfigwidget.h
+  orderseditor.h
+  orderstablemodel.h
+  orderstableview.h
+  orderswidget.h
+  orderssearchbar.h
+  ordersstatusbar.h
+  taborders.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
