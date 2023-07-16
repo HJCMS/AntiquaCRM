@@ -18,6 +18,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_filter->addItem(_icon, tr("Delivery Service"));    // d_name
   m_filter->addItem(_icon, tr("Provider"));            // o_provider_name
   m_filter->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  m_filter->setCurrentIndex(0);
   addWidget(m_filter);
 
   QToolButton *m_icontb = new QToolButton(this);
@@ -37,6 +38,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_datePart->addItem(_icon, tr("Week"), "week");
   m_datePart->addItem(_icon, tr("Day"), "day");
   m_datePart->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  m_datePart->setCurrentIndex(0);
   addWidget(m_datePart);
 
   m_searchBtn = startSearchButton();
