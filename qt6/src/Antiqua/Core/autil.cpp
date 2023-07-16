@@ -17,7 +17,7 @@ const QString AUtil::recipientPattern() {
 }
 
 const QString AUtil::domainPattern() {
-  return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+){2,}");
+  return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
 }
 
 const QString AUtil::tldPattern() { return QString(("\\.([a-z]{2,8})")); }

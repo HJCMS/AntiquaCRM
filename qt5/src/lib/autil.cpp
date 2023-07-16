@@ -42,8 +42,8 @@ const QString AUtil::ucFirst(const QString &str) {
 }
 
 const QRegExp AUtil::emailRegExp() {
-  const QString _recipient("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
-  const QString _domain("([\\d\\w]+[\\-\\.]?[\\d\\w]+){2,}");
+  const QString _recipient("([\\d\\w]+[\\-\\.\\_]?[\\d\\w]+)+");
+  const QString _domain("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
   const QString _tld("\\.([a-z]{2,8})");
   QRegExp _reg;
   _reg.setCaseSensitivity(Qt::CaseInsensitive);
@@ -52,9 +52,12 @@ const QRegExp AUtil::emailRegExp() {
 }
 
 bool AUtil::checkMail(const QString &mail) {
+  if(mail.isEmpty())
+    return false;
+
   QRegularExpression expr(emailRegExp().pattern());
-  QString str = mail.trimmed().toLower();
-  QRegularExpressionMatch match = expr.match(str);
+  QString _str = mail.toLower().trimmed();
+  QRegularExpressionMatch match = expr.match(_str);
   return match.hasMatch();
 }
 
@@ -66,6 +69,9 @@ const QRegExp AUtil::phoneRegExp() {
 }
 
 bool AUtil::checkPhone(const QString &phone) {
+  if(phone.isEmpty())
+    return false;
+
   QRegularExpression expr(phoneRegExp().pattern());
   QString str = phone.trimmed().toLower();
   QRegularExpressionMatch match = expr.match(str);
