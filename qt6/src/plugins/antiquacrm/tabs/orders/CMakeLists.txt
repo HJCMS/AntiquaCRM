@@ -17,6 +17,8 @@ SET (plugin_FILES
 )
 
 SET (plugin_SOURCES
+  orderscustomerinfo.cpp
+  orderscostsettings.cpp
   ordersconfigwidget.cpp
   orderseditor.cpp
   orderstablemodel.cpp
@@ -24,11 +26,14 @@ SET (plugin_SOURCES
   orderswidget.cpp
   orderssearchbar.cpp
   ordersstatusbar.cpp
+  orderspayedarticles.cpp
   taborders.cpp
 )
 
 SET (plugin_HEADERS
   ordersconfig.h
+  orderscustomerinfo.h
+  orderscostsettings.h
   ordersconfigwidget.h
   orderseditor.h
   orderstablemodel.h
@@ -36,6 +41,7 @@ SET (plugin_HEADERS
   orderswidget.h
   orderssearchbar.h
   ordersstatusbar.h
+  orderspayedarticles.h
   taborders.h
 )
 

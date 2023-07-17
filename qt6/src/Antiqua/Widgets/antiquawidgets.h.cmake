@@ -104,6 +104,12 @@
 // AntiquaCRM::SelectMediaType
 #include "selectmediatype.h"
 
+// AntiquaCRM::SelectOrderStatus
+#include "selectorderstatus.h"
+
+// AntiquaCRM::SelectOrderPayment
+#include "selectorderpayment.h"
+
 // AntiquaCRM::SelectPaymentMethod
 #include "selectpaymentmethod.h"
 

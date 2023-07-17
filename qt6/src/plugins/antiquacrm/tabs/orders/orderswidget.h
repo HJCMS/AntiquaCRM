@@ -42,7 +42,7 @@ public:
 
   void createNewEntry() override;
 
-  void openEntry(qint64 articleId) override;
+  void openEntry(qint64 oid) override;
 
   void onEnterChanged() override;
 

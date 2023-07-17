@@ -184,6 +184,12 @@ public:
    * @return success
    */
   bool createNewEntry() override;
+
+  /**
+   * @brief Kunde aus Json Object erstellen
+   * @param object - Datenstruktur
+   */
+  bool createCustomEntry(const QJsonObject &object) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_CUSTOMERSEDITOR_H

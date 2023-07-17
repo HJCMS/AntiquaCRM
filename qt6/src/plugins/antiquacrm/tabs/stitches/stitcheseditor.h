@@ -295,6 +295,12 @@ public:
    * @return success
    */
   bool createNewEntry() override;
+
+  /**
+   * @brief Create a csutomized entry
+   * @param object
+   */
+  bool createCustomEntry(const QJsonObject &object) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_STITCHESEDITOR_H

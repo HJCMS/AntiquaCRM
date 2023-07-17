@@ -304,12 +304,17 @@ public:
    * @brief Einen Artikel zum bearbeiten öffnen.
    * @note Hier wird AntiquaCRM::ASqlDataQuery befüllt!
    */
-  virtual bool openEditEntry(qint64 articleId) = 0;
+  virtual bool openEditEntry(qint64) = 0;
 
   /**
-   * @brief Einen Neuen Artikel erstellen.
+   * @brief Create a new empty entry
    */
   virtual bool createNewEntry() = 0;
+
+  /**
+   * @brief Create a new entry with Json object
+   */
+  virtual bool createCustomEntry(const QJsonObject &) = 0;
 };
 
 } // namespace AntiquaCRM

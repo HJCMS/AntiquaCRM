@@ -760,3 +760,8 @@ bool StitchesEditor::createNewEntry() {
   registerInputChanged();
   return isEnabled();
 }
+
+bool StitchesEditor::createCustomEntry(const QJsonObject &object) {
+  qDebug() << Q_FUNC_INFO << "TODO" << object;
+  return true;
+}

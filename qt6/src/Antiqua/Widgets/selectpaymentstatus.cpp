@@ -32,20 +32,21 @@ void SelectPaymentStatus::initData() {
   _f.setDefaultValue(AntiquaCRM::STATUS_NOT_SET);
   setRestrictions(_f);
 
-  int c = 1;
+  int _c = 1;
   m_edit->setWithoutDisclosures(AntiquaCRM::STATUS_NOT_SET);
-  m_edit->insertItem(c++, tr("Waiting for payment"),
+  m_edit->insertItem(_c++, tr("Waiting for payment"),
                      AntiquaCRM::WAIT_FOR_PAYMENT);
-  m_edit->insertItem(c++, tr("Ready for shipping"),
+  m_edit->insertItem(_c++, tr("Ready for shipping"),
                      AntiquaCRM::SHIPMENT_CREATED);
-  m_edit->insertItem(c++, tr("Delivered waiting for payment"),
+  m_edit->insertItem(_c++, tr("Delivered waiting for payment"),
                      AntiquaCRM::SHIPPED_WAIT_FOR_PAYMENT);
-  m_edit->insertItem(c++, tr("Paid and shipped"), AntiquaCRM::SHIPPED_AND_PAID);
-  m_edit->insertItem(c++, tr("No reaction from buyer"),
+  m_edit->insertItem(_c++, tr("Paid and shipped"),
+                     AntiquaCRM::SHIPPED_AND_PAID);
+  m_edit->insertItem(_c++, tr("No reaction from buyer"),
                      AntiquaCRM::BUYER_NO_REACTION);
-  m_edit->insertItem(c++, tr("order canceled"), AntiquaCRM::ORDER_CANCELED);
+  m_edit->insertItem(_c++, tr("order canceled"), AntiquaCRM::ORDER_CANCELED);
 
-  const QIcon _icon = antiquaIcon("view-loan-asset");
+  const QIcon _icon = AntiquaCRM::antiquaIcon("view-loan-asset");
   for (int i = 1; i < m_edit->count(); i++) {
     m_edit->setItemIcon(i, _icon);
   }
@@ -61,9 +62,9 @@ void SelectPaymentStatus::setValue(const QVariant &value) {
     return;
   }
 
-  AntiquaCRM::ProviderPaymentStatus status =
+  AntiquaCRM::ProviderPaymentStatus _status =
       static_cast<AntiquaCRM::ProviderPaymentStatus>(value.toInt());
-  int _index = m_edit->findData(status, Qt::UserRole);
+  int _index = m_edit->findData(_status, Qt::UserRole);
   if (_index > 0)
     m_edit->setCurrentIndex(_index);
 }

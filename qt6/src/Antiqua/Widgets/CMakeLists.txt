@@ -109,6 +109,8 @@ SET (_library_SOURCES
   selectfile.cpp
   selectlanguage.cpp
   selectmediatype.cpp
+  selectorderstatus.cpp
+  selectorderpayment.cpp
   selectpaymentmethod.cpp
   selectpaymentstatus.cpp
   selectstorage.cpp
@@ -175,6 +177,8 @@ SET (_library_HEADERS
   selectfile.h
   selectlanguage.h
   selectmediatype.h
+  selectorderstatus.h
+  selectorderpayment.h
   selectpaymentmethod.h
   selectpaymentstatus.h
   selectstorage.h

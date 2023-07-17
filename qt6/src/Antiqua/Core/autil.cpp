@@ -13,14 +13,14 @@
 namespace AntiquaCRM {
 
 const QString AUtil::recipientPattern() {
-  return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
+  return QString("([\\d\\w]+[\\-\\.\\_]?[\\d\\w]+)+");
 }
 
 const QString AUtil::domainPattern() {
   return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
 }
 
-const QString AUtil::tldPattern() { return QString(("\\.([a-z]{2,8})")); }
+const QString AUtil::tldPattern() { return QString(("\\.[a-z]{2,10}")); }
 
 const QString AUtil::fqdnPattern() {
   QString _fqdn(domainPattern());

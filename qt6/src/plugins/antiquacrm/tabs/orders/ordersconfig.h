@@ -29,7 +29,7 @@
 #endif
 
 #ifndef ORDERS_SQL_TABLE_NAME
-#define ORDERS_SQL_TABLE_NAME "inventory_orders"
+#define ORDERS_SQL_TABLE_NAME QString("inventory_orders")
 #endif
 
 #ifndef ORDERS_SQL_FIELD_PREFIX
@@ -37,7 +37,7 @@
 #endif
 
 #ifndef ORDERS_SQL_EDITOR_PATTERN
-#define ORDERS_SQL_EDITOR_PATTERN "^o_[a-z_]+\\b$"
+#define ORDERS_SQL_EDITOR_PATTERN "^[ocd]_[a-z_]+\\b$"
 #endif
 
 /**

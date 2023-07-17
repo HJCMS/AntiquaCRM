@@ -468,3 +468,8 @@ bool CustomersEditor::createNewEntry() {
   m_tabWidget->setCurrentIndex(0);
   return isEnabled();
 }
+
+bool CustomersEditor::createCustomEntry(const QJsonObject &object) {
+  qDebug() << Q_FUNC_INFO << "TODO" << object;
+  return true;
+}

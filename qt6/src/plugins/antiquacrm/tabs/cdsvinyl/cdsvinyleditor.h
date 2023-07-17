@@ -92,6 +92,8 @@ public:
   bool openEditEntry(qint64 articleId) override;
 
   bool createNewEntry() override;
+
+  bool createCustomEntry(const QJsonObject &object) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_CDSVINYLEDITOR_H

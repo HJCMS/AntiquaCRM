@@ -124,8 +124,18 @@ void OrdersWidget::createNewEntry() {
   qDebug() << Q_FUNC_INFO << "__TODO__";
 }
 
-void OrdersWidget::openEntry(qint64 articleId) {
-  qDebug() << Q_FUNC_INFO << "__TODO__" << articleId;
+void OrdersWidget::openEntry(qint64 oid) {
+  if (oid < 1)
+    return;
+
+  if (currentIndex() != 0) {
+    popupWarningTabInEditMode();
+    return;
+  }
+
+  if (m_editorWidget->openEditEntry(oid)) {
+    setCurrentWidget(m_editorPage);
+  }
 }
 
 void OrdersWidget::onEnterChanged() {

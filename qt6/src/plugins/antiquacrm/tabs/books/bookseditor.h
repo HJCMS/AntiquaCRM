@@ -328,6 +328,12 @@ public:
    * @return success
    */
   bool createNewEntry() override;
+
+  /**
+   * @brief Buch eintrag mit Json Object erstellen
+   * @param object - Datenstruktur
+   */
+  bool createCustomEntry(const QJsonObject &object) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_BOOKSEDITOR_H
