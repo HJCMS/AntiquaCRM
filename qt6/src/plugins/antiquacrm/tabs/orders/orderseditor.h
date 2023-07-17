@@ -114,21 +114,6 @@ private:
   int getSalesTaxType(int);
 
   /**
-   * @brief Abfrage Paketlieferservice.
-   * @param current - Abfrageart
-   *  @li true  - „currentDeliveryService()“ verwenden.
-   *  @li false - „defaultDeliveryService()“ verwenden.
-   */
-  const QPair<int, int> getDeliveryService(bool current = false);
-
-  /**
-   * @brief Lieferservice setzen
-   * Holse aus Daten von AntiquaCRM::ASqlDataQuery den Paketdienstleister
-   * @note Kann erst nach einer Abfrage verwendet werden.
-   */
-  void setDeliveryService();
-
-  /**
    * @brief Artikel von Auftrag in PgSQL suchen und in Container schreiben!
    */
   const QList<AntiquaCRM::OrderArticleItems> queryOrderArticles(qint64 orderId);

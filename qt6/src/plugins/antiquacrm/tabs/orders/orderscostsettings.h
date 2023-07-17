@@ -12,21 +12,20 @@
 #include <AntiquaWidgets>
 #include <QTabWidget>
 
-class ANTIQUACRM_LIBRARY OrdersCostSettings final : public QTabWidget
-{
+class ANTIQUACRM_LIBRARY OrdersCostSettings final : public QTabWidget {
   Q_OBJECT
 
 private:
-  QWidget *m_costdeliveryTab;
+  QWidget *m_deliveryTab;
   QWidget *m_historyTab;
 
 public:
-  // AntiquaCRM::DeliverService *o_delivery_service;
+  AntiquaCRM::SelectDeliverService *o_delivery_service;
+  AntiquaCRM::SelectDeliverPackage *o_delivery_package;
   AntiquaCRM::TextLine *o_delivery_note_id;
   AntiquaCRM::TextLine *o_delivery_send_id;
-  AntiquaCRM::NumEdit *o_delivery_package;
   AntiquaCRM::SelectEUCountry *o_vat_country;
-  // AntiquaCRM::SelectVAT *o_vat_levels;
+  AntiquaCRM::SelectVAT *o_vat_levels;
   AntiquaCRM::BoolBox *o_delivery_add_price;
   AntiquaCRM::SelectPaymentMethod *o_payment_method;
   AntiquaCRM::TextLine *o_provider_name;

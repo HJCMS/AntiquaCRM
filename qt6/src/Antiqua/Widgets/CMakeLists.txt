@@ -106,6 +106,8 @@ SET (_library_SOURCES
   salutationedit.cpp
   selectcurrency.cpp
   selecteucountry.cpp
+  selectdeliverservice.cpp
+  selectdeliverpackage.cpp
   selectfile.cpp
   selectlanguage.cpp
   selectmediatype.cpp
@@ -115,6 +117,7 @@ SET (_library_SOURCES
   selectpaymentstatus.cpp
   selectstorage.cpp
   selecttargets.cpp
+  selectvat.cpp
   serialid.cpp
   splitter.cpp
   sqlinfopopup.cpp
@@ -174,6 +177,8 @@ SET (_library_HEADERS
   salutationedit.h
   selectcurrency.h
   selecteucountry.h
+  selectdeliverservice.h
+  selectdeliverpackage.h
   selectfile.h
   selectlanguage.h
   selectmediatype.h
@@ -183,6 +188,7 @@ SET (_library_HEADERS
   selectpaymentstatus.h
   selectstorage.h
   selecttargets.h
+  selectvat.h
   serialid.h
   splitter.h
   sqlinfopopup.h

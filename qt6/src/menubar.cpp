@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "menubar.h"
-#include "dialogs/config/configdialog.h"
+#include "utils/config/configdialog.h"
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>

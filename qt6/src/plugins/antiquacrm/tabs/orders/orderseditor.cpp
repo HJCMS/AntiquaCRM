@@ -13,8 +13,7 @@
 OrdersEditor::OrdersEditor(QWidget *parent)
     : AntiquaCRM::TabsEditor{ORDERS_SQL_EDITOR_PATTERN, parent} {
   setObjectName("orders_editor");
-  setWindowTitle(tr("Edit Orders") + " [*]");
-  setStyleSheet("InputEdit {border:1px solid red;}");
+  setWindowTitle(tr("Edit Order") + " [*]");
 
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
@@ -123,9 +122,7 @@ void OrdersEditor::setInputFields() {
   m_tableData = new AntiquaCRM::ASqlDataQuery(ORDERS_SQL_TABLE_NAME);
   inputFields = m_tableData->columnNames();
 
-  /**
-   * Diese Felder sind bei der Abfrage nicht in @ref m_tableData enthalten!
-   */
+  // Diese Felder sind bei der Abfrage nicht in @ref m_tableData enthalten!
   customInput.clear();
   customInput << "c_postal_address";
   customInput << "c_shipping_address";
@@ -137,8 +134,11 @@ void OrdersEditor::setInputFields() {
                "Database connection!");
     openNoticeMessage(warn.join("\n"));
   }
-  // Preloaders
-  // m_costSettings->o_delivery_service->loadDataset();
+
+  // Delivery Service & Package
+  m_costSettings->o_delivery_service->initData();
+  connect(m_costSettings->o_delivery_service, SIGNAL(sendSelectedService(int)),
+          m_costSettings->o_delivery_package, SLOT(loadPackages(int)));
 
   // Menübar SQL Abfrage starten
   m_actionBar->setMailMenu(AntiquaCRM::MAIL_ORDER_GROUP);
@@ -458,27 +458,6 @@ int OrdersEditor::getSalesTaxType(int index) {
   };
 }
 
-const QPair<int, int> OrdersEditor::getDeliveryService(bool b) {
-  qDebug() << Q_FUNC_INFO << "TODO" << b;
-  QPair<int, int> _o;
-  return _o;
-  /*
-  DeliverService *m_ds = m_costSettings->o_delivery_service;
-  if (b)
-    m_ds->currentDeliveryService();
-
-  return m_ds->defaultDeliveryService();
-  */
-}
-
-void OrdersEditor::setDeliveryService() {
-  QPair<int, int> service(0, 0);
-  service.first = m_tableData->getValue("o_delivery_service").toInt();
-  service.second = m_tableData->getValue("o_delivery_package").toInt();
-  qDebug() << Q_FUNC_INFO << "TODO";
-  // m_costSettings->o_delivery_service->setDeliveryService(service);
-}
-
 const QList<AntiquaCRM::OrderArticleItems>
 OrdersEditor::queryOrderArticles(qint64 orderId) {
   QList<AntiquaCRM::OrderArticleItems> _list;
@@ -568,9 +547,9 @@ void OrdersEditor::setDefaultValues() {
                m_tableData->getValue("o_vat_country"));
 
   // Lieferdienst
-  QPair<int, int> _t_ds = getDeliveryService(true);
-  m_tableData->setValue("o_delivery_service", _t_ds.first);
-  m_tableData->setValue("o_delivery_package", _t_ds.second);
+  // QPair<int, int> _t_ds = getDeliveryService(true);
+  // m_tableData->setValue("o_delivery_service", _t_ds.first);
+  // m_tableData->setValue("o_delivery_package", _t_ds.second);
   m_tableData->setValue("o_delivery_send_id", "");
   m_tableData->setValue("o_delivery_add_price", false);
   setDataField(m_tableData->getProperties("o_delivery_add_price"),
@@ -702,9 +681,6 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
 
     // Bestehende Artikel Einkäufe mit orderId einlesen!
     m_ordersList->importArticles(queryOrderArticles(orderId));
-
-    // Muss nachträglich gesetzt werden!
-    setDeliveryService();
 
     setResetModified(customInput);
     _retval = true;
@@ -916,9 +892,10 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
   // End:Umsatzsteuer
 
   // Begin:Lieferdienst
-  QPair<int, int> pkgService = getDeliveryService(false);
-  _prorder.setValue("o_delivery_service", pkgService.first);
-  _prorder.setValue("o_delivery_package", pkgService.second);
+  _prorder.setValue("o_delivery_service",
+                    getDataValue("o_delivery_service").toInt());
+  _prorder.setValue("o_delivery_package",
+                    getDataValue("o_delivery_package").toInt());
   _prorder.setValue("o_delivery_send_id", "");
   _prorder.setValue("o_delivery_add_price", false);
   // Lieferschein Nr. ist hier noch leer!

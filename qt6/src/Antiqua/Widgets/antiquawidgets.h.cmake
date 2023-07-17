@@ -98,11 +98,20 @@
 // AntiquaCRM::SelectEUCountry
 #include "selecteucountry.h"
 
+// AntiquaCRM::SelectDeliverService
+#include "selectdeliverservice.h"
+
+// AntiquaCRM::SelectDeliverPackage
+#include "selectdeliverpackage.h"
+
 // AntiquaCRM::SelectLanguage
 #include "selectlanguage.h"
 
 // AntiquaCRM::SelectMediaType
 #include "selectmediatype.h"
+
+// AntiquaCRM::SelectVAT
+#include "selectvat.h"
 
 // AntiquaCRM::SelectOrderStatus
 #include "selectorderstatus.h"
