@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_DIALOGS_CONFIGDIALOG_H
-#define ANTIQUACRM_DIALOGS_CONFIGDIALOG_H
+#ifndef ANTIQUACRM_UTILS_CONFIGDIALOG_H
+#define ANTIQUACRM_UTILS_CONFIGDIALOG_H
 
 #include <AntiquaWidgets>
 #include <QDialog>
@@ -70,4 +70,4 @@ public:
   int exec() override;
 };
 
-#endif
+#endif // ANTIQUACRM_UTILS_CONFIGDIALOG_H

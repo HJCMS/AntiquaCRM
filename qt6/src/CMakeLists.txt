@@ -38,6 +38,7 @@ INCLUDE_DIRECTORIES (${ANTIQUA_APPL_INCLUDE_DIRS})
 QT_ADD_RESOURCES(APPLICATION_QRC application.qrc)
 
 SET(APPLICATION_HEADERS
+ antiquadialogs.h
  application.h
  mainwindow.h
  menubar.h
