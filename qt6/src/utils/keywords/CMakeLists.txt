@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 
-SET(_library "KewordsDialog")
+SET(_library "KeywordsDialog")
 
 SET (ANTIQUACRM_INCLUDE_DIRS
  ${ANTIQUACRM_INCLUDE_DIRS}

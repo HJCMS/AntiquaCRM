@@ -9,11 +9,19 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 )
 
 SET (_library_SOURCES
+  deliveritem.cpp
   deliverydialog.cpp
+  deliverserviceedit.cpp
+  deliverservicelist.cpp
+  deliverservicebox.cpp
 )
 
 SET (_library_HEADERS
+  deliveritem.h
   deliverydialog.h
+  deliverserviceedit.h
+  deliverservicelist.h
+  deliverservicebox.h
 )
 
 INCLUDE_DIRECTORIES (

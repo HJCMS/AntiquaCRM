@@ -25,13 +25,18 @@ private:
   QMenu *m_applMenu;
   AntiquaCRM::TabsMenu *m_viewsMenu;
   QMenu *m_configMenu;
+  QMenu *m_dialogMenu;
   QMenu *m_aboutMenu;
 
 Q_SIGNALS:
   void sendApplicationQuit();
 
 public Q_SLOTS:
-  void openConfiguration();
+  void openConfigDialog();
+  void openDeliveryDialog();
+  void openCompanyDialog();
+  void openKeywordsDialog();
+  void openStoragesDialog();
 
 public:
   explicit MenuBar(QWidget *parent = nullptr);

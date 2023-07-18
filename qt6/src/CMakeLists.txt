@@ -59,7 +59,11 @@ SET(APPLICATION_LIBRARIES
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
+  CompanyDialog
   ConfigDialog
+  DeliveryDialog
+  KeywordsDialog
+  StoragesDialog
 )
 
 ADD_EXECUTABLE(${PROJECTNAME}
