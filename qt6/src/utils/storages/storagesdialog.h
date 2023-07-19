@@ -10,10 +10,37 @@
 #define ANTIQUACRM_UTILS_STORAGESDIALOG_H
 
 #include <AntiquaWidgets>
+#include <QAction>
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QLineEdit>
+#include <QStatusBar>
+#include <QToolBar>
+
+class StorageTable;
+class StorageEditorWidget;
 
 class StoragesDialog final : public QDialog {
- Q_OBJECT
+  Q_OBJECT
+
+private:
+  QToolBar *m_toolBar;
+  QAction *ac_add;
+  QLineEdit *m_search;
+  QAction *ac_search;
+  StorageTable *m_table;
+  StorageEditorWidget *m_editorWidget;
+  QDialogButtonBox *m_btnBox;
+  QStatusBar *m_statusBar;
+
+  void keyPressEvent(QKeyEvent *) override;
+  bool event(QEvent *) override;
+
+private Q_SLOTS:
+  void searchClicked();
+  void saveClicked();
 
 public:
   explicit StoragesDialog(QWidget *parent = nullptr);

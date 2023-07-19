@@ -26,7 +26,7 @@ private:
   QString d_description;
   bool d_international;
   bool d_default;
-  qreal d_price;
+  double d_price;
   QDateTime d_changed;
 
 public:
@@ -49,8 +49,8 @@ public:
   void setDescription(const QString &);
   const QString description();
 
-  void setPrice(qreal);
-  qreal price();
+  void setPrice(double);
+  double price();
 
   void setChanged(const QDateTime &);
   const QDateTime lastChanged();

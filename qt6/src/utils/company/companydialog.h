@@ -11,9 +11,21 @@
 
 #include <AntiquaWidgets>
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <QStatusBar>
+
+class CompanyWidget;
 
 class CompanyDialog final : public QDialog {
- Q_OBJECT
+  Q_OBJECT
+
+private:
+  CompanyWidget *m_editWidget;
+  QDialogButtonBox *m_btnBox;
+  QStatusBar *m_statusBar;
+
+private Q_SLOTS:
+  void closeDialog(bool);
 
 public:
   explicit CompanyDialog(QWidget *parent = nullptr);

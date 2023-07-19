@@ -3,8 +3,6 @@
 
 #include "textfield.h"
 
-#include <QDebug>
-
 namespace AntiquaCRM {
 
 TextField::TextField(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {

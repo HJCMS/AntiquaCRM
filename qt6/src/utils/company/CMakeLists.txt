@@ -10,10 +10,12 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 
 SET (_library_SOURCES
   companydialog.cpp
+  companywidget.cpp
 )
 
 SET (_library_HEADERS
   companydialog.h
+  companywidget.h
 )
 
 INCLUDE_DIRECTORIES (

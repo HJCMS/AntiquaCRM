@@ -9,18 +9,15 @@
 #include <QAction>
 #include <QHeaderView>
 #include <QJsonValue>
+#include <QLocale>
 #include <QMenu>
 
 DeliverServiceList::DeliverServiceList(QWidget *parent) : QTreeWidget{parent} {
-  setObjectName("deliver_service_list");
   setRootIsDecorated(true);
   setSortingEnabled(true);
   setWordWrap(false);
 
   p_flags = (Qt::ItemIsUserCheckable | Qt::ItemIsEnabled);
-
-  AntiquaCRM::ASettings cfg(this);
-  currency = cfg.value("payment/currency", "€").toString();
 
   QStringList _list;
   _list.append(tr("Service"));
@@ -47,12 +44,10 @@ const QIcon DeliverServiceList::itemIcon() const {
   return AntiquaCRM::antiquaIcon("bookmarks");
 }
 
-const QString DeliverServiceList::priceDisplay(qreal price) {
-  QString out(currency);
-  out.prepend(" ");
-  QString str = QString::number(price, 'f', 2);
-  out.prepend(str);
-  return out;
+const QString DeliverServiceList::priceDisplay(double price) {
+  QLocale _l = QLocale::system();
+  QString _s = _l.currencySymbol(QLocale::CurrencySymbol);
+  return _l.toCurrencyString(price, _s, 2);
 }
 
 QTreeWidgetItem *DeliverServiceList::getParentDeliverService(int srv) {
@@ -84,9 +79,7 @@ void DeliverServiceList::removeByContext() {
   emit removeDeliveryPackage(obj);
 }
 
-void DeliverServiceList::getDeliverServiceId(QTreeWidgetItem *item,
-                                             int column) {
-  qDebug() << Q_FUNC_INFO << "TODO CHECK" << column;
+void DeliverServiceList::getDeliverServiceId(QTreeWidgetItem *item, int) {
   if (!item->flags().testFlag(Qt::ItemNeverHasChildren))
     return;
 
@@ -114,6 +107,9 @@ void DeliverServiceList::getDeliverServiceId(QTreeWidgetItem *item,
   }
   obj.insert("d_description", QJsonValue(d_description));
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << obj;
+#endif
   emit deliverPackageClicked(id, obj);
 }
 

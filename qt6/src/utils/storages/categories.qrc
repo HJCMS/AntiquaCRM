@@ -1,0 +1,6 @@
+<RCC>
+<qresource prefix="/">
+ <file>xml/categories_abebooks.xml</file>
+ <file>xml/categories_booklooker.xml</file>
+</qresource>
+</RCC>

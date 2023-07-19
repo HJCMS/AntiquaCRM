@@ -433,6 +433,16 @@ void BooksEditor::setInputFields() {
   ib_keyword->setCompleterList(_completer_data);
 
   _completer_data.clear();
+
+  // description
+  QStringList _list;
+  _list << tr("Nice clean copy");
+  _list << tr("Clean copy");
+  _list << tr("Copy a bit dusty");
+  _list << tr("Year may differ from entry");
+  _list << tr("Age-related traces");
+  _list << tr("With bookplate");
+  ib_description->setWordsList(_list);
 }
 
 bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {

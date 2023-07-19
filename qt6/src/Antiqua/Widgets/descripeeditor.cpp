@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "descripeeditor.h"
+#include "splitter.h"
 
 #include <QDebug>
 
@@ -9,21 +10,34 @@ namespace AntiquaCRM {
 
 DescripeEditor::DescripeEditor(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
+  setObjectName("description_edit");
+
+  m_splitter = new Splitter(this);
+  layout->addWidget(m_splitter);
+  layout->setStretchFactor(m_splitter, 1);
+
   m_edit = new AntiquaCRM::ATextEdit(this);
-  layout->addWidget(m_edit);
+  m_splitter->addLeft(m_edit);
+  m_splitter->setStretchFactor(0, 1);
 
   m_list = new QListWidget(this);
   m_list->setToolTip(tr("Predefined text blocks"));
-  layout->addWidget(m_list);
-
-  layout->setStretchFactor(m_edit, 1);
-  layout->setStretchFactor(m_list, 0);
+  m_splitter->addRight(m_list);
+  m_splitter->setStretchFactor(1, 0);
 
   initData();
 
   connect(m_edit, SIGNAL(textChanged()), SLOT(valueChanged()));
   connect(m_list, SIGNAL(itemDoubleClicked(QListWidgetItem *)),
           SLOT(appendText(QListWidgetItem *)));
+}
+
+void DescripeEditor::initData() {
+  QSqlField _f;
+  _f.setMetaType(getType());
+  _f.setRequiredStatus(QSqlField::Optional);
+  setRestrictions(_f);
+  setWindowModified(false);
 }
 
 void DescripeEditor::valueChanged() {
@@ -52,26 +66,6 @@ void DescripeEditor::appendText(QListWidgetItem *item) {
   _buf.clear();
 }
 
-void DescripeEditor::initData() {
-  QSqlField _f;
-  _f.setMetaType(getType());
-  _f.setRequiredStatus(QSqlField::Optional);
-  setRestrictions(_f);
-  setWindowModified(false);
-
-  QStringList _list;
-  _list << tr("Nice clean copy");
-  _list << tr("Clean copy");
-  _list << tr("Copy a bit dusty");
-  _list << tr("Year may differ from entry");
-  _list << tr("Age-related traces");
-  _list << tr("With bookplate");
-
-  foreach (QString l, _list) {
-    m_list->addItem(l);
-  }
-}
-
 void DescripeEditor::setValue(const QVariant &value) {
   if (value.metaType().id() == QMetaType::QString) {
     m_edit->setText(value.toString());
@@ -86,6 +80,15 @@ void DescripeEditor::reset() {
   m_edit->setText(QString());
   m_edit->clear();
   setWindowModified(false);
+}
+
+void DescripeEditor::setWordsList(const QStringList &list) {
+  if (list.size() < 1)
+    return;
+
+  foreach (QString l, list) {
+    m_list->addItem(l);
+  }
 }
 
 void DescripeEditor::setRestrictions(const QSqlField &field) {
@@ -119,7 +122,7 @@ const QMetaType DescripeEditor::getType() const {
 const QVariant DescripeEditor::getValue() { return m_edit->text(); }
 
 const QString DescripeEditor::popUpHints() {
-  return tr("This Description field requires a valid input.");
+  return tr("A valid Description is required.");
 }
 
 const QString DescripeEditor::statusHints() { return popUpHints(); }

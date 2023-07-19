@@ -16,6 +16,8 @@
 
 namespace AntiquaCRM {
 
+class Splitter;
+
 /**
  * @class DescripeEditor
  * @brief The „DescripeEditor“ input edit class.
@@ -26,8 +28,10 @@ class ANTIQUACRM_LIBRARY DescripeEditor final
   Q_OBJECT
 
 private:
+  Splitter *m_splitter;
   ATextEdit *m_edit;
   QListWidget *m_list;
+  void initData() override;
 
 private Q_SLOTS:
   /**
@@ -36,12 +40,6 @@ private Q_SLOTS:
   void valueChanged();
 
   void appendText(QListWidgetItem *);
-
-protected:
-  /**
-   * @brief load Database or System file data for on load
-   */
-  void initData() override;
 
 public Q_SLOTS:
   /**
@@ -64,6 +62,11 @@ public:
    * @param parent - parent widget
    */
   explicit DescripeEditor(QWidget *parent = nullptr);
+
+  /**
+   * @brief set data words list
+   */
+  void setWordsList(const QStringList &);
 
   /**
    * @brief Restrict input wirt QSqlField parameters.

@@ -3,6 +3,7 @@
 
 #include "atextedit.h"
 
+#include <QSizePolicy>
 #include <QRegularExpression>
 
 namespace AntiquaCRM {
@@ -14,6 +15,7 @@ ATextEdit::ATextEdit(QWidget *parent) : QTextEdit{parent} {
   setFocusPolicy(Qt::ClickFocus);
   setAcceptDrops(false);
   setAcceptRichText(false);
+  setSizePolicy(QSizePolicy::Preferred, QSizePolicy::MinimumExpanding);
   ungrabGesture(Qt::TapGesture);
 }
 

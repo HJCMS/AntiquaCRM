@@ -219,7 +219,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   QIcon tabIcons = m_tabWidget->defaultIcon();
 
   // Description
-  ip_description = new AntiquaCRM::TextField(m_tabWidget);
+  ip_description = new AntiquaCRM::DescripeEditor(m_tabWidget);
   ip_description->setObjectName("ip_description");
   m_tabWidget->insertTab(0, ip_description, tabIcons, tr("Public Description"));
   // Internal Description
@@ -322,6 +322,16 @@ void StitchesEditor::setInputFields() {
   ip_keyword->setCompleterList(_completer_data);
 
   _completer_data.clear();
+
+  // description
+  QStringList _list;
+  _list << tr("Nice clean copy");
+  _list << tr("Clean copy");
+  _list << tr("Copy a bit dusty");
+  _list << tr("Year may differ from entry");
+  _list << tr("Age-related traces");
+  _list << tr("With bookplate");
+  ip_description->setWordsList(_list);
 }
 
 bool StitchesEditor::setDataField(const QSqlField &field,

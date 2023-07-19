@@ -24,8 +24,7 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   addMenu(m_viewsMenu);
 
   // BEGIN::Configurations
-  m_configMenu = m_viewsMenu->addMenu(tr("Configuration"));
-  addMenu(m_configMenu);
+  m_configMenu = addMenu(tr("Configuration"));
 
   // BEGIN::Dialogs
   m_dialogMenu = m_configMenu->addMenu(tr("Dialogs"));

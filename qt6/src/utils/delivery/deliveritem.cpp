@@ -38,9 +38,9 @@ void DeliverItem::setDescription(const QString &d) { d_description = d; }
 
 const QString DeliverItem::description() { return d_description; }
 
-void DeliverItem::setPrice(qreal p) { d_price = p; }
+void DeliverItem::setPrice(double p) { d_price = p; }
 
-qreal DeliverItem::price() { return d_price; }
+double DeliverItem::price() { return d_price; }
 
 void DeliverItem::setChanged(const QDateTime &dt) { d_changed = dt; }
 

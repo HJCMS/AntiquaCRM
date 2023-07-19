@@ -24,11 +24,10 @@ class DeliverServiceList : public QTreeWidget {
 
 private:
   Qt::ItemFlags p_flags;
-  QString currency;
   const QIcon deliverIcon() const;
   const QIcon sectionIcon() const;
   const QIcon itemIcon() const;
-  const QString priceDisplay(qreal price);
+  const QString priceDisplay(double price);
   QTreeWidgetItem *getParentDeliverService(int srv);
 
 private Q_SLOTS:
