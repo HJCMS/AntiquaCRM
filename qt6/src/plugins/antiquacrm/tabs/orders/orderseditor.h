@@ -119,6 +119,13 @@ private:
   const QList<AntiquaCRM::OrderArticleItems> queryOrderArticles(qint64 orderId);
 
   /**
+   * @brief Artikel einfügen
+   * @see AntiquaCRM::AProviderOrder::createItem
+   */
+  inline AntiquaCRM::ArticleOrderItem
+  addArticleItem(const QString &key, const QVariant &value) const;
+
+  /**
    * @brief Artikel in die Auftrags Tabelle einfügen!
    * SQL Abfrage auf die Artikel-Nr. durchführen und einfügen wenn der Bestand
    * größer als 0 ist.

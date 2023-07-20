@@ -22,6 +22,8 @@ SET (_subWidgetLibrary_SOURCES
  mailtemplatekeys.cpp
  mailcommand.cpp
  mailattachments.cpp
+ orderstablemodel.cpp
+ orderstabledelegate.cpp
 )
 
 SET (_subWidgetLibrary_HEADERS
@@ -34,6 +36,8 @@ SET (_subWidgetLibrary_HEADERS
  mailtemplatekeys.h
  mailcommand.h
  mailattachments.h
+ orderstablemodel.h
+ orderstabledelegate.h
 )
 
 ADD_LIBRARY (${_subWidgetLibrary} STATIC

@@ -45,6 +45,8 @@ public:
    */
   explicit TextLine(QWidget *parent = nullptr);
 
+  void setReadOnly(bool b);
+
   /**
    * @brief Add QStringList and create a QCompleter from it
    */

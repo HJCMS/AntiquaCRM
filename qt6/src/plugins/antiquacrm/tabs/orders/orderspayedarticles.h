@@ -24,7 +24,7 @@ private:
   /**
    * @brief Tabelle für Artikel einfügen
    */
-  QTableWidget *m_table;
+  AntiquaCRM::OrdersTableView *m_table;
 
 Q_SIGNALS:
   /**

@@ -60,6 +60,16 @@ void TextLine::reset() {
   setWindowModified(false);
 }
 
+void TextLine::setReadOnly(bool b) {
+  m_edit->setReadOnly(b);
+  if (b) {
+    m_edit->setClearButtonEnabled(false);
+    m_edit->setStyleSheet("QLineEdit {background:transparent;border:none;}");
+  } else {
+    m_edit->setStyleSheet(QString());
+  }
+}
+
 void TextLine::setCompleterList(const QStringList &list) {
   QCompleter *_completer = new QCompleter(list, this);
   _completer->setCompletionMode(QCompleter::PopupCompletion);
@@ -77,10 +87,10 @@ void TextLine::setPasswordInput(bool b) {
 }
 
 void TextLine::setRestrictions(const QSqlField &field) {
+  m_edit->setClearButtonEnabled(false);
   if (field.requiredStatus() == QSqlField::Required) {
-    m_edit->setClearButtonEnabled(false);
     setRequired(true);
-  } else {
+  } else if (!m_edit->isReadOnly()) {
     m_edit->setClearButtonEnabled(true);
   }
 

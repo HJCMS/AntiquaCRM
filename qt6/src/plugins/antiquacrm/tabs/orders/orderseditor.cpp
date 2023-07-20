@@ -461,13 +461,63 @@ int OrdersEditor::getSalesTaxType(int index) {
 const QList<AntiquaCRM::OrderArticleItems>
 OrdersEditor::queryOrderArticles(qint64 orderId) {
   QList<AntiquaCRM::OrderArticleItems> _list;
-  qDebug() << Q_FUNC_INFO << "TODO" << orderId;
+  QString sql("SELECT * FROM article_orders WHERE a_order_id=");
+  sql.append(QString::number(orderId) + ";");
+  QSqlQuery q = m_sql->query(sql);
+  if (q.size() > 0) {
+    QSqlRecord r = q.record();
+    while (q.next()) {
+      AntiquaCRM::OrderArticleItems article;
+      for (int c = 0; c < r.count(); c++) {
+        AntiquaCRM::ArticleOrderItem item;
+        item.key = r.field(c).name();
+        item.value = q.value(item.key);
+        article.append(item);
+      }
+      _list.append(article);
+    }
+  }
   return _list;
 }
 
+AntiquaCRM::ArticleOrderItem
+OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
+  return AntiquaCRM::AProviderOrder::createItem(key, value);
+}
+
 bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO" << articleId;
+  if (articleId < 1)
+    return false;
+
+  AntiquaCRM::ASqlFiles sqlFile("query_article_order_with_id");
+  if (sqlFile.openTemplate()) {
+    sqlFile.setWhereClause("i_id=" + QString::number(articleId));
+    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
+    if (q.size() > 0) {
+      q.next();
+      QSqlRecord r = q.record();
+      AntiquaCRM::OrderArticleItems items;
+      items.append(addArticleItem("a_order_id", getSerialID("o_id")));
+      items.append(addArticleItem("a_customer_id", getSerialID("o_customer_id")));
+      for (int i = 0; i < r.count(); i++) {
+        QSqlField f = r.field(i);
+        items.append(addArticleItem(f.name(), f.value()));
+        // NOTE: a_sell_price is not in SQL Query
+        if (f.name() == "a_price")
+          items.append(addArticleItem("a_sell_price", f.value()));
+      }
+      if (items.size() > 0) {
+        m_ordersList->insertArticle(items);
+        return true;
+      }
+    }
+#ifdef ANTIQUA_DEVELOPEMENT
+    else {
+      qDebug() << Q_FUNC_INFO << m_sql->lastError();
+    }
+#endif
+  }
+  pushStatusMessage(tr("Article: %1 not found or no stock!").arg(articleId));
   return false;
 }
 

@@ -35,9 +35,10 @@ void AInputWidget::focusOutEvent(QFocusEvent *e) {
 
 void AInputWidget::setRequired(bool b) { required = b; }
 
-AntiquaCRM::ALabel *AInputWidget::addTitleLabel(const QString &title) {
+AntiquaCRM::ALabel *AInputWidget::addTitleLabel(const QString &title,
+                                                Qt::Alignment align) {
   ALabel *m_lb = new ALabel(title, this);
-  m_lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  m_lb->setAlignment(align);
   m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
   layout->insertWidget(0, m_lb);
   return m_lb;

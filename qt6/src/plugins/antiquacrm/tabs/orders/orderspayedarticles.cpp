@@ -12,7 +12,7 @@ OrdersPayedArticles::OrdersPayedArticles(QWidget *parent) : QWidget{parent} {
   QString tbInfo = tr("Current Article orders");
   layout->addWidget(new QLabel(tbInfo + ":", this));
 
-  m_table = new QTableWidget(this);
+  m_table = new AntiquaCRM::OrdersTableView(this, false);
   layout->addWidget(m_table);
   layout->addStretch(1);
   setLayout(layout);
@@ -29,19 +29,18 @@ OrdersPayedArticles::OrdersPayedArticles(QWidget *parent) : QWidget{parent} {
   hideColumn << "a_modified";
   hideColumn << "a_provider_id";
   hideColumn << "a_refunds_cost";
-  // m_table->hideColumns(hideColumn);
+  m_table->hideColumns(hideColumn);
 #endif
 
-  // connect(m_table, SIGNAL(sendTableModified(bool)),
-  // SLOT(setArticleChanged(bool)));
+  connect(m_table, SIGNAL(sendTableModified(bool)),
+          SLOT(setArticleChanged(bool)));
 }
 
 void OrdersPayedArticles::clearTable() { m_table->clearContents(); }
 
 void OrdersPayedArticles::insertArticle(
     const AntiquaCRM::OrderArticleItems &item) {
-  qDebug() << Q_FUNC_INFO << "TODO" << item.size();
-  // m_table->addOrderArticle(item);
+  m_table->addArticle(item);
 }
 
 void OrdersPayedArticles::setArticleChanged(bool b) {
@@ -61,18 +60,14 @@ bool OrdersPayedArticles::setArticleOrderId(qint64 oid) {
   if (oid < 1)
     return false;
 
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return -1; // m_table->setArticleOrderId(oid);
+  return m_table->setArticleOrderId(oid);
 }
 
 bool OrdersPayedArticles::importArticles(
     const QList<AntiquaCRM::OrderArticleItems> &list) {
-  qDebug() << Q_FUNC_INFO << "TODO" << list.size();
-  // bool status = m_table->setOrderArticles(list);
-  return false;
+  return m_table->setOrderArticles(list);
 }
 
 const QStringList OrdersPayedArticles::getQueryData() {
-  qDebug() << Q_FUNC_INFO << "TODO";
-  return QStringList(); // m_table->getSqlQuery();
+  return m_table->getSqlQuery();
 }

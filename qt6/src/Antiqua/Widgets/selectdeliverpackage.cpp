@@ -3,6 +3,8 @@
 
 #include "selectdeliverpackage.h"
 
+#include <QSizePolicy>
+
 namespace AntiquaCRM {
 
 SelectDeliverPackage::SelectDeliverPackage(QWidget *parent)
@@ -10,9 +12,13 @@ SelectDeliverPackage::SelectDeliverPackage(QWidget *parent)
   m_sql = new AntiquaCRM::ASqlCore(this);
 
   m_edit = new AntiquaCRM::AComboBox(this);
+  m_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
   layout->addWidget(m_edit);
 
   m_price = new ALabel(this);
+  m_price->setIndent(4);
+  m_price->setMinimumWidth(60);
+  m_price->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   layout->addWidget(m_price);
 
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));

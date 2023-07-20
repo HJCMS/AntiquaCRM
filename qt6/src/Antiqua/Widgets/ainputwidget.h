@@ -52,12 +52,8 @@ class ALabel;
  */
 class ANTIQUACRM_LIBRARY AInputWidget : public QWidget {
   Q_OBJECT
-  Q_PROPERTY(
-    bool required
-    READ isRequired
-    WRITE setRequired
-    NOTIFY sendRequiredChanged
-  )
+  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY
+                 sendRequiredChanged)
 
 private:
   bool required;
@@ -191,7 +187,9 @@ public:
   /**
    * @brief Prepend a title label to the layout
    */
-  AntiquaCRM::ALabel *addTitleLabel(const QString &);
+  AntiquaCRM::ALabel *addTitleLabel(const QString &title,
+                                    Qt::Alignment align = (Qt::AlignRight |
+                                                           Qt::AlignVCenter));
 
   /**
    * @brief get about status, if this input is required or not.

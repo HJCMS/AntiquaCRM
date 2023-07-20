@@ -8,22 +8,24 @@
 #include <QLayout>
 
 OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
+  // setStyleSheet("QFrame {border:1px solid red;}");
   int _row = 0;
-  setStyleSheet("QFrame {border:1px solid red;}");
-
   m_deliveryTab = new QWidget(this);
   QGridLayout *gridLayout = new QGridLayout(m_deliveryTab);
   gridLayout->setColumnStretch(2, 1);
 
+  // BEGIN:DeliveryLayout
+  QHBoxLayout *_deliverLayout = new QHBoxLayout;
   o_delivery_service = new AntiquaCRM::SelectDeliverService(m_deliveryTab);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setBuddyLabel(tr("Service"));
-  gridLayout->addWidget(o_delivery_service, _row, 0, 1, 1);
-
+  _deliverLayout->addWidget(o_delivery_service);
   o_delivery_package = new AntiquaCRM::SelectDeliverPackage(m_deliveryTab);
   o_delivery_package->setObjectName("o_delivery_package");
   o_delivery_package->setBuddyLabel(tr("Package"));
-  gridLayout->addWidget(o_delivery_package, _row++, 1, 1, 2);
+  _deliverLayout->addWidget(o_delivery_package);
+  gridLayout->addLayout(_deliverLayout, _row++, 0, 1, 3);
+  // END:DeliveryLayout
 
   o_delivery_send_id = new AntiquaCRM::TextLine(m_deliveryTab);
   o_delivery_send_id->setObjectName("o_delivery_send_id");
@@ -32,6 +34,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
 
   o_delivery_note_id = new AntiquaCRM::TextLine(m_deliveryTab);
   o_delivery_note_id->setObjectName("o_delivery");
+  o_delivery_note_id->setReadOnly(true);
   o_delivery_note_id->setBuddyLabel(tr("Delivery note number"));
   gridLayout->addWidget(o_delivery_note_id, _row, 0, 1, 1);
 
@@ -48,6 +51,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_vat_levels->setObjectName("o_vat_levels");
   o_vat_levels->setBuddyLabel(tr("Sales tax in invoice"));
   o_vat_levels->setValue(AntiquaCRM::SalesTax::TAX_INCL);
+  o_vat_levels->appendStretch(0);
   gridLayout->addWidget(o_vat_levels, _row, 0, 1, 1);
 
   o_vat_country = new AntiquaCRM::SelectEUCountry(m_deliveryTab);
