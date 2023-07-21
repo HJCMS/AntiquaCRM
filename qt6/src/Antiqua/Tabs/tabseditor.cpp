@@ -12,10 +12,6 @@
 
 namespace AntiquaCRM {
 
-#ifndef TABS_FIND_INPUT
-#define TABS_FIND_INPUT Qt::FindChildrenRecursively
-#endif
-
 TabsEditor::TabsEditor(const QString &pattern, QWidget *parent)
     : QWidget{parent}, fieldPattern{pattern} {
   setContentsMargins(0, 0, 0, 0);
@@ -87,9 +83,9 @@ const QJsonObject TabsEditor::loadSqlConfig(const QString &group) {
 }
 
 bool TabsEditor::registerInputChanged() {
-  QList<AntiquaCRM::AInputWidget *> list = getInputEditList(fieldPattern);
-  for (int i = 0; i < list.size(); ++i) {
-    AntiquaCRM::AInputWidget *m_inp = list.at(i);
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputEditList(fieldPattern));
+  while (it.hasNext()) {
+    AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp == nullptr || m_inp->objectName().isEmpty())
       continue;
 
@@ -120,12 +116,14 @@ qint64 TabsEditor::getSerialID(const QString &name) {
 }
 
 AntiquaCRM::AInputWidget *TabsEditor::getInputEdit(const QString &name) {
-  return findChild<AntiquaCRM::AInputWidget *>(name, TABS_FIND_INPUT);
+  return findChild<AntiquaCRM::AInputWidget *>(name,
+                                               Qt::FindChildrenRecursively);
 }
 
 QList<AntiquaCRM::AInputWidget *>
-TabsEditor::getInputEditList(const QRegularExpression &pcre) {
-  return findChildren<AntiquaCRM::AInputWidget *>(pcre, TABS_FIND_INPUT);
+TabsEditor::getInputEditList(const QRegularExpression &pattern) {
+  return findChildren<AntiquaCRM::AInputWidget *>(pattern,
+                                                  Qt::FindChildrenRecursively);
 }
 
 const QVariant TabsEditor::getDataValue(const QString &name) {

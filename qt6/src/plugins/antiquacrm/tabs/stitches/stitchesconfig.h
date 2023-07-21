@@ -33,7 +33,7 @@
 #endif
 
 #ifndef STITCHES_SQL_EDITOR_PATTERN
-#define STITCHES_SQL_EDITOR_PATTERN "^ip_[a-z_]+\\b$"
+#define STITCHES_SQL_EDITOR_PATTERN "^ip_[a-z_]+[0-9]?\\b$"
 #endif
 
 /**

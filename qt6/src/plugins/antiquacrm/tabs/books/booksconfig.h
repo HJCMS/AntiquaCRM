@@ -37,7 +37,7 @@
 #endif
 
 #ifndef BOOKS_SQL_EDITOR_PATTERN
-#define BOOKS_SQL_EDITOR_PATTERN "^ib_[a-z_]+\\b$"
+#define BOOKS_SQL_EDITOR_PATTERN "^ib_[a-z_]+[0-9]?\\b$"
 #endif
 
 #ifndef BOOKS_ALWAYS_ADD_ONLOAD

@@ -33,7 +33,7 @@
 #endif
 
 #ifndef CUSTOMERS_SQL_EDITOR_PATTERN
-#define CUSTOMERS_SQL_EDITOR_PATTERN "^c_[\\w\\d_]+\\b$"
+#define CUSTOMERS_SQL_EDITOR_PATTERN "^c_[a-z_]+([0-9]+)?\\b$"
 #endif
 
 #ifndef CUSTOMERS_ALWAYS_ADD_ONLOAD

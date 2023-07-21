@@ -79,6 +79,9 @@ CustomersEditor::CustomersEditor(QWidget *parent)
 
   mainLayout->setStretch(1, 1); // row2
 
+  // Register modified changes
+  registerInputChanged();
+
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));
@@ -441,7 +444,6 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
   if (_status) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
-    registerInputChanged();
 
     QString _co = m_tableData->getValue("c_country").toString();
     if (_co.length() > 3)
@@ -464,7 +466,6 @@ bool CustomersEditor::createNewEntry() {
     setDefaultInput(field);
   }
   setResetModified(inputFields);
-  registerInputChanged();
   m_tabWidget->setCurrentIndex(0);
   return isEnabled();
 }

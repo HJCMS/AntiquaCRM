@@ -17,6 +17,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
 
+  QString _infotxt;
   // BEGIN:Row0
   QHBoxLayout *row0 = new QHBoxLayout();
   row0->setContentsMargins(5, 2, 5, 2);
@@ -38,12 +39,16 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   o_order_status->setObjectName("o_order_status");
   o_order_status->setBuddyLabel(tr("Order status"));
   o_order_status->setValue(AntiquaCRM::OrderStatus::OPEN);
+  _infotxt = tr("Set the order status for the current order.");
+  o_order_status->setWhatsThisText(_infotxt);
   row0->addWidget(o_order_status);
   // Zahlungsstatus
   o_payment_status = new AntiquaCRM::SelectOrderPayment(this);
   o_payment_status->setObjectName("o_payment_status");
   o_payment_status->setBuddyLabel(tr("Payment status"));
   o_payment_status->setValue(AntiquaCRM::OrderPayment::NOTPAID);
+  _infotxt = tr("Set the payment status for the current order.");
+  o_payment_status->setWhatsThisText(_infotxt);
   row0->addWidget(o_payment_status);
 
   mainLayout->addLayout(row0);
@@ -98,6 +103,9 @@ OrdersEditor::OrdersEditor(QWidget *parent)
 
   setLayout(mainLayout);
 
+  // Register modified changes
+  registerInputChanged();
+
   // Signals:ActionsBar
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendPrintDeliveryNote()),
@@ -149,8 +157,6 @@ void OrdersEditor::setInputFields() {
 
   // Delivery Service & Package
   m_costSettings->o_delivery_service->initData();
-  connect(m_costSettings->o_delivery_service, SIGNAL(sendSelectedService(int)),
-          m_costSettings->o_delivery_package, SLOT(loadPackages(int)));
 
   // Menübar SQL Abfrage starten
   m_actionBar->setMailMenu(AntiquaCRM::MAIL_ORDER_GROUP);
@@ -160,10 +166,9 @@ bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
   if (!field.isValid())
     return false;
 
-  QString key = field.name();
-  bool required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AInputWidget *inp =
-      findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);
+  const QString _key = field.name();
+  bool _required = (field.requiredStatus() == QSqlField::Required);
+  AntiquaCRM::AInputWidget *inp = getInputEdit(_key);
   if (inp != nullptr) {
     inp->setRestrictions(field);
     // qDebug() << key << value << required;
@@ -171,14 +176,14 @@ bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
     return true;
   }
 
-  if (ignoreFields.contains(key))
+  if (ignoreFields.contains(_key))
     return true;
 
-  if (required) {
+  if (_required) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
+    qDebug() << Q_FUNC_INFO << "Unknown:" << _key << "|" << value;
 #else
-    qWarning("Unknown Key (%s) found.", qPrintable(key));
+    qWarning("Unknown Key (%s) found.", qPrintable(_key));
 #endif
   }
   return false;
@@ -233,9 +238,7 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
 
 const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
   QHash<QString, QVariant> _hash;
-  QListIterator<AntiquaCRM::AInputWidget *> it(
-      findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                               Qt::FindChildrenRecursively));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputEditList(fieldPattern));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *inp = it.next();
     QString _name = inp->objectName();

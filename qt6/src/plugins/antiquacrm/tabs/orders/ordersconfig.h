@@ -37,7 +37,7 @@
 #endif
 
 #ifndef ORDERS_SQL_EDITOR_PATTERN
-#define ORDERS_SQL_EDITOR_PATTERN "^[ocd]_[a-z_]+\\b$"
+#define ORDERS_SQL_EDITOR_PATTERN "^[\\w]{1,2}_[a-z_]+[0-9]?\\b$"
 #endif
 
 /**

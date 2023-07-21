@@ -12,12 +12,12 @@ SelectDeliverPackage::SelectDeliverPackage(QWidget *parent)
   m_sql = new AntiquaCRM::ASqlCore(this);
 
   m_edit = new AntiquaCRM::AComboBox(this);
-  m_edit->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  m_edit->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
   layout->addWidget(m_edit);
 
   m_price = new ALabel(this);
   m_price->setIndent(4);
-  m_price->setMinimumWidth(60);
+  m_price->setMinimumWidth(50);
   m_price->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   layout->addWidget(m_price);
 
@@ -36,14 +36,13 @@ void SelectDeliverPackage::valueChanged(int) {
 }
 
 void SelectDeliverPackage::loadPackages(int service) {
-  if (service < 1)
-    return;
-
   int _default = -1;
   m_edit->clear();
-  m_edit->setWithoutDisclosures(-1);
-  const QIcon _icon = AntiquaCRM::antiquaIcon("package");
+  m_edit->setWithoutDisclosures(_default);
+  if (service == -1)
+    return;
 
+  const QIcon _icon = AntiquaCRM::antiquaIcon("package");
   QString _sql("SELECT d_cid,d_class,d_definition,d_default");
   _sql.append(" FROM ref_delivery_cost WHERE d_srv=");
   _sql.append(QString::number(service));

@@ -8,7 +8,7 @@ namespace AntiquaCRM {
 SelectDeliverService::SelectDeliverService(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
-  m_edit->setMinimumContentsLength(10);
+  m_edit->setMinimumContentsLength(8);
   layout->addWidget(m_edit);
 
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
@@ -17,7 +17,7 @@ SelectDeliverService::SelectDeliverService(QWidget *parent)
 void SelectDeliverService::valueChanged(int index) {
   setWindowModified(true);
   emit sendInputChanged();
-  if (index > 0)
+  if (index >= 0)
     emit sendSelectedService(index);
 }
 
@@ -42,7 +42,7 @@ void SelectDeliverService::initData() {
   _sql.append(" ORDER BY d_id ASC;");
 
   m_edit->clear();
-  const QIcon _icon = AntiquaCRM::antiquaIcon("package");
+  const QIcon _icon = QIcon(":/icons/package-deliver.png");
 
   AntiquaCRM::ASqlCore t_sql(this);
   QSqlQuery _q = t_sql.query(_sql);

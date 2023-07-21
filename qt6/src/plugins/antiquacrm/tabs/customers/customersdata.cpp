@@ -186,6 +186,11 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   connect(addressGen, SIGNAL(clicked()), SLOT(generateAddressBody()));
 }
 
+void CustomersData::registerChanges() {
+  c_postal_address->setWindowModified(true);
+  parentWidget()->setWindowModified(true);
+}
+
 void CustomersData::setPostalData(const AntiquaCRM::PostalCode &code) {
   c_country->setCountry(code);
   c_location->setCompletion(c_postalcode, code);
@@ -243,7 +248,7 @@ void CustomersData::generateAddressBody() {
 
   if (!body.trimmed().isEmpty()) {
     c_postal_address->setValue(body);
-    c_postal_address->setWindowModified(true);
+    registerChanges();
   }
 }
 
@@ -254,5 +259,6 @@ void CustomersData::setCountry(const QString &country) {
         c_postalcode->getPostalCode(c_postalcode->getValue().toString());
 
     c_location->setCompletion(c_postalcode, _code);
+    registerChanges();
   }
 }

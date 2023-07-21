@@ -26,15 +26,13 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_id = new AntiquaCRM::SerialId(this);
   cv_id->setObjectName("cv_id");
   cv_id->setBuddyLabel(tr("Article ID"));
-  tempWhatsThis = tr("__TODO__");
-  cv_id->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_id);
 
   // cv_count
   cv_count = new AntiquaCRM::CrowdEdit(this);
   cv_count->setObjectName("cv_count");
   cv_count->setBuddyLabel(tr("Count"));
-  tempWhatsThis = tr("__TODO__");
+  tempWhatsThis = "__TODO__";
   cv_count->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_count);
 
@@ -45,7 +43,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_price->setRequired(true);
   cv_price->setBuddyLabel(tr("Price"));
   cv_price->setMinimum(minPrice);
-  tempWhatsThis = tr("__TODO__");
+  tempWhatsThis = "__TODO__";
   cv_price->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_price);
 
@@ -55,7 +53,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_year->setRequired(true);
   cv_year->setBuddyLabel(tr("Year"));
   cv_year->setValue(1800);
-  tempWhatsThis = tr("__TODO__");
+  tempWhatsThis = "__TODO__";
   cv_year->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_year);
 
@@ -63,7 +61,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_restricted = new AntiquaCRM::BoolBox(this);
   cv_restricted->setObjectName("cv_restricted");
   cv_restricted->setBuddyLabel(tr("Local Usage only"));
-  tempWhatsThis = tr("__TODO__");
+  tempWhatsThis = "__TODO__";
   cv_restricted->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_restricted);
 
@@ -85,7 +83,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_title = new AntiquaCRM::TextLine(this);
   cv_title->setObjectName("cv_title");
-  cv_title->setWhatsThisText(infolabel->text());
+  tempWhatsThis = "__TODO__";
+  cv_title->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_title, row2c++, 1, 1, 4);
 
   // cv_title_extended
@@ -93,7 +92,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_title_extended = new AntiquaCRM::TextLine(this);
   cv_title_extended->setObjectName("cv_title_extended");
-  cv_title_extended->setWhatsThisText(infolabel->text());
+  tempWhatsThis = "__TODO__";
+  cv_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_title_extended, row2c++, 1, 1, 4);
 
   // cv_author
@@ -102,6 +102,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_author = new AntiquaCRM::TextLine(this);
   cv_author->setObjectName("cv_author");
   cv_author->setToolTip(infolabel->text());
+  tempWhatsThis = "__TODO__";
+  cv_author->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_author, row2c++, 1, 1, 4);
 
   // cv_publisher
@@ -110,6 +112,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_publisher = new AntiquaCRM::TextLine(this);
   cv_publisher->setObjectName("cv_publisher");
   cv_publisher->setToolTip(infolabel->text());
+  tempWhatsThis = "__TODO__";
+  cv_publisher->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_publisher, row2c++, 1, 1, 4);
 
   // @BEGIN_GROUP {
@@ -127,6 +131,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_condition = new AntiquaCRM::ConditionEdit(this);
   cv_condition->setObjectName("cv_condition");
   cv_condition->setToolTip(infolabel->toolTip());
+  tempWhatsThis = "__TODO__";
+  cv_condition->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_condition, row2c++, 3, 1, 1);
   // } @END_GROUP
 
@@ -136,6 +142,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_designation = new AntiquaCRM::TextLine(this);
   cv_designation->setObjectName("cv_designation");
   cv_designation->setToolTip(infolabel->text());
+  tempWhatsThis = "__TODO__";
+  cv_designation->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_designation, row2c++, 1, 1, 4);
 
   // cv_storage
@@ -230,6 +238,9 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
+
+  // Register modified changes
+  registerInputChanged();
 
   // Signals:ToolBar
   connect(btn_cdread, SIGNAL(clicked()), SLOT(setReadMediaDialog()));
@@ -680,7 +691,6 @@ bool CDsVinylEditor::openEditEntry(qint64 articleId) {
   if (_status) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
-    registerInputChanged();
   }
 
   return _status;
@@ -697,7 +707,6 @@ bool CDsVinylEditor::createNewEntry() {
     setDefaultInput(field);
   }
   setResetModified(inputFields);
-  registerInputChanged();
   return isEnabled();
 }
 

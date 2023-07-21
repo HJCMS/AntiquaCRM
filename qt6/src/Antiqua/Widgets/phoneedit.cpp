@@ -222,21 +222,7 @@ const QMetaType PhoneEdit::getType() const {
 }
 
 const QVariant PhoneEdit::getValue() {
-  QString _phone = m_edit->text().trimmed();
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  // A phone number can only contain 2 leading zeros.
-  // https://de.wikipedia.org/wiki/E.123
-  qsizetype _c = 0;
-  while ((_c = _phone.indexOf("0", _c)) != -1) {
-    if (_c > 3) {
-      qWarning("Phone Number seems not valid!");
-    }
-    ++_c;
-  }
-#endif
-
-  return _phone;
+  return m_edit->text().trimmed();
 }
 
 const QString PhoneEdit::popUpHints() {

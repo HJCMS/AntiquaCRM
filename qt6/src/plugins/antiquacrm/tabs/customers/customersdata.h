@@ -18,6 +18,11 @@ class ANTIQUACRM_LIBRARY CustomersData final : public QWidget {
 
 private Q_SLOTS:
   /**
+   * @brief Summary changed
+   */
+  void registerChanges();
+
+  /**
    * @brief Search for European country bindings!
    * This will change the European country selecter.
    * A Option to find the right Shipping-TAX.

@@ -8,15 +8,14 @@ namespace AntiquaCRM {
 SelectOrderPayment::SelectOrderPayment(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
+  m_edit->setMinimumContentsLength(m_edit->withoutDisclosures().length());
   layout->addWidget(m_edit);
   initData();
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void SelectOrderPayment::valueChanged(int index) {
-  if (index < 1)
-    return;
-
+void SelectOrderPayment::valueChanged(int) {
+  setWindowModified(true);
   emit sendInputChanged();
 }
 

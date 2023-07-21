@@ -127,7 +127,7 @@ protected:
    * @param pcre - pattern
    */
   QList<AntiquaCRM::AInputWidget *>
-  getInputEditList(const QRegularExpression &pcre);
+  getInputEditList(const QRegularExpression &pattern);
 
   /**
    * @brief get data from AntiquaCRM::AInputWidget::objectName()

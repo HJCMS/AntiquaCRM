@@ -256,6 +256,9 @@ StitchesEditor::StitchesEditor(QWidget *parent)
 
   setLayout(mainLayout);
 
+  // Register modified changes
+  registerInputChanged();
+
   // Signals:ImageToolBar
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(setRemoveThumbnail(qint64)));
@@ -750,7 +753,6 @@ bool StitchesEditor::openEditEntry(qint64 articleId) {
   if (status) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
-    registerInputChanged();
   }
 
   return status;
@@ -767,7 +769,6 @@ bool StitchesEditor::createNewEntry() {
     setDefaultInput(field);
   }
   setResetModified(inputFields);
-  registerInputChanged();
   return isEnabled();
 }
 

@@ -37,7 +37,7 @@
 #endif
 
 #ifndef CDSVINYL_SQL_EDITOR_PATTERN
-#define CDSVINYL_SQL_EDITOR_PATTERN "^cv_[a-z_]+\\b$"
+#define CDSVINYL_SQL_EDITOR_PATTERN "^cv_[a-z_]+[0-9]?\\b$"
 #endif
 
 /**

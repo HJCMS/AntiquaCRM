@@ -6,7 +6,6 @@
 #include <QLayout>
 
 OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
-  // setStyleSheet("QFrame {border:1px solid red;}");
   int _row = 0;
   m_deliveryTab = new QWidget(this);
   QGridLayout *gridLayout = new QGridLayout(m_deliveryTab);
@@ -96,4 +95,7 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   vboxLayout->addStretch(1);
   m_historyTab->setLayout(vboxLayout);
   addTab(m_historyTab, parentWidget()->windowIcon(), tr("History info"));
+
+  connect(o_delivery_service, SIGNAL(sendSelectedService(int)),
+          o_delivery_package, SLOT(loadPackages(int)));
 }
