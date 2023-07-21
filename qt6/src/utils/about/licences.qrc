@@ -1,0 +1,9 @@
+<!DOCTYPE RCC><RCC version="1.0">
+ <qresource>
+  <file>aboutantiquacrm.txt</file>
+  <file>aboutpostgresql.txt</file>
+  <file>aboutqrencode.txt</file>
+  <file>postgresql.png</file>
+  <file>qtlogo-64.png</file>
+ </qresource>
+</RCC>

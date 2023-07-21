@@ -26,36 +26,42 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   // BEGIN::Configurations
   m_configMenu = addMenu(tr("Configuration"));
 
+  const QIcon _icon = AntiquaCRM::antiquaIcon("configure");
+
   // BEGIN::Dialogs
   m_dialogMenu = m_configMenu->addMenu(tr("Dialogs"));
-  m_dialogMenu->setIcon(AntiquaCRM::antiquaIcon("configure"));
+  m_dialogMenu->setIcon(_icon);
   // KeywordsDialog
   QAction *ac_ksd = m_dialogMenu->addAction(tr("Keywords"));
-  ac_ksd->setIcon(AntiquaCRM::antiquaIcon("configure"));
+  ac_ksd->setIcon(_icon);
   connect(ac_ksd, SIGNAL(triggered()), SLOT(openKeywordsDialog()));
-  // DeliveryDialog
-  QAction *ac_ddy = m_dialogMenu->addAction(tr("Delivery"));
-  ac_ddy->setIcon(AntiquaCRM::antiquaIcon("configure"));
-  connect(ac_ddy, SIGNAL(triggered()), SLOT(openDeliveryDialog()));
   // CompanyDialog
   QAction *ac_dcy = m_dialogMenu->addAction(tr("Company"));
-  ac_dcy->setIcon(AntiquaCRM::antiquaIcon("configure"));
+  ac_dcy->setIcon(_icon);
   connect(ac_dcy, SIGNAL(triggered()), SLOT(openCompanyDialog()));
+  // DeliveryDialog
+  QAction *ac_ddy = m_dialogMenu->addAction(tr("Delivery"));
+  ac_ddy->setIcon(_icon);
+  connect(ac_ddy, SIGNAL(triggered()), SLOT(openDeliveryDialog()));
+  // DesignationsDialog
+  QAction *ac_dsn = m_dialogMenu->addAction(tr("Designation"));
+  ac_dsn->setIcon(_icon);
+  connect(ac_dsn, SIGNAL(triggered()), SLOT(openDesignationDialog()));
   // StoragesDialog
   QAction *ac_dse = m_dialogMenu->addAction(tr("Storage"));
-  ac_dse->setIcon(AntiquaCRM::antiquaIcon("configure"));
+  ac_dse->setIcon(_icon);
   connect(ac_dse, SIGNAL(triggered()), SLOT(openStoragesDialog()));
   // END::Dialogs
 
   // BEGIN::SystemConfig
   m_configMenu->addSeparator();
   QAction *ac_cfg = m_configMenu->addAction(tr("Configuration"));
-  ac_cfg->setIcon(AntiquaCRM::antiquaIcon("configure"));
+  ac_cfg->setIcon(_icon);
   connect(ac_cfg, SIGNAL(triggered()), SLOT(openConfigDialog()));
   // END::SystemConfig
   // END::Configurations
 
-  m_aboutMenu = new QMenu(tr("About"), this);
+  m_aboutMenu = new AboutMenu(this);
   addMenu(m_aboutMenu);
 }
 
@@ -83,6 +89,11 @@ void MenuBar::openDeliveryDialog() {
 
 void MenuBar::openCompanyDialog() {
   CompanyDialog *d = new CompanyDialog(this);
+  d->exec();
+}
+
+void MenuBar::openDesignationDialog() {
+  DesignationsDialog *d = new DesignationsDialog(this);
   d->exec();
 }
 

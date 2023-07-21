@@ -59,9 +59,11 @@ SET(APPLICATION_LIBRARIES
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
+  AboutDialog
   CompanyDialog
   ConfigDialog
   DeliveryDialog
+  DesignationDialog
   KeywordsDialog
   StoragesDialog
 )

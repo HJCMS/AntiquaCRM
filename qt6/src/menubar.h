@@ -34,6 +34,7 @@ Q_SIGNALS:
 public Q_SLOTS:
   void openConfigDialog();
   void openDeliveryDialog();
+  void openDesignationDialog();
   void openCompanyDialog();
   void openKeywordsDialog();
   void openStoragesDialog();

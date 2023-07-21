@@ -9,6 +9,11 @@
 #ifndef ANTIQUACRM_UTILS_DIALOGS_H
 #define ANTIQUACRM_UTILS_DIALOGS_H
 
+// AboutDialogs
+#ifndef ANTIQUACRM_UTILS_ABOUTDIALOGS_H
+#include "utils/about/aboutdialogs.h"
+#endif
+
 // CompanyDialog
 #ifndef ANTIQUACRM_UTILS_COMPANYDIALOG_H
 #include "utils/company/companydialog.h"
@@ -22,6 +27,11 @@
 // DeliveryDialog
 #ifndef ANTIQUACRM_UTILS_DELIVERYDIALOG_H
 #include "utils/delivery/deliverydialog.h"
+#endif
+
+// DesignationsDialog
+#ifndef ANTIQUACRM_UTILS_DESIGNATIONDIALOG_H
+#include "utils/designation/designationsdialog.h"
 #endif
 
 // KeywordsDialog
