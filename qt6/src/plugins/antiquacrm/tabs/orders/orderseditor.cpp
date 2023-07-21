@@ -8,7 +8,6 @@
 #include "orderstableview.h"
 
 #include <QLayout>
-#include <QSizePolicy>
 
 OrdersEditor::OrdersEditor(QWidget *parent)
     : AntiquaCRM::TabsEditor{ORDERS_SQL_EDITOR_PATTERN, parent} {
@@ -58,16 +57,15 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   // TabWidget
   m_costSettings = new OrdersCostSettings(this);
   row1->addWidget(m_costSettings);
-  row1->setStretch(1, 1);
   mainLayout->addLayout(row1);
   // END:Row1
 
   // BEGIN:Row2
   m_ordersTable = new OrdersTableView(this, false);
+  m_ordersTable->setToolTip(tr("Article orders for this order."));
 /**
  * Für den Kunden ausblenden. Werden hier nicht benötigt!
- * @warning Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
- *          Deshalb wird die Konstante „table_columns“ heran gezogen.
+ * @note Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
  */
 #ifndef ANTIQUA_DEVELOPEMENT
   QStringList hideColumn("a_payment_id");
@@ -84,7 +82,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
 
   /*
    * BEGIN:Row3
-   * Wegen SQL-Abfrage „setMailMenu“ hier nicht setzen!
+   * Wegen SQL-Abfrage setMailMenu hier nicht setzen!
    * Siehe AntiquaCRM::MailButton::setSections ...
    */
   m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
@@ -225,8 +223,8 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
       }
       m_tableData->setValue("o_id", _oid);
       setDataField(m_tableData->getProperties("o_id"), _oid);
-      setResetModified(inputFields);
       setOrderPaymentNumbers(_oid);
+      setResetModified(inputFields);
     }
   }
 
@@ -340,7 +338,6 @@ void OrdersEditor::createSqlUpdate() {
 
   if (_changes == 0 && _sql.isEmpty()) {
     pushStatusMessage(tr("No Modifications found, nothing todo!"));
-    setWindowModified(false); // ???
     return;
   }
 
@@ -349,14 +346,68 @@ void OrdersEditor::createSqlUpdate() {
 #endif
 
   if (sendSqlQuery(_sql)) {
+    m_ordersTable->setWindowModified(false);
     setResetModified(inputFields);
     openSuccessMessage(tr("Order saved successfully!"));
   }
 }
 
 void OrdersEditor::createSqlInsert() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
+  // Werden vom INSERT erstellt!
+  QStringList insertIgnore({"o_id", "o_invoice_id", "o_delivery"});
+  foreach (QString objName, insertIgnore) {
+    getInputEdit(objName)->setRequired(false);
+  }
+
+  QHash<QString, QVariant> data = createSqlDataset();
+  if (data.size() < 1)
+    return;
+
+  QStringList fields;
+  QStringList values;
+  QHashIterator<QString, QVariant> it(data);
+  while (it.hasNext()) {
+    it.next();
+    QString value = it.value().toString();
+    if (insertIgnore.contains(it.key()) || value.isEmpty())
+      continue;
+
+    if (it.value().metaType().id() == QMetaType::QString) {
+      values << "'" + value.trimmed() + "'";
+    } else {
+      values << value;
+    }
+    fields << it.key();
+  }
+
+  QString sql("INSERT INTO inventory_orders (");
+  sql.append(fields.join(","));
+  sql.append(") VALUES (");
+  sql.append(values.join(","));
+  sql.append(") RETURNING o_id;");
+  if (sendSqlQuery(sql)) {
+    qint64 oid = getSerialID("o_id");
+    if (oid < 1) {
+      qWarning("FATAL: Missing o_id after INSERT!");
+      openNoticeMessage("FATAL: Missing o_id after INSERT!");
+      return;
+    }
+    // Artikel Id Setzen
+    if (m_ordersTable->setOrderId(oid)) {
+      // Artikel Bestelliste speichern
+      QString articles_sql = getSqlArticleOrders();
+      if (articles_sql.isEmpty()) {
+        pushStatusMessage(tr("No SQL Articles exist!"));
+        return;
+      }
+      if (sendSqlQuery(articles_sql)) {
+        // Bestehende Artikelliste neu einlesen!
+        m_ordersTable->addArticles(queryOrderArticles(oid));
+        m_ordersTable->setWindowModified(false);
+        pushStatusMessage(tr("Save Articles success!"));
+      }
+    }
+  }
 }
 
 void OrdersEditor::generateDeliveryNumber(qint64 orderId) {
@@ -535,8 +586,14 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
 }
 
 const QString OrdersEditor::getSqlArticleOrders() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
+  IdsCheck _check = getCheckEssentialsIds();
+  if (_check.isNotValid)
+    return QString();
+
+  QStringList queries = m_ordersTable->getSqlQuery();
+  if (queries.size() > 0)
+    return queries.join("\n");
+
   return QString();
 }
 
@@ -641,6 +698,8 @@ void OrdersEditor::setSaveData() {
 
 void OrdersEditor::setCheckLeaveEditor() {
   if (checkIsModified() || m_ordersTable->isWindowModified()) {
+    qDebug() << Q_FUNC_INFO << checkIsModified()
+             << m_ordersTable->isWindowModified();
     unsavedChangesPopup();
     return;
   }
@@ -755,6 +814,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
 
   if (_retval) {
     importSqlResult();
+    m_ordersTable->setWindowModified(false);
     setResetModified(inputFields);
     setEnabled(true);
   }
@@ -764,7 +824,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
 }
 
 bool OrdersEditor::createNewEntry() {
-  qDebug() << Q_FUNC_INFO << "TODO new Order Assistant";
+  qInfo("Create new Order without Customer Id will rejected.");
   return false;
 }
 
@@ -798,7 +858,7 @@ bool OrdersEditor::createNewOrder(qint64 customerId) {
 }
 
 bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << Q_FUNC_INFO << "TODO" << object;
+  qDebug() << Q_FUNC_INFO << "Experimental:" << object;
 
   const QString _action = object.value("ACTION").toString();
   if (_action.isEmpty())
@@ -811,7 +871,7 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
   const QString _articles = object.value("ARTICLES").toString();
   QStringList _article_list = _articles.split(",");
   if (_article_list.size() < 1) {
-    qWarning("NO ARTICLES exists!");
+    qWarning("ARTICLES list not exists or empty!");
     return false;
   }
 
@@ -988,6 +1048,7 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
 
   // 3) Artikel Importieren
   m_ordersTable->addArticles(_prorder.orders());
+  m_ordersTable->setWindowModified(false);
 
   // 4) Datensätze Importieren
   importSqlResult();

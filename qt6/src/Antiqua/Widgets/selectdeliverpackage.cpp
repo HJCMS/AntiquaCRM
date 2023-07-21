@@ -41,20 +41,22 @@ void SelectDeliverPackage::loadPackages(int service) {
 
   int _default = -1;
   m_edit->clear();
+  m_edit->setWithoutDisclosures(-1);
+  const QIcon _icon = AntiquaCRM::antiquaIcon("package");
+
   QString _sql("SELECT d_cid,d_class,d_definition,d_default");
   _sql.append(" FROM ref_delivery_cost WHERE d_srv=");
   _sql.append(QString::number(service));
   _sql.append(" ORDER BY d_international ASC;");
   QSqlQuery _q = m_sql->query(_sql);
   if (_q.size() > 0) {
-    int i = 0;
+    int i = m_edit->count();
     while (_q.next()) {
       QString txt = _q.value("d_class").toString();
       txt.append(" ");
       txt.append(_q.value("d_definition").toString());
-      m_edit->insertItem(i, txt);
+      m_edit->insertItem(i, _icon, txt);
       m_edit->setItemData(i, _q.value("d_cid").toInt(), Qt::UserRole);
-
       if (_q.value("d_default").toBool())
         _default = i;
 
@@ -107,7 +109,8 @@ void SelectDeliverPackage::setBuddyLabel(const QString &text) {
 }
 
 bool SelectDeliverPackage::isValid() {
-  if (isRequired() && m_edit->currentIndex() == 0)
+  int _index = m_edit->currentIndex();
+  if (isRequired() && m_edit->itemData(_index, Qt::UserRole).toInt() == -1)
     return false;
 
   return true;

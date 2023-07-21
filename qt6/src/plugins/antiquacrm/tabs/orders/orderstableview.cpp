@@ -60,7 +60,7 @@ void OrdersTableView::changeEvent(QEvent *event) {
   if (event->type() == QEvent::ModifiedChange && isWindowModified())
     parentWidget()->setWindowModified(true);
 
-  qDebug() << Q_FUNC_INFO << isWindowModified();
+  // qDebug() << Q_FUNC_INFO << isWindowModified();
   QTableView::changeEvent(event);
 }
 

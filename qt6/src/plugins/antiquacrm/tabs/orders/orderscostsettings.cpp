@@ -2,9 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderscostsettings.h"
-// #include "deliverservice.h"
 
-#include <QIcon>
 #include <QLayout>
 
 OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
@@ -98,8 +96,4 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   vboxLayout->addStretch(1);
   m_historyTab->setLayout(vboxLayout);
   addTab(m_historyTab, parentWidget()->windowIcon(), tr("History info"));
-
-  /* SIGNALS
-  connect(o_delivery_service, SIGNAL(sendDeliveryPackage(int)), SLOT((int)));
- */
 }
