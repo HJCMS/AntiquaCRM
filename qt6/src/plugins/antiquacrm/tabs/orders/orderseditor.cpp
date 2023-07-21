@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderseditor.h"
+#include "orderarticledialog.h"
 #include "ordersconfig.h"
 #include "orderscostsettings.h"
 #include "orderscustomerinfo.h"
@@ -211,11 +212,7 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
 
   QSqlQuery _q = m_sql->query(query);
   if (_q.lastError().type() != QSqlError::NoError) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
-#else
     qWarning("OrdersEditor: SQL Error!");
-#endif
     return false;
   }
 
@@ -344,14 +341,15 @@ void OrdersEditor::createSqlUpdate() {
     return;
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << _sql << Qt::endl;
-#endif
-
   if (sendSqlQuery(_sql)) {
     m_ordersTable->setWindowModified(false);
     setResetModified(inputFields);
     openSuccessMessage(tr("Order saved successfully!"));
+  } else {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << _sql << Qt::endl;
+#endif
+    openSuccessMessage(tr("Save operation exited with errors!"));
   }
 }
 
@@ -567,11 +565,15 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
       items.append(
           addArticleItem("a_customer_id", getSerialID("o_customer_id")));
       for (int i = 0; i < r.count(); i++) {
-        QSqlField f = r.field(i);
-        items.append(addArticleItem(f.name(), f.value()));
+        const QSqlField _field = r.field(i);
+        const QMetaType _type = _field.metaType();
+        if (_type.id() == QMetaType::UnknownType) {
+          qWarning("Unknown Field:'%s' Metatype!", qPrintable(_field.name()));
+        }
+        items.append(addArticleItem(_field.name(), _field.value()));
         // NOTE: a_sell_price is not in SQL Query
-        if (f.name() == "a_price")
-          items.append(addArticleItem("a_sell_price", f.value()));
+        if (_field.name() == "a_price")
+          items.append(addArticleItem("a_sell_price", _field.value()));
       }
       if (items.size() > 0) {
         m_ordersTable->addArticle(items);
@@ -739,8 +741,21 @@ void OrdersEditor::createPrintPaymentReminder() {
 }
 
 void OrdersEditor::openSearchInsertArticle() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
+  if (getCheckEssentialsIds().isNotValid)
+    return;
+
+  OrderArticleDialog *d = new OrderArticleDialog(this);
+  if (d->exec() == QDialog::Rejected)
+    return;
+
+  qint64 _aid = d->getArticle();
+  if (_aid < 1)
+    return;
+
+  if (addArticleToOrderTable(_aid))
+    setWindowModified(true);
+
+  d->deleteLater();
 }
 
 void OrdersEditor::setRestore() {
@@ -759,10 +774,9 @@ AntiquaCRM::OrderStatus OrdersEditor::orderStatus() {
 }
 
 bool OrdersEditor::addArticle(qint64 articleId) {
-  if (getCheckEssentialsIds().isNotValid) {
-    pushStatusMessage(tr("Missing essential Ids, save Order first!"));
+  if (getCheckEssentialsIds().isNotValid)
     return false;
-  }
+
   if (addArticleToOrderTable(articleId)) {
     getInputEdit("o_delivery")->setWindowModified(true);
     return true;

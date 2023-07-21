@@ -112,24 +112,24 @@ void MainWindow::setViewTab(const QString &name) {
 
 void MainWindow::setAction(const QString &name, const QJsonObject &data) {
   if (!tabViewAction(name)) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Invalid call" << data;
-#endif
+    qWarning("Window: Invalid Action call!");
     return;
   }
 
   int _index = m_tabWidget->indexByName(name);
-  AntiquaCRM::TabsIndex *_widget = m_tabWidget->tabIndex(_index);
-  if (_widget == nullptr) {
-    qInfo("TabsIndex not opened");
+  AntiquaCRM::TabsIndex *_tab = m_tabWidget->tabIndex(_index);
+  if (_tab == nullptr) {
+    m_statusBar->showMessage("The required Tab is not opened!");
     return;
   }
 
-  if (_widget->customAction(data))
+  if (_tab->customAction(data)) {
     m_tabWidget->setCurrentIndex(_index);
+    return;
+  }
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << _index << name << data;
+  qDebug() << Q_FUNC_INFO << "REJECT" << _index << name << data;
 #endif
 }
 

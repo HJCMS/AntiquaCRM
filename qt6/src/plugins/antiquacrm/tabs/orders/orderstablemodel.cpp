@@ -90,7 +90,6 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
   const QString _field = info.field();
   const QMetaType _type = buffer.metaType();
-
   if (role == Qt::EditRole) {
     switch (_type.id()) {
     case QMetaType::Bool:
@@ -105,6 +104,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     case QMetaType::ULongLong:
       return buffer.toLongLong();
 
+    case QMetaType::Float:
     case QMetaType::Double:
       return buffer.toDouble();
 
@@ -126,7 +126,6 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   if (role != Qt::DisplayRole)
     return buffer;
 
-  // qDebug() << Q_FUNC_INFO << _field << _type.id();
   if (_field == "a_type") {
     return articleType(buffer.toInt());
   }

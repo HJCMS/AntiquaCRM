@@ -186,23 +186,25 @@ const QStringList OrdersTableView::getSqlQuery() {
     QStringList fields;  /**< SQL INSERT FIELDS */
     QStringList inserts; /**< SQL INSERT VALUES */
     for (int c = 0; c < m_model->columnCount(); c++) {
-      QModelIndex index = m_model->index(r, c);
-      QString field = m_model->field(index);
-      if (ignoreList.contains(field))
+      QModelIndex _index = m_model->index(r, c);
+      QString _fieldName = m_model->field(_index);
+      if (ignoreList.contains(_fieldName))
         continue;
 
-      QVariant value = m_model->data(index, Qt::EditRole);
+      QVariant _value = m_model->data(_index, Qt::EditRole);
+      QMetaType _type = _value.metaType();
+      // qDebug() << Q_FUNC_INFO << _fieldName << _value << _type.id();
       if (pid > 0) {
-        if (value.metaType().id() == QMetaType::QString)
-          update << QString(field + "='" + value.toString() + "'");
+        if (_type.id() == QMetaType::QString)
+          update << QString(_fieldName + "='" + _value.toString() + "'");
         else
-          update << QString(field + "=" + value.toString());
+          update << QString(_fieldName + "=" + _value.toString());
       } else {
-        fields << field;
-        if (value.metaType().id() == QMetaType::QString)
-          inserts << "'" + value.toString() + "'";
+        fields << _fieldName;
+        if (_type.id() == QMetaType::QString)
+          inserts << "'" + _value.toString() + "'";
         else
-          inserts << value.toString();
+          inserts << _value.toString();
       }
     }
 

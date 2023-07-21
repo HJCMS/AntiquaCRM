@@ -148,6 +148,19 @@ void OrdersWidget::onEnterChanged() {
 const QString OrdersWidget::getTitle() const { return tr("Orders"); }
 
 bool OrdersWidget::customAction(const QJsonObject &obj) {
-  qDebug() << Q_FUNC_INFO << "__TODO__" << obj;
+  const QString _target = obj.value("TARGET").toString();
+  if (_target != "orders_tab")
+    return false;
+
+  const QString _action = obj.value("ACTION").toString();
+  if (_action == "create_order") {
+    int _customerId = obj.value("VALUE").toInt();
+    if (currentIndex() == 0)
+      setCurrentIndex(1);
+
+    return m_editorWidget->createNewOrder(_customerId);
+  }
+
+  qDebug() << Q_FUNC_INFO << "UNKNOWN" << obj;
   return false;
 }

@@ -17,6 +17,7 @@ SET (plugin_FILES
 )
 
 SET (plugin_SOURCES
+  orderarticledialog.cpp
   ordersconfigwidget.cpp
   orderscostsettings.cpp
   orderscustomerinfo.cpp
@@ -34,6 +35,7 @@ SET (plugin_SOURCES
 
 SET (plugin_HEADERS
   ordersconfig.h
+  orderarticledialog.h
   ordersconfigwidget.h
   orderscostsettings.h
   orderscustomerinfo.h
