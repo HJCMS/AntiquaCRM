@@ -8,7 +8,8 @@ SELECT 'Office' AS a_provider_id,
   1 AS a_count,
   CASE i_id WHEN ib_id THEN 1 WHEN cv_id THEN 2 WHEN ip_id THEN 3 WHEN va_id THEN 4 ELSE 0 END AS a_type,
   CASE i_id WHEN ib_id THEN 1 ELSE 0 END AS a_tax,
-  GREATEST(ib_title, ip_title, cv_title, va_title, NULL) AS a_title
+  GREATEST(ib_title, ip_title, cv_title, va_title, NULL) AS a_title,
+  0.00 AS a_refunds_cost
 FROM inventory
 LEFT JOIN inventory_books ON ib_id=i_id
 LEFT JOIN inventory_prints ON ip_id=i_id
