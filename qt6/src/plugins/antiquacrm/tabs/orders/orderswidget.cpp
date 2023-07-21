@@ -6,7 +6,7 @@
 #include "orderseditor.h"
 #include "orderssearchbar.h"
 #include "ordersstatusbar.h"
-#include "orderstableview.h"
+#include "orderstableoverview.h"
 
 #include <AntiquaCRM>
 #include <QtWidgets>
@@ -24,7 +24,7 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   m_searchBar = new OrdersSearchBar(m_mainPage);
   m_p1Layout->addWidget(m_searchBar);
 
-  m_table = new OrdersTableView(m_mainPage);
+  m_table = new OrdersTableOverView(m_mainPage);
   m_p1Layout->addWidget(m_table);
   m_p1Layout->setStretch(1, 1);
 

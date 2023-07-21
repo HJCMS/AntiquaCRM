@@ -14,7 +14,7 @@
 #include <QObject>
 
 class OrdersSearchBar;
-class OrdersTableView;
+class OrdersTableOverView;
 class OrdersStatusBar;
 class OrdersEditor;
 
@@ -24,7 +24,7 @@ class ANTIQUACRM_LIBRARY OrdersWidget final : public AntiquaCRM::TabsIndex {
 private:
   QWidget *m_mainPage;
   OrdersSearchBar *m_searchBar;
-  OrdersTableView *m_table;
+  OrdersTableOverView *m_table;
   OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;

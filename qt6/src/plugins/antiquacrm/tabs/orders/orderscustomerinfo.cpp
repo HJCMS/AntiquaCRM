@@ -11,7 +11,7 @@ OrdersCustomerInfo::OrdersCustomerInfo(QWidget *parent) : QWidget{parent} {
   setFixedHeight(200);
 
   QString css("QTextEdit {background: transparent;");
-  css.append("border-top: 1px solid palette(text);}");
+  css.append("border:none; border-top:1px solid palette(text);}");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
   o_customer_id = new AntiquaCRM::SerialId(this);

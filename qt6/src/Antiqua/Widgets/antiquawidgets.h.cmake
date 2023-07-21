@@ -74,9 +74,6 @@
 // AntiquaCRM::PhoneEdit
 #include "phoneedit.h"
 
-// AntiquaCRM::OrdersTableView
-#include "orderstableview.h"
-
 // AntiquaCRM::PriceEdit
 #include "priceedit.h"
 

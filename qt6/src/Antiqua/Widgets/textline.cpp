@@ -61,11 +61,14 @@ void TextLine::reset() {
 }
 
 void TextLine::setReadOnly(bool b) {
-  m_edit->setReadOnly(b);
   if (b) {
+    m_edit->setReadOnly(true);
     m_edit->setClearButtonEnabled(false);
+    m_edit->setFrame(false);
     m_edit->setStyleSheet("QLineEdit {background:transparent;border:none;}");
   } else {
+    m_edit->setReadOnly(false);
+    m_edit->setFrame(true);
     m_edit->setStyleSheet(QString());
   }
 }

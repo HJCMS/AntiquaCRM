@@ -15,7 +15,7 @@
 
 class OrdersCustomerInfo;
 class OrdersCostSettings;
-class OrdersPayedArticles;
+class OrdersTableView;
 
 class ANTIQUACRM_LIBRARY OrdersEditor final : public AntiquaCRM::TabsEditor {
   Q_OBJECT
@@ -37,7 +37,7 @@ private:
   OrdersCostSettings *m_costSettings;
 
   // Layout Row2
-  OrdersPayedArticles *m_ordersList;
+  OrdersTableView *m_ordersTable;
 
   // BEGIN:Row3
   AntiquaCRM::TabsEditActionBar *m_actionBar;

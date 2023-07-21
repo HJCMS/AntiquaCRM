@@ -9,39 +9,126 @@
 #ifndef ANTIQUACRM_PLUGIN_ORDERSTABLEVIEW_H
 #define ANTIQUACRM_PLUGIN_ORDERSTABLEVIEW_H
 
-#include <AntiquaWidgets>
+#include <AntiquaCRM>
+#include <QContextMenuEvent>
+#include <QModelIndex>
 #include <QObject>
-#include <QSqlRecord>
+#include <QPaintEvent>
+#include <QTableView>
 
 class OrdersTableModel;
+class OrdersTableDelegate;
 
-class ANTIQUACRM_LIBRARY OrdersTableView final : public AntiquaCRM::TableView {
+/**
+ * @class OrdersTableView
+ * @brief Table view for orders
+ *
+ * The table creates an overview of all current order items for an order.
+ *
+ * That is, if you create a new entry, the order number is not yet available!
+ *
+ * @ingroup PluginOrders
+ */
+class ANTIQUACRM_LIBRARY OrdersTableView final : public QTableView {
   Q_OBJECT
 
 private:
+  QModelIndex p_modelIndex;
   OrdersTableModel *m_model;
-  QString where_clause;
-  QSqlRecord p_tableRecord;
-  qint64 getTableID(const QModelIndex &index, int column = 0) override;
-  bool sqlModelQuery(const QString &query) override;
+  OrdersTableDelegate *m_delegate;
+  QStringList sql_cache;
+
+  /**
+   * @brief Monitors table view changes
+   *
+   * QEvent::ModifiedChange and isWindowModified() are monitored.
+   *
+   * If event is positive, call parentWidget()->setWindowModified(true).
+   *
+   * @sa OrdersTableView::articleChanged
+   */
+  void changeEvent(QEvent *) override;
+
+  /**
+   * @brief if table is empty, display a notice message.
+   */
+  void paintEvent(QPaintEvent *) override;
+
+  /**
+   * @brief Table row item context menu
+   */
   void contextMenuEvent(QContextMenuEvent *) override;
-  void createOrderReturning(qint64 oid);
 
 private Q_SLOTS:
-  void contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                         const QModelIndex &) override;
-  void setSortByColumn(int column, Qt::SortOrder order) override;
-  void getSelectedItem(const QModelIndex &) override;
-  void createSocketOperation(const QModelIndex &) override;
+  /**
+   * @brief This Slot checks watched Table Cell changes.
+   *
+   * It depends on QTableView::dataChanged Signal.
+   * With positive values it calls QTableView::setWindowModified and
+   * QHeaderView::setStretchLastSection.
+   */
+  void articleChanged(const QModelIndex &, const QModelIndex &);
+
+  /**
+   * @brief Creates SQL-Delete Statement from current selected row.
+   */
+  void addDeleteQuery();
 
 public Q_SLOTS:
-  void setReloadView() override;
+  /**
+   * @brief Clears the Table content and his buffer.
+   */
+  void clearContents();
+
+  /**
+   * @brief Insert a new Order article.
+   */
+  void addArticle(const AntiquaCRM::OrderArticleItems &order);
 
 public:
-  explicit OrdersTableView(QWidget *parent = nullptr);
-  int rowCount() override;
-  bool setQuery(const QString &clause = QString()) override;
-  const QString defaultWhereClause() override;
+  /**
+   * @param parent - parent object
+   * @param readOnly - enable/disable ItemDelegation
+   */
+  explicit OrdersTableView(QWidget *parent = nullptr, bool readOnly = true);
+
+  /**
+   * @brief Aktuelle Tabellenzeilenanzahl.
+   */
+  int rowCount();
+
+  /**
+   * @brief is table empty check
+   */
+  bool isEmpty();
+
+  /**
+   * @brief Fieldname list of defined Table cells to be hidden.
+   */
+  void hideColumns(const QStringList &);
+
+  /**
+   * @brief Insert more then one Order Article.
+   */
+  bool addArticles(const QList<AntiquaCRM::OrderArticleItems> &);
+
+  /**
+   * @brief Search for Order Id Cell and update them.
+   *
+   * An "OrderId" is only generated after the first save and is not yet included
+   * in a new entry!
+   */
+  bool setOrderId(qint64);
+
+  /**
+   * @brief Readout buffered SQL-Queries
+   */
+  const QStringList getSqlQuery();
+
+  /**
+   * @brief Readout Payment Id
+   */
+  qint64 getPaymentId(int);
 };
 
 #endif // ANTIQUACRM_PLUGIN_ORDERSTABLEVIEW_H

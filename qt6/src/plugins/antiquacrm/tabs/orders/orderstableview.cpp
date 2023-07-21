@@ -2,188 +2,238 @@
 // vim: set fileencoding=utf-8
 
 #include "orderstableview.h"
+#include "ainputwidget.h"
+#include "orderstabledelegate.h"
 #include "orderstablemodel.h"
 
-#include <AntiquaCRM>
+#include <QAbstractItemView>
+#include <QAction>
+#include <QFont>
+#include <QHeaderView>
+#include <QIcon>
+#include <QMenu>
+#include <QMessageBox>
+#include <QPainter>
+#include <QPalette>
 
-OrdersTableView::OrdersTableView(QWidget *parent)
-    : AntiquaCRM::TableView{parent} {
-  setEnableTableViewSorting(true);
+OrdersTableView::OrdersTableView(QWidget *parent, bool readOnly)
+    : QTableView{parent} {
+  setObjectName("OrdersTableView");
+  setWindowTitle("Purchases [*]");
+  setToolTip(tr("Article purchases"));
+  setSortingEnabled(false);
+  setAlternatingRowColors(true);
+  setCornerButtonEnabled(false);
+  setDragEnabled(false);
+  setDragDropOverwriteMode(false);
+  setWordWrap(false);
+  // Einfaches Auswählen kein Strg+Shift+Mausklick
+  setSelectionMode(QAbstractItemView::SingleSelection);
+  if (readOnly) {
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
+  } else {
+    setSelectionBehavior(QAbstractItemView::SelectItems);
+    setEditTriggers(QAbstractItemView::DoubleClicked);
+  }
+
   m_model = new OrdersTableModel(this);
-  where_clause = defaultWhereClause();
-  connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(sqlModelError(const QString &, const QString &)));
+  setModel(m_model);
 
-  connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(getSelectedItem(const QModelIndex &)));
+  if (!readOnly) {
+    // Editoren initialisieren!
+    m_delegate = new OrdersTableDelegate(this);
+    setItemDelegate(m_delegate);
+  }
+
+  QHeaderView *m_header = horizontalHeader();
+  m_header->setHighlightSections(true);
+  m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
+  setHorizontalHeader(m_header);
+
+  connect(m_model,
+          SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
+          SLOT(articleChanged(const QModelIndex &, const QModelIndex &)));
 }
 
-qint64 OrdersTableView::getTableID(const QModelIndex &index, int column) {
-  const QModelIndex _sibling = index.sibling(index.row(), column);
-  if (m_model->data(_sibling, Qt::EditRole).toInt() >= 1) {
-    return m_model->data(_sibling, Qt::EditRole).toInt();
-  }
-  return -1;
+void OrdersTableView::changeEvent(QEvent *event) {
+  if (event->type() == QEvent::ModifiedChange && isWindowModified())
+    parentWidget()->setWindowModified(true);
+
+  qDebug() << Q_FUNC_INFO << isWindowModified();
+  QTableView::changeEvent(event);
 }
 
-bool OrdersTableView::sqlModelQuery(const QString &query) {
-  // qDebug() << Q_FUNC_INFO << query << Qt::endl;
-  if (m_model->querySelect(query)) {
-    QueryHistory = query;
-    setModel(m_model);
-    emit sendQueryReport(m_model->queryResultInfo());
-    emit sendResultExists((m_model->rowCount() > 0));
-    // Table Record und NICHT QueryRecord abfragen!
-    // Siehe: setSortByColumn
-    p_tableRecord = m_model->tableRecord();
-    return true;
+void OrdersTableView::paintEvent(QPaintEvent *event) {
+  if (rowCount() == 0) {
+    QStringList _info;
+    _info << tr("Please insert here the required Order article.");
+    _info << tr("An Order requires minimum one Article!");
+    QPainter painter(viewport());
+    painter.setBrush(palette().text());
+    painter.setFont(font());
+    painter.setOpacity(0.8);
+    painter.drawText(rect(), Qt::AlignCenter, _info.join("\n"));
   }
-  emit sendQueryReport(m_model->queryResultInfo());
-  bool _status = (m_model->rowCount() > 0);
-  emit sendResultExists(_status);
-  return _status;
+  QTableView::paintEvent(event);
 }
 
 void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
-  QModelIndex index = indexAt(event->pos());
-  qint64 rows = m_model->rowCount();
-  AntiquaCRM::TableContextMenu *m_menu =
-      new AntiquaCRM::TableContextMenu(index, rows, this);
-  m_menu->addOpenAction(tr("Open order"));
-  m_menu->addCopyAction(tr("Copy Order Id"));
-  QAction *ac_customer = m_menu->addOrderAction(tr("View Customer"));
-  ac_customer->setIcon(AntiquaCRM::antiquaIcon("user-group"));
-  m_menu->addUndoAction(tr("Create a return from this order."));
-  m_menu->addReloadAction(tr("Update"));
-  connect(m_menu,
-          SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
-                            const QModelIndex &)),
-          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                                 const QModelIndex &)));
-
-  connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
-  m_menu->exec(event->globalPos());
-  delete m_menu;
-}
-
-void OrdersTableView::contextMenuAction(
-    AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
-  qint64 _oid = getTableID(index);
-  if (_oid < 1)
+  p_modelIndex = indexAt(event->pos());
+  if (!p_modelIndex.isValid())
     return;
 
-  switch (ac) {
-  case (AntiquaCRM::TableContextMenu::Actions::Open):
-    emit sendOpenEntry(_oid);
-    break;
+  QMenu *m = new QMenu("Actions", this);
+  QAction *ac_del = m->addAction(AntiquaCRM::antiquaIcon("database-remove"),
+                                 tr("Delete selected Article"));
+  ac_del->setEnabled((m_model->rowCount() > 1));
+  connect(ac_del, SIGNAL(triggered()), SLOT(addDeleteQuery()));
 
-  case (AntiquaCRM::TableContextMenu::Actions::Delete):
-    emit sendDeleteEntry(_oid);
-    break;
+  m->exec(event->globalPos());
+  delete m;
+}
 
-  case (AntiquaCRM::TableContextMenu::Actions::Order):
-    createSocketOperation(index);
-    break;
+void OrdersTableView::articleChanged(const QModelIndex &current,
+                                     const QModelIndex &previous) {
+  Q_UNUSED(current);
+  resizeColumnToContents(previous.column());
+  horizontalHeader()->setStretchLastSection(true);
+  setWindowModified(true);
+}
 
-  case (AntiquaCRM::TableContextMenu::Actions::Copy):
-    emit sendCopyToClibboard(QString::number(_oid));
-    break;
+void OrdersTableView::addDeleteQuery() {
+  QModelIndex _index = p_modelIndex.sibling(p_modelIndex.row(), 0);
+  if (!_index.isValid())
+    return;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Undo):
-    createOrderReturning(_oid);
-    break;
+  qint64 id = m_model->data(_index, Qt::EditRole).toInt();
+  if (m_model->removeRow(_index.row())) {
+    setWindowModified(true);
+    if (id > 0) { // SQL DELETE call
+      QString _sql("DELETE FROM article_orders WHERE a_payment_id=");
+      _sql.append(QString::number(id) + ";");
+      sql_cache << _sql;
+    }
+  }
+}
 
-  default:
+void OrdersTableView::clearContents() {
+  if (rowCount() > 0) {
+    m_model->clearContents();
+    setWindowModified(true);
+  }
+  sql_cache.clear();
+}
+
+void OrdersTableView::addArticle(const AntiquaCRM::OrderArticleItems &order) {
+  if (m_model->addArticle(order)) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Unknown OrderView::ContextMenu request:" << _oid;
+    qInfo("-- OrdersTableView::addArticle --");
 #endif
-    break;
-  };
+    setWindowModified(true);
+  }
 }
 
-void OrdersTableView::createOrderReturning(qint64 oid) {
-  qDebug() << Q_FUNC_INFO << oid;
-  // ReturnOrder *d = new ReturnOrder(this);
-  // if (d->exec(oid) == QDialog::Accepted) { setReloadView(); }
-  // d->deleteLater();
+int OrdersTableView::rowCount() {
+  int _c = m_model->rowCount();
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (_c < 1)
+    qWarning("-- OrdersTableView::rowCount=%d --", _c);
+#endif
+  return _c;
 }
 
-void OrdersTableView::setSortByColumn(int column, Qt::SortOrder order) {
-  if (column < 0)
-    return;
+bool OrdersTableView::isEmpty() { return (m_model->rowCount() < 1); }
 
-  QString order_by = m_model->fieldName(column);
-  /**
-   * @warning Bei Alias basierenden SELECT abfragen!
-   * ORDER BY "Multisort" Abfragen können nicht mit Aliases gemischt werden!
-   */
-  if (!p_tableRecord.isEmpty()) {
-    QStringList fieldList;
-    for (int i = 0; i < p_tableRecord.count(); i++) {
-      fieldList << p_tableRecord.field(i).name();
+void OrdersTableView::hideColumns(const QStringList &list) {
+  foreach (QString fieldName, list) {
+    int column = m_model->columnIndex(fieldName);
+    horizontalHeader()->setSectionHidden(column, true);
+  }
+}
+
+bool OrdersTableView::addArticles(
+    const QList<AntiquaCRM::OrderArticleItems> &items) {
+  clearContents();
+  if (m_model->addArticles(items)) {
+    setWindowModified(false);
+    horizontalHeader()->setStretchLastSection(true);
+    return true;
+  }
+  return false;
+}
+
+bool OrdersTableView::setOrderId(qint64 orderId) {
+  int _count = 0;
+  int _index = m_model->columnIndex("a_order_id");
+  for (int r = 0; r < m_model->rowCount(); r++) {
+    if (m_model->setData(m_model->index(r, _index), orderId, Qt::EditRole))
+      _count++;
+  }
+  return (_count > 0);
+}
+
+const QStringList OrdersTableView::getSqlQuery() {
+  // Ausgabe
+  QStringList queries;
+  // Werden bei INSERT|UPDATE Ignoriert!
+  QStringList ignoreList({"a_payment_id", "a_modified"});
+  // Starte Tabellen abfrage ...
+  for (int r = 0; r < m_model->rowCount(); r++) {
+    // Suche "a_payment_id" für INSERT|UPDATE Prüfung!
+    qint64 pid = m_model->data(m_model->index(r, 0), Qt::EditRole).toInt();
+    QStringList update;  /**< SQL UPDATE SET */
+    QStringList fields;  /**< SQL INSERT FIELDS */
+    QStringList inserts; /**< SQL INSERT VALUES */
+    for (int c = 0; c < m_model->columnCount(); c++) {
+      QModelIndex index = m_model->index(r, c);
+      QString field = m_model->field(index);
+      if (ignoreList.contains(field))
+        continue;
+
+      QVariant value = m_model->data(index, Qt::EditRole);
+      if (pid > 0) {
+        if (value.metaType().id() == QMetaType::QString)
+          update << QString(field + "='" + value.toString() + "'");
+        else
+          update << QString(field + "=" + value.toString());
+      } else {
+        fields << field;
+        if (value.metaType().id() == QMetaType::QString)
+          inserts << "'" + value.toString() + "'";
+        else
+          inserts << value.toString();
+      }
     }
-    if (fieldList.contains(order_by)) {
-      order_by.prepend("(");
-      order_by.append(",o_modified)");
+
+    if (pid > 0) {
+      QString sql("UPDATE article_orders SET ");
+      sql.append(update.join(","));
+      sql.append(" WHERE a_payment_id=" + QString::number(pid) + ";");
+      queries << sql;
+      update.clear();
+    } else {
+      QString sql("INSERT INTO article_orders (");
+      sql.append(fields.join(","));
+      sql.append(") VALUES (");
+      sql.append(inserts.join(","));
+      sql.append(");");
+      queries << sql;
+      fields.clear();
+      inserts.clear();
     }
   }
 
-  // NOTE Muss hier umgedreht werden!
-  Qt::SortOrder sort = Qt::AscendingOrder;
-  if (order == Qt::AscendingOrder)
-    sort = Qt::DescendingOrder;
+  if (!sql_cache.isEmpty())
+    queries << sql_cache;
 
-  AntiquaCRM::ASqlFiles query("query_tab_orders_main");
-  if (query.openTemplate()) {
-    query.setWhereClause(where_clause);
-    query.setOrderBy(order_by);
-    query.setSorting(sort);
-    query.setLimits(getQueryLimit());
+  return queries;
+}
+
+qint64 OrdersTableView::getPaymentId(int row) {
+  if (row >= 0) {
+    QModelIndex pIndex = m_model->index(row, 0);
+    return m_model->data(pIndex, Qt::EditRole).toInt();
   }
-  sqlModelQuery(query.getQueryContent());
-}
-
-void OrdersTableView::getSelectedItem(const QModelIndex &index) {
-  qint64 _oid = getTableID(index);
-  if (_oid >= 1)
-    emit sendOpenEntry(_oid);
-}
-
-void OrdersTableView::createSocketOperation(const QModelIndex &index) {
-  qint64 _oid = getTableID(index);
-  if (_oid < 1)
-    return;
-
-  QJsonObject obj;
-  obj.insert("ACTION", "open_entry");
-  obj.insert("TARGET", "customers_tab");
-  obj.insert("VALUE", QJsonValue(_oid));
-  emit sendSocketOperation(obj);
-}
-
-void OrdersTableView::setReloadView() {
-  sqlModelQuery(m_model->query().lastQuery());
-}
-
-int OrdersTableView::rowCount() { return m_model->rowCount(); }
-
-bool OrdersTableView::setQuery(const QString &clause) {
-  AntiquaCRM::ASqlFiles query("query_tab_orders_main");
-  if (query.openTemplate()) {
-    where_clause = (clause.isEmpty() ? where_clause : clause);
-    query.setWhereClause(where_clause);
-    query.setOrderBy("(o_modified,o_id)");
-    query.setSorting(Qt::DescendingOrder);
-    query.setLimits(getQueryLimit());
-  }
-  return sqlModelQuery(query.getQueryContent());
-}
-
-const QString OrdersTableView::defaultWhereClause() {
-  QString _sql("o_order_status<4 AND (");
-  _sql.append("DATE_PART('year',o_since)=DATE_PART('year',CURRENT_DATE) OR ");
-  _sql.append("DATE_PART('month',o_modified)=DATE_PART('year',CURRENT_DATE)");
-  _sql.append(")");
-  // qDebug() << Q_FUNC_INFO << _sql << Qt::endl;
-  return _sql;
+  return -1;
 }

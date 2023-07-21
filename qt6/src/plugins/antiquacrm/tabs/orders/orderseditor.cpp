@@ -5,7 +5,7 @@
 #include "ordersconfig.h"
 #include "orderscostsettings.h"
 #include "orderscustomerinfo.h"
-#include "orderspayedarticles.h"
+#include "orderstableview.h"
 
 #include <QLayout>
 #include <QSizePolicy>
@@ -63,9 +63,23 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   // END:Row1
 
   // BEGIN:Row2
-  m_ordersList = new OrdersPayedArticles(this);
-  mainLayout->addWidget(m_ordersList);
-  mainLayout->setStretch(2, 1);
+  m_ordersTable = new OrdersTableView(this, false);
+/**
+ * Für den Kunden ausblenden. Werden hier nicht benötigt!
+ * @warning Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
+ *          Deshalb wird die Konstante „table_columns“ heran gezogen.
+ */
+#ifndef ANTIQUA_DEVELOPEMENT
+  QStringList hideColumn("a_payment_id");
+  hideColumn << "a_order_id";
+  hideColumn << "a_customer_id";
+  hideColumn << "a_modified";
+  hideColumn << "a_provider_id";
+  hideColumn << "a_refunds_cost";
+  m_table->hideColumns(hideColumn);
+#endif
+  mainLayout->addWidget(m_ordersTable);
+  mainLayout->setStretch(2, 0);
   // END:Row2
 
   /*
@@ -249,7 +263,7 @@ void OrdersEditor::createSqlUpdate() {
   /*
    * Ein UPDATE ohne Artikel wird feige verweigert!
    */
-  if (m_ordersList->isEmpty()) {
+  if (m_ordersTable->isEmpty()) {
     openNoticeMessage(tr("No Article has been added to this order!"));
     QPushButton *btn = m_actionBar->findChild<QPushButton *>("article");
     if (btn != nullptr && btn->isVisible()) {
@@ -326,8 +340,7 @@ void OrdersEditor::createSqlUpdate() {
 
   if (_changes == 0 && _sql.isEmpty()) {
     pushStatusMessage(tr("No Modifications found, nothing todo!"));
-    setWindowModified(false);
-    m_ordersList->setArticleChanged(false);
+    setWindowModified(false); // ???
     return;
   }
 
@@ -337,7 +350,6 @@ void OrdersEditor::createSqlUpdate() {
 
   if (sendSqlQuery(_sql)) {
     setResetModified(inputFields);
-    m_ordersList->setArticleChanged(false);
     openSuccessMessage(tr("Order saved successfully!"));
   }
 }
@@ -498,7 +510,8 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
       QSqlRecord r = q.record();
       AntiquaCRM::OrderArticleItems items;
       items.append(addArticleItem("a_order_id", getSerialID("o_id")));
-      items.append(addArticleItem("a_customer_id", getSerialID("o_customer_id")));
+      items.append(
+          addArticleItem("a_customer_id", getSerialID("o_customer_id")));
       for (int i = 0; i < r.count(); i++) {
         QSqlField f = r.field(i);
         items.append(addArticleItem(f.name(), f.value()));
@@ -507,7 +520,7 @@ bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
           items.append(addArticleItem("a_sell_price", f.value()));
       }
       if (items.size() > 0) {
-        m_ordersList->insertArticle(items);
+        m_ordersTable->addArticle(items);
         return true;
       }
     }
@@ -627,7 +640,7 @@ void OrdersEditor::setSaveData() {
 }
 
 void OrdersEditor::setCheckLeaveEditor() {
-  if (checkIsModified() || m_ordersList->getArticleChanged()) {
+  if (checkIsModified() || m_ordersTable->isWindowModified()) {
     unsavedChangesPopup();
     return;
   }
@@ -638,9 +651,8 @@ void OrdersEditor::setFinalLeaveEditor(bool force) {
   if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 
+  m_ordersTable->clearContents(); // Artikel Tabelle leeren!
   setResetInputFields();
-  m_ordersList->clearTable(); // Artikel Tabelle leeren!
-  m_ordersList->setArticleChanged(false);
   emit sendLeaveEditor(); // Zurück zur Hauptsansicht
 }
 
@@ -730,7 +742,7 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
     }
 
     // Bestehende Artikel Einkäufe mit orderId einlesen!
-    m_ordersList->importArticles(queryOrderArticles(orderId));
+    m_ordersTable->addArticles(queryOrderArticles(orderId));
 
     setResetModified(customInput);
     _retval = true;
@@ -975,7 +987,7 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
   }
 
   // 3) Artikel Importieren
-  m_ordersList->importArticles(_prorder.orders());
+  m_ordersTable->addArticles(_prorder.orders());
 
   // 4) Datensätze Importieren
   importSqlResult();
@@ -983,7 +995,6 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
   // 5) Erst nach einfügen reset
   setResetModified(inputFields);
   setResetModified(customInput);
-  m_ordersList->setArticleChanged(false);
 
   return true;
 }

@@ -93,7 +93,6 @@ SET (_library_SOURCES
   mailbutton.cpp
   maildialog.cpp
   numedit.cpp
-  orderstableview.cpp
   phoneedit.cpp
   postalcodeedit.cpp
   postalcodelocation.cpp
@@ -165,7 +164,6 @@ SET (_library_HEADERS
   mailbutton.h
   maildialog.h
   numedit.h
-  orderstableview.h
   phoneedit.h
   postalcodeedit.h
   postalcodelocation.h

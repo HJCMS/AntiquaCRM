@@ -4,8 +4,6 @@
 #include "orderstabledelegate.h"
 #include "orderstablemodel.h"
 
-namespace AntiquaCRM {
-
 OrdersTableDelegate::OrdersTableDelegate(QObject *parent)
     : QItemDelegate{parent} {
   AntiquaCRM::ASettings cfg(this);
@@ -17,6 +15,16 @@ OrdersTableDelegate::OrdersTableDelegate(QObject *parent)
   config.currency = cfg.value("currency", "€").toByteArray();
   config.maxInteger = cfg.value("max_integer", 9999999).toInt();
   cfg.endGroup();
+}
+
+void OrdersTableDelegate::setProperties(
+    const OrdersTableDelegate::EditorProperties &properties) {
+  config.minPrice = properties.minPrice;
+  config.maxPrice = properties.maxPrice;
+  config.minCount = properties.minCount;
+  config.maxCount = properties.maxCount;
+  config.currency = properties.currency;
+  config.maxInteger = properties.maxInteger;
 }
 
 QWidget *OrdersTableDelegate::createEditor(QWidget *parent,
@@ -166,5 +174,3 @@ void OrdersTableDelegate::setModelData(QWidget *editor,
     return;
   }
 }
-
-} // namespace AntiquaCRM

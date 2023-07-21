@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PRIVATE_ORDERSTABLEDELEGATE_H
-#define ANTIQUACRM_PRIVATE_ORDERSTABLEDELEGATE_H
+#ifndef ANTIQUACRM_PLUGIN_ORDERSTABLEDELEGATE_H
+#define ANTIQUACRM_PLUGIN_ORDERSTABLEDELEGATE_H
 
 #include <AntiquaWidgets>
 #include <QAbstractItemModel>
@@ -17,12 +17,16 @@
 #include <QStyleOptionViewItem>
 #include <QWidget>
 
-namespace AntiquaCRM {
-
+/**
+ * @class OrdersTableDelegate
+ * @brief Order articles cell item delegate
+ *
+ * @ingroup PluginOrders
+ */
 class ANTIQUACRM_LIBRARY OrdersTableDelegate final : public QItemDelegate {
   Q_OBJECT
 
-private:
+public:
   /**
    * @brief Input properties
    */
@@ -34,10 +38,13 @@ private:
     int maxInteger;
     QByteArray currency;
   };
-  EditorProperties config;
 
-public:
+  /**
+   * @brief parent - parent object
+   */
   explicit OrdersTableDelegate(QObject *parent = nullptr);
+
+  void setProperties(const OrdersTableDelegate::EditorProperties &);
 
   QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
                         const QModelIndex &index) const override;
@@ -46,8 +53,9 @@ public:
 
   void setModelData(QWidget *editor, QAbstractItemModel *model,
                     const QModelIndex &index) const override;
+
+private:
+  EditorProperties config;
 };
 
-} // namespace AntiquaCRM
-
-#endif // ANTIQUACRM_PRIVATE_ORDERSTABLEDELEGATE_H
+#endif // ANTIQUACRM_PLUGIN_ORDERSTABLEDELEGATE_H
