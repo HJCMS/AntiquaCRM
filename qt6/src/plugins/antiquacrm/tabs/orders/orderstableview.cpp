@@ -11,6 +11,7 @@
 #include <QFont>
 #include <QHeaderView>
 #include <QIcon>
+#include <QItemSelectionModel>
 #include <QMenu>
 #include <QMessageBox>
 #include <QPainter>
@@ -127,21 +128,15 @@ void OrdersTableView::clearContents() {
 
 void OrdersTableView::addArticle(const AntiquaCRM::OrderArticleItems &order) {
   if (m_model->addArticle(order)) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qInfo("-- OrdersTableView::addArticle --");
-#endif
     setWindowModified(true);
+    return;
   }
+#ifdef ANTIQUA_DEVELOPEMENT
+  qWarning("-- OrdersTableView::addArticle -- Rejected --");
+#endif
 }
 
-int OrdersTableView::rowCount() {
-  int _c = m_model->rowCount();
-#ifdef ANTIQUA_DEVELOPEMENT
-  if (_c < 1)
-    qWarning("-- OrdersTableView::rowCount=%d --", _c);
-#endif
-  return _c;
-}
+int OrdersTableView::rowCount() { return m_model->rowCount(); }
 
 bool OrdersTableView::isEmpty() { return (m_model->rowCount() < 1); }
 
@@ -230,6 +225,21 @@ const QStringList OrdersTableView::getSqlQuery() {
     queries << sql_cache;
 
   return queries;
+}
+
+bool OrdersTableView::articleExists(qint64 articleId) {
+  if (rowCount() < 1)
+    return false;
+
+  int _column = m_model->columnIndex("a_article_id");
+  for (int r = 0; r < rowCount(); r++) {
+    QModelIndex _index = m_model->index(r, _column);
+    if (m_model->data(_index, Qt::EditRole).toInt() == articleId) {
+      setCurrentIndex(_index);
+      return true;
+    }
+  }
+  return false;
 }
 
 qint64 OrdersTableView::getPaymentId(int row) {

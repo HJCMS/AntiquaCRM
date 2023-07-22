@@ -126,6 +126,13 @@ public:
   const QStringList getSqlQuery();
 
   /**
+   * @brief Check for Unique Article identifier
+   * @param articleId - Article Id
+   * @return true when already exists
+   */
+  bool articleExists(qint64 articleId);
+
+  /**
    * @brief Readout Payment Id
    */
   qint64 getPaymentId(int);

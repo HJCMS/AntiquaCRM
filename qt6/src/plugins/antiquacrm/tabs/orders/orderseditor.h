@@ -60,7 +60,10 @@ private:
   void createSqlInsert() override;
 
   /**
-   * @brief Wenn die Lieferscheinnummer fehlt, diese generieren!
+   * @brief Lieferscheinnummer genrieren
+   *
+   * Wenn die Lieferscheinnummer fehlt, diese generieren und Parameter Werte
+   * o_delivery setzen.
    */
   void generateDeliveryNumber(qint64 orderId);
 
@@ -71,24 +74,26 @@ private:
 
   /**
    * @brief Generiere Rechnungs- Lieferscheinnummer.
+   * @param oid - Order Id
+   *
    * Es wird bei einem INSERT der Trigger „BEFORE INSERT new_invoice_id()“
    * aufgerufen und eine neue Rechnungsnummer generiert.
    * Diese „invoice_id“ wird hier abgefragt und in die Temporären Container
    * eingefügt!
    */
-  void setOrderPaymentNumbers(qint64 orderId);
+  void setOrderPaymentNumbers(qint64 oid);
 
   /**
    * @brief Temporäre Klasse zum Prüfen der Identifikations Nummern.
    * Gleichzeitig ein Helfer die wichtigsten Id’s sofort abrufen zu können!
    */
-  struct IdsCheck {
-    bool isNotValid = true; /**< Prüfergebnis */
-    qint64 or_id;           /**< Order Id */
-    qint64 cu_id;           /**< Customer Id */
-    qint64 in_id;           /**< Invoide Id */
+  struct Idset {
+    bool isValid = false; /**< Prüfergebnis */
+    qint64 or_id = -1;    /**< Order Id */
+    qint64 cu_id = -1;    /**< Customer Id */
+    qint64 in_id = -1;    /**< Invoice Id */
   };
-  const IdsCheck getCheckEssentialsIds();
+  const Idset identities();
 
   /**
    * @brief Umsatzsteuersatz einbinden oder nicht
@@ -98,25 +103,18 @@ private:
   AntiquaCRM::SalesTax initSalesTax();
 
   /**
-   * @brief Umsatzsteuersatz durch ArtikelTyp bestimmen.
-   * @param int - AntiquaCRM::ArticleType
-   * Die Rückgabewerte „Standard“ oder „Reduziert“ werden bei den Einstellungen
-   * in der Gruppe „payment“ gesetzt!
-   */
-  int getSalesTaxValue(int);
-
-  /**
    * @brief Umsatzsteuerart durch ArtikelTyp bestimmen.
-   * @param int - AntiquaCRM::ArticleType
+   * @param type - AntiquaCRM::ArticleType
    * @return 0|1 = (0:Standard oder 1:Reduziert)
+   *
    * Ermittelt an Hand des ArtikelTyps welcher Umsatzsteuersatz verwendet wird!
    */
-  int getSalesTaxType(int);
+  int getSalesTaxType(int type);
 
   /**
    * @brief Artikel von Auftrag in PgSQL suchen und in Container schreiben!
    */
-  const QList<AntiquaCRM::OrderArticleItems> queryOrderArticles(qint64 orderId);
+  const QList<AntiquaCRM::OrderArticleItems> queryArticles(qint64 oid);
 
   /**
    * @brief Artikel einfügen
@@ -130,13 +128,14 @@ private:
    * SQL Abfrage auf die Artikel-Nr. durchführen und einfügen wenn der Bestand
    * größer als 0 ist.
    * @see PgSQL::query_article_order_with_id.sql
+   * @param aid = Article Id
    */
-  bool addArticleToOrderTable(qint64 articleId);
+  bool addOrderTableArticle(qint64 aid);
 
   /**
-   * @brief Abfrage des in „OrdersItemList“ erstellen SQL-Statements.
+   * @brief Tabellen SQL-Abfragen Speichern ziehen.
    */
-  const QString getSqlArticleOrders();
+  const QString getOrderTableSqlQuery();
 
   /**
    * @brief Datenbank Status des Auftrags
@@ -152,8 +151,10 @@ private:
 
   /**
    * @brief Kundennummer Suchen/Prüfen
+   * @param obj = Daten
+   * @param cid = Kundennummer
    */
-  qint64 findCustomer(const QJsonObject &obj, qint64 customerId = -1);
+  qint64 findCustomer(const QJsonObject &obj, qint64 cid = -1);
 
   /**
    * @brief Setze Standard Werte für bestimmte Felder.
@@ -214,14 +215,15 @@ public:
 
   /**
    * @brief Insert Article to Current Order
-   * @param articleId - Article Number
+   * @param aid - Article Number
    */
-  bool addArticle(qint64 articleId);
+  bool addArticle(qint64 aid);
 
   /**
    * @brief Auftrag öffnen
+   * @param oid - Order Id
    */
-  bool openEditEntry(qint64 orderId) override;
+  bool openEditEntry(qint64 oid) override;
 
   /**
    * @brief Manuelles Auftrag erstellen...

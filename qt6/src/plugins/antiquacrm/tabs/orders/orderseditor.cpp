@@ -68,7 +68,6 @@ OrdersEditor::OrdersEditor(QWidget *parent)
 
   // BEGIN:Row2
   m_ordersTable = new OrdersTableView(this, false);
-  m_ordersTable->setToolTip(tr("Article orders for this order."));
 /**
  * Für den Kunden ausblenden. Werden hier nicht benötigt!
  * @note Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
@@ -86,7 +85,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   mainLayout->setStretch(2, 0);
   // END:Row2
 
-  /*
+  /**
    * BEGIN:Row3
    * Wegen SQL-Abfrage setMailMenu hier nicht setzen!
    * Siehe AntiquaCRM::MailButton::setSections ...
@@ -126,7 +125,11 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(setCheckLeaveEditor()));
 }
 
-OrdersEditor::~OrdersEditor() {}
+OrdersEditor::~OrdersEditor() {
+  ignoreFields.clear();
+  inputFields.clear();
+  customInput.clear();
+}
 
 void OrdersEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
@@ -198,8 +201,7 @@ void OrdersEditor::importSqlResult() {
   blockSignals(true);
   while (it.hasNext()) {
     it.next();
-    QSqlField _f = m_tableData->getProperties(it.key());
-    setDataField(_f, it.value());
+    setDataField(m_tableData->getProperties(it.key()), it.value());
   }
   blockSignals(false);
 
@@ -243,7 +245,7 @@ const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
       continue;
 
     if (inp->isRequired() && !inp->isValid()) {
-      openNoticeMessage(inp->statusHints()); // popUpHints
+      openNoticeMessage(inp->popUpHints());
       inp->setFocus();
       _hash.clear();
       return _hash;
@@ -312,7 +314,7 @@ void OrdersEditor::createSqlUpdate() {
   }
 
   // Artikel Bestelliste aktualisieren
-  const QString _articleSql = getSqlArticleOrders();
+  const QString _articleSql = getOrderTableSqlQuery();
   if (_articleSql.isEmpty()) {
     pushStatusMessage(tr("No SQL Articles exist!"));
     return;
@@ -396,14 +398,14 @@ void OrdersEditor::createSqlInsert() {
     // Artikel Id Setzen
     if (m_ordersTable->setOrderId(oid)) {
       // Artikel Bestelliste speichern
-      QString articles_sql = getSqlArticleOrders();
+      QString articles_sql = getOrderTableSqlQuery();
       if (articles_sql.isEmpty()) {
         pushStatusMessage(tr("No SQL Articles exist!"));
         return;
       }
       if (sendSqlQuery(articles_sql)) {
         // Bestehende Artikelliste neu einlesen!
-        m_ordersTable->addArticles(queryOrderArticles(oid));
+        m_ordersTable->addArticles(queryArticles(oid));
         m_ordersTable->setWindowModified(false);
         pushStatusMessage(tr("Save Articles success!"));
       }
@@ -413,19 +415,20 @@ void OrdersEditor::createSqlInsert() {
 
 void OrdersEditor::generateDeliveryNumber(qint64 orderId) {
   QDate _date;
-  QString _sql("SELECT o_since FROM ");
-  _sql.append("inventory_orders WHERE o_id=");
+  QString _sql("SELECT o_since FROM inventory_orders WHERE o_id=");
   _sql.append(QString::number(orderId) + ";");
-  QSqlQuery _q = m_sql->query(_sql);
-  if (_q.size() == 1) {
-    _q.next();
-    _date = _q.value("o_since").toDate();
+  QSqlQuery _query = m_sql->query(_sql);
+  if (_query.size() == 1) {
+    _query.next();
+    _date = _query.value("o_since").toDate();
   }
   QString _dn; // DeliveryNumber
   _dn.append(QString::number(_date.year()));
   _dn.append(QString::number(_date.dayOfYear()));
   _dn.append(QString::number(orderId));
+  // Muss leer sein und wird nach dem Speichern eingefügt.
   m_tableData->setValue("o_delivery", QString());
+  // o_delivery_note_id
   setDataField(m_tableData->getProperties("o_delivery"), _dn);
 }
 
@@ -438,20 +441,24 @@ bool OrdersEditor::checkDeliveryNumber() {
   return true;
 }
 
-void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
+void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
+  if (oid < 1) {
+    qWarning("Missing Order Id for Order Payment.");
+    return;
+  }
+
   const QDate _date = QDate::currentDate();
-  QString _dn;
+  QString _dn; // DeliveryNumber
   _dn.append(QString::number(_date.year()));
   _dn.append(QString::number(_date.dayOfYear()));
-  _dn.append(QString::number(orderId));
+  _dn.append(QString::number(oid));
   // Siehe PostgreSQL::new_invoice_id()
-  QString _sql("SELECT o_invoice_id FROM ");
-  _sql.append("inventory_orders WHERE o_id=");
-  _sql.append(QString::number(orderId) + ";");
-  QSqlQuery _q = m_sql->query(_sql);
-  if (_q.size() == 1) {
-    _q.next();
-    qint64 _iid = _q.value("o_invoice_id").toInt();
+  QString _sql("SELECT o_invoice_id FROM inventory_orders WHERE o_id=");
+  _sql.append(QString::number(oid) + ";");
+  QSqlQuery _query = m_sql->query(_sql);
+  if (_query.size() == 1) {
+    _query.next();
+    qint64 _iid = _query.value("o_invoice_id").toInt();
     m_tableData->setValue("o_invoice_id", _iid);
     setDataField(m_tableData->getProperties("o_invoice_id"), _iid);
     m_tableData->setValue("o_delivery", _dn);
@@ -461,28 +468,29 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 orderId) {
   }
 }
 
-const OrdersEditor::IdsCheck OrdersEditor::getCheckEssentialsIds() {
-  IdsCheck t_check;
+const OrdersEditor::Idset OrdersEditor::identities() {
+  Idset t_ids;
   qint64 _oid = getSerialID("o_id");
   qint64 _cid = getSerialID("o_customer_id");
   qint64 _iid = getSerialID("o_invoice_id");
   if (_oid > 1 && _cid > 1 && _iid > 1) {
-    t_check.isNotValid = false;
-    t_check.or_id = _oid;
-    t_check.cu_id = _cid;
-    t_check.in_id = _iid;
-    return t_check;
+    t_ids.isValid = true;
+    t_ids.or_id = _oid;
+    t_ids.cu_id = _cid;
+    t_ids.in_id = _iid;
+    return t_ids;
   }
 
   QString _m("<p>");
-  _m.append(tr("A Article can't inserted, if no Order-/Customer Id exists."));
+  _m.append(tr("New Article can not inserted.") + "\n");
+  _m.append(tr("When no Order, Invoice or Customer Id exists."));
   _m.append("</p><p>");
   _m.append(tr("Please save your your Order first."));
   _m.append("</p>");
   openNoticeMessage(_m);
 
-  t_check.isNotValid = true;
-  return t_check;
+  t_ids.isValid = false;
+  return t_ids;
 }
 
 AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
@@ -492,28 +500,12 @@ AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
     getInputEdit("o_vat_levels")->setValue(AntiquaCRM::SalesTax::TAX_NOT);
     return AntiquaCRM::SalesTax::TAX_NOT;
   }
-  int i = getDataValue("o_vat_levels").toInt();
-  return static_cast<AntiquaCRM::SalesTax>(i);
+  int _vat = getDataValue("o_vat_levels").toInt();
+  return static_cast<AntiquaCRM::SalesTax>(_vat);
 }
 
-int OrdersEditor::getSalesTaxValue(int index) {
-  int _vat = -1;
-  m_cfg->beginGroup("payment");
-  switch (static_cast<AntiquaCRM::ArticleType>(index)) {
-  case (AntiquaCRM::ArticleType::BOOK):
-    _vat = m_cfg->value("vat2").toInt();
-    break;
-
-  default:
-    _vat = m_cfg->value("vat1").toInt();
-    break;
-  };
-  m_cfg->endGroup();
-  return _vat;
-}
-
-int OrdersEditor::getSalesTaxType(int index) {
-  switch (static_cast<AntiquaCRM::ArticleType>(index)) {
+int OrdersEditor::getSalesTaxType(int type) {
+  switch (static_cast<AntiquaCRM::ArticleType>(type)) {
   case (AntiquaCRM::ArticleType::BOOK):
     return 1; // VAT reduced
 
@@ -523,22 +515,20 @@ int OrdersEditor::getSalesTaxType(int index) {
 }
 
 const QList<AntiquaCRM::OrderArticleItems>
-OrdersEditor::queryOrderArticles(qint64 orderId) {
+OrdersEditor::queryArticles(qint64 oid) {
   QList<AntiquaCRM::OrderArticleItems> _list;
   QString sql("SELECT * FROM article_orders WHERE a_order_id=");
-  sql.append(QString::number(orderId) + ";");
-  QSqlQuery q = m_sql->query(sql);
-  if (q.size() > 0) {
-    QSqlRecord r = q.record();
-    while (q.next()) {
-      AntiquaCRM::OrderArticleItems article;
-      for (int c = 0; c < r.count(); c++) {
-        AntiquaCRM::ArticleOrderItem item;
-        item.key = r.field(c).name();
-        item.value = q.value(item.key);
-        article.append(item);
+  sql.append(QString::number(oid) + ";");
+  QSqlQuery _query = m_sql->query(sql);
+  if (_query.size() > 0) {
+    const QSqlRecord _record = _query.record();
+    while (_query.next()) {
+      AntiquaCRM::OrderArticleItems _items;
+      for (int i = 0; i < _record.count(); i++) {
+        const QString _fn = _record.field(i).name();
+        _items.append(addArticleItem(_fn, _query.value(_fn)));
       }
-      _list.append(article);
+      _list.append(_items);
     }
   }
   return _list;
@@ -549,50 +539,61 @@ OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
-bool OrdersEditor::addArticleToOrderTable(qint64 articleId) {
-  if (articleId < 1)
+bool OrdersEditor::addOrderTableArticle(qint64 aid) {
+  if (aid < 1)
     return false;
 
-  AntiquaCRM::ASqlFiles sqlFile("query_article_order_with_id");
-  if (sqlFile.openTemplate()) {
-    sqlFile.setWhereClause("i_id=" + QString::number(articleId));
-    QSqlQuery q = m_sql->query(sqlFile.getQueryContent());
-    if (q.size() > 0) {
-      q.next();
-      QSqlRecord r = q.record();
-      AntiquaCRM::OrderArticleItems items;
-      items.append(addArticleItem("a_order_id", getSerialID("o_id")));
-      items.append(
-          addArticleItem("a_customer_id", getSerialID("o_customer_id")));
-      for (int i = 0; i < r.count(); i++) {
-        const QSqlField _field = r.field(i);
-        const QMetaType _type = _field.metaType();
-        if (_type.id() == QMetaType::UnknownType) {
-          qWarning("Unknown Field:'%s' Metatype!", qPrintable(_field.name()));
+  /**
+   * Doppelte Einträge verhindern.
+   */
+  if (m_ordersTable->articleExists(aid)) {
+    pushStatusMessage(tr("Article: %1 already Exists!").arg(aid));
+    return false;
+  }
+
+  /**
+   * Auftragsnummer und Kundennummer sind erforderlich!
+   */
+  qint64 _oid = getSerialID("o_id");
+  qint64 _cid = getSerialID("o_customer_id");
+  if (_oid < 1 || _cid < 1) {
+    pushStatusMessage(tr("Missing required Identities!"));
+    return false;
+  }
+
+  /**
+   * @note Beim Hinzufügen muss das Feld a_payment_id=0 sein!
+   * @sa OrdersTableView::getSqlQuery
+   */
+  AntiquaCRM::ASqlFiles _tpl("query_article_order_with_id");
+  if (_tpl.openTemplate()) {
+    _tpl.setWhereClause("i_id=" + QString::number(aid));
+    QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
+    if (_q.size() > 0) {
+      _q.next();
+      QSqlRecord _record = _q.record();
+      AntiquaCRM::OrderArticleItems _items;
+      _items.append(addArticleItem("a_order_id", _oid));
+      _items.append(addArticleItem("a_customer_id", _cid));
+      for (int i = 0; i < _record.count(); i++) {
+        const QSqlField _field = _record.field(i);
+        if (_field.metaType().id() == QMetaType::UnknownType) {
+          qWarning("Unknown Metatype for '%s'!", qPrintable(_field.name()));
         }
-        items.append(addArticleItem(_field.name(), _field.value()));
-        // NOTE: a_sell_price is not in SQL Query
-        if (_field.name() == "a_price")
-          items.append(addArticleItem("a_sell_price", _field.value()));
+        _items.append(addArticleItem(_field.name(), _field.value()));
       }
-      if (items.size() > 0) {
-        m_ordersTable->addArticle(items);
+      if (_items.size() > 0) {
+        m_ordersTable->addArticle(_items);
         return true;
       }
     }
-#ifdef ANTIQUA_DEVELOPEMENT
-    else {
-      qDebug() << Q_FUNC_INFO << m_sql->lastError();
-    }
-#endif
   }
-  pushStatusMessage(tr("Article: %1 not found or no stock!").arg(articleId));
+  pushStatusMessage(tr("Article: %1 not found or no stock!").arg(aid));
   return false;
 }
 
-const QString OrdersEditor::getSqlArticleOrders() {
-  IdsCheck _check = getCheckEssentialsIds();
-  if (_check.isNotValid)
+const QString OrdersEditor::getOrderTableSqlQuery() {
+  if (!identities().isValid)
     return QString();
 
   QStringList queries = m_ordersTable->getSqlQuery();
@@ -618,23 +619,25 @@ bool OrdersEditor::currentOrderStatus() {
           orderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
 }
 
-qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 customerId) {
-  QStringList _f("c_firstname");
-  _f << "c_lastname";
-  _f << "c_postalcode";
-  _f << "c_email_0";
-
+qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 cid) {
   QStringList _clause;
-  foreach (QString k, _f) {
-    QString v = obj.value(k).toString();
-    if (!v.isEmpty())
-      _clause << k + "='" + v + "'";
+  QStringList _fields("c_firstname");
+  _fields << "c_lastname";
+  _fields << "c_postalcode";
+  _fields << "c_email_0";
+  foreach (QString _f, _fields) {
+    const QString _v = obj.value(_f).toString();
+    if (_v.isEmpty())
+      continue;
+
+    _clause << _f + "='" + _v + "'";
   }
+  _fields.clear();
 
   // Search customer
   QString _sql("SELECT c_id FROM customers WHERE (");
-  if (customerId > 1) {
-    _sql.append("c_id=" + QString::number(customerId));
+  if (cid > 1) {
+    _sql.append("c_id=" + QString::number(cid));
   } else {
     _sql.append(_clause.join(" AND "));
     _sql.append(") OR (c_provider_import='");
@@ -643,11 +646,11 @@ qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 customerId) {
   }
   _sql.append(") ORDER BY c_id;");
 
-  QSqlQuery _q = m_sql->query(_sql);
-  if (_q.size() > 0) {
+  QSqlQuery _query = m_sql->query(_sql);
+  if (_query.size() > 0) {
     QList<qint64> _list;
-    while (_q.next()) {
-      _list << _q.value("c_id").toInt();
+    while (_query.next()) {
+      _list << _query.value("c_id").toInt();
     }
     if (_list.size() > 1)
       qWarning("Warning: Found more then one Customer!");
@@ -663,7 +666,7 @@ void OrdersEditor::setDefaultValues() {
   setDataField(m_tableData->getProperties("o_order_status"),
                m_tableData->getValue("o_order_status"));
 
-  // Einstelleunegn für Umsatzsteuer
+  // Einstellungen für Umsatzsteuer
   m_tableData->setValue("o_vat_levels", AntiquaCRM::SalesTax::TAX_INCL);
   setDataField(m_tableData->getProperties("o_vat_levels"),
                m_tableData->getValue("o_vat_levels"));
@@ -672,10 +675,6 @@ void OrdersEditor::setDefaultValues() {
                m_tableData->getValue("o_vat_country"));
 
   // Lieferdienst
-  // QPair<int, int> _t_ds = getDeliveryService(true);
-  // m_tableData->setValue("o_delivery_service", _t_ds.first);
-  // m_tableData->setValue("o_delivery_package", _t_ds.second);
-  m_tableData->setValue("o_delivery_send_id", "");
   m_tableData->setValue("o_delivery_add_price", false);
   setDataField(m_tableData->getProperties("o_delivery_add_price"),
                m_tableData->getValue("o_delivery_add_price"));
@@ -689,8 +688,8 @@ bool OrdersEditor::prepareCreateEntry() {
 }
 
 void OrdersEditor::setStatusProtection(bool b) {
-  o_payment_status->setEnabled(!b);
-  o_order_status->setEnabled(!b);
+  o_payment_status->setReadOnly(b);
+  o_order_status->setReadOnly(b);
 }
 
 void OrdersEditor::setSaveData() {
@@ -703,8 +702,6 @@ void OrdersEditor::setSaveData() {
 
 void OrdersEditor::setCheckLeaveEditor() {
   if (checkIsModified() || m_ordersTable->isWindowModified()) {
-    qDebug() << Q_FUNC_INFO << checkIsModified()
-             << m_ordersTable->isWindowModified();
     unsavedChangesPopup();
     return;
   }
@@ -741,7 +738,7 @@ void OrdersEditor::createPrintPaymentReminder() {
 }
 
 void OrdersEditor::openSearchInsertArticle() {
-  if (getCheckEssentialsIds().isNotValid)
+  if (!identities().isValid)
     return;
 
   OrderArticleDialog *d = new OrderArticleDialog(this);
@@ -752,7 +749,7 @@ void OrdersEditor::openSearchInsertArticle() {
   if (_aid < 1)
     return;
 
-  if (addArticleToOrderTable(_aid))
+  if (addOrderTableArticle(_aid))
     setWindowModified(true);
 
   d->deleteLater();
@@ -773,24 +770,22 @@ AntiquaCRM::OrderStatus OrdersEditor::orderStatus() {
   return static_cast<AntiquaCRM::OrderStatus>(_id);
 }
 
-bool OrdersEditor::addArticle(qint64 articleId) {
-  if (getCheckEssentialsIds().isNotValid)
+bool OrdersEditor::addArticle(qint64 aid) {
+  if (aid < 1)
     return false;
 
-  if (addArticleToOrderTable(articleId)) {
-    getInputEdit("o_delivery")->setWindowModified(true);
+  if (!identities().isValid)
+    return false;
+
+  if (addOrderTableArticle(aid))
     return true;
-  }
+
   return false;
 }
 
-bool OrdersEditor::openEditEntry(qint64 orderId) {
+bool OrdersEditor::openEditEntry(qint64 oid) {
   bool _retval = false;
-  if (orderId < 1)
-    return _retval;
-
-  const QString _oid_str = QString::number(orderId);
-  if (_oid_str.isEmpty())
+  if (oid < 1)
     return _retval;
 
   setInputFields();
@@ -801,32 +796,26 @@ bool OrdersEditor::openEditEntry(qint64 orderId) {
   if (!_tpl.openTemplate())
     return false;
 
-  _tpl.setWhereClause("o_id=" + _oid_str);
+  _tpl.setWhereClause("o_id=" + QString::number(oid));
 
-  QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
-  if (_q.size() != 0) {
-    QSqlRecord _r = _q.record();
-    _q.next();
+  QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
+  if (_query.size() != 0) {
+    const QSqlRecord _record = _query.record();
+    _query.next();
     // Standard Felder
-    foreach (QString key, inputFields) {
-      m_tableData->setValue(key, _q.value(_r.indexOf(key)));
+    foreach (QString k, inputFields) {
+      m_tableData->setValue(k, _query.value(_record.indexOf(k)));
     }
     // Kunden Daten
-    foreach (QString key, customInput) {
-      QSqlField _f = _r.field(key);
-      setDataField(_f, _q.value(_f.name()));
+    foreach (QString k, customInput) {
+      const QSqlField _field = _record.field(k);
+      setDataField(_field, _query.value(_field.name()));
     }
-
     // Bestehende Artikel Einkäufe mit orderId einlesen!
-    m_ordersTable->addArticles(queryOrderArticles(orderId));
+    m_ordersTable->addArticles(queryArticles(oid));
 
     setResetModified(customInput);
     _retval = true;
-  } else {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
-#endif
-    _retval = false;
   }
 
   if (_retval) {

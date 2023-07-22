@@ -4,6 +4,7 @@
 #include "orderstablemodel.h"
 
 #include <AntiquaInput>
+#include <QMetaType>
 
 #ifdef ANTIQUA_DEVELOPEMENT
 void __debug_article_items(AntiquaCRM::OrderArticleItems items) {
@@ -88,8 +89,13 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     }
   }
 
-  const QString _field = info.field();
   const QMetaType _type = buffer.metaType();
+  if (_type.id() == QMetaType::UnknownType) {
+    qWarning("Invalid MetaType:'%s'.", qPrintable(info.field()));
+    return QVariant();
+  }
+
+  // BEGIN::EditRole
   if (role == Qt::EditRole) {
     switch (_type.id()) {
     case QMetaType::Bool:
@@ -122,20 +128,21 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
     }
     };
   }
+  // END::EditRole
 
-  if (role != Qt::DisplayRole)
-    return buffer;
+  // BEGIN::DisplayRole
+  const QString _fname = info.field();
 
-  if (_field == "a_type") {
+  if (_fname == "a_type") {
     return articleType(buffer.toInt());
   }
 
-  if (_field == "a_tax") {
+  if (_fname == "a_tax") {
     TaxType _t = static_cast<TaxType>(buffer.toInt());
     return QString::number(taxValue(_t)) + "%";
   }
 
-  if (_field.contains("_price") || _field.contains("_cost")) {
+  if (_fname.contains("_price") || _fname.contains("_cost")) {
     return displayPrice(buffer.toDouble());
   }
 
@@ -171,12 +178,14 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   default:
     return buffer.toString();
   };
+  // END::DisplayRole
+
+  return QVariant();
 }
 
 bool OrdersTableModel::setData(const QModelIndex &index, const QVariant &value,
                                int role) {
-  Q_UNUSED(role);
-  if (!index.isValid())
+  if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
     return false;
 
   AntiquaCRM::OrderArticleItems _list = articles.value(index.row());
