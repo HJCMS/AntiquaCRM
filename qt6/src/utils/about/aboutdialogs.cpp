@@ -5,6 +5,7 @@
 #include "aboutantiquacrm.h"
 #include "aboutpostgresql.h"
 #include "aboutqrencode.h"
+#include "aboutdiscid.h"
 
 #include <AntiquaInput>
 #include <QApplication>
@@ -27,6 +28,9 @@ AboutDialogs::AboutDialogs(QWidget *parent) : QDialog{parent} {
 
   m_page2 = new AboutPostgreSQL(this);
   m_pages->insertWidget(2, m_page2);
+
+  m_page3 = new AboutDiscId(this);
+  m_pages->insertWidget(3, m_page3);
 
   layout->addWidget(m_pages);
 
@@ -55,6 +59,10 @@ int AboutDialogs::exec(AboutDialogs::Page page) {
     m_pages->setCurrentIndex(2);
     break;
 
+  case AboutDialogs::Page::MUSICBRAINZ:
+    m_pages->setCurrentIndex(3);
+    break;
+
   default:
     m_pages->setCurrentIndex(0);
   }
@@ -80,7 +88,7 @@ AboutMenu::AboutMenu(QWidget *parent) : QMenu{tr("About"), parent} {
   connect(ac_about_qt, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
 
   QAction *ac_about_qr = addAction("QRencode");
-  ac_about_qr->setIcon(AntiquaCRM::antiquaIcon("help-about"));
+  ac_about_qr->setIcon(AntiquaCRM::antiquaIcon("print-qrcode"));
   m_mapper->setMapping(ac_about_qr, AboutDialogs::Page::QRENCODE);
   connect(ac_about_qr, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
@@ -88,6 +96,11 @@ AboutMenu::AboutMenu(QWidget *parent) : QMenu{tr("About"), parent} {
   ac_about_sql->setIcon(QIcon(":/postgresql.png"));
   m_mapper->setMapping(ac_about_sql, AboutDialogs::Page::POSTGRESQL);
   connect(ac_about_sql, SIGNAL(triggered()), m_mapper, SLOT(map()));
+
+  QAction *ac_about_ldid = addAction("DiscID");
+  ac_about_ldid->setIcon(QIcon(":/libdicid.png"));
+  m_mapper->setMapping(ac_about_ldid, AboutDialogs::Page::MUSICBRAINZ);
+  connect(ac_about_ldid, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
   connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(openDialog(int)));
 }

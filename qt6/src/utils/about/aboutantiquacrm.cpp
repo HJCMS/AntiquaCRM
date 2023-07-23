@@ -4,11 +4,7 @@
 #include "aboutantiquacrm.h"
 
 AboutAntiquaCRM::AboutAntiquaCRM(QWidget *parent) : InfoWidget{parent} {
-  setInfoWidget();
-}
-
-void AboutAntiquaCRM::setInfoWidget() {
-  setInfoIcon(QIcon("://icons/antiqua.png"));
+  setInfoIcon(QIcon("://icons/antiquacrm.png"));
   QUrl url;
   url.setScheme("https");
   url.setHost("www.hjcms.de");

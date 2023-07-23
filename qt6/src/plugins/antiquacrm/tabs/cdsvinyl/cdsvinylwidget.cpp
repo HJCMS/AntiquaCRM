@@ -205,3 +205,7 @@ bool CDsVinylWidget::customAction(const QJsonObject &obj) {
 
   return false;
 }
+
+const QStringList CDsVinylWidget::acceptsCustomActions() const {
+  return QStringList({"open_article"});
+}

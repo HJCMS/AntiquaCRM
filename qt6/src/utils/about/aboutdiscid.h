@@ -6,16 +6,16 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_UTILS_ABOUTQRENCODE_H
-#define ANTIQUACRM_UTILS_ABOUTQRENCODE_H
+#ifndef ANTIQUACRM_UTILS_ABOUTDISCID_H
+#define ANTIQUACRM_UTILS_ABOUTDISCID_H
 
 #include "infowidget.h"
 
-class AboutQREncode final : public InfoWidget {
+class AboutDiscId final : public InfoWidget {
   Q_OBJECT
 
 public:
-  explicit AboutQREncode(QWidget *parent = nullptr);
+  explicit AboutDiscId(QWidget *parent = nullptr);
 };
 
-#endif // ANTIQUACRM_UTILS_ABOUTQRENCODE_H
+#endif // ANTIQUACRM_UTILS_ABOUTDISCID_H

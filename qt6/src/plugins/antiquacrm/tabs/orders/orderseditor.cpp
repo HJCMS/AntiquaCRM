@@ -220,7 +220,7 @@ bool OrdersEditor::sendSqlQuery(const QString &query) {
 
   if (_q.next()) {
     if (!_q.isNull("o_id")) {
-      qint64 _oid = _q.value("o_id").toInt();
+      qint64 _oid = _q.value("o_id").toLongLong();
       if (_oid < 1) {
         qWarning("SQL-Insert: get empty OrderID!");
         return false;
@@ -458,7 +458,7 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
   QSqlQuery _query = m_sql->query(_sql);
   if (_query.size() == 1) {
     _query.next();
-    qint64 _iid = _query.value("o_invoice_id").toInt();
+    qint64 _iid = _query.value("o_invoice_id").toLongLong();
     m_tableData->setValue("o_invoice_id", _iid);
     setDataField(m_tableData->getProperties("o_invoice_id"), _iid);
     m_tableData->setValue("o_delivery", _dn);
@@ -661,23 +661,32 @@ qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 cid) {
 }
 
 void OrdersEditor::setDefaultValues() {
-  // Status
+  // Order Status
   m_tableData->setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
   setDataField(m_tableData->getProperties("o_order_status"),
-               m_tableData->getValue("o_order_status"));
+               AntiquaCRM::OrderStatus::STARTED);
 
-  // Einstellungen für Umsatzsteuer
+  // Payment Status
+  m_tableData->setValue("o_payment_status", AntiquaCRM::OrderPayment::NOTPAID);
+  setDataField(m_tableData->getProperties("o_payment_status"),
+               AntiquaCRM::OrderPayment::NOTPAID);
+
+  // VAT Settings
   m_tableData->setValue("o_vat_levels", AntiquaCRM::SalesTax::TAX_INCL);
   setDataField(m_tableData->getProperties("o_vat_levels"),
-               m_tableData->getValue("o_vat_levels"));
-  m_tableData->setValue("o_vat_country", QString("XX"));
-  setDataField(m_tableData->getProperties("o_vat_country"),
-               m_tableData->getValue("o_vat_country"));
+               AntiquaCRM::SalesTax::TAX_INCL);
 
-  // Lieferdienst
+  // Country
+  m_tableData->setValue("o_vat_country", QString("XX"));
+  setDataField(m_tableData->getProperties("o_vat_country"), QString("XX"));
+
+  // Delivery Service
   m_tableData->setValue("o_delivery_add_price", false);
-  setDataField(m_tableData->getProperties("o_delivery_add_price"),
-               m_tableData->getValue("o_delivery_add_price"));
+  setDataField(m_tableData->getProperties("o_delivery_add_price"), false);
+
+  // Payment Method
+  setDataField(m_tableData->getProperties("o_payment_method"),
+               AntiquaCRM::CASH_ON_DELIVERY);
 }
 
 bool OrdersEditor::prepareCreateEntry() {

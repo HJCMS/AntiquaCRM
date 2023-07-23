@@ -13,6 +13,7 @@
 #include <QIcon>
 #include <QLabel>
 #include <QTextEdit>
+#include <QTextBrowser>
 #include <QUrl>
 #include <QWidget>
 
@@ -26,7 +27,7 @@ class InfoWidget : public QWidget {
 private:
   QLabel *lb_icon;
   QLabel *lb_title;
-  QTextEdit *lb_text;
+  QTextBrowser *lb_text;
   QLabel *lb_homepage;
 
 protected:
@@ -38,11 +39,6 @@ protected:
 
 public:
   explicit InfoWidget(QWidget *parent = nullptr);
-
-  /**
-   * @brief Set current Info Widget
-   */
-  virtual void setInfoWidget() = 0;
 };
 
 #endif // ANTIQUACRM_UTILS_ABOUTINFOWIDGET_H

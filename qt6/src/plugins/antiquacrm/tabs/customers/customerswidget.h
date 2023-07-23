@@ -53,6 +53,8 @@ public:
   const QString getTitle() const override;
 
   bool customAction(const QJsonObject &obj) override;
+
+  const QStringList acceptsCustomActions() const override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_CustomersWIDGET_H

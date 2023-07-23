@@ -148,19 +148,45 @@ void OrdersWidget::onEnterChanged() {
 const QString OrdersWidget::getTitle() const { return tr("Orders"); }
 
 bool OrdersWidget::customAction(const QJsonObject &obj) {
-  const QString _target = obj.value("TARGET").toString();
-  if (_target != "orders_tab")
+  if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 
-  const QString _action = obj.value("ACTION").toString();
-  if (_action == "create_order") {
-    int _customerId = obj.value("VALUE").toInt();
-    if (currentIndex() == 0)
-      setCurrentIndex(1);
+  // first call?
+  onEnterChanged();
 
-    return m_editorWidget->createNewOrder(_customerId);
+  if (currentIndex() != 0) {
+    popupWarningTabInEditMode();
+    return false;
   }
 
-  qDebug() << Q_FUNC_INFO << "UNKNOWN" << obj;
+  const QString _action = obj.value("ACTION").toString().toLower();
+  if (_action == "open_order") {
+    // Open Order
+    int _oid = obj.value("VALUE").toInt();
+    if (m_editorWidget->openEditEntry(_oid)) {
+      setCurrentIndex(1);
+      return true;
+    }
+  } else if (_action == "create_order") {
+    // Create New Order with Customer id
+    int _customerId = obj.value("VALUE").toInt();
+    if (m_editorWidget->createNewOrder(_customerId)) {
+      setCurrentIndex(1);
+      return true;
+    }
+  } else if (_action == "import_order") {
+    // Create Import Orders from Provider data.
+    if (m_editorWidget->createCustomEntry(obj)) {
+      setCurrentIndex(1);
+      return true;
+    }
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "Rejected" << obj;
+#endif
   return false;
+}
+
+const QStringList OrdersWidget::acceptsCustomActions() const {
+  return QStringList({"open_order", "create_order", "import_order"});
 }

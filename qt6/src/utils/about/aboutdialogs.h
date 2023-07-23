@@ -18,6 +18,7 @@
 class AboutAntiquaCRM;
 class AboutQREncode;
 class AboutPostgreSQL;
+class AboutDiscId;
 
 class AboutDialogs final : public QDialog {
   Q_OBJECT
@@ -27,13 +28,14 @@ private:
   AboutAntiquaCRM *m_page0;
   AboutQREncode *m_page1;
   AboutPostgreSQL *m_page2;
+  AboutDiscId *m_page3;
 
 public:
   enum Page {
     ANTIQUACRM = 0, // Antiqua CRM
     QRENCODE = 1,   // QREncode
     POSTGRESQL = 2, // PostgreSQL
-    QT6ABOUT = 3    // Qt
+    MUSICBRAINZ = 3 // DiscID
   };
   explicit AboutDialogs(QWidget *parent = nullptr);
   int exec() override;

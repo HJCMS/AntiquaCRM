@@ -4,11 +4,7 @@
 #include "aboutqrencode.h"
 
 AboutQREncode::AboutQREncode(QWidget *parent) : InfoWidget{parent} {
-  setInfoWidget();
-}
-
-void AboutQREncode::setInfoWidget() {
-  setInfoIcon(QIcon("://icons/filetypes.png"));
+  setInfoIcon(QIcon("://libqrencode.png"));
   QUrl url;
   url.setScheme("https");
   url.setHost("github.com");

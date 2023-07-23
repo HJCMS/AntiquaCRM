@@ -110,7 +110,7 @@ bool TabsEditor::isInputField(const QString &name) {
 qint64 TabsEditor::getSerialID(const QString &name) {
   AntiquaCRM::AInputWidget *obj = getInputEdit(name);
   if (obj != nullptr)
-    return obj->getValue().toInt();
+    return obj->getValue().toLongLong();
 
   return -1;
 }

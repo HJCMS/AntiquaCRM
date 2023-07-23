@@ -3,7 +3,6 @@
 
 #include "acolorluminance.h"
 
-//#include <QDebug>
 #include <QRegularExpression>
 #include <QStringList>
 

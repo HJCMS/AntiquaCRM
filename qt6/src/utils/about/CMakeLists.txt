@@ -11,6 +11,7 @@ SET (ANTIQUACRM_INCLUDE_DIRS
 QT6_ADD_RESOURCES (_library_RC_FILES licences.qrc)
 
 SET (_library_FILES
+ aboutdiscid.txt
  aboutantiquacrm.txt
  aboutpostgresql.txt
  aboutqrencode.txt
@@ -20,6 +21,7 @@ SET (_library_FILES
 SET (_library_SOURCES
  aboutdialogs.cpp
  infowidget.cpp
+ aboutdiscid.cpp
  aboutantiquacrm.cpp
  aboutpostgresql.cpp
  aboutqrencode.cpp
@@ -28,6 +30,7 @@ SET (_library_SOURCES
 SET (_library_HEADERS
  aboutdialogs.h
  infowidget.h
+ aboutdiscid.h
  aboutantiquacrm.h
  aboutpostgresql.h
  aboutqrencode.h

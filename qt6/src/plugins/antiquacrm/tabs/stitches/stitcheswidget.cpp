@@ -206,3 +206,7 @@ bool StitchesWidget::customAction(const QJsonObject &obj) {
 
   return false;
 }
+
+const QStringList StitchesWidget::acceptsCustomActions() const {
+  return QStringList({"open_article"});
+}

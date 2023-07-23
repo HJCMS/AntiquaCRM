@@ -68,17 +68,17 @@ const QStringList ASqlDataQuery::columnNames() const {
 }
 
 const QSqlField ASqlDataQuery::getProperties(const QString &column) const {
-  QSqlField field;
+  QSqlField _field;
   if (!isValid())
-    return field;
+    return _field;
 
   for (int i = 0; i < p_record.count(); i++) {
     if (p_record.fieldName(i) == column) {
-      field = p_record.field(i);
+      _field = p_record.field(i);
       break;
     }
   }
-  return field;
+  return _field;
 }
 
 const QMetaType ASqlDataQuery::getType(const QString &column) const {
@@ -93,40 +93,40 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
   if (!isValid())
     return;
 
-  QSqlField field = getProperties(column);
-  if (!field.isValid())
+  const QSqlField _field = getProperties(column);
+  if (!_field.isValid())
     return;
 
-  QMetaType fieldType = field.metaType();
-  if (fieldType != value.metaType()) {
+  const QMetaType _type = _field.metaType();
+  if (_type != value.metaType()) {
     qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
-              qPrintable(column), fieldType.name(), value.metaType().name());
+             qPrintable(column), _type.name(), value.metaType().name());
   }
 
-  if (field.requiredStatus() == QSqlField::Required && value.isNull()) {
-    if (field.defaultValue().isNull()) {
+  if (_field.requiredStatus() == QSqlField::Required && value.isNull()) {
+    if (_field.defaultValue().isNull()) {
       qFatal("Invalid value! Field:'%s' is required and can't null.",
              qPrintable(column));
       return;
     }
-    p_data.insert(field.name(), field.defaultValue());
+    p_data.insert(column, _field.defaultValue());
     return;
   }
 
-  if (fieldType.id() == QMetaType::QString && field.length() > 0) {
-    if (value.toString().length() > field.length()) {
+  if (_type.id() == QMetaType::QString && _field.length() > 0) {
+    if (value.toString().length() > _field.length()) {
       qFatal("Invalid datasize! '%s' max length is '%d'", qPrintable(column),
-             field.length());
+             _field.length());
       return;
     }
   }
 
-  if (value.isNull() && p_data.contains(field.name())) {
-    p_data.remove(field.name());
+  if (value.isNull() && p_data.contains(column)) {
+    p_data.remove(column);
     return;
   }
 
-  p_data.insert(field.name(), value);
+  p_data.insert(column, value);
 }
 
 const QVariant ASqlDataQuery::getValue(const QString &column) {

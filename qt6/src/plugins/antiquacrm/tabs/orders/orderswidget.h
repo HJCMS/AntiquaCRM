@@ -48,7 +48,30 @@ public:
 
   const QString getTitle() const override;
 
+  /**
+   * @brief Open/Edit Inport actions
+   * @param obj - JsonObject
+   *
+   * Creates restricted custom operations for open/create and import Orders.
+   *
+   * @code
+   *  QJsonObject {
+   *    "TARGET": "orders_tab"
+   *    "ACTION": QString
+   *    "VALUE": QJsonValue()
+   *  }
+   * @endcode
+   *
+   * Acceptable "ACTION" operations:
+   * @li open_order    - Open order with OrderId
+   * @li create_order  - Create new order with Customer Id
+   * @li import_order  - Import Order from Provider
+   *
+   * @return acception
+   */
   bool customAction(const QJsonObject &obj) override;
+
+  const QStringList acceptsCustomActions() const override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_ORDERS_WIDGET_H

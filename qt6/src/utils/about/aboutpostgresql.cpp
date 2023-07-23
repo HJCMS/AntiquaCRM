@@ -4,11 +4,7 @@
 #include "aboutpostgresql.h"
 
 AboutPostgreSQL::AboutPostgreSQL(QWidget *parent) : InfoWidget{parent} {
-  setInfoWidget();
-}
-
-void AboutPostgreSQL::setInfoWidget() {
-  setInfoIcon(QIcon("://icons/postgresql.png"));
+  setInfoIcon(QIcon("://postgresql.png"));
   QUrl url;
   url.setScheme("https");
   url.setHost("www.postgresql.org");

@@ -267,13 +267,18 @@ public:
   TabsIndex::ViewPage currentView();
 
   /**
-   * @brief Create Custom Entries
+   * @brief Create Custom Action for Open/Edit Import.
    *
    * Reserved to create customized operation socket calls.
    *
    * @return Accepted or Rejected
    */
   virtual bool customAction(const QJsonObject &obj) = 0;
+
+  /**
+   * @brief List of Acceptable Custom Actions.
+   */
+  virtual const QStringList acceptsCustomActions() const = 0;
 
   /**
    * @brief Uniq Tab Index Identifier

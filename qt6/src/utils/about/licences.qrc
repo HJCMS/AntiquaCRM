@@ -1,9 +1,13 @@
 <!DOCTYPE RCC><RCC version="1.0">
  <qresource>
+  <file>aboutdiscid.txt</file>
   <file>aboutantiquacrm.txt</file>
   <file>aboutpostgresql.txt</file>
   <file>aboutqrencode.txt</file>
+  <file>libdicid.png</file>
   <file>postgresql.png</file>
   <file>qtlogo-64.png</file>
+  <file>libqrencode.png</file>
+  <file>libqrencode.svg</file>
  </qresource>
 </RCC>

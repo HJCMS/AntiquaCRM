@@ -269,15 +269,22 @@ bool CustomersWidget::customAction(const QJsonObject &obj) {
     return false;
   }
 
-  QString op = obj.value("ACTION").toString();
-  if (!obj.contains(op))
+  const QString _op = obj.value("ACTION").toString().toLower();
+  if (!obj.contains(_op))
     return false;
 
-  qint64 a_id = obj.value(op).toInt();
-  if (op == "open_article" && a_id > 0) {
-    openEntry(a_id);
+  qint64 _id = obj.value(_op).toInt();
+  if (!_op.startsWith("open_customer") && _id < 1)
+    return false;
+
+  if (m_editorWidget->openEditEntry(_id)) {
+    setCurrentIndex(1);
     return true;
   }
 
   return false;
+}
+
+const QStringList CustomersWidget::acceptsCustomActions() const {
+  return QStringList({"open_customer"});
 }

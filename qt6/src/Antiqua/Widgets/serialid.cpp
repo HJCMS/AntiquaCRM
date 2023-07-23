@@ -89,11 +89,9 @@ const QVariant SerialId::getValue() {
 }
 
 const QString SerialId::popUpHints() {
-  return tr("A valid Serial Id is important!");
+  return tr("Id field is required and can not empty.");
 }
 
-const QString SerialId::statusHints() {
-  return tr("is required and can not empty.");
-}
+const QString SerialId::statusHints() { return tr("a valid Id is important!"); }
 
 } // namespace AntiquaCRM

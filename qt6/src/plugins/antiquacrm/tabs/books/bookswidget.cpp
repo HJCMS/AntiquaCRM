@@ -203,3 +203,7 @@ bool BooksWidget::customAction(const QJsonObject &obj) {
 
   return false;
 }
+
+const QStringList BooksWidget::acceptsCustomActions() const {
+  return QStringList({"open_article"});
+}

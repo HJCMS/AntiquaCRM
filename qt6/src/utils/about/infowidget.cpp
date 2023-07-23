@@ -32,11 +32,12 @@ InfoWidget::InfoWidget(QWidget *parent) : QWidget{parent} {
   lb_title->setFont(ft);
   layout->addWidget(lb_title, 0, 1, 1, 1);
 
-  lb_text = new QTextEdit(this);
+  lb_text = new QTextBrowser(this);
   lb_text->setStyleSheet("QTextEdit {background:transparent;}");
+  lb_title->setTextFormat(Qt::RichText);
+  lb_text->setTextInteractionFlags(Qt::TextBrowserInteraction);
+  lb_text->setOpenExternalLinks(true);
   lb_text->setReadOnly(true);
-  lb_text->setTextInteractionFlags(Qt::TextSelectableByMouse |
-                                   Qt::TextSelectableByKeyboard);
   lb_text->setTabChangesFocus(false);
   lb_text->setFocusPolicy(Qt::NoFocus);
   layout->addWidget(lb_text, 1, 0, 1, 2);
@@ -64,12 +65,13 @@ void InfoWidget::setInfoTitle(const QString &title) {
 void InfoWidget::setInfoText(const QString &rc_basename) {
   QFile fp("://" + rc_basename + ".txt");
   if (fp.open(QFile::ReadOnly)) {
-    QString buffer;
+    QString buffer("<div>");
     QTextStream in(&fp);
     while (!in.atEnd()) {
-      buffer.append(in.readLine() + "\n");
+      buffer.append(in.readLine() + "<br>");
     }
-    lb_text->setPlainText(buffer);
+    buffer.append("</div>");
+    lb_text->setHtml(buffer);
   }
   fp.close();
 }

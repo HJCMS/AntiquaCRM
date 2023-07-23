@@ -111,19 +111,27 @@ void MainWindow::setViewTab(const QString &name) {
 }
 
 void MainWindow::setAction(const QString &name, const QJsonObject &data) {
-  if (!tabViewAction(name)) {
-    qWarning("Window: Invalid Action call!");
+  if (!tabViewAction(name) || !data.contains("TARGET")) {
+    qWarning("Window: Invalid Target call!");
+    return;
+  }
+
+  if (!data.contains("ACTION")) {
+    qWarning("Window: Missing Custom Action parameter!");
     return;
   }
 
   int _index = m_tabWidget->indexByName(name);
   AntiquaCRM::TabsIndex *_tab = m_tabWidget->tabIndex(_index);
   if (_tab == nullptr) {
+    qWarning("Window: Required Tab '%s' not open!", qPrintable(name));
     m_statusBar->showMessage("The required Tab is not opened!");
     return;
   }
 
-  if (_tab->customAction(data)) {
+  const QString _action = data.value("ACTION").toString().toLower();
+  if (_tab->acceptsCustomActions().contains(_action) &&
+      _tab->customAction(data)) {
     m_tabWidget->setCurrentIndex(_index);
     return;
   }
@@ -161,7 +169,7 @@ bool MainWindow::openWindow() {
     restoreGeometry(config->value("window/geometry").toByteArray());
 
   showNormal();
-  m_statusBar->showMessage(tr("Window opened"));
+  m_statusBar->showMessage(tr("Window opened"), 5000);
   return true;
 }
 

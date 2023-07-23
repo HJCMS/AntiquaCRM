@@ -10,14 +10,12 @@
 #define ANTIQUACRM_UTILS_ABOUTPOSTGRESQL_H
 
 #include "infowidget.h"
-#include <QWidget>
 
-class AboutPostgreSQL : public InfoWidget {
+class AboutPostgreSQL final : public InfoWidget {
   Q_OBJECT
 
 public:
   explicit AboutPostgreSQL(QWidget *parent = nullptr);
-  void setInfoWidget() override;
 };
 
 #endif // ANTIQUACRM_UTILS_ABOUTPOSTGRESQL_H
