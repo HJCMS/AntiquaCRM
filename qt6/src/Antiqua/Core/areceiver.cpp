@@ -34,9 +34,8 @@ bool AReceiver::createAction(const QJsonObject &obj) {
     return false;
   }
 
-  const QMap<QString, QMetaType> _operations = operations();
   const QString _action = obj.value("ACTION").toString();
-  if (!_operations.contains(_action)) {
+  if (_action.isEmpty()) {
     qWarning("Unknown Socket action, aborted by policy rules!");
     return false;
   }
@@ -69,24 +68,9 @@ bool AReceiver::createAction(const QJsonObject &obj) {
   const QString _target = obj.value("TARGET").toString();
   if (!_target.contains("_tab")) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Invalid Socket operation Target!" << Qt::endl
-             << "- Current:" << _target << Qt::endl
-             << "Check AntiquaCRM::AReceiver::operations() to find permitted!";
+    qDebug() << "Invalid Socket operation Target! : " << _target;
 #else
     qWarning("Unknown Socket operation target, aborted by policy rules!");
-#endif
-    return false;
-  }
-
-  // Check Meta-Type
-  if (_operations.value(_action).id() != _value.metaType().id()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Invalid Socket operation Type!" << Qt::endl
-             << "- Require:" << _operations.value(_action).id() << Qt::endl
-             << "- Current:" << _value.metaType().id() << Qt::endl
-             << "- Value:" << _value;
-#else
-    qWarning("Invalid Socket operation type, aborted by policy rules!");
 #endif
     return false;
   }
@@ -125,36 +109,6 @@ void AReceiver::getTransmitter() {
                qPrintable(_parser.errorString()));
     }
   }
-}
-
-const QMap<QString, QMetaType> AReceiver::operations() {
-  QMap<QString, QMetaType> _m;
-  const QMetaType _int64(QMetaType::LongLong);
-  const QMetaType _string(QMetaType::QString);
-
-  // Open order with orderId
-  _m.insert("open_order", _int64);
-
-  // Add Article to order with Article Id
-  _m.insert("add_article", _int64);
-
-  // Open Article with Article Id
-  _m.insert("open_article", _int64);
-
-  // Open Customer with Customer Id
-  _m.insert("open_customer", _int64);
-
-  // Create order action with customer Id
-  _m.insert("create_order", _int64);
-
-  // Send Customized Provider operation
-  _m.insert("provider_update", _int64);
-
-  // Messanger
-  _m.insert("status_message", _string);
-  _m.insert("popup_message", _string);
-
-  return _m;
 }
 
 }; // namespace AntiquaCRM

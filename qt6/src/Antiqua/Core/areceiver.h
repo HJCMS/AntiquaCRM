@@ -86,13 +86,6 @@ public:
    */
   explicit AReceiver(QObject *parent = nullptr);
   virtual ~AReceiver();
-
-  /**
-   * @brief Usable operations.
-   *
-   * This static function present a list of all allowed socket operations!
-   */
-  static const QMap<QString, QMetaType> operations();
 };
 
 }; // namespace AntiquaCRM

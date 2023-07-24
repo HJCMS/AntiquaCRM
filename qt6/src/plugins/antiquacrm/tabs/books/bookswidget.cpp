@@ -191,14 +191,13 @@ bool BooksWidget::customAction(const QJsonObject &obj) {
     return false;
   }
 
-  QString op = obj.value("ACTION").toString();
-  if (!obj.contains(op))
-    return false;
-
-  qint64 a_id = obj.value(op).toInt();
-  if (op == "open_article" && a_id > 0) {
-    openEntry(a_id);
-    return true;
+  const QString _action = obj.value("ACTION").toString();
+  if (_action == "open_article") {
+    qint64 _aid = obj.value("VALUE").toInt();
+    if (m_editorWidget->openEditEntry(_aid)) {
+      setCurrentIndex(1);
+      return true;
+    }
   }
 
   return false;

@@ -20,6 +20,10 @@
 #define CUSTOMERS_INTERFACE_NAME "customers"
 #endif
 
+#ifndef CUSTOMERS_INTERFACE_TABID
+#define CUSTOMERS_INTERFACE_TABID "customers_tab"
+#endif
+
 #ifndef CUSTOMERS_CONFIG_POINTER
 #define CUSTOMERS_CONFIG_POINTER QString("CONFIG_CUSTOMERS_TAB")
 #endif

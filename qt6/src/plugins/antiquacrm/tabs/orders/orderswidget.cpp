@@ -159,6 +159,11 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
     return false;
   }
 
+  /*
+  QJsonObject({
+
+  )
+  */
   const QString _action = obj.value("ACTION").toString().toLower();
   if (_action == "open_order") {
     // Open Order
@@ -169,13 +174,20 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
     }
   } else if (_action == "create_order") {
     // Create New Order with Customer id
-    int _customerId = obj.value("VALUE").toInt();
-    if (m_editorWidget->createNewOrder(_customerId)) {
+    int _cid = obj.value("VALUE").toInt();
+    if (_cid < 1)
+      return false;
+
+    if (m_editorWidget->createNewOrder(_cid)) {
       setCurrentIndex(1);
       return true;
     }
   } else if (_action == "import_order") {
     // Create Import Orders from Provider data.
+    int _cid = obj.value("VALUE").toInt();
+    if (_cid < 1)
+      return false;
+
     if (m_editorWidget->createCustomEntry(obj)) {
       setCurrentIndex(1);
       return true;

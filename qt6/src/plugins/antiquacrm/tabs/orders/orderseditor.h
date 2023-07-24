@@ -125,27 +125,50 @@ private:
 
   /**
    * @brief Artikel in die Auftrags Tabelle einfügen!
+   *
    * SQL Abfrage auf die Artikel-Nr. durchführen und einfügen wenn der Bestand
    * größer als 0 ist.
+   *
    * @see PgSQL::query_article_order_with_id.sql
    * @param aid = Article Id
    */
   bool addOrderTableArticle(qint64 aid);
 
   /**
-   * @brief Tabellen SQL-Abfragen Speichern ziehen.
+   * @brief SQL-Abfragen von Artikeltabelle entnehmen.
+   *
+   * Wird von \b createSqlInsert und \b createSqlUpdate verwendet und erweitert
+   * das SQL-Statement auf die Bestellten Artikel.
+   *
+   * @return SQL-Statements
    */
-  const QString getOrderTableSqlQuery();
+  const QString getOrderSqlArticleQuery();
 
   /**
-   * @brief Datenbank Status des Auftrags
-   * Wenn SQL o_payment_status="Geliefert" und o_order_status="Bezahlt".
+   * @brief SQL Datenbank Status des Auftrags
+   *
+   * Wird verwendet um zu Prüfen ob der SQL-Eintrag geschlossen ist.
+   *
+   * Prüft wiefolgt ob die SQL Tabellen Werte gesetzt sind:
+   * @li ASqlDataQuery:o_payment_status == AntiquaCRM::OrderPayment::PAYED
+   * @li ASqlDataQuery:o_order_status == AntiquaCRM::OrderStatus::DELIVERED
+   *
+   * Wenn beide Werte ok sind wird true zurück gegeben!
+   * @sa setStatusProtection
    */
   bool databaseOrderStatus();
 
   /**
-   * @brief Abfrage Status editierten Auftrags
-   * Wenn Input o_payment_status="Geliefert" und o_order_status="Bezahlt".
+   * @brief Eingabemasken Status des Auftrags
+   *
+   * Wird verwendet um zu Prüfen ob der Eintrag geschlossen werden soll.
+   *
+   * Prüft wiefolgt ob die Eingabemasken Werte gesetzt sind:
+   * @li AInputWidget::o_payment_status == AntiquaCRM::OrderPayment::PAYED
+   * @li AInputWidget::o_order_status == AntiquaCRM::OrderStatus::DELIVERED
+   *
+   * Wenn beide Werte ok sind wird true zurück gegeben!
+   * @sa setStatusProtection
    */
   bool currentOrderStatus();
 
@@ -153,50 +176,111 @@ private:
    * @brief Kundennummer Suchen/Prüfen
    * @param obj = Daten
    * @param cid = Kundennummer
+   * @code
+   *  QJsonObject{
+   *   c_firstname : QString
+   *   c_lastname : QString
+   *   c_postalcode : QString
+   *   c_email_0 : QString
+   *  }
+   * @endcode
+   * @return c_id
    */
   qint64 findCustomer(const QJsonObject &obj, qint64 cid = -1);
 
   /**
-   * @brief Setze Standard Werte für bestimmte Felder.
-   */
-  void setDefaultValues();
-
-  /**
-   * @brief Vorarbeiten für neuen Eintrag. Datenfelder leeren etc.
+   * @brief Vorarbeiten für neuen Eintrag.
+   *
+   * Eingabe masken leeren und AntiquaCRM::ASqlDataQuery neu einlesen.
    */
   bool prepareCreateEntry();
 
+  /**
+   * @brief Setze Standard Werte
+   *
+   * Es werden Standard Werte für Felder gesetzt die bei einem Neu erstellen
+   * noch nicht gesetzt sind aber immer Erforderlich sind!
+   */
+  void setDefaultValues();
+
 private Q_SLOTS:
   /**
-   * @brief OrderStatus und PaymentStatus versiegeln!
+   * @brief OrderStatus und PaymentStatus sperren?
    */
   void setStatusProtection(bool b = false);
 
+  /**
+   * @brief Speichern einleiten
+   *
+   * Prüfung auf "o_id" - wenn vorhanden wird \b createSqlUpdate ausgeführt
+   * andernfalls \b createSqlInsert.
+   */
   void setSaveData() override;
 
+  /**
+   * @brief Beenden Prüfung durchführen
+   *
+   * Prüft ob Fenster den Modified Status enthalten und gibt bei Bedarf ein
+   * Warnungs Fenster aus.
+   *
+   * Wenn Erflogreich wird @sa setFinalLeaveEditor aufgerufen.
+   */
   void setCheckLeaveEditor() override;
 
+  /**
+   * @brief Beenden und aufräumen
+   * @param force - Beenden erwingen bei Abbrechen/Ignorieren
+   *
+   * Führt eingige Aufräum arbeiten durch.
+   * @li Artikel Tabelle leeren!
+   * @li Eingabe masken leeren.
+   * @li Abschliessend - Gehe zurück zur Hauptsansicht
+   */
   void setFinalLeaveEditor(bool force = true) override;
 
+  /**
+   * @defgroup UNUSED
+   * @{
+   */
   void setStorageCompartments() override{/* unused */};
-
   void setLoadThumbnail(qint64) override{/* unused */};
-
   void setRemoveThumbnail(qint64) override{/* unused */};
-
   void setImportEditImage() override{/* unused */};
+  /**
+   * @}
+   */
 
+  /**
+   * @brief Dialog zum erstellen von E-Mail Nachrichten
+   * @param type - TEMPLATE_MACRO
+   */
   void createMailMessage(const QString &type);
 
+  /**
+   * @brief Dialog zum erstellen und Drucken eines Lieferscheins
+   */
   void createPrintDeliveryNote();
 
+  /**
+   * @brief Dialog zum erstellen und Drucken einer Rechnung
+   */
   void createPrintInvoiceNote();
 
+  /**
+   * @brief Dialog zum erstellen und Drucken einer Zahlungserinnerung
+   */
   void createPrintPaymentReminder();
 
+  /**
+   * @brief Dialog zum Suchen und Einfügen eines Artikels.
+   */
   void openSearchInsertArticle();
 
 public Q_SLOTS:
+  /**
+   * @brief Datenfelder zurücksetzen
+   * @sa importSqlResult
+   */
   void setRestore() override;
 
 public:
@@ -232,13 +316,28 @@ public:
 
   /**
    * @brief Auftrag mit Kunden numemr erstellen.
-   * @param customerId - Kunden Nummer
+   * @param cid - Kunden Nummer
+   * @sa prepareCreateEntry
+   * @sa setDefaultValues
    */
-  bool createNewOrder(qint64 customerId);
+  bool createNewOrder(qint64 cid);
 
   /**
    * @brief Auftrag aus Json Object erstellen
    * @param object - Datenstruktur
+   * @sa prepareCreateEntry
+   * @sa setDefaultValues
+   * @code
+   *  QJsonObject{
+   *    ACTION : QString  -- Aktions typ
+   *    PRORDER : QString -- Provider ID sql::pr_order
+   *    ARTICLES : QStringList -- Artikel Liste
+   *  }
+   * @endcode
+   *
+   * Liest bei einem Provider-Import aus Tabelle "provider_orders" mit "PRORDER"
+   * die aktuelle Bestell-/Kunden- und Artikeldaten aus.
+   * Fügt die ermittelten Daten in die Eingabefelder ein.
    */
   bool createCustomEntry(const QJsonObject &object) override;
 };

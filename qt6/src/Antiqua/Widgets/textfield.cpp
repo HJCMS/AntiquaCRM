@@ -36,7 +36,7 @@ void TextField::setValue(const QVariant &value) {
   }
 
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "TextField Requires type int but get:" << value;
+  qDebug() << "TextField Requires QString but get:" << objectName() << value;
 #endif
 }
 

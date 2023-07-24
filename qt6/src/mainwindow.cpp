@@ -123,6 +123,7 @@ void MainWindow::setAction(const QString &name, const QJsonObject &data) {
 
   int _index = m_tabWidget->indexByName(name);
   AntiquaCRM::TabsIndex *_tab = m_tabWidget->tabIndex(_index);
+  // qDebug() << Q_FUNC_INFO << name << _index;
   if (_tab == nullptr) {
     qWarning("Window: Required Tab '%s' not open!", qPrintable(name));
     m_statusBar->showMessage("The required Tab is not opened!");

@@ -58,7 +58,9 @@ public:
    *  QJsonObject {
    *    "TARGET": "orders_tab"
    *    "ACTION": QString
-   *    "VALUE": QJsonValue()
+   *    "CUSTOMER": qint64
+   *    "PRORDER": QString
+   *    "ARTICLES": QStringList
    *  }
    * @endcode
    *

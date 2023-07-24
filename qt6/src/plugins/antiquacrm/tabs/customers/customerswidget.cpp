@@ -1,6 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
+#include "customersconfig.h"
 #include "customerswidget.h"
 #include "customerseditor.h"
 #include "customerssearchbar.h"
@@ -12,7 +13,7 @@
 #include <QMessageBox>
 
 CustomersWidget::CustomersWidget(QWidget *parent)
-    : AntiquaCRM::TabsIndex{"customers_tab", parent} {
+    : AntiquaCRM::TabsIndex{CUSTOMERS_INTERFACE_TABID, parent} {
   setObjectName("customers_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("system-users"));
   setClosable(false);
@@ -270,14 +271,14 @@ bool CustomersWidget::customAction(const QJsonObject &obj) {
   }
 
   const QString _op = obj.value("ACTION").toString().toLower();
-  if (!obj.contains(_op))
+  if (!acceptsCustomActions().contains(_op))
     return false;
 
-  qint64 _id = obj.value(_op).toInt();
-  if (!_op.startsWith("open_customer") && _id < 1)
+  qint64 _cid = obj.value("VALUE").toInt();
+  if (_cid < 1)
     return false;
 
-  if (m_editorWidget->openEditEntry(_id)) {
+  if (m_editorWidget->openEditEntry(_cid)) {
     setCurrentIndex(1);
     return true;
   }

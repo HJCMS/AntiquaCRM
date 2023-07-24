@@ -472,5 +472,8 @@ bool CustomersEditor::createNewEntry() {
 
 bool CustomersEditor::createCustomEntry(const QJsonObject &object) {
   qDebug() << Q_FUNC_INFO << "TODO" << object;
+  // "ACTION", "open_customer");
+  // "TARGET", "customers_tab");
+  // "CUSTOMER", _cid);
   return true;
 }

@@ -48,7 +48,7 @@ protected:
    * @code
    *  In Table "inventory_books" the field prefix is "ib_*".
    *  This results in the following regular expression for the object search:
-   *    ^ib_[a-z_]+\\b$
+   *    "^ib_[a-z_]+[0-9]?\\b$"
    * @endcode
    * @note With PostgreSQL, field names are always in lower case!
    */
@@ -124,7 +124,7 @@ protected:
 
   /**
    * @brief get Input edit class list
-   * @param pcre - pattern
+   * @param pattern - Regular expression
    */
   QList<AntiquaCRM::AInputWidget *>
   getInputEditList(const QRegularExpression &pattern);

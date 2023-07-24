@@ -79,104 +79,105 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
     return QVariant();
 
-  QVariant buffer;
-  AntiquaCRM::ATableHeaderColumn info = headerColumn(index.column());
-  AntiquaCRM::OrderArticleItems list = articles.value(index.row());
-  for (int c = 0; c < list.size(); c++) {
-    if (list.at(c).key == info.field()) {
-      buffer = list.at(c).value;
+  QVariant _buffer;
+  AntiquaCRM::ATableHeaderColumn _info = headerColumn(index.column());
+  AntiquaCRM::OrderArticleItems _list = articles.value(index.row());
+  for (int c = 0; c < _list.size(); c++) {
+    if (_list.at(c).key == _info.field()) {
+      _buffer = _list.at(c).value;
       break;
     }
   }
+  _list.clear();
 
-  const QMetaType _type = buffer.metaType();
+  const QString _fname = _info.field();
+  const QMetaType _type = _buffer.metaType();
+#ifdef ANTIQUA_DEVELOPEMENT
   if (_type.id() == QMetaType::UnknownType) {
-    qWarning("Invalid MetaType:'%s'.", qPrintable(info.field()));
-    return QVariant();
+    qDebug() << Q_FUNC_INFO << "Invalid MetaType:" << _fname;
   }
+#endif
 
   // BEGIN::EditRole
   if (role == Qt::EditRole) {
     switch (_type.id()) {
     case QMetaType::Bool:
-      return buffer.toBool();
+      return _buffer.toBool();
 
     case QMetaType::Int:
     case QMetaType::Long:
     case QMetaType::ULong:
-      return buffer.toInt();
+      return _buffer.toInt();
 
     case QMetaType::LongLong:
     case QMetaType::ULongLong:
-      return buffer.toLongLong();
+      return _buffer.toLongLong();
 
     case QMetaType::Float:
     case QMetaType::Double:
-      return buffer.toDouble();
+      return _buffer.toDouble();
 
     case QMetaType::QDateTime:
-      return buffer.toDateTime();
+      return _buffer.toDateTime();
 
     default: {
       // FIXME Max. Zeichenlänge beim Titel ist 80!
-      QString str = buffer.toString();
-      if (str.length() > max_string_length) {
+      QString _str = _buffer.toString();
+      if (_str.length() > max_string_length) {
         int l = (max_string_length - 4);
-        return str.left(l) + "...";
+        return _str.left(l) + "...";
       }
-      return str;
+      return _str;
     }
     };
   }
   // END::EditRole
 
   // BEGIN::DisplayRole
-  const QString _fname = info.field();
-
   if (_fname == "a_type") {
-    return articleType(buffer.toInt());
+    return articleType(_buffer.toInt());
   }
 
   if (_fname == "a_tax") {
-    TaxType _t = static_cast<TaxType>(buffer.toInt());
+    const TaxType _t = static_cast<TaxType>(_buffer.toInt());
     return QString::number(taxValue(_t)) + "%";
   }
 
   if (_fname.contains("_price") || _fname.contains("_cost")) {
-    return displayPrice(buffer.toDouble());
+    return displayPrice(_buffer.toDouble());
   }
 
   switch (_type.id()) {
   case QMetaType::Bool:
-    return buffer.toBool() ? tr("Yes") : tr("No");
+    return _buffer.toBool() ? tr("Yes") : tr("No");
 
   case QMetaType::Int:
   case QMetaType::Long:
   case QMetaType::ULong: {
-    return buffer.toInt();
+    return _buffer.toInt();
   }
 
   case QMetaType::LongLong:
   case QMetaType::ULongLong:
-    return buffer.toLongLong();
+    return _buffer.toLongLong();
 
   case QMetaType::Float:
   case QMetaType::Double: {
-    return buffer.toDouble();
+    return _buffer.toDouble();
   }
 
   case QMetaType::QDate: {
-    QDate dt = buffer.toDate();
+    QDate dt = _buffer.toDate();
     return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   }
 
   case QMetaType::QDateTime: {
-    QDateTime dt = buffer.toDateTime();
+    QDateTime dt = _buffer.toDateTime();
     return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   }
 
   default:
-    return buffer.toString();
+    return _buffer.toString();
   };
   // END::DisplayRole
 

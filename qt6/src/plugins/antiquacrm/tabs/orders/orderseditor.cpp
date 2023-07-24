@@ -314,7 +314,7 @@ void OrdersEditor::createSqlUpdate() {
   }
 
   // Artikel Bestelliste aktualisieren
-  const QString _articleSql = getOrderTableSqlQuery();
+  const QString _articleSql = getOrderSqlArticleQuery();
   if (_articleSql.isEmpty()) {
     pushStatusMessage(tr("No SQL Articles exist!"));
     return;
@@ -398,7 +398,7 @@ void OrdersEditor::createSqlInsert() {
     // Artikel Id Setzen
     if (m_ordersTable->setOrderId(oid)) {
       // Artikel Bestelliste speichern
-      QString articles_sql = getOrderTableSqlQuery();
+      QString articles_sql = getOrderSqlArticleQuery();
       if (articles_sql.isEmpty()) {
         pushStatusMessage(tr("No SQL Articles exist!"));
         return;
@@ -592,7 +592,7 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
   return false;
 }
 
-const QString OrdersEditor::getOrderTableSqlQuery() {
+const QString OrdersEditor::getOrderSqlArticleQuery() {
   if (!identities().isValid)
     return QString();
 
@@ -660,6 +660,13 @@ qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 cid) {
   return -1;
 }
 
+bool OrdersEditor::prepareCreateEntry() {
+  setInputFields();
+  setResetModified(inputFields);
+  setEnabled(true);
+  return true;
+}
+
 void OrdersEditor::setDefaultValues() {
   // Order Status
   m_tableData->setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
@@ -676,24 +683,18 @@ void OrdersEditor::setDefaultValues() {
   setDataField(m_tableData->getProperties("o_vat_levels"),
                AntiquaCRM::SalesTax::TAX_INCL);
 
-  // Country
-  m_tableData->setValue("o_vat_country", QString("XX"));
-  setDataField(m_tableData->getProperties("o_vat_country"), QString("XX"));
+  // Delivery Country
+  const QString _co = QLocale::system().bcp47Name().toUpper();
+  m_tableData->setValue("o_vat_country", _co);
+  setDataField(m_tableData->getProperties("o_vat_country"), _co);
 
-  // Delivery Service
+  // Delivery Service add price
   m_tableData->setValue("o_delivery_add_price", false);
   setDataField(m_tableData->getProperties("o_delivery_add_price"), false);
 
   // Payment Method
   setDataField(m_tableData->getProperties("o_payment_method"),
-               AntiquaCRM::CASH_ON_DELIVERY);
-}
-
-bool OrdersEditor::prepareCreateEntry() {
-  setInputFields();
-  setResetModified(inputFields);
-  setEnabled(true);
-  return true;
+               AntiquaCRM::INVOICE_PREPAYMENT_RESERVED);
 }
 
 void OrdersEditor::setStatusProtection(bool b) {
@@ -843,8 +844,8 @@ bool OrdersEditor::createNewEntry() {
   return false;
 }
 
-bool OrdersEditor::createNewOrder(qint64 customerId) {
-  if (customerId < 1)
+bool OrdersEditor::createNewOrder(qint64 cid) {
+  if (cid < 1)
     return false;
 
   prepareCreateEntry();
@@ -853,7 +854,7 @@ bool OrdersEditor::createNewOrder(qint64 customerId) {
   // Nehme relevante Kundendaten
   AntiquaCRM::ASqlFiles _tpl("query_customer_new_order");
   if (_tpl.openTemplate()) {
-    _tpl.setWhereClause("c_id=" + QString::number(customerId));
+    _tpl.setWhereClause("c_id=" + QString::number(cid));
     QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
     if (_q.size() > 0) {
       QSqlRecord _r = _q.record();
@@ -873,8 +874,7 @@ bool OrdersEditor::createNewOrder(qint64 customerId) {
 }
 
 bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << Q_FUNC_INFO << "Experimental:" << object;
-
+  // qDebug() << Q_FUNC_INFO << "Experimental:" << object;
   const QString _action = object.value("ACTION").toString();
   if (_action.isEmpty())
     return false;
@@ -942,9 +942,6 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
           }
         }
       } else {
-#ifdef ANTIQUA_DEVELOPEMENT
-        qDebug() << Q_FUNC_INFO << m_sql->lastError();
-#endif
         qWarning("Using Provider Import!");
         foreach (QString key, customer.keys()) {
           QVariant val = customer.value(key).toVariant();
@@ -989,6 +986,14 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
       if (!article.contains("a_tax") && article.contains("a_type")) {
         article.insert("a_tax",
                        getSalesTaxType(article.value("a_type").toInt()));
+      }
+
+      // Add Missing Fields
+      if (!article.contains("a_refunds_cost")) {
+        article.insert("a_refunds_cost", 0.00);
+      }
+      if (!article.contains("a_modified")) {
+        article.insert("a_modified", QDateTime::currentDateTime().toString());
       }
 
       qint64 _article_id = article.value("a_article_id").toInt();
