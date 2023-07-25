@@ -2,9 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "aboutantiquacrm.h"
+#include "antiquaicon.h"
 
 AboutAntiquaCRM::AboutAntiquaCRM(QWidget *parent) : InfoWidget{parent} {
-  setInfoIcon(QIcon("://icons/antiquacrm.png"));
+  setInfoIcon(AntiquaCRM::qrcIcon("antiquacrm"));
   QUrl url;
   url.setScheme("https");
   url.setHost("www.hjcms.de");

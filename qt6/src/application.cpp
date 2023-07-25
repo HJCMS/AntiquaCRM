@@ -61,6 +61,8 @@ void Application::initIconTheme() {
 }
 
 void Application::initStyleTheme() {
+  Q_INIT_RESOURCE(application);
+
   // AntiquaCRM using Fusion theme
   setStyle(QStyleFactory::create("Fusion"));
 
@@ -155,7 +157,7 @@ void Application::applicationQuit() {
 }
 
 const QIcon Application::applIcon() {
-  return QIcon(QString("://icons/antiquacrm.png"));
+  return AntiquaCRM::qrcIcon("antiquacrm");
 }
 
 bool Application::isRunning() {

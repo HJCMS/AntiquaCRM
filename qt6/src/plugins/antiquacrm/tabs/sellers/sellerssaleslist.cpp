@@ -113,7 +113,7 @@ void SellersSalesList::updateOrderStatus(QTreeWidgetItem *item,
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, QIcon(":/icons/package-created.png"));
+    item->setIcon(1, AntiquaCRM::qrcIcon("package-created"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }
@@ -123,7 +123,7 @@ void SellersSalesList::updateOrderStatus(QTreeWidgetItem *item,
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, QIcon(":/icons/package-deliver.png"));
+    item->setIcon(1, AntiquaCRM::qrcIcon("package-deliver"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }

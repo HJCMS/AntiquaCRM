@@ -79,7 +79,5 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
-  Q_INIT_RESOURCE(application);
-
   return m_app->exec();
 }

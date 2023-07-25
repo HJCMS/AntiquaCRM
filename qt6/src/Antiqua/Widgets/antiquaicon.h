@@ -11,6 +11,7 @@
 
 #include <AGlobal>
 #include <QIcon>
+#include <QResource>
 #include <QString>
 
 namespace AntiquaCRM {
@@ -18,10 +19,21 @@ namespace AntiquaCRM {
 /**
  * @brief Icon from Theme or Application Resource file ...
  * @param name  - Iconname
- *
- * @note The QResource must initialed in application first!
+ * @warning The QResource must initialed in application first!
  *
  * Load qrc://icons/&lt;image&gt; from icon QResource.
+ *
+ * @ingroup IconTheme
+ */
+ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString &name) {
+  return QIcon(":/icons/" + name + ".png");
+}
+
+/**
+ * @brief Icon from Theme or Application Resource file ...
+ * @param name  - Iconname
+ *
+ * @note The QResource must initialed in application first!
  *
  * @ingroup IconTheme
  */
@@ -31,10 +43,8 @@ ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString &name) {
       qWarning("No Theme Icon:'%s'", qPrintable(name));
     }
   */
-  // Windows theme and Unix fallback ...
-  QIcon _back(":/icons/" + name + ".png");
   // Load from Unix Icon theme
-  return QIcon::fromTheme(name, _back);
+  return QIcon::fromTheme(name, qrcIcon(name));
 }
 
 } // namespace AntiquaCRM

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderarticledialog.h"
+#include "antiquaicon.h"
 
 #include <QLayout>
 
@@ -28,7 +29,7 @@ OrderArticleDialog::OrderArticleDialog(QWidget *parent) : QDialog{parent} {
   layout->addWidget(m_searchEdit, 1, 1, 1, 1);
 
   btn_search = new QPushButton(tr("Search"), this);
-  btn_search->setIcon(QIcon("://icons/action_search.png"));
+  btn_search->setIcon(AntiquaCRM::antiquaIcon("system-search"));
   layout->addWidget(btn_search, 1, 2, 1, 1);
 
   btn_box = new QDialogButtonBox(Qt::Horizontal, this);

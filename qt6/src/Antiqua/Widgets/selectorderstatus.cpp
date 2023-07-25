@@ -40,11 +40,11 @@ void SelectOrderStatus::initData() {
 
   // Bereit zur Abholung
   m_edit->insertItem(_c, tr("Fetchet"), AntiquaCRM::OrderStatus::FETCHET);
-  m_edit->setItemIcon(_c++, QIcon("://icons/package-created.png"));
+  m_edit->setItemIcon(_c++, AntiquaCRM::qrcIcon("package-created"));
 
   // Unterwegs
   m_edit->insertItem(_c, tr("Delivery"), AntiquaCRM::OrderStatus::DELIVERY);
-  m_edit->setItemIcon(_c++, QIcon("://icons/package-deliver.png"));
+  m_edit->setItemIcon(_c++, AntiquaCRM::qrcIcon("package-deliver"));
 
   // Geliefert
   m_edit->insertItem(_c, tr("Delivered"), AntiquaCRM::OrderStatus::DELIVERED);

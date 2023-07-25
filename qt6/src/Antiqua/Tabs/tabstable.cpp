@@ -82,8 +82,7 @@ void TabsTable::setQueryLimit(int limit) {
 }
 
 const QIcon TabsTable::getIcon(const QString &name) {
-  QIcon _back("://icons/" + name + ".png");
-  return QIcon::fromTheme(name, _back);
+  return AntiquaCRM::antiquaIcon(name);
 }
 
 int TabsTable::getQueryLimit() { return QueryLimit; }

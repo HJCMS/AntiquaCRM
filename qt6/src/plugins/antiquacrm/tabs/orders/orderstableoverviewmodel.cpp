@@ -94,10 +94,10 @@ const QIcon OrdersTableOverViewModel::getOrderStatusIcon(int status) const {
     return AntiquaCRM::antiquaIcon("action-edit-document");
 
   case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
-    return QIcon("://icons/package-created.png");
+    return AntiquaCRM::qrcIcon("package-created");
 
   case (AntiquaCRM::DELIVERY): /**< Unterwegs */
-    return QIcon("://icons/package-deliver.png");
+    return AntiquaCRM::qrcIcon("package-deliver");
 
   case (AntiquaCRM::DELIVERED): /**< Geliefert */
     return AntiquaCRM::antiquaIcon("dialog-ok-apply");

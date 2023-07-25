@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectdeliverservice.h"
+#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 
@@ -42,7 +43,7 @@ void SelectDeliverService::initData() {
   _sql.append(" ORDER BY d_id ASC;");
 
   m_edit->clear();
-  const QIcon _icon = QIcon(":/icons/package-deliver.png");
+  const QIcon _icon = AntiquaCRM::qrcIcon("package-deliver");
 
   AntiquaCRM::ASqlCore t_sql(this);
   QSqlQuery _q = t_sql.query(_sql);

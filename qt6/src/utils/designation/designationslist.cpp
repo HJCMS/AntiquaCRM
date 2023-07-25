@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "designationslist.h"
+#include "antiquaicon.h"
 
 #include <QDebug>
 #include <QIcon>
@@ -10,7 +11,7 @@ DesignationsListItem::DesignationsListItem(const DesignationData &data,
                                            DesignationsList *parent)
     : QListWidgetItem{parent, QListWidgetItem::Type} {
   setText(data.keyword);
-  setIcon(QIcon("://icons/folder_txt.png"));
+  setIcon(AntiquaCRM::antiquaIcon("view-list-text"));
   data_t = data;
 }
 

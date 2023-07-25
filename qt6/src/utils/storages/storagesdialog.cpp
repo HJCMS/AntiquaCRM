@@ -15,14 +15,15 @@ StoragesDialog::StoragesDialog(QWidget *parent) : QDialog{parent} {
 
   m_toolBar = new QToolBar(this);
   m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-  ac_add = m_toolBar->addAction(QIcon("://icons/db_add.png"), tr("new entry"));
+  ac_add = m_toolBar->addAction(AntiquaCRM::qrcIcon("database-add"),
+                                tr("New Entry"));
   ac_add->setStatusTip(tr("insert a new storage location"));
   m_toolBar->addSeparator();
   m_search = new QLineEdit(this);
-  m_search->setObjectName("search");
+  m_search->setObjectName("system-earch");
   m_toolBar->addWidget(m_search);
-  ac_search =
-      m_toolBar->addAction(QIcon("://icons/system-search.png"), tr("search"));
+  ac_search = m_toolBar->addAction(AntiquaCRM::antiquaIcon("system-search"),
+                                   tr("Search"));
   ac_search->setStatusTip(tr("search in table"));
   m_toolBar->addSeparator();
   layout->addWidget(m_toolBar);
@@ -38,10 +39,10 @@ StoragesDialog::StoragesDialog(QWidget *parent) : QDialog{parent} {
                                QDialogButtonBox::Close);
 
   QPushButton *btn_save = m_btnBox->button(QDialogButtonBox::Save);
-  btn_save->setIcon(QIcon("://icons/action-save.png"));
+  btn_save->setIcon(AntiquaCRM::qrcIcon("action-save"));
 
   QPushButton *btn_close = m_btnBox->button(QDialogButtonBox::Close);
-  btn_close->setIcon(QIcon("://icons/action-quit.png"));
+  btn_close->setIcon(AntiquaCRM::qrcIcon("action-quit"));
 
   layout->addWidget(m_btnBox);
 
