@@ -66,16 +66,33 @@ void PrintDeliveryNote::openPrintDialog() {
 }
 
 int PrintDeliveryNote::exec(const QJsonObject &options) {
-  if (options.contains("orderid")) {
-    pdfFileName = options.value("orderid").toString();
-    pdfFileName.append(".pdf");
+  qint64 o_id = options.value("order_id").toInt();
+  if (o_id < 1) {
+    qWarning("Missing Order ID.");
+    return QDialog::Rejected;
   }
-  qDebug() << Q_FUNC_INFO << "TODO Construct";
-  qint64 customerId = 381;
+
+  qint64 c_id = options.value("customer_id").toInt();
+  if (c_id < 1) {
+    qWarning("Missing Customer ID.");
+    return QDialog::Rejected;
+  }
+
+  const QString de_id = options.value("delivery_id").toString();
+  if (de_id.length() < 3) {
+    qWarning("Missing Delivery ID.");
+    return QDialog::Rejected;
+  }
+
+  qDebug() << Q_FUNC_INFO << options;
+
+  pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
+  pdfFileName.append(".pdf");
+
   page = new DeliveryNote(this);
-  QMap<QString, QVariant> _person = page->queryCustomerData(customerId);
+  QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
   page->setLetterHeading(tr("Delivery note"));
-  page->setRecipientAddress(_person.value("address").toString());
+  page->setRecipientAddress(_person.value("address").toString(), options);
   page->setLetterSubject(tr("Delivery note"));
   setPrintingPage(page);
 

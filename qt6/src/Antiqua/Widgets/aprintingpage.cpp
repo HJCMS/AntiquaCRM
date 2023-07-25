@@ -192,7 +192,8 @@ void APrintingPage::setLetterHeading(const QString &subject) {
   _cursor.insertText(subject);
 }
 
-void APrintingPage::setRecipientAddress(const QString &address) {
+void APrintingPage::setRecipientAddress(const QString &address,
+                                        const QJsonObject &options) {
   Q_CHECK_PTR(headingTable);
   int row = (headingTable->rows() - 1);
   // Anschrift
@@ -212,42 +213,50 @@ void APrintingPage::setRecipientAddress(const QString &address) {
     lines++;
   }
 
+  qint64 _oid = options.value("invoice_id").toInt();
+  qint64 _iid = options.value("order_id").toInt();
+  qint64 _cid = options.value("customer_id").toInt();
+  QString _did = options.value("delivery_id").toString();
+
   // Betreff Informationen
-  QMap<qint8, QString> title;
-  title.insert(0, tr("Invoice No."));
-  title.insert(1, tr("Order No."));
-  title.insert(2, tr("Costumer No."));
+  QMap<qint8, QString> _title;
+  _title.insert(0, tr("Invoice No."));
+  _title.insert(1, tr("Order No."));
+  _title.insert(2, tr("Costumer No."));
+  _title.insert(3, tr("Delivery No."));
 
-  QMap<qint8, QString> data;
-  data.insert(0, AntiquaCRM::AUtil::zerofill(001));
-  data.insert(1, AntiquaCRM::AUtil::zerofill(001));
-  data.insert(2, AntiquaCRM::AUtil::zerofill(381));
+  QMap<qint8, QString> _data;
+  _data.insert(0, AntiquaCRM::AUtil::zerofill(_iid, 10));
+  _data.insert(1, AntiquaCRM::AUtil::zerofill(_oid, 10));
+  _data.insert(2, AntiquaCRM::AUtil::zerofill(_cid, 10));
+  _data.insert(3, _did);
 
-  QFont _font = getFont("print_font_normal");
+  const QFont _font = getFont("print_font_normal");
   QTextTableCell infoCell = headingTable->cellAt(row, 1);
   infoCell.setFormat(charFormat(_font));
   _cursor = infoCell.firstCursorPosition();
 
-  QTextTable *m_info_table = _cursor.insertTable(data.size(), 3, // Size
+  QTextTable *m_info_table = _cursor.insertTable(_data.size(), 3, // Size
                                                  inlineTableFormat());
-  QMapIterator<qint8, QString> it(data);
+  const QFont _cell_font(getFont("print_font_small"));
+  QMapIterator<qint8, QString> it(_data);
   while (it.hasNext()) {
     it.next();
     // left
     QTextTableCell cl = m_info_table->cellAt(it.key(), 0);
-    cl.setFormat(charFormat(_font));
+    cl.setFormat(charFormat(_cell_font));
     _cursor = cl.firstCursorPosition();
     _cursor.setBlockFormat(alignRight());
-    _cursor.insertText(title[it.key()]);
+    _cursor.insertText(_title[it.key()]);
     // middle
     QTextTableCell cm = m_info_table->cellAt(it.key(), 1);
-    cm.setFormat(charFormat(_font));
+    cm.setFormat(charFormat(_cell_font));
     _cursor = cm.firstCursorPosition();
     _cursor.setBlockFormat(alignCenter());
     _cursor.insertText(":");
     // right
     QTextTableCell cr = m_info_table->cellAt(it.key(), 2);
-    cr.setFormat(charFormat(_font));
+    cr.setFormat(charFormat(_cell_font));
     _cursor = cr.firstCursorPosition();
     _cursor.setBlockFormat(alignRight());
     _cursor.insertText(it.value());

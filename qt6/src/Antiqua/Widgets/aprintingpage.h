@@ -121,7 +121,7 @@ public:
   /**
    * @brief insert reciepient address
    */
-  void setRecipientAddress(const QString &address);
+  void setRecipientAddress(const QString &address, const QJsonObject &options);
 
   /**
    * @brief insert letter subject and date

@@ -189,10 +189,11 @@ void PrintBookCard::openPrintDialog() {
 }
 
 int PrintBookCard::exec(const QJsonObject &options) {
-  if (!options.contains("article"))
+  if (!options.contains("article_id")) {
+    qWarning("Missing Article Id!");
     return QDialog::Rejected;
-
-  pdfFileName = options.value("article").toString();
+  }
+  pdfFileName = options.value("article_id").toString();
   pdfFileName.append(".pdf");
 
   page = new BookCardPage(options, this);

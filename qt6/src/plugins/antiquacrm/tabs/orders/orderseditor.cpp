@@ -475,11 +475,13 @@ const OrdersEditor::Idset OrdersEditor::identities() {
   qint64 _oid = getSerialID("o_id");
   qint64 _cid = getSerialID("o_customer_id");
   qint64 _iid = getSerialID("o_invoice_id");
+  QString _did = getDataValue("o_delivery").toString();
   if (_oid > 1 && _cid > 1 && _iid > 1) {
     t_ids.isValid = true;
     t_ids.or_id = _oid;
     t_ids.cu_id = _cid;
     t_ids.in_id = _iid;
+    t_ids.de_id = _did;
     return t_ids;
   }
 
@@ -747,13 +749,39 @@ void OrdersEditor::createMailMessage(const QString &caller) {
 }
 
 void OrdersEditor::createPrintDeliveryNote() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  QJsonObject _obj;
+  _obj.insert("order_id", _ids.or_id);
+  _obj.insert("customer_id", _ids.cu_id);
+  _obj.insert("invoice_id", _ids.in_id);
+  _obj.insert("delivery_id", _ids.de_id);
+
+  AntiquaCRM::PrintDeliveryNote *d = new AntiquaCRM::PrintDeliveryNote(this);
+  if (d->exec(_obj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Delivery note printed."));
+  }
+  d->deleteLater();
 }
 
 void OrdersEditor::createPrintInvoiceNote() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  QJsonObject _obj;
+  _obj.insert("order_id", _ids.or_id);
+  _obj.insert("customer_id", _ids.cu_id);
+  _obj.insert("invoice_id", _ids.in_id);
+  _obj.insert("delivery_id", _ids.de_id);
+
+  AntiquaCRM::PrintInvoice *d = new AntiquaCRM::PrintInvoice(this);
+  if (d->exec(_obj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Invoice printed."));
+  }
+  d->deleteLater();
 }
 
 void OrdersEditor::createPrintPaymentReminder() {

@@ -88,10 +88,11 @@ private:
    * Gleichzeitig ein Helfer die wichtigsten Id’s sofort abrufen zu können!
    */
   struct Idset {
-    bool isValid = false; /**< Prüfergebnis */
-    qint64 or_id = -1;    /**< Order Id */
-    qint64 cu_id = -1;    /**< Customer Id */
-    qint64 in_id = -1;    /**< Invoice Id */
+    bool isValid = false;      /**< Prüfergebnis */
+    qint64 or_id = -1;         /**< Order Id */
+    qint64 cu_id = -1;         /**< Customer Id */
+    qint64 in_id = -1;         /**< Invoice Id */
+    QString de_id = QString(); /**< Delivery Id */
   };
   const Idset identities();
 
