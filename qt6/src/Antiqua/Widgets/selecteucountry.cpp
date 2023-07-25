@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selecteucountry.h"
+#include "antiquaicon.h"
 
 #include <AntiquaCRM>
 #include <QPalette>
@@ -19,8 +20,8 @@ EUCountry::EUCountry(int ro, QString is, QString na) {
 // BEGIN::SelectEUCountryModel
 SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
     : QAbstractListModel{parent}, p_palette{parent->palette()},
-      euIcon(antiquaIcon("european-flag")),
-      nonIcon(antiquaIcon("dialog-warning")) {
+      euIcon(AntiquaCRM::antiquaIcon("european-flag")),
+      nonIcon(AntiquaCRM::antiquaIcon("dialog-warning")) {
   p_list.clear();
 }
 

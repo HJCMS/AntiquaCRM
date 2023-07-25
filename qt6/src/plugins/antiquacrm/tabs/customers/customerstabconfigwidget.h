@@ -10,9 +10,11 @@
 #define ANTIQUACRM_PLUGIN_CUSTOMERS_CONFIGWIDGET_H
 
 #include <AntiquaTabs>
-#include <AntiquaWidgets>
+#include <QJsonObject>
+#include <QWidget>
 
-class CustomersTabConfigWidget final : public AntiquaCRM::PluginConfigWidget {
+class ANTIQUACRM_LIBRARY CustomersTabConfigWidget final
+    : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 public Q_SLOTS:

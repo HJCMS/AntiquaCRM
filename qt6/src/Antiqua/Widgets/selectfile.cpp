@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectfile.h"
+#include "antiquaicon.h"
 
 #include <QDebug>
 #include <QFileDialog>

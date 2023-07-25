@@ -11,29 +11,27 @@
 
 namespace AntiquaCRM {
 
-#ifndef ANTIQUACRM_CONFIG_MAILLER_KEY
-#define ANTIQUACRM_CONFIG_MAILLER_KEY QString("dirs/mailappl")
-#endif
-
 MailCommand::MailCommand(QObject *parent) : QProcess{parent} {
   p_email = QUrl();
   p_subject = QString();
   p_body = QString();
   p_attachment = QString();
-  setMailProgramm();
 }
 
-void MailCommand::setMailProgramm() {
+bool MailCommand::initMailAppl() {
+  QFileInfo _info;
   AntiquaCRM::ASettings cfg(this);
-  QString config = cfg.value(ANTIQUACRM_CONFIG_MAILLER_KEY).toString();
-  QFileInfo fileCheck(config);
-  if (fileCheck.isExecutable()) {
-    qInfo("Using %s Mail-Application", qPrintable(fileCheck.filePath()));
-    setProgram(fileCheck.filePath());
-  } else {
-    qWarning("Missing Mail-Application!");
-    emit sendMessage("Missing Mailler Application!");
+  _info.setFile(cfg.value("dirs/appl_mailler").toString());
+
+  if (_info.isExecutable()) {
+    qInfo("Using Mail-Application '%s'", qPrintable(_info.filePath()));
+    setProgram(_info.filePath());
+    return true;
   }
+
+  qWarning("Missing Mail-Application!");
+  emit sendMessage("Missing Mailler Application!");
+  return false;
 }
 
 const QString MailCommand::urlEncode(const QString &str) const {
@@ -42,6 +40,8 @@ const QString MailCommand::urlEncode(const QString &str) const {
 }
 
 void MailCommand::sendMail() {
+  initMailAppl();
+
   QStringList cmd;
   if (program().contains("thunderbird", Qt::CaseInsensitive)) {
     cmd = prepare(THUNDERBIRD);
@@ -59,15 +59,6 @@ void MailCommand::sendMail() {
     terminate();
     return;
   }
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  QString info("Send eMail Command in Developement ignored!");
-  qDebug() << info << Qt::endl;
-  qDebug() << program() << Qt::endl;
-  qDebug() << cmd << Qt::endl;
-  qDebug() << info << Qt::endl;
-  return;
-#endif
 
   qint64 retval;
   setArguments(cmd);

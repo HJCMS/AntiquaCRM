@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "imagetreepathview.h"
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 #include "alineedit.h"
-#include "imagefilesource.h"
+#include "antiquaicon.h"
 
 #include <QDebug>
 #include <QFileDialog>

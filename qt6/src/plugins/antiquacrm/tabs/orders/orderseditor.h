@@ -252,9 +252,9 @@ private Q_SLOTS:
 
   /**
    * @brief Dialog zum erstellen von E-Mail Nachrichten
-   * @param type - TEMPLATE_MACRO
+   * @param caller - PgSQL::ui_template_body.tb_caller
    */
-  void createMailMessage(const QString &type);
+  void createMailMessage(const QString &caller);
 
   /**
    * @brief Dialog zum erstellen und Drucken eines Lieferscheins

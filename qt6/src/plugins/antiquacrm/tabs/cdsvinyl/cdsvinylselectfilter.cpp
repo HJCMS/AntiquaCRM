@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "cdsvinylselectfilter.h"
-
-#include <AntiquaInput>
+#include "antiquaicon.h"
 
 CDsVinylSelectFilter::CDsVinylSelectFilter(QWidget *parent)
     : QComboBox{parent} {

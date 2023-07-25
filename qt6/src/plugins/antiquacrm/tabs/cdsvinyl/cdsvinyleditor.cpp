@@ -180,7 +180,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   tbfLayout->setContentsMargins(0, 0, 0, 0);
   // Erfordert: http://musicbrainz.org/doc/libdiscid 64Bit
   btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
-  btn_cdread->setIcon(AntiquaCRM::antiquaIcon("action-search"));
+  btn_cdread->setIcon(AntiquaCRM::antiquaIcon("view-search"));
   btn_cdread->setToolTip(tr("Opens a Metadata readout Dialog for Music CD."));
   tbfLayout->addWidget(btn_cdread);
   tbfLayout->addStretch(1);

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectvat.h"
+#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 

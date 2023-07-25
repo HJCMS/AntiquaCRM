@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tabsmenu.h"
-
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 

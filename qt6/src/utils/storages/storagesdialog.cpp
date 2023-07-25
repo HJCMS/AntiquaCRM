@@ -22,7 +22,7 @@ StoragesDialog::StoragesDialog(QWidget *parent) : QDialog{parent} {
   m_search->setObjectName("search");
   m_toolBar->addWidget(m_search);
   ac_search =
-      m_toolBar->addAction(QIcon("://icons/action-search.png"), tr("search"));
+      m_toolBar->addAction(QIcon("://icons/system-search.png"), tr("search"));
   ac_search->setStatusTip(tr("search in table"));
   m_toolBar->addSeparator();
   layout->addWidget(m_toolBar);

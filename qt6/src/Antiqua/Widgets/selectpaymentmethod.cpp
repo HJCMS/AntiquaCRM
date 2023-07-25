@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectpaymentmethod.h"
+#include "antiquaicon.h"
 
 #include <QIcon>
 
@@ -61,7 +62,7 @@ void SelectPaymentMethod::initData() {
   m_edit->insertItem(c++, tr("Check - payment in advance"),
                      AntiquaCRM::CHECK_PREPAYMENT);
 
-  const QIcon _icon = antiquaIcon("view-loan-asset");
+  const QIcon _icon = AntiquaCRM::antiquaIcon("view-loan-asset");
   for (int i = 1; i < m_edit->count(); i++) {
     m_edit->setItemIcon(i, _icon);
   }

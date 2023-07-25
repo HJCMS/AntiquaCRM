@@ -3,6 +3,8 @@
 
 #include "orderarticledialog.h"
 
+#include <QLayout>
+
 OrderArticleDialog::OrderArticleDialog(QWidget *parent) : QDialog{parent} {
   setWindowTitle(tr("Search insert Article Id"));
   setMinimumWidth(450);

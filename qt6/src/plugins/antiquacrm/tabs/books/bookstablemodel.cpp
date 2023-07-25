@@ -2,9 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "bookstablemodel.h"
+#include "antiquaicon.h"
 #include "booksconfig.h"
-
-#include <AntiquaInput>
 
 BooksTableModel::BooksTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{BOOKS_SQL_TABLE_NAME, parent} {

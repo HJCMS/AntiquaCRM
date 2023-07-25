@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "tableview.h"
+#include "antiquaicon.h"
 #include "tableheader.h"
 
-#include <AntiquaInput>
 #include <QDateTime>
 #include <QDebug>
 #include <QFont>

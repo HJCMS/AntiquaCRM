@@ -12,7 +12,7 @@ SellersSalesList::SellersSalesList(QWidget *parent) : QTreeWidget{parent} {
 
   QTreeWidgetItem *m_header = headerItem();
   m_header->setText(0, tr("Orders"));
-  m_header->setIcon(0, AntiquaCRM::antiquaIcon("view-financial-transfer"));
+  m_header->setIcon(0, AntiquaCRM::antiquaIcon("view-task-child"));
   m_header->setText(1, tr("Date"));
   m_header->setIcon(1, AntiquaCRM::antiquaIcon("chronometer"));
   m_header->setText(2, tr("Buyer"));
@@ -180,7 +180,6 @@ void SellersSalesList::addOrder(const QString &pro, const TreeOrderItem &data) {
     QString tip(data.buyer + "\n" + dt.toString("ddd dd. MMMM yyyy hh:mm"));
     item->setText(0, data.id);
     item->setFont(0, font);
-    item->setIcon(0, AntiquaCRM::antiquaIcon("groups"));
     item->setToolTip(0, tip.trimmed());
     item->setText(1, setDateString(dt));
     item->setIcon(1, AntiquaCRM::antiquaIcon("dialog-warning"));

@@ -3,11 +3,11 @@
 
 #include "aboutdialogs.h"
 #include "aboutantiquacrm.h"
+#include "aboutdiscid.h"
 #include "aboutpostgresql.h"
 #include "aboutqrencode.h"
-#include "aboutdiscid.h"
+#include "antiquaicon.h"
 
-#include <AntiquaInput>
 #include <QApplication>
 #include <QLayout>
 #include <QPushButton>

@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "maildialog.h"
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 #include "private/mailattachments.h"
 #include "private/mailcommand.h"
 #include "private/mailtemplatekeys.h"
@@ -42,11 +42,11 @@ MailDialog::MailDialog(QWidget *parent) : QDialog{parent} {
   // row 3
   m_btnBox = new QDialogButtonBox(Qt::Horizontal, this);
   btn_email = new QPushButton(tr("Mail"), m_btnBox);
-  btn_email->setIcon(antiquaIcon("user-identity"));
+  btn_email->setIcon(AntiquaCRM::antiquaIcon("mail-send"));
   btn_email->setToolTip(tr("Start eMail command"));
   m_btnBox->addButton(btn_email, QDialogButtonBox::ActionRole);
   btn_close = new QPushButton(tr("Close"), m_btnBox);
-  btn_close->setIcon(antiquaIcon("action-quit"));
+  btn_close->setIcon(AntiquaCRM::antiquaIcon("dialog-close"));
   btn_close->setToolTip(tr("Closing this dialog"));
   m_btnBox->addButton(btn_close, QDialogButtonBox::RejectRole);
   layout->addWidget(m_btnBox);

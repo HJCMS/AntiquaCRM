@@ -179,11 +179,11 @@ bool CustomersTableView::setQuery(const QString &clause) {
 }
 
 const QString CustomersTableView::defaultWhereClause() {
-  QDate _d = QDate::currentDate();
+  int _year = QDate::currentDate().year();
   QString _sql("(");
-  _sql.append("DATE_PART('YEAR', c_changed)=" + QString::number(_d.year()));
+  _sql.append("DATE_PART('YEAR', c_changed)=" + QString::number(_year));
   _sql.append(" AND ");
-  _sql.append("DATE_PART('MONTH', c_changed)=" + QString::number(_d.month()));
+  _sql.append("DATE_PART('WEEK', c_changed)=DATE_PART('WEEK', CURRENT_DATE)");
   _sql.append(")");
   return _sql;
 }

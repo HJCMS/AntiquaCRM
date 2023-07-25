@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "imageviewtoolbar.h"
+#include "antiquaicon.h"
 
-#include <ASettings>
 #include <AntiquaInput>
 #include <QDialog>
 #include <QDirIterator>
@@ -57,7 +57,7 @@ ImageViewToolBar::ImageViewToolBar(QWidget *parent) : QFrame{parent} {
 
   // Search
   QPushButton *ac_search = new QPushButton(tr("Search"), lbar);
-  ac_search->setIcon(antiquaIcon("action-search"));
+  ac_search->setIcon(antiquaIcon("view-search"));
   ac_search->setToolTip(tr("Search picture with article number."));
   ac_search->setStatusTip(ac_search->toolTip());
   connect(ac_search, SIGNAL(clicked()), SLOT(searchArticleImage()));

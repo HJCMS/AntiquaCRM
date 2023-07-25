@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "aprintdialog.h"
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 #include "aprintingpage.h"
 
 #include <QLayout>

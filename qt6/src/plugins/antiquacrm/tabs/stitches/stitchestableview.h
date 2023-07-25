@@ -16,7 +16,8 @@
 
 class StitchesTableModel;
 
-class StitchesTableView final : public AntiquaCRM::TableView {
+class ANTIQUACRM_LIBRARY StitchesTableView final
+    : public AntiquaCRM::TableView {
   Q_OBJECT
 
 private:

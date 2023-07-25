@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "alineedit.h"
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 
 #include <ASettings>
 #include <QAbstractItemView>

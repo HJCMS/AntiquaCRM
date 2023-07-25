@@ -9,14 +9,11 @@
 #ifndef ANTIQUACRM_PLUGIN_SELLERS_PURCHASETABLE_H
 #define ANTIQUACRM_PLUGIN_SELLERS_PURCHASETABLE_H
 
+#include <AGlobal>
 #include <QContextMenuEvent>
-#include <QIcon>
 #include <QJsonValue>
-#include <QObject>
-#include <QStringList>
 #include <QTableWidget>
 #include <QTableWidgetItem>
-#include <QWidget>
 
 /**
  * @class PurchaseTable
@@ -34,11 +31,8 @@
  *  --------------------------------------------------------
  * @endcode
  */
-class PurchaseTable final : public QTableWidget {
+class ANTIQUACRM_LIBRARY PurchaseTable final : public QTableWidget {
   Q_OBJECT
-
-private:
-  const QIcon pic(const QString &name) const;
 
 private Q_SLOTS:
   void prepareOpenArticle();

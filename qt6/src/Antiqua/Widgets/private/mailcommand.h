@@ -27,7 +27,7 @@ private:
   QString p_body;
   QString p_attachment;
   QString p_signature;
-  void setMailProgramm();
+  bool initMailAppl();
 
 Q_SIGNALS:
   void sendMessage(const QString &message);

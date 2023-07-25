@@ -22,7 +22,7 @@ TabsStatusBar::TabsStatusBar(QWidget *parent) : QStatusBar{parent} {
   insertPermanentWidget(0, m_frame, 0);
 
   btn_refresh = new QPushButton(this);
-  btn_refresh->setIcon(antiquaIcon("action-reload"));
+  btn_refresh->setIcon(antiquaIcon("view-refresh"));
   btn_refresh->setText(tr("Update"));
   btn_refresh->setToolTip(tr("Update current View"));
   btn_refresh->setWhatsThis(tr("When pressed the table query will reloaded."));
@@ -92,7 +92,7 @@ QPushButton *TabsStatusBar::historyButton(const QString &title) {
 
 QPushButton *TabsStatusBar::defaultViewButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
-  btn->setIcon(AntiquaCRM::antiquaIcon("spreadsheet"));
+  btn->setIcon(AntiquaCRM::antiquaIcon("x-office-spreadsheet"));
   btn->setToolTip(tr("Push to load the Standard view."));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())

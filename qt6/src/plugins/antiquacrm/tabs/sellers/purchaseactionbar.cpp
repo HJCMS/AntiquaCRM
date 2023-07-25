@@ -21,7 +21,7 @@ PurchaseActionBar::PurchaseActionBar(QWidget *parent) : QStatusBar{parent} {
   addPermanentWidget(btn_create);
 
   btn_check = new QPushButton(tr("Check Articles"), this);
-  btn_check->setIcon(AntiquaCRM::antiquaIcon("action-search"));
+  btn_check->setIcon(AntiquaCRM::antiquaIcon("view-search"));
   QString info = tr("Create a search query to see if all items are available.");
   btn_check->setToolTip(info);
   addPermanentWidget(btn_check);

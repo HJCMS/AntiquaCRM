@@ -2,10 +2,10 @@
 // vim: set fileencoding=utf-8
 
 #include "designationsdialog.h"
+#include "antiquaicon.h"
 #include "designationedit.h"
 #include "designationslist.h"
 
-#include <AntiquaInput>
 #include <QDebug>
 #include <QLabel>
 #include <QPushButton>

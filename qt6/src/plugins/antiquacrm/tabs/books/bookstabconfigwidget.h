@@ -12,7 +12,8 @@
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 
-class BooksTabConfigWidget final : public AntiquaCRM::PluginConfigWidget {
+class ANTIQUACRM_LIBRARY BooksTabConfigWidget final
+    : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:

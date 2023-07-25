@@ -3,9 +3,9 @@
 
 #include "deliverservicelist.h"
 #include "deliveritem.h"
+#include "antiquaicon.h"
 
 #include <ASettings>
-#include <AntiquaInput>
 #include <QAction>
 #include <QHeaderView>
 #include <QJsonValue>

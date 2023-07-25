@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tablecontextmenu.h"
+#include "antiquaicon.h"
 
 #include <QDebug>
 
@@ -84,7 +85,7 @@ QAction *TableContextMenu::addCopyAction(const QString &title) {
 }
 
 QAction *TableContextMenu::addReloadAction(const QString &title) {
-  QAction *ac = addAction(antiquaIcon("action-reload"), title);
+  QAction *ac = addAction(antiquaIcon("view-refresh"), title);
   ac->setObjectName("ac_reload");
   connect(ac, SIGNAL(triggered()), SIGNAL(sendRefresh()));
   return ac;

@@ -62,7 +62,7 @@ MailAttachments::MailAttachments(QWidget *parent) : QFrame{parent} {
 
   m_btn = new QPushButton(this);
   m_btn->setText(tr("Attach file"));
-  m_btn->setIcon(antiquaIcon("action-search"));
+  m_btn->setIcon(antiquaIcon("view-search"));
   m_btn->setToolTip(tr("Search file to attach"));
   m_btn->setWhatsThis(
       tr("Open the file dialog and change the attachment path."));

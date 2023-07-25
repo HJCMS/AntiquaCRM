@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "mailbutton.h"
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 
-#include <QDebug>
+#include <AntiquaCRM>
 #include <QIcon>
 
 namespace AntiquaCRM {

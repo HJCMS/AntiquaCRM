@@ -10,7 +10,6 @@
 #define ANTIQUACRM_PLUGIN_SELLERS_SALESTAB_H
 
 #include <AntiquaTabs>
-#include <AntiquaWidgets>
 #include <QTabWidget>
 
 class SellersSalesWidget;
@@ -20,6 +19,9 @@ class ANTIQUACRM_LIBRARY SellersSalesTab final : public QTabWidget {
 
 private:
   AntiquaCRM::TabsBar *m_tabsBar;
+
+private Q_SLOTS:
+  void setTabClosed(int);
 
 public:
   explicit SellersSalesTab(QWidget *parent = nullptr);

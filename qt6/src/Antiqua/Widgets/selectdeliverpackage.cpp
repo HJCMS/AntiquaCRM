@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectdeliverpackage.h"
+#include "antiquaicon.h"
 
 #include <QSizePolicy>
 

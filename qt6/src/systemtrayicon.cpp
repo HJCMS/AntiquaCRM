@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "systemtrayicon.h"
+#include "antiquaicon.h"
 
-#include <AntiquaInput>
 #include <QMenu>
 
 SystemTrayIcon::SystemTrayIcon(const QIcon &icon, QObject *parent)
@@ -11,13 +11,13 @@ SystemTrayIcon::SystemTrayIcon(const QIcon &icon, QObject *parent)
   setObjectName("antiquacrm_systemtray");
   setToolTip(tr("Database connected."));
 
+  const QIcon _fc = AntiquaCRM::antiquaIcon("view-fullscreen");
+
   QMenu *m_menu = new QMenu();
-  ac_show = m_menu->addAction(AntiquaCRM::antiquaIcon("window-fullscreen"),
-                              tr("Window show"));
-  ac_hide = m_menu->addAction(
-      AntiquaCRM::antiquaIcon("window-nofullscreen"), tr("Window hide"));
+  ac_show = m_menu->addAction(_fc, tr("Window show"));
+  ac_hide = m_menu->addAction(_fc, tr("Window hide"));
   m_menu->addSeparator();
-  ac_quit = m_menu->addAction(AntiquaCRM::antiquaIcon("action-quit"),
+  ac_quit = m_menu->addAction(AntiquaCRM::antiquaIcon("dialog-close"),
                               tr("Application Quit"));
   setContextMenu(m_menu);
 

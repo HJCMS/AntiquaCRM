@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "iconthemes.h"
+#include "antiquaicon.h"
 
 #include <QDir>
 #include <QFileInfo>

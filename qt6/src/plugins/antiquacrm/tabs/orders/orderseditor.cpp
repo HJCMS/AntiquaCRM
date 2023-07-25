@@ -8,6 +8,8 @@
 #include "orderscustomerinfo.h"
 #include "orderstableview.h"
 
+#include <AntiquaMail>
+#include <AntiquaPrinting>
 #include <QLayout>
 
 OrdersEditor::OrdersEditor(QWidget *parent)
@@ -481,13 +483,11 @@ const OrdersEditor::Idset OrdersEditor::identities() {
     return t_ids;
   }
 
-  QString _m("<p>");
-  _m.append(tr("New Article can not inserted.") + "\n");
-  _m.append(tr("When no Order, Invoice or Customer Id exists."));
-  _m.append("</p><p>");
-  _m.append(tr("Please save your your Order first."));
-  _m.append("</p>");
-  openNoticeMessage(_m);
+  const QString _msg =
+      tr("<b>Operation execution rejected!</b><p>Missing required Order-, "
+         "Invoice- or Customer Number.</p><p>Please save your current Order "
+         "first and make sure that all required fields available.</p>");
+  openNoticeMessage(_msg);
 
   t_ids.isValid = false;
   return t_ids;
@@ -727,9 +727,23 @@ void OrdersEditor::setFinalLeaveEditor(bool force) {
   emit sendLeaveEditor(); // Zurück zur Hauptsansicht
 }
 
-void OrdersEditor::createMailMessage(const QString &type) {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO" << type;
+void OrdersEditor::createMailMessage(const QString &caller) {
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  QJsonObject _obj;
+  _obj.insert("tb_tab", "ORDERS");
+  _obj.insert("tb_caller", caller);
+  _obj.insert("CRM_CUSTOMER_ID", _ids.cu_id);
+  _obj.insert("CRM_INVOICE_ID", _ids.in_id);
+  _obj.insert("CRM_ORDER_ID", _ids.or_id);
+
+  AntiquaCRM::MailDialog *d = new AntiquaCRM::MailDialog(this);
+  if (d->exec(_obj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Mail Message done!"));
+  }
+  d->deleteLater();
 }
 
 void OrdersEditor::createPrintDeliveryNote() {

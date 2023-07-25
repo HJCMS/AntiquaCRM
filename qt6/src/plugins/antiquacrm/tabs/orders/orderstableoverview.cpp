@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderstableoverview.h"
+#include "ordersconfig.h"
 #include "orderstableoverviewmodel.h"
 
 #include <AntiquaCRM>
@@ -52,7 +53,7 @@ void OrdersTableOverView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->addOpenAction(tr("Open order"));
   m_menu->addCopyAction(tr("Copy Order Id"));
   QAction *ac_customer = m_menu->addOrderAction(tr("View Customer"));
-  ac_customer->setIcon(AntiquaCRM::antiquaIcon("user-group"));
+  ac_customer->setIcon(AntiquaCRM::antiquaIcon("system-users"));
   m_menu->addUndoAction(tr("Create a return from this order."));
   m_menu->addReloadAction(tr("Update"));
   connect(m_menu,
@@ -102,7 +103,7 @@ void OrdersTableOverView::contextMenuAction(
 }
 
 void OrdersTableOverView::createOrderReturning(qint64 oid) {
-  qDebug() << Q_FUNC_INFO << oid;
+  qDebug() << Q_FUNC_INFO << "__TODO__" << oid;
   // ReturnOrder *d = new ReturnOrder(this);
   // if (d->exec(oid) == QDialog::Accepted) { setReloadView(); }
   // d->deleteLater();
@@ -154,11 +155,24 @@ void OrdersTableOverView::createSocketOperation(const QModelIndex &index) {
   if (_oid < 1)
     return;
 
-  QJsonObject obj;
-  obj.insert("ACTION", "open_entry");
-  obj.insert("TARGET", "customers_tab");
-  obj.insert("VALUE", QJsonValue(_oid));
-  emit sendSocketOperation(obj);
+  qint64 _cid = -1;
+  QString _sql("SELECT o_customer_id FROM " + ORDERS_SQL_TABLE_NAME);
+  _sql.append(" WHERE o_id=" + QString::number(_oid) + ";");
+  QSqlQuery _query = AntiquaCRM::ASqlCore(this).query(_sql);
+  if (_query.size() > 0) {
+    _query.next();
+    _cid = _query.value("o_customer_id").toLongLong();
+  }
+  _query.clear();
+
+  if (_cid < 1)
+    return;
+
+  QJsonObject _obj;
+  _obj.insert("ACTION", "open_customer");
+  _obj.insert("TARGET", "customers_tab");
+  _obj.insert("VALUE", QJsonValue(_cid));
+  emit sendSocketOperation(_obj);
 }
 
 void OrdersTableOverView::setReloadView() {

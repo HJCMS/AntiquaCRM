@@ -2,9 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "printerbutton.h"
-#include "ainputwidget.h"
+#include "antiquaicon.h"
 
-#include <QDebug>
 #include <QIcon>
 #include <QMenu>
 

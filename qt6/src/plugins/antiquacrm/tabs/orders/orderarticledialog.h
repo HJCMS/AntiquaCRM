@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_ORDERARTICLEDIALOG_H
 #define ANTIQUACRM_PLUGIN_ORDERARTICLEDIALOG_H
 
-#include <AntiquaWidgets>
+#include <AntiquaCRM>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QLabel>
@@ -18,7 +18,7 @@
 #include <QStatusBar>
 #include <QWidget>
 
-class OrderArticleDialog final : public QDialog {
+class ANTIQUACRM_LIBRARY OrderArticleDialog final : public QDialog {
   Q_OBJECT
 
 private:

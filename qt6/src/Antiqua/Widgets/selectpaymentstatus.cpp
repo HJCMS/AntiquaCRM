@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectpaymentstatus.h"
+#include "antiquaicon.h"
 
 #include <QDebug>
 #include <QIcon>

@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchesselectfilter.h"
-
-#include <AntiquaInput>
+#include "antiquaicon.h"
 
 StitchesSelectFilter::StitchesSelectFilter(QWidget *parent)
     : QComboBox{parent} {

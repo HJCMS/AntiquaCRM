@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordsedit.h"
+#include "antiquaicon.h"
 #include "private/keywordlistview.h"
 
 #include <AntiquaCRM>
@@ -15,8 +16,7 @@
 
 namespace AntiquaCRM {
 
-KeywordsEdit::KeywordsEdit(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+KeywordsEdit::KeywordsEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   // ColumnList
   m_keywords = new KeywordListView(this);
   m_keywords->setFocusPolicy(Qt::NoFocus);
@@ -25,12 +25,12 @@ KeywordsEdit::KeywordsEdit(QWidget *parent)
 
   // Buttons
   QToolButton *ac_clear = new QToolButton(this);
-  ac_clear->setIcon(antiquaIcon("action-remove"));
+  ac_clear->setIcon(AntiquaCRM::antiquaIcon("action-remove"));
   ac_clear->setToolTip(tr("This button reset the Keyword field."));
   ac_clear->setFocusPolicy(Qt::NoFocus);
   layout->addWidget(ac_clear);
   QToolButton *ac_add = new QToolButton(this);
-  ac_add->setIcon(antiquaIcon("action-add"));
+  ac_add->setIcon(AntiquaCRM::antiquaIcon("action-add"));
   ac_add->setToolTip(tr("Keyword add"));
   ac_add->setFocusPolicy(Qt::NoFocus);
   layout->addWidget(ac_add);

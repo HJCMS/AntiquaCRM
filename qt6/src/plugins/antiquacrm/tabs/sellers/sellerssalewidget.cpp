@@ -154,7 +154,7 @@ bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
 }
 
 void SellersSalesWidget::pushCmd(const QJsonObject &action) {
-  qDebug() << Q_FUNC_INFO << action;
+  // qDebug() << Q_FUNC_INFO << action;
   AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(action))

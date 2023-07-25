@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "selectorderstatus.h"
+#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 

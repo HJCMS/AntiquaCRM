@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchestablemodel.h"
-
-#include <AntiquaInput>
+#include "antiquaicon.h"
 
 StitchesTableModel::StitchesTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{"inventory_prints", parent} {

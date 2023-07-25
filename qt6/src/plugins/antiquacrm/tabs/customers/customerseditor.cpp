@@ -453,6 +453,7 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
   }
 
   m_tabWidget->setCurrentIndex(0);
+  setResetModified(inputFields);
   return _status;
 }
 

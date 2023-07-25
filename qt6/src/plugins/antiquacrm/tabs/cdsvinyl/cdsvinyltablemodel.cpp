@@ -3,8 +3,7 @@
 
 #include "cdsvinylconfig.h"
 #include "cdsvinyltablemodel.h"
-
-#include <AntiquaInput>
+#include "antiquaicon.h"
 
 CDsVinylTableModel::CDsVinylTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{CDSVINYL_TABLE_NAME, parent} {

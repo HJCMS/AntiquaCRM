@@ -16,7 +16,8 @@
 
 class CustomersTableModel;
 
-class CustomersTableView final : public AntiquaCRM::TableView {
+class ANTIQUACRM_LIBRARY CustomersTableView final
+    : public AntiquaCRM::TableView {
   Q_OBJECT
 
 private:

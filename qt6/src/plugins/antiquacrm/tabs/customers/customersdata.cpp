@@ -159,7 +159,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   QPushButton *addressGen = new QPushButton(this);
   addressGen->setToolTip(tr("Generate Address with given Dataset."));
   addressGen->setText(tr("Generate Invoice address"));
-  addressGen->setIcon(AntiquaCRM::antiquaIcon("groups"));
+  addressGen->setIcon(AntiquaCRM::antiquaIcon("view-group"));
   row4->addWidget(addressGen, 0, 0, 1, 1);
 
   c_postal_address = new AntiquaCRM::TextField(this);

@@ -12,6 +12,7 @@
 #include <AGlobal>
 #include <QAction>
 #include <QIcon>
+#include <QJsonObject>
 #include <QList>
 #include <QMenu>
 #include <QMenuBar>

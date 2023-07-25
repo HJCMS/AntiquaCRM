@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "genderedit.h"
-
-#include <AntiquaCRM>
+#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 

@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "customersselectfilter.h"
-
-#include <AntiquaInput>
+#include "antiquaicon.h"
 
 CustomersSelectFilter::CustomersSelectFilter(QWidget *parent)
     : QComboBox{parent} {

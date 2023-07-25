@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "orderstablemodel.h"
+#include "antiquaicon.h"
 
-#include <AntiquaInput>
 #include <QMetaType>
 
 #ifdef ANTIQUA_DEVELOPEMENT

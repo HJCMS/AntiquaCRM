@@ -2,13 +2,12 @@
 // vim: set fileencoding=utf-8
 
 #include "purchasetable.h"
+#include "antiquaicon.h"
 
-#include <AntiquaWidgets>
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
 #include <QHeaderView>
-#include <QIcon>
 #include <QMenu>
 
 PurchaseTable::PurchaseTable(QWidget *parent) : QTableWidget{parent} {
@@ -23,20 +22,18 @@ PurchaseTable::PurchaseTable(QWidget *parent) : QTableWidget{parent} {
   horizontalHeader()->setStretchLastSection(true);
 }
 
-const QIcon PurchaseTable::pic(const QString &name) const {
-  return AntiquaCRM::antiquaIcon(name);
-}
-
 void PurchaseTable::contextMenuEvent(QContextMenuEvent *e) {
   QMenu *m = new QMenu("Actions", this);
-  QAction *ac_find =
-      m->addAction(pic("action-search"), tr("check article duration"));
+  QAction *ac_find = m->addAction(AntiquaCRM::antiquaIcon("view-search"),
+                                  tr("check article duration"));
   connect(ac_find, SIGNAL(triggered()), SIGNAL(sendCheckArticles()));
 
-  QAction *ac_copy = m->addAction(pic("edit-document"), tr("copy article id"));
+  QAction *ac_copy =
+      m->addAction(AntiquaCRM::antiquaIcon("edit-copy"), tr("copy article id"));
   connect(ac_copy, SIGNAL(triggered()), SLOT(copyIdToClipboard()));
 
-  QAction *ac_open = m->addAction(pic("action-add"), tr("open article id"));
+  QAction *ac_open = m->addAction(AntiquaCRM::antiquaIcon("action-add"),
+                                  tr("open article id"));
   connect(ac_open, SIGNAL(triggered()), SLOT(prepareOpenArticle()));
 
   m->exec(e->globalPos());
@@ -66,9 +63,11 @@ void PurchaseTable::setArticleStatus(const QString &article, bool available) {
       continue;
 
     if (available) {
-      cellItem->setData(Qt::DecorationRole, pic("action_ok"));
+      cellItem->setData(Qt::DecorationRole,
+                        AntiquaCRM::antiquaIcon("dialog-ok-apply"));
     } else {
-      cellItem->setData(Qt::DecorationRole, pic("action_cancel"));
+      cellItem->setData(Qt::DecorationRole,
+                        AntiquaCRM::antiquaIcon("edit-delete"));
       // reset quantity
       item(r, 2)->setData(Qt::EditRole, 0);
     }

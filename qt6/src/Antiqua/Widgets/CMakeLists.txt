@@ -130,6 +130,7 @@ SET (_library_SOURCES
 )
 
 SET (_library_HEADERS
+  antiquaicon.h
   acolorluminance.h
   acombobox.h
   adatetimeedit.h

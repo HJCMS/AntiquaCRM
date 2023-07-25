@@ -8,27 +8,26 @@
 OrdersSearchBar::OrdersSearchBar(QWidget *parent)
     : AntiquaCRM::TabsSearchBar{parent} {
 
-  const QIcon _icon = AntiquaCRM::antiquaIcon("action-search");
+  const QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
   const QString _tip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
 
   m_filter = new AntiquaCRM::AComboBox(this);
   m_filter->setToolTip(_tip);
-  m_filter->addItem(_icon, tr("Order Id"));            // o_id
   m_filter->addItem(_icon, tr("Customer or Company")); // customer
+  m_filter->addItem(_icon, tr("Order Id"));            // o_id
   m_filter->addItem(_icon, tr("Delivery Service"));    // d_name
   m_filter->addItem(_icon, tr("Provider"));            // o_provider_name
   m_filter->setSizeAdjustPolicy(QComboBox::AdjustToContents);
-  m_filter->setCurrentIndex(0);
   addWidget(m_filter);
 
   QToolButton *m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
-  m_icontb->setIcon(AntiquaCRM::antiquaIcon("action-search"));
+  m_icontb->setIcon(AntiquaCRM::antiquaIcon("view-search"));
   addWidget(m_icontb);
 
   m_searchInput = new AntiquaCRM::ALineEdit(this);
-  m_searchInput->setPlaceholderText(tr("Search Order id"));
-  m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
+  m_searchInput->setPlaceholderText(tr("Search Company or Customer"));
+  m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
   addWidget(m_searchInput);
 
   QLabel *m_area = new QLabel(this);
@@ -60,6 +59,8 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   connect(m_filter, SIGNAL(currentIndexChanged(int)), SLOT(setFilter(int)));
   connect(m_searchInput, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
+
+  m_filter->setCurrentIndex(0);
 }
 
 const QString OrdersSearchBar::getDatePart() {
@@ -98,15 +99,15 @@ void OrdersSearchBar::setSearch() {
 void OrdersSearchBar::setFilter(int index) {
   switch (index) {
   case 0: {
-    m_searchInput->setPlaceholderText(tr("Search Order id"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
-  } break;
-
-  case 1: {
     m_searchInput->setPlaceholderText(tr("Search Customer or Company"));
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+  } break;
+
+  case 1: {
+    m_searchInput->setPlaceholderText(tr("Search Order id"));
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
   } break;
 
   case 2: {
@@ -154,11 +155,7 @@ const QString OrdersSearchBar::getSearchStatement() {
   int _index = m_filter->currentIndex();
   QString _sql;
   switch (_index) {
-  case 0:
-    _sql = QString("o_id IN (%1)").arg(p_search);
-    break;
-
-  case 1: {
+  case 0: {
     QStringList sList({"c_company_name", "c_firstname", "c_lastname"});
     QStringList buffer;
     foreach (QString f, sList) {
@@ -167,6 +164,10 @@ const QString OrdersSearchBar::getSearchStatement() {
     _sql = "(" + buffer.join(" OR ") + ")";
     _sql.append(" AND " + getDatePart());
   } break;
+
+  case 1:
+    _sql = QString("o_id IN (%1)").arg(p_search);
+  break;
 
   case 2:
     _sql = QString("d_name ILIKE '%1%'").arg(p_search);

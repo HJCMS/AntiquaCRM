@@ -22,25 +22,6 @@
 
 namespace AntiquaCRM {
 
-/**
- * @ingroup IconTheme
- * @brief Icon from Theme or Application Resource file ...
- * Load qrc://icons/&lt;image&gt; from icon QResource.
- * @note The QResource must initialed in application first!
- * @param name  - Iconname
- * @return QIcon
- */
-ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString &name) {
-  QIcon _back(":/icons/" + name + ".png");
-  QIcon _icon = QIcon::fromTheme(name, _back);
-#ifdef ANTIQUA_DEVELOPEMENT
-  if (_icon.isNull()) {
-    qWarning("Missing required ThemeIcon(%s)!", qPrintable(name));
-  }
-#endif
-  return _icon;
-}
-
 class ALabel;
 
 /**

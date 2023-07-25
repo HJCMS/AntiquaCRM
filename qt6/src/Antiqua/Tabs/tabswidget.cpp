@@ -4,8 +4,7 @@
 #include "tabswidget.h"
 #include "tabsbar.h"
 #include "tabsindex.h"
-
-#include <AntiquaInput>
+#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 

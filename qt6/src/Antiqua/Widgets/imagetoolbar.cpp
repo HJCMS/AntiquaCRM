@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "imagetoolbar.h"
+#include "antiquaicon.h"
 
 #include <QIcon>
 #include <QLayout>
@@ -12,8 +13,8 @@ namespace AntiquaCRM {
 ImageToolBar::ImageToolBar(QWidget *parent) : QToolBar{parent} {
   setContentsMargins(0, 1, 0, 1);
 
-  QIcon img_icon = antiquaIcon("view-image");
-  QIcon del_icon = antiquaIcon("action-remove");
+  QIcon img_icon = AntiquaCRM::antiquaIcon("view-image");
+  QIcon del_icon = AntiquaCRM::antiquaIcon("action-remove");
 
   m_btnOpen = new QPushButton(img_icon, tr("Image Dialog"), this);
   m_btnOpen->setToolTip(tr("Dialog to Edit/Import Images."));

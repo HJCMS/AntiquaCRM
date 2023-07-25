@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "tabssearchbar.h"
+#include "antiquaicon.h"
 
 #include <ASettings>
-#include <AntiquaInput>
 
 namespace AntiquaCRM {
 
@@ -29,7 +29,7 @@ void TabsSearchBar::searchPatternChanged(int i) {
 
 QPushButton *TabsSearchBar::startSearchButton(const QString &text) {
   QPushButton *btn = new QPushButton(this);
-  btn->setIcon(getIcon("action-search"));
+  btn->setIcon(getIcon("system-search"));
   btn->setToolTip(tr("Push to start search."));
 
   if (text.isEmpty())
@@ -52,7 +52,7 @@ QCheckBox *TabsSearchBar::stockCheckBox(const QString &text) {
 
 QPushButton *TabsSearchBar::customSearchButton(const QString &text) {
   QPushButton *btn = new QPushButton(text, this);
-  btn->setIcon(getIcon("action-search"));
+  btn->setIcon(getIcon("system-search"));
   btn->setToolTip(tr("Custom queries"));
   btn->setStatusTip(tr("Click to open Dialog for custom queries."));
   connect(btn, SIGNAL(clicked()), SIGNAL(sendOpenCustomSearch()));

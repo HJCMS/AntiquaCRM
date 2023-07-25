@@ -92,12 +92,11 @@ public:
    * Sample code and description below:
    * @code
    *  QJsonObject _obj;
-   *  // ui_template_body.tb_tab
-   *  _obj.insert("tb_tab", "customer");
-   *  // ui_template_body.tb_caller
-   *  _obj.insert("tb_caller", "MAIL_ACTION_SIMPLE_MESSAGE");
-   *  // ui_template_keys.tk_key OR antiquacrm_company.ac_class
+   *  _obj.insert("tb_tab", "ORDERS");
+   *  _obj.insert("tb_caller", "MAIL_ACTION_SHIPPING_NOTICE");
    *  _obj.insert("CRM_CUSTOMER_ID", 1);
+   *  _obj.insert("CRM_ORDER_ID", 1);
+   *  _obj.insert("CRM_INVOICE_ID", 1);
    * @endcode
    *
    * The "tb_tab" variable is used to create relationships to the destination.

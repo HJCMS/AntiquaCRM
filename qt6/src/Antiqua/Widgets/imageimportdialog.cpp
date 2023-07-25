@@ -8,6 +8,7 @@
 #include "private/imagetreeview.h"
 #include "private/imageviewtoolbar.h"
 #include "splitter.h"
+#include "antiquaicon.h"
 
 #include <AntiquaCRM>
 #include <QDebug>
@@ -26,7 +27,7 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
     : QDialog{parent}, p_article_id{articleId}, p_category{category} {
   setObjectName("image_import_dialog");
   setWindowTitle(tr("Import Edit Source Images") + "[*]");
-  setWindowIcon(antiquaIcon("antiquacrm"));
+  setWindowIcon(AntiquaCRM::antiquaIcon("antiquacrm"));
   setMinimumSize(700, 500);
   setSizeGripEnabled(true);
   setContentsMargins(2, 2, 2, 0);

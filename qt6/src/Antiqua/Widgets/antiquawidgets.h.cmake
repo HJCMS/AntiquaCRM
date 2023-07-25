@@ -9,6 +9,10 @@
 #ifndef ANTIQUACRM_WIDGETS_LIB_H
 #define ANTIQUACRM_WIDGETS_LIB_H
 
+#ifndef ANTIQUACRM_WIDGETS_ANTIQUAICON_H
+#include "antiquaicon.h"
+#endif
+
 // AntiquaCRM::PluginConfigWidget
 #ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
 #include "apluginconfigwidget.h"
