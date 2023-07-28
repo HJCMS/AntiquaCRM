@@ -21,7 +21,7 @@ EUCountry::EUCountry(int ro, QString is, QString na) {
 SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
     : QAbstractListModel{parent}, p_palette{parent->palette()},
       euIcon(AntiquaCRM::antiquaIcon("european-flag")),
-      nonIcon(AntiquaCRM::antiquaIcon("dialog-warning")) {
+      dwIcon(AntiquaCRM::antiquaIcon("dialog-warning")) {
   p_list.clear();
 }
 
@@ -39,19 +39,20 @@ QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
     return QVariant();
 
   const EUCountry _country = p_list[index.row()];
+  const QString _bcp47(_country.iso);
   switch (role) {
   case (Qt::DisplayRole):
     return _country.name;
 
   case (Qt::EditRole):
   case (Qt::UserRole):
-    return _country.iso;
+    return _bcp47;
 
   case (Qt::ToolTipRole):
     return _country.name;
 
   case (Qt::DecorationRole):
-    return (_country.iso == "XX") ? nonIcon : euIcon;
+    return (_bcp47 == "XX" || _bcp47.isEmpty()) ? dwIcon : euIcon;
 
   case (Qt::BackgroundRole):
     return ((row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
@@ -75,8 +76,8 @@ bool SelectEUCountryModel::initModel() {
     QJsonArray _arr = obj.value("european_countries").toArray();
     beginInsertRows(createIndex(row, 0), 0, _arr.size() + 1);
     // No Selection (Fix sort order)
-    EUCountry _item(row++, "XX", tr("Non European Country"));
-    p_list.append(_item);
+    p_list.append(EUCountry(row++, QString(), tr("Without disclosures")));
+    p_list.append(EUCountry(row++, "XX", tr("Non European Country")));
     for (int i = 0; i < _arr.size(); i++) {
       QJsonObject item = _arr[i].toObject();
       EUCountry eu(row++, item.value("code").toString(),

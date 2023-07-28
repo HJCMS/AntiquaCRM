@@ -9,8 +9,9 @@
 #ifndef ANTIQUACRM_WIDGETS_PRINT_FORMAT_H
 #define ANTIQUACRM_WIDGETS_PRINT_FORMAT_H
 
-#include <ASettings>
+#include <AntiquaCRM>
 #include <QPrinterInfo>
+#include <QRegularExpression>
 #include <QTextEdit>
 #include <QWidget>
 #include <QtGui>
@@ -30,6 +31,7 @@ private:
     QPrinterInfo dinA4; /**< @brief Primary printer info */
     QPrinterInfo dinA6; /**< @brief Secundary printer info */
   };
+
   /**
    * @brief printer info class
    * Called with @ref getPrinterInfo.
@@ -38,12 +40,17 @@ private:
   PrinterInfo p_printerInfo;
 
   struct PageMargins {
+    qreal top = 10;    /**< @brief Header margin top  */
     qreal left = 20;   /**< @brief Document margin left */
     qreal right = 10;  /**< @brief Document margin right */
     qreal address = 6; /**< @brief Address margin in Letter window */
     qreal subject = 6; /**< @brief Subject margin top to Letter window */
-    qreal body = 10;   /**< @brief Body margin top to Subject */
   };
+
+  const QPen linePen = QPen(Qt::gray);
+  const QPen fontPen = QPen(Qt::black);
+
+  const QString toRichText(const QString &) const;
 
   /**
    * @brief load configuration settings and company data
@@ -51,7 +58,41 @@ private:
    */
   void initConfiguration();
 
+  /**
+   * @brief Inserts Document Header title and Attachment
+   */
+  void paintHeader(QPainter &painter);
+
+  /**
+   * @brief Inserts Document Recipient and Letter Window
+   */
+  void paintAddressBox(QPainter &painter);
+
+  /**
+   * @brief Inserts Document Identities
+   */
+  void paintIdentities(QPainter &painter);
+
+  /**
+   * @brief Inserts Document Subject and Date
+   */
+  void paintSubject(QPainter &painter);
+
+  /**
+   * @brief Inserts Document footer
+   */
+  void paintFooter(QPainter &painter);
+
+  /**
+   * @brief paint watermark and borders
+   * @short define DEBUG_DISPLAY_BORDERS before load this class
+   * if you want display painted borders
+   */
+  virtual void paintEvent(QPaintEvent *) override final;
+
 protected:
+  AntiquaCRM::ASqlCore *m_sql = nullptr;
+
   /**
    * @brief Fixed page size
    */
@@ -69,16 +110,14 @@ protected:
   PageMargins margin;
 
   /**
-   * @brief 1mm to point
-   * 1 mm = 2.8452755906 point (printer's)
-   * 1 point (printer's) = 0.3514598035 mm
-   */
-  const qreal points = 2.8452755906;
-
-  /**
    * @brief Company data, loaded by initConfiguration()
    */
   QHash<QString, QString> p_companyData;
+
+  /**
+   * @brief Primary Content data to fill
+   */
+  QJsonObject p_content_data;
 
   /**
    * @brief QTextDocument rootFrame
@@ -92,11 +131,44 @@ protected:
   QTextTable *headingTable;
 
   /**
-   * @brief paint watermark and borders
-   * @short define DEBUG_DISPLAY_BORDERS before load this class
-   * if you want display painted borders
+   * @brief 1mm to point
+   * 1 mm = 2.8452755906 point (printer's)
+   * 1 point (printer's) = 0.3514598035 mm
    */
-  virtual void paintEvent(QPaintEvent *) override;
+  const qreal points = 2.8452755906;
+
+  /**
+   * @brief Convert Millimeter to Points
+   * @param millimeter
+   */
+  qreal getPoints(int millimeter) const;
+
+  /**
+   * @brief get Page pressure Area Rect in points
+   * @note without margins!
+   */
+  const QRectF pointsRect() const;
+
+  /**
+   * @brief get Painting width() minus margins in points!
+   */
+  const QRectF paintArea() const;
+
+  /**
+   * @brief Letter Recipient Window (DIN 5008B) Position.
+   * @param left - start position from left in millimeter
+   */
+  const QRectF letterWindow(qreal left = 25.0) const;
+
+  /**
+   * @brief Border left in points
+   */
+  qreal borderLeft() const;
+
+  /**
+   * @brief Border right from left in points
+   */
+  qreal borderRight() const;
 
 public:
   /**
@@ -109,35 +181,27 @@ public:
   virtual ~APrintingPage();
 
   /**
-   * @brief layout of a page in a paged document
+   * @brief Borderless Page Layout for this Document
+   * @note We use a DIN A4 Portrait Layout.
    */
   const QPageLayout pageLayout() const;
 
   /**
-   * @brief initial dcoument letter heading
+   * @brief Create Document Body
+   * @param oid = Order Id
+   * @param cid = Customer Id
    */
-  void setLetterHeading(const QString &subject);
+  virtual void setBody(qint64 oid, qint64 cid) = 0;
 
   /**
-   * @brief insert reciepient address
+   * @brief SQL-Query Customer data
+   * @param cid - Customer Id
    */
-  void setRecipientAddress(const QString &address, const QJsonObject &options);
+  const QMap<QString, QVariant> queryCustomerData(qint64 cid);
 
   /**
-   * @brief insert letter subject and date
-   */
-  void setLetterSubject(const QString &subject);
-
-  /**
-   * @brief query Customer data
-   * @param cId - Customer Id
-   */
-  const QMap<QString, QVariant> queryCustomerData(qint64 cId);
-
-  /**
-   * @brief  call Printer Info for PageSize Id
-   * @param id
-   * @return
+   * @brief Call Printer Info for PageSize Id
+   * @param id - Default: Din A4 Portrait
    */
   const QPrinterInfo getPrinterInfo(QPageSize::PageSizeId id = QPageSize::A4);
 
@@ -147,14 +211,19 @@ public:
   const QPen penStyle() const;
 
   /**
-   * @brief Table border color
+   * @brief Brush for visible Borders
    */
   const QBrush borderBrush() const;
 
   /**
-   * @brief Standard text format for document content
+   * @brief Standard text format
    */
   const QTextCharFormat charFormat(const QFont &f, bool bolded = false);
+
+  /**
+   * @brief Body Text Block align left
+   */
+  const QTextBlockFormat bodyText();
 
   /**
    * @brief Text Block align right
@@ -167,13 +236,18 @@ public:
   const QTextBlockFormat alignCenter();
 
   /**
-   * @brief Table formats
+   * @brief Create Centered Cell Format
+   */
+  const QTextCharFormat verticalCenter();
+
+  /**
+   * @brief Text Table formats
    */
   const QTextTableFormat tableFormat();
   const QTextTableFormat inlineTableFormat();
 
   /**
-   * @brief Table cell formats
+   * @brief Text Table Cell formats
    */
   const QTextTableCellFormat addressCellFormat();
 
@@ -213,33 +287,7 @@ public:
    */
   const QImage watermark() const;
 
-  /**
-   * @brief get Page Rect in points
-   * @note without margins!
-   */
-  const QRectF pointsRect() const;
-
-  qreal getPoints(int mm) const;
-
-  /**
-   * @brief get Letter Window rect for DIN 5008B
-   */
-  const QRectF letterWindowRect() const;
-
-  /**
-   * @brief Border left in points
-   */
-  qreal borderLeft() const;
-
-  /**
-   * @brief Border right from left in points
-   */
-  qreal borderRight() const;
-
-  /**
-   * @brief get Painting width() minus margins in points!
-   */
-  Q_DECL_DEPRECATED qreal inlineFrameWidth() const;
+  bool setContentData(const QJsonObject &data);
 };
 
 } // namespace AntiquaCRM

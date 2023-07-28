@@ -3,9 +3,12 @@
 
 #include "aprintingpage.h"
 
-#include <AntiquaCRM>
+#include <QFontMetrics>
 #include <QPrinter>
 #include <QPrinterInfo>
+#include <QRegularExpression>
+#include <QTextLayout>
+#include <QTextLine>
 
 #ifdef ANTIQUA_DEVELOPEMENT
 #define DEBUG_DISPLAY_BORDERS 1
@@ -24,7 +27,9 @@ APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
 
   const QRectF _rf = pointsRect();
   setFixedSize(_rf.width(), _rf.height());
+  setMaximumSize(pointsRect().size().toSize());
 
+  p_content_data = QJsonObject();
   cfg = new AntiquaCRM::ASettings(this);
   initConfiguration();
 
@@ -37,6 +42,7 @@ APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
     frameFormat.setRightMargin(5 * points);
   }
   frameFormat.setWidth(QTextLength(QTextLength().PercentageLength, 100));
+  frameFormat.setHeight(QTextLength(QTextLength().PercentageLength, 100));
   rootFrame = document()->rootFrame();
   rootFrame->setFrameFormat(frameFormat);
 }
@@ -45,16 +51,28 @@ APrintingPage::~APrintingPage() {
   if (!cfg->group().isEmpty())
     cfg->endGroup();
 
+  p_companyData.clear();
   cfg->deleteLater();
 }
 
+const QString APrintingPage::toRichText(const QString &txt) const {
+  static const QRegularExpression pattern("[\\n\\r]",
+                                          QRegularExpression::NoPatternOption);
+  QString _txt(txt.trimmed());
+  _txt.replace(pattern, "<br>");
+  return _txt;
+}
+
 void APrintingPage::initConfiguration() {
+  if (m_sql == nullptr)
+    m_sql = new AntiquaCRM::ASqlCore(this);
+
   // NOTE: do not close this group here!
   cfg->beginGroup("printer");
   margin.left = cfg->value("page_margin_left", 20.0).toReal();
   margin.right = cfg->value("page_margin_right", 20.0).toReal();
   margin.subject = cfg->value("page_margin_subject", 120).toReal();
-  margin.body = cfg->value("page_margin_body", 15).toReal();
+  margin.top = cfg->value("page_margin_body", 20).toReal();
   margin.address = cfg->value("page_margin_recipient", 0.5).toReal();
 
   QStringList printers = QPrinterInfo::availablePrinterNames();
@@ -67,72 +85,318 @@ void APrintingPage::initConfiguration() {
     qWarning("No Printer configuration found!");
   }
 
-  QString _sql_str("SELECT ac_class,ac_value FROM antiquacrm_company");
-  _sql_str.append(" ORDER BY ac_class;");
+  QString _sql("SELECT ac_class, ac_value FROM antiquacrm_company");
+  _sql.append(" ORDER BY ac_class;");
 
-  AntiquaCRM::ASqlCore sql(this);
-  QSqlQuery q = sql.query(_sql_str);
-  if (q.size() > 0) {
-    while (q.next()) {
-      QString key = q.value("ac_class").toString().toUpper();
-      QString value = q.value("ac_value").toString();
-      // #ifdef ANTIQUA_DEVELOPEMENT
-      //       qDebug() << Q_FUNC_INFO << key << ":" << value;
-      // #endif
-      p_companyData.insert(key, value);
+  QSqlQuery _query = m_sql->query(_sql);
+  if (_query.size() > 0) {
+    while (_query.next()) {
+      QString _key = _query.value("ac_class").toString().toUpper();
+      QString _value = _query.value("ac_value").toString();
+      p_companyData.insert(_key, _value);
+    }
+  } else {
+    qWarning("No Printer Company data found!");
+  }
+
+  QString _company(companyData("COMPANY_SHORTNAME"));
+  _company.append(" - ");
+  _company.append(companyData("COMPANY_STREET"));
+  _company.append(" - ");
+  _company.append(companyData("COMPANY_LOCATION"));
+  p_companyData.insert("COMPANY_LETTER_STRING", _company);
+}
+
+void APrintingPage::paintHeader(QPainter &painter) {
+  painter.setPen(fontPen);
+  const QImage image = watermark();
+  if (!image.isNull()) {
+    painter.setOpacity(watermarkOpacity());
+    painter.drawImage(QPointF(borderLeft(), 0), image);
+    painter.setOpacity(1.0);
+  }
+
+  QString _txt = toRichText(companyData("COMPANY_PRINTING_HEADER"));
+  QTextOption _opts(Qt::AlignCenter);
+  _opts.setWrapMode(QTextOption::ManualWrap);
+
+  QStaticText _box;
+  _box.setTextFormat(Qt::RichText);
+  _box.setTextOption(_opts);
+  _box.setText(_txt);
+  _box.prepare(painter.transform(), getFont("print_font_header"));
+
+  int _x = qRound((viewport()->width() / 2) - (_box.size().width() / 2));
+
+  painter.setFont(getFont("print_font_header"));
+  painter.drawStaticText(QPoint(_x, margin.top), _box);
+}
+
+void APrintingPage::paintAddressBox(QPainter &painter) {
+  const QFont _small_font(getFont("print_font_small"));
+  const QFont _address_font(getFont("print_font_address"));
+  // letter address window
+  const QRectF _wr = letterWindow();
+  painter.setPen(linePen);
+  painter.setOpacity(0.8);
+  painter.fillRect(_wr, QBrush(Qt::white, Qt::SolidPattern));
+  painter.setOpacity(1.0);
+
+  QTextOption _opts(Qt::AlignLeft);
+  _opts.setWrapMode(QTextOption::NoWrap);
+
+  QString _txt = companyData("COMPANY_LETTER_STRING");
+  QStaticText _company;
+  _company.setTextFormat(Qt::PlainText);
+  _company.setTextOption(_opts);
+  _company.setText(_txt.trimmed());
+  _company.prepare(painter.transform(), _small_font);
+  QRect _txt_rect = QFontMetrics(_small_font).boundingRect(_company.text());
+  int _y = (_wr.top() - _txt_rect.height());
+  painter.setOpacity(0.8);
+  painter.setPen(fontPen);
+  painter.setFont(_small_font);
+  painter.drawStaticText(QPoint(_wr.left(), _y), _company);
+  painter.setOpacity(1.0);
+  // Address Body
+  const QPoint _rp(_wr.left() + getPoints(5), _wr.top() + getPoints(5));
+  _txt = toRichText(p_content_data.value("address").toString());
+  _txt_rect = QFontMetrics(_address_font).boundingRect(_txt);
+  _opts.setWrapMode(QTextOption::WrapAnywhere);
+
+  QStaticText _address;
+  _address.setTextFormat(Qt::RichText);
+  _address.setTextOption(_opts);
+  _address.setText(_txt.trimmed());
+  _address.prepare(painter.transform(), _address_font);
+
+  painter.setPen(fontPen);
+  painter.setFont(_address_font);
+  painter.drawStaticText(_rp, _address);
+}
+
+void APrintingPage::paintIdentities(QPainter &painter) {
+  const QFont _font = getFont("print_font_normal");
+  const QPoint _point(getPoints(125), getPoints(50));
+  painter.setPen(fontPen);
+  painter.setFont(_font);
+
+  QStringList _txt;
+  QStringList _keys({"order_id", "invoice_id", "customer_id", "delivery_id"});
+  foreach (QString _k, _keys) {
+    if (p_content_data.contains(_k)) {
+      QJsonArray _arr = p_content_data.value(_k).toArray();
+      _txt << _arr[0].toString() + " : " + _arr[1].toString();
     }
   }
-#ifdef ANTIQUA_DEVELOPEMENT
-  else if (!sql.lastError().isEmpty()) {
-    qDebug() << Q_FUNC_INFO << sql.lastError();
+
+  QTextOption _opts(Qt::AlignRight);
+  _opts.setWrapMode(QTextOption::NoWrap);
+
+  QStaticText _info;
+  _info.setTextFormat(Qt::RichText);
+  _info.setTextOption(_opts);
+  _info.setText(_txt.join("<br>"));
+  _info.prepare(painter.transform(), _font);
+  painter.drawStaticText(_point, _info);
+}
+
+void APrintingPage::paintSubject(QPainter &painter) {
+  const QFont _font = getFont("print_font_normal");
+  painter.setPen(fontPen);
+  painter.setFont(_font);
+
+  QTextOption _opts(Qt::AlignLeft);
+  _opts.setWrapMode(QTextOption::NoWrap);
+
+  QStaticText _info;
+  _info.setTextFormat(Qt::PlainText);
+  _info.setTextOption(_opts);
+  _info.setText(p_content_data.value("subject").toString());
+  _info.prepare(painter.transform(), _font);
+  painter.drawStaticText(QPoint(borderLeft(), getPoints(98)), _info);
+
+  _opts.setAlignment(Qt::AlignRight);
+  QString _date_str(companyData("COMPANY_LOCATION_NAME"));
+  _date_str.append(" " + tr("on") + " ");
+  _date_str.append(QDate::currentDate().toString("dd.MM.yyyy"));
+
+  QStaticText _date;
+  _date.setTextFormat(Qt::PlainText);
+  _date.setTextOption(_opts);
+  _date.setText(_date_str);
+  _date.prepare(painter.transform(), _font);
+  int _x = (borderRight() - _date.size().width());
+  painter.drawStaticText(QPoint(_x, getPoints(98)), _date);
+}
+
+void APrintingPage::paintFooter(QPainter &painter) {
+  painter.setPen(fontPen);
+  painter.setFont(getFont("print_font_footer"));
+
+  QTextOption _textOpts(Qt::AlignLeft | Qt::AlignTop);
+  _textOpts.setWrapMode(QTextOption::NoWrap);
+
+  // BEGIN:Left
+  QStringList _body;
+  QString _buffer = companyData("COMPANY_FULLNAME");
+  _body << _buffer.trimmed();
+  _buffer = companyData("COMPANY_STREET");
+  _buffer.append(" " + companyData("COMPANY_LOCATION"));
+  _body << _buffer;
+  _buffer = tr("eMail") + ": " + companyData("COMPANY_EMAIL");
+  _body << _buffer;
+  _buffer = tr("Phone") + ": " + companyData("COMPANY_PHONE");
+  _body << _buffer;
+  if (!companyData("COMPANY_FAX").isEmpty()) {
+    _buffer = tr("Fax") + ": " + companyData("COMPANY_FAX");
+    _body << _buffer;
   }
-#endif
+
+  QStaticText _leftBox;
+  _leftBox.setTextFormat(Qt::RichText);
+  _leftBox.setTextOption(_textOpts);
+  _leftBox.setText(_body.join("<br>"));
+  // END:Left
+
+  // BEGIN:Right
+  _body.clear();
+  _buffer = tr("Bank") + ": " + companyData("COMPANY_BANK_NAME");
+  _body << _buffer;
+  _buffer = tr("Swift-BIC") + ": " + companyData("COMPANY_BANK_BICSWIFT");
+  _body << _buffer;
+  _buffer = tr("IBAN") + ": " + companyData("COMPANY_BANK_IBAN");
+  _body << _buffer;
+  _buffer = tr("VAT No.") + ": " + companyData("COMPANY_EPR_NUMBER");
+  _body << _buffer;
+  if (!companyData("COMPANY_PAYPAL_ID").isEmpty()) {
+    _buffer = tr("PayPal") + ": " + companyData("COMPANY_PAYPAL_ID");
+    _body << _buffer;
+  }
+
+  QStaticText _rightBox;
+  _rightBox.setTextFormat(Qt::RichText);
+  _rightBox.setTextOption(_textOpts);
+  _rightBox.setText(_body.join("<br>"));
+  // END:Right
+
+  // start positioning
+  qreal _left_x = borderLeft();
+  qreal _right_x = borderRight();
+  int _spacing = 6;
+  int _height = -1;
+  if (_leftBox.size().height() > _rightBox.size().height()) {
+    _height = _leftBox.size().height();
+  } else {
+    _height = _rightBox.size().height();
+  }
+  // footer text boxes y Position.
+  int _ft_y = (viewport()->height() - _height);
+
+  // float left
+  // @note must painted before calculate the right box!
+  int _left_box_y = (_ft_y - _spacing);
+  painter.drawStaticText(QPoint(_left_x, _left_box_y), _leftBox);
+
+  // footer text box right x()
+  int _lb_right = (borderLeft() + _leftBox.size().width());
+  int _right_box_x = (viewport()->width() / 2);
+  if (_lb_right > _right_box_x)
+    _right_box_x = (_lb_right + _spacing);
+
+  // float right
+  int _right_box_y = (_ft_y - _spacing);
+  painter.drawStaticText(QPoint(_right_box_x, _right_box_y), _rightBox);
+
+  // prepend heading line
+  int _line_y = (_ft_y - _spacing);
+  painter.setPen(linePen);
+  painter.drawLine(QPoint(_left_x, _line_y), QPoint(_right_x, _line_y));
 }
 
 void APrintingPage::paintEvent(QPaintEvent *event) {
+  // Config Defaults
+  const QBrush _base(Qt::white, Qt::SolidPattern);
+  // Start Painter
   QPainter painter;
-  QBrush background(Qt::white, Qt::SolidPattern);
   painter.begin(viewport());
-  painter.fillRect(viewport()->rect(), background);
+  painter.fillRect(viewport()->rect(), _base);
+  painter.setBrush(QBrush(Qt::black, Qt::SolidPattern));
+  painter.translate(0, 0);
+
   // only when A4 letter is set
   if (pageLayout().pageSize().id() == QPageSize::A4) {
-    // Letter folding lines
-    int _yh = (rect().height() / 3);
-    int _ym = (rect().height() / 2);
-    painter.translate(0, 0);
-    painter.setPen(QPen(Qt::gray));
+    // BEGIN::Letter_folding_lines
+    int _yh = getPoints(105);
+    int _ym = getPoints(148);
+    painter.setPen(linePen);
     painter.drawLine(QPoint(5, _yh), // start
                      QPoint((borderLeft() / 2), _yh));
     painter.drawLine(QPoint(5, _ym), // start
                      QPoint(((borderLeft() / 3) * 2), _ym));
 #ifdef DEBUG_DISPLAY_BORDERS
-    // show borders
+    // Seitenränder Anzeigen!
+    const QRectF _frame = paintArea();
     painter.setPen(QPen(Qt::yellow));
-    painter.drawLine(QPoint(borderLeft(), 0),
-                     QPoint(borderLeft(), rect().height()));
-    painter.drawLine(QPoint(borderRight(), 0),
-                     QPoint(borderRight(), rect().height()));
+    painter.drawLine(_frame.topLeft(), _frame.bottomLeft());
+    painter.drawLine(_frame.topRight(), _frame.bottomRight());
 #endif
-    // heading attachment
-    painter.translate(borderLeft(), 0);
-    const QImage image = watermark();
-    if (!image.isNull()) {
-      painter.setOpacity(watermarkOpacity());
-      painter.drawImage(QPointF(5, 5), image);
-      // letter window
-      QRectF _wr = letterWindowRect();
-      _wr.setX(_wr.x() - borderLeft());
-      painter.setPen(QPen(Qt::gray));
-      painter.setOpacity(0.8);
-#ifdef DEBUG_DISPLAY_BORDERS
-      painter.fillRect(_wr, Qt::yellow);
-#else
-      painter.fillRect(_wr, background);
-#endif
-    }
-    painter.end();
+    // END::Letter_folding_lines
+
+    // BEGIN::Header
+    paintHeader(painter);
+    // END::Header
+
+    // BEGIN::Address
+    paintAddressBox(painter);
+    // END::Address
+
+    // BEGIN::Identities
+    paintIdentities(painter);
+    // END::Identities
+
+    // BEGIN::Subject
+    paintSubject(painter);
+    // END::Subject
+
+    // BEGIN::Footer
+    paintFooter(painter);
+    // END::Footer
   }
+  painter.end();
   QTextEdit::paintEvent(event);
+}
+
+qreal APrintingPage::getPoints(int millimeter) const {
+  return qRound(millimeter * points);
+}
+
+const QRectF APrintingPage::pointsRect() const {
+  const QRectF _lr = pageLayout().fullRect(QPageLayout::Millimeter);
+  return QRectF(0, 0, (_lr.width() * points), (_lr.height() * points));
+}
+
+const QRectF APrintingPage::paintArea() const {
+  return QRectF(QPointF(borderLeft(), 0),
+                QPointF(borderRight(), pointsRect().height()));
+}
+
+const QRectF APrintingPage::letterWindow(qreal left) const {
+  return QRectF(getPoints(left), // 25mm left
+                getPoints(45),   // 45mm top
+                getPoints(80),   // 80mm width
+                getPoints(45)    // 45mm height
+  );
+}
+
+qreal APrintingPage::borderLeft() const {
+  // linker rand
+  return qRound(margin.left * points);
+}
+
+qreal APrintingPage::borderRight() const {
+  // rechter rand
+  return qRound(pointsRect().width() - (margin.right * points));
 }
 
 const QPageLayout APrintingPage::pageLayout() const {
@@ -146,171 +410,36 @@ const QPageLayout APrintingPage::pageLayout() const {
   return _layout;
 }
 
-void APrintingPage::setLetterHeading(const QString &subject) {
-  // Header
-  QString _title = companyData("COMPANY_PRINTING_HEADER");
-  QTextBlockFormat _block;
-  _block.setAlignment(Qt::AlignCenter);
-  QFont _font = getFont("print_font_header");
-  QTextCursor _cursor = rootFrame->firstCursorPosition();
-  _cursor.setCharFormat(charFormat(_font));
-  foreach (QString line, _title.split("#")) {
-    _cursor.insertBlock(_block);
-    _cursor.insertText(line);
-    _cursor.atEnd();
-  }
-  // Subject
-  _cursor = textCursor();
-  QFont font(getFont("print_font_small"));
-  font.setUnderline(true);
-  font.setPointSize(8);
-  // Company
-  QString company(companyData("COMPANY_SHORTNAME"));
-  company.append(" - ");
-  company.append(companyData("COMPANY_STREET"));
-  company.append(" - ");
-  company.append(companyData("COMPANY_LOCATION"));
-
-  QTextTableFormat _tableFormat = tableFormat();
-  _tableFormat.setLeftMargin((25 - margin.left) * points);
-  _tableFormat.setTopMargin(font.pointSize() * 2);
-
-  headingTable = _cursor.insertTable(2, 2, _tableFormat);
-
-  QTextCharFormat cellFormat;
-  cellFormat.setFont(font);
-  cellFormat.setVerticalAlignment(QTextCharFormat::AlignBottom);
-
-  QTextTableCell tc00 = headingTable->cellAt(0, 0);
-  tc00.setFormat(cellFormat);
-  _cursor = tc00.firstCursorPosition();
-  _cursor.insertText(company);
-
-  QTextTableCell tc01 = headingTable->cellAt(0, 1);
-  tc01.setFormat(cellFormat);
-  _cursor = tc01.firstCursorPosition();
-  _cursor.insertText(subject);
-}
-
-void APrintingPage::setRecipientAddress(const QString &address,
-                                        const QJsonObject &options) {
-  Q_CHECK_PTR(headingTable);
-  int row = (headingTable->rows() - 1);
-  // Anschrift
-  QTextCursor _cursor = textCursor();
-  QTextTableCell addrCell = headingTable->cellAt(row, 0);
-  addrCell.setFormat(addressCellFormat());
-  _cursor = addrCell.firstCursorPosition();
-  int lines = 0;
-  foreach (QString _l, address.split("\n")) {
-    _cursor.insertText(_l);
-    _cursor.insertText("\n");
-    lines++;
-  }
-  // DIN 5008B address label must have 4 lines!
-  while (lines < 5) {
-    _cursor.insertText("\n");
-    lines++;
-  }
-
-  qint64 _oid = options.value("invoice_id").toInt();
-  qint64 _iid = options.value("order_id").toInt();
-  qint64 _cid = options.value("customer_id").toInt();
-  QString _did = options.value("delivery_id").toString();
-
-  // Betreff Informationen
-  QMap<qint8, QString> _title;
-  _title.insert(0, tr("Invoice No."));
-  _title.insert(1, tr("Order No."));
-  _title.insert(2, tr("Costumer No."));
-  _title.insert(3, tr("Delivery No."));
-
-  QMap<qint8, QString> _data;
-  _data.insert(0, AntiquaCRM::AUtil::zerofill(_iid, 10));
-  _data.insert(1, AntiquaCRM::AUtil::zerofill(_oid, 10));
-  _data.insert(2, AntiquaCRM::AUtil::zerofill(_cid, 10));
-  _data.insert(3, _did);
-
-  const QFont _font = getFont("print_font_normal");
-  QTextTableCell infoCell = headingTable->cellAt(row, 1);
-  infoCell.setFormat(charFormat(_font));
-  _cursor = infoCell.firstCursorPosition();
-
-  QTextTable *m_info_table = _cursor.insertTable(_data.size(), 3, // Size
-                                                 inlineTableFormat());
-  const QFont _cell_font(getFont("print_font_small"));
-  QMapIterator<qint8, QString> it(_data);
-  while (it.hasNext()) {
-    it.next();
-    // left
-    QTextTableCell cl = m_info_table->cellAt(it.key(), 0);
-    cl.setFormat(charFormat(_cell_font));
-    _cursor = cl.firstCursorPosition();
-    _cursor.setBlockFormat(alignRight());
-    _cursor.insertText(_title[it.key()]);
-    // middle
-    QTextTableCell cm = m_info_table->cellAt(it.key(), 1);
-    cm.setFormat(charFormat(_cell_font));
-    _cursor = cm.firstCursorPosition();
-    _cursor.setBlockFormat(alignCenter());
-    _cursor.insertText(":");
-    // right
-    QTextTableCell cr = m_info_table->cellAt(it.key(), 2);
-    cr.setFormat(charFormat(_cell_font));
-    _cursor = cr.firstCursorPosition();
-    _cursor.setBlockFormat(alignRight());
-    _cursor.insertText(it.value());
-  }
-}
-
-void APrintingPage::setLetterSubject(const QString &subject) {
-  // Subject Table
-  QFont _font = getFont("print_font_subject");
-  QTextCursor _cursor = textCursor();
-  QTextTable *table = _cursor.insertTable(1, 2, inlineTableFormat());
-  QTextTableCell scl0 = table->cellAt(0, 0);
-  scl0.setFormat(charFormat(_font));
-  _cursor = scl0.firstCursorPosition();
-  _cursor.insertText(subject);
-  QTextTableCell scl1 = table->cellAt(0, 1);
-  scl1.setFormat(charFormat(_font));
-  _cursor = scl1.firstCursorPosition();
-  _cursor.setBlockFormat(alignRight());
-  QString _date(companyData("COMPANY_LOCATION_NAME"));
-  _date.append(" " + tr("on") + " ");
-  _date.append(QDate::currentDate().toString("dd.MM.yyyy"));
-  _cursor.insertText(_date);
-}
-
-const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cId) {
+const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {
   QMap<QString, QVariant> _map;
-  AntiquaCRM::ASqlFiles sql_file("query_customer_recipient_address");
-  if (!sql_file.openTemplate() || cId < 1) {
-    qWarning("Can't open query_customer_recipient_address template!");
+  AntiquaCRM::ASqlFiles _tpl("query_customer_recipient_address");
+  if (!_tpl.openTemplate() || cid < 1) {
+    qWarning("Unable to query customer recipient address template!");
     return _map;
   }
 
-  QString _clause("c_id='");
-  _clause.append(QString::number(cId));
-  _clause.append("'");
-  sql_file.setWhereClause(_clause);
+  QString _clause("c_id=");
+  _clause.append(QString::number(cid));
+  _tpl.setWhereClause(_clause);
 
-  AntiquaCRM::ASqlCore sql(this);
-  QSqlQuery q = sql.query(sql_file.getQueryContent());
-  if (q.size() > 0) {
+  const QString _sql = _tpl.getQueryContent();
+  QSqlQuery _query = m_sql->query(_sql);
+  if (_query.size() > 0) {
     _map.clear();
-    while (q.next()) {
-      _map.insert("id", q.value("cid").toLongLong());
-      _map.insert("gender", q.value("gender").toInt());
-      _map.insert("person", q.value("person").toString());
-      _map.insert("address", q.value("address").toString());
+    while (_query.next()) {
+      _map.insert("id", cid);
+      _map.insert("gender", _query.value("gender").toInt());
+      _map.insert("person", _query.value("person").toString());
+      _map.insert("address", _query.value("address").toString());
     }
-  }
+    _query.clear();
+  } else {
 #ifdef ANTIQUA_DEVELOPEMENT
-  else if (!sql.lastError().isEmpty()) {
-    qDebug() << Q_FUNC_INFO << sql.lastError();
-  }
+    qDebug() << Q_FUNC_INFO << _sql;
+#else
+    qWarning("Printer Recipient Data is empty!");
 #endif
+  }
   return _map;
 }
 
@@ -342,6 +471,17 @@ const QTextCharFormat APrintingPage::charFormat(const QFont &font,
   return _format;
 }
 
+const QTextBlockFormat APrintingPage::bodyText() {
+  qreal _i = 5.0;
+  QTextBlockFormat _f;
+  _f.setAlignment(Qt::AlignLeft);
+  _f.setLeftMargin(_i);
+  _f.setTopMargin(_i);
+  _f.setRightMargin(_i);
+  _f.setBottomMargin(_i);
+  return _f;
+}
+
 const QTextBlockFormat APrintingPage::alignRight() {
   QTextBlockFormat _format;
   _format.setAlignment(Qt::AlignRight | Qt::AlignVCenter);
@@ -352,6 +492,13 @@ const QTextBlockFormat APrintingPage::alignCenter() {
   QTextBlockFormat _format;
   _format.setAlignment(Qt::AlignCenter | Qt::AlignVCenter);
   return _format;
+}
+
+const QTextCharFormat APrintingPage::verticalCenter() {
+  QTextCharFormat _f;
+  _f.setFont(getFont("print_font_normal"));
+  _f.setVerticalAlignment(QTextCharFormat::AlignMiddle);
+  return _f;
 }
 
 const QTextTableFormat APrintingPage::tableFormat() {
@@ -373,17 +520,18 @@ const QTextTableFormat APrintingPage::tableFormat() {
   _f.setBorderBrush(QBrush(Qt::NoBrush));
   _f.setBorderStyle(QTextFrameFormat::BorderStyle_None);
 #endif
-  _f.setAlignment(Qt::AlignLeft | Qt::AlignTop);
+  _f.setAlignment(Qt::AlignLeft);
   return _f;
 }
 
 const QTextTableFormat APrintingPage::inlineTableFormat() {
   QTextTableFormat _f;
-  _f.setWidth(QTextLength(QTextLength().PercentageLength, 100));
+  _f.setWidth(QTextLength(QTextLength().PercentageLength, 99.8));
   _f.setPadding(0);
   _f.setCellPadding(0);
   _f.setCellSpacing(0);
   _f.setMargin(0);
+  _f.setLeftMargin(2);
 #ifdef DEBUG_DISPLAY_BORDERS
   _f.setBorder(1);
   _f.setBorderBrush(QBrush(Qt::gray));
@@ -488,32 +636,12 @@ const QImage APrintingPage::watermark() const {
   return QImage();
 }
 
-const QRectF APrintingPage::pointsRect() const {
-  QRectF _lr = pageLayout().fullRect(QPageLayout::Millimeter);
-  return QRectF(0, 0, (_lr.width() * points), (_lr.height() * points));
-}
+bool APrintingPage::setContentData(const QJsonObject &data) {
+  if (data.isEmpty())
+    return false;
 
-qreal APrintingPage::getPoints(int mm) const { return qRound(mm * points); }
-
-const QRectF APrintingPage::letterWindowRect() const {
-  QRectF _r(qRound(25 * points), // 25mm left
-            qRound(45 * points), // 25mm top
-            qRound(80 * points), // 80mm width
-            qRound(45 * points)  // 45mm height
-  );
-  return _r;
-}
-
-qreal APrintingPage::borderLeft() const { return qRound(margin.left * points); }
-
-qreal APrintingPage::borderRight() const {
-  qreal _w = pointsRect().width();
-  return qRound(_w - (margin.right * points));
-}
-
-qreal APrintingPage::inlineFrameWidth() const {
-  qreal _w = pointsRect().width();
-  return qRound(_w - (margin.left * points) - (margin.right * points));
+  p_content_data = data;
+  return true;
 }
 
 } // namespace AntiquaCRM

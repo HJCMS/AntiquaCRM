@@ -28,6 +28,7 @@ class ANTIQUACRM_LIBRARY InvoicePage final
 
 public:
   explicit InvoicePage(QWidget *parent = nullptr);
+  void setBody(qint64 oid, qint64 cid) override;
 };
 
 /**

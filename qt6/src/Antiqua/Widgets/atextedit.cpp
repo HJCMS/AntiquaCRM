@@ -3,8 +3,8 @@
 
 #include "atextedit.h"
 
-#include <QSizePolicy>
 #include <QRegularExpression>
+#include <QSizePolicy>
 
 namespace AntiquaCRM {
 
@@ -39,24 +39,23 @@ void ATextEdit::keyReleaseEvent(QKeyEvent *event) {
   QTextEdit::keyReleaseEvent(event);
 }
 
-void ATextEdit::setText(const QString &txt) { setPlainText(txt); }
+void ATextEdit::setText(const QString &txt) {
+  setPlainText(strip(txt));
+}
 
-const QString ATextEdit::text() { return toPlainText(); }
+const QString ATextEdit::text() {
+  return strip(toPlainText());
+}
 
 const QString ATextEdit::strip(const QString &str) {
-  QString _buf = str;
+  QString _buf = str.trimmed();
+  _buf.replace("\"", "’");
   _buf.replace("'", "’");
   _buf.replace("<", "«");
   _buf.replace(">", "»");
-
-  static const QRegularExpression spaces("\\b\\s+\\b",
-                                         QRegularExpression::NoPatternOption);
-  _buf.replace(spaces, " ");
-
   static const QRegularExpression tabs("\\t+",
                                        QRegularExpression::NoPatternOption);
-  _buf.remove(tabs);
-
+  _buf.replace(tabs, " ");
   _buf.squeeze();
   return _buf.trimmed();
 }

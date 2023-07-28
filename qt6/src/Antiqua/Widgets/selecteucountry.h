@@ -58,7 +58,7 @@ private:
   /**
    * @brief Default warn icon
    */
-  const QIcon nonIcon;
+  const QIcon dwIcon;
 
   /**
    * @brief Country Model list

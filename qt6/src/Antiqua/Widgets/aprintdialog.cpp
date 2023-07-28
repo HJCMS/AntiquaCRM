@@ -11,7 +11,7 @@ namespace AntiquaCRM {
 
 APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
   setSizeGripEnabled(true);
-  setMinimumSize(330, 480);
+  setMinimumSize(580, 480);
   setContentsMargins(5, 5, 5, 5);
 
   config = new AntiquaCRM::ASettings(this);
