@@ -21,6 +21,7 @@ SET (_library_FILES
   antiquainput.h.cmake
   antiquamail.h.cmake
   antiquaprinting.h.cmake
+  antiquaprintsupport.h.cmake
   antiquawidgets.h.cmake
 )
 
@@ -40,22 +41,35 @@ CONFIGURE_FILE (antiquaprinting.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
 )
 
+CONFIGURE_FILE (antiquaprinting.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
+)
+
+CONFIGURE_FILE (antiquaprintsupport.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprintsupport.h
+)
+
 CONFIGURE_FILE (antiquamail.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquamail.h
 )
 
-SET (_stl_HEADERS
+SET (_library_config_HEADERS
+  antiquabuttons.h
+  antiquainput.h
+  antiquamail.h
+  antiquaprinting.h
+  antiquaprintsupport.h
+  antiquawidgets.h
+)
+
+SET (_library_config_TEMPLATES
  AntiquaInput
- antiquainput.h
  AntiquaWidgets
- antiquawidgets.h
  AntiquaButtons
- antiquabuttons.h
  AntiquaPrintDialog
+ AntiquaPrintSupport
  AntiquaPrinting
- antiquaprinting.h
  AntiquaMail
- antiquamail.h
 )
 
 SET (_library_SOURCES
@@ -69,6 +83,7 @@ SET (_library_SOURCES
   apluginconfigwidget.cpp
   aprintdialog.cpp
   aprintingpage.cpp
+  aprinttools.cpp
   aslider.cpp
   aspinbox.cpp
   atextedit.cpp
@@ -105,14 +120,14 @@ SET (_library_SOURCES
   printinvoice.cpp
   salutationedit.cpp
   selectcurrency.cpp
-  selecteucountry.cpp
-  selectdeliverservice.cpp
   selectdeliverpackage.cpp
+  selectdeliverservice.cpp
+  selecteucountry.cpp
   selectfile.cpp
   selectlanguage.cpp
   selectmediatype.cpp
-  selectorderstatus.cpp
   selectorderpayment.cpp
+  selectorderstatus.cpp
   selectpaymentmethod.cpp
   selectpaymentstatus.cpp
   selectstorage.cpp
@@ -130,7 +145,6 @@ SET (_library_SOURCES
 )
 
 SET (_library_HEADERS
-  antiquaicon.h
   acolorluminance.h
   acombobox.h
   adatetimeedit.h
@@ -138,9 +152,11 @@ SET (_library_HEADERS
   ainputwidget.h
   alabel.h
   alineedit.h
+  antiquaicon.h
   apluginconfigwidget.h
   aprintdialog.h
   aprintingpage.h
+  aprinttools.h
   aslider.h
   aspinbox.h
   atextedit.h
@@ -177,14 +193,14 @@ SET (_library_HEADERS
   printinvoice.h
   salutationedit.h
   selectcurrency.h
-  selecteucountry.h
-  selectdeliverservice.h
   selectdeliverpackage.h
+  selectdeliverservice.h
+  selecteucountry.h
   selectfile.h
   selectlanguage.h
   selectmediatype.h
-  selectorderstatus.h
   selectorderpayment.h
+  selectorderstatus.h
   selectpaymentmethod.h
   selectpaymentstatus.h
   selectstorage.h
@@ -202,9 +218,10 @@ SET (_library_HEADERS
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED
+ ${_library_config_HEADERS}
+ ${_library_config_TEMPLATES}
  ${_library_SOURCES}
  ${_library_HEADERS}
- ${_stl_HEADERS}
  ${_library_FILES}
 )
 

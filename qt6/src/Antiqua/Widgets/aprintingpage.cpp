@@ -8,6 +8,7 @@
 #include <QPrinterInfo>
 #include <QRegularExpression>
 #include <QTextLayout>
+#include <QStaticText>
 #include <QTextLine>
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -17,7 +18,7 @@
 namespace AntiquaCRM {
 
 APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
-    : QTextEdit{parent}, p_pageSizeId{id} {
+    : QTextEdit{parent}, APrintTools{id} {
   setAttribute(Qt::WA_OpaquePaintEvent, true);
   QPalette _p = palette();
   _p.setColor(QPalette::Base, Qt::white);
@@ -25,9 +26,9 @@ APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
   setPalette(_p);
   setTextColor(Qt::black);
 
-  const QRectF _rf = pointsRect();
+  const QRectF _rf = pagePoints();
   setFixedSize(_rf.width(), _rf.height());
-  setMaximumSize(pointsRect().size().toSize());
+  setMaximumSize(pagePoints().size().toSize());
 
   p_content_data = QJsonObject();
   cfg = new AntiquaCRM::ASettings(this);
@@ -51,16 +52,11 @@ APrintingPage::~APrintingPage() {
   if (!cfg->group().isEmpty())
     cfg->endGroup();
 
+  foreach (QString _k, p_content_data.keys()) {
+    p_content_data.remove(_k);
+  }
   p_companyData.clear();
   cfg->deleteLater();
-}
-
-const QString APrintingPage::toRichText(const QString &txt) const {
-  static const QRegularExpression pattern("[\\n\\r]",
-                                          QRegularExpression::NoPatternOption);
-  QString _txt(txt.trimmed());
-  _txt.replace(pattern, "<br>");
-  return _txt;
 }
 
 void APrintingPage::initConfiguration() {
@@ -104,11 +100,11 @@ void APrintingPage::initConfiguration() {
   _company.append(companyData("COMPANY_STREET"));
   _company.append(" - ");
   _company.append(companyData("COMPANY_LOCATION"));
-  p_companyData.insert("COMPANY_LETTER_STRING", _company);
+  p_companyData.insert("COMPANY_ADDRESS_LABEL", _company);
 }
 
 void APrintingPage::paintHeader(QPainter &painter) {
-  painter.setPen(fontPen);
+  painter.setPen(fontPen());
   const QImage image = watermark();
   if (!image.isNull()) {
     painter.setOpacity(watermarkOpacity());
@@ -137,7 +133,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   const QFont _address_font(getFont("print_font_address"));
   // letter address window
   const QRectF _wr = letterWindow();
-  painter.setPen(linePen);
+  painter.setPen(linePen());
   painter.setOpacity(0.8);
   painter.fillRect(_wr, QBrush(Qt::white, Qt::SolidPattern));
   painter.setOpacity(1.0);
@@ -145,7 +141,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   QTextOption _opts(Qt::AlignLeft);
   _opts.setWrapMode(QTextOption::NoWrap);
 
-  QString _txt = companyData("COMPANY_LETTER_STRING");
+  QString _txt = companyData("COMPANY_ADDRESS_LABEL");
   QStaticText _company;
   _company.setTextFormat(Qt::PlainText);
   _company.setTextOption(_opts);
@@ -154,7 +150,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   QRect _txt_rect = QFontMetrics(_small_font).boundingRect(_company.text());
   int _y = (_wr.top() - _txt_rect.height());
   painter.setOpacity(0.8);
-  painter.setPen(fontPen);
+  painter.setPen(fontPen());
   painter.setFont(_small_font);
   painter.drawStaticText(QPoint(_wr.left(), _y), _company);
   painter.setOpacity(1.0);
@@ -162,7 +158,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   const QPoint _rp(_wr.left() + getPoints(5), _wr.top() + getPoints(5));
   _txt = toRichText(p_content_data.value("address").toString());
   _txt_rect = QFontMetrics(_address_font).boundingRect(_txt);
-  _opts.setWrapMode(QTextOption::WrapAnywhere);
+  _opts.setWrapMode(QTextOption::ManualWrap);
 
   QStaticText _address;
   _address.setTextFormat(Qt::RichText);
@@ -170,7 +166,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   _address.setText(_txt.trimmed());
   _address.prepare(painter.transform(), _address_font);
 
-  painter.setPen(fontPen);
+  painter.setPen(fontPen());
   painter.setFont(_address_font);
   painter.drawStaticText(_rp, _address);
 }
@@ -178,7 +174,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
 void APrintingPage::paintIdentities(QPainter &painter) {
   const QFont _font = getFont("print_font_normal");
   const QPoint _point(getPoints(125), getPoints(50));
-  painter.setPen(fontPen);
+  painter.setPen(fontPen());
   painter.setFont(_font);
 
   QStringList _txt;
@@ -203,7 +199,7 @@ void APrintingPage::paintIdentities(QPainter &painter) {
 
 void APrintingPage::paintSubject(QPainter &painter) {
   const QFont _font = getFont("print_font_normal");
-  painter.setPen(fontPen);
+  painter.setPen(fontPen());
   painter.setFont(_font);
 
   QTextOption _opts(Qt::AlignLeft);
@@ -231,7 +227,7 @@ void APrintingPage::paintSubject(QPainter &painter) {
 }
 
 void APrintingPage::paintFooter(QPainter &painter) {
-  painter.setPen(fontPen);
+  painter.setPen(fontPen());
   painter.setFont(getFont("print_font_footer"));
 
   QTextOption _textOpts(Qt::AlignLeft | Qt::AlignTop);
@@ -309,8 +305,8 @@ void APrintingPage::paintFooter(QPainter &painter) {
   painter.drawStaticText(QPoint(_right_box_x, _right_box_y), _rightBox);
 
   // prepend heading line
-  int _line_y = (_ft_y - _spacing);
-  painter.setPen(linePen);
+  int _line_y = (_ft_y - 10);
+  painter.setPen(linePen());
   painter.drawLine(QPoint(_left_x, _line_y), QPoint(_right_x, _line_y));
 }
 
@@ -329,7 +325,7 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
     // BEGIN::Letter_folding_lines
     int _yh = getPoints(105);
     int _ym = getPoints(148);
-    painter.setPen(linePen);
+    painter.setPen(linePen());
     painter.drawLine(QPoint(5, _yh), // start
                      QPoint((borderLeft() / 2), _yh));
     painter.drawLine(QPoint(5, _ym), // start
@@ -367,26 +363,9 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QTextEdit::paintEvent(event);
 }
 
-qreal APrintingPage::getPoints(int millimeter) const {
-  return qRound(millimeter * points);
-}
-
-const QRectF APrintingPage::pointsRect() const {
-  const QRectF _lr = pageLayout().fullRect(QPageLayout::Millimeter);
-  return QRectF(0, 0, (_lr.width() * points), (_lr.height() * points));
-}
-
 const QRectF APrintingPage::paintArea() const {
   return QRectF(QPointF(borderLeft(), 0),
-                QPointF(borderRight(), pointsRect().height()));
-}
-
-const QRectF APrintingPage::letterWindow(qreal left) const {
-  return QRectF(getPoints(left), // 25mm left
-                getPoints(45),   // 45mm top
-                getPoints(80),   // 80mm width
-                getPoints(45)    // 45mm height
-  );
+                QPointF(borderRight(), pagePoints().height()));
 }
 
 qreal APrintingPage::borderLeft() const {
@@ -396,18 +375,7 @@ qreal APrintingPage::borderLeft() const {
 
 qreal APrintingPage::borderRight() const {
   // rechter rand
-  return qRound(pointsRect().width() - (margin.right * points));
-}
-
-const QPageLayout APrintingPage::pageLayout() const {
-  QPageLayout _layout;
-  _layout.setOrientation(QPageLayout::Portrait);
-  _layout.setPageSize(QPageSize(p_pageSizeId));
-  _layout.setMinimumMargins(QMargins(0, 0, 0, 0));
-  _layout.setMargins(QMargins(0, 0, 0, 0));
-  _layout.setUnits(QPageLayout::Millimeter);
-  _layout.setMode(QPageLayout::FullPageMode);
-  return _layout;
+  return qRound(pagePoints().width() - (margin.right * points));
 }
 
 const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {
@@ -448,18 +416,6 @@ const QPrinterInfo APrintingPage::getPrinterInfo(QPageSize::PageSizeId id) {
     return p_printerInfo.dinA6;
 
   return p_printerInfo.dinA4;
-}
-
-const QPen APrintingPage::penStyle() const {
-  QPen _pen(Qt::gray, Qt::SolidLine);
-  _pen.setCapStyle(Qt::FlatCap);
-  _pen.setWidthF(0.6);
-  _pen.setCosmetic(true);
-  return _pen;
-}
-
-const QBrush APrintingPage::borderBrush() const {
-  return QBrush(Qt::gray, Qt::SolidPattern);
 }
 
 const QTextCharFormat APrintingPage::charFormat(const QFont &font,
