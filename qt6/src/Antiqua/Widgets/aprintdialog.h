@@ -10,8 +10,8 @@
 #define ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
 
 #include <AntiquaCRM>
+#include <AntiquaPrintSupport>
 #include <QObject>
-#include <QPrinter>
 #include <QScrollArea>
 #include <QtWidgets>
 
@@ -36,6 +36,7 @@ protected:
   QPageLayout pageLayout;
   QString pdfFileName;
   QScrollArea *viewPort;
+
   void setPrintingPage(AntiquaCRM::APrintingPage *page);
 
 protected Q_SLOTS:
@@ -67,6 +68,12 @@ public:
    * @param parent - parent object
    */
   explicit APrintDialog(QWidget *parent = nullptr);
+
+  /**
+   * @brief Call Printer Info for PageSize Id
+   * @param id - Default: Din A4 Portrait
+   */
+  const QPrinterInfo getPrinterInfo(QPageSize::PageSizeId id = QPageSize::A4);
 
   /**
    * @brief prevent dialog without options

@@ -7,78 +7,61 @@
 
 namespace AntiquaCRM {
 
-InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
+InvoicePage::InvoicePage(QWidget *parent)
+    : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
 }
 
-void InvoicePage::setBody(qint64 oid, qint64 cid) {
+void InvoicePage::paintContent(QPainter &painter) {
+  if (!contentData.contains("body"))
+    return; // skip if not exists
+
+  Q_UNUSED(painter);
+}
+
+bool InvoicePage::setContentData(QJsonObject &data) {
+  bool _return = false;
+  if (!data.contains("config")) {
+    qWarning("Unable to read invoice content data!");
+    return _return;
+  }
+
+  contentData = data;
+  QJsonObject _config = contentData.value("config").toObject();
+  QJsonObject _body;
+  _body.insert("intro", companyData("COMPANY_INTRO_DELIVERY"));
+  _body.insert("policy", "");
+
   AntiquaCRM::ASqlFiles _tpl("query_printing_invoice");
-  if (!_tpl.openTemplate() || oid < 1 || cid < 1) {
-    qWarning("Unable to query invoice data!");
+  if (!_tpl.openTemplate()) {
+    qWarning("Unable to open invoice SQL template!");
   }
 
   QString _sql("a_order_id=");
-  _sql.append(QString::number(oid));
+  _sql.append(QString::number(_config.value("order_id").toDouble()));
   _sql.append(" AND a_customer_id=");
-  _sql.append(QString::number(cid));
-  _sql = QString("a_order_id=481 AND a_customer_id=698");
+  _sql.append(QString::number(_config.value("customer_id").toDouble()));
   _tpl.setWhereClause(_sql);
 
-  QTextCursor _cursor = textCursor();
-  _cursor.insertBlock(bodyText());
-  _cursor.beginEditBlock();
-  QStringList _l;
-  for (int i = 0; i < 50; ++i) { _l.append("text"); }
-  _cursor.insertText(_l.join(" "));
-  // _cursor.insertText(companyData("COMPANY_INTRO_DELIVERY"));
-  _cursor.insertText("\n");
-  _cursor.endEditBlock();
-
-  double _full_price = 0.00;
   QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
   int _size = _query.size();
   if (_size > 0) {
-    QFont _font = getFont("print_font_normal");
-    QTextTable *m_tb = _cursor.insertTable((_size + 1), 4, inlineTableFormat());
-
-    int _row = 0;
-    QTextTableCell t_c1 = m_tb->cellAt(_row, 0);
-    t_c1.setFormat(charFormat(_font, true));
-    t_c1.firstCursorPosition().insertText(tr("Article"));
-    QTextTableCell t_c2 = m_tb->cellAt(_row, 1);
-    t_c2.setFormat(charFormat(_font, true));
-    t_c2.firstCursorPosition().insertText(tr("Product"));
-    QTextTableCell t_c3 = m_tb->cellAt(_row, 2);
-    t_c3.setFormat(charFormat(_font, true));
-    t_c3.firstCursorPosition().insertText(tr("Quantity"));
-    QTextTableCell t_c4 = m_tb->cellAt(_row, 3);
-    t_c4.setFormat(charFormat(_font, true));
-    t_c4.firstCursorPosition().insertText(tr("Price"));
-    _row++;
-
+    QJsonArray _array;
     while (_query.next()) {
-      QTextTableCell _tc1 = m_tb->cellAt(_row, 0);
-      _cursor = _tc1.firstCursorPosition();
-      _cursor.insertText(_query.value("a_article_id").toString());
-      QTextTableCell _tc2 = m_tb->cellAt(_row, 1);
-      _cursor = _tc2.firstCursorPosition();
-      _cursor.insertText(_query.value("a_title").toString());
-      QTextTableCell _tc3 = m_tb->cellAt(_row, 2);
-      _cursor = _tc3.firstCursorPosition();
-      _cursor.insertText(_query.value("a_count").toString());
-      // price
-      double _price = _query.value("a_sell_price").toDouble();
-      _full_price += _price;
-      QString _money = AntiquaCRM::ATaxCalculator::money(_price);
-      QTextTableCell _tc4 = m_tb->cellAt(_row, 3);
-      _cursor = _tc4.firstCursorPosition();
-      _cursor.insertText(_money);
-      _row++;
+      QJsonObject _obj;
+      _obj.insert("aid", _query.value("a_article_id").toString());
+      _obj.insert("title", _query.value("a_title").toString());
+      _obj.insert("count", _query.value("a_count").toDouble());
+      _obj.insert("price", _query.value("a_sell_price").toDouble());
+      _array.append(_obj);
     }
+    _body.insert("articles", _array);
+    _return = (_array.size() > 0);
   }
+  // qDebug() << _return << _sql << contentData;
+  contentData.insert("body", _body);
   _query.clear();
-
-  qDebug() << Q_FUNC_INFO << "__TODO__" << oid << cid << _full_price;
+  return _return;
 }
 
 PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {
@@ -116,7 +99,7 @@ void PrintInvoice::createPDF() {
 }
 
 void PrintInvoice::openPrintDialog() {
-  const QPrinterInfo printerInfo = page->getPrinterInfo();
+  const QPrinterInfo printerInfo = getPrinterInfo();
   QPageLayout pageLayout = page->pageLayout();
   pageLayout.setMode(QPageLayout::FullPageMode);
 
@@ -147,23 +130,44 @@ int PrintInvoice::exec(const QJsonObject &options) {
     return QDialog::Rejected;
   }
 
-  qDebug() << Q_FUNC_INFO << options;
-
   pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
   pdfFileName.append(".pdf");
 
-//  page = new InvoicePage(this);
-//  // Company
-//  QString _title = page->companyData("COMPANY_PRINTING_HEADER");
-//  QString _company(page->companyData("COMPANY_SHORTNAME"));
-//  _company.append(" - ");
-//  _company.append(page->companyData("COMPANY_STREET"));
-//  _company.append(" - ");
-//  _company.append(page->companyData("COMPANY_LOCATION"));
+  page = new InvoicePage(this);
 
-//  QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
-//  page->setRecipientData(_person.value("address").toString(), options);
-//  setPrintingPage(page);
+  QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
+
+  QJsonObject content;
+  content.insert("subject", tr("Invoice"));
+  content.insert("address", _person.value("address").toString());
+
+  double _iid = options.value("invoice_id").toDouble();
+  double _did = options.value("order_id").toDouble();
+
+  QJsonArray _array;
+  _array.append(tr("Invoice No."));
+  _array.append(AntiquaCRM::AUtil::zerofill(_iid, 10));
+  content.insert("invoice_id", _array);
+
+  _array = QJsonArray();
+  _array.append(tr("Order No."));
+  _array.append(AntiquaCRM::AUtil::zerofill(o_id, 10));
+  content.insert("order_id", _array);
+
+  _array = QJsonArray();
+  _array.append(tr("Costumer No."));
+  _array.append(AntiquaCRM::AUtil::zerofill(c_id, 10));
+  content.insert("customer_id", _array);
+
+  _array = QJsonArray();
+  _array.append(tr("Delivery No."));
+  _array.append(AntiquaCRM::AUtil::zerofill(_did, 10));
+  content.insert("delivery_id", _array);
+
+  if (!page->setContentData(content))
+    return QDialog::Rejected;
+
+  setPrintingPage(page);
 
   return QDialog::exec();
 }

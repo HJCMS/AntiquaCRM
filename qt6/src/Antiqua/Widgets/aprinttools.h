@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_INPUT_APRINTTOOLS_H
-#define ANTIQUACRM_INPUT_APRINTTOOLS_H
+#ifndef ANTIQUACRM_PRINTING_APRINTTOOLS_H
+#define ANTIQUACRM_PRINTING_APRINTTOOLS_H
 
 #include <AGlobal>
 #include <QPrinter>
@@ -18,14 +18,19 @@ namespace AntiquaCRM {
 
 class ANTIQUACRM_LIBRARY APrintTools {
 private:
+  /**
+   * @brief Current PageSize
+   */
   const QPageSize pageSize;
 
-protected:
-  struct PrinterInfo {
-    QPrinterInfo dinA4; /**< @brief Primary printer info */
-    QPrinterInfo dinA6; /**< @brief Secundary printer info */
-  };
+  /**
+   * @brief 1mm to point
+   * 1 mm = 2.8452755906 point (printer's)
+   * 1 point (printer's) = 0.3514598035 mm
+   */
+  const qreal points = 2.8452755906;
 
+protected:
   struct PageMargins {
     qreal top = 10;    /**< @brief Header margin top  */
     qreal left = 20;   /**< @brief Document margin left */
@@ -35,27 +40,27 @@ protected:
   };
 
   /**
-   * @brief 1mm to point
-   * 1 mm = 2.8452755906 point (printer's)
-   * 1 point (printer's) = 0.3514598035 mm
+   * @brief current page margins
+   * Initialed in @ref APrintingPage::initConfiguration()
    */
-  const qreal points = 2.8452755906;
+  PageMargins margin;
 
   /**
    * @brief Convert Millimeter to Points
+   *
+   * 1 mm = 2.8452755906 point (printer's)
+   * 1 point (printer's) = 0.3514598035 mm
+   *
    * @param millimeter
    */
   qreal getPoints(int millimeter) const;
 
   /**
-   * @brief General Linestyle and for folds and paper punches!
+   * @brief Default Static text
    */
-  const QPen linePen(const QColor &color = Qt::gray) const;
-
-  /**
-   * @brief Default fonts Pen
-   */
-  const QPen fontPen(const QColor &color = Qt::black) const;
+  const QStaticText
+  textBlock(Qt::Alignment align = Qt::AlignLeft,
+            QTextOption::WrapMode mode = QTextOption::ManualWrap) const;
 
   /**
    * @brief Convert linebreaks to html br
@@ -84,6 +89,22 @@ public:
   const QPageLayout pageLayout() const;
 
   /**
+   * @brief General Linestyle and for folds and paper punches!
+   */
+  const QPen linePen(const QColor &color = Qt::gray) const;
+
+  /**
+   * @brief Default fonts Pen
+   */
+  const QPen fontPen(const QColor &color = Qt::black) const;
+
+  /**
+   * @brief get Font height in Points
+   * @param font
+   */
+  qreal fontHeight(const QFont &font) const;
+
+  /**
    * @brief Brush for visible Borders
    */
   const QBrush borderBrush(const QColor &color = Qt::gray) const;
@@ -91,4 +112,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_INPUT_APRINTTOOLS_H
+#endif // ANTIQUACRM_PRINTING_APRINTTOOLS_H

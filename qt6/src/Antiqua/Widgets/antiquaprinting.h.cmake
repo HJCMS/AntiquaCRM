@@ -6,11 +6,6 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-// AntiquaCRM::AGlobal
-#ifndef ANTIQUACRM_GLOBAL_H
-#include "aglobal.h"
-#endif
-
 // AntiquaCRM::PrintInvoice
 #ifndef ANTIQUACRM_WIDGETS_PRINT_INVOICE_H
 #include "printinvoice.h"

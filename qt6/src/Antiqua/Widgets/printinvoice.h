@@ -22,13 +22,15 @@ namespace AntiquaCRM {
  * @brief Invoice Painting Device
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY InvoicePage final
-    : public AntiquaCRM::APrintingPage {
+class ANTIQUACRM_LIBRARY InvoicePage final : public AntiquaCRM::APrintingPage {
   Q_OBJECT
+
+protected:
+  void paintContent(QPainter &painter) override;
 
 public:
   explicit InvoicePage(QWidget *parent = nullptr);
-  void setBody(qint64 oid, qint64 cid) override;
+  bool setContentData(QJsonObject &data) override;
 };
 
 /**

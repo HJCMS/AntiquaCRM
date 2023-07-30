@@ -215,7 +215,6 @@ namespace AntiquaCRM {
     PRINT_BOOKCARD = 0x8  /**< @brief Enable Bookcard button */
   };
   Q_DECLARE_FLAGS(PrinterGroups, PrinterGroup);
-
 }; // namespace AntiquaCRM
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(AntiquaCRM::MailGroups);

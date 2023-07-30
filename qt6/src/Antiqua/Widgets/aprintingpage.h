@@ -12,8 +12,6 @@
 #include <AntiquaCRM>
 #include <AntiquaPrintSupport>
 #include <QPainter>
-#include <QTextEdit>
-#include <QTextFrame>
 #include <QWidget>
 
 namespace AntiquaCRM {
@@ -21,34 +19,17 @@ namespace AntiquaCRM {
 /**
  * @class APrintingPage
  * @brief TextEdit Widgets with Watermark and Textformatings
+ *
  * @ingroup PrinterWidgets
  */
-class ANTIQUACRM_LIBRARY APrintingPage : public QTextEdit, public APrintTools {
+class ANTIQUACRM_LIBRARY APrintingPage : public QWidget, public APrintTools {
   Q_OBJECT
 
 private:
   /**
-   * @brief printer info class
-   * Called with @ref getPrinterInfo.
-   * Initialed in @ref initConfiguration()
-   */
-  PrinterInfo p_printerInfo;
-
-  /**
-   * @brief current page margins
-   * Initialed in initConfiguration()
-   */
-  PageMargins margin;
-
-  /**
    * @brief Company data, loaded by initConfiguration()
    */
   QHash<QString, QString> p_companyData;
-
-  /**
-   * @brief Primary Content data to fill
-   */
-  QJsonObject p_content_data;
 
   /**
    * @brief load configuration settings and company data
@@ -72,11 +53,6 @@ private:
   void paintIdentities(QPainter &painter);
 
   /**
-   * @brief Inserts Document Subject and Date
-   */
-  void paintSubject(QPainter &painter);
-
-  /**
    * @brief Inserts Document footer
    */
   void paintFooter(QPainter &painter);
@@ -85,10 +61,24 @@ private:
    * @brief paint watermark and borders
    * @short define DEBUG_DISPLAY_BORDERS before load this class
    * if you want display painted borders
+   *
+   * https://wikipedia.org/wiki/DIN_5008
    */
   virtual void paintEvent(QPaintEvent *) override final;
 
 protected:
+  /**
+   * @brief Primary Content data ...
+   * @note Required by all Painting functions!
+   *
+   * Most important data set in this class.
+   * Inherits all Configuration fields, text bodies and article data.
+   * e.g.: Article list, VAT and prices.
+   *
+   * @sa setContentData
+   */
+  QJsonObject contentData;
+
   /**
    * @brief Query Sql settings
    */
@@ -100,15 +90,9 @@ protected:
   AntiquaCRM::ASettings *cfg;
 
   /**
-   * @brief QTextDocument rootFrame
-   * Initialed and configured in constructor
+   * @brief Inserts Document Body
    */
-  QTextFrame *rootFrame;
-
-  /**
-   * @brief get Painting width() minus margins in points!
-   */
-  const QRectF paintArea() const;
+  virtual void paintContent(QPainter &painter) = 0;
 
   /**
    * @brief Border left in points
@@ -131,11 +115,9 @@ public:
   virtual ~APrintingPage();
 
   /**
-   * @brief Create Document Body
-   * @param oid = Order Id
-   * @param cid = Customer Id
+   * @brief Set required Content data fpr Page layout!
    */
-  virtual void setBody(qint64 oid, qint64 cid) = 0;
+  virtual bool setContentData(QJsonObject &data) = 0;
 
   /**
    * @brief SQL-Query Customer data
@@ -144,65 +126,10 @@ public:
   const QMap<QString, QVariant> queryCustomerData(qint64 cid);
 
   /**
-   * @brief Call Printer Info for PageSize Id
-   * @param id - Default: Din A4 Portrait
-   */
-  const QPrinterInfo getPrinterInfo(QPageSize::PageSizeId id = QPageSize::A4);
-
-  /**
-   * @brief Standard text format
-   */
-  const QTextCharFormat charFormat(const QFont &f, bool bolded = false);
-
-  /**
-   * @brief Body Text Block align left
-   */
-  const QTextBlockFormat bodyText();
-
-  /**
-   * @brief Text Block align right
-   */
-  const QTextBlockFormat alignRight();
-
-  /**
-   * @brief Text Block align Center
-   */
-  const QTextBlockFormat alignCenter();
-
-  /**
-   * @brief Create Centered Cell Format
-   */
-  const QTextCharFormat verticalCenter();
-
-  /**
-   * @brief Text Table formats
-   */
-  const QTextTableFormat tableFormat();
-  const QTextTableFormat inlineTableFormat();
-
-  /**
-   * @brief Text Table Cell formats
-   */
-  const QTextTableCellFormat addressCellFormat();
-
-  /**
-   * @brief Table cell formats
-   * Only Qt::AlignTop and Qt::AlignBottom enumarations accepted!
-   * If not one of this Alignments, border is disabled!
-   * @param border - Set border with Vertical Alignments
-   */
-  const QTextTableCellFormat cellFormat(Qt::Alignment border = Qt::AlignBaseline);
-
-  /**
    * @brief Company data from Configuration
    * @param key
    */
   const QString companyData(const QString &key);
-
-  /**
-   * @brief Key list for add Fonts in printer configuration.
-   */
-  const QStringList fontKeys() const;
 
   /**
    * @brief query font by configuration key
@@ -219,8 +146,6 @@ public:
    * @brief letter heading watermark
    */
   const QImage watermark() const;
-
-  bool setContentData(const QJsonObject &data);
 };
 
 } // namespace AntiquaCRM

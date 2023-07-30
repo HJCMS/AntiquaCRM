@@ -62,6 +62,35 @@ void APrintDialog::sendStatusMessage(const QString &message) {
   m_statusBar->showMessage(message, 5000);
 }
 
+const QPrinterInfo APrintDialog::getPrinterInfo(QPageSize::PageSizeId id) {
+  QPrinterInfo _info;
+  config->beginGroup("printer");
+  // Load Printers
+  QStringList printers = QPrinterInfo::availablePrinterNames();
+  if (printers.size() > 0) {
+    if (id == QPageSize::A4) {
+      // Primary Printer
+      QString _primary = config->value("device_primary").toString();
+      if (_primary.isEmpty())
+        _info = QPrinterInfo::printerInfo(printers.first());
+      else
+        _info = QPrinterInfo::printerInfo(_primary);
+    }
+    if (id == QPageSize::A6) {
+      // Secondary Printer
+      QString _secondary = config->value("device_secondary").toString();
+      if (_secondary.isEmpty())
+        _info = QPrinterInfo::printerInfo(printers.last());
+      else
+        _info = QPrinterInfo::printerInfo(_secondary);
+    }
+  } else {
+    qWarning("No Printer configuration found!");
+  }
+  config->endGroup();
+  return _info;
+}
+
 int APrintDialog::exec() {
   qWarning("Do not use a Printer dialog without options set!");
   return QDialog::Rejected;

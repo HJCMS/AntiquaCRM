@@ -13,18 +13,15 @@ qreal APrintTools::getPoints(int millimeter) const {
   return qRound(millimeter * points);
 }
 
-const QPen APrintTools::linePen(const QColor &color) const {
-  QPen _pen(color, Qt::SolidLine);
-  _pen.setCapStyle(Qt::FlatCap);
-  _pen.setWidthF(0.6);
-  _pen.setCosmetic(true);
-  return _pen;
-}
+const QStaticText APrintTools::textBlock(Qt::Alignment align,
+                                         QTextOption::WrapMode mode) const {
+  QTextOption _opts(align);
+  _opts.setWrapMode(mode);
 
-const QPen APrintTools::fontPen(const QColor &color) const {
-  QPen _pen(color, Qt::SolidLine);
-  _pen.setCosmetic(true);
-  return _pen;
+  QStaticText _box;
+  _box.setTextFormat(Qt::RichText);
+  _box.setTextOption(_opts);
+  return _box;
 }
 
 const QString APrintTools::toRichText(const QString &txt) const {
@@ -41,9 +38,10 @@ const QRectF APrintTools::pagePoints() const {
 }
 
 const QRectF APrintTools::letterWindow(qreal left) const {
+  // https://de.wikipedia.org/wiki/DIN_5008
   return QRectF(getPoints(left), // 25mm left
                 getPoints(45),   // 45mm top
-                getPoints(80),   // 80mm width
+                getPoints(85),   // 85mm width
                 getPoints(45)    // 45mm height
   );
 }
@@ -57,6 +55,27 @@ const QPageLayout APrintTools::pageLayout() const {
   _layout.setUnits(QPageLayout::Millimeter);
   _layout.setMode(QPageLayout::FullPageMode);
   return _layout;
+}
+
+const QPen APrintTools::linePen(const QColor &color) const {
+  QPen _pen(color);
+  _pen.setStyle(Qt::SolidLine);
+  _pen.setCapStyle(Qt::FlatCap);
+  _pen.setJoinStyle(Qt::RoundJoin);
+  _pen.setWidthF(0.6);
+  _pen.setCosmetic(true);
+  return _pen;
+}
+
+const QPen APrintTools::fontPen(const QColor &color) const {
+  QPen _pen(color);
+  _pen.setCosmetic(true);
+  return _pen;
+}
+
+qreal APrintTools::fontHeight(const QFont &font) const {
+  const QFontMetrics _metrics(font);
+  return _metrics.height();
 }
 
 const QBrush APrintTools::borderBrush(const QColor &color) const {

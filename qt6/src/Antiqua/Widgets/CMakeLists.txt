@@ -21,6 +21,7 @@ SET (_library_FILES
   antiquainput.h.cmake
   antiquamail.h.cmake
   antiquaprinting.h.cmake
+  antiquaprintdialog.h.cmake
   antiquaprintsupport.h.cmake
   antiquawidgets.h.cmake
 )
@@ -41,8 +42,8 @@ CONFIGURE_FILE (antiquaprinting.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
 )
 
-CONFIGURE_FILE (antiquaprinting.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
+CONFIGURE_FILE (antiquaprintdialog.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprintdialog.h
 )
 
 CONFIGURE_FILE (antiquaprintsupport.h.cmake
@@ -58,6 +59,7 @@ SET (_library_config_HEADERS
   antiquainput.h
   antiquamail.h
   antiquaprinting.h
+  antiquaprintdialog.h
   antiquaprintsupport.h
   antiquawidgets.h
 )

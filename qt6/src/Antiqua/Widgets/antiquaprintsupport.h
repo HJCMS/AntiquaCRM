@@ -12,7 +12,7 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 
-#ifndef ANTIQUACRM_INPUT_APRINTTOOLS_H
+#ifndef ANTIQUACRM_PRINTING_APRINTTOOLS_H
 #include "aprinttools.h"
 #endif
 
