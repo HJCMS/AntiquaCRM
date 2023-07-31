@@ -3,34 +3,213 @@
 
 #include "printinvoice.h"
 
+#include <QLayout>
+#include <QMetaType>
 #include <QPrintDialog>
+#include <QTableWidgetItem>
 
 namespace AntiquaCRM {
 
-InvoicePage::InvoicePage(QWidget *parent)
-    : AntiquaCRM::APrintingPage{parent} {
+InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
+  // https://de.wikipedia.org/wiki/DIN_5008
+  normalFont = getFont("print_font_normal");
+
+  QVBoxLayout *layout = new QVBoxLayout(this);
+  layout->setContentsMargins(borderLeft(),              // left margin
+                             getPoints(120),            // top margin
+                             (width() - borderRight()), // right margin
+                             getPoints(100));
+
+  QString _css("* {background-color:#FFFFFF;color:#000000;border:none;}");
+
+  m_table = new QTableWidget(this);
+  m_table->setColumnCount(5);
+  m_table->setStyleSheet(_css);
+  m_table->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
+  m_table->setSelectionMode(QAbstractItemView::NoSelection);
+  m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
+  m_table->setWordWrap(true);
+
+  setArticleHeaderItem(0, tr("Article"), (Qt::AlignCenter));
+  setArticleHeaderItem(1, tr("Description"), (Qt::AlignLeft));
+  setArticleHeaderItem(2, tr("Amount"), (Qt::AlignCenter));
+  setArticleHeaderItem(3, tr("VAT"), (Qt::AlignCenter));
+  setArticleHeaderItem(4, tr("Price"), (Qt::AlignCenter));
+
+  QHeaderView *m_hview = m_table->horizontalHeader();
+  m_hview->setSectionResizeMode(QHeaderView::ResizeToContents);
+  m_hview->setSectionResizeMode(1, QHeaderView::Stretch);
+
+  QHeaderView *m_vview = m_table->verticalHeader();
+  m_vview->setVisible(false);
+  m_vview->setSectionResizeMode(QHeaderView::ResizeToContents);
+
+  layout->addWidget(m_table);
+  setLayout(layout);
+}
+
+const QPoint InvoicePage::startPoint() const {
+  return QPoint(borderLeft(), getPoints(100));
+}
+
+void InvoicePage::setArticleData(int row, int column, const QVariant &data) {
+  // Table Rows
+  QTableWidgetItem *item = new QTableWidgetItem(data.toString());
+  switch (column) {
+  case 0:
+    item->setTextAlignment(Qt::AlignRight);
+    break;
+
+  case 1:
+    item->setTextAlignment(Qt::AlignLeft | Qt::AlignTop);
+    break;
+
+  default:
+    item->setTextAlignment(Qt::AlignCenter);
+    break;
+  }
+  m_table->setItem(row, column, item);
+}
+
+void InvoicePage::setArticleVAT(int row, int column, int type) {
+  QString _title;
+  switch (type) {
+  case 0:
+    _title = QString("19%");
+    break;
+
+  case 1:
+    _title = QString("7%");
+    break;
+
+  default:
+    _title = QString(" - ");
+    break;
+  }
+  QTableWidgetItem *item = new QTableWidgetItem(_title);
+  item->setData(Qt::UserRole, type);
+  item->setTextAlignment(Qt::AlignCenter);
+  m_table->setItem(row, column, item);
+}
+
+int InvoicePage::setArticlePrice(int row, int column, double price) {
+  AntiquaCRM::ATaxCalculator _calc(price);
+  QTableWidgetItem *item = new QTableWidgetItem(_calc.money(price));
+  item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  item->setData(Qt::UserRole, price);
+  m_table->setItem(row, column, item);
+
+  row++;
+  return row;
+}
+
+void InvoicePage::setArticleSummary() {
+  int _row = (m_table->rowCount() - 1);
+  int _vat = m_table->item(_row, 3)->data(Qt::UserRole).toInt();
+  double _price = m_table->item(_row, 4)->data(Qt::UserRole).toDouble();
+  switch (static_cast<AntiquaCRM::SalesTax>(_vat)) {
+  case (AntiquaCRM::SalesTax::TAX_NOT):
+    // without sales tax
+    break;
+
+  case (AntiquaCRM::SalesTax::TAX_INCL):
+    // including sales tax
+    break;
+
+  case (AntiquaCRM::SalesTax::TAX_WITH):
+    // with sales tax
+    break;
+
+  default:
+    // unknown sales tax
+    break;
+  }
+  qDebug() << Q_FUNC_INFO << "__TODO__" << _vat << _price;
+}
+
+void InvoicePage::paintSubject(QPainter &painter) {
+  painter.setPen(fontPen());
+  QFont _subjectFont(normalFont);
+  _subjectFont.setBold(true);
+  painter.setFont(_subjectFont);
+
+  // Subject
+  QStaticText _subject = textBlock();
+  _subject.setText(contentData.value("subject").toString());
+  _subject.prepare(painter.transform(), _subjectFont);
+  painter.drawStaticText(startPoint(), _subject);
+
+  // Location and Date
+  painter.setFont(normalFont);
+  QString _location(companyData("COMPANY_LOCATION_NAME"));
+  _location.append(" " + tr("on") + " ");
+  _location.append(QDate::currentDate().toString("dd.MM.yyyy"));
+  QStaticText _datebox = textBlock(Qt::AlignRight);
+  _datebox.setText(_location);
+  _datebox.prepare(painter.transform(), normalFont);
+  qreal _bx = (borderRight() - _datebox.size().width());
+  painter.drawStaticText(QPoint(_bx, startPoint().y()), _datebox);
+
+  painter.setPen(linePen());
+  qreal _ly = (startPoint().y() + fontHeight(normalFont));
+  painter.drawLine(QPoint(borderLeft(), _ly), QPoint(borderRight(), _ly));
+
+  position = _ly;
 }
 
 void InvoicePage::paintContent(QPainter &painter) {
   if (!contentData.contains("body"))
     return; // skip if not exists
 
-  Q_UNUSED(painter);
+  // at first paint subject and date with underline.
+  paintSubject(painter);
+
+  // dataset
+  const QJsonObject _body = contentData.value("body").toObject();
+
+  // config
+  qreal _fontHeight = fontHeight(normalFont);
+  qreal _margin = 5;
+  qreal _y = position + getPoints(_margin);
+  qreal _x = borderLeft();
+  QTransform _transform = painter.transform();
+
+  // init painter
+  painter.setPen(fontPen());
+  painter.setFont(normalFont);
+
+  if (_body.contains("intro")) {
+    QStaticText _intro = textBlock();
+    _intro.setText(_body.value("intro").toString());
+    _intro.prepare(_transform, normalFont);
+    _intro.setTextWidth(inlineWidth());
+    painter.drawStaticText(QPoint(_x, _y), _intro);
+  }
+
+  _y += m_table->rect().bottomLeft().y() + getPoints(_margin) + _fontHeight;
+
+  if (_body.contains("finally")) {
+    QStaticText _finally = textBlock();
+    _finally.setText(_body.value("finally").toString());
+    _finally.prepare(_transform, normalFont);
+    _finally.setTextWidth(inlineWidth());
+    painter.drawStaticText(QPoint(_x, _y), _finally);
+  }
 }
 
 bool InvoicePage::setContentData(QJsonObject &data) {
-  bool _return = false;
   if (!data.contains("config")) {
     qWarning("Unable to read invoice content data!");
-    return _return;
+    return false;
   }
 
   contentData = data;
   QJsonObject _config = contentData.value("config").toObject();
   QJsonObject _body;
-  _body.insert("intro", companyData("COMPANY_INTRO_DELIVERY"));
-  _body.insert("policy", "");
+  _body.insert("intro", companyData("COMPANY_INVOICE_INTRO"));
+  _body.insert("finally", companyData("COMPANY_INVOICE_THANKS"));
+  contentData.insert("body", _body);
 
   AntiquaCRM::ASqlFiles _tpl("query_printing_invoice");
   if (!_tpl.openTemplate()) {
@@ -46,22 +225,19 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
   int _size = _query.size();
   if (_size > 0) {
-    QJsonArray _array;
+    m_table->setRowCount(_query.size());
+    int row = 0;
     while (_query.next()) {
-      QJsonObject _obj;
-      _obj.insert("aid", _query.value("a_article_id").toString());
-      _obj.insert("title", _query.value("a_title").toString());
-      _obj.insert("count", _query.value("a_count").toDouble());
-      _obj.insert("price", _query.value("a_sell_price").toDouble());
-      _array.append(_obj);
+      setArticleData(row, 0, _query.value("a_article_id").toString());
+      setArticleData(row, 1, _query.value("a_title").toString());
+      setArticleData(row, 2, _query.value("a_count").toInt());
+      setArticleVAT(row, 3, _query.value("a_tax").toInt());
+      row = setArticlePrice(row, 4, _query.value("a_sell_price").toDouble());
     }
-    _body.insert("articles", _array);
-    _return = (_array.size() > 0);
+    setArticleSummary();
+    _query.clear();
   }
-  // qDebug() << _return << _sql << contentData;
-  contentData.insert("body", _body);
-  _query.clear();
-  return _return;
+  return (m_table->rowCount() > 0);
 }
 
 PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {
@@ -130,6 +306,9 @@ int PrintInvoice::exec(const QJsonObject &options) {
     return QDialog::Rejected;
   }
 
+  double _iid = options.value("invoice_id").toDouble();
+  double _did = options.value("order_id").toDouble();
+
   pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
   pdfFileName.append(".pdf");
 
@@ -137,12 +316,16 @@ int PrintInvoice::exec(const QJsonObject &options) {
 
   QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
 
+  QJsonObject _config;
+  _config.insert("invoice_id", _iid);
+  _config.insert("order_id", o_id);
+  _config.insert("customer_id", c_id);
+  _config.insert("delivery_id", _did);
+
   QJsonObject content;
+  content.insert("config", _config);
   content.insert("subject", tr("Invoice"));
   content.insert("address", _person.value("address").toString());
-
-  double _iid = options.value("invoice_id").toDouble();
-  double _did = options.value("order_id").toDouble();
 
   QJsonArray _array;
   _array.append(tr("Invoice No."));

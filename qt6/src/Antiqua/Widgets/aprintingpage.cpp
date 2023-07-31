@@ -4,8 +4,7 @@
 #include "aprintingpage.h"
 
 #include <QFontMetrics>
-#include <QLayout>
-#include <QSizePolicy>
+#include <QTableWidgetItem>
 
 #ifdef ANTIQUA_DEVELOPEMENT
 // Display helper borders
@@ -13,6 +12,24 @@
 #endif
 
 namespace AntiquaCRM {
+
+APrintingText::APrintingText(APrintingPage *parent) : QTextEdit{parent} {
+  setContentsMargins(0, 0, 0, 0);
+  QPalette p = palette();
+  p.setColor(QPalette::Base, Qt::white);
+  p.setColor(QPalette::Text, Qt::black);
+  setPalette(p);
+
+  setTextColor(Qt::black);
+  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+
+  setWindowModified(true);
+
+  QString css("* { color: black; }");
+  css.append("p, li { white-space: pre-wrap; }");
+  document()->setDefaultStyleSheet(css);
+  document()->setModified(true);
+}
 
 APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
     : QWidget{parent}, APrintTools{id} {
@@ -246,6 +263,8 @@ void APrintingPage::paintFooter(QPainter &painter) {
   int _line_y = (_ft_y - 10);
   painter.setPen(linePen());
   painter.drawLine(QPoint(_left_x, _line_y), QPoint(_right_x, _line_y));
+
+  footerPosition = _line_y;
 }
 
 void APrintingPage::paintEvent(QPaintEvent *event) {
@@ -305,10 +324,26 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QWidget::paintEvent(event);
 }
 
+void APrintingPage::setArticleHeaderItem(int column, const QString &title,
+                                         Qt::Alignment align) {
+  if (m_table == nullptr)
+    return;
+
+  QTableWidgetItem *item = new QTableWidgetItem(title);
+  item->setForeground(Qt::black);
+  item->setBackground(Qt::white);
+  item->setTextAlignment(align);
+  m_table->setHorizontalHeaderItem(column, item);
+}
+
 qreal APrintingPage::borderLeft() const { return getPoints(margin.left); }
 
 qreal APrintingPage::borderRight() const {
   return qRound(pagePoints().width() - getPoints(margin.right));
+}
+
+qreal APrintingPage::inlineWidth() const {
+  return qRound(borderRight() - borderLeft());
 }
 
 const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {

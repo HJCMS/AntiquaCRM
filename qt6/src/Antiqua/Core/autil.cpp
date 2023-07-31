@@ -13,7 +13,7 @@
 namespace AntiquaCRM {
 
 const QString AUtil::recipientPattern() {
-  return QString("([\\d\\w]+[\\-\\.\\_]?[\\d\\w]+)+");
+  return QString("([\\d\\w\\-\\.\\_]+)");
 }
 
 const QString AUtil::domainPattern() {

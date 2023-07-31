@@ -25,7 +25,14 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY InvoicePage final : public AntiquaCRM::APrintingPage {
   Q_OBJECT
 
-protected:
+private:
+  mutable qreal position = -1;
+  const QPoint startPoint() const;
+  void setArticleData(int row, int column, const QVariant &data) override;
+  void setArticleVAT(int row, int column, int type);
+  int setArticlePrice(int row, int column, double price);
+  void setArticleSummary() override;
+  void paintSubject(QPainter &painter);
   void paintContent(QPainter &painter) override;
 
 public:

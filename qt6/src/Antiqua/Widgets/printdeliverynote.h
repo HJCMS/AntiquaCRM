@@ -10,42 +10,23 @@
 #define ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
 
 #include <AntiquaPrintDialog>
-#include <QTableWidget>
-#include <QTableWidgetItem>
 
 namespace AntiquaCRM {
 
 /**
  * @class DeliveryNote
  * @brief Delivery note Painting Device
+ *
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY DeliveryNote final : public AntiquaCRM::APrintingPage {
   Q_OBJECT
 
 private:
-  QTableWidget *m_table;
-  QFont normalFont;
-
-  /**
-   * @brief Textfield Start point!
-   */
-  const QPoint startPoint() const;
-
-  /**
-   * @brief Set Static Text indent ...
-   */
-  qreal indent = getPoints(5);
-
-  /**
-   * @brief Current Painter psotion.
-   */
   mutable qreal position = -1;
-
-  void setTableHeader(int column, const QString &title);
-  void setData(int row, int column, const QString &title);
-
-protected:
+  const QPoint startPoint() const;
+  void setArticleData(int row, int column, const QVariant &data) override;
+  void setArticleSummary() override;
   void paintSubject(QPainter &painter);
   void paintContent(QPainter &painter) override;
 
@@ -57,6 +38,7 @@ public:
 /**
  * @class PrintDeliveryNote
  * @brief Printing Delivery Notes Dialog
+ *
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PrintDeliveryNote : public AntiquaCRM::APrintDialog {

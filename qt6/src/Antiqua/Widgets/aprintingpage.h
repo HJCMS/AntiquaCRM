@@ -12,9 +12,19 @@
 #include <AntiquaCRM>
 #include <AntiquaPrintSupport>
 #include <QPainter>
-#include <QWidget>
+#include <QTableWidget>
+#include <QTextEdit>
 
 namespace AntiquaCRM {
+
+class APrintingPage;
+
+class ANTIQUACRM_LIBRARY APrintingText : public QTextEdit {
+  Q_OBJECT
+
+public:
+  explicit APrintingText(APrintingPage *parent);
+};
 
 /**
  * @class APrintingPage
@@ -90,19 +100,78 @@ protected:
   AntiquaCRM::ASettings *cfg;
 
   /**
-   * @brief Inserts Document Body
+   * @brief Default Font
+   */
+  QFont normalFont;
+
+  /**
+   * @brief Text Boxes
+   */
+  APrintingText *m_intro = nullptr;
+  APrintingText *m_final = nullptr;
+
+  /**
+   * @brief Articles Table
+   */
+  QTableWidget *m_table = nullptr;
+
+  /**
+   * @brief Set Table Header columns
+   * @param column
+   * @param title - item text
+   */
+  void setArticleHeaderItem(int column, const QString &title,
+                            Qt::Alignment align = Qt::AlignLeft);
+
+  /**
+   * @brief Insert Article into table.
+   * @param row
+   * @param column
+   * @param title - item text
+   */
+  virtual void setArticleData(int row, int column, const QVariant &data) = 0;
+
+  /**
+   * @brief Finalize Article table.
+   */
+  virtual void setArticleSummary() = 0;
+
+  /**
+   * @brief Paint Document Body
+   * @param painter
    */
   virtual void paintContent(QPainter &painter) = 0;
 
   /**
-   * @brief Border left in points
+   * @brief Start Position from Footer.
+   *
+   * e.g. Margin bottom
+   */
+  int footerPosition = 0;
+
+  /**
+   * @brief Points from left Margin to left Border
+   * @code
+   *  getPoints(margin.left)
+   * @endcode
    */
   qreal borderLeft() const;
 
   /**
-   * @brief Border right from left in points
+   * @brief Points from left Margin to right Border
+   * @code
+   *  pagePoints().width() - getPoints(margin.right)
+   * @endcode
    */
   qreal borderRight() const;
+
+  /**
+   * @brief Inline frame Width
+   * @code
+   *   borderRight() - borderLeft()
+   * @endcode
+   */
+  qreal inlineWidth() const;
 
 public:
   /**
