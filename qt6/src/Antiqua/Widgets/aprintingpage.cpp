@@ -4,6 +4,8 @@
 #include "aprintingpage.h"
 
 #include <QFontMetrics>
+#include <QPalette>
+#include <QSizePolicy>
 #include <QTableWidgetItem>
 
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -12,24 +14,6 @@
 #endif
 
 namespace AntiquaCRM {
-
-APrintingText::APrintingText(APrintingPage *parent) : QTextEdit{parent} {
-  setContentsMargins(0, 0, 0, 0);
-  QPalette p = palette();
-  p.setColor(QPalette::Base, Qt::white);
-  p.setColor(QPalette::Text, Qt::black);
-  setPalette(p);
-
-  setTextColor(Qt::black);
-  setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
-
-  setWindowModified(true);
-
-  QString css("* { color: black; }");
-  css.append("p, li { white-space: pre-wrap; }");
-  document()->setDefaultStyleSheet(css);
-  document()->setModified(true);
-}
 
 APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
     : QWidget{parent}, APrintTools{id} {
@@ -61,6 +45,13 @@ APrintingPage::~APrintingPage() {
 void APrintingPage::initConfiguration() {
   if (m_sql == nullptr)
     m_sql = new AntiquaCRM::ASqlCore(this);
+
+  // Payment Settings
+  cfg->beginGroup("payment");
+  foreach (QString _k, cfg->allKeys()) {
+    p_companyData.insert(_k.toUpper(), cfg->value(_k).toString());
+  }
+  cfg->endGroup();
 
   // NOTE: do not close this group here!
   cfg->beginGroup("printer");
@@ -263,8 +254,6 @@ void APrintingPage::paintFooter(QPainter &painter) {
   int _line_y = (_ft_y - 10);
   painter.setPen(linePen());
   painter.drawLine(QPoint(_left_x, _line_y), QPoint(_right_x, _line_y));
-
-  footerPosition = _line_y;
 }
 
 void APrintingPage::paintEvent(QPaintEvent *event) {
@@ -311,9 +300,7 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
     // END::Identities
 
     // BEGIN::Body
-    if (contentData.contains("body")) {
-      paintContent(painter);
-    }
+    paintContent(painter);
     // END::Body
 
     // BEGIN::Footer

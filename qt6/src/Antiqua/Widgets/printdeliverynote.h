@@ -10,6 +10,7 @@
 #define ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
 
 #include <AntiquaPrintDialog>
+#include <QWidget>
 
 namespace AntiquaCRM {
 
@@ -26,8 +27,7 @@ private:
   mutable qreal position = -1;
   const QPoint startPoint() const;
   void setArticleData(int row, int column, const QVariant &data) override;
-  void setArticleSummary() override;
-  void paintSubject(QPainter &painter);
+  void setSummary() override;
   void paintContent(QPainter &painter) override;
 
 public:

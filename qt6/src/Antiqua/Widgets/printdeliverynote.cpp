@@ -5,8 +5,8 @@
 
 #include <QAbstractItemView>
 #include <QHeaderView>
+#include <QLayout>
 #include <QPrintDialog>
-#include <QSizePolicy>
 #include <QTableWidgetItem>
 
 namespace AntiquaCRM {
@@ -14,25 +14,27 @@ namespace AntiquaCRM {
 DeliveryNote::DeliveryNote(QWidget *parent)
     : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_deliverynote_page");
-  // https://de.wikipedia.org/wiki/DIN_5008
   normalFont = getFont("print_font_normal");
 
-  setStyleSheet("QFrame {border: 1px solid red;}");
   QVBoxLayout *layout = new QVBoxLayout(this);
+  // https://de.wikipedia.org/wiki/DIN_5008
+  qreal _top = getPoints(100) + fontHeight(normalFont) + linePen().width();
   layout->setContentsMargins(borderLeft(),              // left margin
-                             getPoints(120),            // top margin
+                             _top,                      // top margin
                              (width() - borderRight()), // right margin
-                             getPoints(20));
+                             getPoints(50));
 
   QString _css("* {background-color:#FFFFFF;color:#000000;border:none;}");
 
-  m_intro = new APrintingText(this);
+  m_intro = new QLabel(this);
+  m_intro->setContentsMargins(5, 5, 5, 5);
+  m_intro->setWordWrap(true);
+  m_intro->setStyleSheet(_css);
   layout->insertWidget(0, m_intro);
 
   m_table = new QTableWidget(this);
   m_table->setColumnCount(3);
   m_table->setStyleSheet(_css);
-  m_table->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
   m_table->setSelectionMode(QAbstractItemView::NoSelection);
   m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
@@ -49,13 +51,14 @@ DeliveryNote::DeliveryNote(QWidget *parent)
   m_vview->setSectionResizeMode(QHeaderView::ResizeToContents);
 
   layout->insertWidget(1, m_table);
+  layout->setStretch(1, 1);
 
-  m_final = new APrintingText(this);
+  m_final = new QLabel(this);
+  m_final->setContentsMargins(5, 5, 5, 5);
+  m_final->setWordWrap(true);
+  m_final->setStyleSheet(_css);
   layout->insertWidget(2, m_final);
 
-  layout->setStretchFactor(m_intro, 25);
-  layout->setStretchFactor(m_table, 50);
-  layout->setStretchFactor(m_final, 25);
   layout->addStretch(1);
   setLayout(layout);
 }
@@ -86,7 +89,7 @@ void DeliveryNote::setArticleData(int row, int column, const QVariant &data) {
   m_table->setItem(row, column, item);
 }
 
-void DeliveryNote::setArticleSummary() {
+void DeliveryNote::setSummary() {
   // Summary
   int _count = m_table->rowCount();
   int _summary = 0;
@@ -105,7 +108,7 @@ void DeliveryNote::setArticleSummary() {
   m_table->setItem(_count, 2, ic2);
 }
 
-void DeliveryNote::paintSubject(QPainter &painter) {
+void DeliveryNote::paintContent(QPainter &painter) {
   painter.setPen(fontPen());
   QFont _subjectFont(normalFont);
   _subjectFont.setBold(true);
@@ -135,36 +138,21 @@ void DeliveryNote::paintSubject(QPainter &painter) {
   position = _ly;
 }
 
-void DeliveryNote::paintContent(QPainter &painter) {
-  if (!contentData.contains("body"))
-    return; // skip if not exists
-
-  // at first paint subject and date with underline.
-  paintSubject(painter);
-}
-
 bool DeliveryNote::setContentData(QJsonObject &data) {
-  bool _return = false;
   if (!data.contains("config")) {
     qWarning("Unable to read invoice delivery note data!");
-    return _return;
-  }
-
-  if (!data.contains("config"))
     return false;
-
-  m_intro->setPlainText(companyData("COMPANY_DELIVERY_INTRO"));
-
-  m_intro->setPlainText(companyData("COMPANY_DELIVERY_THANKS"));
-
+  }
   contentData = data;
-  QJsonObject _config = contentData.value("config").toObject();
+  m_intro->setText(companyData("COMPANY_DELIVERY_INTRO"));
+  m_final->setText(companyData("COMPANY_DELIVERY_THANKS"));
 
   AntiquaCRM::ASqlFiles _tpl("query_printing_delivery_note");
   if (!_tpl.openTemplate()) {
     qWarning("Unable to open delivery note SQL template!");
   }
 
+  QJsonObject _config = contentData.value("config").toObject();
   QString _sql("a_order_id=");
   _sql.append(QString::number(_config.value("order_id").toDouble()));
   _sql.append(" AND a_customer_id=");
@@ -181,7 +169,7 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
       setArticleData(_row, 2, _query.value("crowd").toString());
       _row++;
     }
-    setArticleSummary();
+    setSummary();
     _query.clear();
   }
   return (m_table->rowCount() > 0);

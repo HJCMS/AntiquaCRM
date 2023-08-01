@@ -33,13 +33,15 @@ namespace AntiquaCRM {
  */
 class ANTIQUACRM_LIBRARY ATaxCalculator final {
 private:
-  const double p_origin;
+  double p_origin;
+  int p_vat_type;
+  AntiquaCRM::SalesTax p_vat_mode;
 
 public:
   /**
    * @param price - money
    */
-  explicit ATaxCalculator(double price);
+  explicit ATaxCalculator(double price, int vat_type);
 
   /**
    * @brief calculate sales tax for current price
@@ -52,6 +54,46 @@ public:
    * @param vat - sales tax rate
    */
   qreal getIncl(qreal vat) const;
+
+  /**
+   * @brief Set Current VAT Mode
+   * @param mode
+   */
+  void setBillingMode(AntiquaCRM::SalesTax mode);
+
+  /**
+   * @brief Current VAT Billing mode
+   * @sa AntiquaCRM::SalesTax
+   */
+  AntiquaCRM::SalesTax getBillingMode() const;
+
+  /**
+   * @brief Current VAT
+   *
+   * Returning current VAT-Type.
+   * Referenced by PostgreSQL Table \b "article_orders" and his columns:
+   * @li "a_type" - ArticleType
+   * @li "a_tax"  - Tax Value Category
+   *
+   * @code
+   *  pgsql=> \dt+ article_orders
+   * @endcode
+   *
+   * Defined in Table Column: a_tax
+   * @code
+   *  0 = Normal VAT
+   *  1 = Reduced VAT
+   *  2 = Without VAT
+   * @endcode
+   * @sa AntiquaCRM::ArticleType
+   *
+   */
+  int vatType() const;
+
+  /**
+   * @brief net price without any VAT calculation
+   */
+  double netprice() const;
 
   /**
    * @brief add sales tax to current price
@@ -70,7 +112,8 @@ public:
    * @param value - price
    * @param format
    */
-  static const QString money(double value,
+  static const QString
+  money(double value,
         QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);
 };
 

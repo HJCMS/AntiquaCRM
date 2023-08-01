@@ -12,30 +12,34 @@ namespace AntiquaCRM {
 
 InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
-  // https://de.wikipedia.org/wiki/DIN_5008
   normalFont = getFont("print_font_normal");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
+  // https://de.wikipedia.org/wiki/DIN_5008
+  qreal _top = getPoints(100) + fontHeight(normalFont) + linePen().width();
   layout->setContentsMargins(borderLeft(),              // left margin
-                             getPoints(120),            // top margin
+                             _top,                      // top margin
                              (width() - borderRight()), // right margin
-                             getPoints(100));
+                             getPoints(50));
 
   QString _css("* {background-color:#FFFFFF;color:#000000;border:none;}");
 
+  m_intro = new QLabel(this);
+  m_intro->setContentsMargins(5, 5, 5, 5);
+  m_intro->setWordWrap(true);
+  m_intro->setStyleSheet(_css);
+  layout->insertWidget(0, m_intro);
+
   m_table = new QTableWidget(this);
-  m_table->setColumnCount(5);
+  m_table->setColumnCount(4);
   m_table->setStyleSheet(_css);
-  m_table->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
   m_table->setSelectionMode(QAbstractItemView::NoSelection);
   m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-  m_table->setWordWrap(true);
 
   setArticleHeaderItem(0, tr("Article"), (Qt::AlignCenter));
   setArticleHeaderItem(1, tr("Description"), (Qt::AlignLeft));
   setArticleHeaderItem(2, tr("Amount"), (Qt::AlignCenter));
-  setArticleHeaderItem(3, tr("VAT"), (Qt::AlignCenter));
-  setArticleHeaderItem(4, tr("Price"), (Qt::AlignCenter));
+  setArticleHeaderItem(3, tr("Price"), (Qt::AlignCenter));
 
   QHeaderView *m_hview = m_table->horizontalHeader();
   m_hview->setSectionResizeMode(QHeaderView::ResizeToContents);
@@ -45,7 +49,16 @@ InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
   m_vview->setVisible(false);
   m_vview->setSectionResizeMode(QHeaderView::ResizeToContents);
 
-  layout->addWidget(m_table);
+  layout->insertWidget(1, m_table);
+  layout->setStretch(1, 1);
+
+  m_final = new QLabel(this);
+  m_final->setContentsMargins(5, 5, 5, 5);
+  m_final->setWordWrap(true);
+  m_final->setStyleSheet(_css);
+  layout->insertWidget(2, m_final);
+
+  layout->addStretch(1);
   setLayout(layout);
 }
 
@@ -72,63 +85,50 @@ void InvoicePage::setArticleData(int row, int column, const QVariant &data) {
   m_table->setItem(row, column, item);
 }
 
-void InvoicePage::setArticleVAT(int row, int column, int type) {
-  QString _title;
-  switch (type) {
+int InvoicePage::setArticleSummary(int row, AntiquaCRM::ATaxCalculator calc) {
+  // QString _title;
+  QString _vat_value;
+  switch (calc.vatType()) {
   case 0:
-    _title = QString("19%");
+    _vat_value = companyData("VAT_NORMAL") + "%";
     break;
 
   case 1:
-    _title = QString("7%");
+    _vat_value = companyData("VAT_REDUCED") + "%";
     break;
 
   default:
-    _title = QString(" - ");
+    _vat_value = QString(" - ");
     break;
   }
-  QTableWidgetItem *item = new QTableWidgetItem(_title);
-  item->setData(Qt::UserRole, type);
-  item->setTextAlignment(Qt::AlignCenter);
-  m_table->setItem(row, column, item);
-}
+  // VAT
+  QTableWidgetItem *i2 = new QTableWidgetItem(_vat_value);
+  i2->setData(Qt::UserRole, calc.vatType());
+  i2->setTextAlignment(Qt::AlignCenter);
+  m_table->setItem(row, 2, i2);
+  // Coast
+  QTableWidgetItem *i3 = new QTableWidgetItem(calc.money(calc.netprice()));
+  i3->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
+  i3->setData(Qt::UserRole, calc.netprice());
+  m_table->setItem(row, 3, i3);
 
-int InvoicePage::setArticlePrice(int row, int column, double price) {
-  AntiquaCRM::ATaxCalculator _calc(price);
-  QTableWidgetItem *item = new QTableWidgetItem(_calc.money(price));
-  item->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  item->setData(Qt::UserRole, price);
-  m_table->setItem(row, column, item);
-
-  row++;
+  // row++;
   return row;
 }
 
-void InvoicePage::setArticleSummary() {
-  int _row = (m_table->rowCount() - 1);
-  int _vat = m_table->item(_row, 3)->data(Qt::UserRole).toInt();
-  double _price = m_table->item(_row, 4)->data(Qt::UserRole).toDouble();
-  switch (static_cast<AntiquaCRM::SalesTax>(_vat)) {
-  case (AntiquaCRM::SalesTax::TAX_NOT):
-    // without sales tax
-    break;
+void InvoicePage::setSummary() {
+  double _sum = 0;
+  for (int r = 0; r < m_table->rowCount(); r++) {
+    QTableWidgetItem *item = m_table->item(r, 3);
+    if (item == nullptr)
+      continue;
 
-  case (AntiquaCRM::SalesTax::TAX_INCL):
-    // including sales tax
-    break;
-
-  case (AntiquaCRM::SalesTax::TAX_WITH):
-    // with sales tax
-    break;
-
-  default:
-    // unknown sales tax
-    break;
+    _sum += item->data(Qt::UserRole).toDouble();
   }
-  qDebug() << Q_FUNC_INFO << "__TODO__" << _vat << _price;
+  qDebug() << Q_FUNC_INFO << "__TODO__" << _sum;
 }
 
-void InvoicePage::paintSubject(QPainter &painter) {
+void InvoicePage::paintContent(QPainter &painter) {
   painter.setPen(fontPen());
   QFont _subjectFont(normalFont);
   _subjectFont.setBold(true);
@@ -158,64 +158,21 @@ void InvoicePage::paintSubject(QPainter &painter) {
   position = _ly;
 }
 
-void InvoicePage::paintContent(QPainter &painter) {
-  if (!contentData.contains("body"))
-    return; // skip if not exists
-
-  // at first paint subject and date with underline.
-  paintSubject(painter);
-
-  // dataset
-  const QJsonObject _body = contentData.value("body").toObject();
-
-  // config
-  qreal _fontHeight = fontHeight(normalFont);
-  qreal _margin = 5;
-  qreal _y = position + getPoints(_margin);
-  qreal _x = borderLeft();
-  QTransform _transform = painter.transform();
-
-  // init painter
-  painter.setPen(fontPen());
-  painter.setFont(normalFont);
-
-  if (_body.contains("intro")) {
-    QStaticText _intro = textBlock();
-    _intro.setText(_body.value("intro").toString());
-    _intro.prepare(_transform, normalFont);
-    _intro.setTextWidth(inlineWidth());
-    painter.drawStaticText(QPoint(_x, _y), _intro);
-  }
-
-  _y += m_table->rect().bottomLeft().y() + getPoints(_margin) + _fontHeight;
-
-  if (_body.contains("finally")) {
-    QStaticText _finally = textBlock();
-    _finally.setText(_body.value("finally").toString());
-    _finally.prepare(_transform, normalFont);
-    _finally.setTextWidth(inlineWidth());
-    painter.drawStaticText(QPoint(_x, _y), _finally);
-  }
-}
-
 bool InvoicePage::setContentData(QJsonObject &data) {
   if (!data.contains("config")) {
     qWarning("Unable to read invoice content data!");
     return false;
   }
-
   contentData = data;
-  QJsonObject _config = contentData.value("config").toObject();
-  QJsonObject _body;
-  _body.insert("intro", companyData("COMPANY_INVOICE_INTRO"));
-  _body.insert("finally", companyData("COMPANY_INVOICE_THANKS"));
-  contentData.insert("body", _body);
+  m_intro->setText(companyData("COMPANY_INVOICE_INTRO"));
+  m_final->setText(companyData("COMPANY_INVOICE_THANKS"));
 
   AntiquaCRM::ASqlFiles _tpl("query_printing_invoice");
   if (!_tpl.openTemplate()) {
     qWarning("Unable to open invoice SQL template!");
   }
 
+  QJsonObject _config = contentData.value("config").toObject();
   QString _sql("a_order_id=");
   _sql.append(QString::number(_config.value("order_id").toDouble()));
   _sql.append(" AND a_customer_id=");
@@ -228,14 +185,20 @@ bool InvoicePage::setContentData(QJsonObject &data) {
     m_table->setRowCount(_query.size());
     int row = 0;
     while (_query.next()) {
+      int _count = _query.value("a_count").toInt();
+      int _vat_type = _query.value("a_tax").toInt();
+      double _price = _query.value("a_sell_price").toDouble();
       setArticleData(row, 0, _query.value("a_article_id").toString());
       setArticleData(row, 1, _query.value("a_title").toString());
-      setArticleData(row, 2, _query.value("a_count").toInt());
-      setArticleVAT(row, 3, _query.value("a_tax").toInt());
-      row = setArticlePrice(row, 4, _query.value("a_sell_price").toDouble());
+      setArticleData(row, 2, _count);
+      AntiquaCRM::ATaxCalculator _calc(_price, _vat_type);
+      setArticleData(row, 3, _calc.money(_price));
+      row = setArticleSummary(row, _calc);
+      row++;
     }
-    setArticleSummary();
+    setSummary();
     _query.clear();
+    m_table->update();
   }
   return (m_table->rowCount() > 0);
 }

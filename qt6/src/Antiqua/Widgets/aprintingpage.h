@@ -13,18 +13,9 @@
 #include <AntiquaPrintSupport>
 #include <QPainter>
 #include <QTableWidget>
-#include <QTextEdit>
+#include <QLabel>
 
 namespace AntiquaCRM {
-
-class APrintingPage;
-
-class ANTIQUACRM_LIBRARY APrintingText : public QTextEdit {
-  Q_OBJECT
-
-public:
-  explicit APrintingText(APrintingPage *parent);
-};
 
 /**
  * @class APrintingPage
@@ -107,8 +98,8 @@ protected:
   /**
    * @brief Text Boxes
    */
-  APrintingText *m_intro = nullptr;
-  APrintingText *m_final = nullptr;
+  QLabel *m_intro = nullptr;
+  QLabel *m_final = nullptr;
 
   /**
    * @brief Articles Table
@@ -134,20 +125,13 @@ protected:
   /**
    * @brief Finalize Article table.
    */
-  virtual void setArticleSummary() = 0;
+  virtual void setSummary() = 0;
 
   /**
    * @brief Paint Document Body
    * @param painter
    */
   virtual void paintContent(QPainter &painter) = 0;
-
-  /**
-   * @brief Start Position from Footer.
-   *
-   * e.g. Margin bottom
-   */
-  int footerPosition = 0;
 
   /**
    * @brief Points from left Margin to left Border
