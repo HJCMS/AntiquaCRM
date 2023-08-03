@@ -12,14 +12,16 @@
 #include <AntiquaCRM>
 #include <AntiquaPrintSupport>
 #include <QPainter>
-#include <QTableWidget>
-#include <QLabel>
+#include <QTextEdit>
 
 namespace AntiquaCRM {
 
 /**
  * @class APrintingPage
  * @brief TextEdit Widgets with Watermark and Textformatings
+ *
+ *  https://de.wikipedia.org/wiki/DIN_5008
+ *  https://www.deutschepost.de/de/b/briefvorlagen/normbrief-din-5008-vorlage.html
  *
  * @ingroup PrinterWidgets
  */
@@ -68,6 +70,8 @@ private:
   virtual void paintEvent(QPaintEvent *) override final;
 
 protected:
+  APrintingBody *m_body = nullptr;
+
   /**
    * @brief Primary Content data ...
    * @note Required by all Painting functions!
@@ -96,42 +100,16 @@ protected:
   QFont normalFont;
 
   /**
-   * @brief Text Boxes
-   */
-  QLabel *m_intro = nullptr;
-  QLabel *m_final = nullptr;
-
-  /**
-   * @brief Articles Table
-   */
-  QTableWidget *m_table = nullptr;
-
-  /**
-   * @brief Set Table Header columns
-   * @param column
-   * @param title - item text
-   */
-  void setArticleHeaderItem(int column, const QString &title,
-                            Qt::Alignment align = Qt::AlignLeft);
-
-  /**
-   * @brief Insert Article into table.
-   * @param row
-   * @param column
-   * @param title - item text
-   */
-  virtual void setArticleData(int row, int column, const QVariant &data) = 0;
-
-  /**
-   * @brief Finalize Article table.
-   */
-  virtual void setSummary() = 0;
-
-  /**
    * @brief Paint Document Body
    * @param painter
    */
   virtual void paintContent(QPainter &painter) = 0;
+
+  /**
+   * @brief Begin Body Painting
+   */
+  const QPointF bodyTop() const;
+  const QPointF bodyBottom() const;
 
   /**
    * @brief Points from left Margin to left Border
@@ -166,6 +144,11 @@ public:
                          QPageSize::PageSizeId id = QPageSize::A4);
 
   virtual ~APrintingPage();
+
+  /**
+   * @brief Set required Body objects
+   */
+  virtual void setBodyLayout() = 0;
 
   /**
    * @brief Set required Content data fpr Page layout!

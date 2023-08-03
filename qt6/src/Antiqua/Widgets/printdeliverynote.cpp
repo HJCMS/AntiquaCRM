@@ -3,11 +3,8 @@
 
 #include "printdeliverynote.h"
 
-#include <QAbstractItemView>
-#include <QHeaderView>
 #include <QLayout>
 #include <QPrintDialog>
-#include <QTableWidgetItem>
 
 namespace AntiquaCRM {
 
@@ -15,137 +12,26 @@ DeliveryNote::DeliveryNote(QWidget *parent)
     : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_deliverynote_page");
   normalFont = getFont("print_font_normal");
+}
 
+void DeliveryNote::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+
+void DeliveryNote::setBodyLayout() {
   QVBoxLayout *layout = new QVBoxLayout(this);
-  // https://de.wikipedia.org/wiki/DIN_5008
-  qreal _top = getPoints(100) + fontHeight(normalFont) + linePen().width();
-  layout->setContentsMargins(borderLeft(),              // left margin
-                             _top,                      // top margin
-                             (width() - borderRight()), // right margin
-                             getPoints(50));
-
-  QString _css("* {background-color:#FFFFFF;color:#000000;border:none;}");
-
-  m_intro = new QLabel(this);
-  m_intro->setContentsMargins(5, 5, 5, 5);
-  m_intro->setWordWrap(true);
-  m_intro->setStyleSheet(_css);
-  layout->insertWidget(0, m_intro);
-
-  m_table = new QTableWidget(this);
-  m_table->setColumnCount(3);
-  m_table->setStyleSheet(_css);
-  m_table->setSelectionMode(QAbstractItemView::NoSelection);
-  m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-  setArticleHeaderItem(0, tr("Article"), (Qt::AlignCenter));
-  setArticleHeaderItem(1, tr("Description"), (Qt::AlignLeft));
-  setArticleHeaderItem(2, tr("Amount"), (Qt::AlignCenter));
-
-  QHeaderView *m_hview = m_table->horizontalHeader();
-  m_hview->setSectionResizeMode(QHeaderView::ResizeToContents);
-  m_hview->setSectionResizeMode(1, QHeaderView::Stretch);
-
-  QHeaderView *m_vview = m_table->verticalHeader();
-  m_vview->setVisible(false);
-  m_vview->setSectionResizeMode(QHeaderView::ResizeToContents);
-
-  layout->insertWidget(1, m_table);
-  layout->setStretch(1, 1);
-
-  m_final = new QLabel(this);
-  m_final->setContentsMargins(5, 5, 5, 5);
-  m_final->setWordWrap(true);
-  m_final->setStyleSheet(_css);
-  layout->insertWidget(2, m_final);
-
-  layout->addStretch(1);
+  layout->setContentsMargins(margin.left(), getPoints(100), margin.right(),
+                             margin.bottom());
+  m_body = new APrintingBody(this);
+  layout->addWidget(m_body);
   setLayout(layout);
 }
 
-const QPoint DeliveryNote::startPoint() const {
-  return QPoint(borderLeft(), getPoints(100));
-}
-
-void DeliveryNote::setArticleData(int row, int column, const QVariant &data) {
-  // Table Rows
-  QTableWidgetItem *item = new QTableWidgetItem;
-  switch (column) {
-  case 0:
-    item->setText(data.toString());
-    item->setTextAlignment(Qt::AlignRight);
-    break;
-
-  case 1:
-    item->setText(data.toString());
-    item->setTextAlignment(Qt::AlignLeft | Qt::AlignTop);
-    break;
-
-  default:
-    item->setText(data.toString());
-    item->setTextAlignment(Qt::AlignCenter);
-    break;
-  }
-  m_table->setItem(row, column, item);
-}
-
-void DeliveryNote::setSummary() {
-  // Summary
-  int _count = m_table->rowCount();
-  int _summary = 0;
-  for (int r = 0; r < _count; r++) {
-    int _c = m_table->item(r, 2)->data(Qt::DisplayRole).toInt();
-    _summary += _c;
-  }
-  m_table->setRowCount(_count + 1);
-
-  QTableWidgetItem *ic1 = new QTableWidgetItem(tr("Summary"));
-  ic1->setTextAlignment(Qt::AlignRight | Qt::AlignVCenter);
-  m_table->setItem(_count, 1, ic1);
-
-  QTableWidgetItem *ic2 = new QTableWidgetItem(QString::number(_summary));
-  ic2->setTextAlignment(Qt::AlignCenter);
-  m_table->setItem(_count, 2, ic2);
-}
-
-void DeliveryNote::paintContent(QPainter &painter) {
-  painter.setPen(fontPen());
-  QFont _subjectFont(normalFont);
-  _subjectFont.setBold(true);
-  painter.setFont(_subjectFont);
-
-  // Subject
-  QStaticText _subject = textBlock();
-  _subject.setText(contentData.value("subject").toString());
-  _subject.prepare(painter.transform(), _subjectFont);
-  painter.drawStaticText(startPoint(), _subject);
-
-  // Location and Date
-  painter.setFont(normalFont);
-  QString _location(companyData("COMPANY_LOCATION_NAME"));
-  _location.append(" " + tr("on") + " ");
-  _location.append(QDate::currentDate().toString("dd.MM.yyyy"));
-  QStaticText _datebox = textBlock(Qt::AlignRight);
-  _datebox.setText(_location);
-  _datebox.prepare(painter.transform(), normalFont);
-  qreal _bx = (borderRight() - _datebox.size().width());
-  painter.drawStaticText(QPoint(_bx, startPoint().y()), _datebox);
-
-  painter.setPen(linePen());
-  qreal _ly = (startPoint().y() + fontHeight(normalFont));
-  painter.drawLine(QPoint(borderLeft(), _ly), QPoint(borderRight(), _ly));
-
-  position = _ly;
-}
-
 bool DeliveryNote::setContentData(QJsonObject &data) {
-  if (!data.contains("config")) {
+  setBodyLayout();
+  if (!data.contains("config") || m_body == nullptr) {
     qWarning("Unable to read invoice delivery note data!");
     return false;
   }
   contentData = data;
-  m_intro->setText(companyData("COMPANY_DELIVERY_INTRO"));
-  m_final->setText(companyData("COMPANY_DELIVERY_THANKS"));
 
   AntiquaCRM::ASqlFiles _tpl("query_printing_delivery_note");
   if (!_tpl.openTemplate()) {
@@ -160,19 +46,67 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
   _tpl.setWhereClause(_sql);
 
   QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
-  if (_query.size() > 0) {
-    m_table->setRowCount(_query.size());
-    int _row = 0;
+  int _size = _query.size();
+  if (_size > 0) {
+    const QFont _font = getFont("print_font_normal");
+    const QTextCharFormat _charFormat = m_body->charFormat(_font);
+
+    QTextCursor cursor = m_body->textCursor();
+    cursor.setCharFormat(_charFormat);
+
+    QTextTableFormat _tableFormat = m_body->tableFormat();
+    _tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
+    _tableFormat.setTopMargin(5);
+
+    QTextTable *m_table = cursor.insertTable(_size + 1, 3, _tableFormat);
+    m_table->setObjectName("article_table");
+
+    QTextTableCellFormat _cellFormat = m_body->cellFormat();
+    _cellFormat.setTopBorder(1);
+    _cellFormat.setTopBorderBrush(borderBrush());
+    _cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+    _cellFormat.setBottomBorder(1);
+    _cellFormat.setBottomBorderBrush(borderBrush());
+    _cellFormat.setBottomBorderStyle(QTextFrameFormat::BorderStyle_Solid);
+
+    qint8 _row = 0;
+    QTextTableCell ce00 = m_table->cellAt(_row, 0);
+    cursor = ce00.firstCursorPosition();
+    ce00.setFormat(_cellFormat);
+    cursor.insertText(tr("Article-ID"));
+
+    QTextTableCell ce01 = m_table->cellAt(_row, 1);
+    ce01.setFormat(_cellFormat);
+    ce01.firstCursorPosition().insertText(tr("Designation"));
+
+    QTextTableCell ce02 = m_table->cellAt(_row, 2);
+    ce02.setFormat(_cellFormat);
+    ce02.firstCursorPosition().insertText(tr("Quantity"));
+
     while (_query.next()) {
-      setArticleData(_row, 0, _query.value("aid").toString());
-      setArticleData(_row, 1, _query.value("title").toString());
-      setArticleData(_row, 2, _query.value("crowd").toString());
       _row++;
+      // Article
+      QTextTableCell ce00 = m_table->cellAt(_row, 0);
+      ce00.firstCursorPosition().insertText(_query.value("aid").toString());
+      // Title
+      QTextTableCell ce01 = m_table->cellAt(_row, 1);
+      ce01.firstCursorPosition().insertText(_query.value("title").toString());
+      // Quantity
+      QTextTableCell ce02 = m_table->cellAt(_row, 2);
+      ce02.firstCursorPosition().insertText(_query.value("crowd").toString());
     }
-    setSummary();
     _query.clear();
+
+    cursor = m_body->textCursor();
+    cursor.setCharFormat(_charFormat);
+    cursor.setBlockFormat(m_body->alignLeft());
+    cursor.beginEditBlock();
+    cursor.insertText("\n\n");
+    cursor.insertText(companyData("COMPANY_DELIVERY_THANKS"));
+    cursor.endEditBlock();
   }
-  return (m_table->rowCount() > 0);
+
+  return true;
 }
 
 PrintDeliveryNote::PrintDeliveryNote(QWidget *parent) : APrintDialog{parent} {

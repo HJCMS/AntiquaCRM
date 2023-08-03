@@ -28,9 +28,7 @@ class ANTIQUACRM_LIBRARY InvoicePage final : public AntiquaCRM::APrintingPage {
 private:
   mutable qreal position = -1;
   const QPoint startPoint() const;
-  void setArticleData(int row, int column, const QVariant &data) override;
-  int setArticleSummary(int row, AntiquaCRM::ATaxCalculator calc);
-  void setSummary() override;
+  virtual void setBodyLayout() override;
   void paintContent(QPainter &painter) override;
 
 public:

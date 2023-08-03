@@ -14,12 +14,13 @@ qreal APrintTools::getPoints(int millimeter) const {
 }
 
 const QStaticText APrintTools::textBlock(Qt::Alignment align,
-                                         QTextOption::WrapMode mode) const {
+                                         QTextOption::WrapMode mode,
+                                         Qt::TextFormat format) const {
   QTextOption _opts(align);
   _opts.setWrapMode(mode);
 
   QStaticText _box;
-  _box.setTextFormat(Qt::RichText);
+  _box.setTextFormat(format);
   _box.setTextOption(_opts);
   return _box;
 }
@@ -46,6 +47,14 @@ const QRectF APrintTools::letterWindow(qreal left) const {
   );
 }
 
+const QRectF APrintTools::addressZone() const {
+  return QRectF(letterWindow().left() + getPoints(5), // +5mm left
+                letterWindow().top() + getPoints(3),  // +3mm top
+                getPoints(80),                        // 80mm width
+                getPoints(40)                         // 40mm height
+  );
+}
+
 const QPageLayout APrintTools::pageLayout() const {
   QPageLayout _layout;
   _layout.setOrientation(QPageLayout::Portrait);
@@ -55,6 +64,13 @@ const QPageLayout APrintTools::pageLayout() const {
   _layout.setUnits(QPageLayout::Millimeter);
   _layout.setMode(QPageLayout::FullPageMode);
   return _layout;
+}
+
+const QTextOption APrintTools::textOption(Qt::Alignment align,
+                                          QTextOption::WrapMode mode) {
+  QTextOption _opts(align);
+  _opts.setWrapMode(mode);
+  return _opts;
 }
 
 const QPen APrintTools::linePen(const QColor &color) const {

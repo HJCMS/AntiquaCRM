@@ -31,19 +31,11 @@ private:
   const qreal points = 2.8452755906;
 
 protected:
-  struct PageMargins {
-    qreal top = 10;    /**< @brief Header margin top  */
-    qreal left = 20;   /**< @brief Document margin left */
-    qreal right = 10;  /**< @brief Document margin right */
-    qreal address = 6; /**< @brief Address margin in Letter window */
-    qreal subject = 6; /**< @brief Subject margin top to Letter window */
-  };
-
   /**
    * @brief current page margins
    * Initialed in @ref APrintingPage::initConfiguration()
    */
-  PageMargins margin;
+  QMarginsF margin = QMarginsF(0, 0, 0, 0);
 
   /**
    * @brief Convert Millimeter to Points
@@ -60,7 +52,8 @@ protected:
    */
   const QStaticText
   textBlock(Qt::Alignment align = Qt::AlignLeft,
-            QTextOption::WrapMode mode = QTextOption::ManualWrap) const;
+            QTextOption::WrapMode mode = QTextOption::ManualWrap,
+            Qt::TextFormat format = Qt::RichText) const;
 
   /**
    * @brief Convert linebreaks to html br
@@ -74,10 +67,20 @@ protected:
   const QRectF pagePoints() const;
 
   /**
-   * @brief Letter Recipient Window (DIN 5008B) Position.
+   * @brief Letter Recipient Window (DIN 5008) Position.
    * @param left - start position from left in millimeter
    */
   const QRectF letterWindow(qreal left = 25.0) const;
+
+  /**
+   * @brief Letter Recipient Address zone (DIN 5008) Rect.
+   *
+   * A Recipient address zone is 80mm width and 40mm height and must inside of
+   * Letter Window rectangle.
+   *
+   * @sa APrintTools::letterWindow()
+   */
+  const QRectF addressZone() const;
 
 public:
   explicit APrintTools(QPageSize::PageSizeId id);
@@ -87,6 +90,14 @@ public:
    * @note We use a DIN A4 Portrait Layout.
    */
   const QPageLayout pageLayout() const;
+
+  /**
+   * @brief Default painter drawText option
+   * @param align
+   */
+  const QTextOption
+  textOption(Qt::Alignment align = Qt::AlignLeft,
+             QTextOption::WrapMode mode = QTextOption::NoWrap);
 
   /**
    * @brief General Linestyle and for folds and paper punches!

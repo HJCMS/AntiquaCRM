@@ -55,11 +55,11 @@ void APrintingPage::initConfiguration() {
 
   // NOTE: do not close this group here!
   cfg->beginGroup("printer");
-  margin.left = cfg->value("page_margin_left", 20.0).toReal();
-  margin.right = cfg->value("page_margin_right", 20.0).toReal();
-  margin.subject = cfg->value("page_margin_subject", 120).toReal();
-  margin.top = cfg->value("page_margin_body", 20).toReal();
-  margin.address = cfg->value("page_margin_recipient", 0.5).toReal();
+  QMarginsF _m(getPoints(cfg->value("page_margin_left", 20.0).toReal()),
+               getPoints(cfg->value("page_margin_top", 0.0).toReal()),
+               getPoints(cfg->value("page_margin_right", 20.0).toReal()),
+               getPoints(cfg->value("page_margin_bottom", 0.0).toReal()));
+  margin = _m;
 
   QString _sql("SELECT ac_class, ac_value FROM antiquacrm_company");
   _sql.append(" ORDER BY ac_class;");
@@ -69,7 +69,7 @@ void APrintingPage::initConfiguration() {
     while (_query.next()) {
       QString _key = _query.value("ac_class").toString().toUpper();
       QString _value = _query.value("ac_value").toString();
-      p_companyData.insert(_key, _value);
+      p_companyData.insert(_key, _value.trimmed());
     }
   } else {
     qWarning("No Printer Company data found!");
@@ -86,78 +86,65 @@ void APrintingPage::initConfiguration() {
 }
 
 void APrintingPage::paintHeader(QPainter &painter) {
+  // DIN 5008 Letter Header
+  const QRectF _rect(QPointF(borderLeft(), 0),
+                     QPointF(borderRight(), getPoints(45)));
+  const QFont _font = getFont("print_font_header");
+  painter.setFont(_font);
   painter.setPen(fontPen());
-  const QImage image = watermark();
-  if (!image.isNull()) {
+
+  const QImage _image = watermark();
+  if (!_image.isNull()) {
     painter.setOpacity(watermarkOpacity());
-    painter.drawImage(QPointF(borderLeft(), 0), image);
+    painter.drawImage(_rect.topLeft(), _image);
     painter.setOpacity(1.0);
   }
 
-  QString _txt = toRichText(companyData("COMPANY_PRINTING_HEADER"));
-  QTextOption _opts(Qt::AlignCenter);
-  _opts.setWrapMode(QTextOption::ManualWrap);
-
-  QStaticText _box;
-  _box.setTextFormat(Qt::RichText);
-  _box.setTextOption(_opts);
-  _box.setText(_txt);
-  _box.prepare(painter.transform(), getFont("print_font_header"));
-
-  int _x = qRound((width() / 2) - (_box.size().width() / 2));
-
-  painter.setFont(getFont("print_font_header"));
-  painter.drawStaticText(QPoint(_x, margin.top), _box);
+  const QString _text = companyData("COMPANY_PRINTING_HEADER");
+  painter.drawText(_rect, (Qt::AlignCenter | Qt::AlignTop), _text);
 }
 
 void APrintingPage::paintAddressBox(QPainter &painter) {
-  const QFont _small_font(getFont("print_font_small"));
-  const QFont _address_font(getFont("print_font_address"));
-  // letter address window
-  const QRectF _wr = letterWindow();
+  // DIN 5008B Address Window position
+  const QRectF _lwr = letterWindow();
+  painter.setFont(getFont("print_font_small"));
+  painter.setOpacity(0.8);
   painter.setPen(linePen());
-  painter.setOpacity(0.8);
-  painter.fillRect(_wr, QBrush(Qt::white, Qt::SolidPattern));
-  painter.setOpacity(1.0);
+#ifdef ANTIQUA_DEVELOPEMENT
+  painter.fillRect(_lwr, QBrush(Qt::yellow, Qt::SolidPattern));
+#else
+  painter.fillRect(_lwr, QBrush(Qt::white, Qt::SolidPattern));
+#endif
 
-  QTextOption _opts(Qt::AlignLeft);
-  _opts.setWrapMode(QTextOption::NoWrap);
-
-  QString _txt = companyData("COMPANY_ADDRESS_LABEL");
-  QStaticText _company;
-  _company.setTextFormat(Qt::PlainText);
-  _company.setTextOption(_opts);
-  _company.setText(_txt.trimmed());
-  _company.prepare(painter.transform(), _small_font);
-  QRect _txt_rect = QFontMetrics(_small_font).boundingRect(_company.text());
-  int _y = (_wr.top() - _txt_rect.height());
-  painter.setOpacity(0.8);
+  // Company Address Header
+  const QRectF _rect(QPointF(_lwr.left(), _lwr.top() - getPoints(5)),
+                     QPointF(borderRight(), _lwr.bottom()));
   painter.setPen(fontPen());
-  painter.setFont(_small_font);
-  painter.drawStaticText(QPoint(_wr.left(), _y), _company);
-  painter.setOpacity(1.0);
-  // Address Body
-  const QPoint _rp(_wr.left() + getPoints(5), _wr.top() + getPoints(5));
-  _txt = toRichText(contentData.value("address").toString());
-  _txt_rect = QFontMetrics(_address_font).boundingRect(_txt);
-  _opts.setWrapMode(QTextOption::ManualWrap);
+  painter.drawText(_rect, companyData("COMPANY_ADDRESS_LABEL"));
+  painter.setOpacity(1.0); // reset
 
-  QStaticText _address;
-  _address.setTextFormat(Qt::RichText);
-  _address.setTextOption(_opts);
-  _address.setText(_txt.trimmed());
-  _address.prepare(painter.transform(), _address_font);
+  // Recipient Address Body
+  const QPointF _top = addressZone().topLeft();
+  const QFont _address_font = getFont("print_font_address");
+  const QString _address = toRichText(contentData.value("address").toString());
 
-  painter.setPen(fontPen());
+  QStaticText _recipient = textBlock((Qt::AlignLeft | Qt::AlignTop),
+                                     QTextOption::WrapAtWordBoundaryOrAnywhere);
+  _recipient.setTextWidth(getPoints(80));
+  _recipient.setText(_address);
+  _recipient.prepare(painter.transform(), _address_font);
+
   painter.setFont(_address_font);
-  painter.drawStaticText(_rp, _address);
+  painter.drawStaticText(_top, _recipient);
 }
 
 void APrintingPage::paintIdentities(QPainter &painter) {
   const QFont _font = getFont("print_font_normal");
-  const QPoint _point(getPoints(125), getPoints(50));
+  // DIN 5008B Address Area
+  const QPointF _point(getPoints(125), getPoints(55));
   painter.setPen(fontPen());
   painter.setFont(_font);
+  painter.setOpacity(1.0);
 
   QStringList _txt;
   QStringList _keys({"order_id", "invoice_id", "customer_id", "delivery_id"});
@@ -168,18 +155,20 @@ void APrintingPage::paintIdentities(QPainter &painter) {
     }
   }
 
-  QTextOption _opts(Qt::AlignRight);
-  _opts.setWrapMode(QTextOption::NoWrap);
-
   QStaticText _info;
   _info.setTextFormat(Qt::RichText);
-  _info.setTextOption(_opts);
+  _info.setTextOption(textOption(Qt::AlignRight));
   _info.setText(_txt.join("<br>"));
   _info.prepare(painter.transform(), _font);
   painter.drawStaticText(_point, _info);
 }
 
 void APrintingPage::paintFooter(QPainter &painter) {
+  // Footer line
+  painter.setPen(linePen());
+  QLineF _footerLine(bodyBottom(), QPointF(borderRight(), bodyBottom().y()));
+  painter.drawLine(_footerLine);
+  // Footer text
   painter.setPen(fontPen());
   painter.setFont(getFont("print_font_footer"));
 
@@ -223,8 +212,6 @@ void APrintingPage::paintFooter(QPainter &painter) {
   // END:Right
 
   // start positioning
-  qreal _left_x = borderLeft();
-  qreal _right_x = borderRight();
   int _spacing = 6;
   int _height = -1;
   if (_leftBox.size().height() > _rightBox.size().height()) {
@@ -238,7 +225,7 @@ void APrintingPage::paintFooter(QPainter &painter) {
   // float left
   // @note must painted before calculate the right box!
   int _left_box_y = (_ft_y - _spacing);
-  painter.drawStaticText(QPoint(_left_x, _left_box_y), _leftBox);
+  painter.drawStaticText(QPoint(borderLeft(), _left_box_y), _leftBox);
 
   // footer text box right x()
   int _lb_right = (borderLeft() + _leftBox.size().width());
@@ -249,11 +236,6 @@ void APrintingPage::paintFooter(QPainter &painter) {
   // float right
   int _right_box_y = (_ft_y - _spacing);
   painter.drawStaticText(QPoint(_right_box_x, _right_box_y), _rightBox);
-
-  // prepend heading line
-  int _line_y = (_ft_y - 10);
-  painter.setPen(linePen());
-  painter.drawLine(QPoint(_left_x, _line_y), QPoint(_right_x, _line_y));
 }
 
 void APrintingPage::paintEvent(QPaintEvent *event) {
@@ -311,22 +293,19 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QWidget::paintEvent(event);
 }
 
-void APrintingPage::setArticleHeaderItem(int column, const QString &title,
-                                         Qt::Alignment align) {
-  if (m_table == nullptr)
-    return;
-
-  QTableWidgetItem *item = new QTableWidgetItem(title);
-  item->setForeground(Qt::black);
-  item->setBackground(Qt::white);
-  item->setTextAlignment(align);
-  m_table->setHorizontalHeaderItem(column, item);
+const QPointF APrintingPage::bodyTop() const {
+  return QPointF(margin.left(), getPoints(90));
 }
 
-qreal APrintingPage::borderLeft() const { return getPoints(margin.left); }
+const QPointF APrintingPage::bodyBottom() const {
+  qreal _y = qRound(pagePoints().height() - margin.bottom());
+  return QPointF(margin.left(), _y);
+}
+
+qreal APrintingPage::borderLeft() const { return margin.left(); }
 
 qreal APrintingPage::borderRight() const {
-  return qRound(pagePoints().width() - getPoints(margin.right));
+  return qRound(pagePoints().width() - margin.right());
 }
 
 qreal APrintingPage::inlineWidth() const {

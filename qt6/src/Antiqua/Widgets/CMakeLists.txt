@@ -84,6 +84,7 @@ SET (_library_SOURCES
   alineedit.cpp
   apluginconfigwidget.cpp
   aprintdialog.cpp
+  aprintingbody.cpp
   aprintingpage.cpp
   aprinttools.cpp
   aslider.cpp
@@ -157,6 +158,7 @@ SET (_library_HEADERS
   antiquaicon.h
   apluginconfigwidget.h
   aprintdialog.h
+  aprintingbody.h
   aprintingpage.h
   aprinttools.h
   aslider.h

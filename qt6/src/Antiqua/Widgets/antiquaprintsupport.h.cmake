@@ -12,6 +12,10 @@
 #include <QPrinter>
 #include <QPrinterInfo>
 
+#ifndef ANTIQUACRM_PRINTING_APRINTINGBODY_H
+#include "aprintingbody.h"
+#endif
+
 #ifndef ANTIQUACRM_PRINTING_APRINTTOOLS_H
 #include "aprinttools.h"
 #endif

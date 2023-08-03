@@ -29,6 +29,13 @@ PrinterPaperLayout::PrinterPaperLayout(QWidget *parent) : QGroupBox{parent} {
   m_marginLeft->setValue(15); // DIN 5008B
   layout->addWidget(m_marginLeft, row++, 1, 1, 1);
 
+  // Margin:Footer
+  layout->addWidget(label(tr("Top")), row, 0, 1, 1);
+  _tip = tr("General print area. From margin top to content.");
+  m_marginTop = new PrinterSetBorder(_tip, this);
+  m_marginTop->setObjectName("page_margin_top");
+  layout->addWidget(m_marginTop, row++, 1, 1, 1);
+
   // Margin:Right
   layout->addWidget(label(tr("Right")), row, 0, 1, 1);
   _tip = tr("General print area. From content to margin right.");
@@ -36,41 +43,23 @@ PrinterPaperLayout::PrinterPaperLayout(QWidget *parent) : QGroupBox{parent} {
   m_marginRight->setObjectName("page_margin_right");
   layout->addWidget(m_marginRight, row++, 1, 1, 1);
 
-  // Margin:Subject
-  layout->addWidget(label(tr("Subject")), row, 0, 1, 1);
-  _tip = tr("Distance from Document heading to the recipient address.");
-  m_marginSubject = new PrinterSetBorder(_tip, this);
-  m_marginSubject->setObjectName("page_margin_subject");
-  layout->addWidget(m_marginSubject, row++, 1, 1, 1);
-
-  // Margin:Recipient
-  layout->addWidget(label(tr("Recipient")), row, 0, 1, 1);
-  _tip = tr("Space above for recipient address. Useful for the letterhead "
-            "window positioning.");
-  m_marginRecipient = new PrinterSetBorder(_tip, this);
-  m_marginRecipient->setRange(0, 10);
-  m_marginRecipient->setObjectName("page_margin_recipient");
-  layout->addWidget(m_marginRecipient, row++, 1, 1, 1);
-
-  // Margin:Body
-  layout->addWidget(label(tr("Body")), row, 0, 1, 1);
-  _tip = tr("Distance from Subject to Document content.");
-  m_marginBody = new PrinterSetBorder(_tip, this);
-  m_marginBody->setObjectName("page_margin_body");
-  layout->addWidget(m_marginBody, row++, 1, 1, 1);
+  // Margin:Bottom
+  layout->addWidget(label(tr("Bottom")), row, 0, 1, 1);
+  _tip = tr("Distance from Document Footer top bottom.");
+  m_marginBottom = new PrinterSetBorder(_tip, this);
+  m_marginBottom->setObjectName("page_margin_bottom");
+  layout->addWidget(m_marginBottom, row++, 1, 1, 1);
 
   layout->setRowStretch(row, 1);
   setLayout(layout);
 
   connect(m_marginLeft, SIGNAL(updateChanged(bool)),
           SLOT(setInputChanges(bool)));
+  connect(m_marginTop, SIGNAL(updateChanged(bool)),
+          SLOT(setInputChanges(bool)));
   connect(m_marginRight, SIGNAL(updateChanged(bool)),
           SLOT(setInputChanges(bool)));
-  connect(m_marginSubject, SIGNAL(updateChanged(bool)),
-          SLOT(setInputChanges(bool)));
-  connect(m_marginRecipient, SIGNAL(updateChanged(bool)),
-          SLOT(setInputChanges(bool)));
-  connect(m_marginBody, SIGNAL(updateChanged(bool)),
+  connect(m_marginBottom, SIGNAL(updateChanged(bool)),
           SLOT(setInputChanges(bool)));
 }
 

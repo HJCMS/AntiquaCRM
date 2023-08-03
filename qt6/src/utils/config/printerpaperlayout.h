@@ -21,9 +21,8 @@ class PrinterPaperLayout final : public QGroupBox {
 private:
   PrinterSetBorder *m_marginLeft;
   PrinterSetBorder *m_marginRight;
-  PrinterSetBorder *m_marginSubject;
-  PrinterSetBorder *m_marginRecipient;
-  PrinterSetBorder *m_marginBody;
+  PrinterSetBorder *m_marginTop;
+  PrinterSetBorder *m_marginBottom;
 
   QLabel *label(const QString &title);
 
