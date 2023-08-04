@@ -26,10 +26,15 @@ class ANTIQUACRM_LIBRARY InvoicePage final : public AntiquaCRM::APrintingPage {
   Q_OBJECT
 
 private:
-  mutable qreal position = -1;
-  const QPoint startPoint() const;
-  virtual void setBodyLayout() override;
+  QJsonObject config;
+  QTextTable *m_articles = nullptr;
+  double summary = 0.00;
   void paintContent(QPainter &painter) override;
+  virtual void setBodyLayout() override;
+  void setArticleItem(int row, const QVariant &value);
+  void setTitleItem(int row, const QVariant &value);
+  void setQuantityItem(int row, const QVariant &value);
+  int addArticle(int row, const QSqlQuery &result);
 
 public:
   explicit InvoicePage(QWidget *parent = nullptr);

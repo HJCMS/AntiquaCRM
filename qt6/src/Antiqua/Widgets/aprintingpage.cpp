@@ -61,6 +61,8 @@ void APrintingPage::initConfiguration() {
                getPoints(cfg->value("page_margin_bottom", 0.0).toReal()));
   margin = _m;
 
+  normalFont = QFont(getFont("print_font_normal"));
+
   QString _sql("SELECT ac_class, ac_value FROM antiquacrm_company");
   _sql.append(" ORDER BY ac_class;");
 

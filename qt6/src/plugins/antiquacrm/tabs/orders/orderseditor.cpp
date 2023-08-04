@@ -776,6 +776,8 @@ void OrdersEditor::createPrintInvoiceNote() {
   _obj.insert("customer_id", _ids.cu_id);
   _obj.insert("invoice_id", _ids.in_id);
   _obj.insert("delivery_id", _ids.de_id);
+  _obj.insert("vat_level", getDataValue("o_vat_levels").toInt());
+  _obj.insert("payment_status", getDataValue("o_payment_status").toInt());
 
   AntiquaCRM::PrintInvoice *d = new AntiquaCRM::PrintInvoice(this);
   if (d->exec(_obj) == QDialog::Accepted) {

@@ -11,19 +11,66 @@ namespace AntiquaCRM {
 DeliveryNote::DeliveryNote(QWidget *parent)
     : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_deliverynote_page");
-  normalFont = getFont("print_font_normal");
 }
-
-void DeliveryNote::paintContent(QPainter &painter) { Q_UNUSED(painter); }
 
 void DeliveryNote::setBodyLayout() {
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(margin.left(), getPoints(100), margin.right(),
                              margin.bottom());
   m_body = new APrintingBody(this);
+  m_body->setFont(normalFont);
   layout->addWidget(m_body);
   setLayout(layout);
+
+  QTextCursor cursor = m_body->textCursor();
+  QTextTableFormat _tableFormat = m_body->tableFormat();
+  _tableFormat.setBottomMargin(10);
+
+  QTextTable *m_table = cursor.insertTable(1, 2, _tableFormat);
+  m_table->setObjectName("article_table");
+
+  QTextTableCell hcl = m_table->cellAt(0, 0);
+  hcl.setFormat(m_body->tableCellFormat());
+  hcl.firstCursorPosition().insertText(tr("Delivery"));
+
+  QTextTableCell hcr = m_table->cellAt(0, 1);
+  hcr.setFormat(m_body->tableCellFormat());
+
+  QString _dtext = companyData("COMPANY_LOCATION_NAME");
+  _dtext.append(" " + tr("on") + " ");
+  _dtext.append(QDate::currentDate().toString("dd.MM.yyyy"));
+
+  cursor = hcr.firstCursorPosition();
+  cursor.setBlockFormat(m_body->alignRight());
+  cursor.beginEditBlock();
+  cursor.insertText(_dtext);
+  cursor.endEditBlock();
 }
+
+int DeliveryNote::addArticle(int row, const QSqlQuery &result) {
+  if (m_articles == nullptr)
+    return row;
+
+  // Article
+  QTextTableCell ce00 = m_articles->cellAt(row, 0);
+  ce00.firstCursorPosition().insertText(result.value("aid").toString());
+
+  // Title
+  QTextTableCell ce01 = m_articles->cellAt(row, 1);
+  ce01.firstCursorPosition().insertText(result.value("title").toString());
+
+  // Quantity
+  QTextTableCell ce02 = m_articles->cellAt(row, 2);
+  QTextCursor cursor = ce02.firstCursorPosition();
+  cursor.setBlockFormat(m_body->alignCenter());
+  cursor.beginEditBlock();
+  cursor.insertText(result.value("crowd").toString());
+  cursor.endEditBlock();
+
+  return row;
+}
+
+void DeliveryNote::paintContent(QPainter &painter) { Q_UNUSED(painter); }
 
 bool DeliveryNote::setContentData(QJsonObject &data) {
   setBodyLayout();
@@ -50,52 +97,39 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
   if (_size > 0) {
     const QFont _font = getFont("print_font_normal");
     const QTextCharFormat _charFormat = m_body->charFormat(_font);
-
     QTextCursor cursor = m_body->textCursor();
     cursor.setCharFormat(_charFormat);
 
-    QTextTableFormat _tableFormat = m_body->tableFormat();
-    _tableFormat.setBorderStyle(QTextFrameFormat::BorderStyle_None);
-    _tableFormat.setTopMargin(5);
-
-    QTextTable *m_table = cursor.insertTable(_size + 1, 3, _tableFormat);
-    m_table->setObjectName("article_table");
-
-    QTextTableCellFormat _cellFormat = m_body->cellFormat();
-    _cellFormat.setTopBorder(1);
-    _cellFormat.setTopBorderBrush(borderBrush());
-    _cellFormat.setTopBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-    _cellFormat.setBottomBorder(1);
-    _cellFormat.setBottomBorderBrush(borderBrush());
-    _cellFormat.setBottomBorderStyle(QTextFrameFormat::BorderStyle_Solid);
-
     qint8 _row = 0;
-    QTextTableCell ce00 = m_table->cellAt(_row, 0);
+    // BEGIN::ArticleHeaderTable
+    m_articles = cursor.insertTable(_size + 1, 3, m_body->tableFormat());
+    m_articles->setObjectName("article_table");
+    const QTextTableCellFormat _hcformat = m_body->headerTableCellFormat();
+    // Article
+    QTextTableCell ce00 = m_articles->cellAt(_row, 0);
     cursor = ce00.firstCursorPosition();
-    ce00.setFormat(_cellFormat);
-    cursor.insertText(tr("Article-ID"));
+    ce00.setFormat(_hcformat);
+    cursor.insertText(tr("Article"));
+    // Description
+    QTextTableCell ce01 = m_articles->cellAt(_row, 1);
+    ce01.setFormat(_hcformat);
+    ce01.firstCursorPosition().insertText(tr("Description"));
+    // Quantity
+    QTextTableCell ce02 = m_articles->cellAt(_row, 2);
+    ce02.setFormat(_hcformat);
+    cursor = ce02.firstCursorPosition();
+    cursor.setBlockFormat(m_body->alignCenter());
+    cursor.beginEditBlock();
+    cursor.insertText(tr("Quantity"));
+    cursor.endEditBlock();
+    // END::ArticleHeaderTable
 
-    QTextTableCell ce01 = m_table->cellAt(_row, 1);
-    ce01.setFormat(_cellFormat);
-    ce01.firstCursorPosition().insertText(tr("Designation"));
-
-    QTextTableCell ce02 = m_table->cellAt(_row, 2);
-    ce02.setFormat(_cellFormat);
-    ce02.firstCursorPosition().insertText(tr("Quantity"));
-
+    // BEGIN::ArticleItems
     while (_query.next()) {
-      _row++;
-      // Article
-      QTextTableCell ce00 = m_table->cellAt(_row, 0);
-      ce00.firstCursorPosition().insertText(_query.value("aid").toString());
-      // Title
-      QTextTableCell ce01 = m_table->cellAt(_row, 1);
-      ce01.firstCursorPosition().insertText(_query.value("title").toString());
-      // Quantity
-      QTextTableCell ce02 = m_table->cellAt(_row, 2);
-      ce02.firstCursorPosition().insertText(_query.value("crowd").toString());
+      addArticle(++_row, _query);
     }
     _query.clear();
+    // END::ArticleItems
 
     cursor = m_body->textCursor();
     cursor.setCharFormat(_charFormat);

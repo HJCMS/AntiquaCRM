@@ -24,8 +24,9 @@ class ANTIQUACRM_LIBRARY DeliveryNote final : public AntiquaCRM::APrintingPage {
   Q_OBJECT
 
 private:
-  mutable qreal position = -1;
+  QTextTable *m_articles = nullptr;
   virtual void setBodyLayout() override;
+  int addArticle(int row, const QSqlQuery &result);
   void paintContent(QPainter &painter) override;
 
 public:

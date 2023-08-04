@@ -10,6 +10,7 @@
 #define ANTIQUACRM_PRINTING_APRINTINGBODY_H
 
 #include <AGlobal>
+#include <QBrush>
 #include <QFont>
 #include <QTextBlockFormat>
 #include <QTextCharFormat>
@@ -23,6 +24,12 @@ namespace AntiquaCRM {
 
 class ANTIQUACRM_LIBRARY APrintingBody final : public QTextEdit {
   Q_OBJECT
+
+private:
+  /**
+   * @brief Brush for visible Borders
+   */
+  inline const QBrush borderBrush() const;
 
 public:
   explicit APrintingBody(QWidget *parent);
@@ -38,24 +45,42 @@ public:
   const QTextTableFormat tableFormat();
 
   /**
-   * @brief Default table cell format
+   * @brief Default Table Cell format class
    */
-  const QTextTableCellFormat cellFormat();
+  const QTextTableCellFormat tableCellFormat() const;
 
   /**
-   * @brief Text Block align left
+   * @brief Default table cell formats
+   */
+  const QTextTableCellFormat headerTableCellFormat();
+
+  /**
+   * @brief Default table article cell formats
+   */
+  const QTextTableCellFormat articleTableCellFormat(bool border = false);
+
+  /**
+   * @brief Text Block format
+   */
+  const QTextBlockFormat blockFormat(Qt::Alignment align = Qt::AlignLeft) const;
+
+  /**
+   * @brief Text Block align left valign middle
    */
   const QTextBlockFormat alignLeft();
 
   /**
-   * @brief Text Block align Center
+   * @brief Text Block align Center valign middle
    */
   const QTextBlockFormat alignCenter();
 
   /**
-   * @brief Text Block align right
+   * @brief Text Block align right valign middle
    */
   const QTextBlockFormat alignRight();
+
+  void setCellItem(QTextTableCell &cell, const QVariant &value,
+                   Qt::Alignment align = (Qt::AlignCenter | Qt::AlignVCenter));
 };
 
 } // namespace AntiquaCRM

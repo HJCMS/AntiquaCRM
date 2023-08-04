@@ -15,7 +15,7 @@ namespace AntiquaCRM {
  * @brief Sales Tax calculator
  *
  * @code
-  qreal vat = 19.0;
+  double vat = 19.0;
   double salePrice = 143.45;
   AntiquaCRM::ATaxCalculator calcTax(salePrice);
   double totalPrice = calcTax.plus(vat);
@@ -34,7 +34,7 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY ATaxCalculator final {
 private:
   double p_origin;
-  int p_vat_type;
+  double p_vat;
   AntiquaCRM::SalesTax p_vat_mode;
 
 public:
@@ -44,22 +44,10 @@ public:
   explicit ATaxCalculator(double price, int vat_type);
 
   /**
-   * @brief calculate sales tax for current price
-   * @param vat - sales tax rate
-   */
-  qreal toAdd(qreal vat) const;
-
-  /**
-   * @brief get included sales tax from current price
-   * @param vat - sales tax rate
-   */
-  qreal getIncl(qreal vat) const;
-
-  /**
    * @brief Set Current VAT Mode
    * @param mode
    */
-  void setBillingMode(AntiquaCRM::SalesTax mode);
+  void setBillingMode(int mode);
 
   /**
    * @brief Current VAT Billing mode
@@ -68,44 +56,48 @@ public:
   AntiquaCRM::SalesTax getBillingMode() const;
 
   /**
-   * @brief Current VAT
-   *
-   * Returning current VAT-Type.
-   * Referenced by PostgreSQL Table \b "article_orders" and his columns:
-   * @li "a_type" - ArticleType
-   * @li "a_tax"  - Tax Value Category
-   *
-   * @code
-   *  pgsql=> \dt+ article_orders
-   * @endcode
-   *
-   * Defined in Table Column: a_tax
-   * @code
-   *  0 = Normal VAT
-   *  1 = Reduced VAT
-   *  2 = Without VAT
-   * @endcode
-   * @sa AntiquaCRM::ArticleType
-   *
+   * @brief Current sales tax rate
    */
-  int vatType() const;
+  double salesTaxRate() const;
+
+  /**
+   * @brief calculate sales tax for current price
+   * @param vat - sales tax rate
+   */
+  double toAdd(double vat) const;
+
+  /**
+   * @brief get included sales tax from current price
+   * @param vat - sales tax rate
+   */
+  double getIncl(double vat) const;
+
+  /**
+   * @brief calculated VAT Value from price
+   */
+  double vatCosts() const;
 
   /**
    * @brief net price without any VAT calculation
    */
-  double netprice() const;
+  double netPrice() const;
 
   /**
    * @brief add sales tax to current price
    * @param vat - sales tax rate
    */
-  double plus(qreal vat) const;
+  double plus(double vat) const;
 
   /**
    * @brief Calculate out sales tax from current price
    * @param vat - sales tax rate
    */
-  double minus(qreal vat) const;
+  double minus(double vat) const;
+
+  /**
+   * @brief Returning sales price, calculated by settings
+   */
+  double salesPrice() const;
 
   /**
    * @brief Convert price to currency string

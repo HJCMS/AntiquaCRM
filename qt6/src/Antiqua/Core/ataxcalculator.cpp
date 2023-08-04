@@ -2,24 +2,26 @@
 // vim: set fileencoding=utf-8
 
 #include "ataxcalculator.h"
+#include "asettings.h"
 
 #include <QLocale>
 
 namespace AntiquaCRM {
 
-ATaxCalculator::ATaxCalculator(double price, int vat_type)
-    : p_origin{price}, p_vat_type{vat_type} {}
-
-qreal ATaxCalculator::toAdd(qreal vat) const {
-  return ((p_origin / (100)) * vat);
+ATaxCalculator::ATaxCalculator(double price, int vat_type) : p_origin{price} {
+  ASettings cfg;
+  cfg.beginGroup("payment");
+  if (vat_type == 1) {
+    p_vat = cfg.value("vat_reduced", 19.0).toDouble();
+  } else {
+    p_vat = cfg.value("vat_normal", 7.0).toDouble();
+  }
+  cfg.endGroup();
 }
 
-qreal ATaxCalculator::getIncl(qreal vat) const {
-  return ((p_origin * vat) / (100 + vat));
-}
-
-void ATaxCalculator::setBillingMode(AntiquaCRM::SalesTax mode) {
-  switch (mode) {
+void ATaxCalculator::setBillingMode(int mode) {
+  AntiquaCRM::SalesTax _mode = static_cast<AntiquaCRM::SalesTax>(mode);
+  switch (_mode) {
   case (AntiquaCRM::SalesTax::TAX_NOT):
     p_vat_mode = AntiquaCRM::SalesTax::TAX_NOT;
     break;
@@ -42,14 +44,33 @@ AntiquaCRM::SalesTax ATaxCalculator::getBillingMode() const {
   return p_vat_mode;
 }
 
-int ATaxCalculator::vatType() const { return p_vat_type; }
+double ATaxCalculator::salesTaxRate() const { return p_vat; }
 
-double ATaxCalculator::netprice() const { return p_origin; }
+double ATaxCalculator::toAdd(double vat) const {
+  return ((p_origin / (100)) * vat);
+}
 
-double ATaxCalculator::plus(qreal vat) const { return (p_origin + toAdd(vat)); }
+double ATaxCalculator::getIncl(double vat) const {
+  return ((p_origin * vat) / (100 + vat));
+}
 
-double ATaxCalculator::minus(qreal vat) const {
+double ATaxCalculator::vatCosts() const { return getIncl(p_vat); }
+
+double ATaxCalculator::netPrice() const { return p_origin; }
+
+double ATaxCalculator::plus(double vat) const {
+  return (p_origin + toAdd(vat));
+}
+
+double ATaxCalculator::minus(double vat) const {
   return (p_origin - getIncl(vat));
+}
+
+double ATaxCalculator::salesPrice() const {
+  if (getBillingMode() == AntiquaCRM::SalesTax::TAX_WITH) {
+    return plus(p_vat);
+  }
+  return p_origin;
 }
 
 const QString ATaxCalculator::money(double value,
