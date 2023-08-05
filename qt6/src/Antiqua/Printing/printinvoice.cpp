@@ -14,9 +14,7 @@ InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
 }
 
-void InvoicePage::paintContent(QPainter &painter) {
-  Q_UNUSED(painter);
-}
+void InvoicePage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
 
 void InvoicePage::setBodyLayout() {
   QVBoxLayout *layout = new QVBoxLayout(this);
@@ -155,8 +153,6 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   config = contentData.value("config").toObject();
 
   QTextCursor cursor = m_body->textCursor();
-  cursor.setCharFormat(m_body->charFormat(normalFont));
-
   AntiquaCRM::ASqlFiles _tpl("query_printing_invoice");
   if (!_tpl.openTemplate()) {
     qWarning("Unable to open invoice SQL template!");
@@ -173,7 +169,6 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   if (_size > 0) {
     // BEGIN::ArticleHeaderTable
     cursor = m_body->textCursor();
-    cursor.setCharFormat(m_body->charFormat(normalFont));
     // querySize * (2 article rows) + HeaderRow
     int _rows = ((_size * 2) + 1);
     m_articles = cursor.insertTable(_rows, 4, m_body->tableFormat());
@@ -221,7 +216,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
                       Qt::AlignRight);
 
   _row++;
-  double delivery_cost = 0.00;
+  double delivery_cost = config.value("package_price").toDouble();
   // Delivery cost summary
   QTextTableCell _dc0 = m_articles->cellAt(_row, 2);
   _dc0.setFormat(m_body->articleTableCellFormat(false));
@@ -244,7 +239,16 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
                       Qt::AlignRight);
 
-  qDebug() << "payment_status" << config.value("payment_status").toBool();
+  cursor = m_body->textCursor();
+  cursor.insertText("\n\n");
+  cursor.setBlockFormat(m_body->alignLeft());
+  cursor.beginEditBlock();
+  if (config.value("payment_status").toBool()) {
+    cursor.insertText(companyData("COMPANY_INVOICE_PAYED"));
+  } else {
+    cursor.insertText(companyData("COMPANY_INVOICE_THANKS"));
+  }
+  cursor.endEditBlock();
 
   return true;
 }
@@ -337,6 +341,7 @@ int PrintInvoice::exec(const QJsonObject &options) {
   _config.insert("delivery_id", _did);
   _config.insert("vat_level", options.value("vat_level").toInt());
   _config.insert("payment_status", options.value("payment_status").toBool());
+  _config.insert("package_price", options.value("package_price").toDouble());
 
   QJsonObject content;
   content.insert("config", _config);

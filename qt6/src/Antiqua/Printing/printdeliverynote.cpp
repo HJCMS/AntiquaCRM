@@ -27,11 +27,9 @@ void DeliveryNote::setBodyLayout() {
   _tableFormat.setBottomMargin(10);
 
   QTextTable *m_table = cursor.insertTable(1, 2, _tableFormat);
-  m_table->setObjectName("article_table");
-
   QTextTableCell hcl = m_table->cellAt(0, 0);
   hcl.setFormat(m_body->tableCellFormat());
-  hcl.firstCursorPosition().insertText(tr("Delivery"));
+  hcl.firstCursorPosition().insertText(tr("Delivery note"));
 
   QTextTableCell hcr = m_table->cellAt(0, 1);
   hcr.setFormat(m_body->tableCellFormat());
@@ -85,6 +83,7 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
     qWarning("Unable to open delivery note SQL template!");
   }
 
+  QTextCursor cursor = m_body->textCursor();
   QJsonObject _config = contentData.value("config").toObject();
   QString _sql("a_order_id=");
   _sql.append(QString::number(_config.value("order_id").toDouble()));
@@ -95,11 +94,6 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
   QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
   int _size = _query.size();
   if (_size > 0) {
-    const QFont _font = getFont("print_font_normal");
-    const QTextCharFormat _charFormat = m_body->charFormat(_font);
-    QTextCursor cursor = m_body->textCursor();
-    cursor.setCharFormat(_charFormat);
-
     qint8 _row = 0;
     // BEGIN::ArticleHeaderTable
     m_articles = cursor.insertTable(_size + 1, 3, m_body->tableFormat());
@@ -130,16 +124,14 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
     }
     _query.clear();
     // END::ArticleItems
-
-    cursor = m_body->textCursor();
-    cursor.setCharFormat(_charFormat);
-    cursor.setBlockFormat(m_body->alignLeft());
-    cursor.beginEditBlock();
-    cursor.insertText("\n\n");
-    cursor.insertText(companyData("COMPANY_DELIVERY_THANKS"));
-    cursor.endEditBlock();
   }
 
+  cursor = m_body->textCursor();
+  cursor.insertText("\n\n");
+  cursor.setBlockFormat(m_body->alignLeft());
+  cursor.beginEditBlock();
+  cursor.insertText(companyData("COMPANY_DELIVERY_THANKS"));
+  cursor.endEditBlock();
   return true;
 }
 

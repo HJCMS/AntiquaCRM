@@ -26,15 +26,6 @@ const QBrush APrintingBody::borderBrush() const {
   return QBrush(Qt::gray, Qt::SolidPattern);
 }
 
-const QTextCharFormat APrintingBody::charFormat(const QFont &font,
-                                                bool bolded) {
-  QTextCharFormat _format;
-  QFont _font(font);
-  _font.setBold(bolded);
-  _format.setFont(_font);
-  return _format;
-}
-
 const QTextTableFormat APrintingBody::tableFormat() {
   QTextTableFormat _f;
   _f.setWidth(QTextLength(QTextLength().PercentageLength, 100));

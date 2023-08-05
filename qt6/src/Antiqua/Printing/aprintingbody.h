@@ -35,11 +35,6 @@ public:
   explicit APrintingBody(QWidget *parent);
 
   /**
-   * @brief General text format
-   */
-  const QTextCharFormat charFormat(const QFont &font, bool bolded = false);
-
-  /**
    * @brief Default table format
    */
   const QTextTableFormat tableFormat();

@@ -777,9 +777,17 @@ void OrdersEditor::createPrintInvoiceNote() {
   _obj.insert("invoice_id", _ids.in_id);
   _obj.insert("delivery_id", _ids.de_id);
   _obj.insert("vat_level", getDataValue("o_vat_levels").toInt());
+  // payment status
   AntiquaCRM::OrderPayment _pstat = static_cast<AntiquaCRM::OrderPayment>(
       getDataValue("o_payment_status").toInt());
   _obj.insert("payment_status", (_pstat != AntiquaCRM::OrderPayment::NOTPAID));
+  // package price
+  if (getDataValue("o_delivery_add_price").toBool()) {
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
+  } else {
+    _obj.insert("package_price", 0.00);
+  }
 
   AntiquaCRM::PrintInvoice *d = new AntiquaCRM::PrintInvoice(this);
   if (d->exec(_obj) == QDialog::Accepted) {
