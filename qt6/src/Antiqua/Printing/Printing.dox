@@ -2,5 +2,9 @@
  * @section AntiquaPrinting Printing library
  * @short AntiquaCRM Printing library
  *
+ * By default a DIN 5008 Letter format is used.
+ * @li https://de.wikipedia.org/wiki/DIN_5008
+ * @li https://www.deutschepost.de/de/b/briefvorlagen/normbrief-din-5008-vorlage.html
+ *
  * @addtogroup PrinterWidgets
  */

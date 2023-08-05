@@ -32,9 +32,6 @@ private:
 private Q_SLOTS:
   void valueChanged(int);
 
-protected:
-  void initData() override;
-
 public Q_SLOTS:
   void setValue(const QVariant &) override;
 
@@ -47,6 +44,11 @@ public:
    * @param parent - parent widget
    */
   explicit SalutationEdit(QWidget *parent = nullptr);
+
+  /**
+   * @brief Loading Data from Json file.
+   */
+  void initData() override;
 
   void setRestrictions(const QSqlField &) override;
 
@@ -66,8 +68,9 @@ public:
 
   /**
    * @brief get all salutations from json document
+   * @param bcp47 - Default fallback if no System language supported!
    */
-  static const QMap<QString, QString> salutations();
+  static const QMap<QString, QString> map(const QString &bcp47 = QString("en"));
 };
 
 } // namespace AntiquaCRM

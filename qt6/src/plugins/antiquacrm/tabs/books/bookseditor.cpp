@@ -746,14 +746,15 @@ void BooksEditor::setStorageCompartments() {
 }
 
 void BooksEditor::setPrintBookCard() {
-  qint64 _id = getDataValue("ib_id").toLongLong();
-  if (_id < 1) {
+  qint64 _aid = getDataValue("ib_id").toLongLong();
+  if (_aid < 1) {
     pushStatusMessage(tr("Missing valid Article Id!"));
     return;
   }
 
   QJsonObject jsobj = ib_storage->getBookcardData();
-  jsobj.insert("article", AntiquaCRM::AUtil::zerofill(_id));
+  jsobj.insert("aid", _aid);
+  jsobj.insert("basename", AntiquaCRM::AUtil::zerofill(_aid));
   jsobj.insert("title", getDataValue("ib_title").toString());
   jsobj.insert("year", getDataValue("ib_year").toString());
   jsobj.insert("author", getDataValue("ib_author").toString());
@@ -779,7 +780,11 @@ void BooksEditor::setPrintBookCard() {
   _buffer.clear();
 
   AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
-  m_d->exec(jsobj);
+  if (m_d->exec(jsobj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Bookcard print successfully."));
+  } else {
+    pushStatusMessage(tr("Bookcard dialog canceled."));
+  }
 }
 
 void BooksEditor::setLoadThumbnail(qint64 articleId) {

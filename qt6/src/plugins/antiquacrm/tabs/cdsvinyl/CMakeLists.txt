@@ -68,6 +68,7 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   Qt6::PrintSupport
   AntiquaCRM
   AntiquaWidgets
+  AntiquaPrinting
   AntiquaTabs
   CDTracking
 )

@@ -20,9 +20,6 @@ namespace AntiquaCRM {
  * @class APrintingPage
  * @brief TextEdit Widgets with Watermark and Textformatings
  *
- *  https://de.wikipedia.org/wiki/DIN_5008
- *  https://www.deutschepost.de/de/b/briefvorlagen/normbrief-din-5008-vorlage.html
- *
  * @ingroup PrinterWidgets
  */
 class ANTIQUACRM_LIBRARY APrintingPage : public QWidget, public APrintTools {

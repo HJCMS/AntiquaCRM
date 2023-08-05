@@ -14,7 +14,9 @@ InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
 }
 
-void InvoicePage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+void InvoicePage::paintContent(QPainter &painter) {
+  Q_UNUSED(painter);
+}
 
 void InvoicePage::setBodyLayout() {
   QVBoxLayout *layout = new QVBoxLayout(this);
@@ -365,6 +367,7 @@ int PrintInvoice::exec(const QJsonObject &options) {
     return QDialog::Rejected;
 
   setPrintingPage(page);
+  adjustSize();
 
   return QDialog::exec();
 }

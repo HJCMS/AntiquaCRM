@@ -53,11 +53,6 @@ public:
    * AntiquaCRM::AReceiver::AReceiver
    *
    * On Windows this is a named pipe and on Unix this is a local domain socket
-   *
-   * @note
-   * @li A list with valid operations can read from @ref
-   * AntiquaCRM::AReceiver::operations
-   * @li All Unknown operations are ignored.
    */
   bool pushOperation(const QJsonObject &json);
 

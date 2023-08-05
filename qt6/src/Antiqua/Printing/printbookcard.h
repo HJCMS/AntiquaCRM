@@ -17,56 +17,65 @@
 
 namespace AntiquaCRM {
 
-/**
- * @brief QRCode erstellen
- * @ingroup _printing
- */
-class BookCardQrCode final {
-
-private:
-  const QUrl p_url;
-  const int p_size;
-
-public:
-  explicit BookCardQrCode(const QUrl &url, int size = 128);
-  const QImage image();
-};
-
-/**
- * @class BookCardPage
- * @brief Bookcard Painting Device
- * @ingroup EditWidgets
- */
-class ANTIQUACRM_LIBRARY BookCardPage final : public QWidget {
-  Q_OBJECT
-
-private:
-  const QJsonObject p_data;
-  virtual void paintEvent(QPaintEvent *) override final;
-
-public:
-  explicit BookCardPage(const QJsonObject &data, QWidget *parent = nullptr);
-};
+class BookCardPage;
 
 /**
  * @class PrintBookCard
  * @brief Printing Bookcard Dialog
- * @ingroup EditWidgets
+ *
+ * @ingroup PrinterWidgets
  */
 class ANTIQUACRM_LIBRARY PrintBookCard final : public AntiquaCRM::APrintDialog {
   Q_OBJECT
 
 private:
-  BookCardPage *page;
+  /**
+   * @brief Render page, initialed in exec function.
+   */
+  BookCardPage *page = nullptr;
 
 private Q_SLOTS:
+  /**
+   * @brief Render BookCardPage to Printer Device
+   */
   void renderPage(QPrinter *printer) override;
+
+  /**
+   * @brief Create PDF from Rendering page ...
+   */
   void createPDF() override;
+
+  /**
+   * @brief Initial/config and open QPrintDialog ...
+   */
   void openPrintDialog() override;
 
 public:
+  /**
+   * @param parent - parent widget
+   */
   explicit PrintBookCard(QWidget *parent = nullptr);
-  int exec(const QJsonObject &options) override;
+
+  /**
+   * @brief Open Book card printin dialog
+   * @param opts - Options
+   * @code
+   * QJsonObject({
+   *    "aid" : qint64,          // Article ID
+   *    "author" : QString,      // Authors
+   *    "basename" : QString,    // File basename
+   *    "category" : QString,    // Stored in category
+   *    "changed" : QString,     // formated Date string
+   *    "compartment" : QString, // Storage compartment
+   *    "name" : QString,        // Name
+   *    "qrquery" : QString,     // QUrl Query String
+   *    "storage" : Qint64,      // Storage Id from SQL database
+   *    "title" : QString,       // Title
+   *    "year" : QString         // Year String format: yyyy
+   * })
+   * @endcode
+   */
+  int exec(const QJsonObject &opts) override;
 };
 
 } // namespace AntiquaCRM

@@ -21,9 +21,4 @@
 #include "printbookcard.h"
 #endif
 
-// AntiquaCRM::PrinterButton
-#ifndef ANTIQUACRM_PRINTING_BUTTON_H
-#include "printerbutton.h"
-#endif
-
 // EOF

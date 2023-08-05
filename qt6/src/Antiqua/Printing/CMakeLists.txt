@@ -49,16 +49,20 @@ SET (_library_SOURCES
   aprintingbody.cpp
   aprintingpage.cpp
   aprinttools.cpp
+  bookcardqrcode.cpp
+  bookcardpage.cpp
   printbookcard.cpp
   printdeliverynote.cpp
   printinvoice.cpp
 )
 
 SET (_library_HEADERS
-  aprintdialog.h
   aprintingbody.h
   aprintingpage.h
   aprinttools.h
+  aprintdialog.h
+  bookcardqrcode.h
+  bookcardpage.h
   printbookcard.h
   printdeliverynote.h
   printinvoice.h

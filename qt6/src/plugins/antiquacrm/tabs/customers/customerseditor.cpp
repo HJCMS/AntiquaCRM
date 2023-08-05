@@ -116,8 +116,11 @@ void CustomersEditor::setInputFields() {
   if (m_tableData == nullptr)
     return;
 
-  // Completers
+  // PLZ Completers
   m_dataWidget->c_postalcode->initData();
+
+  // Salutations
+  m_dataWidget->c_title->initData();
 }
 
 bool CustomersEditor::setDataField(const QSqlField &field,

@@ -40,6 +40,7 @@ private:
 public:
   /**
    * @param price - money
+   * @param vat_type - VAT normal or reduced
    */
   explicit ATaxCalculator(double price, int vat_type);
 

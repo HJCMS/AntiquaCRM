@@ -54,7 +54,7 @@ public:
 
   /**
    * @brief Configuration Widget ...
-   * @sa @ref AntiquaCRM::TabsConfigWidget
+   * @sa AntiquaCRM::PluginConfigWidget
    * @param parent - parent object
    *
    * Widget for AntiquaCRM Configuration system.

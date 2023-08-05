@@ -16,6 +16,12 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class APrintTools
+ * @brief Utilities for APrintingPage
+ *
+ * @ingroup PrinterWidgets
+ */
 class ANTIQUACRM_LIBRARY APrintTools {
 private:
   /**

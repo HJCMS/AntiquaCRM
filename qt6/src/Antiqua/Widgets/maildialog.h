@@ -87,7 +87,7 @@ public:
 
   /**
    * @brief execute with options
-   * @param options - Json Object
+   * @param data - Json Object
    *
    * Sample code and description below:
    * @code

@@ -22,6 +22,7 @@ class APrintingPage;
 /**
  * @class APrintDialog
  * @brief Abstract Printing Dialog
+ *
  * @ingroup PrinterWidgets
  */
 class ANTIQUACRM_LIBRARY APrintDialog : public QDialog {

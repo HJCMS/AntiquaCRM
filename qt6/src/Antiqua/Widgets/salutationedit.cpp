@@ -6,6 +6,7 @@
 #include <AntiquaCRM>
 #include <QFontMetrics>
 #include <QLineEdit>
+#include <QLocale>
 
 namespace AntiquaCRM {
 
@@ -20,7 +21,6 @@ SalutationEdit::SalutationEdit(QWidget *parent)
   m_edit->setLineEdit(m_lineEdit);
 
   layout->addWidget(m_edit);
-  initData();
 
   QString _info = m_lineEdit->placeholderText();
   QFontMetrics _m(m_edit->font());
@@ -33,25 +33,6 @@ SalutationEdit::SalutationEdit(QWidget *parent)
 void SalutationEdit::valueChanged(int) {
   setWindowModified(true);
   emit sendInputChanged();
-}
-
-void SalutationEdit::initData() {
-  QSqlField _f;
-  _f.setMetaType(getType());
-  _f.setRequiredStatus(QSqlField::Optional);
-  _f.setLength(25);
-  setRestrictions(_f);
-
-  m_edit->clear();
-  m_edit->addItem(QString(), QString());
-  QMapIterator<QString, QString> it(salutations());
-  int i = 1;
-  while (it.hasNext()) {
-    it.next();
-    m_edit->insertItem(i, it.key(), it.key());
-    m_edit->setItemData(i, it.value(), Qt::ToolTipRole);
-    i++;
-  }
 }
 
 void SalutationEdit::setValue(const QVariant &val) {
@@ -74,6 +55,25 @@ void SalutationEdit::setFocus() {
 void SalutationEdit::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
+}
+
+void SalutationEdit::initData() {
+  QSqlField _f;
+  _f.setMetaType(getType());
+  _f.setRequiredStatus(QSqlField::Optional);
+  _f.setLength(25);
+  setRestrictions(_f);
+
+  m_edit->clear();
+  m_edit->addItem(QString(), QString());
+  QMapIterator<QString, QString> it(SalutationEdit::map());
+  int i = 1;
+  while (it.hasNext()) {
+    it.next();
+    m_edit->insertItem(i, it.key(), it.key());
+    m_edit->setItemData(i, it.value(), Qt::ToolTipRole);
+    i++;
+  }
 }
 
 void SalutationEdit::setRestrictions(const QSqlField &field) {
@@ -122,26 +122,28 @@ const QVariant SalutationEdit::getValue() {
   return QString();
 }
 
-const QString SalutationEdit::popUpHints() { return tr("Salutation __TODO__"); }
-
-const QString SalutationEdit::statusHints() {
-  return tr("Salutation __TODO__");
+const QString SalutationEdit::popUpHints() {
+  return tr("A salutation is missing!");
 }
 
-const QMap<QString, QString> SalutationEdit::salutations() {
-  QMap<QString, QString> map;
-  AntiquaCRM::ASharedDataFiles files(AntiquaCRM::ASettings::getDataDir("json"));
-  QJsonObject obj = files.getJson("salutations").object();
-  QStringList lng = obj.keys();
-  if (lng.size() > 0) {
-    QJsonArray arr = obj.value(lng.first()).toArray();
-    for (int i = 0; i < arr.size(); i++) {
-      QJsonObject item = arr[i].toObject();
-      map.insert(item.value("title").toString(),
-                 item.value("describe").toString());
+const QString SalutationEdit::statusHints() { return popUpHints(); }
+
+const QMap<QString, QString> SalutationEdit::map(const QString &bcp47) {
+  QMap<QString, QString> _map;
+  AntiquaCRM::ASharedDataFiles file(AntiquaCRM::ASettings::getDataDir("json"));
+  QJsonObject _salutations = file.getJson("salutations").object();
+  QStringList _sections = _salutations.keys();
+  const QString _lc = QLocale::system().bcp47Name().toLower();
+  if (_sections.size() > 0) {
+    const QString _key(_sections.contains(_lc) ? _lc : bcp47);
+    QJsonArray _array = _salutations.value(_key).toArray();
+    for (int i = 0; i < _array.size(); i++) {
+      QJsonObject _object = _array[i].toObject();
+      _map.insert(_object.value("title").toString(),
+                  _object.value("describe").toString());
     }
   }
-  return map;
+  return _map;
 }
 
 } // namespace AntiquaCRM
