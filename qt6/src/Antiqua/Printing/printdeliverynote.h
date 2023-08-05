@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
-#define ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
+#ifndef ANTIQUACRM_PRINTING_DELIVERYNOTE_H
+#define ANTIQUACRM_PRINTING_DELIVERYNOTE_H
 
 #include <AntiquaPrintDialog>
 #include <QWidget>
@@ -58,4 +58,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
+#endif // ANTIQUACRM_PRINTING_DELIVERYNOTE_H

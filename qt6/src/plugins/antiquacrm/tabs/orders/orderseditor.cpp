@@ -777,7 +777,9 @@ void OrdersEditor::createPrintInvoiceNote() {
   _obj.insert("invoice_id", _ids.in_id);
   _obj.insert("delivery_id", _ids.de_id);
   _obj.insert("vat_level", getDataValue("o_vat_levels").toInt());
-  _obj.insert("payment_status", getDataValue("o_payment_status").toInt());
+  AntiquaCRM::OrderPayment _pstat = static_cast<AntiquaCRM::OrderPayment>(
+      getDataValue("o_payment_status").toInt());
+  _obj.insert("payment_status", (_pstat != AntiquaCRM::OrderPayment::NOTPAID));
 
   AntiquaCRM::PrintInvoice *d = new AntiquaCRM::PrintInvoice(this);
   if (d->exec(_obj) == QDialog::Accepted) {

@@ -16,6 +16,7 @@ SET(ANTIQUACRM_INCLUDE_DIRS
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}/Antiqua/Core
   ${CMAKE_CURRENT_SOURCE_DIR}/Antiqua/Widgets
+  ${CMAKE_CURRENT_SOURCE_DIR}/Antiqua/Printing
   ${CMAKE_CURRENT_SOURCE_DIR}/Antiqua/Providers
   ${CMAKE_CURRENT_SOURCE_DIR}/Antiqua/Tabs
 )
@@ -58,6 +59,7 @@ SET(APPLICATION_SOURCES
 SET(APPLICATION_LIBRARIES
   AntiquaCRM
   AntiquaWidgets
+  AntiquaPrinting
   AntiquaTabs
   AboutDialog
   CompanyDialog

@@ -44,38 +44,38 @@ void InvoicePage::setBodyLayout() {
   m_body->setCellItem(hcr, _dtext, Qt::AlignRight);
 }
 
-void InvoicePage::setArticleItem(int row, const QVariant &value) {
+void InvoicePage::setArticleCell(int row, const QVariant &value) {
   QTextTableCell _tc = m_articles->cellAt(row, 0);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toLongLong(),
                       (Qt::AlignRight | Qt::AlignVCenter));
 }
 
-void InvoicePage::setTitleItem(int row, const QVariant &value) {
+void InvoicePage::setDescripeCell(int row, const QVariant &value) {
   QTextTableCell _tc = m_articles->cellAt(row, 1);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toString(), (Qt::AlignLeft | Qt::AlignTop));
 }
 
-void InvoicePage::setQuantityItem(int row, const QVariant &value) {
+void InvoicePage::setQuantityCell(int row, const QVariant &value) {
   QTextTableCell _tc = m_articles->cellAt(row, 2);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toLongLong(),
                       (Qt::AlignCenter | Qt::AlignVCenter));
 }
 
-int InvoicePage::addArticle(int row, const QSqlQuery &result) {
+int InvoicePage::addArticleRows(int row, const QSqlQuery &result) {
   if (m_articles == nullptr)
     return row;
 
   int _row = row;
   // Article
-  setArticleItem(_row, result.value("a_article_id"));
+  setArticleCell(_row, result.value("a_article_id"));
   // Title
-  setTitleItem(_row, result.value("a_title"));
+  setDescripeCell(_row, result.value("a_title"));
   // Quantity
   int _count = result.value("a_count").toInt();
-  setQuantityItem(_row, _count);
+  setQuantityCell(_row, _count);
 
   // Price
   QString _vat_prefix;
@@ -115,8 +115,10 @@ int InvoicePage::addArticle(int row, const QSqlQuery &result) {
   case (AntiquaCRM::ArticleType::BOOK): {
     QString _str(_vat_prefix);
     _str.append(" ");
-    _str.append(QString::number(_calc.salesTaxRate()));
-    _str.append("% ");
+    if (_calc.salesTaxRate() > 0) {
+      _str.append(QString::number(_calc.salesTaxRate()));
+      _str.append("% ");
+    }
     _str.append(tr("VAT"));
     m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
     m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
@@ -126,11 +128,13 @@ int InvoicePage::addArticle(int row, const QSqlQuery &result) {
   default: {
     QString _str(_vat_prefix);
     _str.append(" ");
-    _str.append(QString::number(_calc.salesTaxRate()));
-    _str.append("% ");
+    if (_calc.salesTaxRate() > 0) {
+      _str.append(QString::number(_calc.salesTaxRate()));
+      _str.append("% ");
+    }
     _str.append(tr("VAT"));
     m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(0.00),
+    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
                         (Qt::AlignRight | Qt::AlignVCenter));
   } break;
   }
@@ -194,7 +198,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
 
     int _row = 1;
     while (_query.next()) {
-      _row = addArticle(_row, _query);
+      _row = addArticleRows(_row, _query);
       _row++;
     }
     _query.clear();
@@ -238,16 +242,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
                       Qt::AlignRight);
 
-  QVector<QTextLength> _constraint;
-  QTextLength::Type _type(QTextLength::PercentageLength);
-  _constraint.append(QTextLength(_type, 15));
-  _constraint.append(QTextLength(_type, 50));
-  QTextTableFormat _format = m_body->tableFormat();
-  _format.setColumnWidthConstraints(_constraint);
-
-  m_articles->format().clearColumnWidthConstraints();
-  m_articles->setFormat(_format);
-  // config.value("payment_status").toInt();
+  qDebug() << "payment_status" << config.value("payment_status").toBool();
 
   return true;
 }
@@ -270,7 +265,6 @@ void PrintInvoice::renderPage(QPrinter *printer) {
 
   QPainter _painter(printer);
   _painter.setWindow(page->rect());
-  _painter.translate(0, 0);
   page->render(&_painter);
   _painter.end();
 }
@@ -340,7 +334,7 @@ int PrintInvoice::exec(const QJsonObject &options) {
   _config.insert("customer_id", c_id);
   _config.insert("delivery_id", _did);
   _config.insert("vat_level", options.value("vat_level").toInt());
-  _config.insert("payment_status", options.value("payment_status").toInt());
+  _config.insert("payment_status", options.value("payment_status").toBool());
 
   QJsonObject content;
   content.insert("config", _config);

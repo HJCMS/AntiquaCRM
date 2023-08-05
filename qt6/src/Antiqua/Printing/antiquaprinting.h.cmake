@@ -7,22 +7,22 @@
 //
 
 // AntiquaCRM::PrintInvoice
-#ifndef ANTIQUACRM_WIDGETS_PRINT_INVOICE_H
+#ifndef ANTIQUACRM_PRINTING_INVOICE_H
 #include "printinvoice.h"
 #endif
 
 // AntiquaCRM::PrintDeliveryNote
-#ifndef ANTIQUACRM_WIDGETS_PRINT_DELIVERYNOTE_H
+#ifndef ANTIQUACRM_PRINTING_DELIVERYNOTE_H
 #include "printdeliverynote.h"
 #endif
 
 // AntiquaCRM::PrintBookCard
-#ifndef ANTIQUACRM_WIDGETS_PRINT_BOOKCARD_H
+#ifndef ANTIQUACRM_PRINTING_BOOKCARD_H
 #include "printbookcard.h"
 #endif
 
 // AntiquaCRM::PrinterButton
-#ifndef ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
+#ifndef ANTIQUACRM_PRINTING_BUTTON_H
 #include "printerbutton.h"
 #endif
 

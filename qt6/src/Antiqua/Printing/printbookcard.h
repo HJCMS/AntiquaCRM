@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PRINT_BOOKCARD_H
-#define ANTIQUACRM_WIDGETS_PRINT_BOOKCARD_H
+#ifndef ANTIQUACRM_PRINTING_BOOKCARD_H
+#define ANTIQUACRM_PRINTING_BOOKCARD_H
 
 #include <AntiquaPrintDialog>
 #include <QImage>
@@ -71,4 +71,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_PRINT_BOOKCARD_H
+#endif // ANTIQUACRM_PRINTING_BOOKCARD_H

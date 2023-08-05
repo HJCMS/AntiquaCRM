@@ -12,12 +12,12 @@
 #endif
 
 // AntiquaCRM::APrintingPage
-#ifndef ANTIQUACRM_WIDGETS_PRINT_FORMAT_H
+#ifndef ANTIQUACRM_PRINTING_FORMAT_H
 #include "aprintingpage.h"
 #endif
 
 // AntiquaCRM::APrintDialog
-#ifndef ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
+#ifndef ANTIQUACRM_PRINTING_DIALOG_H
 #include "aprintdialog.h"
 #endif
 

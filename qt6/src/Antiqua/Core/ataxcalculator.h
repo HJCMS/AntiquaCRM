@@ -34,7 +34,7 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY ATaxCalculator final {
 private:
   double p_origin;
-  double p_vat;
+  double p_vat_value;
   AntiquaCRM::SalesTax p_vat_mode;
 
 public:
@@ -45,7 +45,7 @@ public:
 
   /**
    * @brief Set Current VAT Mode
-   * @param mode
+   * @param mode - AntiquaCRM::SalesTax
    */
   void setBillingMode(int mode);
 

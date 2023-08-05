@@ -10,7 +10,6 @@ INCLUDE_DIRECTORIES (
  ${INTERNAL_WIDGET_INCLUDE_DIRS}
  ${CMAKE_CURRENT_SOURCE_DIR}
  ${CMAKE_CURRENT_BINARY_DIR}
- ${QRENCODE_INCLUDE_DIRS}
 )
 
 ADD_SUBDIRECTORY (private)
@@ -20,9 +19,6 @@ SET (_library_FILES
   antiquabuttons.h.cmake
   antiquainput.h.cmake
   antiquamail.h.cmake
-  antiquaprinting.h.cmake
-  antiquaprintdialog.h.cmake
-  antiquaprintsupport.h.cmake
   antiquawidgets.h.cmake
 )
 
@@ -38,18 +34,6 @@ CONFIGURE_FILE (antiquabuttons.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquabuttons.h
 )
 
-CONFIGURE_FILE (antiquaprinting.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
-)
-
-CONFIGURE_FILE (antiquaprintdialog.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprintdialog.h
-)
-
-CONFIGURE_FILE (antiquaprintsupport.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprintsupport.h
-)
-
 CONFIGURE_FILE (antiquamail.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquamail.h
 )
@@ -58,9 +42,6 @@ SET (_library_config_HEADERS
   antiquabuttons.h
   antiquainput.h
   antiquamail.h
-  antiquaprinting.h
-  antiquaprintdialog.h
-  antiquaprintsupport.h
   antiquawidgets.h
 )
 
@@ -68,9 +49,6 @@ SET (_library_config_TEMPLATES
  AntiquaInput
  AntiquaWidgets
  AntiquaButtons
- AntiquaPrintDialog
- AntiquaPrintSupport
- AntiquaPrinting
  AntiquaMail
 )
 
@@ -83,10 +61,6 @@ SET (_library_SOURCES
   alabel.cpp
   alineedit.cpp
   apluginconfigwidget.cpp
-  aprintdialog.cpp
-  aprintingbody.cpp
-  aprintingpage.cpp
-  aprinttools.cpp
   aslider.cpp
   aspinbox.cpp
   atextedit.cpp
@@ -111,16 +85,13 @@ SET (_library_SOURCES
   mailbutton.cpp
   maildialog.cpp
   numedit.cpp
+  printerbutton.cpp
   phoneedit.cpp
   postalcodeedit.cpp
   postalcodelocation.cpp
   postalcodemodel.cpp
   postalcodestate.cpp
   priceedit.cpp
-  printbookcard.cpp
-  printdeliverynote.cpp
-  printerbutton.cpp
-  printinvoice.cpp
   salutationedit.cpp
   selectcurrency.cpp
   selectdeliverpackage.cpp
@@ -157,10 +128,6 @@ SET (_library_HEADERS
   alineedit.h
   antiquaicon.h
   apluginconfigwidget.h
-  aprintdialog.h
-  aprintingbody.h
-  aprintingpage.h
-  aprinttools.h
   aslider.h
   aspinbox.h
   atextedit.h
@@ -185,16 +152,13 @@ SET (_library_HEADERS
   mailbutton.h
   maildialog.h
   numedit.h
+  printerbutton.h
   phoneedit.h
   postalcodeedit.h
   postalcodelocation.h
   postalcodemodel.h
   postalcodestate.h
   priceedit.h
-  printbookcard.h
-  printdeliverynote.h
-  printerbutton.h
-  printinvoice.h
   salutationedit.h
   selectcurrency.h
   selectdeliverpackage.h
@@ -245,8 +209,6 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Network
  Qt6::Sql
  Qt6::Xml
- Qt6::PrintSupport
- ${QRENCODE_LIBRARIES}
  AntiquaCRM
  AntiquaSubWidgets
 )

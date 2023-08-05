@@ -8,10 +8,10 @@
 #include <QSizePolicy>
 #include <QTableWidgetItem>
 
-#ifdef ANTIQUA_DEVELOPEMENT
-// Display helper borders
-#define PRINTPAGE_DISPLAY_BORDERS 1
-#endif
+//#ifdef ANTIQUA_DEVELOPEMENT
+//// Display helper borders
+//#define PRINTPAGE_DISPLAY_BORDERS 1
+//#endif
 
 namespace AntiquaCRM {
 
@@ -112,11 +112,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   painter.setFont(getFont("print_font_small"));
   painter.setOpacity(0.8);
   painter.setPen(linePen());
-#ifdef ANTIQUA_DEVELOPEMENT
-  painter.fillRect(_lwr, QBrush(Qt::yellow, Qt::SolidPattern));
-#else
   painter.fillRect(_lwr, QBrush(Qt::white, Qt::SolidPattern));
-#endif
 
   // Company Address Header
   const QRectF _rect(QPointF(_lwr.left(), _lwr.top() - getPoints(5)),

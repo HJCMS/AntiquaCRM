@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
-#define ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
+#ifndef ANTIQUACRM_PRINTING_DIALOG_H
+#define ANTIQUACRM_PRINTING_DIALOG_H
 
 #include <AntiquaCRM>
 #include <AntiquaPrintSupport>
@@ -91,4 +91,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_PRINT_DIALOG_H
+#endif // ANTIQUACRM_PRINTING_DIALOG_H
