@@ -9,7 +9,26 @@
 #include <QFocusEvent>
 #include <QLineEdit>
 #include <QObject>
+#include <QValidator>
 #include <QWidget>
+
+/**
+ * @brief The AntiquaInputValidator class
+ *
+ * SQL injection protection
+ *
+ * @ingroup widgets
+ */
+class AntiquaInputValidator final : public QValidator {
+  Q_OBJECT
+
+private:
+  static const QStringList checkList();
+
+public:
+  explicit AntiquaInputValidator(QLineEdit *parent);
+  QValidator::State validate(QString &input, int &pos) const override;
+};
 
 /**
  * @brief The AntiquaLineEdit class
@@ -17,11 +36,15 @@
  */
 class AntiquaLineEdit final : public QLineEdit {
   Q_OBJECT
-  Q_PROPERTY(bool keyReturn READ keyEnterEventEnabled WRITE setEnableKeyEnterEvent
-             NOTIFY sendKeyEnterEventChanged);
+  Q_PROPERTY(bool keyReturn READ keyEnterEventEnabled WRITE
+                 setEnableKeyEnterEvent NOTIFY sendKeyEnterEventChanged);
 
 private:
   bool keyEnterEvent;
+  AntiquaInputValidator *m_validator;
+
+private Q_SLOTS:
+  void checkInput(const QString &);
 
 protected:
   void focusInEvent(QFocusEvent *event);

@@ -19,11 +19,17 @@ InputEdit::InputEdit(QWidget *parent) : QFrame{parent} {
 }
 
 const QString InputEdit::stripString(const QString &str) const {
-  QString buf = str.trimmed();
-  buf.replace("'", "´");
-  QRegExp pattern("^\\s+");
-  buf.replace(pattern, "´");
-  return buf.trimmed();
+  QString _buf = str.trimmed();
+  _buf.replace("\"", "’");
+  _buf.replace("'", "’");
+  _buf.replace("`", "’");
+  _buf.replace("´", "’");
+  _buf.replace("<", "«");
+  _buf.replace(">", "»");
+  static const QRegExp pattern("\\t+");
+  _buf.replace(pattern, " ");
+  _buf.squeeze();
+  return _buf.trimmed();
 }
 
 void InputEdit::skipReturnPressed() { setModified(true); }
