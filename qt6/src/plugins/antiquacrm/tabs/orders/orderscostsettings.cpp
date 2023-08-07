@@ -15,11 +15,11 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   QHBoxLayout *_deliverLayout = new QHBoxLayout;
   o_delivery_service = new AntiquaCRM::SelectDeliverService(m_deliveryTab);
   o_delivery_service->setObjectName("o_delivery_service");
-  o_delivery_service->setBuddyLabel(tr("Service"));
+  o_delivery_service->setInputToolTip(tr("Delivery service"));
   _deliverLayout->addWidget(o_delivery_service);
   o_delivery_package = new AntiquaCRM::SelectDeliverPackage(m_deliveryTab);
   o_delivery_package->setObjectName("o_delivery_package");
-  o_delivery_package->setBuddyLabel(tr("Package"));
+  o_delivery_package->setInputToolTip(tr("Delivery package"));
   _deliverLayout->addWidget(o_delivery_package);
   gridLayout->addLayout(_deliverLayout, _row++, 0, 1, 3);
   // END:DeliveryLayout

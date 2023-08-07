@@ -3,6 +3,7 @@
 
 #include "aprintingbody.h"
 
+#include <QChar>
 #include <QMetaType>
 #include <QPalette>
 
@@ -26,6 +27,12 @@ const QBrush APrintingBody::borderBrush() const {
   return QBrush(Qt::gray, Qt::SolidPattern);
 }
 
+const QString APrintingBody::carriageReturn() const {
+  QString _str;
+  _str.append(QChar::CarriageReturn);
+  return _str;
+}
+
 const QTextTableFormat APrintingBody::tableFormat() {
   QTextTableFormat _f;
   _f.setWidth(QTextLength(QTextLength().PercentageLength, 100));
@@ -33,6 +40,7 @@ const QTextTableFormat APrintingBody::tableFormat() {
   _f.setCellPadding(0);
   _f.setCellSpacing(0);
   _f.setMargin(0);
+  _f.setTopMargin(5);
   _f.setBorder(0);
   _f.setAlignment(Qt::AlignLeft | Qt::AlignTop);
   return _f;
@@ -88,6 +96,33 @@ const QTextBlockFormat APrintingBody::alignRight() {
 
 const QTextBlockFormat APrintingBody::alignCenter() {
   return blockFormat(Qt::AlignCenter | Qt::AlignVCenter);
+}
+
+void APrintingBody::insertText(const QString &text) {
+  QTextBlockFormat _bf = blockFormat(Qt::AlignLeft | Qt::AlignTop);
+  _bf.setProperty(QTextFormat::LayoutDirection, Qt::LeftToRight);
+  _bf.setProperty(QTextFormat::BlockLeftMargin, 5);
+  _bf.setProperty(QTextFormat::BlockTopMargin, 5);
+  _bf.setProperty(QTextFormat::BlockRightMargin, 5);
+
+  QTextCursor _cursor = textCursor();
+  _cursor.setBlockFormat(_bf);
+  _cursor.beginEditBlock();
+  _cursor.insertText(text);
+  _cursor.endEditBlock();
+  _cursor.insertText(carriageReturn());
+}
+
+void APrintingBody::insertText(const QTextCursor &cursor,
+                               const QString &text) const {
+  if (cursor.isNull())
+    return;
+
+  QTextCursor _cursor(cursor);
+  _cursor.beginEditBlock();
+  _cursor.insertText(text);
+  _cursor.endEditBlock();
+  _cursor.insertText(carriageReturn());
 }
 
 void APrintingBody::setCellItem(QTextTableCell &cell, const QVariant &value,

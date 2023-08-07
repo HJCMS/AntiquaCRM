@@ -31,6 +31,13 @@ private:
    */
   inline const QBrush borderBrush() const;
 
+  /**
+   * @brief Put QChar::CarriageReturn into QString
+   *
+   * This will always appendet to @ref insertText
+   */
+  inline const QString carriageReturn() const;
+
 public:
   explicit APrintingBody(QWidget *parent);
 
@@ -74,6 +81,29 @@ public:
    */
   const QTextBlockFormat alignRight();
 
+  /**
+   * @brief Standalone Text with TextBlockFormat
+   * @param text - Text
+   *
+   * Insert a text block to the currently visible cursor position.
+   */
+  void insertText(const QString &text);
+
+  /**
+   * @brief Standalone Text without TextBlockFormat
+   * @param cursor - Text Cursor
+   * @param text   - Text
+   *
+   * Insert a text to given cursor position.
+   */
+  void insertText(const QTextCursor &cursor, const QString &text) const;
+
+  /**
+   * @brief Set a table cell item value
+   * @param cell  - cell to use
+   * @param value - convert to string with QMetaTypeId
+   * @param align - set alignment
+   */
   void setCellItem(QTextTableCell &cell, const QVariant &value,
                    Qt::Alignment align = (Qt::AlignCenter | Qt::AlignVCenter));
 };

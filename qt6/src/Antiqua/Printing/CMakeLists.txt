@@ -54,6 +54,7 @@ SET (_library_SOURCES
   printbookcard.cpp
   printdeliverynote.cpp
   printinvoice.cpp
+  printreminder.cpp
 )
 
 SET (_library_HEADERS
@@ -66,6 +67,7 @@ SET (_library_HEADERS
   printbookcard.h
   printdeliverynote.h
   printinvoice.h
+  printreminder.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED

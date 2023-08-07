@@ -113,7 +113,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   connect(m_actionBar, SIGNAL(sendPrintDeliveryNote()),
           SLOT(createPrintDeliveryNote()));
   connect(m_actionBar, SIGNAL(sendPrintInvoiceNote()),
-          SLOT(createPrintInvoiceNote()));
+          SLOT(createPrintInvoice()));
   connect(m_actionBar, SIGNAL(sendPrintPaymentReminder()),
           SLOT(createPrintPaymentReminder()));
   connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
@@ -305,11 +305,9 @@ void OrdersEditor::createSqlUpdate() {
     _changes++;
   }
 
-  /*
-   * Wenn der Status der Datenbank nicht auf abschließen steht
-   * und der Anwender den Auftrag abschließt.
-   * Muss das Datum für geliefert hier gesetzt werden!
-   */
+  // Wenn der Status der Datenbank nicht auf abschließen steht
+  // und der Anwender den Auftrag abschließt.
+  // Muss das Datum für geliefert hier gesetzt werden!
   if (!databaseOrderStatus() && currentOrderStatus()) {
     _set.append("o_delivered=CURRENT_TIMESTAMP");
     _changes++;
@@ -449,22 +447,18 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
     return;
   }
 
-  const QDate _date = QDate::currentDate();
-  QString _dn; // DeliveryNumber
-  _dn.append(QString::number(_date.year()));
-  _dn.append(QString::number(_date.dayOfYear()));
-  _dn.append(QString::number(oid));
-  // Siehe PostgreSQL::new_invoice_id()
+  // Siehe PgSQL::new_invoice_id()
   QString _sql("SELECT o_invoice_id FROM inventory_orders WHERE o_id=");
   _sql.append(QString::number(oid) + ";");
   QSqlQuery _query = m_sql->query(_sql);
   if (_query.size() == 1) {
     _query.next();
     qint64 _iid = _query.value("o_invoice_id").toLongLong();
+    QString _did = AntiquaCRM::AUtil::zerofill(_iid);
     m_tableData->setValue("o_invoice_id", _iid);
     setDataField(m_tableData->getProperties("o_invoice_id"), _iid);
-    m_tableData->setValue("o_delivery", _dn);
-    setDataField(m_tableData->getProperties("o_delivery"), _dn);
+    m_tableData->setValue("o_delivery", oid);
+    setDataField(m_tableData->getProperties("o_delivery"), _did);
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
@@ -493,6 +487,30 @@ const OrdersEditor::Idset OrdersEditor::identities() {
 
   t_ids.isValid = false;
   return t_ids;
+}
+
+const QJsonObject OrdersEditor::createDialogData(qint64 oid) const {
+  QJsonObject _jso;
+  if (oid < 1)
+    return _jso;
+
+  QString _sql("SELECT * FROM inventory_orders WHERE ");
+  _sql.append("o_id=" + QString::number(oid) + " LIMIT 1;");
+
+  QSqlQuery _query = m_sql->query(_sql);
+  if (_query.size() == 1) {
+    _query.next();
+    const QSqlRecord _record(_query.record());
+    for (int i = 0; i < _record.count(); i++) {
+      const QSqlField _field = _record.field(i);
+      QVariant _buffer = _query.value(_field.name());
+      QVariant _value(_field.metaType(), &_buffer);
+      _jso.insert(_field.name(), _value.toJsonValue());
+      _buffer.clear();
+    }
+    _query.clear();
+  }
+  return _jso;
 }
 
 AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
@@ -753,36 +771,23 @@ void OrdersEditor::createPrintDeliveryNote() {
   if (!_ids.isValid)
     return;
 
-  QJsonObject _obj;
-  _obj.insert("order_id", _ids.or_id);
-  _obj.insert("customer_id", _ids.cu_id);
-  _obj.insert("invoice_id", _ids.in_id);
-  _obj.insert("delivery_id", _ids.de_id);
-
   AntiquaCRM::PrintDeliveryNote *d = new AntiquaCRM::PrintDeliveryNote(this);
-  if (d->exec(_obj) == QDialog::Accepted) {
+  if (d->exec(createDialogData(_ids.or_id)) == QDialog::Accepted) {
     pushStatusMessage(tr("Delivery note printed."));
   }
   d->deleteLater();
 }
 
-void OrdersEditor::createPrintInvoiceNote() {
+void OrdersEditor::createPrintInvoice() {
   OrdersEditor::Idset _ids = identities();
   if (!_ids.isValid)
     return;
 
-  QJsonObject _obj;
-  _obj.insert("order_id", _ids.or_id);
-  _obj.insert("customer_id", _ids.cu_id);
-  _obj.insert("invoice_id", _ids.in_id);
-  _obj.insert("delivery_id", _ids.de_id);
-  _obj.insert("vat_level", getDataValue("o_vat_levels").toInt());
-  // payment status
-  AntiquaCRM::OrderPayment _pstat = static_cast<AntiquaCRM::OrderPayment>(
-      getDataValue("o_payment_status").toInt());
-  _obj.insert("payment_status", (_pstat != AntiquaCRM::OrderPayment::NOTPAID));
-  // package price
-  if (getDataValue("o_delivery_add_price").toBool()) {
+  QJsonObject _obj = createDialogData(_ids.or_id);
+  if (_obj.isEmpty())
+    return;
+
+  if (_obj.value("o_delivery_add_price").toBool()) {
     _obj.insert("package_price",
                 m_costSettings->o_delivery_package->getPackagePrice());
   } else {
@@ -797,8 +802,26 @@ void OrdersEditor::createPrintInvoiceNote() {
 }
 
 void OrdersEditor::createPrintPaymentReminder() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  QJsonObject _obj = createDialogData(_ids.or_id);
+  if (_obj.isEmpty())
+    return;
+
+  if (_obj.value("o_delivery_add_price").toBool()) {
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
+  } else {
+    _obj.insert("package_price", 0.00);
+  }
+
+  AntiquaCRM::PrintReminder *d = new AntiquaCRM::PrintReminder(this);
+  if (d->exec(_obj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Invoice printed."));
+  }
+  d->deleteLater();
 }
 
 void OrdersEditor::openSearchInsertArticle() {

@@ -97,6 +97,27 @@ private:
   const Idset identities();
 
   /**
+   * @brief Erstelle Datenkopf für Druckaufträge
+   * @param oid - Order id
+   *
+   * Erstelle mit Idset und einer SQL Anfrage an inventory_orders Tabelle ein
+   * Json object und füge die SQL Daten den Idest Feldern hinzu.
+   *
+   * Wird von Rechung, Erinnerung, Mahnung und E-Mail Dialogen benötigt!
+   *
+   * @sa identities()
+   * @code
+   * QJsonObject({
+   *    "order_id" : qint64,
+   *    "customer_id" : qint64,
+   *    "invoice_id" : qint64,
+   *    "delivery_id" : QString
+   * })
+   * @endcode
+   */
+  const QJsonObject createDialogData(qint64 oid = -1) const;
+
+  /**
    * @brief Umsatzsteuersatz einbinden oder nicht
    * Sehe nach ob „o_vat_country“ gesetzt und nicht „XX“="Kein EU Land" ist.
    * Abhängig von diesem Wert den Paramter AntiquaCRM::SalesTax setzen.
@@ -265,7 +286,7 @@ private Q_SLOTS:
   /**
    * @brief Dialog zum erstellen und Drucken einer Rechnung
    */
-  void createPrintInvoiceNote();
+  void createPrintInvoice();
 
   /**
    * @brief Dialog zum erstellen und Drucken einer Zahlungserinnerung

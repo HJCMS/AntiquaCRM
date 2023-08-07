@@ -189,59 +189,62 @@ void PrintDeliveryNote::openPrintDialog() {
 }
 
 int PrintDeliveryNote::exec(const QJsonObject &options) {
-  qint64 o_id = options.value("order_id").toInt();
+  qint64 o_id = options.value("o_id").toInt();
   if (o_id < 1) {
     qWarning("Missing Order ID.");
     return QDialog::Rejected;
   }
 
-  qint64 c_id = options.value("customer_id").toInt();
+  qint64 c_id = options.value("o_customer_id").toInt();
   if (c_id < 1) {
     qWarning("Missing Customer ID.");
+    return QDialog::Rejected;
+  }
+
+  qint64 i_id = options.value("o_invoice_id").toDouble();
+  if (i_id < 1) {
+    qWarning("Missing Invoice ID.");
     return QDialog::Rejected;
   }
 
   pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
   pdfFileName.append(".pdf");
 
+  QJsonObject _config;
+  _config.insert("invoice_id", i_id);
+  _config.insert("order_id", o_id);
+  _config.insert("customer_id", c_id);
+  _config.insert("delivery_id", o_id);
+
   page = new DeliveryNote(this);
   QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
 
-  double _iid = options.value("invoice_id").toDouble();
-  double _did = options.value("order_id").toDouble();
-
-  QJsonObject _config;
-  _config.insert("invoice_id", _iid);
-  _config.insert("order_id", o_id);
-  _config.insert("customer_id", c_id);
-  _config.insert("delivery_id", _did);
-
-  QJsonObject content;
-  content.insert("config", _config);
-  content.insert("subject", tr("Delivery note"));
-  content.insert("address", _person.value("address").toString());
+  QJsonObject _content;
+  _content.insert("config", _config);
+  _content.insert("subject", tr("Delivery note"));
+  _content.insert("address", _person.value("address").toString());
 
   QJsonArray _array;
   _array.append(tr("Invoice No."));
-  _array.append(AntiquaCRM::AUtil::zerofill(_iid, 10));
-  content.insert("invoice_id", _array);
+  _array.append(AntiquaCRM::AUtil::zerofill(i_id, 10));
+  _content.insert("invoice_id", _array);
 
   _array = QJsonArray();
   _array.append(tr("Order No."));
   _array.append(AntiquaCRM::AUtil::zerofill(o_id, 10));
-  content.insert("order_id", _array);
+  _content.insert("order_id", _array);
 
   _array = QJsonArray();
   _array.append(tr("Costumer No."));
   _array.append(AntiquaCRM::AUtil::zerofill(c_id, 10));
-  content.insert("customer_id", _array);
+  _content.insert("customer_id", _array);
 
   _array = QJsonArray();
   _array.append(tr("Delivery No."));
-  _array.append(AntiquaCRM::AUtil::zerofill(_did, 10));
-  content.insert("delivery_id", _array);
+  _array.append(AntiquaCRM::AUtil::zerofill(o_id, 10));
+  _content.insert("delivery_id", _array);
 
-  if (!page->setContentData(content))
+  if (!page->setContentData(_content))
     return QDialog::Rejected;
 
   setPrintingPage(page);

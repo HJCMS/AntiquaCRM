@@ -11,5 +11,6 @@ OrderSearchLine::OrderSearchLine(QWidget *parent)
 const QString OrderSearchLine::getSearch() {
   QString txt = text().trimmed();
   txt.replace("'", "");
+  txt.replace("\"", "");
   return txt;
 }

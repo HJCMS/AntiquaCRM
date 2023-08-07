@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "printinvoice.h"
+#include "printreminder.h"
 
 #include <QLayout>
 #include <QMetaType>
@@ -10,13 +10,14 @@
 
 namespace AntiquaCRM {
 
-InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
-  setObjectName("printing_invoice_page");
+ReminderPage::ReminderPage(QWidget *parent)
+    : AntiquaCRM::APrintingPage{parent} {
+  setObjectName("printing_reminder_page");
 }
 
-void InvoicePage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+void ReminderPage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
 
-void InvoicePage::setBodyLayout() {
+void ReminderPage::setBodyLayout() {
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(margin.left(), getPoints(95), margin.right(),
                              margin.bottom());
@@ -34,7 +35,7 @@ void InvoicePage::setBodyLayout() {
 
   QTextTableCell hcl = m_table->cellAt(0, 0);
   hcl.setFormat(m_body->tableCellFormat());
-  m_body->setCellItem(hcl, tr("Invoice"), Qt::AlignLeft);
+  m_body->setCellItem(hcl, tr("Reminder"), Qt::AlignLeft);
 
   QTextTableCell hcr = m_table->cellAt(0, 1);
   hcr.setFormat(m_body->tableCellFormat());
@@ -44,27 +45,27 @@ void InvoicePage::setBodyLayout() {
   m_body->setCellItem(hcr, _dtext, Qt::AlignRight);
 }
 
-void InvoicePage::setArticleCell(int row, const QVariant &value) {
+void ReminderPage::setArticleCell(int row, const QVariant &value) {
   QTextTableCell _tc = m_articles->cellAt(row, 0);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toLongLong(),
                       (Qt::AlignRight | Qt::AlignVCenter));
 }
 
-void InvoicePage::setDescripeCell(int row, const QVariant &value) {
+void ReminderPage::setDescripeCell(int row, const QVariant &value) {
   QTextTableCell _tc = m_articles->cellAt(row, 1);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toString(), (Qt::AlignLeft | Qt::AlignTop));
 }
 
-void InvoicePage::setQuantityCell(int row, const QVariant &value) {
+void ReminderPage::setQuantityCell(int row, const QVariant &value) {
   QTextTableCell _tc = m_articles->cellAt(row, 2);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toLongLong(),
                       (Qt::AlignCenter | Qt::AlignVCenter));
 }
 
-int InvoicePage::addArticleRows(int row, const QSqlQuery &result) {
+int ReminderPage::addArticleRows(int row, const QSqlQuery &result) {
   if (m_articles == nullptr)
     return row;
 
@@ -143,19 +144,20 @@ int InvoicePage::addArticleRows(int row, const QSqlQuery &result) {
   return _row;
 }
 
-bool InvoicePage::setContentData(QJsonObject &data) {
+bool ReminderPage::setContentData(QJsonObject &data) {
   setBodyLayout();
   if (!data.contains("config") || m_body == nullptr) {
-    qWarning("Unable to read invoice content data!");
+    qWarning("Unable to read Reminder content data!");
     return false;
   }
   contentData = data;
   config = contentData.value("config").toObject();
 
-  QTextCursor cursor = m_body->textCursor();
+  m_body->insertText(" __TODO__ Text Block __TODO__ ");
+
   AntiquaCRM::ASqlFiles _tpl("query_printing_invoice");
   if (!_tpl.openTemplate()) {
-    qWarning("Unable to open invoice SQL template!");
+    qWarning("Unable to open Reminder SQL template!");
   }
 
   QString _sql("a_order_id=");
@@ -164,14 +166,15 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   _sql.append(QString::number(config.value("customer_id").toDouble()));
   _tpl.setWhereClause(_sql);
 
+  QTextCursor _cursor = m_body->textCursor();
   QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
   qsizetype _size = _query.size();
   if (_size > 0) {
     // BEGIN::ArticleHeaderTable
-    cursor = m_body->textCursor();
+    _cursor = m_body->textCursor();
     // querySize * (2 article rows) + HeaderRow
     int _rows = ((_size * 2) + 1);
-    m_articles = cursor.insertTable(_rows, 4, m_body->tableFormat());
+    m_articles = _cursor.insertTable(_rows, 4, m_body->tableFormat());
     m_articles->setObjectName("article_table");
 
     QTextTableCellFormat _headerFormat = m_body->headerTableCellFormat();
@@ -239,16 +242,13 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
                       Qt::AlignRight);
 
-  if (config.value("payment_status").toBool()) {
-    m_body->insertText(companyData("COMPANY_INVOICE_PAYED"));
-  } else {
-    m_body->insertText(companyData("COMPANY_INVOICE_THANKS"));
-  }
+  m_body->insertText(" __TODO__ Text Block __TODO__ ");
+
   return true;
 }
 
-PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {
-  setObjectName("print_invoice_dialog");
+PrintReminder::PrintReminder(QWidget *parent) : APrintDialog{parent} {
+  setObjectName("print_Reminder_dialog");
   pageLayout.setOrientation(QPageLayout::Portrait);
   pageLayout.setPageSize(QPageSize(QPageSize::A4));
   pageLayout.setMinimumMargins(QMargins(0, 0, 0, 0));
@@ -257,7 +257,7 @@ PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
-void PrintInvoice::renderPage(QPrinter *printer) {
+void PrintReminder::renderPage(QPrinter *printer) {
   Q_CHECK_PTR(page);
   // Bug Windows lost pageLayout
   if (!printer->pageLayout().isValid())
@@ -269,8 +269,8 @@ void PrintInvoice::renderPage(QPrinter *printer) {
   _painter.end();
 }
 
-void PrintInvoice::createPDF() {
-  QDir _dir(config->value("dirs/archive_invoices").toString());
+void PrintReminder::createPDF() {
+  QDir _dir(config->value("dirs/archive_Reminders").toString());
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);
@@ -282,11 +282,11 @@ void PrintInvoice::createPDF() {
     printer->setOutputFileName(_file.filePath());
     renderPage(printer);
     if (_file.isReadable())
-      sendStatusMessage(tr("Invoice PDF created!"));
+      sendStatusMessage(tr("Reminder PDF created!"));
   }
 }
 
-void PrintInvoice::openPrintDialog() {
+void PrintReminder::openPrintDialog() {
   const QPrinterInfo printerInfo = getPrinterInfo();
   QPageLayout pageLayout = page->pageLayout();
   pageLayout.setMode(QPageLayout::FullPageMode);
@@ -294,18 +294,18 @@ void PrintInvoice::openPrintDialog() {
   QPrinter *printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
-  printer->setDocName("Invoice");
+  printer->setDocName("Reminder");
   printer->setPrinterName(printerInfo.printerName());
   QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
-    sendStatusMessage(tr("Invoice printed!"));
+    sendStatusMessage(tr("Reminder printed!"));
   }
 }
 
-int PrintInvoice::exec(const QJsonObject &options) {
+int PrintReminder::exec(const QJsonObject &options) {
   qint64 o_id = options.value("o_id").toInt();
   if (o_id < 1) {
     qWarning("Missing Order ID.");
@@ -327,7 +327,7 @@ int PrintInvoice::exec(const QJsonObject &options) {
   pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
   pdfFileName.append(".pdf");
 
-  page = new InvoicePage(this);
+  page = new ReminderPage(this);
 
   QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
 
