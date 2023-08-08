@@ -19,6 +19,8 @@
 
 namespace AntiquaCRM {
 
+class LineInputValidator;
+
 /**
  * @class ALineEdit
  * @brief AntiquaCRM Line input edit widget
@@ -51,8 +53,37 @@ private:
    * @brief Action icon to note invalid content!
    */
   QAction *ac_invalid;
+
+  /**
+   * @brief Default input Validator and initialized in constructor.
+   * @sa invalidChars
+   */
+  LineInputValidator *m_validator;
+
+  /**
+   * @brief Static List of Invalid Input chars
+   *
+   * This list is used by Default Input Validator, which is initialized in
+   * constructor.
+   */
+  static const QStringList invalidChars();
+
+  /**
+   * @brief Switch to Validator with Text RegEx Pattern
+   * @sa setValidation
+   */
   void setTextValidator();
+
+  /**
+   * @brief Switch to Validator with Numeric RegEx Pattern
+   * @sa setValidation
+   */
   void setNumericValidator();
+
+  /**
+   * @brief Switch to Validator with Article RegEx Pattern
+   * @sa setValidation
+   */
   void setArticleValidator();
 
 private Q_SLOTS:
@@ -113,17 +144,18 @@ public Q_SLOTS:
    * @param timeout in Milliseconds
    * @note Only works if it has a focus!
    */
-  void setVisualFeedback(int timeout = 2000);
+  void setVisualFeedback(int timeout = 1000);
 
 public:
   /**
    * @brief Predefined Input validator enumeration.
    */
   enum InputValidator {
-    NOTHING = 0, /**< @brief No Input Validation (default) */
+    DEFAULT = 0, /**< @brief Default Validation */
     STRINGS = 1, /**< @brief Match strings */
     NUMERIC = 2, /**< @brief Match numeric */
-    ARTICLE = 3  /**< @brief Match ArticleID */
+    ARTICLE = 3, /**< @brief Match ArticleID */
+    NOTHING = 4  /**< @brief Disable Validation */
   };
 
   /**

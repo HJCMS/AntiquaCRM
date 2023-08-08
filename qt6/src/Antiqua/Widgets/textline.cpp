@@ -10,13 +10,16 @@ namespace AntiquaCRM {
 
 TextLine::TextLine(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
+  m_edit->setValidation(ALineEdit::InputValidator::DEFAULT);
   layout->addWidget(m_edit);
   initData();
+
   connect(m_edit, SIGNAL(textChanged(const QString &)),
           SLOT(valueChanged(const QString &)));
 }
 
 void TextLine::valueChanged(const QString &) {
+  // if(m_edit->validator() != nullptr) {}
   setWindowModified(true);
   emit sendInputChanged();
 }

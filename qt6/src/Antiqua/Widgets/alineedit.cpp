@@ -3,6 +3,7 @@
 
 #include "alineedit.h"
 #include "antiquaicon.h"
+#include "private/lineinputvalidator.h"
 
 #include <ASettings>
 #include <QAbstractItemView>
@@ -20,8 +21,8 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setObjectName("ALineEdit");
   setClearButtonEnabled(true);
   setFocusPolicy(Qt::StrongFocus);
-  ac_completer = addAction(antiquaIcon("view-list-details"),
-                           QLineEdit::TrailingPosition);
+  ac_completer =
+      addAction(antiquaIcon("view-list-details"), QLineEdit::TrailingPosition);
   ac_completer->setToolTip(tr("Show Completer Popup."));
   ac_completer->setEnabled(false);
   ac_completer->setVisible(false);
@@ -32,8 +33,16 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   ac_invalid->setEnabled(false);
   ac_invalid->setVisible(false);
 
+  m_validator = new LineInputValidator(invalidChars(), this);
+  setValidator(m_validator);
+
   connect(ac_completer, SIGNAL(triggered()), SLOT(showCompleter()));
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
+  connect(this, SIGNAL(inputRejected()), SLOT(setVisualFeedback()));
+}
+
+const QStringList ALineEdit::invalidChars() {
+  return QStringList({"'", "\"", "<", ">", "´", "`"});
 }
 
 void ALineEdit::setTextValidator() {
@@ -131,9 +140,13 @@ void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
     setNumericValidator();
     break;
 
-  default: {
+  case (InputValidator::NOTHING): {
     if (validator() != nullptr)
-      setValidator(nullptr); // remove it
+      setValidator(m_validator); // remove it
+  } break;
+
+  default: {
+    setValidator(m_validator);
   } break;
   };
 }
@@ -166,7 +179,8 @@ void ALineEdit::setLineEditProperties(const QSqlField &prop) {
     }
   }
 
-  setValidation(InputValidator::NOTHING);
+  if (validator() == nullptr)
+    setValidation(InputValidator::DEFAULT);
 }
 
 int ALineEdit::length() { return text().trimmed().length(); }

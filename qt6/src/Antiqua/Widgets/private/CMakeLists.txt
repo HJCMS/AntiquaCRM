@@ -13,6 +13,7 @@ INCLUDE_DIRECTORIES (
 )
 
 SET (_subWidgetLibrary_SOURCES
+ lineinputvalidator.cpp
  keywordlistview.cpp
  keywordlabel.cpp
  rubberband.cpp
@@ -25,6 +26,7 @@ SET (_subWidgetLibrary_SOURCES
 )
 
 SET (_subWidgetLibrary_HEADERS
+ lineinputvalidator.h
  keywordlistview.h
  keywordlabel.h
  rubberband.h
