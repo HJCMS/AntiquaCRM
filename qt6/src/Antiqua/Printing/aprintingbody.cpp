@@ -41,6 +41,7 @@ const QTextTableFormat APrintingBody::tableFormat() {
   _f.setCellSpacing(0);
   _f.setMargin(0);
   _f.setTopMargin(p_margin);
+  _f.setBottomMargin(p_margin);
   _f.setBorder(0);
   _f.setAlignment(Qt::AlignLeft | Qt::AlignTop);
   return _f;

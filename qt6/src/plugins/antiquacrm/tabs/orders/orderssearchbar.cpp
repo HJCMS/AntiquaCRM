@@ -124,8 +124,7 @@ void OrdersSearchBar::setFilter(int index) {
 
   default:
     m_searchInput->setPlaceholderText(tr("Search ..."));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::NOTHING);
+    m_searchInput->setValidation(m_searchInput->InputValidator::DEFAULT);
     break;
   }
   setClearAndFocus();

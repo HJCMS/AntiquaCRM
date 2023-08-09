@@ -113,12 +113,43 @@ public:
   static const QRegularExpression keywordRegExp();
 
   /**
+   * @short Simple Numeric validator
+   * @code
+   *  "^\\d+$"
+   * @endcode
+   */
+  static const QRegularExpression numericRegExp();
+
+  /**
+   * @short AntiquaCRM find TABs and SPACEs
+   * @code
+   *  "[\\s\\t]+"
+   * @endcode
+   */
+  static const QRegularExpression spaceRegExp();
+
+  /**
+   * @short AntiquaCRM Article number validation
+   *
+   * The item number system in Antiqua CRM consists of consecutive numbers.
+   * When searching, these may also be entered separated by commas.
+   * @code
+   *  "^(\\d{1,9}[\\,]?)+$"
+   * @endcode
+   */
+  static const QRegularExpression articleRegExp();
+
+  /**
    * @brief Convert Number with leading zeros to string.
    * @param number - input
    * @param length - fill length
    */
   static const QString zerofill(qint64 number, int length = 7);
 
+  /**
+   * @brief MD5 sum from String
+   * @param data
+   */
   static const QString md5sum(const QString &data);
 };
 

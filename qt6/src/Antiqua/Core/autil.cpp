@@ -131,6 +131,18 @@ const QRegularExpression AUtil::keywordRegExp() {
   return _reg;
 }
 
+const QRegularExpression AUtil::numericRegExp() {
+  return QRegularExpression("^\\d+$");
+}
+
+const QRegularExpression AUtil::articleRegExp() {
+  return QRegularExpression("^(\\d{1,9}[\\,]?)+$");
+}
+
+const QRegularExpression AUtil::spaceRegExp() {
+  return QRegularExpression("[\\s\\t]+");
+}
+
 const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
 }

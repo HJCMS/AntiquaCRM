@@ -111,8 +111,7 @@ bool BooksSearchBar::lineInputsEnabled() {
 void BooksSearchBar::setCustomSearch(const QString &info) {
   if (info.length() < 1) {
     m_customSearch->clear();
-    m_customSearch->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::NOTHING);
+    m_customSearch->setValidation(m_customSearch->InputValidator::DEFAULT);
     m_customSearch->setEnabled(false);
     m_customSearch->setPlaceholderText(QString());
   } else {

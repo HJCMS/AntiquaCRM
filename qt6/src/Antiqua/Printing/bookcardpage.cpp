@@ -44,7 +44,9 @@ void BookCardPage::paintEvent(QPaintEvent *) {
   QTextOption _textopts;
   _textopts.setWrapMode(QTextOption::WordWrap);
 
-  QString _line = tr("Book Id") + ": " + p_data.value("article").toString();
+  // qDebug() << p_data;
+  QString _line = tr("Article Id");
+  _line.append(": " + QString::number(p_data.value("aid").toInt()));
   qreal _width = _fmf.horizontalAdvance(_line);
   qreal _ypos = (_fontHeight + _padding);
   _painter.drawText((rect().width() - _width - _margin), _ypos, _line);
@@ -57,6 +59,12 @@ void BookCardPage::paintEvent(QPaintEvent *) {
   _painter.drawStaticText(_margin, _ypos, _text);
 
   _ypos += (_text.size().height() + _padding);
+  _line = tr("Author") + ": ";
+  _line.append(p_data.value("author").toString());
+  _text = QStaticText(_line);
+  _painter.drawStaticText(_margin, _ypos, _text);
+
+  _ypos += (_text.size().height() + _padding);
   _line = tr("Compartment") + ": ";
   _line.append(p_data.value("compartment").toString());
   _text = QStaticText(_line);
@@ -65,12 +73,6 @@ void BookCardPage::paintEvent(QPaintEvent *) {
   _ypos += (_text.size().height() + _padding);
   _line = tr("Title") + ": ";
   _line.append(p_data.value("title").toString());
-  _text = QStaticText(_line);
-  _painter.drawStaticText(_margin, _ypos, _text);
-
-  _ypos += (_text.size().height() + _padding);
-  _line = tr("Author") + ": ";
-  _line.append(p_data.value("author").toString());
   _text = QStaticText(_line);
   _painter.drawStaticText(_margin, _ypos, _text);
 

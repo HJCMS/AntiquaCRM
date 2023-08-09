@@ -24,9 +24,11 @@ class LineInputValidator;
 /**
  * @class ALineEdit
  * @brief AntiquaCRM Line input edit widget
- * Some extended Functions with SQL-Field properties, predefined Validators,
- * Completer and visual feedback functions. Also includes the minLength property
- * for SQL table field constraints.
+ *
+ * This is a final sub class of QTextEdit with some extended Functions with
+ * SQL-Field properties, predefined Validators, Completers and visual feedback
+ * functions. It  also includes the minLength property for SQL table field
+ * constraints.
  *
  * @ingroup EditInputs
  */
@@ -67,12 +69,6 @@ private:
    * constructor.
    */
   static const QStringList invalidChars();
-
-  /**
-   * @brief Switch to Validator with Text RegEx Pattern
-   * @sa setValidation
-   */
-  void setTextValidator();
 
   /**
    * @brief Switch to Validator with Numeric RegEx Pattern
@@ -152,10 +148,9 @@ public:
    */
   enum InputValidator {
     DEFAULT = 0, /**< @brief Default Validation */
-    STRINGS = 1, /**< @brief Match strings */
+    STRINGS = 1, /**< @brief e.g. default */
     NUMERIC = 2, /**< @brief Match numeric */
     ARTICLE = 3, /**< @brief Match ArticleID */
-    NOTHING = 4  /**< @brief Disable Validation */
   };
 
   /**
@@ -163,41 +158,6 @@ public:
    * @param parent - parent Widget
    */
   explicit ALineEdit(QWidget *parent = nullptr);
-
-  /**
-   * @short Simple Text validator
-   * @code
-   *  "^\\S{2}.+"
-   * @endcode
-   */
-  static const QRegularExpression textPattern();
-
-  /**
-   * @short Simple Numeric validator
-   * @code
-   *  "^\\d+$"
-   * @endcode
-   */
-  static const QRegularExpression digitPattern();
-
-  /**
-   * @short AntiquaCRM Article number validation
-   *
-   * The item number system in Antiqua CRM consists of consecutive numbers.
-   * When searching, these may also be entered separated by commas.
-   * @code
-   *  "^(\\d{1,9}[\\,]?)+$"
-   * @endcode
-   */
-  static const QRegularExpression articlePattern();
-
-  /**
-   * @short AntiquaCRM find TABs and SPACEs
-   * @code
-   *  "[\\s\\t]+"
-   * @endcode
-   */
-  static const QRegularExpression spacePattern();
 
   /**
    * @brief the minimum acceptable Characters length.

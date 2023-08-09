@@ -5,10 +5,9 @@
 #include "antiquaicon.h"
 #include "private/lineinputvalidator.h"
 
-#include <ASettings>
+#include <AntiquaCRM>
 #include <QAbstractItemView>
 #include <QCompleter>
-#include <QDebug>
 #include <QIcon>
 #include <QRegularExpressionValidator>
 #include <QTimer>
@@ -44,16 +43,12 @@ const QStringList ALineEdit::invalidChars() {
   return QStringList({"'", "\"", "<", ">", "´", "`"});
 }
 
-void ALineEdit::setTextValidator() {
-  setValidator(new QRegularExpressionValidator(textPattern(), this));
-}
-
 void ALineEdit::setNumericValidator() {
-  setValidator(new QRegularExpressionValidator(digitPattern(), this));
+  setValidator(new QRegularExpressionValidator(AUtil::numericRegExp(), this));
 }
 
 void ALineEdit::setArticleValidator() {
-  setValidator(new QRegularExpressionValidator(articlePattern(), this));
+  setValidator(new QRegularExpressionValidator(AUtil::articleRegExp(), this));
 }
 
 void ALineEdit::initCompleter() {
@@ -106,28 +101,12 @@ void ALineEdit::setVisualFeedback(int timeout) {
   QTimer::singleShot(timeout, this, SLOT(resetVisualFeedback()));
 }
 
-const QRegularExpression ALineEdit::textPattern() {
-  return QRegularExpression("^\\S{2}.+");
-}
-
-const QRegularExpression ALineEdit::digitPattern() {
-  return QRegularExpression("^\\d+$");
-}
-
-const QRegularExpression ALineEdit::articlePattern() {
-  return QRegularExpression("^(\\d{1,9}[\\,]?)+$");
-}
-
-const QRegularExpression ALineEdit::spacePattern() {
-  return QRegularExpression("[\\s\\t]+");
-}
-
 int ALineEdit::getMinLength() { return minLength; }
 
 void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
   switch (type) {
   case (InputValidator::STRINGS):
-    setTextValidator();
+    setValidator(m_validator);
     break;
 
   case (InputValidator::ARTICLE):
@@ -137,11 +116,6 @@ void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
   case (InputValidator::NUMERIC):
     setNumericValidator();
     break;
-
-  case (InputValidator::NOTHING): {
-    if (validator() != nullptr)
-      setValidator(nullptr); // remove it
-  } break;
 
   default: {
     setValidator(m_validator);
@@ -187,7 +161,7 @@ const QString ALineEdit::getArticleNumber() {
   QString _buffer = text().trimmed();
   ASettings cfg(this);
   int _len = cfg.value("image/zerofill", 8).toInt();
-  QRegularExpressionMatch match = articlePattern().match(_buffer);
+  QRegularExpressionMatch match = AUtil::articleRegExp().match(_buffer);
   if (match.hasMatch())
     return _buffer.rightJustified(_len, '0');
 

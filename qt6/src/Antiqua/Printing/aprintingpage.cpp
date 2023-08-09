@@ -46,16 +46,22 @@ APrintingPage::~APrintingPage() {
 }
 
 void APrintingPage::initConfiguration() {
-  // NOTE: do not close this group here!
+  // NOTE: do not close the group in this function!
   cfg->beginGroup("printer");
+
   QMarginsF _m(getPoints(cfg->value("page_margin_left", 20.0).toReal()),
                getPoints(cfg->value("page_margin_top", 0.0).toReal()),
                getPoints(cfg->value("page_margin_right", 20.0).toReal()),
                getPoints(cfg->value("page_margin_bottom", 0.0).toReal()));
   margin = _m;
 
+  // Fonts
+  headerFont = getFont("header");
+  normalFont = getFont("normal");
+  addressFont = getFont("address");
+  footerFont = getFont("footer");
+
   watermark_opacity = cfg->value("print_watermark_opacity", 0.6).toReal();
-  normalFont = QFont(getFont("print_font_normal"));
 
   AntiquaCRM::ASqlFiles _tpl("query_company_data");
   if (!_tpl.openTemplate()) {
@@ -68,7 +74,8 @@ void APrintingPage::initConfiguration() {
     while (_query.next()) {
       QString _key = _query.value("ac_class").toString().toUpper();
       QString _value = _query.value("ac_value").toString();
-      p_companyData.insert(_key, _value.trimmed());
+      if (_value.length() > 2)
+        p_companyData.insert(_key, _value.trimmed());
     }
   } else {
     qWarning("No Printer Company data found!");
@@ -98,8 +105,7 @@ void APrintingPage::paintHeader(QPainter &painter) {
   // DIN 5008 Letter Header
   const QRectF _rect(QPointF(borderLeft(), 0),
                      QPointF(borderRight(), getPoints(45)));
-  const QFont _font = getFont("print_font_header");
-  painter.setFont(_font);
+  painter.setFont(headerFont);
   painter.setPen(fontPen());
 
   const QImage _image = watermark();
@@ -116,7 +122,7 @@ void APrintingPage::paintHeader(QPainter &painter) {
 void APrintingPage::paintAddressBox(QPainter &painter) {
   // DIN 5008B Address Window position
   const QRectF _lwr = letterWindow();
-  painter.setFont(getFont("print_font_small"));
+  painter.setFont(footerFont);
   painter.setOpacity(0.8);
   painter.setPen(linePen());
   painter.fillRect(_lwr, QBrush(Qt::white, Qt::SolidPattern));
@@ -130,21 +136,20 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
 
   // Recipient Address Body
   const QPointF _top = addressZone().topLeft();
-  const QFont _address_font = getFont("print_font_address");
   const QString _address = toRichText(contentData.value("address").toString());
 
   QStaticText _recipient = textBlock((Qt::AlignLeft | Qt::AlignTop),
                                      QTextOption::WrapAtWordBoundaryOrAnywhere);
   _recipient.setTextWidth(getPoints(80));
   _recipient.setText(_address);
-  _recipient.prepare(painter.transform(), _address_font);
+  _recipient.prepare(painter.transform(), addressFont);
 
-  painter.setFont(_address_font);
+  painter.setFont(addressFont);
   painter.drawStaticText(_top, _recipient);
 }
 
 void APrintingPage::paintIdentities(QPainter &painter) {
-  const QFont _font = getFont("print_font_normal");
+  const QFont _font = getFont("normal");
   // DIN 5008B Address Area
   const QPointF _point(getPoints(125), getPoints(55));
   painter.setPen(fontPen());
@@ -174,7 +179,7 @@ void APrintingPage::paintFooter(QPainter &painter) {
   painter.drawLine(footerLine());
   // Footer text
   painter.setPen(fontPen());
-  painter.setFont(getFont("print_font_footer"));
+  painter.setFont(footerFont);
 
   // BEGIN:Left
   QStringList _body;
@@ -297,6 +302,16 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QWidget::paintEvent(event);
 }
 
+const QFont APrintingPage::getFont(const QString &key) const {
+  QFont _font;
+  QString _str("print_font_");
+  _str.append(key);
+  if (!_font.fromString(cfg->value(_str).toString())) {
+    qWarning("Can not load Printing '%s' font!", qPrintable(_str));
+  }
+  return _font;
+}
+
 const QLineF APrintingPage::footerLine() const {
   qreal _y = qRound(pagePoints().height() - margin.bottom());
   const QPointF _sp(margin.left(), _y);
@@ -348,14 +363,6 @@ const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {
 
 const QString APrintingPage::companyData(const QString &key) {
   return p_companyData.value(key.toUpper());
-}
-
-const QFont APrintingPage::getFont(const QString &key) const {
-  QFont font;
-  if (!font.fromString(cfg->value(key).toString())) {
-    qWarning("Can't load Printing '%s' font!", qPrintable(key));
-  }
-  return font;
 }
 
 const QImage APrintingPage::watermark() const {

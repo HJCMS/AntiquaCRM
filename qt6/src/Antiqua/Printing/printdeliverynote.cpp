@@ -83,6 +83,8 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
     qWarning("Unable to open delivery note SQL template!");
   }
 
+  m_body->insertText(companyData("COMPANY_DELIVERY_INTRO"));
+
   QTextCursor cursor = m_body->textCursor();
   QJsonObject _config = contentData.value("config").toObject();
   QString _sql("a_order_id=");
@@ -126,12 +128,7 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
     // END::ArticleItems
   }
 
-  cursor = m_body->textCursor();
-  cursor.insertText("\n\n");
-  cursor.setBlockFormat(m_body->alignLeft());
-  cursor.beginEditBlock();
-  cursor.insertText(companyData("COMPANY_DELIVERY_THANKS"));
-  cursor.endEditBlock();
+  m_body->insertText(companyData("COMPANY_DELIVERY_THANKS"));
   return true;
 }
 

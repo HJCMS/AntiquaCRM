@@ -25,18 +25,6 @@ PrinterFonts::PrinterFonts(QWidget *parent) : QGroupBox{parent} {
 
   _title = tr("Document Body");
   _desc = tr("Standard font for table content and text blocks.");
-  layout->addWidget(section("body", _title), row, 0, 1, 1);
-  layout->addWidget(button("body"), row, 1, 1, 1);
-  layout->addWidget(fontTip(_desc), row++, 2, 1, 1);
-
-  _title = tr("Document Footer");
-  _desc = tr("Font format in document footer.");
-  layout->addWidget(section("footer", _title), row, 0, 1, 1);
-  layout->addWidget(button("footer"), row, 1, 1, 1);
-  layout->addWidget(fontTip(_desc), row++, 2, 1, 1);
-
-  _title = tr("Normal inline text");
-  _desc = tr("Standard font for content and text blocks");
   layout->addWidget(section("normal", _title), row, 0, 1, 1);
   layout->addWidget(button("normal"), row, 1, 1, 1);
   layout->addWidget(fontTip(_desc), row++, 2, 1, 1);
@@ -47,16 +35,10 @@ PrinterFonts::PrinterFonts(QWidget *parent) : QGroupBox{parent} {
   layout->addWidget(button("address"), row, 1, 1, 1);
   layout->addWidget(fontTip(_desc), row++, 2, 1, 1);
 
-  _title = tr("Letter subject text");
-  _desc = tr("Font for letterhead subject table.");
-  layout->addWidget(section("subject", _title), row, 0, 1, 1);
-  layout->addWidget(button("subject"), row, 1, 1, 1);
-  layout->addWidget(fontTip(_desc), row++, 2, 1, 1);
-
-  _title = tr("Small inline text");
-  _desc = tr("Very small font for notes and additions.");
-  layout->addWidget(section("small", _title), row, 0, 1, 1);
-  layout->addWidget(button("small"), row, 1, 1, 1);
+  _title = tr("Document Footer");
+  _desc = tr("Font format in document footer.");
+  layout->addWidget(section("footer", _title), row, 0, 1, 1);
+  layout->addWidget(button("footer"), row, 1, 1, 1);
   layout->addWidget(fontTip(_desc), row++, 2, 1, 1);
 
   layout->setColumnStretch(0, 1);

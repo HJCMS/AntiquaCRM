@@ -83,10 +83,13 @@ protected:
   APrintingBody *m_body = nullptr;
 
   /**
-   * @brief Default Font
+   * @brief Default Fonts
    * @sa initConfiguration
    */
+  QFont headerFont;
+  QFont addressFont;
   QFont normalFont;
+  QFont footerFont;
 
   /**
    * @brief Opacity for Header attachment
@@ -105,6 +108,12 @@ protected:
    * @sa setContentData
    */
   QJsonObject contentData;
+
+  /**
+   * @brief query font by configuration key
+   * @note to find the right key see fontKeys()
+   */
+  const QFont getFont(const QString &) const;
 
   /**
    * @brief Begin Painting
@@ -172,12 +181,6 @@ public:
    * @param key
    */
   const QString companyData(const QString &key);
-
-  /**
-   * @brief query font by configuration key
-   * @note to find the right key see fontKeys()
-   */
-  const QFont getFont(const QString &) const;
 
   /**
    * @brief letter heading watermark
