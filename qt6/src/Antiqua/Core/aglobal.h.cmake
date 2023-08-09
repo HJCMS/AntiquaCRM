@@ -304,4 +304,11 @@ Q_DECLARE_METATYPE(AntiquaCRM::PostalCode)
 #include "aenumerations.h"
 #endif
 
+/**
+ * @short Including predefined flags
+ */
+#ifndef ANTIQUACRM_AFLAGS_H
+#include "aflags.h"
+#endif
+
 #endif // ANTIQUACRM_GLOBAL_H

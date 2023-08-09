@@ -11,7 +11,6 @@
 #include <QDebug>
 #include <QIcon>
 #include <QRegularExpressionValidator>
-#include <QStyle>
 #include <QTimer>
 #include <QValidator>
 
@@ -21,14 +20,14 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   setObjectName("ALineEdit");
   setClearButtonEnabled(true);
   setFocusPolicy(Qt::StrongFocus);
-  ac_completer =
-      addAction(antiquaIcon("view-list-details"), QLineEdit::TrailingPosition);
+  ac_completer = addAction(AntiquaCRM::antiquaIcon("view-list-details"),
+                           QLineEdit::TrailingPosition);
   ac_completer->setToolTip(tr("Show Completer Popup."));
   ac_completer->setEnabled(false);
   ac_completer->setVisible(false);
 
-  QIcon _warnIcon = style()->standardIcon(QStyle::SP_MessageBoxWarning);
-  ac_invalid = addAction(_warnIcon, QLineEdit::TrailingPosition);
+  ac_invalid = addAction(AntiquaCRM::antiquaIcon("dialog-warning"),
+                         QLineEdit::TrailingPosition);
   ac_invalid->setToolTip(tr("Invalid content"));
   ac_invalid->setEnabled(false);
   ac_invalid->setVisible(false);
@@ -36,7 +35,7 @@ ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
   m_validator = new LineInputValidator(invalidChars(), this);
   setValidator(m_validator);
 
-  connect(ac_completer, SIGNAL(triggered()), SLOT(showCompleter()));
+  connect(ac_completer, SIGNAL(triggered()), SLOT(initCompleter()));
   connect(this, SIGNAL(returnPressed()), SLOT(skipReturnPressed()));
   connect(this, SIGNAL(inputRejected()), SLOT(setVisualFeedback()));
 }
@@ -57,14 +56,13 @@ void ALineEdit::setArticleValidator() {
   setValidator(new QRegularExpressionValidator(articlePattern(), this));
 }
 
-void ALineEdit::showCompleter() {
+void ALineEdit::initCompleter() {
   QCompleter *m_cpl = completer();
   if (m_cpl != nullptr) {
     QAbstractItemView *m_view = m_cpl->popup();
     m_view->setAlternatingRowColors(true);
     m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_view->setSelectionMode(QAbstractItemView::SingleSelection);
-
     m_cpl->complete(rect());
     emit sendCompleterShown();
   }
@@ -142,7 +140,7 @@ void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
 
   case (InputValidator::NOTHING): {
     if (validator() != nullptr)
-      setValidator(m_validator); // remove it
+      setValidator(nullptr); // remove it
   } break;
 
   default: {

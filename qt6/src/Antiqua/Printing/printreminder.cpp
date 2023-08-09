@@ -153,7 +153,7 @@ bool ReminderPage::setContentData(QJsonObject &data) {
   contentData = data;
   config = contentData.value("config").toObject();
 
-  m_body->insertText(" __TODO__ Text Block __TODO__ ");
+  m_body->insertText(companyData("COMPANY_PAYMENT_REMINDER_OPEN"));
 
   AntiquaCRM::ASqlFiles _tpl("query_printing_invoice");
   if (!_tpl.openTemplate()) {
@@ -242,7 +242,7 @@ bool ReminderPage::setContentData(QJsonObject &data) {
   m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
                       Qt::AlignRight);
 
-  m_body->insertText(" __TODO__ Text Block __TODO__ ");
+  m_body->insertText(companyData("COMPANY_PAYMENT_REMINDER_FINAL"));
 
   return true;
 }
@@ -270,7 +270,7 @@ void PrintReminder::renderPage(QPrinter *printer) {
 }
 
 void PrintReminder::createPDF() {
-  QDir _dir(config->value("dirs/archive_Reminders").toString());
+  QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_REMINDERS);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);

@@ -30,7 +30,7 @@ void PrintBookCard::renderPage(QPrinter *printer) {
 }
 
 void PrintBookCard::createPDF() {
-  QDir _dir(config->value("dirs/archive_cards").toString());
+  QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_CARDS);
   if (!_dir.exists()) {
     qWarning("Bookcard destination not exists or writeable!");
     return;

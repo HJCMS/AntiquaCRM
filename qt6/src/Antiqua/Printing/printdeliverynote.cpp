@@ -155,7 +155,7 @@ void PrintDeliveryNote::renderPage(QPrinter *printer) {
 }
 
 void PrintDeliveryNote::createPDF() {
-  QDir _dir(config->value("dirs/archive_delivery").toString());
+  QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_DELIVERY);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);

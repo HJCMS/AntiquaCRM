@@ -40,7 +40,7 @@ const QTextTableFormat APrintingBody::tableFormat() {
   _f.setCellPadding(0);
   _f.setCellSpacing(0);
   _f.setMargin(0);
-  _f.setTopMargin(5);
+  _f.setTopMargin(p_margin);
   _f.setBorder(0);
   _f.setAlignment(Qt::AlignLeft | Qt::AlignTop);
   return _f;
@@ -84,13 +84,13 @@ const QTextBlockFormat APrintingBody::blockFormat(Qt::Alignment align) const {
 
 const QTextBlockFormat APrintingBody::alignLeft() {
   QTextBlockFormat _f = blockFormat(Qt::AlignLeft | Qt::AlignVCenter);
-  _f.setLeftMargin(5);
+  _f.setLeftMargin(p_margin);
   return _f;
 }
 
 const QTextBlockFormat APrintingBody::alignRight() {
   QTextBlockFormat _f = blockFormat(Qt::AlignRight | Qt::AlignVCenter);
-  _f.setRightMargin(5);
+  _f.setRightMargin(p_margin);
   return _f;
 }
 
@@ -101,11 +101,11 @@ const QTextBlockFormat APrintingBody::alignCenter() {
 void APrintingBody::insertText(const QString &text) {
   QTextBlockFormat _bf = blockFormat(Qt::AlignLeft | Qt::AlignTop);
   _bf.setProperty(QTextFormat::LayoutDirection, Qt::LeftToRight);
-  _bf.setProperty(QTextFormat::BlockLeftMargin, 5);
-  _bf.setProperty(QTextFormat::BlockTopMargin, 5);
-  _bf.setProperty(QTextFormat::BlockRightMargin, 5);
+  _bf.setProperty(QTextFormat::BlockLeftMargin, p_margin);
+  _bf.setProperty(QTextFormat::BlockRightMargin, p_margin);
 
   QTextCursor _cursor = textCursor();
+  _cursor.insertText(carriageReturn());
   _cursor.setBlockFormat(_bf);
   _cursor.beginEditBlock();
   _cursor.insertText(text);

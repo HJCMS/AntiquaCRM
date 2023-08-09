@@ -270,7 +270,7 @@ void PrintInvoice::renderPage(QPrinter *printer) {
 }
 
 void PrintInvoice::createPDF() {
-  QDir _dir(config->value("dirs/archive_invoices").toString());
+  QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_INVOICES);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);

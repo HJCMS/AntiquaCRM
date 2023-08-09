@@ -90,7 +90,7 @@ private Q_SLOTS:
   /**
    * @brief Initial QCompleter and add to Editor
    */
-  void showCompleter();
+  void initCompleter();
 
   /**
    * @brief emit sendFocusOut if (text().length()>2)

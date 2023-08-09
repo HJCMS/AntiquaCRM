@@ -8,10 +8,10 @@
 #include <QSizePolicy>
 #include <QTableWidgetItem>
 
-//#ifdef ANTIQUA_DEVELOPEMENT
-//// Display helper borders
-//#define PRINTPAGE_DISPLAY_BORDERS 1
-//#endif
+#ifdef ANTIQUA_DEVELOPEMENT
+// Display helper borders
+#define PRINTPAGE_DEBUG
+#endif
 
 namespace AntiquaCRM {
 
@@ -23,8 +23,11 @@ APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
   _p.setColor(QPalette::Text, Qt::black);
   setPalette(_p);
 
-  contentData = QJsonObject();
   cfg = new AntiquaCRM::ASettings(this);
+  m_sql = new AntiquaCRM::ASqlCore(this);
+  contentData = QJsonObject();
+  normalFont = font();
+
   initConfiguration();
 
   const QRectF _rf = pagePoints();
@@ -43,16 +46,6 @@ APrintingPage::~APrintingPage() {
 }
 
 void APrintingPage::initConfiguration() {
-  if (m_sql == nullptr)
-    m_sql = new AntiquaCRM::ASqlCore(this);
-
-  // Payment Settings
-  cfg->beginGroup("payment");
-  foreach (QString _k, cfg->allKeys()) {
-    p_companyData.insert(_k.toUpper(), cfg->value(_k).toString());
-  }
-  cfg->endGroup();
-
   // NOTE: do not close this group here!
   cfg->beginGroup("printer");
   QMarginsF _m(getPoints(cfg->value("page_margin_left", 20.0).toReal()),
@@ -61,12 +54,16 @@ void APrintingPage::initConfiguration() {
                getPoints(cfg->value("page_margin_bottom", 0.0).toReal()));
   margin = _m;
 
+  watermark_opacity = cfg->value("print_watermark_opacity", 0.6).toReal();
   normalFont = QFont(getFont("print_font_normal"));
 
-  QString _sql("SELECT ac_class, ac_value FROM antiquacrm_company");
-  _sql.append(" ORDER BY ac_class;");
+  AntiquaCRM::ASqlFiles _tpl("query_company_data");
+  if (!_tpl.openTemplate()) {
+    qFatal("Can not read printing config!");
+    return;
+  }
 
-  QSqlQuery _query = m_sql->query(_sql);
+  QSqlQuery _query = m_sql->query(_tpl.getQueryContent());
   if (_query.size() > 0) {
     while (_query.next()) {
       QString _key = _query.value("ac_class").toString().toUpper();
@@ -83,8 +80,18 @@ void APrintingPage::initConfiguration() {
   _company.append(" - ");
   _company.append(companyData("COMPANY_LOCATION"));
   p_companyData.insert("COMPANY_ADDRESS_LABEL", _company);
-  p_companyData.insert("COMPANY_INTRO_DELIVERY",
-                       tr("Thank you for your order."));
+
+#ifdef PRINTPAGE_DEBUG
+  QHashIterator<QString, QString> it(p_companyData);
+  while (it.hasNext()) {
+    it.next();
+    if (it.value().length() > 50) {
+      qDebug() << it.key() << it.value().left(50) << "..";
+    } else {
+      qDebug() << it.key() << it.value();
+    }
+  }
+#endif
 }
 
 void APrintingPage::paintHeader(QPainter &painter) {
@@ -97,7 +104,7 @@ void APrintingPage::paintHeader(QPainter &painter) {
 
   const QImage _image = watermark();
   if (!_image.isNull()) {
-    painter.setOpacity(watermarkOpacity());
+    painter.setOpacity(watermark_opacity);
     painter.drawImage(_rect.topLeft(), _image);
     painter.setOpacity(1.0);
   }
@@ -164,8 +171,7 @@ void APrintingPage::paintIdentities(QPainter &painter) {
 void APrintingPage::paintFooter(QPainter &painter) {
   // Footer line
   painter.setPen(linePen());
-  QLineF _footerLine(bodyBottom(), QPointF(borderRight(), bodyBottom().y()));
-  painter.drawLine(_footerLine);
+  painter.drawLine(footerLine());
   // Footer text
   painter.setPen(fontPen());
   painter.setFont(getFont("print_font_footer"));
@@ -257,7 +263,7 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
     painter.drawLine(QPoint(5, _ym), // start
                      QPoint(((borderLeft() / 3) * 2), _ym));
     // END::Letter_folding_lines
-#ifdef PRINTPAGE_DISPLAY_BORDERS
+#ifdef PRINTPAGE_DEBUG
     const QRectF _frame(
         QPointF(borderLeft(), 0),                     // top left
         QPointF(borderRight(), pagePoints().height()) // bottom right
@@ -291,13 +297,10 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QWidget::paintEvent(event);
 }
 
-const QPointF APrintingPage::bodyTop() const {
-  return QPointF(margin.left(), getPoints(90));
-}
-
-const QPointF APrintingPage::bodyBottom() const {
+const QLineF APrintingPage::footerLine() const {
   qreal _y = qRound(pagePoints().height() - margin.bottom());
-  return QPointF(margin.left(), _y);
+  const QPointF _sp(margin.left(), _y);
+  return QLineF(_sp, QPointF(borderRight(), _sp.y()));
 }
 
 qreal APrintingPage::borderLeft() const { return margin.left(); }
@@ -353,10 +356,6 @@ const QFont APrintingPage::getFont(const QString &key) const {
     qWarning("Can't load Printing '%s' font!", qPrintable(key));
   }
   return font;
-}
-
-qreal APrintingPage::watermarkOpacity() const {
-  return cfg->value("print_watermark_opacity", 0.6).toReal();
 }
 
 const QImage APrintingPage::watermark() const {

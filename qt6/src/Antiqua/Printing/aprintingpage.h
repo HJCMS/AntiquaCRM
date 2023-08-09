@@ -59,15 +59,40 @@ private:
 
   /**
    * @brief paint watermark and borders
-   * @short define DEBUG_DISPLAY_BORDERS before load this class
-   * if you want display painted borders
    *
-   * https://wikipedia.org/wiki/DIN_5008
+   * if you want display page borders define PRINTPAGE_DEBUG=1
    */
   virtual void paintEvent(QPaintEvent *) override final;
 
 protected:
+  /**
+   * @brief System settings
+   * @sa initConfiguration
+   */
+  AntiquaCRM::ASettings *cfg;
+
+  /**
+   * @brief Query Sql settings
+   * @sa initConfiguration
+   */
+  AntiquaCRM::ASqlCore *m_sql = nullptr;
+
+  /**
+   * @brief a TextEdit widget for content data
+   */
   APrintingBody *m_body = nullptr;
+
+  /**
+   * @brief Default Font
+   * @sa initConfiguration
+   */
+  QFont normalFont;
+
+  /**
+   * @brief Opacity for Header attachment
+   * @sa initConfiguration
+   */
+  qreal watermark_opacity = 1.0;
 
   /**
    * @brief Primary Content data ...
@@ -82,31 +107,9 @@ protected:
   QJsonObject contentData;
 
   /**
-   * @brief Query Sql settings
+   * @brief Begin Painting
    */
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
-
-  /**
-   * @brief System settings
-   */
-  AntiquaCRM::ASettings *cfg;
-
-  /**
-   * @brief Default Font
-   */
-  QFont normalFont;
-
-  /**
-   * @brief Paint Document Body
-   * @param painter
-   */
-  virtual void paintContent(QPainter &painter) = 0;
-
-  /**
-   * @brief Begin Body Painting
-   */
-  const QPointF bodyTop() const;
-  const QPointF bodyBottom() const;
+  const QLineF footerLine() const;
 
   /**
    * @brief Points from left Margin to left Border
@@ -131,6 +134,12 @@ protected:
    * @endcode
    */
   qreal inlineWidth() const;
+
+  /**
+   * @brief Paint Document Body
+   * @param painter
+   */
+  virtual void paintContent(QPainter &painter) = 0;
 
 public:
   /**
@@ -169,11 +178,6 @@ public:
    * @note to find the right key see fontKeys()
    */
   const QFont getFont(const QString &) const;
-
-  /**
-   * @brief letter heading watermark transparency
-   */
-  qreal watermarkOpacity() const;
 
   /**
    * @brief letter heading watermark

@@ -37,22 +37,17 @@ void CompanyWidget::saveConfig() {
   }
   AntiquaCRM::ASqlCore sql(this);
   sql.query(queries.join("\n"));
-  if (!sql.lastError().isEmpty()) {
-    qWarning("SQL-ERROR Company save ...");
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << sql.lastError();
-#endif
-    emit sendSaved(false);
-  } else {
-    emit sendSaved(true);
-  }
+  emit sendSaved(sql.lastError().isEmpty());
 }
 
 bool CompanyWidget::loadConfig() {
   bool _status = false;
-  const QString _sql("SELECT * FROM antiquacrm_company ORDER BY ac_sort;");
+  AntiquaCRM::ASqlFiles _tpl("query_company_data");
+  if(!_tpl.openTemplate())
+    return false;
+
   AntiquaCRM::ASqlCore c_sql(this);
-  QSqlQuery _q = c_sql.query(_sql);
+  QSqlQuery _q = c_sql.query(_tpl.getQueryContent());
   if (_q.size() > 0) {
     _status = true;
     while (_q.next()) {
@@ -62,6 +57,7 @@ bool CompanyWidget::loadConfig() {
                           p_row, 0, 1, 1, (Qt::AlignTop | Qt::AlignRight));
         AntiquaCRM::TextField *m_edit = new AntiquaCRM::TextField(this);
         m_edit->setObjectName(_q.value("ac_class").toString());
+        m_edit->setInputToolTip(m_edit->objectName());
         m_edit->setValue(_q.value("ac_value").toString());
         layout->addWidget(m_edit, p_row, 1, 1, 1);
       } else {
@@ -69,6 +65,7 @@ bool CompanyWidget::loadConfig() {
                           p_row, 0, 1, 1, Qt::AlignRight);
         AntiquaCRM::TextLine *m_edit = new AntiquaCRM::TextLine(this);
         m_edit->setObjectName(_q.value("ac_class").toString());
+        m_edit->setInputToolTip(m_edit->objectName());
         m_edit->setValue(_q.value("ac_value").toString());
         layout->addWidget(m_edit, p_row, 1, 1, 1);
       }

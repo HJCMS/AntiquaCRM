@@ -27,6 +27,11 @@ class ANTIQUACRM_LIBRARY APrintingBody final : public QTextEdit {
 
 private:
   /**
+   * @brief Fixed Content Margin for text and tables.
+   */
+  qreal p_margin = 5.0;
+
+  /**
    * @brief Brush for visible Borders
    */
   inline const QBrush borderBrush() const;
