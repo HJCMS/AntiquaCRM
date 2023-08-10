@@ -752,35 +752,37 @@ void BooksEditor::setPrintBookCard() {
     return;
   }
 
-  QJsonObject jsobj = ib_storage->getBookcardData();
-  jsobj.insert("aid", _aid);
-  jsobj.insert("basename", AntiquaCRM::AUtil::zerofill(_aid));
-  jsobj.insert("title", getDataValue("ib_title").toString());
-  jsobj.insert("year", getDataValue("ib_year").toString());
-  jsobj.insert("author", getDataValue("ib_author").toString());
+  QJsonObject _config = ib_storage->getBookcardData();
+  _config.insert("aid", _aid);
+  _config.insert("basename", AntiquaCRM::AUtil::zerofill(_aid));
+  _config.insert("title", getDataValue("ib_title").toString());
+  _config.insert("year", getDataValue("ib_year").toString());
+  _config.insert("author", getDataValue("ib_author").toString());
 
   QUrl _qr_url;
   m_cfg->beginGroup("printer");
   _qr_url.setUrl(m_cfg->value("qrcode_url").toString());
+
   QString _query(m_cfg->value("qrcode_query").toString());
   _query.append("=");
-  _query.append(jsobj.value("article").toString());
+  _query.append(_config.value("aid").toString());
   _qr_url.setQuery(_query);
-  jsobj.insert("qrquery", _qr_url.toString());
+
+  _config.insert("qrquery", _qr_url.toString());
   m_cfg->endGroup();
 
   QString _buffer = getDataValue("ib_storage_compartment").toString();
-  jsobj.insert("compartment", _buffer.trimmed());
+  _config.insert("compartment", _buffer.trimmed());
   _buffer.clear();
 
   _buffer = getDataValue("ib_changed")
                 .toDate()
                 .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
-  jsobj.insert("changed", _buffer.trimmed());
+  _config.insert("changed", _buffer.trimmed());
   _buffer.clear();
 
   AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
-  if (m_d->exec(jsobj) == QDialog::Accepted) {
+  if (m_d->exec(_config) == QDialog::Accepted) {
     pushStatusMessage(tr("Bookcard print successfully."));
   } else {
     pushStatusMessage(tr("Bookcard dialog canceled."));

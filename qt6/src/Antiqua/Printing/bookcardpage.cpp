@@ -64,11 +64,13 @@ void BookCardPage::paintEvent(QPaintEvent *) {
   _text = QStaticText(_line);
   _painter.drawStaticText(_margin, _ypos, _text);
 
-  _ypos += (_text.size().height() + _padding);
-  _line = tr("Compartment") + ": ";
-  _line.append(p_data.value("compartment").toString());
-  _text = QStaticText(_line);
-  _painter.drawStaticText(_margin, _ypos, _text);
+  if (p_data.contains("compartment")) {
+    _ypos += (_text.size().height() + _padding);
+    _line = tr("Compartment") + ": ";
+    _line.append(p_data.value("compartment").toString());
+    _text = QStaticText(_line);
+    _painter.drawStaticText(_margin, _ypos, _text);
+  }
 
   _ypos += (_text.size().height() + _padding);
   _line = tr("Title") + ": ";

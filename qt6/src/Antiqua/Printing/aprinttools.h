@@ -39,7 +39,7 @@ private:
 protected:
   /**
    * @brief current page margins
-   * Initialed in @ref APrintingPage::initConfiguration()
+   * Initialed in @sa APrintingPage::initConfiguration()
    */
   QMarginsF margin = QMarginsF(0, 0, 0, 0);
 
@@ -99,11 +99,11 @@ public:
 
   /**
    * @brief Default painter drawText option
-   * @param align
+   * @param align - Alignment
+   * @param mode  - WrapMode
    */
-  const QTextOption
-  textOption(Qt::Alignment align = Qt::AlignLeft,
-             QTextOption::WrapMode mode = QTextOption::NoWrap);
+  const QTextOption textOption(Qt::Alignment align = Qt::AlignLeft,
+                               QTextOption::WrapMode mode = QTextOption::NoWrap);
 
   /**
    * @brief General Linestyle and for folds and paper punches!

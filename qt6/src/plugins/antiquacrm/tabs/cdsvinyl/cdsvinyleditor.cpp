@@ -10,6 +10,7 @@
 #include <AntiquaPrinting>
 #include <QDate>
 #include <QLayout>
+#include <QPixmap>
 
 CDsVinylEditor::CDsVinylEditor(QWidget *parent)
     : AntiquaCRM::TabsEditor{CDSVINYL_SQL_EDITOR_PATTERN, parent} {
@@ -235,6 +236,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
 
   m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
   m_actionBar->setViewMailButton(false);
+  m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_BOOKCARD);
   mainLayout->addWidget(m_actionBar);
 
   setLayout(mainLayout);
@@ -255,6 +257,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
   connect(m_actionBar, SIGNAL(sendFinishClicked()),
           SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintQRCode()));
 }
 
 CDsVinylEditor::~CDsVinylEditor() {
@@ -656,6 +659,45 @@ void CDsVinylEditor::setReadMediaDialog() {
   d->deleteLater();
 }
 
+void CDsVinylEditor::setPrintQRCode() {
+  qint64 _aid = getDataValue("cv_id").toLongLong();
+  if (_aid < 1) {
+    pushStatusMessage(tr("Missing valid Article Id!"));
+    return;
+  }
+
+  QJsonObject _config = cv_storage->getBookcardData();
+  _config.insert("aid", _aid);
+  _config.insert("basename", AntiquaCRM::AUtil::zerofill(_aid));
+  _config.insert("title", getDataValue("cv_title").toString());
+  _config.insert("year", getDataValue("cv_year").toString());
+  _config.insert("author", getDataValue("cv_author").toString());
+
+  QUrl _qr_url;
+  m_cfg->beginGroup("printer");
+  _qr_url.setUrl(m_cfg->value("qrcode_url").toString());
+
+  QString _query(m_cfg->value("qrcode_query").toString());
+  _query.append("=");
+  _query.append(_config.value("aid").toString());
+  _qr_url.setQuery(_query);
+
+  _config.insert("qrquery", _qr_url.toString());
+  m_cfg->endGroup();
+
+  QString _changed = getDataValue("cv_changed")
+                         .toDate()
+                         .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+  _config.insert("changed", _changed.trimmed());
+
+  AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
+  if (m_d->exec(_config) == QDialog::Accepted) {
+    pushStatusMessage(tr("Card print successfully."));
+  } else {
+    pushStatusMessage(tr("Card print canceled."));
+  }
+}
+
 void CDsVinylEditor::setRestore() {
   importSqlResult();
   cv_count->setFocus();
@@ -684,7 +726,6 @@ bool CDsVinylEditor::openEditEntry(qint64 articleId) {
     setLoadThumbnail(articleId);
     _status = true;
   } else {
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
     _status = false;
   }
 

@@ -52,35 +52,23 @@ private:
   AntiquaCRM::TabsEditActionBar *m_actionBar;
 
   void setInputFields() override;
-
   bool setDataField(const QSqlField &field, const QVariant &value) override;
-
   void importSqlResult() override;
-
   bool sendSqlQuery(const QString &query) override;
-
   const QHash<QString, QVariant> createSqlDataset() override;
-
   void createSqlUpdate() override;
-
   void createSqlInsert() override;
 
 private Q_SLOTS:
   void setSaveData() override;
-
   void setCheckLeaveEditor() override;
-
   void setFinalLeaveEditor(bool force = true) override;
-
   void setStorageCompartments() override;
-
   void setLoadThumbnail(qint64) override;
-
   void setRemoveThumbnail(qint64) override;
-
   void setImportEditImage() override;
-
   void setReadMediaDialog();
+  void setPrintQRCode();
 
 public Q_SLOTS:
   void setRestore() override;
@@ -88,11 +76,8 @@ public Q_SLOTS:
 public:
   explicit CDsVinylEditor(QWidget *parent = nullptr);
   ~CDsVinylEditor() override;
-
   bool openEditEntry(qint64 articleId) override;
-
   bool createNewEntry() override;
-
   bool createCustomEntry(const QJsonObject &object) override;
 };
 

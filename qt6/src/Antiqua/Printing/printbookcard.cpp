@@ -20,6 +20,20 @@ PrintBookCard::PrintBookCard(QWidget *parent)
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
+bool PrintBookCard::notValid(const QJsonValue &value) const {
+  switch (value.type()) {
+  case (QJsonValue::Double):
+    return (value.toInteger(0) == 0);
+
+  case (QJsonValue::String):
+    return (value.toString().length() < 1);
+
+  default: // null or unknown = not valid
+    return true;
+  }
+  return true;
+}
+
 void PrintBookCard::renderPage(QPrinter *printer) {
   Q_CHECK_PTR(page);
   QPainter _painter(printer);
@@ -74,6 +88,11 @@ void PrintBookCard::openPrintDialog() {
 
 int PrintBookCard::exec(const QJsonObject &opts) {
   if (!opts.contains("aid") || !opts.contains("basename")) {
+    qWarning("Missing Article Id!");
+    return QDialog::Rejected;
+  }
+
+  if (notValid(opts.value("aid")) || notValid(opts.value("basename"))) {
     qWarning("Missing Article Id!");
     return QDialog::Rejected;
   }

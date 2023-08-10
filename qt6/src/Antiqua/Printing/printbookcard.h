@@ -34,6 +34,8 @@ private:
    */
   BookCardPage *page = nullptr;
 
+  bool notValid(const QJsonValue &) const;
+
 private Q_SLOTS:
   /**
    * @brief Render BookCardPage to Printer Device

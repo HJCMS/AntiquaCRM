@@ -633,40 +633,47 @@ void StitchesEditor::setStorageCompartments() {
 }
 
 void StitchesEditor::setPrintBookCard() {
-  qint64 _id = getDataValue("ip_id").toLongLong();
-  if (_id < 1) {
+  qint64 _aid = getDataValue("ip_id").toLongLong();
+  if (_aid < 1) {
     pushStatusMessage(tr("Missing valid Article Id!"));
     return;
   }
 
-  QJsonObject jsobj = ip_storage->getBookcardData();
-  jsobj.insert("article", AntiquaCRM::AUtil::zerofill(_id));
-  jsobj.insert("title", getDataValue("ip_title").toString());
-  jsobj.insert("year", getDataValue("ip_year").toString());
-  jsobj.insert("author", getDataValue("ip_author").toString());
+  QJsonObject _config = ip_storage->getBookcardData();
+  _config.insert("aid", _aid);
+  _config.insert("basename", AntiquaCRM::AUtil::zerofill(_aid));
+  _config.insert("title", getDataValue("ip_title").toString());
+  _config.insert("year", getDataValue("ip_year").toString());
+  _config.insert("author", getDataValue("ip_author").toString());
 
   QUrl _qr_url;
   m_cfg->beginGroup("printer");
   _qr_url.setUrl(m_cfg->value("qrcode_url").toString());
+
   QString _query(m_cfg->value("qrcode_query").toString());
   _query.append("=");
-  _query.append(jsobj.value("article").toString());
+  _query.append(_config.value("aid").toString());
   _qr_url.setQuery(_query);
-  jsobj.insert("qrquery", _qr_url.toString());
+
+  _config.insert("qrquery", _qr_url.toString());
   m_cfg->endGroup();
 
   QString _buffer = getDataValue("ip_storage_compartment").toString();
-  jsobj.insert("compartment", _buffer.trimmed());
+  _config.insert("compartment", _buffer.trimmed());
   _buffer.clear();
 
   _buffer = getDataValue("ip_changed")
                 .toDate()
                 .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
-  jsobj.insert("changed", _buffer.trimmed());
+  _config.insert("changed", _buffer.trimmed());
   _buffer.clear();
 
   AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
-  m_d->exec(jsobj);
+  if (m_d->exec(_config) == QDialog::Accepted) {
+    pushStatusMessage(tr("Card print successfully."));
+  } else {
+    pushStatusMessage(tr("Card print canceled."));
+  }
 }
 
 void StitchesEditor::setLoadThumbnail(qint64 articleId) {

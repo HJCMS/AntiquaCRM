@@ -306,19 +306,19 @@ void PrintInvoice::openPrintDialog() {
 }
 
 int PrintInvoice::exec(const QJsonObject &options) {
-  qint64 o_id = options.value("o_id").toInt();
+  qint64 o_id = options.value("o_id").toInteger(0);
   if (o_id < 1) {
     qWarning("Missing Order ID.");
     return QDialog::Rejected;
   }
 
-  qint64 c_id = options.value("o_customer_id").toInt();
+  qint64 c_id = options.value("o_customer_id").toInteger(0);
   if (c_id < 1) {
     qWarning("Missing Customer ID.");
     return QDialog::Rejected;
   }
 
-  qint64 i_id = options.value("o_invoice_id").toInt();
+  qint64 i_id = options.value("o_invoice_id").toInteger(0);
   if (i_id < 1) {
     qWarning("Missing Invoice ID.");
     return QDialog::Rejected;

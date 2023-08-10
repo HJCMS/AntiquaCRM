@@ -102,7 +102,7 @@ bool AUtil::checkMail(const QString &mail) {
 const QRegularExpression AUtil::phoneRegExp() {
   QRegularExpression _reg;
   _reg.setPatternOptions(QRegularExpression::CaseInsensitiveOption);
-  _reg.setPattern("^(0[\\d]{2,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
+  _reg.setPattern("^(0[\\d]{1,3}\\s?[\\d]{2,4}[\\s?\\d]+)$");
   return _reg;
 }
 

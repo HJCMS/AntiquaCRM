@@ -88,6 +88,7 @@ public:
    * Containing "ITU-T E.123", "ITU-T E.164" and EPP definition.
    * @code
    *  (Country Code) (NPA Area Code) (Prefix) (Subscriber)
+   *  "^(0[\\d]{1,3}\\s?[\\d]{2,4}[\\s?\\d]+)$"
    * @endcode
    */
   static const QRegularExpression phoneRegExp();

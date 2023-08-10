@@ -67,22 +67,28 @@ QVariant PhoneCountryCodeModel::headerData(int section,
 
 void PhoneCountryCodeModel::initModel() {
   p_codes.clear();
-  AntiquaCRM::ASharedDataFiles file(AntiquaCRM::ASettings::getDataDir("json"));
-  if (file.fileExists("iso_countrycodes")) {
-    QJsonDocument jdoc = file.getJson("iso_countrycodes");
-    QJsonArray arr = jdoc.object().value("countries").toArray();
-    for (int i = 0; i < arr.size(); i++) {
-      QJsonObject obj = arr[i].toObject();
-      qint64 npa = obj.value("phone").toInt();
-      CountryCode code;
-      code.npa = AntiquaCRM::AUtil::zerofill(npa, 3);
-      code.info = obj.value("country").toString();
-      p_codes.append(code);
-    }
+  AntiquaCRM::ASharedDataFiles _db(AntiquaCRM::ASettings::getDataDir("json"));
+  if (!_db.fileExists("iso_countrycodes")) {
+    qWarning("Missing Country codes document!");
+    return;
+  }
+
+  const QJsonDocument _doc = _db.getJson("iso_countrycodes");
+  const QJsonArray _array = _doc.object().value("countries").toArray();
+  for (int i = 0; i < _array.size(); i++) {
+    const QJsonObject _obj = _array[i].toObject();
+    qint64 _npa = _obj.value("phone").toInteger(0);
+    if (_npa < 1)
+      continue;
+
+    CountryCode _code;
+    _code.npa = AntiquaCRM::AUtil::zerofill(_npa, 3);
+    _code.info = _obj.value("country").toString();
+    p_codes.append(_code);
   }
 }
 
-PhoneEdit::PhoneEdit(const QString &name, QWidget *parent)
+PhoneEdit::PhoneEdit(QWidget *parent, const QString &name)
     : AntiquaCRM::AInputWidget{parent} {
   setObjectName(name);
 
@@ -90,8 +96,8 @@ PhoneEdit::PhoneEdit(const QString &name, QWidget *parent)
   m_edit->setToolTip("DIN 5008/E.123");
   layout->addWidget(m_edit);
 
-  QRegularExpression simple("^(0\\d+[\\s?\\d]+)$");
-  m_validator = new QRegularExpressionValidator(simple, m_edit);
+  // const QRegularExpression _pattern("^(0\\d+[\\s?\\d]+)$");
+  m_validator = new QRegularExpressionValidator(AUtil::phoneRegExp(), m_edit);
   m_edit->setValidator(m_validator);
 
   initData();
@@ -99,8 +105,6 @@ PhoneEdit::PhoneEdit(const QString &name, QWidget *parent)
   connect(m_edit, SIGNAL(textChanged(const QString &)),
           SLOT(valueChanged(const QString &)));
 }
-
-PhoneEdit::PhoneEdit(QWidget *parent) : PhoneEdit{"phone_edit", parent} {}
 
 bool PhoneEdit::validate(const QString &phone) const {
   bool _b = (phone.length() > 3);
@@ -151,7 +155,7 @@ void PhoneEdit::valueChanged(const QString &phone) {
 }
 
 void PhoneEdit::setValue(const QVariant &value) {
-  if (value.metaType().id() != QMetaType::QString)
+  if (value.metaType().id() != getType().id())
     return;
 
   QString _phone = value.toString().trimmed();
@@ -221,9 +225,7 @@ const QMetaType PhoneEdit::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant PhoneEdit::getValue() {
-  return m_edit->text().trimmed();
-}
+const QVariant PhoneEdit::getValue() { return m_edit->text().trimmed(); }
 
 const QString PhoneEdit::popUpHints() {
   return tr("Please enter a valid phone number.");

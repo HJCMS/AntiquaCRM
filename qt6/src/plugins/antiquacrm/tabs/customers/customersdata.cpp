@@ -94,27 +94,27 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   row2->addWidget(c_street, gridRow++, 1, 1, 1);
 
   /** Phone 1 */
-  c_phone_0 = new AntiquaCRM::PhoneEdit("c_phone_0", this);
+  c_phone_0 = new AntiquaCRM::PhoneEdit(this, "c_phone_0");
   c_phone_0->setBuddyLabel(tr("Primary phone number"));
   row2->addWidget(c_phone_0, gridRow, 0, 1, 1);
 
   /** Phone 2 */
-  c_phone_1 = new AntiquaCRM::PhoneEdit("c_phone_1", this);
+  c_phone_1 = new AntiquaCRM::PhoneEdit(this, "c_phone_1");
   c_phone_1->setBuddyLabel(tr("Secundary phone number"));
   row2->addWidget(c_phone_1, gridRow++, 1, 1, 1);
 
   /** Mobil 1 */
-  c_mobil_0 = new AntiquaCRM::PhoneEdit("c_mobil_0", this);
+  c_mobil_0 = new AntiquaCRM::PhoneEdit(this, "c_mobil_0");
   c_mobil_0->setBuddyLabel(tr("Primary mobile number"));
   row2->addWidget(c_mobil_0, gridRow, 0, 1, 1);
 
   /** Mobil 2 */
-  c_mobil_1 = new AntiquaCRM::PhoneEdit("c_mobil_1", this);
+  c_mobil_1 = new AntiquaCRM::PhoneEdit(this, "c_mobil_1");
   c_mobil_1->setBuddyLabel(tr("Secundary mobile number"));
   row2->addWidget(c_mobil_1, gridRow++, 1, 1, 1);
 
   /** Faxnumber */
-  c_fax_0 = new AntiquaCRM::PhoneEdit("c_fax_0", this);
+  c_fax_0 = new AntiquaCRM::PhoneEdit(this, "c_fax_0");
   c_fax_0->setBuddyLabel(tr("fax number"));
   row2->addWidget(c_fax_0, gridRow, 0, 1, 1);
 
