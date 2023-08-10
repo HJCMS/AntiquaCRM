@@ -97,6 +97,8 @@ public:
    */
   int registerTab(AntiquaCRM::TabsIndex *tab);
 
+  void sortTabs();
+
   /**
    * @brief fallback theme icon
    */

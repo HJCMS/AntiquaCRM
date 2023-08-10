@@ -22,10 +22,9 @@ const QStringList TabsLoader::getInterfaceList() {
   foreach (QString p, p_dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
     if (p_dir.cd(p)) {
       foreach (QFileInfo info, p_dir.entryInfoList(p_filter, sFilter)) {
-        QString plugFile = info.filePath();
-        if (QLibrary::isLibrary(plugFile)) {
-          plugins << plugFile;
-        }
+        const QString _shared = info.filePath();
+        if (QLibrary::isLibrary(_shared))
+          plugins << _shared;
       }
       p_dir.cdUp();
     }

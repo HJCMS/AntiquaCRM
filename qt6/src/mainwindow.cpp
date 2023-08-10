@@ -58,6 +58,7 @@ bool MainWindow::loadTabInterfaces() {
   tabInterfaces = loader.interfaces(this);
   if (tabInterfaces.size() > 0) {
     QListIterator<AntiquaCRM::TabsInterface *> it(tabInterfaces);
+    QMap<int, AntiquaCRM::TabsInterface *> _sort_tabs;
     while (it.hasNext()) {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
@@ -79,6 +80,8 @@ bool MainWindow::loadTabInterfaces() {
         connect(_tab, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
       }
     }
+
+    m_tabWidget->sortTabs();
     return true;
   }
   return false;

@@ -2,9 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "tabswidget.h"
+#include "antiquaicon.h"
 #include "tabsbar.h"
 #include "tabsindex.h"
-#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 
@@ -107,6 +107,12 @@ int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab) {
     tab->onEnterChanged();
   }
   return _index;
+}
+
+void TabsWidget::sortTabs() {
+  m_tabBar->moveTab(indexByName("sellers_tab"), 0);
+  m_tabBar->moveTab(indexByName("orders_tab"), 1);
+  m_tabBar->moveTab(indexByName("customers_tab"), 2);
 }
 
 const QIcon TabsWidget::defaultIcon() {

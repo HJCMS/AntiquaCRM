@@ -121,7 +121,7 @@ QDir::Filters ASettings::directoryFilter() {
 
 const QStringList ASettings::pluginSearchFilter() {
 #ifdef Q_OS_LINUX
-  return QStringList("*.so");
+  return QStringList({"*.a","*.so"});
 #else
   return QStringList("*.dll");
 #endif
