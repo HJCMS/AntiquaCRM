@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_TABS_BAR_H
-#define ANTIQUACRM_TABS_BAR_H
+#ifndef ANTIQUACRM_TABS_TABSBAR_H
+#define ANTIQUACRM_TABS_TABSBAR_H
 
 #include <AGlobal>
 #include <QObject>
@@ -19,53 +19,33 @@ namespace AntiquaCRM {
 
 /**
  * @class TabsBar
- * @brief Abstract TabBar class for TabsInterface
+ * @brief TabBar class for TabsInterface
+ *
+ * Default Properties for this class are Movable, Expanding and Tabs Closable.
+ *
  * @ingroup TabsInterface
  */
 class ANTIQUACRM_LIBRARY TabsBar final : public QTabBar {
   Q_OBJECT
 
 private:
-  bool enableWheel;
-  int changedIndex = -1;
-
-protected:
   /**
-   * @brief some defaults when a tab has been add
-   * @param index - set index for this page
+   * @brief Wheel support status
+   * @sa wheelEvent
    */
-  virtual void tabInserted(int index) override;
+  bool p_wheel_support = false;
 
   /**
-   * @brief prevent wheel events, when enableWheel is true
-   * @param event - wheel event type
-   */
-  virtual void wheelEvent(QWheelEvent *event) override;
-
-protected Q_SLOTS:
-  /**
-   * @brief tab changed with index
+   * @brief Setting some defaults when a tab has been add.
    * @param index
    */
-  void setChangedIndex(int index);
+  void tabInserted(int index) override;
 
   /**
-   * @brief is this tabe closeable
+   * @brief Prevent wheel events, when \i p_wheel_support is disabled.
+   * @param event
    */
-  void setCheckToClose();
-
-Q_SIGNALS:
-  /**
-   * @brief tab has changed
-   * @param index - index from internal signal
-   */
-  void sendTabChanged(int index);
-
-  /**
-   * @brief tab has to be closed
-   * @param index - index from internal signal
-   */
-  void sendCloseTab(int index);
+  void wheelEvent(QWheelEvent *event) override;
 
 public:
   /**
@@ -74,18 +54,22 @@ public:
    */
   explicit TabsBar(QWidget *parent = nullptr, bool wheelEvents = false);
 
-  int getChangedIndex();
-
   /**
    * @brief Modify properties
-   * @param index     - use index
-   * @param closeable - is it closeable?
+   * @param index
+   * @param closeable
+   *
+   * Setting \b setTabData and \b setTabButton if needed.
    */
   void setTabCloseable(int index, bool closeable = false);
 
-  virtual ~TabsBar();
+  /**
+   * @brief Checking if Indexed Tab is closeable.
+   * @param index
+   */
+  bool isTabCloseable(int index);
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_TABS_BAR_H
+#endif // ANTIQUACRM_TABS_TABSBAR_H

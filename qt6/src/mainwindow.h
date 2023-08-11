@@ -13,7 +13,6 @@
 #include <QList>
 #include <QMainWindow>
 #include <QObject>
-#include <QPair>
 
 class MenuBar;
 class StatusBar;
@@ -41,7 +40,7 @@ private:
   /**
    * @brief Tabs Menu, entries filled by loadTabInterfaces
    */
-  AntiquaCRM::TabsMenu *m_viewsMenu;
+  AntiquaCRM::TabsMenu *m_tabsMenu;
 
   /**
    * @brief Tabs Interfaces list

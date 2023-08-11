@@ -11,31 +11,22 @@ namespace AntiquaCRM {
 TabsWidget::TabsWidget(QWidget *parent) : QTabWidget{parent} {
   setContentsMargins(1, 1, 1, 1);
   setTabsClosable(false);
+
+  QStringList _list({"sellers_tab", "orders_tab", "customers_tab"});
   m_cfg = new AntiquaCRM::ASettings(this);
-  bool _wheel_support =
-      m_cfg->groupValue("window_behavior", "mouse_wheel_support", false)
-          .toBool();
-  m_tabBar = new AntiquaCRM::TabsBar(this, _wheel_support);
+  m_cfg->beginGroup("window_behavior");
+  // Sorting Tabs list
+  p_sorting_tabs = m_cfg->value("sorting_tabs", _list).toStringList();
+  // Mouse wheel suppport
+  p_wheel_support = m_cfg->value("mouse_wheel_support", false).toBool();
+  m_cfg->endGroup();
+
+  // tabbar
+  m_tabBar = new AntiquaCRM::TabsBar(this, p_wheel_support);
   setTabBar(m_tabBar);
 
   connect(m_tabBar, SIGNAL(currentChanged(int)), SLOT(setTabChanged(int)));
   connect(m_tabBar, SIGNAL(tabCloseRequested(int)), SLOT(setTabClosed(int)));
-}
-
-bool TabsWidget::removeIndex(int index) {
-  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
-  if (m_ti != nullptr && m_ti->isClosable()) {
-    if (!m_ti->isWindowModified()) {
-      removeTab(index);
-      return true;
-    }
-    QString title = m_ti->windowTitle();
-    emit sendMessage(tr("Unsaved changes for tab '%1'!").arg(title));
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Can't close this tab, unsaved changes!" << title;
-#endif
-  }
-  return false;
 }
 
 void TabsWidget::tabInserted(int index) {
@@ -47,6 +38,26 @@ void TabsWidget::tabInserted(int index) {
   }
 }
 
+void TabsWidget::tabRemoved(int) {
+  if (m_tmp == nullptr)
+    return;
+
+  m_tmp->deleteLater();
+}
+
+bool TabsWidget::removeIndex(int index) {
+  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (m_ti != nullptr && m_ti->isClosable()) {
+    if (!m_ti->isWindowModified()) {
+      m_tmp = m_ti;
+      removeTab(index);
+      return true;
+    }
+    emit sendMessage(tr("Unsaved changes for '%1'!").arg(m_ti->windowTitle()));
+  }
+  return false;
+}
+
 void TabsWidget::setTabChanged(int index) {
   AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
   if (m_ti != nullptr && m_ti->currentView() == TabsIndex::ViewPage::MainView)
@@ -54,6 +65,9 @@ void TabsWidget::setTabChanged(int index) {
 }
 
 void TabsWidget::setTabClosed(int index) {
+  if (!m_tabBar->isTabCloseable(index))
+    return;
+
   AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
   if (m_ti->currentView() != TabsIndex::ViewPage::MainView) {
     setCurrentIndex(index);
@@ -77,6 +91,10 @@ void TabsWidget::setCurrentTab(const QString &name) {
   }
 
   setCurrentIndex(indexByName(_id));
+}
+
+const QIcon TabsWidget::defaultIcon() {
+  return AntiquaCRM::antiquaIcon("action-edit-document");
 }
 
 int TabsWidget::indexByName(const QString &name) const {
@@ -110,13 +128,10 @@ int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab) {
 }
 
 void TabsWidget::sortTabs() {
-  m_tabBar->moveTab(indexByName("sellers_tab"), 0);
-  m_tabBar->moveTab(indexByName("orders_tab"), 1);
-  m_tabBar->moveTab(indexByName("customers_tab"), 2);
-}
-
-const QIcon TabsWidget::defaultIcon() {
-  return antiquaIcon("action-edit-document");
+  int i = 0;
+  foreach (QString _t, p_sorting_tabs) {
+    m_tabBar->moveTab(indexByName(_t), i++);
+  }
 }
 
 AntiquaCRM::TabsIndex *TabsWidget::tabIndex(int index) const {

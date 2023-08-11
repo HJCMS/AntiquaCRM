@@ -6,24 +6,14 @@
 #include "statusbar.h"
 #include "tabswidget.h"
 
-#include <AntiquaCRM>
-#include <AntiquaWidgets>
-
 MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
-#ifdef ANTIQUA_DEVELOPEMENT
-  setMinimumSize(QSize(1230, 800));
-#else
   setMinimumSize(QSize(800, 600));
-#endif
 
   m_menuBar = new MenuBar(this);
+  m_tabsMenu = m_menuBar->tabsMenu();
   setMenuBar(m_menuBar);
-
-  m_viewsMenu = new AntiquaCRM::TabsMenu(m_menuBar);
-  m_viewsMenu->setIcon(m_menuBar->tabIcon());
-  m_menuBar->setViewsMenu(m_viewsMenu);
 
   m_tabWidget = new AntiquaCRM::TabsWidget(this);
   setCentralWidget(m_tabWidget);
@@ -35,7 +25,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   connect(m_menuBar, SIGNAL(sendApplicationQuit()),
           SIGNAL(sendApplicationQuit()));
 
-  connect(m_viewsMenu, SIGNAL(sendOpenTab(const QString &)),
+  connect(m_tabsMenu, SIGNAL(sendOpenTab(const QString &)),
           SLOT(setViewTab(const QString &)));
   // End:Menu:Signals
 
@@ -58,13 +48,12 @@ bool MainWindow::loadTabInterfaces() {
   tabInterfaces = loader.interfaces(this);
   if (tabInterfaces.size() > 0) {
     QListIterator<AntiquaCRM::TabsInterface *> it(tabInterfaces);
-    QMap<int, AntiquaCRM::TabsInterface *> _sort_tabs;
     while (it.hasNext()) {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
         QString _name = _iface->displayName();
         QString _id = _iface->interfaceName();
-        m_viewsMenu->addAction(_iface->menuEntry());
+        m_tabsMenu->addAction(_iface->menuEntry());
         if (!_iface->addIndexOnInit())
           continue;
 
@@ -80,7 +69,6 @@ bool MainWindow::loadTabInterfaces() {
         connect(_tab, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
       }
     }
-
     m_tabWidget->sortTabs();
     return true;
   }
@@ -90,7 +78,7 @@ bool MainWindow::loadTabInterfaces() {
 void MainWindow::setChanges(bool b) { setWindowModified(b); }
 
 bool MainWindow::tabViewAction(const QString &id) {
-  if (!m_viewsMenu->exists(id))
+  if (!m_tabsMenu->exists(id))
     return false;
 
   if (m_tabWidget->indexByName(id) >= 0)

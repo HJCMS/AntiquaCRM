@@ -4,20 +4,16 @@
 #include "tabsbar.h"
 #include "antiquaicon.h"
 
-#include <QAction>
-#include <QDebug>
 #include <QIcon>
 #include <QLabel>
-#include <QMenu>
 
 namespace AntiquaCRM {
 
 TabsBar::TabsBar(QWidget *parent, bool wheelEvents)
-    : QTabBar{parent}, enableWheel{wheelEvents} {
+    : QTabBar{parent}, p_wheel_support{wheelEvents} {
   setMovable(true);
   setExpanding(true);
   setTabsClosable(true);
-  connect(this, SIGNAL(currentChanged(int)), SLOT(setChangedIndex(int)));
 }
 
 void TabsBar::tabInserted(int index) {
@@ -28,21 +24,9 @@ void TabsBar::tabInserted(int index) {
 }
 
 void TabsBar::wheelEvent(QWheelEvent *event) {
-  if (enableWheel)
+  if (p_wheel_support)
     QTabBar::wheelEvent(event);
 }
-
-void TabsBar::setChangedIndex(int index) {
-  changedIndex = index;
-  emit sendTabChanged(index);
-}
-
-void TabsBar::setCheckToClose() {
-  if (changedIndex >= 0)
-    emit sendCloseTab(changedIndex);
-}
-
-int TabsBar::getChangedIndex() { return changedIndex; }
 
 void TabsBar::setTabCloseable(int index, bool closeable) {
   setTabData(index, closeable);
@@ -50,9 +34,9 @@ void TabsBar::setTabCloseable(int index, bool closeable) {
     setTabButton(index, QTabBar::RightSide, new QLabel(this));
 }
 
-TabsBar::~TabsBar() {
-  // restore
-  changedIndex = -1;
+bool TabsBar::isTabCloseable(int index) {
+  // @ref setTabCloseable
+  return tabData(index).toBool();
 }
 
 } // namespace AntiquaCRM

@@ -12,6 +12,7 @@
 #include <AGlobal>
 #include <ASettings>
 #include <QObject>
+#include <QScopedPointer>
 #include <QTabWidget>
 #include <QWidget>
 
@@ -22,7 +23,8 @@ class TabsBar;
 
 /**
  * @class TabsWidget
- * @brief Primary Tab.
+ * @brief Primary Interfaces TabWidget for Tab Plugins.
+ *
  * Class member to handle AntiquaCRM::TabIndex childs.
  *
  * @ingroup TabsInterface
@@ -32,12 +34,45 @@ class ANTIQUACRM_LIBRARY TabsWidget final : public QTabWidget {
 
 private:
   /**
-   * @brief Read properties after insert and set changes.
+   * @brief Temporary pointer to current removed class
+   * @sa removeIndex
    */
-  virtual void tabInserted(int) override final;
+  mutable AntiquaCRM::TabsIndex *m_tmp = nullptr;
+
+  /**
+   * @brief Read properties after insert and set changes.
+   * @param index
+   * @sa AntiquaCRM::TabsBar::setTabCloseable
+   *
+   * This virtual handler is called after a new tab was added or inserted at
+   * position index.
+   *
+   * Searching for AntiquaCRM::TabsIndex and read closable properties.
+   * When Tab removed the member class will copied to \b m_tmp and destroyed in
+   * tabRemoved.
+   */
+  void tabInserted(int index) override;
+
+  /**
+   * @brief This virtual handler is called after a tab was removed.
+   * @param index
+   * @sa removeIndex
+   *
+   * This handler destroying the removed AntiquaCRM::TabsIndex member from
+   * cache.
+   */
+  void tabRemoved(int index) override;
 
   /**
    * @brief close tab by index
+   * @param index
+   *
+   * It searching for AntiquaCRM::TabsIndex and check for unsaved changes.
+   * If all has been checked, remove it.
+   *
+   * Removes the tab at position index from this stack of widgets.
+   * The page widget itself is not deleted.
+   * @sa tabRemoved
    */
   bool removeIndex(int index);
 
@@ -46,26 +81,58 @@ private Q_SLOTS:
    * @brief Check for TabsIndex::ViewPage
    * @param index - current index
    *
-   * If currentIndex() == TabsIndex::ViewPage::MainView call onEnterChanged()
+   * If this Tab has property TabsIndex::ViewPage::MainView then calling method
+   * onEnterChanged.
    */
   void setTabChanged(int index);
 
   /**
-   * @brief close tab by index
-   * @param index - current index
+   * @brief Check and close tab with index
+   * @param index
+   *
+   * If this Tab has not property TabsIndex::ViewPage::MainView or
+   * AntiquaCRM::TabsBar::isTabCloseable responses true then calling \i
+   * removeIndex Tab.
    */
   void setTabClosed(int index);
 
 protected:
+  /**
+   * @brief Configuration member
+   *
+   * This member class is always initialized in constructor.
+   */
   AntiquaCRM::ASettings *m_cfg;
+
+  /**
+   * @brief TabBar member
+   *
+   * This member class is always initialized in constructor.
+   */
   AntiquaCRM::TabsBar *m_tabBar;
+
+  /**
+   * @brief Sorting Tabs with this Listing after application start.
+   *
+   * Read from configuration:
+   *  @li Group: window_behavior
+   *  @li Section: sorting_tabs
+   */
+  QStringList p_sorting_tabs;
+
+  /**
+   * @brief Enable/Disable Mouse Wheel support on tab hover mouse
+   *
+   * Read from configuration:
+   *  @li Group: window_behavior
+   *  @li Section: mouse_wheel_support
+   */
+  bool p_wheel_support;
 
 Q_SIGNALS:
   /**
    * @brief Notify status messages
-   * @param msg
-   *
-   * e.g. Current tab is in edit mode ...
+   * @param msg - Notification string
    */
   void sendMessage(const QString &msg);
 
@@ -86,23 +153,29 @@ public:
   explicit TabsWidget(QWidget *parent = nullptr);
 
   /**
+   * @brief fallback theme icon
+   */
+  static const QIcon defaultIcon();
+
+  /**
    * @brief find tab by QObjectName
-   * @param name = objectName()
+   * @param name = find with objectName
    */
   int indexByName(const QString &name) const;
 
   /**
    * @brief overload function for addTab
    * @param tab - object to insert
+   *
+   * Reading member properties and set AntiquaCRM::TabsBar::setTabCloseable and
+   * calling QTabWidget::addTab and emit signal onEnterChanged.
    */
   int registerTab(AntiquaCRM::TabsIndex *tab);
 
-  void sortTabs();
-
   /**
-   * @brief fallback theme icon
+   * @brief Sorting tabs to configuration default.
    */
-  static const QIcon defaultIcon();
+  void sortTabs();
 
   /**
    * @brief overlaod function for QTabWidget::widget with object_cast

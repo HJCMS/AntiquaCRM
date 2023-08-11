@@ -23,7 +23,7 @@ class MenuBar final : public QMenuBar {
 
 private:
   QMenu *m_applMenu;
-  AntiquaCRM::TabsMenu *m_viewsMenu;
+  AntiquaCRM::TabsMenu *m_tabsMenu;
   QMenu *m_configMenu;
   QMenu *m_dialogMenu;
   QMenu *m_aboutMenu;
@@ -41,8 +41,7 @@ public Q_SLOTS:
 
 public:
   explicit MenuBar(QWidget *parent = nullptr);
-  void setViewsMenu(AntiquaCRM::TabsMenu *);
-
+  AntiquaCRM::TabsMenu *tabsMenu();
   static const QIcon tabIcon(const QString &name = QString());
 };
 

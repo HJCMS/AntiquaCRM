@@ -20,8 +20,8 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   connect(ac_quit, SIGNAL(triggered()), SIGNAL(sendApplicationQuit()));
   addMenu(m_applMenu);
 
-  m_viewsMenu = new AntiquaCRM::TabsMenu(this);
-  addMenu(m_viewsMenu);
+  m_tabsMenu = new AntiquaCRM::TabsMenu(this);
+  addMenu(m_tabsMenu);
 
   // BEGIN::Configurations
   m_configMenu = addMenu(tr("Configuration"));
@@ -65,11 +65,8 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   addMenu(m_aboutMenu);
 }
 
-void MenuBar::setViewsMenu(AntiquaCRM::TabsMenu *menu) {
-  if (menu == nullptr)
-    return;
-
-  m_viewsMenu->addMenu(menu);
+AntiquaCRM::TabsMenu *MenuBar::tabsMenu() {
+  return m_tabsMenu;
 }
 
 const QIcon MenuBar::tabIcon(const QString &name) {

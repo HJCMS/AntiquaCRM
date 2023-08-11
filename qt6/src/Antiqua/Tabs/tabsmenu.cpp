@@ -8,7 +8,6 @@ namespace AntiquaCRM {
 
 TabsMenu::TabsMenu(QMenuBar *parent) : QMenu{parent} {
   setTitle(tr("Tabs"));
-
   m_mapper = new QSignalMapper(this);
   connect(m_mapper, SIGNAL(mappedString(const QString &)),
           SIGNAL(sendOpenTab(const QString &)));
@@ -30,12 +29,10 @@ void TabsMenu::addAction(const QJsonObject &jo) {
 }
 
 bool TabsMenu::exists(const QString &id) {
-  if (id.length() < 4) // must contain _tab
+  if (id.length() < 3) // must contain _tab
     return false;
 
   return (m_mapper->mapping(id) != nullptr);
 }
-
-TabsMenu::~TabsMenu() {}
 
 } // namespace AntiquaCRM

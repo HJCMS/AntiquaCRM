@@ -53,8 +53,6 @@ public:
    * @param id - identifier and mapper:id
    */
   bool exists(const QString &id);
-
-  virtual ~TabsMenu();
 };
 
 } // namespace AntiquaCRM
