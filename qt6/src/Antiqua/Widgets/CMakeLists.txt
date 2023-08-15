@@ -46,10 +46,10 @@ SET (_library_config_HEADERS
 )
 
 SET (_library_config_TEMPLATES
- AntiquaInput
- AntiquaWidgets
- AntiquaButtons
- AntiquaMail
+  AntiquaInput
+  AntiquaWidgets
+  AntiquaButtons
+  AntiquaMail
 )
 
 SET (_library_SOURCES
@@ -75,11 +75,8 @@ SET (_library_SOURCES
   emailedit.cpp
   genderedit.cpp
   groupboxedit.cpp
-  imagefilesource.cpp
-  imageimportdialog.cpp
   imagethumbnail.cpp
   imagetoolbar.cpp
-  imageviewer.cpp
   isbnedit.cpp
   keywordsedit.cpp
   mailbutton.cpp
@@ -142,11 +139,8 @@ SET (_library_HEADERS
   emailedit.h
   genderedit.h
   groupboxedit.h
-  imagefilesource.h
-  imageimportdialog.h
   imagethumbnail.h
   imagetoolbar.h
-  imageviewer.h
   isbnedit.h
   keywordsedit.h
   mailbutton.h

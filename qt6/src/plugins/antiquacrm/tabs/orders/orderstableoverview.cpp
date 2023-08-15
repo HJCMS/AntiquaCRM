@@ -19,6 +19,10 @@ OrdersTableOverView::OrdersTableOverView(QWidget *parent)
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
+const QStringList OrdersTableOverView::sortOrder() const {
+  return QStringList({"o_since", "o_modified", "o_id"});
+}
+
 qint64 OrdersTableOverView::getTableID(const QModelIndex &index, int column) {
   const QModelIndex _sibling = index.sibling(index.row(), column);
   if (m_model->data(_sibling, Qt::EditRole).toInt() >= 1) {
@@ -28,14 +32,12 @@ qint64 OrdersTableOverView::getTableID(const QModelIndex &index, int column) {
 }
 
 bool OrdersTableOverView::sqlModelQuery(const QString &query) {
-  // qDebug() << Q_FUNC_INFO << query << Qt::endl;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
     emit sendQueryReport(m_model->queryResultInfo());
     emit sendResultExists((m_model->rowCount() > 0));
     // Table Record und NICHT QueryRecord abfragen!
-    // Siehe: setSortByColumn
     p_tableRecord = m_model->tableRecord();
     return true;
   }
@@ -113,32 +115,30 @@ void OrdersTableOverView::setSortByColumn(int column, Qt::SortOrder order) {
   if (column < 0)
     return;
 
-  QString order_by = m_model->fieldName(column);
   /**
    * @warning Bei Alias basierenden SELECT abfragen!
    * ORDER BY "Multisort" Abfragen können nicht mit Aliases gemischt werden!
    */
+  QString _order_by;
   if (!p_tableRecord.isEmpty()) {
-    QStringList fieldList;
+    QStringList _fields;
+    const QString _column_sort = m_model->fieldName(column);
     for (int i = 0; i < p_tableRecord.count(); i++) {
-      fieldList << p_tableRecord.field(i).name();
+      _fields << p_tableRecord.field(i).name();
     }
-    if (fieldList.contains(order_by)) {
-      order_by.prepend("(");
-      order_by.append(",o_modified)");
+    QStringList _sort = sortOrder();
+    if (_fields.contains(_column_sort)) {
+      if (!_sort.contains(_column_sort))
+        _sort.prepend(_column_sort);
     }
+    _order_by.append("(" + _sort.join(",") + ")");
   }
-
-  // NOTE Muss hier umgedreht werden!
-  Qt::SortOrder sort = Qt::AscendingOrder;
-  if (order == Qt::AscendingOrder)
-    sort = Qt::DescendingOrder;
 
   AntiquaCRM::ASqlFiles query("query_tab_orders_main");
   if (query.openTemplate()) {
     query.setWhereClause(where_clause);
-    query.setOrderBy(order_by);
-    query.setSorting(sort);
+    query.setOrderBy(_order_by);
+    query.setSorting(order);
     query.setLimits(getQueryLimit());
   }
   sqlModelQuery(query.getQueryContent());
@@ -186,7 +186,7 @@ bool OrdersTableOverView::setQuery(const QString &clause) {
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
     query.setWhereClause(where_clause);
-    query.setOrderBy("(o_modified,o_id)");
+    query.setOrderBy("(" + sortOrder().join(",") + ")");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_IMAGESFILEOURCE_H
-#define ANTIQUACRM_WIDGETS_IMAGESFILEOURCE_H
+#ifndef ANTIQUACRM_IMAGE_FILEOURCE_H
+#define ANTIQUACRM_IMAGE_FILEOURCE_H
 
 #include <AntiquaCRM>
 #include <QByteArray>
@@ -68,7 +68,7 @@ namespace AntiquaCRM {
  *
  * @note This class will not touch the Server Sources Directory
  *
- * @ingroup AntiquaWidgets
+ * @ingroup ImageWidgets
  */
 class ANTIQUACRM_LIBRARY ImageFileSource final : private QFileInfo {
 private:
@@ -212,4 +212,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_IMAGESFILEOURCE_H
+#endif // ANTIQUACRM_IMAGE_FILEOURCE_H

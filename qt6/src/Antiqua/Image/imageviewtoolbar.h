@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PRIVATE_IMAGEVIEWTOOLBAR_H
-#define ANTIQUACRM_PRIVATE_IMAGEVIEWTOOLBAR_H
+#ifndef ANTIQUACRM_IMAGE_VIEWTOOLBAR_H
+#define ANTIQUACRM_IMAGE_VIEWTOOLBAR_H
 
 #include <AGlobal>
 #include <QAction>
@@ -22,7 +22,9 @@ namespace AntiquaCRM {
 class ALineEdit;
 
 /**
+ * @class ImageViewToolBar
  * @brief Image Import Actions bar
+ * @ingroup ImageWidgets
  */
 class ANTIQUACRM_LIBRARY ImageViewToolBar final : public QFrame {
   Q_OBJECT
@@ -67,4 +69,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_PRIVATE_IMAGEVIEWTOOLBAR_H
+#endif // ANTIQUACRM_IMAGE_VIEWTOOLBAR_H

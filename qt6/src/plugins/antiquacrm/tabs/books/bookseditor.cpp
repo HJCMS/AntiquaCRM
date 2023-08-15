@@ -5,6 +5,7 @@
 #include "booksconfig.h"
 
 #include <AntiquaCRM>
+#include <AntiquaImageDialog>
 #include <AntiquaPrinting>
 #include <QDate>
 #include <QLayout>

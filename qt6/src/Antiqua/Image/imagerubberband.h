@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PRIVATE_RUBBERBAND_H
-#define ANTIQUACRM_PRIVATE_RUBBERBAND_H
+#ifndef ANTIQUACRM_IMAGE_RUBBERBAND_H
+#define ANTIQUACRM_IMAGE_RUBBERBAND_H
 
 #include <AGlobal>
 #include <QGraphicsView>
@@ -19,7 +19,12 @@
 
 namespace AntiquaCRM {
 
-class ANTIQUACRM_LIBRARY RubberBand final : public QRubberBand {
+/**
+ * @class ImageRubberBand
+ * @brief Cutting Rubberband class
+ * @ingroup ImageWidgets
+ */
+class ANTIQUACRM_LIBRARY ImageRubberBand final : public QRubberBand {
   Q_OBJECT
 
 private:
@@ -36,10 +41,10 @@ public:
   /**
    * @brief RubberBand for cutting
    */
-  explicit RubberBand(QGraphicsView *parent = nullptr);
+  explicit ImageRubberBand(QGraphicsView *parent = nullptr);
   bool isValid();
 };
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_PRIVATE_RUBBERBAND_H
+#endif // ANTIQUACRM_IMAGE_RUBBERBAND_H

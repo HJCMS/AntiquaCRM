@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PRIVATE_IMAGETREEPATHVIEW_H
-#define ANTIQUACRM_PRIVATE_IMAGETREEPATHVIEW_H
+#ifndef ANTIQUACRM_IMAGE_TREEPATHVIEW_H
+#define ANTIQUACRM_IMAGE_TREEPATHVIEW_H
 
 #include <AGlobal>
 #include <QFrame>
@@ -19,6 +19,11 @@ namespace AntiquaCRM {
 
 class ALineEdit;
 
+/**
+ * @class ImageTreePathView
+ * @brief Images Treeview class
+ * @ingroup ImageWidgets
+ */
 class ANTIQUACRM_LIBRARY ImageTreePathView final : public QFrame {
   Q_OBJECT
 
@@ -40,4 +45,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_PRIVATE_IMAGETREEPATHVIEW_H
+#endif // ANTIQUACRM_IMAGE_TREEPATHVIEW_H

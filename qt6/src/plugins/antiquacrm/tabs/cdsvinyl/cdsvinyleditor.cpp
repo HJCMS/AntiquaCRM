@@ -7,6 +7,7 @@
 #include "dialog/selectgenre.h"
 
 #include <AntiquaCRM>
+#include <AntiquaImageDialog>
 #include <AntiquaPrinting>
 #include <QDate>
 #include <QLayout>

@@ -3,6 +3,7 @@
 
 #include "orderssearchbar.h"
 
+#include <QFrame>
 #include <QToolButton>
 
 OrdersSearchBar::OrdersSearchBar(QWidget *parent)
@@ -30,13 +31,17 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
   addWidget(m_searchInput);
 
-  QLabel *m_area = new QLabel(this);
-  m_area->setText(tr("Area") + ":");
-  m_area->setIndent(2);
-  addWidget(m_area);
+  m_searchBtn = startSearchButton();
+  addWidget(m_searchBtn);
+
+  QFrame *m_spacer = new QFrame(this);
+  m_spacer->setSizePolicy(QSizePolicy::MinimumExpanding,
+                          QSizePolicy::Preferred);
+  addWidget(m_spacer);
 
   m_datePart = new AntiquaCRM::AComboBox(this);
   m_datePart->setToolTip(tr("Restrict search to current to selection."));
+  m_datePart->addItem(_icon, tr("Restriction"), QString());
   m_datePart->addItem(_icon, tr("Year"), "year");
   m_datePart->addItem(_icon, tr("Month"), "month");
   m_datePart->addItem(_icon, tr("Week"), "week");
@@ -53,9 +58,6 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_year->setValue(_y);
   addWidget(m_year);
 
-  m_searchBtn = startSearchButton();
-  addWidget(m_searchBtn);
-
   connect(m_filter, SIGNAL(currentIndexChanged(int)), SLOT(setFilter(int)));
   connect(m_searchInput, SIGNAL(returnPressed()), SLOT(setSearch()));
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
@@ -66,7 +68,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
 const QString OrdersSearchBar::getDatePart() {
   const QString _year = QString::number(getYear());
   QString _dp = m_datePart->itemData(m_datePart->currentIndex()).toString();
-  if (_dp == "year") {
+  if (_dp.isEmpty() || _dp == "year") {
     return QString("DATE_PART('year',o_since)=" + _year);
   }
 
@@ -166,7 +168,7 @@ const QString OrdersSearchBar::getSearchStatement() {
 
   case 1:
     _sql = QString("o_id IN (%1)").arg(p_search);
-  break;
+    break;
 
   case 2:
     _sql = QString("d_name ILIKE '%1%'").arg(p_search);
@@ -182,6 +184,5 @@ const QString OrdersSearchBar::getSearchStatement() {
     _sql.clear();
     break;
   }
-  // qDebug() << Q_FUNC_INFO << _sql;
   return _sql;
 }

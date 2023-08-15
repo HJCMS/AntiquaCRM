@@ -23,6 +23,7 @@ private:
   OrdersTableOverViewModel *m_model;
   QString where_clause;
   QSqlRecord p_tableRecord;
+  const QStringList sortOrder() const;
   qint64 getTableID(const QModelIndex &index, int column = 0) override;
   bool sqlModelQuery(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;

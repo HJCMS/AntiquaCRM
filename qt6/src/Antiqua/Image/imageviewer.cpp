@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "imageviewer.h"
-#include "private/rubberband.h"
+#include "imagerubberband.h"
 
 #include <QApplication>
 #include <QDebug>
@@ -57,7 +57,7 @@ void ImageViewer::resizeEvent(QResizeEvent *event) {
 void ImageViewer::mousePressEvent(QMouseEvent *event) {
   if (event->button() == Qt::LeftButton) {
     if (m_rubberband == nullptr) {
-      m_rubberband = new RubberBand(this);
+      m_rubberband = new ImageRubberBand(this);
     }
     p_startPoint = event->pos();
     m_rubberband->setGeometry(QRect(p_startPoint, QSize(1, 1)));

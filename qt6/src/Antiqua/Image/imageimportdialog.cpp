@@ -4,13 +4,11 @@
 #include "imageimportdialog.h"
 #include "imagefilesource.h"
 #include "imageviewer.h"
-#include "private/imagetreepathview.h"
-#include "private/imagetreeview.h"
-#include "private/imageviewtoolbar.h"
-#include "splitter.h"
-#include "antiquaicon.h"
+#include "imagetreepathview.h"
+#include "imagetreeview.h"
+#include "imageviewtoolbar.h"
 
-#include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QDebug>
 #include <QDirIterator>
 #include <QFile>

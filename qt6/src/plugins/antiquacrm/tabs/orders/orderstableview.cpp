@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "orderstableview.h"
-#include "ainputwidget.h"
 #include "orderstabledelegate.h"
 #include "orderstablemodel.h"
 

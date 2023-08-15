@@ -4,70 +4,49 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET(_sharedLibrary "AntiquaPrinting")
+SET(_sharedLibrary "AntiquaImage")
 
 INCLUDE_DIRECTORIES (
  ${INTERNAL_LIBRARY_INCLUDE_DIRS}
  ${CMAKE_CURRENT_SOURCE_DIR}
  ${CMAKE_CURRENT_BINARY_DIR}
- ${QRENCODE_INCLUDE_DIRS}
 )
 
 SET (_library_FILES
-  Printing.dox
-  antiquaprinting.h.cmake
-  antiquaprintdialog.h.cmake
-  antiquaprintsupport.h.cmake
+  Images.dox
+  antiquaimagedialog.h.cmake
 )
 
-CONFIGURE_FILE (antiquaprinting.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprinting.h
-)
-
-CONFIGURE_FILE (antiquaprintdialog.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprintdialog.h
-)
-
-CONFIGURE_FILE (antiquaprintsupport.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaprintsupport.h
+CONFIGURE_FILE (antiquaimagedialog.h.cmake
+  ${CMAKE_CURRENT_SOURCE_DIR}/antiquaimagedialog.h
 )
 
 SET (_library_config_HEADERS
-  antiquaprinting.h
-  antiquaprintdialog.h
-  antiquaprintsupport.h
+  antiquaimagedialog.h
 )
 
 SET (_library_config_TEMPLATES
- AntiquaPrintDialog
- AntiquaPrintSupport
- AntiquaPrinting
+ AntiquaImageDialog
 )
 
 SET (_library_SOURCES
-  aprintdialog.cpp
-  aprintingbody.cpp
-  aprintingpage.cpp
-  aprinttools.cpp
-  bookcardqrcode.cpp
-  bookcardpage.cpp
-  printbookcard.cpp
-  printdeliverynote.cpp
-  printinvoice.cpp
-  printreminder.cpp
+  imagefilesource.cpp
+  imageimportdialog.cpp
+  imagerubberband.cpp
+  imagetreepathview.cpp
+  imagetreeview.cpp
+  imageviewer.cpp
+  imageviewtoolbar.cpp
 )
 
 SET (_library_HEADERS
-  aprintingbody.h
-  aprintingpage.h
-  aprinttools.h
-  aprintdialog.h
-  bookcardqrcode.h
-  bookcardpage.h
-  printbookcard.h
-  printdeliverynote.h
-  printinvoice.h
-  printreminder.h
+  imagefilesource.h
+  imageimportdialog.h
+  imagerubberband.h
+  imagetreepathview.h
+  imagetreeview.h
+  imageviewer.h
+  imageviewtoolbar.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED
@@ -94,8 +73,6 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Network
  Qt6::Sql
  Qt6::Xml
- Qt6::PrintSupport
- ${QRENCODE_LIBRARIES}
  AntiquaCRM
  AntiquaWidgets
 )

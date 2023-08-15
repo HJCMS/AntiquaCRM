@@ -18,7 +18,6 @@ class ANTIQUACRM_LIBRARY OrdersTableOverViewModel final
   Q_OBJECT
 
 private:
-  QSqlRecord queryRecord;
   const QIcon getHeaderIcon(int column) const;
   const QIcon getPaymentIcon(int status = 0) const;
   const QString getPaymentStatus(int status) const;

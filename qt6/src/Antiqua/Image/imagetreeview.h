@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PRIVATE_IMAGETREEVIEW_H
-#define ANTIQUACRM_PRIVATE_IMAGETREEVIEW_H
+#ifndef ANTIQUACRM_IMAGE_TREEVIEW_H
+#define ANTIQUACRM_IMAGE_TREEVIEW_H
 
 #include <AGlobal>
 #include <QDir>
@@ -20,6 +20,11 @@
 
 namespace AntiquaCRM {
 
+/**
+ * @class ImageTreeView
+ * @brief Images Treeview class
+ * @ingroup ImageWidgets
+ */
 class ANTIQUACRM_LIBRARY ImageTreeView final : public QTreeView {
   Q_OBJECT
 
@@ -53,4 +58,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_PRIVATE_IMAGETREEVIEW_H
+#endif // ANTIQUACRM_IMAGE_TREEVIEW_H

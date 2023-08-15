@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "rubberband.h"
+#include "imagerubberband.h"
 
 #include <QColor>
 #include <QPainter>
@@ -11,7 +11,7 @@
 
 namespace AntiquaCRM {
 
-RubberBand::RubberBand(QGraphicsView *parent)
+ImageRubberBand::ImageRubberBand(QGraphicsView *parent)
     : QRubberBand{QRubberBand::Rectangle, parent} {
   setAttribute(Qt::WA_TransparentForMouseEvents);
   setAttribute(Qt::WA_NoSystemBackground);
@@ -19,21 +19,21 @@ RubberBand::RubberBand(QGraphicsView *parent)
   setVisible(false);
 }
 
-const QStyleOptionRubberBand RubberBand::styleOption() {
+const QStyleOptionRubberBand ImageRubberBand::styleOption() {
   QStyleOptionRubberBand option;
   option.shape = QRubberBand::Rectangle;
   option.opaque = true;
   return option;
 }
 
-const QPen RubberBand::pen() {
+const QPen ImageRubberBand::pen() {
   QPen p(Qt::DashLine);
   p.setWidth(2);
   p.setColor(Qt::red);
   return p;
 }
 
-void RubberBand::paintEvent(QPaintEvent *event) {
+void ImageRubberBand::paintEvent(QPaintEvent *event) {
   QRect cp = event->rect();
   QRectF rectF(QPointF(cp.topLeft()), QPointF(cp.bottomRight()));
   QStylePainter sp(this);
@@ -44,11 +44,11 @@ void RubberBand::paintEvent(QPaintEvent *event) {
   sp.drawControl(QStyle::CE_RubberBand, styleOption());
 }
 
-void RubberBand::reset() {
+void ImageRubberBand::reset() {
   setGeometry(QRect(-1, -1, 0, 0));
   hide();
 }
 
-bool RubberBand::isValid() { return !rect().isEmpty(); }
+bool ImageRubberBand::isValid() { return !rect().isEmpty(); }
 
 } // namespace AntiquaCRM

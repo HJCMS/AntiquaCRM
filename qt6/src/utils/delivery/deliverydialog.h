@@ -11,6 +11,8 @@
 
 #include <AntiquaWidgets>
 #include <QDialog>
+#include <QDialogButtonBox>
+#include <QStatusBar>
 
 class DeliverServiceEdit;
 class DeliverServiceList;

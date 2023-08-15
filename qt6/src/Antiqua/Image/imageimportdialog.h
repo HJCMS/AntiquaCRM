@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_IMAGEIMPORTDIALOG_H
-#define ANTIQUACRM_WIDGETS_IMAGEIMPORTDIALOG_H
+#ifndef ANTIQUACRM_IMAGE_IMPORTDIALOG_H
+#define ANTIQUACRM_IMAGE_IMPORTDIALOG_H
 
 #include <ASettings>
 #include <QDialog>
@@ -31,7 +31,7 @@ class ImageTreeView;
 /**
  * @class ImageImportDialog
  * @brief The ImageImportDialog class
- * @ingroup AntiquaWidgets
+ * @ingroup ImageWidgets
  */
 class ANTIQUACRM_LIBRARY ImageImportDialog final : public QDialog {
   Q_OBJECT
@@ -163,4 +163,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_IMAGEIMPORTDIALOG_H
+#endif // ANTIQUACRM_IMAGE_IMPORTDIALOG_H

@@ -41,11 +41,7 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
 bool ASqlQueryModel::querySelect(const QString &sql) {
   setQuery(sql, m_sql->db());
   if (lastError().isValid()) {
-    QSqlError err = lastError();
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << err.text();
-#endif
-    emit sqlErrorMessage(p_table, err.text());
+    emit sqlErrorMessage(p_table, lastError().text());
     return false;
   }
   return true;

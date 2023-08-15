@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_IMAGEVIEWER_H
-#define ANTIQUACRM_WIDGETS_IMAGEVIEWER_H
+#ifndef ANTIQUACRM_IMAGE_VIEWER_H
+#define ANTIQUACRM_IMAGE_VIEWER_H
 
 #include <AntiquaInput>
 #include <QGraphicsPixmapItem>
@@ -23,12 +23,12 @@
 
 namespace AntiquaCRM {
 
-class RubberBand;
+class ImageRubberBand;
 
 /**
  * @class ImageViewer
  * @brief Source Image Edit Viewer
- * @ingroup AntiquaWidgets
+ * @ingroup ImageWidgets
  */
 class ANTIQUACRM_LIBRARY ImageViewer final : public QGraphicsView {
   Q_OBJECT
@@ -53,7 +53,7 @@ private:
 
   QGraphicsScene *m_scene;
   QGraphicsPixmapItem *m_pixItem;
-  RubberBand *m_rubberband;
+  ImageRubberBand *m_rubberband;
 
   /**
    * @brief Initial and set PixmapCache limit.
@@ -150,4 +150,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_IMAGEVIEWER_H
+#endif // ANTIQUACRM_IMAGE_VIEWER_H

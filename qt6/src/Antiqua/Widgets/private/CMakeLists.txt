@@ -16,10 +16,6 @@ SET (_subWidgetLibrary_SOURCES
  lineinputvalidator.cpp
  keywordlistview.cpp
  keywordlabel.cpp
- rubberband.cpp
- imagetreeview.cpp
- imageviewtoolbar.cpp
- imagetreepathview.cpp
  mailtemplatekeys.cpp
  mailcommand.cpp
  mailattachments.cpp
@@ -29,10 +25,6 @@ SET (_subWidgetLibrary_HEADERS
  lineinputvalidator.h
  keywordlistview.h
  keywordlabel.h
- rubberband.h
- imagetreeview.h
- imageviewtoolbar.h
- imagetreepathview.h
  mailtemplatekeys.h
  mailcommand.h
  mailattachments.h

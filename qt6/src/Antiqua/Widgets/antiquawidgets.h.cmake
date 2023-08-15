@@ -51,20 +51,11 @@
 // AntiquaCRM::GroupBoxEdit
 #include "groupboxedit.h"
 
-// AntiquaCRM::ImageFileSource
-#include "imagefilesource.h"
-
-// AntiquaCRM::ImageImportDialog
-#include "imageimportdialog.h"
-
 // AntiquaCRM::ImageThumbnail
 #include "imagethumbnail.h"
 
 // AntiquaCRM::ImageToolBar
 #include "imagetoolbar.h"
-
-// AntiquaCRM::ImageViewer
-#include "imageviewer.h"
 
 // AntiquaCRM::IsbnEdit
 #include "isbnedit.h"
