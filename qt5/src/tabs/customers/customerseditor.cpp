@@ -49,6 +49,9 @@ CustomersEditor::CustomersEditor(QWidget *parent)
 
   setLayout(mainLayout);
 
+  connect(m_ordersWidget, SIGNAL(pushMessage(const QString &)),
+          SLOT(sendStatusMessage(const QString &)));
+
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));

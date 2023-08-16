@@ -6,9 +6,11 @@
 #include <AGlobal>
 #include <AntiquaInput>
 #include <QDateTime>
+#include <QDesktopServices>
 #include <QHeaderView>
 #include <QIcon>
 #include <QMenu>
+#include <QUrl>
 
 CustomersOrders::CustomersOrders(QWidget *parent) : QTableWidget{parent} {
   setWindowTitle(tr("Orders"));
@@ -20,12 +22,14 @@ CustomersOrders::CustomersOrders(QWidget *parent) : QTableWidget{parent} {
 void CustomersOrders::contextMenuEvent(QContextMenuEvent *event) {
   p_model = indexAt(event->pos());
   QMenu *m = new QMenu(this);
-  QAction *ac_open =
-      m->addAction(windowIcon(), tr("Open it in Orders System."));
-  ac_open->setEnabled(p_model.isValid());
-  connect(ac_open, SIGNAL(triggered()), SLOT(openOrder()));
+  QAction *ac_o = m->addAction(windowIcon(), tr("Open it in Orders System."));
+  ac_o->setEnabled(p_model.isValid());
+  connect(ac_o, SIGNAL(triggered()), SLOT(openOrder()));
+  QAction *ac_i = m->addAction(windowIcon(), tr("Open Invoice."));
+  ac_i->setEnabled(p_model.isValid());
+  connect(ac_i, SIGNAL(triggered()), SLOT(openInvoice()));
   m->exec(event->globalPos());
-  delete m;
+  m->deleteLater();
 }
 
 void CustomersOrders::openOrder() {
@@ -42,6 +46,26 @@ void CustomersOrders::openOrder() {
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(obj))
     m_sock->close();
+}
+
+void CustomersOrders::openInvoice() {
+  if (!p_model.isValid())
+    return;
+
+  qint64 i_id = item(p_model.row(), 2)->text().toInt();
+  const QString _prefix(AntiquaCRM::AUtil::zerofill(i_id));
+  AntiquaCRM::ASettings cfg(this);
+  QDir _dir(cfg.getArchivPath("archive_invoices"));
+  foreach (QFileInfo _f, _dir.entryInfoList(QDir::Files, QDir::Name)) {
+    if (_f.baseName().contains(_prefix, Qt::CaseInsensitive)) {
+      QUrl _pdf;
+      _pdf.setScheme("file");
+      _pdf.setPath(_f.filePath(), QUrl::TolerantMode);
+      QDesktopServices::openUrl(_pdf);
+      return;
+    }
+  }
+  emit pushMessage(tr("Invoice not found."));
 }
 
 void CustomersOrders::restore() {

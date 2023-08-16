@@ -73,7 +73,7 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
 
   m_menu->exec(event->globalPos());
-  delete m_menu;
+  m_menu->deleteLater();
 }
 
 void CustomersTableView::contextMenuAction(

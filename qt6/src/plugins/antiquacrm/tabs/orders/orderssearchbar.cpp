@@ -39,14 +39,21 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
                           QSizePolicy::Preferred);
   addWidget(m_spacer);
 
+  const QString _toolTip(tr("Restrict search to current selection."));
+
+  AntiquaCRM::ALabel *m_label = new AntiquaCRM::ALabel(this);
+  m_label->setText(tr("Restriction"));
+  m_label->setToolTip(_toolTip);
+  addWidget(m_label);
+
   m_datePart = new AntiquaCRM::AComboBox(this);
-  m_datePart->setToolTip(tr("Restrict search to current to selection."));
-  m_datePart->addItem(_icon, tr("Restriction"), QString());
-  m_datePart->addItem(_icon, tr("Year"), "year");
-  m_datePart->addItem(_icon, tr("Month"), "month");
-  m_datePart->addItem(_icon, tr("Week"), "week");
-  m_datePart->addItem(_icon, tr("Day"), "day");
   m_datePart->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  m_datePart->setToolTip(_toolTip);
+  m_datePart->addItem(_icon, m_datePart->withoutDisclosures(), QString());
+  m_datePart->addItem(_icon, tr("Since in Year"), "year");
+  m_datePart->addItem(_icon, tr("Month in Year"), "month");
+  m_datePart->addItem(_icon, tr("Week of Year"), "week");
+  m_datePart->addItem(_icon, tr("Day in Month"), "day");
   m_datePart->setCurrentIndex(0);
   addWidget(m_datePart);
 
@@ -54,7 +61,6 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_year = new AntiquaCRM::NumEdit(this);
   m_year->setToolTip(tr("Year"));
   m_year->setRange((_y - 20), _y);
-  m_year->setBuddyLabel(tr("Year"));
   m_year->setValue(_y);
   addWidget(m_year);
 

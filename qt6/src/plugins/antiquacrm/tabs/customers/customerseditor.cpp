@@ -82,6 +82,9 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   // Register modified changes
   registerInputChanged();
 
+  connect(m_ordersTable, SIGNAL(pushMessage(const QString &)),
+          SLOT(pushStatusMessage(const QString &)));
+
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()),
           SLOT(setFinalLeaveEditor()));

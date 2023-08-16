@@ -29,6 +29,10 @@ private:
 
 private Q_SLOTS:
   void openOrder();
+  void openInvoice();
+
+Q_SIGNALS:
+  void pushMessage(const QString &);
 
 public Q_SLOTS:
   void restore();

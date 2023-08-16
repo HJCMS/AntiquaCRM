@@ -70,7 +70,7 @@ void BooksTableView::contextMenuEvent(QContextMenuEvent *event) {
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
 
   m_menu->exec(event->globalPos());
-  delete m_menu;
+  m_menu->deleteLater();
 }
 
 void BooksTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
