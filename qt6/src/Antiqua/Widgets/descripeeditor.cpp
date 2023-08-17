@@ -86,6 +86,9 @@ void DescripeEditor::setWordsList(const QStringList &list) {
   if (list.size() < 1)
     return;
 
+  if (m_list->count() > 0)
+    m_list->clear();
+
   foreach (QString l, list) {
     m_list->addItem(l);
   }
