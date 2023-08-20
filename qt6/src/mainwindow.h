@@ -38,11 +38,6 @@ private:
   MenuBar *m_menuBar;
 
   /**
-   * @brief Tabs Menu, entries filled by loadTabInterfaces
-   */
-  AntiquaCRM::TabsMenu *m_tabsMenu;
-
-  /**
    * @brief Tabs Interfaces list
    */
   QList<AntiquaCRM::TabsInterface *> tabInterfaces;

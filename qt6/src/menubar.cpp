@@ -5,7 +5,6 @@
 #ifndef ANTIQUACRM_UTILS_DIALOGS_H
 #include "antiquadialogs.h"
 #endif
-
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 
@@ -15,48 +14,55 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
 
   m_applMenu = addMenu("Antiqua CRM");
   QAction *ac_quit = m_applMenu->addAction(tr("Application Quit"));
-  ac_quit->setIcon(AntiquaCRM::antiquaIcon("action-quit"));
+  ac_quit->setIcon(tabIcon("action-quit"));
   ac_quit->setShortcut(QKeySequence::Quit);
   connect(ac_quit, SIGNAL(triggered()), SIGNAL(sendApplicationQuit()));
   addMenu(m_applMenu);
 
-  m_tabsMenu = new AntiquaCRM::TabsMenu(this);
-  addMenu(m_tabsMenu);
+  // BEGIN::Views
+  m_viewsMenu = addMenu(tr("Views"));
+
+  // AntiquaTabs
+  tabsMenu = new AntiquaCRM::TabsMenu(this);
+  tabsMenu->setIcon(tabIcon());
+
+  m_viewsMenu->addMenu(tabsMenu);
+  // END::Views
 
   // BEGIN::Configurations
   m_configMenu = addMenu(tr("Configuration"));
 
-  const QIcon _icon = AntiquaCRM::antiquaIcon("configure");
+  const QIcon _conf_icon = tabIcon("configure");
 
   // BEGIN::Dialogs
   m_dialogMenu = m_configMenu->addMenu(tr("Dialogs"));
-  m_dialogMenu->setIcon(_icon);
+  m_dialogMenu->setIcon(_conf_icon);
   // KeywordsDialog
   QAction *ac_ksd = m_dialogMenu->addAction(tr("Keywords"));
-  ac_ksd->setIcon(_icon);
+  ac_ksd->setIcon(_conf_icon);
   connect(ac_ksd, SIGNAL(triggered()), SLOT(openKeywordsDialog()));
   // CompanyDialog
   QAction *ac_dcy = m_dialogMenu->addAction(tr("Company"));
-  ac_dcy->setIcon(_icon);
+  ac_dcy->setIcon(_conf_icon);
   connect(ac_dcy, SIGNAL(triggered()), SLOT(openCompanyDialog()));
   // DeliveryDialog
   QAction *ac_ddy = m_dialogMenu->addAction(tr("Delivery"));
-  ac_ddy->setIcon(_icon);
+  ac_ddy->setIcon(_conf_icon);
   connect(ac_ddy, SIGNAL(triggered()), SLOT(openDeliveryDialog()));
   // DesignationsDialog
   QAction *ac_dsn = m_dialogMenu->addAction(tr("Designation"));
-  ac_dsn->setIcon(_icon);
+  ac_dsn->setIcon(_conf_icon);
   connect(ac_dsn, SIGNAL(triggered()), SLOT(openDesignationDialog()));
   // StoragesDialog
   QAction *ac_dse = m_dialogMenu->addAction(tr("Storage"));
-  ac_dse->setIcon(_icon);
+  ac_dse->setIcon(_conf_icon);
   connect(ac_dse, SIGNAL(triggered()), SLOT(openStoragesDialog()));
   // END::Dialogs
 
   // BEGIN::SystemConfig
   m_configMenu->addSeparator();
   QAction *ac_cfg = m_configMenu->addAction(tr("Configuration"));
-  ac_cfg->setIcon(_icon);
+  ac_cfg->setIcon(_conf_icon);
   connect(ac_cfg, SIGNAL(triggered()), SLOT(openConfigDialog()));
   // END::SystemConfig
   // END::Configurations
@@ -65,41 +71,42 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   addMenu(m_aboutMenu);
 }
 
-AntiquaCRM::TabsMenu *MenuBar::tabsMenu() {
-  return m_tabsMenu;
-}
-
 const QIcon MenuBar::tabIcon(const QString &name) {
-  QString _name = name.isEmpty() ? "action-tab" : name;
-  return AntiquaCRM::antiquaIcon(_name);
+  return AntiquaCRM::antiquaIcon(name);
 }
 
 void MenuBar::openConfigDialog() {
   ConfigDialog *d = new ConfigDialog(this);
   d->exec();
+  d->deleteLater();
 }
 
 void MenuBar::openDeliveryDialog() {
   DeliveryDialog *d = new DeliveryDialog(this);
   d->exec();
+  d->deleteLater();
 }
 
 void MenuBar::openCompanyDialog() {
   CompanyDialog *d = new CompanyDialog(this);
   d->exec();
+  d->deleteLater();
 }
 
 void MenuBar::openDesignationDialog() {
   DesignationsDialog *d = new DesignationsDialog(this);
   d->exec();
+  d->deleteLater();
 }
 
 void MenuBar::openKeywordsDialog() {
   KeywordsDialog *d = new KeywordsDialog(this);
   d->exec();
+  d->deleteLater();
 }
 
 void MenuBar::openStoragesDialog() {
   StoragesDialog *d = new StoragesDialog(this);
   d->exec();
+  d->deleteLater();
 }

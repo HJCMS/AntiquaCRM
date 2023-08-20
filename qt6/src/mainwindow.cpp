@@ -9,15 +9,17 @@
 MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
-  setMinimumSize(QSize(800, 600));
+  setMinimumSize(QSize(800, 580));
 
+  // Main Window Menubar
   m_menuBar = new MenuBar(this);
-  m_tabsMenu = m_menuBar->tabsMenu();
   setMenuBar(m_menuBar);
 
+  // AntiquaTabs
   m_tabWidget = new AntiquaCRM::TabsWidget(this);
   setCentralWidget(m_tabWidget);
 
+  // Main Statusbar
   m_statusBar = new StatusBar(this);
   setStatusBar(m_statusBar);
 
@@ -25,7 +27,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   connect(m_menuBar, SIGNAL(sendApplicationQuit()),
           SIGNAL(sendApplicationQuit()));
 
-  connect(m_tabsMenu, SIGNAL(sendOpenTab(const QString &)),
+  connect(m_menuBar->tabsMenu, SIGNAL(sendOpenTab(const QString &)),
           SLOT(setViewTab(const QString &)));
   // End:Menu:Signals
 
@@ -51,16 +53,15 @@ bool MainWindow::loadTabInterfaces() {
     while (it.hasNext()) {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
-        QString _name = _iface->displayName();
-        QString _id = _iface->interfaceName();
-        m_tabsMenu->addAction(_iface->menuEntry());
+        m_menuBar->tabsMenu->addAction(_iface->menuEntry());
         if (!_iface->addIndexOnInit())
           continue;
 
         AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
         if (_tab == nullptr) {
-          qWarning("Plugin '%s' TabsIndex failed.", qPrintable(_name));
-          qWarning("Unload '%s'", qPrintable(_id));
+          qWarning("Plugin '%s' TabsIndex failed.",
+                   qPrintable(_iface->displayName()));
+          qWarning("Unload '%s'", qPrintable(_iface->interfaceName()));
           _iface->deleteLater();
           continue;
         }
@@ -78,7 +79,7 @@ bool MainWindow::loadTabInterfaces() {
 void MainWindow::setChanges(bool b) { setWindowModified(b); }
 
 bool MainWindow::tabViewAction(const QString &id) {
-  if (!m_tabsMenu->exists(id))
+  if (!m_menuBar->tabsMenu->exists(id))
     return false;
 
   if (m_tabWidget->indexByName(id) >= 0)
@@ -167,7 +168,7 @@ bool MainWindow::openWindow() {
 
 bool MainWindow::closeWindow() {
   if (isWindowModified()) {
-    QString _title = tr("Save request");
+    const QString _title = tr("Save request");
     QStringList _warn(tr("<b>You have unsaved changes.</b>"));
     _warn << tr("<p>Do you really want to close the application?</p>");
     int _ret = QMessageBox::question(this, _title, _warn.join("\n"));
