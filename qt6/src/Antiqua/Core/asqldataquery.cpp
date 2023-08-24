@@ -20,6 +20,14 @@ static const QSqlRecord asql_table_record(const QString &name) {
     return QSqlRecord();
   }
   QSqlDatabase db = QSqlDatabase::database(ANTIQUACRM_CONNECTION_DOMAIN);
+  // #ifdef ANTIQUA_DEVELOPEMENT
+  //   QSqlRecord _r = db.record(name);
+  //   for(int i = 0; i < _r.count(); i++) {
+  //     QSqlField _f = _r.field(i);
+  //     qDebug() << "F:" << _f.name() << _f.metaType().id() <<
+  //     _f.metaType().name();
+  //   }
+  // #endif
   return (db.isValid() ? db.record(name) : QSqlRecord());
 }
 

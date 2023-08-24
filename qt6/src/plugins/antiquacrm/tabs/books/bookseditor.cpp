@@ -394,6 +394,7 @@ void BooksEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
+  ignoreFields << "ib_type"; // only for orders!
   ignoreFields << "ib_including_vat"; /* DEPRECATED */
 
   // Load default table data
@@ -454,7 +455,7 @@ bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
     return false;
 
   QString key = field.name();
-  // qDebug() << "setDataField:" << field.name() << value;
+  // qDebug() << "setDataField:" << key << value << ignoreFields.contains(key);
   bool required = (field.requiredStatus() == QSqlField::Required);
   AntiquaCRM::AInputWidget *inp =
       findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);

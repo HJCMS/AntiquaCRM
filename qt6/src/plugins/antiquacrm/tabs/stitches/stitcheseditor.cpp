@@ -293,6 +293,7 @@ void StitchesEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ip_since";
   ignoreFields << "ip_changed";
+  ignoreFields << "ip_type"; // only for orders!
   ignoreFields << "ip_including_vat"; /* DEPRECATED */
 
   m_tableData = initTableData(STITCHES_TABLE_NAME);

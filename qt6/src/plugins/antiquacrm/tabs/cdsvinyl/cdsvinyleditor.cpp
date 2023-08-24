@@ -275,6 +275,7 @@ void CDsVinylEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "cv_since";
   ignoreFields << "cv_changed";
+  ignoreFields << "cv_type"; // only for orders!
   ignoreFields << "cv_including_vat"; /* DEPRECATED */
 
   m_tableData = initTableData(CDSVINYL_TABLE_NAME);
@@ -317,7 +318,7 @@ bool CDsVinylEditor::setDataField(const QSqlField &field,
     return false;
 
   QString key = field.name();
-  // qDebug() << "setDataField:" << field.name() << value;
+  // qDebug() << "setDataField:" << key << value << ignoreFields.contains(key);
   bool required = (field.requiredStatus() == QSqlField::Required);
   AntiquaCRM::AInputWidget *inp =
       findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);

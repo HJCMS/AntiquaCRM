@@ -63,13 +63,13 @@ namespace AntiquaCRM {
   Q_ENUM_NS(AntiquaCRM::ProviderPaymentStatus)
 
   /**
-    * @brief Payment method of the order
-    *
-    * Used in the order system to show the payment method.
-    * The implementation of this specification is up to the plugin integration!
-    *
-    * @ingroup Enumerations
-    */
+   * @brief Payment method of the order
+   *
+   * Used in the order system to show the payment method.
+   * The implementation of this specification is up to the plugin integration!
+   *
+   * @ingroup Enumerations
+   */
   enum PaymentMethod {
     PAYMENT_NOT_SET = 0,              /**< unspecified */
     BANK_PREPAYMENT = 1,              /**< bank transfer (prepayment) */
@@ -90,9 +90,9 @@ namespace AntiquaCRM {
   Q_ENUM_NS(AntiquaCRM::PaymentMethod)
 
   /**
-    * @brief Set customer trust level!
-    * @ingroup Enumerations
-    */
+   * @brief Set customer trust level!
+   * @ingroup Enumerations
+   */
   enum CustomerTrustLevel {
     NO_TRUST_LEVEL = 0, /**< unspecified */
     ON_TIME = 1,        /**< Pays on time */
@@ -104,9 +104,9 @@ namespace AntiquaCRM {
   Q_ENUM_NS(AntiquaCRM::CustomerTrustLevel)
 
   /**
-    * @brief gender definition
-    * @ingroup Enumerations
-    */
+   * @brief gender definition
+   * @ingroup Enumerations
+   */
   enum Gender {
     NO_GENDER = 0, /**< unspecified */
     MALE = 1,      /**< male */
@@ -116,12 +116,17 @@ namespace AntiquaCRM {
   Q_ENUM_NS(AntiquaCRM::Gender)
 
   /**
-    * @brief Inventory groups
-    *
-    * Implementation for service categories.
-    *
-    * @ingroup Enumerations
-    */
+   * @brief Article type finder...
+   *
+   * By default this "ArticleType" is used to find the right tax categories.
+   *
+   * The Enumeration is identical with PgSQL Database table enum_article_type.
+   * @code
+   *  \d+ enum_article_type
+   * @endcode
+   *
+   * @ingroup Enumerations
+   */
   enum ArticleType {
     UNKNOWN = 0, /**< unspecified */
     BOOK = 1,    /**< books */
