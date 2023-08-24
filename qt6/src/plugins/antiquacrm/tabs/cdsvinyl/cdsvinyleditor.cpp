@@ -34,7 +34,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_count = new AntiquaCRM::CrowdEdit(this);
   cv_count->setObjectName("cv_count");
   cv_count->setBuddyLabel(tr("Count"));
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("Current article stock.");
   cv_count->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_count);
 
@@ -45,7 +45,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_price->setRequired(true);
   cv_price->setBuddyLabel(tr("Price"));
   cv_price->setMinimum(minPrice);
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("Current price you are requesting for this item.");
   cv_price->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_price);
 
@@ -55,7 +55,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_year->setRequired(true);
   cv_year->setBuddyLabel(tr("Year"));
   cv_year->setValue(1800);
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("The year of publication for this item.");
   cv_year->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_year);
 
@@ -63,7 +63,10 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_restricted = new AntiquaCRM::BoolBox(this);
   cv_restricted->setObjectName("cv_restricted");
   cv_restricted->setBuddyLabel(tr("Local Usage only"));
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("If the option is selected, the article will be listed on "
+                     "your online portals. Please keep in mind that articles "
+                     "are not automatically removed from your Providers, if "
+                     "this option is subsequently deactivated!");
   cv_restricted->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_restricted);
 
@@ -85,7 +88,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_title = new AntiquaCRM::TextLine(this);
   cv_title->setObjectName("cv_title");
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("Insert the title for the media album here.");
   cv_title->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_title, row2c++, 1, 1, 4);
 
@@ -94,7 +97,9 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_title_extended = new AntiquaCRM::TextLine(this);
   cv_title_extended->setObjectName("cv_title_extended");
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis =
+      tr("The extended title gives you the option of including subtitles or "
+         "additional information in the displayed service provider title.");
   cv_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_title_extended, row2c++, 1, 1, 4);
 
@@ -104,7 +109,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_author = new AntiquaCRM::TextLine(this);
   cv_author->setObjectName("cv_author");
   cv_author->setToolTip(infolabel->text());
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("Typically the name of the artist or group.");
   cv_author->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_author, row2c++, 1, 1, 4);
 
@@ -114,7 +119,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_publisher = new AntiquaCRM::TextLine(this);
   cv_publisher->setObjectName("cv_publisher");
   cv_publisher->setToolTip(infolabel->text());
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis =
+      tr("In this field please indicate the publisher or the record label.");
   cv_publisher->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_publisher, row2c++, 1, 1, 4);
 
@@ -133,7 +139,9 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_condition = new AntiquaCRM::ConditionEdit(this);
   cv_condition->setObjectName("cv_condition");
   cv_condition->setToolTip(infolabel->toolTip());
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("The current condition for the medium such as CD or vinyl."
+                     "\nNote: In the case of a CD, the plastic sleeve is not "
+                     "included in the description.");
   cv_condition->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_condition, row2c++, 3, 1, 1);
   // } @END_GROUP
@@ -144,7 +152,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_designation = new AntiquaCRM::TextLine(this);
   cv_designation->setObjectName("cv_designation");
   cv_designation->setToolTip(infolabel->text());
-  tempWhatsThis = "__TODO__";
+  tempWhatsThis = tr("Description for this multimedia article.");
   cv_designation->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_designation, row2c++, 1, 1, 4);
 
@@ -275,7 +283,7 @@ void CDsVinylEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "cv_since";
   ignoreFields << "cv_changed";
-  ignoreFields << "cv_type"; // only for orders!
+  ignoreFields << "cv_type";          // only for orders!
   ignoreFields << "cv_including_vat"; /* DEPRECATED */
 
   m_tableData = initTableData(CDSVINYL_TABLE_NAME);
