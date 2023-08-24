@@ -62,10 +62,14 @@ CREATE OR REPLACE FUNCTION validate_article_type(numeric(2,0))
   RETURNS BOOLEAN
   LANGUAGE plpgsql
 AS $B$
-  DECLARE i_check BOOLEAN;
+  DECLARE b_type NUMERIC(2,0);
 BEGIN
-  SELECT (article_type>0) FROM article_types WHERE article_type=$1 INTO i_check;
-  return i_check;
+  SELECT article_type FROM article_types WHERE article_type=$1 INTO b_type;
+  IF b_type IS NULL THEN
+    RETURN false;
+  ELSE
+    RETURN (b_type>0)::BOOLEAN;
+  END IF;
 END
 $B$;
 -- END
