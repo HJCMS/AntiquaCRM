@@ -31,38 +31,59 @@ This module defines the following variables:
 
 include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 
+SET(QRENCODE_VERSION)
+SET(QRENCODE_INCLUDE_DIR)
+SET(QRENCODE_LIBRARY)
+
+find_package(PkgConfig QUIET)
+if(PKG_CONFIG_FOUND)
+  pkg_check_modules(PKG_QRENCODE QUIET libqrencode)
+  if(PKG_QRENCODE_FOUND)
+    set(QRENCODE_VERSION ${PKG_QRENCODE_VERSION})
+    set(QRENCODE_INCLUDE_DIR ${PKG_QRENCODE_INCLUDE_DIRS})
+    set(QRENCODE_LIBRARY ${PKG_QRENCODE_LINK_LIBRARIES})
+  endif()
+endif()
+
+## BEGIN QRENCODE_INCLUDE_DIR
+if(NOT QRENCODE_INCLUDE_DIR)
 find_path(QRENCODE_INCLUDE_DIR
   NAMES qrencode.h
-  HINTS ${PC_QRENCODE_INCLUDE_DIRS})
+  HINTS ${PKG_RENCODE_INCLUDE_DIR}
+)
+endif(NOT QRENCODE_INCLUDE_DIR)
 mark_as_advanced(QRENCODE_INCLUDE_DIR)
+## END
 
+## BEGIN QRENCODE_LIBRARY
 if(NOT QRENCODE_LIBRARY)
-  find_library(QRENCODE_LIBRARY NAMES
-    qrencode
-    libqrencode
-    HINTS ${PC_QRENCODE_LIBRARY_DIRS}
+  find_library(QRENCODE_LIBRARY
+    NAMES qrencode libqrencode
+    NO_CACHE
+    HINTS ${PKG_QRENCODE_LIBRARY_DIRS}
   )
-  find_library(QRENCODE_LIBRARY_RELEASE NAMES
-    qrencode
-    libqrencode
-    HINTS ${PC_QRENCODE_LIBRARY_DIRS}
+  mark_as_advanced(QRENCODE_LIBRARY)
+
+  find_library(QRENCODE_LIBRARY_REALEASE
+    NAMES qrencode libqrencode
+    NO_CACHE
+    HINTS ${PKG_QRENCODE_LIBRARY_DIRS}
   )
-  mark_as_advanced(QRENCODE_LIBRARY_RELEASE)
-  find_library(QRENCODE_LIBRARY_DEBUG NAMES
-    qrencode-d
-    libqrencode-d
-    qrencode_debug
-    libqrencode_debug
-    HINTS ${PC_QRENCODE_LIBRARY_DIRS}
+  mark_as_advanced(QRENCODE_LIBRARY_REALEASE)
+
+  find_library(QRENCODE_LIBRARY_DEBUG
+    NAMES qrencode-d qrencode-debug libqrencode-d libqrencode-debug
+    NO_CACHE
+    HINTS ${PKG_QRENCODE_LIBRARY_DIRS}
   )
   mark_as_advanced(QRENCODE_LIBRARY_DEBUG)
-  include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
-  select_library_configurations(QRENCODE)
-endif(NOT QRENCODE_LIBRARY)
 
-find_package_handle_standard_args(QRENCODE
-  REQUIRED_VARS QRENCODE_LIBRARY QRENCODE_INCLUDE_DIR
-  VERSION_VAR QRENCODE_VERSION)
+  include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
+
+  select_library_configurations(QRENCODE)
+
+endif(NOT QRENCODE_LIBRARY)
+## END
 
 if(QRENCODE_FOUND)
   set(QRENCODE_LIBRARIES ${QRENCODE_LIBRARY})
