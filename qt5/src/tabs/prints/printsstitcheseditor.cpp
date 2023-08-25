@@ -225,8 +225,9 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
 void PrintsStitchesEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ip_since";
+  ignoreFields << "ip_type";
   ignoreFields << "ip_changed";
-  ignoreFields << "ip_category_subject"; /** @warning OBSOLETE */
+  ignoreFields << "ip_category_subject"; /** @obsolete */
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_prints");
   inputFields = m_tableData->columnNames();
   if (inputFields.isEmpty()) {

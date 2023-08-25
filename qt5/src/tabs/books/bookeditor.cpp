@@ -275,6 +275,7 @@ BookEditor::BookEditor(QWidget *parent)
 void BookEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
+  ignoreFields << "ib_type";
   ignoreFields << "ib_changed";
 
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_books");

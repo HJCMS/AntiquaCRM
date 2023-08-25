@@ -243,6 +243,7 @@ CDVEditor::CDVEditor(QWidget *parent)
 void CDVEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "cv_since";
+  ignoreFields << "cv_type";
   ignoreFields << "cv_changed";
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_cdvinyl");
   inputFields = m_tableData->columnNames();

@@ -173,6 +173,7 @@ VariousEditor::VariousEditor(QWidget *parent)
 void VariousEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "va_since";
+  ignoreFields << "va_type";
   ignoreFields << "va_changed";
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_various");
   inputFields = m_tableData->columnNames();
