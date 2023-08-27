@@ -18,6 +18,12 @@ ASharedDataFiles::ASharedDataFiles(const QDir &d) : QDir{d} {
   setNameFilters(defaultFilter());
 }
 
+const QString ASharedDataFiles::bcp47Suffix() const {
+  QString _str("_");
+  _str.append(QLocale::system().bcp47Name().toLower());
+  return _str;
+}
+
 const QStringList ASharedDataFiles::dataFiles() {
   return entryList((QDir::Files | QDir::Writable), QDir::Name);
 }
@@ -89,34 +95,31 @@ bool ASharedDataFiles::storeJson(const QString &basename,
 }
 
 const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
-  QJsonDocument doc;
-  QJsonParseError parseHandle;
+  QJsonDocument _doc;
+  QFileInfo _info(path(), basename + bcp47Suffix() + ".json");
+  if (!_info.isReadable())
+    _info.setFile(path(), basename + ".json");
 
-  QString lng = QLocale::system().name();
-  lng = lng.split("_").last().toLower();
-  QFileInfo info(path(), basename + "_" + lng + ".json");
-  if (!info.isReadable())
-    info.setFile(path(), basename + ".json");
-
-  if (!info.isReadable()) {
-    qWarning("No File or Permission denied (%s).", qPrintable(info.filePath()));
-    return doc;
+  if (!_info.isReadable()) {
+    qWarning("Missing Json Document or Permission denied for (%s).",
+             qPrintable(_info.filePath()));
+    return _doc;
   }
 
-  QFile fp(info.filePath());
-  if (fp.open(QIODevice::ReadOnly)) {
-    QTextStream data(&fp);
-    QByteArray buffer = data.readAll().toLocal8Bit();
-    doc = QJsonDocument::fromJson(buffer, &parseHandle);
-    if (parseHandle.error != QJsonParseError::NoError) {
-      qWarning("Json Document Error: '%s'.",
-               qPrintable(parseHandle.errorString()));
-      doc = QJsonDocument();
+  QFile _fp(_info.filePath());
+  if (_fp.open(QIODevice::ReadOnly)) {
+    QTextStream _stream(&_fp);
+    QByteArray _jsdata = _stream.readAll().toLocal8Bit();
+    QJsonParseError _parser;
+    _doc = QJsonDocument::fromJson(_jsdata, &_parser);
+    if (_parser.error != QJsonParseError::NoError) {
+      qWarning("Json Document Error: '%s'.", qPrintable(_parser.errorString()));
+      _doc = QJsonDocument();
     }
-    fp.close();
-    buffer.clear();
+    _fp.close();
+    _jsdata.clear();
   }
-  return doc;
+  return _doc;
 }
 
 bool ASharedDataFiles::storeXml(const QString &basename,
@@ -144,42 +147,44 @@ bool ASharedDataFiles::storeXml(const QString &basename,
 }
 
 const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
-  QDomDocument doc;
-  QFileInfo info(path(), basename + ".xml");
-  if (!info.isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
-#else
-    qWarning("Can't load '%s' XML!", qPrintable(info.fileName()));
-#endif
-    return doc;
+  QDomDocument _doc;
+  QFileInfo _info(path(), basename + bcp47Suffix() + ".xml");
+  if (!_info.isReadable())
+    _info.setFile(path(), basename + ".xml");
+
+  if (!_info.isReadable()) {
+    qWarning("Can't load '%s' XML!", qPrintable(_info.fileName()));
+    return _doc;
   }
-  QFile fp(info.filePath());
-  if (fp.open(QIODevice::ReadOnly)) {
-    QString errMsg;
-    if (!doc.setContent(&fp, false, &errMsg)) {
-      qWarning("XML Errors: '%s'.", qPrintable(errMsg));
+
+  QFile _fp(_info.filePath());
+  if (_fp.open(QIODevice::ReadOnly)) {
+    QString _errno;
+    if (!_doc.setContent(&_fp, false, &_errno)) {
+      qWarning("XML Errors: '%s'.", qPrintable(_errno));
+      return QDomDocument();
     }
-    fp.close();
+    _fp.close();
   }
-  return doc;
+  return _doc;
 }
 
 const QStringList ASharedDataFiles::getCompleterList(const QString &basename,
                                                      const QString &key) {
-  QStringList list;
-  QJsonDocument doc = getJson(basename);
-  if (doc.isEmpty()) {
+  QStringList _list;
+  QJsonDocument _data = getJson(basename);
+  if (_data.isEmpty() || _data.object().isEmpty()) {
     qWarning("ACompleterData::getCompleterList missing '%s'",
              qPrintable(basename));
-    return list;
+    return _list;
   }
-  QJsonArray arr = doc.object().value(basename).toArray();
-  for (int i = 0; i < arr.count(); i++) {
-    QJsonObject obj = arr[i].toObject();
-    list << obj.value(key).toString();
+
+  QJsonArray _array = _data.object().value(basename).toArray();
+  for (int i = 0; i < _array.count(); i++) {
+    QJsonObject _obj = _array[i].toObject();
+    _list << _obj.value(key).toString();
   }
-  return list;
+  return _list;
 }
 
 ASharedCacheFiles::ASharedCacheFiles(const QDir &d) : QDir{d} {}

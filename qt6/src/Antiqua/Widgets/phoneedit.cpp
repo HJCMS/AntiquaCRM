@@ -74,6 +74,9 @@ void PhoneCountryCodeModel::initModel() {
   }
 
   const QJsonDocument _doc = _db.getJson("iso_countrycodes");
+  if (_doc.isEmpty())
+    return;
+
   const QJsonArray _array = _doc.object().value("countries").toArray();
   for (int i = 0; i < _array.size(); i++) {
     const QJsonObject _obj = _array[i].toObject();
@@ -82,7 +85,8 @@ void PhoneCountryCodeModel::initModel() {
       continue;
 
     CountryCode _code;
-    _code.npa = AntiquaCRM::AUtil::zerofill(_npa, 3);
+    // a national phone area must begin with 0
+    _code.npa = AntiquaCRM::AUtil::zerofill(_npa, 4);
     _code.info = _obj.value("country").toString();
     p_codes.append(_code);
   }
@@ -96,7 +100,6 @@ PhoneEdit::PhoneEdit(QWidget *parent, const QString &name)
   m_edit->setToolTip("DIN 5008/E.123");
   layout->addWidget(m_edit);
 
-  // const QRegularExpression _pattern("^(0\\d+[\\s?\\d]+)$");
   m_validator = new QRegularExpressionValidator(AUtil::phoneRegExp(), m_edit);
   m_edit->setValidator(m_validator);
 

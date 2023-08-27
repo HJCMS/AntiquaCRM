@@ -16,21 +16,32 @@
 namespace AntiquaCRM {
 
 /**
- * @brief Datenbehandlung im Benutzerverzeichnis
+ * @brief Data handling in the user directory
+ *
+ * This class reads and writes XML, Json files in given user directory.
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASharedDataFiles : public QDir {
 public:
+  /**
+   * @param d - Working Directory
+   */
   explicit ASharedDataFiles(const QDir &d = ASettings::getUserDataDir());
 
   /**
-   * @brief Gibt eine Liste der beschreibaren Dateien zurück ...
+   * @brief Returning "_" with "Locale::bcp47Name" in lowercase.
+   */
+  const QString bcp47Suffix() const;
+
+  /**
+   * @brief Returns a list of writable files...
    */
   const QStringList dataFiles();
 
   /**
-   * @brief Standard für Suche, Anhand der Dateierweiterrung.
-   * Üblicherweise:
+   * @brief Search standards, based on file extension.
+   * Usually:
    * @li *.xml
    * @li *.sql
    * @li *.json
@@ -38,46 +49,47 @@ public:
   static const QStringList defaultFilter();
 
   /**
-   * @brief Vergleicht ob die an diesem tag schon erneuert wurde!
-   * Wenn dies der fall ist dann gibt die Methode false zurück!
+   * @brief Compares whether it has already been renewed on this day!
    * @param basename - File baseName
    * @param ext      - File extensions
+   *
+   * If this is the case then the method returns false!
    */
   bool needsUpdate(const QString &basename,
                    const QStringList &ext = defaultFilter());
 
   /**
-   * @brief Such mit dem Basisnamen und optionaler Erweiterung nach
-   * Verfügbarkeit!
-   * @note Nur Beschreibbare Dateien werden berücksichtigt!
+   * @brief Search with the base name and optional extension for availability!
    * @param basename - File baseName
    * @param ext      - File extensions
+   *
+   * @note Only writable files are considered!
    */
   bool fileExists(const QString &basename,
                   const QStringList &ext = defaultFilter());
 
   /**
-   * @brief Json Dokument speichern.
+   * @brief Save json document.
    * @param basename - File baseName
    * @param doc      - Json Document
    */
   bool storeJson(const QString &basename, const QJsonDocument &doc);
 
   /**
-   * @brief Nehme Json Dokument aus Datei.
+   * @brief Get json Document from file.
    * @param basename - File baseName
    */
   const QJsonDocument getJson(const QString &basename);
 
   /**
-   * @brief XML Dokument speichern.
+   * @brief Save XML document.
    * @param basename - File baseName
    * @param xml      - XML Document
    */
   bool storeXml(const QString &basename, const QDomDocument &xml);
 
   /**
-   * @brief Nehme XML Dokument aus Datei.
+   * @brief Get XML Document from file.
    * @param basename - File baseName
    */
   const QDomDocument getXML(const QString &basename);
@@ -92,33 +104,42 @@ public:
 };
 
 /**
- * @brief Datenbehandlung im Benutzer Cache-/ Tempverzeichnis
+ * @brief Data handling in user cache/temp directory
+ *
+ * This class reads and writes XML, Json files in given temp directory.
+ *
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY ASharedCacheFiles : public QDir {
 public:
+  /**
+   * @param d - Working Directory
+   */
   explicit ASharedCacheFiles(const QDir &d = ASettings::getUserTempDir());
 
   /**
-   * @brief Cache Datei speichern.
-   * @note Umwandlung QTextStream
+   * @brief Save cache file with QTextStream
+   * @param filename
+   * @param data
    */
   bool storeTempFile(const QString &filename, const QByteArray &data);
 
   /**
-   * @brief Cache Datei speichern.
-   * @note QTextStream
+   * @brief Save cache file with QTextStream
+   * @param filename
+   * @param data
    */
   bool storeTempFile(const QString &filename, const QString &data);
 
   /**
-   * @brief Öffne Cache Datei
+   * @brief Open cache file with QTextStream
+   * @param filename
    */
   const QString getTempFile(const QString &filename);
 
   /**
-   * @brief Öffne Cache Json Dokument
-   * @param md5sum - Der CacheBuilder speichert die Dateinamen mit md5 hash
+   * @brief Open Cache Json Document
+   * @param md5sum - The CacheBuilder stores the filenames with md5 hash
    */
   const QJsonObject getTempJson(const QString &md5sum);
 };
