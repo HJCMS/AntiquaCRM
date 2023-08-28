@@ -15,14 +15,17 @@
 
 namespace AntiquaCRM {
 
-static const QRegularExpression comment_pattern() {
+ASqlFiles::ASqlFiles(const QString &file)
+    : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"} {
+  p_content = QString();
+}
+
+const QRegularExpression ASqlFiles::commentPattern() {
   return QRegularExpression("(^|\\s)--.+$");
 }
 
-ASqlFiles::ASqlFiles(const QString &file)
-    : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"},
-      comments{comment_pattern()} {
-  p_content = QString();
+const QRegularExpression ASqlFiles::macrosPattern() {
+  return QRegularExpression("@([A-Z_]+)@");
 }
 
 bool ASqlFiles::openTemplate() {
@@ -40,7 +43,7 @@ bool ASqlFiles::openTemplate() {
     QTextStream stream(&fp);
     while (!stream.atEnd()) {
       QString buf = stream.readLine();
-      if (!buf.contains(comments))
+      if (!buf.contains(commentPattern()))
         p_content += " " + buf.trimmed();
     }
     fp.close();
@@ -98,59 +101,32 @@ void ASqlFiles::setLimits(int limit) {
 }
 
 const QString ASqlFiles::getQueryContent() {
-  QRegularExpression check("@([A-Z_]+)@");
-  if (p_content.contains(check)) {
+  if (p_content.contains(macrosPattern())) {
     qWarning("Unused template replacements!");
   }
   return p_content.trimmed();
 }
 
-const QString ASqlFiles::selectStatement(const QString &name) {
-  QFileInfo info(ASettings::getDataDir("pgsql"), name + ".sql");
-  QString out;
-  if (!info.isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Permission Denied!";
-#else
-    qWarning("Permission Denied!");
-#endif
-    return out;
+const QString ASqlFiles::queryStatement(const QString &basename) {
+  const QFileInfo _info(ASettings::getDataDir("pgsql"), basename + ".sql");
+  QString _out;
+  if (!_info.isReadable()) {
+    qWarning("Sql file (%s) not found or Permission Denied!",
+             qPrintable(basename));
+    return _out;
   }
-  QFile fp(info.filePath());
-  if (fp.open(QIODevice::ReadOnly)) {
-    QTextStream stream(&fp);
-    while (!stream.atEnd()) {
-      QString buf = stream.readLine();
-      if (!buf.contains(comment_pattern()))
-        out += " " + buf.trimmed();
-    }
-    fp.close();
-  }
-  return out.trimmed();
-}
 
-const QString ASqlFiles::queryStatement(const QString &name) {
-  QFileInfo info(ASettings::getDataDir("pgsql"), name + ".sql");
-  QString out;
-  if (!info.isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Permission Denied!";
-#else
-    qWarning("SqlFiles not found or Permission Denied!");
-#endif
-    return out;
-  }
-  QFile fp(info.filePath());
-  if (fp.open(QIODevice::ReadOnly)) {
-    QTextStream stream(&fp);
+  QFile _fp(_info.filePath());
+  if (_fp.open(QIODevice::ReadOnly)) {
+    QTextStream stream(&_fp);
     while (!stream.atEnd()) {
       QString buf = stream.readLine();
-      if (!buf.contains(comment_pattern()))
-        out += " " + buf.trimmed();
+      if (!buf.contains(commentPattern()))
+        _out += " " + buf.trimmed();
     }
-    fp.close();
+    _fp.close();
   }
-  return out.trimmed();
+  return _out.trimmed();
 }
 
 }; // namespace AntiquaCRM

@@ -39,21 +39,39 @@ void SelectDeliverService::reset() {
 }
 
 void SelectDeliverService::initData() {
-  QString _sql("SELECT d_id, d_name FROM ref_delivery_service");
-  _sql.append(" ORDER BY d_id ASC;");
-
   m_edit->clear();
   const QIcon _icon = AntiquaCRM::qrcIcon("package-deliver");
+  const QString _union_query =
+      AntiquaCRM::ASqlFiles::queryStatement("union_default_delivery");
+  if (_union_query.isEmpty())
+    return;
 
   AntiquaCRM::ASqlCore t_sql(this);
-  QSqlQuery _q = t_sql.query(_sql);
+  QSqlQuery _q = t_sql.query(_union_query);
   if (_q.size() > 0) {
-    int i = m_edit->count();
+    int _index = 0; // without disclosure
+    int _count = m_edit->count();
     while (_q.next()) {
-      m_edit->insertItem(i, _icon, _q.value("d_name").toString());
-      m_edit->setItemData(i, _q.value("d_id").toInt(), Qt::UserRole);
-      i++;
+      // d_id, d_name, d_index
+      int d_id = _q.value("d_id").toInt();
+      const QString d_name = _q.value("d_name").toString();
+      // add only items with a package name
+      if (d_name.isEmpty()) {
+        // if d_index equal to d_id then mark as current index
+        // NOTE: Default index - don't have a title or name!
+        if (d_id == _q.value("d_index").toInt())
+          _index = _count;
+
+        continue;
+      }
+      m_edit->insertItem(_count, _icon, d_name);
+      m_edit->setItemData(_count, d_id, Qt::UserRole);
+      _count++;
     }
+    if (_index > 0)
+      m_edit->setCurrentIndex(_index);
+
+    _q.clear();
   }
 }
 
