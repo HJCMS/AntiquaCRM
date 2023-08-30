@@ -51,7 +51,7 @@ SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
   connect(m_actionBar, SIGNAL(sendProviderAction()),
-          SIGNAL(sendOpenProviderDialog()));
+          SLOT(openProviderActions()));
 }
 
 const QString SellersSalesWidget::mediaType(const QJsonValue &object) {
@@ -93,8 +93,8 @@ const QString SellersSalesWidget::getPrice(const QJsonValue &price) const {
 
 const QString SellersSalesWidget::getTitle(const QJsonValue &title) const {
   QString _str = title.toString();
-  _str.replace("\"","’");
-  _str.replace("'","’");
+  _str.replace("\"", "’");
+  _str.replace("'", "’");
   return _str.trimmed();
 }
 
@@ -154,11 +154,14 @@ bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
 }
 
 void SellersSalesWidget::pushCmd(const QJsonObject &action) {
-  // qDebug() << Q_FUNC_INFO << action;
   AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(action))
     m_sock->close();
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << action;
+#endif
 }
 
 void SellersSalesWidget::openOrder(qint64 oid) {
@@ -223,6 +226,26 @@ void SellersSalesWidget::openArticle(qint64 aid) {
   };
   obj.insert("VALUE", aid);
   pushCmd(obj);
+}
+
+void SellersSalesWidget::openProviderActions() {
+  if (!p_order.contains("orderinfo"))
+    return;
+
+  QString _provider = p_order.value("provider").toString().toLower();
+  QJsonObject _values;
+  _values.insert("orderinfo", p_order.value("orderinfo").toObject());
+
+  const QJsonObject _recipient = p_order.value("customer").toObject();
+  _values.insert("buyer", _recipient.value("c_provider_import").toString());
+  _values.insert("email", _recipient.value("c_email_0").toString());
+
+  QJsonObject _action;
+  _action.insert("ACTION", "providers");
+  _action.insert("TARGET", "plugin");
+  _action.insert("NAME", _provider);
+  _action.insert("VALUE", _values);
+  pushCmd(_action);
 }
 
 void SellersSalesWidget::findArticleIds() {

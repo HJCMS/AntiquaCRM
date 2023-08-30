@@ -99,18 +99,18 @@ QTableWidgetItem *PurchaseTable::createItem(const QJsonValue &data) const {
 }
 
 const QStringList PurchaseTable::getArticleIds() {
-  QStringList l;
-  for (int r = 0; r < rowCount(); r++) {
-    QTableWidgetItem *quantity = item(r, 2);
+  QStringList _l;
+  for (int _r = 0; _r < rowCount(); _r++) {
+    QTableWidgetItem *quantity = item(_r, 2);
     if (quantity->data(Qt::DisplayRole).toInt() < 1) {
-      qInfo("Ignore row %d", r);
+      qInfo("Ignore row %d", _r);
       continue;
     }
 
-    QTableWidgetItem *m = item(r, 1);
+    QTableWidgetItem *m = item(_r, 1);
     if (m != nullptr) {
-      l.append(m->data(Qt::DisplayRole).toString());
+      _l.append(m->data(Qt::DisplayRole).toString());
     }
   }
-  return l;
+  return _l;
 }

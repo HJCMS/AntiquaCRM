@@ -63,12 +63,19 @@ private:
   bool createSocketListener();
 
   /**
+   * @brief Loading Static tabs ...
+   *
+   * Tab Sellers, Orders and Customers will loaded statically.
+   */
+  void loadStaticTabs();
+
+  /**
    * @brief Loading available AntiquaCRM::TabsInterface’s
    *
-   * Use AntiquaCRM::TabsLoader to find all loadable Interfaces.
+   * Using AntiquaCRM::TabsLoader to find all loadable Interfaces.
    * Create a Menu entry and fill @ref p_tabsIndexList container.
    */
-  bool loadTabInterfaces();
+  bool loadPluginTabs();
 
   /**
    * @brief Search Tabs view action with Id.

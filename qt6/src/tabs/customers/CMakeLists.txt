@@ -4,16 +4,12 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET (_pluginTarget "Customers")
+SET (_pluginTarget "TabCustomers")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
-)
-
-SET (plugin_FILES
-  customers.json
 )
 
 SET (plugin_HEADERS
@@ -51,10 +47,9 @@ SET (plugin_SOURCES
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
-ADD_LIBRARY (${_pluginTarget} MODULE
+ADD_LIBRARY (${_pluginTarget} STATIC
  ${plugin_SOURCES}
  ${plugin_HEADERS}
- ${plugin_FILES}
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
@@ -72,9 +67,4 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
-)
-
-INSTALL (TARGETS ${_pluginTarget}
-  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/tabs
-  COMPONENT Plugin
 )

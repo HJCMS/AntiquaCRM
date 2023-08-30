@@ -66,12 +66,16 @@ bool AReceiver::createAction(const QJsonObject &obj) {
 
   // Check Destination suffix
   const QString _target = obj.value("TARGET").toString();
-  if (!_target.contains("_tab")) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << "Invalid Socket operation Target! : " << _target;
-#else
-    qWarning("Unknown Socket operation target, aborted by policy rules!");
-#endif
+
+  if (_action.startsWith("providers") && _target.startsWith("plugin")) {
+    // Plugin Operations
+    if (!obj.contains("NAME") || obj.value("NAME").toString().isEmpty()) {
+      qWarning("Unknown plugin name for Socket action!");
+      return false;
+    }
+  } else if (!_target.contains("_tab")) {
+    // Tabs Operations
+    qWarning("Unknown Socket target, aborted by policy rules!");
     return false;
   }
 

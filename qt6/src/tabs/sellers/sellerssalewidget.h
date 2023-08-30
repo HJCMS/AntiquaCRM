@@ -43,11 +43,9 @@ private Q_SLOTS:
   void createOrder(const QString &prid);
   void openCustomer();
   void openArticle(qint64 aid);
+  void openProviderActions();
   void findArticleIds();
   void prepareCreateOrder();
-
-Q_SIGNALS:
-  void sendOpenProviderDialog();
 
 public:
   explicit SellersSalesWidget(const QJsonObject &config,

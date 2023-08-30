@@ -26,6 +26,7 @@ SET(ANTIQUACRM_INCLUDE_DIRS
 ADD_SUBDIRECTORY(plugins)
 
 ## Static libraries
+ADD_SUBDIRECTORY(tabs)
 ADD_SUBDIRECTORY(utils)
 
 SET(ANTIQUA_APPL_INCLUDE_DIRS
@@ -70,6 +71,9 @@ SET(APPLICATION_LIBRARIES
   DesignationDialog
   KeywordsDialog
   StoragesDialog
+  TabSellers
+  TabOrders
+  TabCustomers
 )
 
 ADD_EXECUTABLE(${PROJECTNAME}

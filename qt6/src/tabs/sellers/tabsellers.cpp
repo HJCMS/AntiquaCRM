@@ -6,7 +6,9 @@
 #include "sellersconfigwidget.h"
 #include "sellerswidget.h"
 
-TabSellers::TabSellers(QObject *parent) : AntiquaCRM::TabsInterface{parent} {}
+TabSellers::TabSellers(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
+  setObjectName("static_tab_sellers");
+}
 
 const QString TabSellers::displayName() const { return tr("Providers"); }
 
@@ -47,5 +49,6 @@ AntiquaCRM::TabsIndex *TabSellers::indexWidget(QWidget *parent) const {
 }
 
 bool TabSellers::createInterface(QObject *parent) {
-  return (parent != nullptr);
+  Q_UNUSED(parent);
+  return true;
 }

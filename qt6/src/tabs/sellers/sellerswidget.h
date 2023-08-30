@@ -30,7 +30,6 @@ private:
   bool findPage(const QString &provider, const QString &oid);
 
 private Q_SLOTS:
-  void openProviderDialog();
   void openOrderPage(const QString &provider, const QString &oid);
 
 public:

@@ -7,7 +7,9 @@
 #include "customerswidget.h"
 
 TabCustomers::TabCustomers(QObject *parent)
-    : AntiquaCRM::TabsInterface{parent} {}
+    : AntiquaCRM::TabsInterface{parent} {
+  setObjectName("static_tab_customers");
+}
 
 const QString TabCustomers::displayName() const { return tr("Customers"); }
 
@@ -48,6 +50,6 @@ AntiquaCRM::TabsIndex *TabCustomers::indexWidget(QWidget *parent) const {
 }
 
 bool TabCustomers::createInterface(QObject *parent) {
-  // TODO
-  return (parent != nullptr);
+  Q_UNUSED(parent);
+  return true;
 }

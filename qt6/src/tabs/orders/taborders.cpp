@@ -6,7 +6,9 @@
 #include "ordersconfigwidget.h"
 #include "orderswidget.h"
 
-TabOrders::TabOrders(QObject *parent) : AntiquaCRM::TabsInterface{parent} {}
+TabOrders::TabOrders(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
+  setObjectName("static_tab_orders");
+}
 
 const QString TabOrders::displayName() const { return tr("Orders"); }
 
@@ -41,4 +43,7 @@ AntiquaCRM::TabsIndex *TabOrders::indexWidget(QWidget *parent) const {
   return _widget;
 }
 
-bool TabOrders::createInterface(QObject *parent) { return (parent != nullptr); }
+bool TabOrders::createInterface(QObject *parent) {
+  Q_UNUSED(parent);
+  return true;
+}

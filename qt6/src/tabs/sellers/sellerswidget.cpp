@@ -42,29 +42,6 @@ bool SellersWidget::findPage(const QString &provider, const QString &oid) {
   return false;
 }
 
-void SellersWidget::openProviderDialog() {
-  const QString orderId = sender()->objectName();
-
-  QString _sql("SELECT pr_name, pr_order_data FROM provider_orders");
-  _sql.append(" WHERE pr_order='" + orderId + "';");
-  QSqlQuery _query = m_sql->query(_sql);
-  if (_query.size() != 1) {
-    qWarning("Missing data for OrderId:(%s).", qPrintable(orderId));
-    return;
-  }
-
-  _query.next();
-  const QString _provider = _query.value("pr_name").toString();
-  QByteArray _order_data = _query.value("pr_order_data").toByteArray();
-  QJsonObject _jobj = QJsonDocument::fromJson(_order_data).object();
-  if (_jobj.isEmpty()) {
-    qWarning("Missing Json for createProviderAction");
-    return;
-  }
-
-  qDebug() << Q_FUNC_INFO << "__TODO__" << _provider << _jobj;
-}
-
 void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
   if (provider.isEmpty() || oid.isEmpty())
     return;
@@ -97,7 +74,6 @@ void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
     _jobj.insert("c_id", _cid);
 
     SellersSalesWidget *mp = new SellersSalesWidget(_jobj, m_pages);
-    connect(mp, SIGNAL(sendOpenProviderDialog()), SLOT(openProviderDialog()));
     if (mp->init()) {
       int index = m_pages->addPage(oid, mp);
       m_pages->setCurrentIndex(index);

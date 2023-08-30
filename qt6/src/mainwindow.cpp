@@ -5,6 +5,10 @@
 #include "menubar.h"
 #include "statusbar.h"
 #include "tabswidget.h"
+// Static Tab Interfaces
+#include "tabs/customers/tabcustomers.h"
+#include "tabs/orders/taborders.h"
+#include "tabs/sellers/tabsellers.h"
 
 MainWindow::MainWindow(QWidget *parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
@@ -45,7 +49,30 @@ bool MainWindow::createSocketListener() {
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
 }
 
-bool MainWindow::loadTabInterfaces() {
+void MainWindow::loadStaticTabs() {
+  // Provider tab
+  TabSellers *m_sellers = new TabSellers(this);
+  m_menuBar->tabsMenu->addAction(m_sellers->menuEntry());
+  AntiquaCRM::TabsIndex *m_tab0 = m_sellers->indexWidget(m_tabWidget);
+  m_tabWidget->registerTab(m_tab0);
+  connect(m_tab0, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
+
+  // Orders tab
+  TabOrders *m_orders = new TabOrders(this);
+  m_menuBar->tabsMenu->addAction(m_orders->menuEntry());
+  AntiquaCRM::TabsIndex *m_tab1 = m_orders->indexWidget(m_tabWidget);
+  m_tabWidget->registerTab(m_tab1);
+  connect(m_tab1, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
+
+  // Customer tab
+  TabCustomers *m_customers = new TabCustomers(this);
+  m_menuBar->tabsMenu->addAction(m_customers->menuEntry());
+  AntiquaCRM::TabsIndex *m_tab2 = m_customers->indexWidget(m_tabWidget);
+  m_tabWidget->registerTab(m_tab2);
+  connect(m_tab2, SIGNAL(sendModifiedStatus(bool)), SLOT(setChanges(bool)));
+}
+
+bool MainWindow::loadPluginTabs() {
   AntiquaCRM::TabsLoader loader(this);
   tabInterfaces = loader.interfaces(this);
   if (tabInterfaces.size() > 0) {
@@ -103,6 +130,15 @@ void MainWindow::setViewTab(const QString &name) {
 }
 
 void MainWindow::setAction(const QString &name, const QJsonObject &data) {
+  if (name == "plugin") {
+    const QString _action = data.value("ACTION").toString();
+    if (_action.startsWith("provider")) {
+      QString _provider = data.value("NAME").toString();
+      qDebug() << Q_FUNC_INFO << "TODO" << name << _provider;
+    }
+    return;
+  }
+
   if (!tabViewAction(name) || !data.contains("TARGET")) {
     qWarning("Window: Invalid Target call!");
     return;
@@ -154,8 +190,9 @@ bool MainWindow::openWindow() {
   tabInterfaces.clear();
   config = new AntiquaCRM::ASettings(this);
   createSocketListener();
+  loadStaticTabs();
 
-  if (!loadTabInterfaces())
+  if (!loadPluginTabs())
     m_statusBar->showMessage(tr("No tabs available"));
 
   if (config->contains("window/geometry"))

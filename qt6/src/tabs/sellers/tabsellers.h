@@ -15,7 +15,6 @@
 
 class ANTIQUACRM_LIBRARY TabSellers final : public AntiquaCRM::TabsInterface {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID ANTIQUACRM_TABS_INTERFACE FILE "sellers.json")
   Q_INTERFACES(AntiquaCRM::TabsInterface)
 
 public:
