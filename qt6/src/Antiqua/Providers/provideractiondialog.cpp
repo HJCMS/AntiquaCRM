@@ -41,7 +41,7 @@ void ProviderActionDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
     if (isWindowModified()) {
       e->setAccepted(false);
-      m_statusBar->showMessage(tr("There are changes in this Dialog!"));
+      statusMessage(tr("There are changes in this Dialog!"));
     }
   }
   QDialog::closeEvent(e);
@@ -76,7 +76,7 @@ void ProviderActionDialog::statusMessage(const QString &message) {
 }
 
 int ProviderActionDialog::exec() {
-  // todo something here
+  setWindowModified(false);
   return QDialog::exec();
 }
 

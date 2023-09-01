@@ -18,6 +18,7 @@
 #include <QJsonObject>
 #include <QScrollArea>
 #include <QStatusBar>
+#include <QUrl>
 #include <QWidget>
 
 namespace AntiquaCRM {
@@ -55,6 +56,16 @@ protected:
    * @brief Central design widget
    */
   QScrollArea *m_scrollArea;
+
+  /**
+   * @brief Read Configuration
+   */
+  virtual bool initConfiguration() = 0;
+
+  /**
+   * @brief API query string
+   */
+  virtual const QUrl apiQuery(const QString &) = 0;
 
   /**
    * @brief prevent invalid access

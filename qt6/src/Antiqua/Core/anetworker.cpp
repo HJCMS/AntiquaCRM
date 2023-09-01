@@ -7,7 +7,7 @@
 
 #ifdef ANTIQUA_DEVELOPEMENT
 #ifndef ANTIQUACRM_NETWORK_DEBUG
-#define ANTIQUACRM_NETWORK_DEBUG false
+#define ANTIQUACRM_NETWORK_DEBUG true
 #endif
 #endif
 
@@ -127,7 +127,7 @@ void ANetworker::slotReadResponse() {
 #if (ANTIQUACRM_NETWORK_DEBUG == true)
   qInfo("Host: %s", qPrintable(m_reply->url().host()));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
-    qInfo("-- %s: %s", a.constData(), reply->rawHeader(a).constData());
+    qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
   }
 #else
   QByteArray byte_info;
@@ -187,9 +187,6 @@ QNetworkReply *ANetworker::loginRequest(const QUrl &url,
   request.setTransferTimeout((transfer_timeout * 1000));
   m_reply = post(request, data);
 
-  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
-          SLOT(slotError(QNetworkReply::NetworkError)));
-
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
 
@@ -215,9 +212,6 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
   request.setHeaderContentLength(data.size());
 
   m_reply = post(request, data);
-
-  connect(m_reply, SIGNAL(error(QNetworkReply::NetworkError)), this,
-          SLOT(slotError(QNetworkReply::NetworkError)));
 
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));

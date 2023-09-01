@@ -47,12 +47,12 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   m_api_port = new AntiquaCRM::NumEdit(this);
   m_api_port->setObjectName("api_port");
   m_api_port->setRange(80, 49151);
+  m_api_port->setValue(443);
   m_api_port->setInputToolTip(tr("Port"));
   m_api_port->appendStretch(0);
-  m_api_port->setValue(apiUrl().port());
   gb1_layout->addWidget(label(tr("Port")), _row, 0, 1, 1);
   gb1_layout->addWidget(m_api_port, _row, 1, 1, 1);
-  _info = tr("API Connection Port. Default: 10003");
+  _info = tr("API Connection Port. Default: 443");
   gb1_layout->addToolTip(_row++, 2, _info);
   gbox->setLayout(gb1_layout);
   layout->addWidget(gbox);
@@ -77,7 +77,6 @@ const QUrl BookLookerConfigWidget::apiUrl() const {
   QUrl _url;
   _url.setScheme("https");
   _url.setHost("api.booklooker.de", QUrl::StrictMode);
-  _url.setPort(443);
   _url.setPath("/");
   return _url;
 }
