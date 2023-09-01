@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_ANTIQUAPROVIDERS_H
-#define ANTIQUACRM_ANTIQUAPROVIDERS_H
+#ifndef ANTIQUACRM_PROVIDERS_PLUGIN_H
+#define ANTIQUACRM_PROVIDERS_PLUGIN_H
 
 #ifndef ANTIQUACRM_PROVIDER_INTERFACE
 #define ANTIQUACRM_PROVIDER_INTERFACE "@CMAKE_ANTIQUA_PROVIDER_INTERFACE@"
@@ -30,4 +30,7 @@
 // AntiquaCRM::ProvidersLoader
 #include "providersloader.h"
 
-#endif
+// AntiquaCRM::ProviderActionDialog
+#include "provideractiondialog.h"
+
+#endif // ANTIQUACRM_PROVIDERS_PLUGIN_H

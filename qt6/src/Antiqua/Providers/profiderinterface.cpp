@@ -3,10 +3,6 @@
 
 #include "profiderinterface.h"
 
-#ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
-#include "apluginconfigwidget.h"
-#endif
-
 namespace AntiquaCRM {
 
 ProviderInterface::ProviderInterface(QObject *parent) : QObject{parent} {}

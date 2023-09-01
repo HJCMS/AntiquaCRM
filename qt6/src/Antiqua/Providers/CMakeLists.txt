@@ -27,14 +27,16 @@ SET (_stl_HEADERS
  antiquaproviders.h
 )
 
-SET (_library_SOURCES
-  profiderinterface.cpp
-  providersloader.cpp
-)
-
 SET (_library_HEADERS
   profiderinterface.h
   providersloader.h
+  provideractiondialog.h
+)
+
+SET (_library_SOURCES
+  profiderinterface.cpp
+  providersloader.cpp
+  provideractiondialog.cpp
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED

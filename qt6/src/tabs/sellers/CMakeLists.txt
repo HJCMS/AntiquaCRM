@@ -8,6 +8,7 @@ SET (_pluginTarget "TabSellers")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
+  ${ANTIQUACRM_PLUGIN_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
@@ -63,4 +64,5 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
+  AntiquaProviders
 )

@@ -9,14 +9,12 @@
 #ifndef ANTIQUACRM_PROVIDER_INTERFACE_H
 #define ANTIQUACRM_PROVIDER_INTERFACE_H
 
-#include <AGlobal>
+#include <AntiquaWidgets>
 #include <QJsonObject>
 #include <QObject>
 #include <QWidget>
 
 namespace AntiquaCRM {
-
-class PluginConfigWidget;
 
 /**
  * @class ProviderInterface
@@ -60,6 +58,14 @@ public:
    * Widget for AntiquaCRM Configuration system.
    */
   virtual AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const = 0;
+
+  /**
+   * @brief Open Provider remote actions dialog
+   * @param parent - parent object
+   * @param order - Provider order data
+   */
+  virtual bool operationWidget(QWidget *parent,
+                               const QJsonObject &order) const = 0;
 
   /**
    * @brief Required Menu entry parameters.

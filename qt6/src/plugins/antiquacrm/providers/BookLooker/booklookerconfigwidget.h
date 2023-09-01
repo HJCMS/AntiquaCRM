@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_BOOKLOOKER_CONFIGWIDGET_H
-#define ANTIQUACRM_PLUGIN_BOOKLOOKER_CONFIGWIDGET_H
+#ifndef BOOKLOOKER_PLUGIN_CONFIGWIDGET_H
+#define BOOKLOOKER_PLUGIN_CONFIGWIDGET_H
 
 #include <AntiquaProviders>
 #include <AntiquaWidgets>
@@ -36,4 +36,4 @@ public:
   const QJsonObject getMenuEntry() const override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_BOOKLOOKER_CONFIGWIDGET_H
+#endif // BOOKLOOKER_PLUGIN_CONFIGWIDGET_H

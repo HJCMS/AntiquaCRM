@@ -14,7 +14,8 @@
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BookLooker final : public AntiquaCRM::ProviderInterface {
+class ANTIQUACRM_LIBRARY BookLooker final
+    : public AntiquaCRM::ProviderInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_PROVIDER_INTERFACE FILE "booklooker.json")
   Q_INTERFACES(AntiquaCRM::ProviderInterface)
@@ -46,7 +47,11 @@ public:
    *
    * Widget for AntiquaCRM Configuration system.
    */
-  virtual AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const override;
+  virtual AntiquaCRM::PluginConfigWidget *
+  configWidget(QWidget *parent) const override;
+
+  virtual bool operationWidget(QWidget *parent,
+                               const QJsonObject &order) const override;
 
   /**
    * @brief Required Menu entry parameters.

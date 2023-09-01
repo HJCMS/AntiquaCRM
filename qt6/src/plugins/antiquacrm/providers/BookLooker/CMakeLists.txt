@@ -19,12 +19,16 @@ SET (plugin_FILES
 SET (plugin_SOURCES
  booklooker.cpp
  booklookerconfigwidget.cpp
+ booklookeractions.cpp
+ booklookeroperations.cpp
 )
 
 SET (plugin_HEADERS
  booklooker.h
  booklookerconfig.h
  booklookerconfigwidget.h
+ booklookeractions.h
+ booklookeroperations.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

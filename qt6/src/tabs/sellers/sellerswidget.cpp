@@ -31,6 +31,16 @@ SellersWidget::SellersWidget(QWidget *parent)
           SLOT(openOrderPage(const QString &, const QString &)));
 }
 
+bool SellersWidget::loadProviderPlugins() {
+  AntiquaCRM::ProvidersLoader loader(this);
+  p_list = loader.interfaces(this);
+  if (p_list.size() < 1) {
+    qWarning("Provider plugins loader failed!");
+    return false;
+  }
+  return true;
+}
+
 bool SellersWidget::findPage(const QString &provider, const QString &oid) {
   Q_UNUSED(provider);
   for (int p = 0; p < m_pages->count(); p++) {
@@ -40,6 +50,23 @@ bool SellersWidget::findPage(const QString &provider, const QString &oid) {
     }
   }
   return false;
+}
+
+void SellersWidget::openProviderAction(const QJsonObject &data) {
+  if (!data.contains("PROVIDER"))
+    return;
+
+  const QString _provider = data.value("PROVIDER").toString();
+  QListIterator<AntiquaCRM::ProviderInterface *> it(p_list);
+  while (it.hasNext()) {
+    AntiquaCRM::ProviderInterface *iface = it.next();
+    if (iface == nullptr)
+      continue;
+
+    if (iface->interfaceName().contains(_provider, Qt::CaseInsensitive)) {
+      iface->operationWidget(this, data);
+    }
+  }
 }
 
 void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
@@ -76,6 +103,9 @@ void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
     SellersSalesWidget *mp = new SellersSalesWidget(_jobj, m_pages);
     if (mp->init()) {
       int index = m_pages->addPage(oid, mp);
+      connect(mp, SIGNAL(sendOpenRemoteAction(const QJsonObject &)),
+              SLOT(openProviderAction(const QJsonObject &)));
+
       m_pages->setCurrentIndex(index);
     }
   }
@@ -86,24 +116,10 @@ void SellersWidget::openStartPage() {
     m_sql = new AntiquaCRM::ASqlCore(this);
 }
 
-void SellersWidget::createSearchQuery(const QString &history) {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO" << history;
-}
-
-void SellersWidget::createNewEntry() {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO";
-}
-
-void SellersWidget::openEntry(qint64 prid) {
-  //
-  qDebug() << Q_FUNC_INFO << "TODO" << prid;
-}
-
 void SellersWidget::onEnterChanged() {
   openStartPage();
   if (!initialed) {
+    loadProviderPlugins();
     initialed = true;
   }
   m_tree->loadUpdate();
@@ -115,7 +131,7 @@ bool SellersWidget::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 
-  qDebug() << Q_FUNC_INFO << "TODO" << obj;
+  qDebug() << Q_FUNC_INFO << "customAction" << obj;
 
   return false;
 }

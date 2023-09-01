@@ -19,6 +19,13 @@ AntiquaCRM::PluginConfigWidget *AbeBooks::configWidget(QWidget *parent) const {
   return (new AbeBooksConfigWidget(parent));
 }
 
+bool AbeBooks::operationWidget(QWidget *parent,
+                               const QJsonObject &order) const {
+  Q_UNUSED(parent);
+  Q_UNUSED(order);
+  return false;
+}
+
 const QJsonObject AbeBooks::menuEntry() const {
   QJsonObject _jo;
   _jo.insert("title", tr("AbeBooks"));

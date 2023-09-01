@@ -51,7 +51,7 @@ SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
   connect(m_actionBar, SIGNAL(sendProviderAction()),
-          SLOT(openProviderActions()));
+          SLOT(createProviderActions()));
 }
 
 const QString SellersSalesWidget::mediaType(const QJsonValue &object) {
@@ -62,11 +62,11 @@ const QString SellersSalesWidget::mediaType(const QJsonValue &object) {
     break;
 
   case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
-    _name = tr("CD/Vinyl");
+    _name = tr("Media");
     break;
 
   case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
-    _name = tr("Prints or Stitches");
+    _name = tr("Prints");
     break;
 
   default:
@@ -228,7 +228,7 @@ void SellersSalesWidget::openArticle(qint64 aid) {
   pushCmd(obj);
 }
 
-void SellersSalesWidget::openProviderActions() {
+void SellersSalesWidget::createProviderActions() {
   if (!p_order.contains("orderinfo"))
     return;
 
@@ -241,11 +241,10 @@ void SellersSalesWidget::openProviderActions() {
   _values.insert("email", _recipient.value("c_email_0").toString());
 
   QJsonObject _action;
-  _action.insert("ACTION", "providers");
-  _action.insert("TARGET", "plugin");
-  _action.insert("NAME", _provider);
-  _action.insert("VALUE", _values);
-  pushCmd(_action);
+  _action.insert("PROVIDER", _provider);
+  _action.insert("DATA", _values);
+
+  emit sendOpenRemoteAction(_action);
 }
 
 void SellersSalesWidget::findArticleIds() {
