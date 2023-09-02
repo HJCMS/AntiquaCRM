@@ -6,6 +6,7 @@
 #define ANTIQUACRM_LINEEDIT_H
 
 #include <AntiquaInputEdit>
+#include <QAction>
 #include <QCompleter>
 
 /**
@@ -17,11 +18,13 @@ class LineEdit final : public InputEdit {
 
 private:
   AntiquaLineEdit *m_edit;
+  QAction *ac_cplpopup;
   QCompleter *m_completer;
   bool p_passwordInput = false;
   void loadDataset() override;
 
 private Q_SLOTS:
+  void showCompleterPopUp();
   void inputChanged(const QString &);
 
 public Q_SLOTS:

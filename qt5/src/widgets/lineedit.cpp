@@ -3,12 +3,17 @@
 
 #include "lineedit.h"
 
+#include <QAbstractItemView>
 #include <QDebug>
 #include <QHBoxLayout>
 #include <QModelIndex>
 
 LineEdit::LineEdit(QWidget *parent, bool enableStretch) : InputEdit{parent} {
   m_edit = new AntiquaLineEdit(this);
+  ac_cplpopup = m_edit->addAction(QIcon(":/icons/view_list.png"),
+                                  QLineEdit::TrailingPosition);
+  ac_cplpopup->setVisible(false);
+
   m_layout->addWidget(m_edit);
   if (enableStretch) {
     m_layout->addStretch(1);
@@ -18,9 +23,21 @@ LineEdit::LineEdit(QWidget *parent, bool enableStretch) : InputEdit{parent} {
   connect(m_edit, SIGNAL(textChanged(const QString &)), this,
           SLOT(inputChanged(const QString &)));
   connect(m_edit, SIGNAL(returnPressed()), this, SLOT(skipReturnPressed()));
+  connect(ac_cplpopup, SIGNAL(triggered()), SLOT(showCompleterPopUp()));
 }
 
 void LineEdit::loadDataset() {}
+
+void LineEdit::showCompleterPopUp() {
+  QCompleter *m_cpl = m_edit->completer();
+  if (m_cpl != nullptr) {
+    QAbstractItemView *m_view = m_cpl->popup();
+    m_view->setAlternatingRowColors(true);
+    m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
+    m_view->setSelectionMode(QAbstractItemView::SingleSelection);
+    m_cpl->complete(m_edit->rect());
+  }
+}
 
 void LineEdit::inputChanged(const QString &str) {
   Q_UNUSED(str)
@@ -33,6 +50,7 @@ void LineEdit::setValue(const QVariant &val) {
 
 void LineEdit::reset() {
   m_edit->clear();
+  setCompleter(QStringList());
   setModified(false);
 }
 
@@ -68,13 +86,14 @@ bool LineEdit::isPasswordInput() { return p_passwordInput; }
 
 void LineEdit::setCompleter(const QStringList &list) {
   if (list.size() < 1) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Remove Completer";
-#endif
-    m_edit->setCompleter(nullptr);
+    ac_cplpopup->setVisible(false);
+    if (m_edit->completer() != nullptr)
+      m_edit->setCompleter(nullptr);
+
     return;
   }
 
+  ac_cplpopup->setVisible(true);
   m_completer = new QCompleter(list, m_edit);
   m_completer->setCompletionMode(QCompleter::PopupCompletion);
   m_completer->setCaseSensitivity(Qt::CaseInsensitive);

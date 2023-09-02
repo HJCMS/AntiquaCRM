@@ -114,6 +114,7 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
   m_postalcode->setMaxLength(12);
   m_postalcode->setMaximumWidth(100);
   m_postalcode->setPlaceholderText(tr("Postalcode"));
+  m_postalcode->setClearButtonEnabled(false);
   m_layout->addWidget(m_postalcode);
 
   m_completer = new QCompleter(m_postalcode);
@@ -121,6 +122,7 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent) : InputEdit{parent} {
   m_completer->setCompletionMode(QCompleter::PopupCompletion);
   m_completer->setCompletionRole(Qt::EditRole);
   m_completer->setFilterMode(Qt::MatchStartsWith);
+
   QAbstractItemView *m_view = m_completer->popup();
   m_view->setAlternatingRowColors(true);
   m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
