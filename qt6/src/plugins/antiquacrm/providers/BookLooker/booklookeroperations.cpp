@@ -29,6 +29,9 @@ BookLookerOperations::BookLookerOperations(QWidget *parent) : QFrame{parent} {
   layout->addStretch();
   setLayout(layout);
 
-//  QString css("QFrame {border: 1px solid; }");
-//  setStyleSheet(css);
+  connect(m_rb2, SIGNAL(toggled(bool)), SIGNAL(sendSelectionModified(bool)));
+  connect(m_rb3, SIGNAL(toggled(bool)), SIGNAL(sendSelectionModified(bool)));
+  connect(m_rb4, SIGNAL(toggled(bool)), SIGNAL(sendSelectionModified(bool)));
+  connect(m_rb5, SIGNAL(toggled(bool)), SIGNAL(sendSelectionModified(bool)));
+  connect(m_rb6, SIGNAL(toggled(bool)), SIGNAL(sendSelectionModified(bool)));
 }

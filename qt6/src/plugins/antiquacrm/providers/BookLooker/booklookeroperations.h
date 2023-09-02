@@ -9,12 +9,17 @@
 #ifndef BOOKLOOKER_PLUGIN_OPERATIONS_H
 #define BOOKLOOKER_PLUGIN_OPERATIONS_H
 
+#include <AGlobal>
+#include <QEvent>
+#include <QFrame>
 #include <QObject>
 #include <QWidget>
-#include <QFrame>
 
-class BookLookerOperations : public QFrame {
+class ANTIQUACRM_LIBRARY BookLookerOperations final : public QFrame {
   Q_OBJECT
+
+Q_SIGNALS:
+  void sendSelectionModified(bool);
 
 public:
   explicit BookLookerOperations(QWidget *parent = nullptr);

@@ -9,7 +9,7 @@
 #ifndef BOOKLOOKER_PLUGIN_ACTIONS_H
 #define BOOKLOOKER_PLUGIN_ACTIONS_H
 
-#include <AntiquaCRM>
+#include <AGlobal>
 #include <AntiquaProviders>
 #include <QLabel>
 #include <QMap>

@@ -53,12 +53,14 @@ BookLookerActions::BookLookerActions(QWidget *parent)
 
   connect(m_network, SIGNAL(sendJsonResponse(const QJsonDocument &)),
           SLOT(prepareResponse(const QJsonDocument &)));
+
   connect(m_network, SIGNAL(finished(QNetworkReply *)),
           SLOT(queryFinished(QNetworkReply *)));
-  connect(this, SIGNAL(sendApplyClicked()), SLOT(prepareOperation()));
-  connect(this, SIGNAL(sendOkClicked()), SLOT(accept()));
-  connect(this, SIGNAL(sendCancelClicked()), SLOT(reject()));
-  connect(this, SIGNAL(sendCloseClicked()), SLOT(accept()));
+
+  connect(m_selecter, SIGNAL(sendSelectionModified(bool)),
+          SLOT(isChildWindowModified(bool)));
+
+  connect(this, SIGNAL(sendSubmitClicked()), SLOT(prepareOperation()));
 }
 
 bool BookLookerActions::initConfiguration() {
@@ -204,7 +206,7 @@ void BookLookerActions::orderUpdateAction(const QJsonObject &data) {
   if (!q.isEmpty())
     url.setQuery(q);
 
-  // qDebug() << Q_FUNC_INFO << data << url.toString();
+  // qDebug() << Q_FUNC_INFO << "DISABLED" << url.toString();
   m_network->putRequest(url, QByteArray());
 }
 

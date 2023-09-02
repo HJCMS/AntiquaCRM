@@ -11,7 +11,6 @@
 
 #include <AGlobal>
 #include <QAbstractButton>
-#include <QBoxLayout>
 #include <QCloseEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -44,9 +43,14 @@ private:
   QStatusBar *m_statusBar;
 
   /**
-   * @brief prevent close with changes
+   * @brief isWindowModified, prevent close requests with system window bars
    */
-  void closeEvent(QCloseEvent *) override;
+  void closeEvent(QCloseEvent *) override final;
+
+  /**
+   * @brief Default Status Bar Reject message
+   */
+  void setRejectMessage();
 
 private Q_SLOTS:
   void buttonAction(QAbstractButton *button);
@@ -68,35 +72,26 @@ protected:
   virtual const QUrl apiQuery(const QString &) = 0;
 
   /**
-   * @brief prevent invalid access
+   * @brief protected for invalid public access
    */
   int exec() final override;
+
+protected Q_SLOTS:
+  /**
+   * @brief Redirection slot to setWindowModified
+   */
+  void isChildWindowModified(bool);
 
 Q_SIGNALS:
   /**
    * @brief emitted when apply button clicked
    */
-  void sendApplyClicked();
-
-  /**
-   * @brief emitted when ok button clicked
-   */
-  void sendOkClicked();
-
-  /**
-   * @brief emitted when cancel button clicked
-   */
-  void sendCancelClicked();
-
-  /**
-   * @brief emitted when close button clicked
-   */
-  void sendCloseClicked();
+  void sendSubmitClicked();
 
 public Q_SLOTS:
   /**
    * @brief Forward messages to statusbar
-   * @param message - Body
+   * @param message - Message string
    */
   void statusMessage(const QString &message);
 
@@ -114,7 +109,7 @@ public:
   explicit ProviderActionDialog(QWidget *parent = nullptr);
 
   /**
-   * @brief Open with current Provider order data.
+   * @brief Open Dialog with current Provider order data.
    * @param data - dataset for operations
    */
   virtual int exec(const QJsonObject &data) = 0;
