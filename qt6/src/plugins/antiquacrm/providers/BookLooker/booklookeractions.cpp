@@ -13,6 +13,7 @@
 BookLookerActions::BookLookerActions(QWidget *parent)
     : AntiquaCRM::ProviderActionDialog{parent} {
   setObjectName("booklooker_actions_dialog");
+  setWindowTitle(tr("Update BookLooker order."));
 
   QFrame *m_frame = new QFrame(this);
   m_frame->setFrameStyle(QFrame::NoFrame);
@@ -89,19 +90,19 @@ bool BookLookerActions::initConfiguration() {
 }
 
 const QUrl BookLookerActions::apiQuery(const QString &target) {
-  QString _path("/");
-  _path.append("2.0");
-  _path.append("/");
+  QString _path = p_config.value("api_path", "/2.0/").toString();
   _path.append(target);
 
   QUrl _url;
   _url.setScheme("https");
-  _url.setHost("api.booklooker.de", QUrl::StrictMode);
-  _url.setPath(_path);
-  int _port = p_config.value("api_port", 443).toInt();
-  if (_port != 443)
-    _url.setPort(_port);
+  _url.setHost(p_config.value("api_host", "api.booklooker.de").toString(),
+               QUrl::StrictMode);
 
+  int _p = p_config.value("api_port", 443).toInt();
+  if (_p != 443)
+    _url.setPort(_p);
+
+  _url.setPath(_path);
   return _url;
 }
 

@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_ABEBOOKS_H
-#define ANTIQUACRM_PLUGIN_ABEBOOKS_H
+#ifndef ABEBOOKS_PLUGIN_ABEBOOKS_H
+#define ABEBOOKS_PLUGIN_ABEBOOKS_H
 
 #include <AntiquaProviders>
 #include <QJsonObject>
@@ -78,4 +78,4 @@ public:
   virtual bool createInterface(QObject *parent) override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_ABEBOOKS_H
+#endif // ABEBOOKS_PLUGIN_ABEBOOKS_H

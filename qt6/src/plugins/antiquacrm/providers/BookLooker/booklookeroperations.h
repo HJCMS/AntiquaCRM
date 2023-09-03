@@ -15,13 +15,25 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @class BookLookerOperations
+ * @brief BookLooker Radio buttons operations
+ *
+ * @ingroup BookLooker
+ */
 class ANTIQUACRM_LIBRARY BookLookerOperations final : public QFrame {
   Q_OBJECT
 
 Q_SIGNALS:
+  /**
+   * @brief Send Window modification status
+   */
   void sendSelectionModified(bool);
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit BookLookerOperations(QWidget *parent = nullptr);
 };
 

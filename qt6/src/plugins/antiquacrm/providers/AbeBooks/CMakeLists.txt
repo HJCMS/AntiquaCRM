@@ -19,12 +19,16 @@ SET (plugin_FILES
 SET (plugin_SOURCES
  abebooks.cpp
  abebooksconfigwidget.cpp
+ abebooksactionsdialog.cpp
+ abebookssellerstatus.cpp
 )
 
 SET (plugin_HEADERS
  abebooksconfig.h
  abebooks.h
  abebooksconfigwidget.h
+ abebooksactionsdialog.h
+ abebookssellerstatus.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

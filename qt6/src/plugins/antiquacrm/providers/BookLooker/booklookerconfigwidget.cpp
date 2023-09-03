@@ -30,10 +30,19 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   m_api_host = new AntiquaCRM::TextLine(this);
   m_api_host->setObjectName("api_host");
   m_api_host->setInputToolTip(tr("API Hostname"));
-  m_api_host->setValue(apiUrl().host());
+  m_api_host->setValue("api.booklooker.de");
   gb1_layout->addWidget(label(tr("Host")), _row, 0, 1, 1);
   gb1_layout->addWidget(m_api_host, _row, 1, 1, 1);
-  _info = tr("API Hostname. Default: orderupdate.abebooks.com");
+  _info = tr("API Hostname. Default: api.booklooker.de");
+  gb1_layout->addToolTip(_row++, 2, _info);
+
+  m_api_path = new AntiquaCRM::TextLine(this);
+  m_api_path->setObjectName("m_api_path");
+  m_api_path->setInputToolTip(tr("API Hostname"));
+  m_api_path->setValue("/2.0/");
+  gb1_layout->addWidget(label(tr("Path")), _row, 0, 1, 1);
+  gb1_layout->addWidget(m_api_path, _row, 1, 1, 1);
+  _info = tr("API Query path. Default: /2.0/");
   gb1_layout->addToolTip(_row++, 2, _info);
 
   m_api_key = new AntiquaCRM::TextLine(this);
@@ -71,14 +80,6 @@ QLabel *BookLookerConfigWidget::label(const QString &text) {
   lb->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
   lb->setText(text + ":");
   return lb;
-}
-
-const QUrl BookLookerConfigWidget::apiUrl() const {
-  QUrl _url;
-  _url.setScheme("https");
-  _url.setHost("api.booklooker.de", QUrl::StrictMode);
-  _url.setPath("/");
-  return _url;
 }
 
 void BookLookerConfigWidget::loadSectionConfig() {

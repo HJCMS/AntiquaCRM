@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
-#define ANTIQUACRM_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
+#ifndef ABEBOOKS_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
+#define ABEBOOKS_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
 
 #include <AntiquaProviders>
 #include <AntiquaWidgets>
@@ -37,4 +37,4 @@ public:
   const QJsonObject getMenuEntry() const override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
+#endif // ABEBOOKS_PLUGIN_ABEBOOKS_CONFIGWIDGET_H

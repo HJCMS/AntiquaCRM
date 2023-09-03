@@ -13,7 +13,7 @@
 
 /**
  * @brief BookLooker Provider plugin Macros
- * @ingroup ProviderPlugin
+ * @ingroup BookLooker
  * @{
  */
 #ifndef BOOKLOOKER_CONFIG_POINTER

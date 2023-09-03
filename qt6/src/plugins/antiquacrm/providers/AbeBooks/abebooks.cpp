@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooks.h"
+#include "abebooksactionsdialog.h"
 #include "abebooksconfigwidget.h"
 
 #include <AntiquaWidgets>
@@ -21,9 +22,11 @@ AntiquaCRM::PluginConfigWidget *AbeBooks::configWidget(QWidget *parent) const {
 
 bool AbeBooks::operationWidget(QWidget *parent,
                                const QJsonObject &order) const {
-  Q_UNUSED(parent);
-  Q_UNUSED(order);
-  return false;
+  AbeBooksActionsDialog *d = new AbeBooksActionsDialog(parent);
+  if (d->exec(order) == QDialog::Rejected)
+    return false;
+
+  return true;
 }
 
 const QJsonObject AbeBooks::menuEntry() const {

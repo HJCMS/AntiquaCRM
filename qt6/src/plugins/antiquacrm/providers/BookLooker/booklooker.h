@@ -14,6 +14,12 @@
 #include <QObject>
 #include <QWidget>
 
+/**
+ * @class BookLooker
+ * @brief BookLooker Provider Interface
+ *
+ * @ingroup BookLooker
+ */
 class ANTIQUACRM_LIBRARY BookLooker final
     : public AntiquaCRM::ProviderInterface {
   Q_OBJECT
