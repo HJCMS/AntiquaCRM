@@ -39,6 +39,9 @@ void ProviderPurchaseTable::contextMenuEvent(QContextMenuEvent *e) {
   QAction *ac_open = m->addAction(pic("action_add"), tr("open article id"));
   connect(ac_open, SIGNAL(triggered()), SLOT(prepareOpenArticle()));
 
+  QAction *ac_print = m->addAction(pic("printer"), tr("open card print"));
+  connect(ac_print, SIGNAL(triggered()), SLOT(preparePrintCard()));
+
   m->exec(e->globalPos());
   delete m;
 }
@@ -47,6 +50,12 @@ void ProviderPurchaseTable::prepareOpenArticle() {
   qint64 id = getSelectedArticleId();
   if (id > 0)
     emit sendOpenArticle(id);
+}
+
+void ProviderPurchaseTable::preparePrintCard() {
+  qint64 id = getSelectedArticleId();
+  if (id > 0)
+    emit sendPrintCard(id);
 }
 
 void ProviderPurchaseTable::copyIdToClipboard() {

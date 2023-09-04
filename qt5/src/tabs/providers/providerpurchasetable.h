@@ -38,6 +38,7 @@ private:
 
 private Q_SLOTS:
   void prepareOpenArticle();
+  void preparePrintCard();
   void copyIdToClipboard();
 
 protected:
@@ -47,6 +48,7 @@ protected:
 Q_SIGNALS:
   void sendCheckArticles();
   void sendOpenArticle(qint64);
+  void sendPrintCard(qint64);
 
 public Q_SLOTS:
   void setArticleStatus(const QString &article, bool available = false);

@@ -6420,7 +6420,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Öffne mit Artikelnummer</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+3"/>
+        <source>open card print</source>
+        <translation>Öffne Karte drucken</translation>
+    </message>
+    <message>
+        <location line="+60"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -6478,7 +6483,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+39"/>
         <source>Buyer</source>
         <translation>Käufer*in</translation>
     </message>
@@ -6488,7 +6493,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+102"/>
         <source>CD/Vinyl</source>
         <translation></translation>
     </message>
@@ -6519,7 +6524,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ein Auftrag kann ohne einen Artkel nicht importiert werden!</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+122"/>
         <source>An order for %1 already exists!</source>
         <translation>Ein Auftrag für %1 existiert bereits!</translation>
     </message>

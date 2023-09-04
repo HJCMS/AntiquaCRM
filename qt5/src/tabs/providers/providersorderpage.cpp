@@ -10,6 +10,7 @@
 #include "providerspageview.h"
 
 #include <ASettings>
+#include <AntiquaPrinting>
 #include <QDebug>
 #include <QDialog>
 #include <QLayout>
@@ -50,6 +51,7 @@ ProvidersOrderPage::ProvidersOrderPage(const QJsonObject &order,
 
   connect(m_table, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_table, SIGNAL(sendOpenArticle(qint64)), SLOT(openArticle(qint64)));
+  connect(m_table, SIGNAL(sendPrintCard(qint64)), SLOT(openPrinting(qint64)));
   connect(m_actionBar, SIGNAL(sendViewCustomer()), SLOT(createOpenCustomer()));
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
@@ -228,6 +230,37 @@ void ProvidersOrderPage::openArticle(qint64 aid) {
   };
   obj.insert("open_article", aid);
   pushCmd(obj);
+}
+
+void ProvidersOrderPage::openPrinting(qint64 aid) {
+  if (aid < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles _tpl("query_printing_cards");
+  if (!_tpl.openTemplate())
+    return;
+
+  _tpl.setWhereClause("i_id=" + QString::number(aid));
+  AntiquaCRM::ASqlCore _sql(this);
+  QHash<QString, QVariant> _data;
+  QSqlQuery _q = _sql.query(_tpl.getQueryContent());
+  if (_q.size() > 0) {
+    _q.next();
+    QSqlRecord _record = _q.record();
+    for (int c = 0; c < _record.count(); c++) {
+      QSqlField _field = _record.field(c);
+      _data.insert(_field.name(), _field.value());
+      // qDebug() << _field.name() << _field.value();
+    }
+  }
+  _q.clear();
+
+  if(_data.size() < 2)
+    return;
+
+  BookCard *m_d = new BookCard(this);
+  m_d->setObjectName("card_printing");
+  m_d->exec(_data);
 }
 
 void ProvidersOrderPage::findArticleIds() {

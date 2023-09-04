@@ -88,6 +88,11 @@ private Q_SLOTS:
   void openArticle(qint64 aid);
 
   /**
+   * @brief Send Action Open Cards Printing
+   */
+  void openPrinting(qint64 aid);
+
+  /**
    * @brief SQL Query func_get_article_count()
    */
   void findArticleIds();

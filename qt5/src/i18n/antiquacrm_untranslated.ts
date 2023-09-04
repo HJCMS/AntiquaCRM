@@ -6414,7 +6414,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+3"/>
+        <source>open card print</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+60"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6472,7 +6477,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ProvidersOrderPage</name>
     <message>
-        <location filename="../tabs/providers/providersorderpage.cpp" line="+38"/>
+        <location filename="../tabs/providers/providersorderpage.cpp" line="+39"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6482,7 +6487,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+102"/>
         <source>CD/Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6513,7 +6518,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+122"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
