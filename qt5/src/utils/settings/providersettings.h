@@ -34,6 +34,7 @@ private:
   LineEdit *m_abebooks_api_url;
   LineEdit *m_abebooks_api_key;
   LineEdit *m_abebooks_api_port;
+  LineEdit *m_abebooks_seller_id;
 
   /**
    * @brief Booklooker

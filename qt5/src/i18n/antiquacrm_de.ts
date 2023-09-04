@@ -2,6 +2,19 @@
 <!DOCTYPE TS>
 <TS version="2.1" language="de_DE">
 <context>
+    <name>AbeBooksDialog</name>
+    <message>
+        <location filename="../plugins/antiquacrm/abebooks/abebooksdialog.cpp" line="+54"/>
+        <source>This Plugin currently not support any remote actions.</source>
+        <translation>Dieses Plugin unterstützt derzeit keine Remote-Aktionen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Open &lt;a href=&apos;%1&apos;&gt;AbeBooks Orders page.&lt;/a&gt;</source>
+        <translation>Öffne &lt;a href=&apos;%1&apos;&gt;AbeBooks Bestellseite.&lt;/a&gt;</translation>
+    </message>
+</context>
+<context>
     <name>Abebooks</name>
     <message>
         <location filename="../plugins/antiquacrm/abebooks/abebooks.cpp" line="+84"/>
@@ -48,7 +61,7 @@
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+87"/>
         <source>Search Networkconnection!</source>
         <translation>Suche Netzwerkverbindung!</translation>
     </message>
@@ -747,7 +760,7 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+95"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -831,7 +844,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-401"/>
+        <location line="-402"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -1377,7 +1390,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+40"/>
+        <location line="+41"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -2148,7 +2161,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Erstelle Auftrag</translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+44"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -2205,12 +2218,22 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>CustomersOrders</name>
     <message>
-        <location filename="../tabs/customers/customersorders.cpp" line="+22"/>
+        <location filename="../tabs/customers/customersorders.cpp" line="+23"/>
         <source>Open it in Orders System.</source>
         <translation>Bestellung im Auftragsystem öffnen.</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+4"/>
+        <source>Open Invoice.</source>
+        <translation>Öffne Rechnung</translation>
+    </message>
+    <message>
+        <location line="+40"/>
+        <source>Invoice not found.</source>
+        <translation>Rechnung nicht gefunden.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <location line="+25"/>
         <source>Payed</source>
         <translation>Bezahlt</translation>
@@ -2295,7 +2318,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+21"/>
         <source>Search customer</source>
         <translation>Suche Kunde</translation>
     </message>
@@ -2762,7 +2785,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>DescripeEdit</name>
     <message>
-        <location filename="../widgets/descripeedit.cpp" line="+21"/>
+        <location filename="../widgets/descripeedit.cpp" line="+22"/>
         <source>Appends text blocks into the Description.</source>
         <translation>Fügt Textbausteine der Beschreibung hinzu.</translation>
     </message>
@@ -3899,12 +3922,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>LineEdit</name>
     <message>
-        <location filename="../widgets/lineedit.cpp" line="+48"/>
+        <location filename="../widgets/lineedit.cpp" line="+66"/>
         <source>Max allowed length</source>
         <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+81"/>
         <source>is required and can&apos;t empty.</source>
         <translation>ist erforderlich und darf nicht leer sein.</translation>
     </message>
@@ -5432,17 +5455,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Unterstützte Länder</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>Without disclosures</source>
         <translation>Keine Angaben</translation>
     </message>
     <message>
-        <location line="-36"/>
+        <location line="-38"/>
         <source>Postalcode</source>
         <translation>Postleitzahl</translation>
     </message>
     <message>
-        <location line="+192"/>
+        <location line="+194"/>
         <source>a valid Postalcode is required!</source>
         <translation>Eine gültige Postleitzahl ist erforderlich!</translation>
     </message>
@@ -5963,7 +5986,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+38"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -6412,19 +6435,19 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location filename="../utils/settings/providersettings.cpp" line="+24"/>
         <location line="+26"/>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Domain</source>
         <translation>Domäne</translation>
     </message>
     <message>
-        <location line="-47"/>
+        <location line="-51"/>
         <location line="+31"/>
-        <location line="+21"/>
+        <location line="+25"/>
         <source>API Key</source>
         <translation>API Schlüssel</translation>
     </message>
     <message>
-        <location line="-35"/>
+        <location line="-39"/>
         <source>Loginname</source>
         <translation>Anmeldename</translation>
     </message>
@@ -6432,6 +6455,11 @@ Bild - Artikel Nr: %2</translation>
         <location line="+9"/>
         <source>API Port</source>
         <translation>API Port</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Seller Id</source>
+        <translation>Verkäufer Nr.</translation>
     </message>
 </context>
 <context>
@@ -7985,7 +8013,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../widgets/textfield.cpp" line="+63"/>
+        <location filename="../widgets/textfield.cpp" line="+66"/>
         <source>requires a valid input.</source>
         <translation>erfordert eine gültige Eingabe.</translation>
     </message>
@@ -8149,7 +8177,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+36"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>

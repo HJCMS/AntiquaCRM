@@ -5,7 +5,7 @@
 set +x
 
 _func="${1:-"help"}"
-_build_dir="build-antiquacrm-Desktop_Qt_5_15_2_GCC_64bit-Debug"
+_build_dir="build-qt5-debug"
 _lang="de"
 _dirs="`find . -maxdepth 1 -type d -not -name plugins -not -name qt5-tr -exec basename "{}" \;`"
 

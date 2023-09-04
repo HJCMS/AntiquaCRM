@@ -10,6 +10,7 @@
 #include <QDialogButtonBox>
 #include <QJsonObject>
 #include <QObject>
+#include <QLabel>
 #include <QPushButton>
 #include <QWidget>
 
@@ -22,6 +23,8 @@ class ANTIQUACRM_LIBRARY AbeBooksDialog : public AntiquaCRM::UpdateDialog {
 
 protected:
   QString p_order_id;
+  QString p_seller_id;
+  QLabel *m_info;
   QJsonObject p_system_data;
   QJsonObject p_post_data;
 

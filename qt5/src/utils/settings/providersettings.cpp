@@ -59,6 +59,10 @@ ProviderSettings::ProviderSettings(QWidget *parent) : SettingsWidget{parent} {
   m_abebooks_api_key->setObjectName("api_key");
   m_abebooks_api_key->setInfo(tr("API Key"));
   m_abe_layout->addWidget(m_abebooks_api_key);
+  m_abebooks_seller_id = new LineEdit(m_abebooks);
+  m_abebooks_seller_id->setObjectName("seller_id");
+  m_abebooks_seller_id->setInfo(tr("Seller Id"));
+  m_abe_layout->addWidget(m_abebooks_seller_id);
   m_abe_layout->addStretch(1);
   m_abebooks->setLayout(m_abe_layout);
   layout->addWidget(m_abebooks);
