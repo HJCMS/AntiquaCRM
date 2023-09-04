@@ -2,48 +2,41 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooksactionsdialog.h"
+#include "abebooksactionsbar.h"
 #include "abebooksconfig.h"
+#include "abebooksordermaininfo.h"
 #include "abebookssellerstatus.h"
 
 #include <QFrame>
 #include <QRadioButton>
+#include <QUrl>
+#include <QUrlQuery>
 #include <QVBoxLayout>
 
 AbeBooksActionsDialog::AbeBooksActionsDialog(QWidget *parent)
     : AntiquaCRM::ProviderActionDialog{parent} {
   setObjectName("abebooks_actions_dialog");
-  setWindowTitle(tr("Update AbeBooks order."));
+  setWindowTitle(tr("Update AbeBooks order.") + "[*]");
+  setMinimumWidth(550);
 
   QFrame *m_frame = new QFrame(this);
-  m_frame->setFrameStyle(QFrame::NoFrame);
   m_frame->setContentsMargins(5, 0, 5, 0);
 
-  int col = 0;
   QVBoxLayout *layout = new QVBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  QLabel *m_lb = new QLabel(this);
-  m_lb->setWordWrap(false);
-  m_lb->setText(tr("Changes the Provider status of the current order."));
-  m_lb->setStyleSheet("QLabel {font-weight:bold;}");
-  layout->insertWidget(col++, m_lb);
+  int _page = 0;
+  m_pages = new QStackedWidget(m_frame);
+  layout->addWidget(m_pages);
 
-  QLabel *m_info = new QLabel(this);
-  m_info->setWordWrap(true);
-  QStringList notes;
-  notes << tr("Not all service providers fully support these features.");
-  notes << tr(
-      "Please make sure to check it regularly on the service provider side.");
-  m_info->setText(notes.join("<br>"));
-  m_info->setStyleSheet("QLabel {font-style:italic; font-size:smaller;}");
-  layout->insertWidget(col++, m_info);
+  m_orderInfo = new AbeBooksOrderMainInfo(m_frame);
+  m_pages->insertWidget(_page++, m_orderInfo);
 
-  m_buyerInfo = new QLabel(this);
-  layout->insertWidget(col++, m_buyerInfo);
+  m_sellerStatus = new AbeBooksSellerStatus(m_pages);
+  m_pages->insertWidget(_page++, m_sellerStatus);
 
-  m_status = new AbeBooksSellerStatus(this);
-  layout->insertWidget(col++, m_status);
-  layout->setStretch(col, 1);
+  m_actionsBar = new AbeBooksActionsBar(this);
+  layout->addWidget(m_actionsBar);
 
   m_frame->setLayout(layout);
   m_scrollArea->setWidget(m_frame);
@@ -56,6 +49,12 @@ AbeBooksActionsDialog::AbeBooksActionsDialog(QWidget *parent)
 
   connect(m_network, SIGNAL(finished(QNetworkReply *)),
           SLOT(queryFinished(QNetworkReply *)));
+
+  connect(m_sellerStatus, SIGNAL(sendSelectionModified(bool)),
+          SLOT(isChildWindowModified(bool)));
+
+  connect(m_actionsBar, SIGNAL(goPrevious()), SLOT(previousPage()));
+  connect(m_actionsBar, SIGNAL(goNext()), SLOT(nextPage()));
 
   connect(this, SIGNAL(sendSubmitClicked()), SLOT(prepareOperation()));
 }
@@ -131,13 +130,27 @@ QDomDocument AbeBooksActionsDialog::orderUpdateRequest(const QString &attr) {
   return _dom;
 }
 
+void AbeBooksActionsDialog::previousPage() {
+  int _index = (m_pages->currentIndex() - 1);
+  if (_index >= 0)
+    m_pages->setCurrentIndex(_index);
+}
+
+void AbeBooksActionsDialog::nextPage() {
+  int _index = (m_pages->currentIndex() + 1);
+  if (_index > 0 && _index < m_pages->count())
+    m_pages->setCurrentIndex(_index);
+}
+
 void AbeBooksActionsDialog::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
-    statusMessage(tr("AbeBooks response with errors!"));
+    statusMessage(tr("Network request, response with error!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << reply->readAll();
+#endif
     return;
   }
-  statusMessage(tr("Update successfully."));
-  setWindowModified(false);
+  statusMessage(tr("Query successfully."));
 }
 
 void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
@@ -151,22 +164,34 @@ void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
     fp.close();
   }
 #endif
-  qDebug() << Q_FUNC_INFO << xml.toString(-1);
+
+  QDomElement _root = xml.documentElement();
+  if (_root.tagName() == "orderUpdateResponse") {
+    QDomElement _poNode = _root.firstChildElement("purchaseOrder");
+    if (_poNode.isNull())
+      return;
+
+    QDomElement _buyerNode = _poNode.firstChildElement("buyer");
+    if (_buyerNode.isNull())
+      return;
+
+    m_orderInfo->setContentData(_buyerNode);
+
+    QDomElement _bpoNode = _poNode.lastChildElement("buyerPurchaseOrder");
+    if (_bpoNode.isNull())
+      return;
+
+    m_orderInfo->setOrderPurchaseId(_bpoNode.attribute("id", "0"));
+  }
+#ifdef ANTIQUA_DEVELOPEMENT
+  else {
+    qDebug() << Q_FUNC_INFO << xml.toString(-1) << Qt::endl;
+  }
+#endif
 }
 
 void AbeBooksActionsDialog::prepareOperation() {
-  QString _status;
-  QList<QRadioButton *> l = findChildren<QRadioButton *>(QString());
-  for (int i = 0; i < l.count(); i++) {
-    QRadioButton *rb = l.at(i);
-    if (rb != nullptr && !rb->objectName().isEmpty()) {
-      if (rb->isChecked()) {
-        _status = rb->objectName();
-        break;
-      }
-    }
-  }
-
+  QString _status = m_sellerStatus->getStatus();
   if (_status.isEmpty()) {
     statusMessage(tr("We need a Selection for this operations."));
     return;
@@ -181,7 +206,7 @@ void AbeBooksActionsDialog::prepareOperation() {
   _statusNode.appendChild(_dom.createTextNode(_status));
   _pnode.appendChild(_statusNode);
 
-  qDebug() << Q_FUNC_INFO << _dom.toString(-1);
+  qDebug() << "TODO" << _dom.toString(-1);
   // m_network->xmlPostRequest(apiQuery(), _dom);
 }
 
@@ -190,6 +215,8 @@ int AbeBooksActionsDialog::exec(const QJsonObject &data) {
     qWarning("Plugin AbeBooks missing configuration!");
     return QDialog::Rejected;
   }
+  // AbeBooks Seller customer id
+  seller_id = p_config.value("seller_id", QString()).toString();
 
   QJsonObject _main = data.value("DATA").toObject();
   QJsonObject _order = _main.value("orderinfo").toObject();
@@ -199,24 +226,29 @@ int AbeBooksActionsDialog::exec(const QJsonObject &data) {
     return QDialog::Rejected;
   }
 
-  QString _info = tr("Create remote action for %1 with Order Id: %2")
-                      .arg(_main.value("buyer").toString(), order_id);
-  m_buyerInfo->setText(_info);
+  m_orderInfo->setOrderId(order_id);
 
-#ifdef ANTIQUA_DEVELOPEMENT
-  AntiquaCRM::ASharedCacheFiles _tmpf(AntiquaCRM::ASettings::getUserTempDir());
-  QString _data = _tmpf.getTempFile(order_id + ".xml");
-  if (_data.length() > 10) {
-    QDomDocument _doc;
-    QString _errno;
-    if (!_doc.setContent(_data, false, &_errno)) {
-      qWarning("XML Errors: '%s'.", qPrintable(_errno));
-      return QDialog::Rejected;
-    }
-    prepareResponse(_doc);
-    return AntiquaCRM::ProviderActionDialog::exec();
+  QUrl _servUrl;
+  if (seller_id.length() > 2) {
+    _servUrl.setScheme("https");
+    _servUrl.setHost("www.abebooks.com");
+    _servUrl.setPath("/servlet/OrderUpdate");
+    QUrlQuery _query;
+    _query.addQueryItem("abepoid", order_id);
+    _query.addQueryItem("clientid", seller_id);
+    _servUrl.setQuery(_query);
   }
-#endif
+
+  QString _sellerInfo;
+  if (_servUrl.isValid()) {
+    _sellerInfo = tr("Remote action for <a href='%1'>%2</a> with Order Id: %3")
+                      .arg(_servUrl.toString(), // remote url
+                           _main.value("buyer").toString(), order_id);
+  } else {
+    _sellerInfo = tr("Remote action for %1 with Order Id: %2")
+                      .arg(_main.value("buyer").toString(), order_id);
+  }
+  m_sellerStatus->setBuyerInfo(_sellerInfo);
 
   m_network->xmlPostRequest(apiQuery(), orderUpdateRequest("getOrder"));
 

@@ -53,6 +53,14 @@ AbeBooksConfigWidget::AbeBooksConfigWidget(QWidget *parent)
   _info = tr("Connection API Key");
   gb1_layout->addToolTip(_row++, 2, _info);
 
+  m_seller_id = new AntiquaCRM::TextLine(this);
+  m_seller_id->setObjectName("seller_id");
+  m_seller_id->setInputToolTip(tr("Seller id"));
+  gb1_layout->addWidget(label(tr("Seller Id")), _row, 0, 1, 1);
+  gb1_layout->addWidget(m_seller_id, _row, 1, 1, 1);
+  _info = tr("AbeBooks account customer number or seller Id.");
+  gb1_layout->addToolTip(_row++, 2, _info);
+
   m_api_port = new AntiquaCRM::NumEdit(this);
   m_api_port->setObjectName("api_port");
   m_api_port->setRange(80, 49151);

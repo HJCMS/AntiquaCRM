@@ -23,6 +23,7 @@ private:
   AntiquaCRM::TextLine *m_api_user;
   AntiquaCRM::TextLine *m_api_host;
   AntiquaCRM::TextLine *m_api_key;
+  AntiquaCRM::TextLine *m_seller_id;
   AntiquaCRM::NumEdit *m_api_port;
   inline QLabel *label(const QString &text);
   const QUrl apiUrl() const;

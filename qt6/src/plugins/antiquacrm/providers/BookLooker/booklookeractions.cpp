@@ -13,7 +13,7 @@
 BookLookerActions::BookLookerActions(QWidget *parent)
     : AntiquaCRM::ProviderActionDialog{parent} {
   setObjectName("booklooker_actions_dialog");
-  setWindowTitle(tr("Update BookLooker order."));
+  setWindowTitle(tr("Update BookLooker order.") + "[*]");
 
   QFrame *m_frame = new QFrame(this);
   m_frame->setFrameStyle(QFrame::NoFrame);
@@ -242,11 +242,12 @@ void BookLookerActions::prepareOperation() {
 
 void BookLookerActions::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
-    statusMessage(tr("Booklooker response with errors!"));
-    return;
+    statusMessage(tr("Network request, response with error!"));
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << reply->readAll();
+#endif
   }
-  statusMessage(tr("Update successfully."));
-  setWindowModified(false);
+  statusMessage(tr("Query successfully."));
 }
 
 int BookLookerActions::exec(const QJsonObject &data) {

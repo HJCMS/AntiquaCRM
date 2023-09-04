@@ -12,12 +12,14 @@
 #include <AntiquaProviders>
 #include <QJsonObject>
 #include <QMap>
-#include <QLabel>
 #include <QObject>
+#include <QStackedWidget>
 #include <QWidget>
 #include <QtXml>
 
+class AbeBooksOrderMainInfo;
 class AbeBooksSellerStatus;
+class AbeBooksActionsBar;
 
 /**
  * @class AbeBooksActionsDialog
@@ -32,6 +34,13 @@ class ANTIQUACRM_LIBRARY AbeBooksActionsDialog final
 
 private:
   /**
+   * @brief AbeBooks Seller Client Id
+   *
+   * Required for creating Remote Urls.
+   */
+  QString seller_id;
+
+  /**
    * @brief This ID is the AbeBooks purchase order ID, or ABEPOID.
    */
   QString order_id;
@@ -41,9 +50,10 @@ private:
    */
   QMap<QString, QVariant> p_config;
 
-  QLabel *m_buyerInfo;
-
-  AbeBooksSellerStatus *m_status;
+  QStackedWidget *m_pages;
+  AbeBooksOrderMainInfo *m_orderInfo;
+  AbeBooksSellerStatus *m_sellerStatus;
+  AbeBooksActionsBar *m_actionsBar;
 
   AntiquaCRM::ANetworker *m_network;
 
@@ -54,6 +64,9 @@ private:
   QDomDocument orderUpdateRequest(const QString &attr = QString("getOrder"));
 
 private Q_SLOTS:
+  void previousPage();
+  void nextPage();
+
   void queryFinished(QNetworkReply *reply);
 
   void prepareResponse(const QDomDocument &xml);
