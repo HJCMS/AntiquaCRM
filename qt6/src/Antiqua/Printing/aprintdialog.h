@@ -11,7 +11,7 @@
 
 #include <AntiquaCRM>
 #include <AntiquaPrintSupport>
-#include <QObject>
+#include <QPushButton>
 #include <QScrollArea>
 #include <QtWidgets>
 
@@ -36,6 +36,7 @@ protected:
   AntiquaCRM::ASettings *config;
   QPageLayout pageLayout;
   QString pdfFileName;
+  QPushButton *btn_pdf;
   QScrollArea *viewPort;
 
   void setPrintingPage(AntiquaCRM::APrintingPage *page);
@@ -85,9 +86,10 @@ public:
   /**
    * @brief execute with options
    * @param options - Json Object
+   * @param pdfbtn - Enable PDF Export Button
    * @return QDialog::DialogCode
    */
-  virtual int exec(const QJsonObject &options) = 0;
+  virtual int exec(const QJsonObject &options, bool pdfbtn = true) = 0;
 };
 
 } // namespace AntiquaCRM

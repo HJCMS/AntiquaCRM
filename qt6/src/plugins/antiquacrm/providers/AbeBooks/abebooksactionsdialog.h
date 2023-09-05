@@ -19,7 +19,6 @@
 
 class AbeBooksOrderMainInfo;
 class AbeBooksSellerStatus;
-class AbeBooksActionsBar;
 
 /**
  * @class AbeBooksActionsDialog
@@ -50,10 +49,8 @@ private:
    */
   QMap<QString, QVariant> p_config;
 
-  QStackedWidget *m_pages;
   AbeBooksOrderMainInfo *m_orderInfo;
   AbeBooksSellerStatus *m_sellerStatus;
-  AbeBooksActionsBar *m_actionsBar;
 
   AntiquaCRM::ANetworker *m_network;
 
@@ -64,9 +61,6 @@ private:
   QDomDocument orderUpdateRequest(const QString &attr = QString("getOrder"));
 
 private Q_SLOTS:
-  void previousPage();
-  void nextPage();
-
   void queryFinished(QNetworkReply *reply);
 
   void prepareResponse(const QDomDocument &xml);

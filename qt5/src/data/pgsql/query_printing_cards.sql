@@ -7,11 +7,15 @@ SELECT i_id AS id,
   GREATEST(ib_year,ip_year,cv_year,va_year) AS year,
   GREATEST(ib_storage,ip_storage,cv_storage,va_storage) AS storage,
   GREATEST(ib_since,ip_since,cv_since,va_since) AS since,
-  CASE WHEN ib_storage_compartment IS NULL THEN 'Office' ELSE ib_storage_compartment END AS keywords
+  CASE WHEN ib_storage_compartment IS NULL THEN 'Office' ELSE ib_storage_compartment END AS keywords,
+  sl_id AS storage_id,
+  sl_storage AS storage_name,
+  sl_identifier AS storage_category
 FROM inventory
 LEFT JOIN inventory_books ON ib_id=i_id
 LEFT JOIN inventory_prints ON ip_id=i_id
 LEFT JOIN inventory_cdvinyl ON cv_id=i_id
 LEFT JOIN inventory_various ON va_id=i_id
+LEFT JOIN ref_storage_location ON sl_id IN (ib_storage,ip_storage,cv_storage,va_storage)
 WHERE @SQL_WHERE_CLAUSE@
 ORDER BY i_id;

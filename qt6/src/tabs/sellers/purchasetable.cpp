@@ -4,6 +4,7 @@
 #include "purchasetable.h"
 #include "antiquaicon.h"
 
+#include <AntiquaPrinting>
 #include <QAction>
 #include <QApplication>
 #include <QClipboard>
@@ -36,6 +37,10 @@ void PurchaseTable::contextMenuEvent(QContextMenuEvent *e) {
                                   tr("open article id"));
   connect(ac_open, SIGNAL(triggered()), SLOT(prepareOpenArticle()));
 
+  QAction *ac_print = m->addAction(AntiquaCRM::antiquaIcon("printer"),
+                                   tr("open card printing"));
+  connect(ac_print, SIGNAL(triggered()), SLOT(createPrintingCard()));
+
   m->exec(e->globalPos());
   delete m;
 }
@@ -49,6 +54,60 @@ void PurchaseTable::prepareOpenArticle() {
 void PurchaseTable::copyIdToClipboard() {
   QString buf = item(currentItem()->row(), 1)->text();
   QApplication::clipboard()->setText(buf, QClipboard::Clipboard);
+}
+
+void PurchaseTable::createPrintingCard() {
+  qint64 aid = getSelectedArticleId();
+  if (aid < 1)
+    return;
+
+  AntiquaCRM::ASqlFiles _tpl("query_printing_cards");
+  if (!_tpl.openTemplate())
+    return;
+
+  _tpl.setWhereClause("i_id=" + QString::number(aid));
+  AntiquaCRM::ASqlCore _sql(this);
+  QHash<QString, QVariant> _data;
+  QSqlQuery _q = _sql.query(_tpl.getQueryContent());
+  if (_q.size() > 0) {
+    _q.next();
+    QSqlRecord _record = _q.record();
+    for (int c = 0; c < _record.count(); c++) {
+      QSqlField _field = _record.field(c);
+      _data.insert(_field.name(), _field.value());
+      // qDebug() << _field.name() << _field.value();
+    }
+  }
+  _q.clear();
+
+  if(_data.size() < 2)
+    return;
+
+  QJsonObject _options;
+  _options.insert("aid", aid);
+  _options.insert("author", _data.value("author").toString());
+  _options.insert("title", _data.value("title").toString());
+  _options.insert("year", _data.value("year").toString());
+  _options.insert("changed", _data.value("since").toString());
+  _options.insert("compartment", _data.value("keywords").toString());
+  _options.insert("storage", _data.value("storage_id").toInt());
+  _options.insert("name", _data.value("storage_name").toString());
+  _options.insert("category", _data.value("storage_category").toString());
+  _options.insert("basename", AntiquaCRM::AUtil::zerofill(aid));
+
+  QUrl _qr_url;
+  AntiquaCRM::ASettings cfg(this);
+  cfg.beginGroup("printer");
+  _qr_url.setUrl(cfg.value("qrcode_url").toString());
+  QString _query(cfg.value("qrcode_query").toString());
+  _query.append("=");
+  _query.append(QString::number(aid));
+  _qr_url.setQuery(_query);
+  _options.insert("qrquery", _qr_url.toString());
+  cfg.endGroup();
+
+  AntiquaCRM::PrintBookCard *d = new AntiquaCRM::PrintBookCard(this);
+  d->exec(_options, false);
 }
 
 void PurchaseTable::addHeaderItem(int i, const QString &name) {

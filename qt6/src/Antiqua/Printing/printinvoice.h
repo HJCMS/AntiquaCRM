@@ -59,7 +59,7 @@ private Q_SLOTS:
 
 public:
   explicit PrintInvoice(QWidget *parent = nullptr);
-  int exec(const QJsonObject &options) override;
+  int exec(const QJsonObject &options, bool pdfbtn = true) override;
 };
 
 } // namespace AntiquaCRM

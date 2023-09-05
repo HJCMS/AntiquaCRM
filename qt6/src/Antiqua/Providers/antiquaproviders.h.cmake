@@ -33,4 +33,7 @@
 // AntiquaCRM::ProviderActionDialog
 #include "provideractiondialog.h"
 
+// AntiquaCRM::ProviderActionNavigator
+#include "provideractionnavigator.h"
+
 #endif // ANTIQUACRM_PROVIDERS_PLUGIN_H

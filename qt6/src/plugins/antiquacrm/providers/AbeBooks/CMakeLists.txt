@@ -22,7 +22,6 @@ SET (plugin_SOURCES
  abebooksactionsdialog.cpp
  abebooksordermaininfo.cpp
  abebookssellerstatus.cpp
- abebooksactionsbar.cpp
 )
 
 SET (plugin_HEADERS
@@ -32,7 +31,6 @@ SET (plugin_HEADERS
  abebooksactionsdialog.h
  abebooksordermaininfo.h
  abebookssellerstatus.h
- abebooksactionsbar.h
 )
 
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)

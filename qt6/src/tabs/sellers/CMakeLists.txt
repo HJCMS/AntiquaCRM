@@ -64,5 +64,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs
+  AntiquaPrinting
   AntiquaProviders
 )

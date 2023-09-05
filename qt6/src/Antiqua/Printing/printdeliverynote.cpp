@@ -185,7 +185,8 @@ void PrintDeliveryNote::openPrintDialog() {
   }
 }
 
-int PrintDeliveryNote::exec(const QJsonObject &options) {
+int PrintDeliveryNote::exec(const QJsonObject &options, bool pdfbtn) {
+  btn_pdf->setEnabled(pdfbtn);
   qint64 o_id = options.value("o_id").toInteger(0);
   if (o_id < 1) {
     qWarning("Missing Order ID.");

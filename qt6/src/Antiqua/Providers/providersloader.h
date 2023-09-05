@@ -19,7 +19,7 @@ class ProviderInterface;
  * @class ProvidersLoader
  * @brief Pluginloader class for this interface
  *
- * @ingroup AntiquaProviders
+ * @ingroup ProviderInterface
  */
 class ANTIQUACRM_LIBRARY ProvidersLoader final : public QPluginLoader {
   Q_OBJECT

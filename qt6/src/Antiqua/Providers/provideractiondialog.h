@@ -15,18 +15,20 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QJsonObject>
-#include <QScrollArea>
+#include <QStackedWidget>
 #include <QStatusBar>
 #include <QUrl>
 #include <QWidget>
 
 namespace AntiquaCRM {
 
+class ProviderActionNavigator;
+
 /**
  * @class ProviderActionDialog
  * @brief Abstract Dialog for Provider Remote actions.
  *
- * @ingroup AntiquaWidgets
+ * @ingroup ProviderInterface
  */
 class ANTIQUACRM_LIBRARY ProviderActionDialog : public QDialog {
   Q_OBJECT
@@ -59,7 +61,12 @@ protected:
   /**
    * @brief Central design widget
    */
-  QScrollArea *m_scrollArea;
+  QStackedWidget *stackedWidget;
+
+  /**
+   * @brief Pages Navigator
+   */
+  ProviderActionNavigator *m_navigator;
 
   /**
    * @brief Read Configuration

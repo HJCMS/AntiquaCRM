@@ -26,10 +26,11 @@ APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
 
   m_buttonBox = new QDialogButtonBox(this);
 
-  QPushButton *btn_pdf = new QPushButton(this);
+  btn_pdf = new QPushButton(this);
   btn_pdf->setText(tr("PDF"));
   btn_pdf->setIcon(AntiquaCRM::antiquaIcon("application-pdf"));
   btn_pdf->setToolTip(tr("Generate PDF."));
+  btn_pdf->setEnabled(false);
   m_buttonBox->addButton(btn_pdf, QDialogButtonBox::ActionRole);
 
   QPushButton *btn_print = new QPushButton(this);

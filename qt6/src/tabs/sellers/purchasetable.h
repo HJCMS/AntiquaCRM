@@ -37,6 +37,7 @@ class ANTIQUACRM_LIBRARY PurchaseTable final : public QTableWidget {
 private Q_SLOTS:
   void prepareOpenArticle();
   void copyIdToClipboard();
+  void createPrintingCard();
 
 protected:
   void addHeaderItem(int, const QString &name);

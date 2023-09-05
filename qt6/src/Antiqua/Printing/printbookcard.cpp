@@ -86,7 +86,8 @@ void PrintBookCard::openPrintDialog() {
   }
 }
 
-int PrintBookCard::exec(const QJsonObject &opts) {
+int PrintBookCard::exec(const QJsonObject &opts, bool pdfbtn) {
+  btn_pdf->setEnabled(pdfbtn);
   if (!opts.contains("aid") || !opts.contains("basename")) {
     qWarning("Missing Article Id!");
     return QDialog::Rejected;

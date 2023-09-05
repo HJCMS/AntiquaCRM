@@ -4,7 +4,6 @@
  *
  * @addtogroup AntiquaProviders
  * @{
- *  @defgroup Provider  Provider Interface
- *  @defgroup Settings  Settings Interface
+ *  @defgroup ProviderInterface  Provider Interface
  * @}
  */

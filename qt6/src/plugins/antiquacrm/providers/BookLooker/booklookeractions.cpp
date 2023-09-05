@@ -26,18 +26,7 @@ BookLookerActions::BookLookerActions(QWidget *parent)
   QLabel *m_lb = new QLabel(this);
   m_lb->setWordWrap(false);
   m_lb->setText(tr("Changes the Provider status of the current order."));
-  m_lb->setStyleSheet("QLabel {font-weight:bold;}");
   layout->insertWidget(col++, m_lb);
-
-  QLabel *m_info = new QLabel(this);
-  m_info->setWordWrap(true);
-  QStringList notes;
-  notes << tr("Not all service providers fully support these features.");
-  notes << tr(
-      "Please make sure to check it regularly on the service provider side.");
-  m_info->setText(notes.join("<br>"));
-  m_info->setStyleSheet("QLabel {font-style:italic; font-size:smaller;}");
-  layout->insertWidget(col++, m_info);
 
   m_buyerInfo = new QLabel(this);
   layout->insertWidget(col++, m_buyerInfo);
@@ -47,7 +36,7 @@ BookLookerActions::BookLookerActions(QWidget *parent)
   layout->setStretch(col, 1);
 
   m_frame->setLayout(layout);
-  m_scrollArea->setWidget(m_frame);
+  stackedWidget->insertWidget(0, m_frame);
 
   m_network = new AntiquaCRM::ANetworker(
       AntiquaCRM::NetworkQueryType::JSON_QUERY, this);
@@ -86,7 +75,13 @@ bool BookLookerActions::initConfiguration() {
   for (it = _config.begin(); it != _config.end(); ++it) {
     p_config.insert(it.key(), it.value().toVariant());
   }
-  return (p_config.size() > 0);
+
+  if (!p_config.contains("api_key") || p_config.value("api_key").isNull()) {
+    qWarning("BookLooker - API Key is not configured or set!");
+    return false;
+  }
+
+  return (p_config.size() > 2);
 }
 
 const QUrl BookLookerActions::apiQuery(const QString &target) {
@@ -264,7 +259,7 @@ int BookLookerActions::exec(const QJsonObject &data) {
     return QDialog::Rejected;
   }
 
-  QString _info = tr("Create remote action for %1 with Order Id: %2")
+  QString _info = tr("Create remote action for <b>%1</b> with Order Id: %2")
                       .arg(_main.value("buyer").toString(), order_id);
   m_buyerInfo->setText(_info);
 

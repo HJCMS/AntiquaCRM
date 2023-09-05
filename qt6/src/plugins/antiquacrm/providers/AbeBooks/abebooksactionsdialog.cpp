@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooksactionsdialog.h"
-#include "abebooksactionsbar.h"
 #include "abebooksconfig.h"
 #include "abebooksordermaininfo.h"
 #include "abebookssellerstatus.h"
@@ -19,27 +18,13 @@ AbeBooksActionsDialog::AbeBooksActionsDialog(QWidget *parent)
   setWindowTitle(tr("Update AbeBooks order.") + "[*]");
   setMinimumWidth(550);
 
-  QFrame *m_frame = new QFrame(this);
-  m_frame->setContentsMargins(5, 0, 5, 0);
-
-  QVBoxLayout *layout = new QVBoxLayout(m_frame);
-  layout->setContentsMargins(0, 0, 0, 0);
-
   int _page = 0;
-  m_pages = new QStackedWidget(m_frame);
-  layout->addWidget(m_pages);
 
-  m_orderInfo = new AbeBooksOrderMainInfo(m_frame);
-  m_pages->insertWidget(_page++, m_orderInfo);
+  m_orderInfo = new AbeBooksOrderMainInfo(stackedWidget);
+  stackedWidget->insertWidget(_page++, m_orderInfo);
 
-  m_sellerStatus = new AbeBooksSellerStatus(m_pages);
-  m_pages->insertWidget(_page++, m_sellerStatus);
-
-  m_actionsBar = new AbeBooksActionsBar(this);
-  layout->addWidget(m_actionsBar);
-
-  m_frame->setLayout(layout);
-  m_scrollArea->setWidget(m_frame);
+  m_sellerStatus = new AbeBooksSellerStatus(stackedWidget);
+  stackedWidget->insertWidget(_page++, m_sellerStatus);
 
   m_network =
       new AntiquaCRM::ANetworker(AntiquaCRM::NetworkQueryType::XML_QUERY, this);
@@ -52,9 +37,6 @@ AbeBooksActionsDialog::AbeBooksActionsDialog(QWidget *parent)
 
   connect(m_sellerStatus, SIGNAL(sendSelectionModified(bool)),
           SLOT(isChildWindowModified(bool)));
-
-  connect(m_actionsBar, SIGNAL(goPrevious()), SLOT(previousPage()));
-  connect(m_actionsBar, SIGNAL(goNext()), SLOT(nextPage()));
 
   connect(this, SIGNAL(sendSubmitClicked()), SLOT(prepareOperation()));
 }
@@ -82,7 +64,10 @@ bool AbeBooksActionsDialog::initConfiguration() {
     p_config.insert(it.key(), it.value().toVariant());
   }
 
-  return (p_config.size() > 0);
+  if (!p_config.contains("api_user") || !p_config.contains("api_key"))
+    statusMessage(tr("Missing access configurations!"));
+
+  return (p_config.size() > 2);
 }
 
 const QUrl AbeBooksActionsDialog::apiQuery(const QString &target) {
@@ -96,16 +81,15 @@ const QUrl AbeBooksActionsDialog::apiQuery(const QString &target) {
 }
 
 QDomDocument AbeBooksActionsDialog::orderUpdateRequest(const QString &attr) {
-  QDomDocument _dom;
+  const QString _encoding("version=\"1.0\" encoding=\"ISO-8859-1\"");
   const QString _user = p_config.value("api_user").toString();
   const QString _key = p_config.value("api_key").toString();
+  QDomDocument _dom;
   if (_user.isEmpty() || _key.isEmpty()) {
-    qWarning("AbeBooks - Missing access configurations!");
+    statusMessage(tr("Access configuration is incomplete!"));
     return _dom;
   }
-
-  _dom.appendChild(_dom.createProcessingInstruction(
-      "xml", "version=\"1.0\" encoding=\"ISO-8859-1\""));
+  _dom.appendChild(_dom.createProcessingInstruction("xml", _encoding));
 
   QDomElement _rootNode = _dom.createElement("orderUpdateRequest");
   _rootNode.setAttribute("version", "1.1");
@@ -130,23 +114,11 @@ QDomDocument AbeBooksActionsDialog::orderUpdateRequest(const QString &attr) {
   return _dom;
 }
 
-void AbeBooksActionsDialog::previousPage() {
-  int _index = (m_pages->currentIndex() - 1);
-  if (_index >= 0)
-    m_pages->setCurrentIndex(_index);
-}
-
-void AbeBooksActionsDialog::nextPage() {
-  int _index = (m_pages->currentIndex() + 1);
-  if (_index > 0 && _index < m_pages->count())
-    m_pages->setCurrentIndex(_index);
-}
-
 void AbeBooksActionsDialog::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
     statusMessage(tr("Network request, response with error!"));
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << reply->readAll();
+    qDebug() << Q_FUNC_INFO << Qt::endl << reply->readAll() << Qt::endl;
 #endif
     return;
   }
@@ -185,7 +157,7 @@ void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
-    qDebug() << Q_FUNC_INFO << xml.toString(-1) << Qt::endl;
+    qDebug() << Q_FUNC_INFO << Qt::endl << xml.toString(-1) << Qt::endl;
   }
 #endif
 }
@@ -198,6 +170,9 @@ void AbeBooksActionsDialog::prepareOperation() {
   }
 
   QDomDocument _dom = orderUpdateRequest("update");
+  if (!_dom.isDocument())
+    return;
+
   QDomElement _pnode = _dom.documentElement().lastChildElement("purchaseOrder");
   if (_pnode.isNull())
     return;
@@ -206,7 +181,7 @@ void AbeBooksActionsDialog::prepareOperation() {
   _statusNode.appendChild(_dom.createTextNode(_status));
   _pnode.appendChild(_statusNode);
 
-  qDebug() << "TODO" << _dom.toString(-1);
+  qDebug() << "TODO" << Q_FUNC_INFO << _dom.toString(-1) << Qt::endl;
   // m_network->xmlPostRequest(apiQuery(), _dom);
 }
 
@@ -215,7 +190,7 @@ int AbeBooksActionsDialog::exec(const QJsonObject &data) {
     qWarning("Plugin AbeBooks missing configuration!");
     return QDialog::Rejected;
   }
-  // AbeBooks Seller customer id
+  // AbeBooks Seller-/Customer id
   seller_id = p_config.value("seller_id", QString()).toString();
 
   QJsonObject _main = data.value("DATA").toObject();
@@ -228,21 +203,21 @@ int AbeBooksActionsDialog::exec(const QJsonObject &data) {
 
   m_orderInfo->setOrderId(order_id);
 
-  QUrl _servUrl;
+  QUrl _url;
   if (seller_id.length() > 2) {
-    _servUrl.setScheme("https");
-    _servUrl.setHost("www.abebooks.com");
-    _servUrl.setPath("/servlet/OrderUpdate");
+    _url.setScheme("https");
+    _url.setHost("www.abebooks.com");
+    _url.setPath("/servlet/OrderUpdate");
     QUrlQuery _query;
     _query.addQueryItem("abepoid", order_id);
     _query.addQueryItem("clientid", seller_id);
-    _servUrl.setQuery(_query);
+    _url.setQuery(_query);
   }
 
   QString _sellerInfo;
-  if (_servUrl.isValid()) {
+  if (_url.isValid()) {
     _sellerInfo = tr("Remote action for <a href='%1'>%2</a> with Order Id: %3")
-                      .arg(_servUrl.toString(), // remote url
+                      .arg(_url.toString(), // remote url
                            _main.value("buyer").toString(), order_id);
   } else {
     _sellerInfo = tr("Remote action for %1 with Order Id: %2")

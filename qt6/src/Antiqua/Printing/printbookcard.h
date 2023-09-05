@@ -77,7 +77,7 @@ public:
    * })
    * @endcode
    */
-  int exec(const QJsonObject &opts) override;
+  int exec(const QJsonObject &opts, bool pdfbtn = true) override;
 };
 
 } // namespace AntiquaCRM
