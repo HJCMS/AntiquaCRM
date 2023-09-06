@@ -326,7 +326,7 @@ void BookEditor::setInputFields() {
 
 void BookEditor::setCatalogSearch() {
   QString _search = m_tableData->getValue("ib_isbn").toString();
-  if (_search.isEmpty())
+  if (_search.length() < 10)
     return;
 
   QUrl _url;
