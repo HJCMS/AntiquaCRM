@@ -760,7 +760,18 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+19"/>
+        <location line="+136"/>
+        <source>&lt;a href=&apos;%1&apos;&gt;German National Library&lt;/a&gt;</source>
+        <translation>&lt;a href=&apos;%1&apos;&gt;Deutsche National Bibliothek&lt;/a&gt;</translation>
+    </message>
+    <message>
+        <location line="-133"/>
+        <source>German National Library</source>
+        <translation>Deutsche National Bibliothek</translation>
+    </message>
+    <message>
+        <location line="+82"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -785,7 +796,7 @@
         <translation>Autorenteam</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+114"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten erfolgreich gespeichert!</translation>
     </message>
@@ -844,12 +855,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-402"/>
+        <location line="-423"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-181"/>
         <source>Local Usage only</source>
         <translation>Nur lokale Verwendung</translation>
     </message>
@@ -859,7 +870,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+176"/>
+        <location line="+185"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>

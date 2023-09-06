@@ -76,6 +76,12 @@ public:
    */
   static const QString toMoney(double value,
     QLocale::CurrencySymbolFormat format = QLocale::CurrencySymbol);
+
+  /**
+   * @brief Convert String to URL Query String with '+' delimiter for spaces!
+   * @param txt
+   */
+  static const QString urlSearchString(const QString &txt);
 };
 
 }; // namespace AntiquaCRM

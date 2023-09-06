@@ -202,6 +202,15 @@ BookEditor::BookEditor(QWidget *parent)
   ib_isbn->setObjectName("ib_isbn");
   ib_isbn->setToolTip("ISBN/EAN");
   tbLayout->addWidget(ib_isbn);
+
+  QUrl _url("https://katalog.dnb.de/DE/home.html?v=plist");
+  m_dnbQuery = new QLabel(
+      tr("<a href='%1'>German National Library</a>").arg(_url.toString()),
+      this);
+  m_dnbQuery->setOpenExternalLinks(true);
+  m_dnbQuery->setToolTip(tr("German National Library"));
+  tbLayout->addWidget(m_dnbQuery);
+
   tbLayout->addStretch(1);
   m_imageToolBar = new ImageToolBar(this);
   tbLayout->addWidget(m_imageToolBar);
@@ -313,6 +322,27 @@ void BookEditor::setInputFields() {
 
   // Schlüsselwörter
   ib_keyword->loadDataset();
+}
+
+void BookEditor::setCatalogSearch() {
+  QString _search = m_tableData->getValue("ib_isbn").toString();
+  if (_search.isEmpty())
+    return;
+
+  QUrl _url;
+  _url.setScheme("https");
+  _url.setHost("katalog.dnb.de");
+  _url.setPath("/DE/list.html");
+  QUrlQuery _query;
+  _query.addQueryItem("key", "num");
+  _query.addQueryItem("t", _search);
+  _query.addQueryItem("v", "plist");
+  _url.setQuery(_query);
+
+  if (_url.isValid()) {
+    m_dnbQuery->setText(
+        tr("<a href='%1'>German National Library</a>").arg(_url.toString()));
+  }
 }
 
 bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
@@ -666,6 +696,7 @@ bool BookEditor::openEditEntry(qint64 articleId) {
         m_tableData->setValue(key, q.value(r.indexOf(key)));
       }
     }
+    setCatalogSearch();
     status = true;
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT

@@ -95,4 +95,20 @@ const QString AUtil::toMoney(double value,
   return lc.toCurrencyString(value, cs, 2);
 }
 
+const QString AUtil::urlSearchString(const QString &txt) {
+  QString _o = txt.trimmed();
+  _o.replace(".", "");
+  _o.replace(",", "");
+  _o.replace(":", " ");
+  _o.replace("-", " ");
+  _o.replace("\"", "");
+  _o.replace("'", "");
+  _o.replace("´", "");
+  _o.replace("`", "");
+  _o.replace("&", " ");
+  _o.replace(" ", "+");
+
+  return _o.toLower().trimmed();
+}
+
 }; // namespace AntiquaCRM

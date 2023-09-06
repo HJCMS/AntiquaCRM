@@ -47,6 +47,8 @@ private:
   LineEdit *ib_storage_compartment; /**< @brief Lagerfach */
   KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
   IsbnEdit *ib_isbn;                /**< @brief ISBN */
+  QLabel *m_dnbQuery;               /**< @brief DNB Suche */
+
   // Row 3
   EditorTab *m_tabWidget;
   DescripeEdit *ib_description;       /**< @brief Öffentliche Beschreibung */
@@ -70,6 +72,8 @@ private:
   ImageView *m_imageView;
 
   void setInputFields() override;
+
+  void setCatalogSearch();
 
   bool setDataField(const QSqlField &field, const QVariant &value) override;
 

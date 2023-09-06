@@ -760,7 +760,18 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+19"/>
+        <location line="+136"/>
+        <source>&lt;a href=&apos;%1&apos;&gt;German National Library&lt;/a&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-133"/>
+        <source>German National Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+82"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -785,7 +796,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+114"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -842,12 +853,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-402"/>
+        <location line="-423"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-172"/>
+        <location line="-181"/>
         <source>Local Usage only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -857,7 +868,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+176"/>
+        <location line="+185"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
