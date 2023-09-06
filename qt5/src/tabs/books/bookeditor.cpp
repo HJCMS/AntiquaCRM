@@ -203,10 +203,7 @@ BookEditor::BookEditor(QWidget *parent)
   ib_isbn->setToolTip("ISBN/EAN");
   tbLayout->addWidget(ib_isbn);
 
-  QUrl _url("https://katalog.dnb.de/DE/home.html?v=plist");
-  m_dnbQuery = new QLabel(
-      tr("<a href='%1'>German National Library</a>").arg(_url.toString()),
-      this);
+  m_dnbQuery = new QLabel(this);
   m_dnbQuery->setOpenExternalLinks(true);
   m_dnbQuery->setToolTip(tr("German National Library"));
   tbLayout->addWidget(m_dnbQuery);
@@ -287,6 +284,10 @@ void BookEditor::setInputFields() {
   ignoreFields << "ib_type";
   ignoreFields << "ib_changed";
 
+  QUrl _url("https://katalog.dnb.de/DE/home.html");
+  m_dnbQuery->setText(
+      tr("<a href='%1'>German National Library</a>").arg(_url.toString()));
+
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_books");
   inputFields = m_tableData->columnNames();
   if (inputFields.isEmpty()) {
@@ -325,21 +326,29 @@ void BookEditor::setInputFields() {
 }
 
 void BookEditor::setCatalogSearch() {
+  QString _key("num");
   QString _search = m_tableData->getValue("ib_isbn").toString();
-  if (_search.length() < 10)
-    return;
+  if (_search.length() < 10) {
+    _key = QString("all");
+    _search = AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+    if (_search.isEmpty())
+      return;
+  }
 
   QUrl _url;
   _url.setScheme("https");
   _url.setHost("katalog.dnb.de");
   _url.setPath("/DE/list.html");
   QUrlQuery _query;
-  _query.addQueryItem("key", "num");
+  _query.addQueryItem("key", _key);
   _query.addQueryItem("t", _search);
   _query.addQueryItem("v", "plist");
   _url.setQuery(_query);
 
   if (_url.isValid()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << _url.toString();
+#endif
     m_dnbQuery->setText(
         tr("<a href='%1'>German National Library</a>").arg(_url.toString()));
   }
@@ -394,6 +403,7 @@ void BookEditor::importSqlResult() {
 
   m_actionBar->setRestoreable(m_tableData->isValid());
   setResetModified(inputFields);
+  setCatalogSearch();
 }
 
 bool BookEditor::sendSqlQuery(const QString &query) {
@@ -696,7 +706,6 @@ bool BookEditor::openEditEntry(qint64 articleId) {
         m_tableData->setValue(key, q.value(r.indexOf(key)));
       }
     }
-    setCatalogSearch();
     status = true;
   } else {
 #ifdef ANTIQUA_DEVELOPEMENT
