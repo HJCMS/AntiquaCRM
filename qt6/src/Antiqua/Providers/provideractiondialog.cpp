@@ -6,12 +6,13 @@
 
 #include <AntiquaWidgets>
 #include <QBoxLayout>
-#include <QDebug>
 #include <QPushButton>
+#include <QStatusTipEvent>
 
 namespace AntiquaCRM {
 
-ProviderActionDialog::ProviderActionDialog(QWidget *parent) : QDialog{parent} {
+ProviderActionDialog::ProviderActionDialog(QWidget *parent, bool remote)
+    : QDialog{parent} {
   setSizeGripEnabled(true);
   setMinimumSize(500, 400);
   setContentsMargins(0, 0, 0, 0);
@@ -38,10 +39,12 @@ ProviderActionDialog::ProviderActionDialog(QWidget *parent) : QDialog{parent} {
   layout->addWidget(m_navigator);
 
   m_buttonBox = new QDialogButtonBox(this);
-  QPushButton *btn_send = m_buttonBox->addButton(QDialogButtonBox::Apply);
-  btn_send->setText(tr("Submit"));
-  btn_send->setToolTip(tr("Sends selected changes to your provider."));
-  btn_send->setIcon(windowIcon());
+  if (remote) {
+    QPushButton *btn_send = m_buttonBox->addButton(QDialogButtonBox::Apply);
+    btn_send->setText(tr("Submit"));
+    btn_send->setToolTip(tr("Sends selected changes to your provider."));
+    btn_send->setIcon(windowIcon());
+  }
 
   QPushButton *btn_cancel = m_buttonBox->addButton(QDialogButtonBox::Cancel);
   btn_cancel->setToolTip(tr("Cancel all operations and close this Dialog."));
@@ -72,6 +75,18 @@ void ProviderActionDialog::closeEvent(QCloseEvent *e) {
     }
   }
   QDialog::closeEvent(e);
+}
+
+bool ProviderActionDialog::event(QEvent *e) {
+  if (e->type() == QEvent::StatusTip && e->isAccepted()) {
+    QStatusTipEvent *t = static_cast<QStatusTipEvent *>(e);
+    if (t == nullptr)
+      return false;
+
+    m_statusBar->showMessage(t->tip(), 5000);
+    return true;
+  }
+  return QDialog::event(e);
 }
 
 void ProviderActionDialog::setRejectMessage() {

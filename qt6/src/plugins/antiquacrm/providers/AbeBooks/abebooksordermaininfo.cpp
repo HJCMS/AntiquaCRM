@@ -7,7 +7,7 @@
 #include <QDomNode>
 #include <QLayout>
 #include <QSizePolicy>
-#include <QUrl>
+#include <QUrlQuery>
 
 AbeBooksOrderMainInfo::AbeBooksOrderMainInfo(QWidget *parent)
     : QWidget{parent} {
@@ -23,10 +23,6 @@ AbeBooksOrderMainInfo::AbeBooksOrderMainInfo(QWidget *parent)
   m_lb->setStyleSheet("QLabel {font-weight:bold;}");
   layout->addWidget(m_lb);
 
-  m_address = new QTextEdit(this);
-  m_address->setStyleSheet("QTextEdit {border:none;background:transparent;}");
-  layout->addWidget(m_address);
-
   m_orderId = new QLabel(this);
   layout->addWidget(m_orderId);
 
@@ -40,6 +36,16 @@ AbeBooksOrderMainInfo::AbeBooksOrderMainInfo(QWidget *parent)
   m_email->setTextFormat(Qt::RichText);
   m_email->setOpenExternalLinks(true);
   layout->addWidget(m_email);
+
+  m_buyerInfo = new QLabel(this);
+  m_buyerInfo->setTextFormat(Qt::RichText);
+  m_buyerInfo->setOpenExternalLinks(true);
+  layout->addWidget(m_buyerInfo);
+
+  m_address = new QTextEdit(this);
+  m_address->setStyleSheet("QTextEdit {border:none;background:transparent;}");
+  m_address->setEnabled(false);
+  layout->addWidget(m_address);
 
   layout->addStretch(1);
   setLayout(layout);
@@ -82,6 +88,7 @@ void AbeBooksOrderMainInfo::mailingAddress(const QDomNodeList &list) {
   }
 
   m_address->setPlainText(_address);
+  m_address->setEnabled(true);
 }
 
 void AbeBooksOrderMainInfo::setMail(const QString &mail) {
@@ -136,4 +143,12 @@ void AbeBooksOrderMainInfo::setOrderId(const QString &id) {
 
 void AbeBooksOrderMainInfo::setOrderPurchaseId(const QString &id) {
   m_purchaseId->setText(tr("Purchase Id: %1").arg(id));
+}
+
+void AbeBooksOrderMainInfo::setOrderLink(const QUrl &url) {
+  QString _text =
+      tr("Open AbeBooks <a href='%1'>order webpage</a>.").arg(url.toString());
+  m_buyerInfo->setToolTip(tr("Open link to AbeBooks order actions page."));
+  m_buyerInfo->setStatusTip(url.toDisplayString(QUrl::RemoveQuery));
+  m_buyerInfo->setText(_text);
 }

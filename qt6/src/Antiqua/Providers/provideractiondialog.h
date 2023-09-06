@@ -50,6 +50,12 @@ private:
   void closeEvent(QCloseEvent *) override final;
 
   /**
+   * @brief fetch status tips from links and buttons
+   * @return
+   */
+  virtual bool event(QEvent *) override;
+
+  /**
    * @brief Default Status Bar Reject message
    */
   void setRejectMessage();
@@ -112,8 +118,9 @@ public Q_SLOTS:
 public:
   /**
    * @param parent - parent object
+   * @param remote - enable submit remote actions button
    */
-  explicit ProviderActionDialog(QWidget *parent = nullptr);
+  explicit ProviderActionDialog(QWidget *parent = nullptr, bool remote = true);
 
   /**
    * @brief Open Dialog with current Provider order data.

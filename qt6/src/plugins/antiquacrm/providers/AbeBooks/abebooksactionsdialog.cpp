@@ -4,7 +4,6 @@
 #include "abebooksactionsdialog.h"
 #include "abebooksconfig.h"
 #include "abebooksordermaininfo.h"
-#include "abebookssellerstatus.h"
 
 #include <QFrame>
 #include <QRadioButton>
@@ -13,18 +12,13 @@
 #include <QVBoxLayout>
 
 AbeBooksActionsDialog::AbeBooksActionsDialog(QWidget *parent)
-    : AntiquaCRM::ProviderActionDialog{parent} {
+    : AntiquaCRM::ProviderActionDialog{parent, false} {
   setObjectName("abebooks_actions_dialog");
   setWindowTitle(tr("Update AbeBooks order.") + "[*]");
   setMinimumWidth(550);
 
-  int _page = 0;
-
   m_orderInfo = new AbeBooksOrderMainInfo(stackedWidget);
-  stackedWidget->insertWidget(_page++, m_orderInfo);
-
-  m_sellerStatus = new AbeBooksSellerStatus(stackedWidget);
-  stackedWidget->insertWidget(_page++, m_sellerStatus);
+  stackedWidget->addWidget(m_orderInfo);
 
   m_network =
       new AntiquaCRM::ANetworker(AntiquaCRM::NetworkQueryType::XML_QUERY, this);
@@ -34,11 +28,6 @@ AbeBooksActionsDialog::AbeBooksActionsDialog(QWidget *parent)
 
   connect(m_network, SIGNAL(finished(QNetworkReply *)),
           SLOT(queryFinished(QNetworkReply *)));
-
-  connect(m_sellerStatus, SIGNAL(sendSelectionModified(bool)),
-          SLOT(isChildWindowModified(bool)));
-
-  connect(this, SIGNAL(sendSubmitClicked()), SLOT(prepareOperation()));
 }
 
 bool AbeBooksActionsDialog::initConfiguration() {
@@ -120,9 +109,7 @@ void AbeBooksActionsDialog::queryFinished(QNetworkReply *reply) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << Qt::endl << reply->readAll() << Qt::endl;
 #endif
-    return;
   }
-  statusMessage(tr("Query successfully."));
 }
 
 void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
@@ -162,37 +149,11 @@ void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
 #endif
 }
 
-void AbeBooksActionsDialog::prepareOperation() {
-  QString _status = m_sellerStatus->getStatus();
-  if (_status.isEmpty()) {
-    statusMessage(tr("We need a Selection for this operations."));
-    return;
-  }
-
-  QDomDocument _dom = orderUpdateRequest("update");
-  if (!_dom.isDocument())
-    return;
-
-  QDomElement _pnode = _dom.documentElement().lastChildElement("purchaseOrder");
-  if (_pnode.isNull())
-    return;
-
-  QDomElement _statusNode = _dom.createElement("status");
-  _statusNode.appendChild(_dom.createTextNode(_status));
-  _pnode.appendChild(_statusNode);
-
-  qDebug() << "TODO" << Q_FUNC_INFO << _dom.toString(-1) << Qt::endl;
-  // m_network->xmlPostRequest(apiQuery(), _dom);
-}
-
 int AbeBooksActionsDialog::exec(const QJsonObject &data) {
   if (!initConfiguration()) {
     qWarning("Plugin AbeBooks missing configuration!");
     return QDialog::Rejected;
   }
-  // AbeBooks Seller-/Customer id
-  seller_id = p_config.value("seller_id", QString()).toString();
-
   QJsonObject _main = data.value("DATA").toObject();
   QJsonObject _order = _main.value("orderinfo").toObject();
   order_id = _order.value("o_provider_order_id").toString();
@@ -200,8 +161,9 @@ int AbeBooksActionsDialog::exec(const QJsonObject &data) {
     qWarning("Missing OrderId - Operation rejected!");
     return QDialog::Rejected;
   }
-
   m_orderInfo->setOrderId(order_id);
+  // AbeBooks Seller-/Customer id
+  seller_id = p_config.value("seller_id", QString()).toString();
 
   QUrl _url;
   if (seller_id.length() > 2) {
@@ -212,18 +174,9 @@ int AbeBooksActionsDialog::exec(const QJsonObject &data) {
     _query.addQueryItem("abepoid", order_id);
     _query.addQueryItem("clientid", seller_id);
     _url.setQuery(_query);
+    if (_url.isValid())
+      m_orderInfo->setOrderLink(_url);
   }
-
-  QString _sellerInfo;
-  if (_url.isValid()) {
-    _sellerInfo = tr("Remote action for <a href='%1'>%2</a> with Order Id: %3")
-                      .arg(_url.toString(), // remote url
-                           _main.value("buyer").toString(), order_id);
-  } else {
-    _sellerInfo = tr("Remote action for %1 with Order Id: %2")
-                      .arg(_main.value("buyer").toString(), order_id);
-  }
-  m_sellerStatus->setBuyerInfo(_sellerInfo);
 
   m_network->xmlPostRequest(apiQuery(), orderUpdateRequest("getOrder"));
 

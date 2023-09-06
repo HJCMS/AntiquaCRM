@@ -18,7 +18,6 @@
 #include <QtXml>
 
 class AbeBooksOrderMainInfo;
-class AbeBooksSellerStatus;
 
 /**
  * @class AbeBooksActionsDialog
@@ -49,9 +48,14 @@ private:
    */
   QMap<QString, QVariant> p_config;
 
+  /**
+   * @brief order overview
+   */
   AbeBooksOrderMainInfo *m_orderInfo;
-  AbeBooksSellerStatus *m_sellerStatus;
 
+  /**
+   * @brief networker
+   */
   AntiquaCRM::ANetworker *m_network;
 
   bool initConfiguration() override;
@@ -65,7 +69,7 @@ private Q_SLOTS:
 
   void prepareResponse(const QDomDocument &xml);
 
-  void prepareOperation() override;
+  void prepareOperation() override { /* unused */ };
 
 public:
   explicit AbeBooksActionsDialog(QWidget *parent = nullptr);

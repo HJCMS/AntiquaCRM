@@ -14,6 +14,7 @@
 #include <QDomNode>
 #include <QLabel>
 #include <QTextEdit>
+#include <QUrl>
 #include <QWidget>
 
 class ANTIQUACRM_LIBRARY AbeBooksOrderMainInfo final : public QWidget {
@@ -25,9 +26,13 @@ private:
   QLabel *m_buyerId;
   QLabel *m_purchaseId;
   QLabel *m_email;
+  QLabel *m_buyerInfo;
 
   void mailingAddress(const QDomNodeList &);
   void setMail(const QString &);
+
+public Q_SLOTS:
+  void setOrderLink(const QUrl &url);
 
 public:
   explicit AbeBooksOrderMainInfo(QWidget *parent = nullptr);
