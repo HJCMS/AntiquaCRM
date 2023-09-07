@@ -8,6 +8,7 @@
 #include <AntiquaCRM>
 #include <AntiquaPrinting>
 #include <QDebug>
+#include <QDesktopServices>
 #include <QMessageBox>
 
 BookEditor::BookEditor(QWidget *parent)
@@ -203,10 +204,12 @@ BookEditor::BookEditor(QWidget *parent)
   ib_isbn->setToolTip("ISBN/EAN");
   tbLayout->addWidget(ib_isbn);
 
-  m_dnbQuery = new QLabel(this);
-  m_dnbQuery->setOpenExternalLinks(true);
-  m_dnbQuery->setToolTip(tr("German National Library"));
-  tbLayout->addWidget(m_dnbQuery);
+  btn_dnbQuery = new QPushButton("DNB", this);
+  btn_dnbQuery->setIcon(QIcon(":/icons/network.png"));
+  btn_dnbQuery->setToolTip(tr("Opens the search page of the German National "
+                              "Library in your web browser."));
+  btn_dnbQuery->setStatusTip(tr("Link: German National Library"));
+  tbLayout->addWidget(btn_dnbQuery);
 
   tbLayout->addStretch(1);
   m_imageToolBar = new ImageToolBar(this);
@@ -259,6 +262,8 @@ BookEditor::BookEditor(QWidget *parent)
 
   setLayout(mainLayout);
 
+  connect(btn_dnbQuery, SIGNAL(clicked()), SLOT(openDNBLink()));
+
   // Signals:ImageToolBar
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
           SLOT(actionRemoveImage(qint64)));
@@ -283,10 +288,6 @@ void BookEditor::setInputFields() {
   ignoreFields << "ib_since";
   ignoreFields << "ib_type";
   ignoreFields << "ib_changed";
-
-  QUrl _url("https://katalog.dnb.de/DE/home.html");
-  m_dnbQuery->setText(
-      tr("<a href='%1'>German National Library</a>").arg(_url.toString()));
 
   m_tableData = new AntiquaCRM::ASqlDataQuery("inventory_books");
   inputFields = m_tableData->columnNames();
@@ -323,35 +324,6 @@ void BookEditor::setInputFields() {
 
   // Schlüsselwörter
   ib_keyword->loadDataset();
-}
-
-void BookEditor::setCatalogSearch() {
-  QString _key("num");
-  QString _search = m_tableData->getValue("ib_isbn").toString();
-  if (_search.length() < 10) {
-    _key = QString("all");
-    _search = AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
-    if (_search.isEmpty())
-      return;
-  }
-
-  QUrl _url;
-  _url.setScheme("https");
-  _url.setHost("katalog.dnb.de");
-  _url.setPath("/DE/list.html");
-  QUrlQuery _query;
-  _query.addQueryItem("key", _key);
-  _query.addQueryItem("t", _search);
-  _query.addQueryItem("v", "plist");
-  _url.setQuery(_query);
-
-  if (_url.isValid()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << _url.toString();
-#endif
-    m_dnbQuery->setText(
-        tr("<a href='%1'>German National Library</a>").arg(_url.toString()));
-  }
 }
 
 bool BookEditor::setDataField(const QSqlField &field, const QVariant &value) {
@@ -403,7 +375,6 @@ void BookEditor::importSqlResult() {
 
   m_actionBar->setRestoreable(m_tableData->isValid());
   setResetModified(inputFields);
-  setCatalogSearch();
 }
 
 bool BookEditor::sendSqlQuery(const QString &query) {
@@ -604,6 +575,29 @@ bool BookEditor::realyDeactivateEntry() {
 
   ib_count->setRequired(false);
   return true;
+}
+
+void BookEditor::openDNBLink() {
+  QString _search =
+      AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+  if (_search.length() < 5)
+    return;
+
+  QUrl _url;
+  _url.setScheme("https");
+  _url.setHost("katalog.dnb.de");
+  _url.setPath("/DE/list.html");
+
+  QUrlQuery _query;
+  _query.addQueryItem("key", "all");
+  _query.addQueryItem("t", _search);
+  _query.addQueryItem("v", "plist");
+  _url.setQuery(_query);
+
+  if (_url.isValid())
+    QDesktopServices::openUrl(_url);
+  else
+    QDesktopServices::openUrl(QUrl("https://katalog.dnb.de/DE/home.html"));
 }
 
 void BookEditor::setSaveData() {

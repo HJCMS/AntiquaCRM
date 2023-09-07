@@ -47,7 +47,7 @@ private:
   LineEdit *ib_storage_compartment; /**< @brief Lagerfach */
   KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
   IsbnEdit *ib_isbn;                /**< @brief ISBN */
-  QLabel *m_dnbQuery;               /**< @brief DNB Suche */
+  QPushButton *btn_dnbQuery;        /**< @brief DNB Suche */
 
   // Row 3
   EditorTab *m_tabWidget;
@@ -73,8 +73,6 @@ private:
 
   void setInputFields() override;
 
-  void setCatalogSearch();
-
   bool setDataField(const QSqlField &field, const QVariant &value) override;
 
   void importSqlResult() override;
@@ -97,6 +95,7 @@ private:
   bool realyDeactivateEntry();
 
 private Q_SLOTS:
+  void openDNBLink();
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor(bool force = true) override;
