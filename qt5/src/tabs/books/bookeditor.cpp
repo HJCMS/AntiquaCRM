@@ -8,7 +8,6 @@
 #include <AntiquaCRM>
 #include <AntiquaPrinting>
 #include <QDebug>
-#include <QDesktopServices>
 #include <QMessageBox>
 
 BookEditor::BookEditor(QWidget *parent)
@@ -204,11 +203,7 @@ BookEditor::BookEditor(QWidget *parent)
   ib_isbn->setToolTip("ISBN/EAN");
   tbLayout->addWidget(ib_isbn);
 
-  btn_dnbQuery = new QPushButton("DNB", this);
-  btn_dnbQuery->setIcon(QIcon(":/icons/network.png"));
-  btn_dnbQuery->setToolTip(tr("Opens the search page of the German National "
-                              "Library in your web browser."));
-  btn_dnbQuery->setStatusTip(tr("Link: German National Library"));
+  btn_dnbQuery = new DNBSearch(this);
   tbLayout->addWidget(btn_dnbQuery);
 
   tbLayout->addStretch(1);
@@ -262,7 +257,7 @@ BookEditor::BookEditor(QWidget *parent)
 
   setLayout(mainLayout);
 
-  connect(btn_dnbQuery, SIGNAL(clicked()), SLOT(openDNBLink()));
+  connect(btn_dnbQuery, SIGNAL(sendQuery()), SLOT(openDNBLink()));
 
   // Signals:ImageToolBar
   connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
@@ -578,26 +573,34 @@ bool BookEditor::realyDeactivateEntry() {
 }
 
 void BookEditor::openDNBLink() {
-  QString _search =
-      AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+  QString _type = btn_dnbQuery->getSearchType();
+  if (_type.length() < 3)
+    return;
+
+  QString _search;
+  if (_type == "tit") {
+    _search = AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+  } else if (_type == "num") {
+    QString _s = ib_isbn->value().toString();
+    if (_s.length() < 10) {
+      sendStatusMessage(tr("Missing a valid ISBN Number!"));
+      return;
+    }
+    _search = _s;
+  } else if (_type == "nam") {
+    _search = AntiquaCRM::AUtil::urlSearchString(ib_author->value().toString());
+  } else {
+    _type = "all";
+    _search = AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+  }
+
   if (_search.length() < 5)
     return;
 
-  QUrl _url;
-  _url.setScheme("https");
-  _url.setHost("katalog.dnb.de");
-  _url.setPath("/DE/list.html");
-
   QUrlQuery _query;
-  _query.addQueryItem("key", "all");
+  _query.addQueryItem("key", _type);
   _query.addQueryItem("t", _search);
-  _query.addQueryItem("v", "plist");
-  _url.setQuery(_query);
-
-  if (_url.isValid())
-    QDesktopServices::openUrl(_url);
-  else
-    QDesktopServices::openUrl(QUrl("https://katalog.dnb.de/DE/home.html"));
+  btn_dnbQuery->sendQuery(_query);
 }
 
 void BookEditor::setSaveData() {

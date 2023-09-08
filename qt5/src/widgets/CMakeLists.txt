@@ -39,6 +39,7 @@ SET (projectLibrary_SOURCES
  conditionedit.cpp
  deliveryid.cpp
  descripeedit.cpp
+ dnbsearch.cpp
  opacityslider.cpp
  ecurrency.cpp
  editoractionbar.cpp
@@ -102,6 +103,7 @@ SET (projectLibrary_HEADERS
  conditionedit.h
  deliveryid.h
  descripeedit.h
+ dnbsearch.h
  opacityslider.h
  ecurrency.h
  editoractionbar.h

@@ -47,7 +47,7 @@ private:
   LineEdit *ib_storage_compartment; /**< @brief Lagerfach */
   KeywordLineEdit *ib_keyword;      /**< @brief Schlüsselwort */
   IsbnEdit *ib_isbn;                /**< @brief ISBN */
-  QPushButton *btn_dnbQuery;        /**< @brief DNB Suche */
+  DNBSearch *btn_dnbQuery;          /**< @brief DNB Suche */
 
   // Row 3
   EditorTab *m_tabWidget;

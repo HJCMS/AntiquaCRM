@@ -57,6 +57,10 @@
 #include "descripeedit.h"
 #endif
 
+#ifndef ANTIQUA_WIDGET_DNBSEARCH_H
+#include "dnbsearch.h"
+#endif
+
 #ifndef ANTIQUACRM_ECURRENCY_H
 #include "ecurrency.h"
 #endif
