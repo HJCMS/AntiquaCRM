@@ -18,6 +18,7 @@ namespace AntiquaCRM {
 /**
  * @class PostalCodeState
  * @brief Display Postalcode country/state
+ *
  * @ingroup EditWidgets
  */
 class ANTIQUACRM_LIBRARY PostalCodeState final

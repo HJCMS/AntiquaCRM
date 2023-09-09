@@ -144,12 +144,12 @@ const QHash<QString, QMetaType::Type> AProviderOrder::orderEditKeys() {
   /**
    * @brief AntiquaCRM - System Order Id
    */
-  hash.insert("o_id", QMetaType::Int);
+  hash.insert("o_id", QMetaType::LongLong);
 
   /**
    * @brief AntiquaCRM - Invoice Id
    */
-  hash.insert("o_invoice_id", QMetaType::Int);
+  hash.insert("o_invoice_id", QMetaType::LongLong);
 
   /**
    * @brief e.g. Provider name
@@ -164,12 +164,12 @@ const QHash<QString, QMetaType::Type> AProviderOrder::orderEditKeys() {
   /**
    * @brief Order Provider Purchase Id (Numeric)
    */
-  hash.insert("o_provider_purchase_id", QMetaType::Int);
+  hash.insert("o_provider_purchase_id", QMetaType::LongLong);
 
   /**
    * @brief e.g. Order Customer Id
    */
-  hash.insert("o_customer_id", QMetaType::Int);
+  hash.insert("o_customer_id", QMetaType::LongLong);
 
   /**
    * @brief Order Delivery Comment from Buyer

@@ -323,37 +323,42 @@ void CustomersEditor::findPurchases() {
   if (_cid < 1)
     return;
 
-  AntiquaCRM::ASqlFiles sfile("query_customer_orders_status");
-  if (sfile.openTemplate()) {
-    sfile.setWhereClause("c_id=" + QString::number(_cid));
-    QSqlQuery q = m_sql->query(sfile.getQueryContent());
-    if (q.size() > 0) {
-      m_ordersTable->clearContents();
-      m_ordersTable->setRowCount(q.size());
-      int row = 0;
-      while (q.next()) {
-        int col = 0;
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->paymentItem(q.value("payed")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->numidItem(q.value("orderid")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->numidItem(q.value("invoice")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->createItem(q.value("article")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->createItem(q.value("title")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->createItem(q.value("provider")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->createItem(q.value("prorder")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->createDate(q.value("since")));
-        m_ordersTable->setItem(row, col++,
-                               m_ordersTable->createDate(q.value("deliver")));
+  AntiquaCRM::ASqlFiles _tpl("query_customer_orders_status");
+  if (!_tpl.openTemplate()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qWarning("No query_customer_orders_status file found");
+#endif
+    return;
+  }
 
-        row++;
-      }
+  _tpl.setWhereClause("c_id=" + QString::number(_cid));
+  QSqlQuery q = m_sql->query(_tpl.getQueryContent());
+  if (q.size() > 0) {
+    m_ordersTable->clearContents();
+    m_ordersTable->setRowCount(q.size());
+    int row = 0;
+    while (q.next()) {
+      int col = 0;
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->paymentItem(q.value("payed")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->numidItem(q.value("orderid")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->numidItem(q.value("invoice")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->createItem(q.value("article")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->createItem(q.value("title")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->createItem(q.value("provider")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->createItem(q.value("prorder")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->createDate(q.value("since")));
+      m_ordersTable->setItem(row, col++,
+                             m_ordersTable->createDate(q.value("deliver")));
+
+      row++;
     }
   }
 }
@@ -376,7 +381,7 @@ void CustomersEditor::setCheckLeaveEditor() {
 }
 
 void CustomersEditor::setFinalLeaveEditor(bool force) {
-  if (force) // Wenn auf Abbrechen geklickt wurde!
+  if (force) // cancel action triggered
     setWindowModified(false);
 
   setResetInputFields();
@@ -418,20 +423,20 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
   if (_cid.isEmpty())
     return false;
 
-  AntiquaCRM::ASqlFiles _sf("query_customer_data");
-  if (!_sf.openTemplate()) {
+  AntiquaCRM::ASqlFiles _tpl("query_customer_data");
+  if (!_tpl.openTemplate()) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "No Template found";
+    qWarning("No query_customer_data file found");
 #endif
     return false;
   }
 
   setInputFields();
 
-  _sf.setWhereClause("c_id=" + _cid);
+  _tpl.setWhereClause("c_id=" + _cid);
 
   bool _status = false;
-  QSqlQuery _q = m_sql->query(_sf.getQueryContent());
+  QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
   if (_q.size() != 0) {
     QSqlRecord _r = m_tableData->record();
     _q.next();
@@ -441,9 +446,6 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
     }
     _status = true;
   } else {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << m_sql->lastError();
-#endif
     _status = false;
   }
 

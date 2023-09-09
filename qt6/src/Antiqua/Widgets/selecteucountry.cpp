@@ -111,6 +111,10 @@ SelectEUCountry::~SelectEUCountry() {
     m_model->deleteLater();
 }
 
+int SelectEUCountry::noMemberIndex() {
+  return m_edit->findData("XX", Qt::UserRole, Qt::MatchFixedString);
+}
+
 void SelectEUCountry::valueChanged(int index) {
   if (index == 0)
     return;
@@ -145,13 +149,18 @@ void SelectEUCountry::setValue(const QVariant &value) {
 
   int _index = 0;
   QString _value = value.toString().trimmed();
-  if (_value.length() > 2)
-    _index = m_edit->findData(_value, Qt::DisplayRole, Qt::MatchStartsWith);
-  else
+  if (_value.length() == 2) // bcp47
     _index = m_edit->findData(_value, Qt::UserRole, Qt::MatchFixedString);
+  else
+    _index = m_edit->findData(_value, Qt::DisplayRole, Qt::MatchStartsWith);
 
-  if (_index > 0)
+  if (_index > 0) {
     m_edit->setCurrentIndex(_index);
+    return;
+  }
+
+  qInfo("Changes for '%s' to non EU Country.", qPrintable(_value));
+  m_edit->setCurrentIndex(noMemberIndex());
 }
 
 void SelectEUCountry::setFocus() { m_edit->setFocus(); }
@@ -197,6 +206,9 @@ const QMetaType SelectEUCountry::getType() const {
 
 const QVariant SelectEUCountry::getValue() {
   int _index = m_edit->currentIndex();
+  if (_index == 0)
+    _index = noMemberIndex();
+
   QString _v = m_edit->itemData(_index, Qt::UserRole).toString();
   return (_v.length() == 2) ? _v.toUpper() : QString();
 }

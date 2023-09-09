@@ -22,9 +22,9 @@ namespace AntiquaCRM {
  */
 class ANTIQUACRM_LIBRARY EUCountry final {
 public:
-  int index;    /**< @brief Sort order index */
-  QString iso;  /**< @brief ISO 3166-1 Alpha-2 Code */
-  QString name; /**< @brief Translated Country name */
+  int index;        /**< @brief Sort order index */
+  QString iso;      /**< @brief ISO 3166-1 Alpha-2 Code */
+  QString name;     /**< @brief Translated Country name */
 
   /**
    * @param ro - Row index
@@ -112,6 +112,7 @@ class ANTIQUACRM_LIBRARY SelectEUCountry final
 private:
   AComboBox *m_edit;
   SelectEUCountryModel *m_model;
+  int noMemberIndex();
 
 private Q_SLOTS:
   void valueChanged(int);

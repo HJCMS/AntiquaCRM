@@ -443,7 +443,7 @@ bool OrdersEditor::checkDeliveryNumber() {
 
 void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
   if (oid < 1) {
-    qWarning("Missing Order Id for Order Payment.");
+    qWarning("Missing Id for Order Payment.");
     return;
   }
 
@@ -454,10 +454,10 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
   if (_query.size() == 1) {
     _query.next();
     qint64 _iid = _query.value("o_invoice_id").toLongLong();
-    QString _did = AntiquaCRM::AUtil::zerofill(_iid);
+    const QString _did = AntiquaCRM::AUtil::zerofill(_iid);
     m_tableData->setValue("o_invoice_id", _iid);
     setDataField(m_tableData->getProperties("o_invoice_id"), _iid);
-    m_tableData->setValue("o_delivery", oid);
+    m_tableData->setValue("o_delivery", _did);
     setDataField(m_tableData->getProperties("o_delivery"), _did);
   } else {
     qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));

@@ -99,11 +99,16 @@ const QString SellersSalesWidget::getTitle(const QJsonValue &title) const {
 }
 
 bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
+  // qDebug() << object;
   QString _fullname = object.value("c_provider_import").toString();
   if (object.contains("c_postal_address")) {
     QString address = object.value("c_postal_address").toString();
+    if (object.contains("c_country")) {
+      address.append("\n");
+      address.append(object.value("c_country").toString());
+    }
     if (object.contains("c_phone_0")) {
-      address.append("\nTel: ");
+      address.append("\n\n" + tr("Phone") + ": ");
       address.append(object.value("c_phone_0").toString());
     }
     m_buyerInfo->setAddress(address);
