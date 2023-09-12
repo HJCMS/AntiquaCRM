@@ -12,7 +12,7 @@
 #include <QMessageBox>
 
 SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
-                                       QTabWidget *parent)
+                                       QWidget *parent)
     : QWidget{parent}, p_order{config} {
   setWindowTitle(p_order.value("orderid").toString());
   setContentsMargins(0, 0, 0, 0);

@@ -10,6 +10,7 @@
 #define ANTIQUACRM_PLUGIN_SELLERS_SALESTAB_H
 
 #include <AntiquaTabs>
+#include <QPaintEvent>
 #include <QTabWidget>
 
 class SellersSalesWidget;
@@ -19,6 +20,8 @@ class ANTIQUACRM_LIBRARY SellersSalesTab final : public QTabWidget {
 
 private:
   AntiquaCRM::TabsBar *m_tabsBar;
+  inline const QString infoText() const;
+  virtual void paintEvent(QPaintEvent *) override;
 
 private Q_SLOTS:
   void setTabClosed(int);

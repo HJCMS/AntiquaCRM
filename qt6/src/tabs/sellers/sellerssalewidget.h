@@ -16,6 +16,7 @@
 class PurchaseHeader;
 class PurchaseTable;
 class PurchaseActionBar;
+class SellersTabWidget;
 class BuyerInfo;
 class SalesInfo;
 
@@ -52,7 +53,7 @@ Q_SIGNALS:
 
 public:
   explicit SellersSalesWidget(const QJsonObject &config,
-                              QTabWidget *parent = nullptr);
+                              QWidget *parent = nullptr);
   bool init();
 };
 
