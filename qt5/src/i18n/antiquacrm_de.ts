@@ -760,18 +760,7 @@
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+19"/>
-        <location line="+136"/>
-        <source>&lt;a href=&apos;%1&apos;&gt;German National Library&lt;/a&gt;</source>
-        <translation>&lt;a href=&apos;%1&apos;&gt;Deutsche National Bibliothek&lt;/a&gt;</translation>
-    </message>
-    <message>
-        <location line="-133"/>
-        <source>German National Library</source>
-        <translation>Deutsche National Bibliothek</translation>
-    </message>
-    <message>
-        <location line="+82"/>
+        <location line="+101"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -796,7 +785,7 @@
         <translation>Autorenteam</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+93"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten erfolgreich gespeichert!</translation>
     </message>
@@ -831,7 +820,12 @@
         <translation>Buch deaktivierung</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+22"/>
+        <source>Missing a valid ISBN Number!</source>
+        <translation>Es fehlt eine gültige ISBN-Nummer!</translation>
+    </message>
+    <message>
+        <location line="+74"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -855,12 +849,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-423"/>
+        <location line="-435"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="-181"/>
+        <location line="-176"/>
         <source>Local Usage only</source>
         <translation>Nur lokale Verwendung</translation>
     </message>
@@ -870,7 +864,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Wenn diese Option markiert ist. Dann wird dieser Artikel nicht an die Dienstleister exportiert.</translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+180"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -2499,6 +2493,44 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Reload</source>
         <translation>Aktualisieren</translation>
+    </message>
+</context>
+<context>
+    <name>DNBSearch</name>
+    <message>
+        <location filename="../widgets/dnbsearch.cpp" line="+13"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens the search page of the German National Library in your web browser.</source>
+        <translation>Öffnet die Suchseite der Deutschen Nationalbibliothek in Ihrem Webbrowser.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Link: German National Library</source>
+        <translation>Verknüpfung: Deutsche Nationalbibliothek</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search in everything</source>
+        <translation>Suchen Sie in allem</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title search</source>
+        <translation>Titelsuche</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Authors search</source>
+        <translation>Autorensuche</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>ISBN search</source>
+        <translation>ISBN Suche</translation>
     </message>
 </context>
 <context>
@@ -6578,6 +6610,29 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Broken Orderdata!</source>
         <translation>Defekte Bestelldaten!</translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersPageView</name>
+    <message>
+        <location filename="../tabs/providers/providerspageview.cpp" line="+26"/>
+        <source>In this area you can accept orders from your service providers.</source>
+        <translation>In diesem Bereich können Sie die Aufträge Ihrer Dienstleister entgegennehmen.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Select the desired order in the right half to display it here.</source>
+        <translation>Wählen Sie in der rechten Hälfte die gewünschte Bestellung aus, um diese hier anzuzeigen.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only orders are accepted here!</source>
+        <translation>Hier werden nur Bestellungen angenommen!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>For order processing, please see the Orders tab.</source>
+        <translation>Für die Bestellbearbeitung, öffnen Sie die Registerkarte Aufträge.</translation>
     </message>
 </context>
 <context>

@@ -8,6 +8,8 @@
 #include <QDebug>
 #include <QIcon>
 #include <QMenu>
+#include <QPainter>
+#include <QPalette>
 
 ProvidersPageView::ProvidersPageView(QWidget *parent) : QTabWidget{parent} {
   m_tabBar = new AntiquaTabBar(tabBar());
@@ -16,6 +18,27 @@ ProvidersPageView::ProvidersPageView(QWidget *parent) : QTabWidget{parent} {
   connect(this, SIGNAL(tabCloseRequested(int)), SLOT(closeTabClicked(int)));
   connect(m_tabBar, SIGNAL(sendCloseTab(int)), SLOT(closeTabClicked(int)));
   connect(this, SIGNAL(currentChanged(int)), this, SLOT(pageEntered(int)));
+}
+
+const QString ProvidersPageView::infoText() const {
+  QStringList _l;
+  // Background info when SellersSalesTab is empty
+  _l << tr("In this area you can accept orders from your service providers.");
+  _l << tr("Select the desired order in the right half to display it here.");
+  _l << "" << tr("Only orders are accepted here!");
+  _l << tr("For order processing, please see the Orders tab.");
+  return _l.join("\n");
+}
+
+void ProvidersPageView::paintEvent(QPaintEvent *pe) {
+  QTabWidget::paintEvent(pe);
+  if (!count()) {
+    QPainter p(this);
+    p.setBrush(palette().text());
+    p.setFont(font());
+    p.setOpacity(0.8);
+    p.drawText(rect(), Qt::AlignCenter, infoText());
+  }
 }
 
 void ProvidersPageView::closeTabClicked(int index) {

@@ -25,13 +25,12 @@ void AntiquaTabBar::tabInserted(int index) {
 }
 
 void AntiquaTabBar::wheelEvent(QWheelEvent *event) {
+  event->setAccepted(enableWheel);
   if (enableWheel)
     QTabBar::wheelEvent(event);
 }
 
-void AntiquaTabBar::tabIndexChanged(int index) {
-  emit sendTabChanged(index);
-}
+void AntiquaTabBar::tabIndexChanged(int index) { emit sendTabChanged(index); }
 
 void AntiquaTabBar::checkToClose() {
   if (index >= 0)

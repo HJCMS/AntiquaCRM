@@ -8,8 +8,8 @@
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
 #include <QObject>
+#include <QPaintEvent>
 #include <QTabWidget>
-#include <QWheelEvent>
 #include <QWidget>
 
 class ProvidersOrderPage;
@@ -23,13 +23,12 @@ class ProvidersPageView final : public QTabWidget {
 
 private:
   AntiquaTabBar *m_tabBar;
+  inline const QString infoText() const;
+  virtual void paintEvent(QPaintEvent *) override;
 
 private Q_SLOTS:
   void closeTabClicked(int);
   void pageEntered(int);
-
-protected:
-  void wheelEvent(QWheelEvent *) override{/* ignore it */};
 
 Q_SIGNALS:
   void sendCloseTab(int index);

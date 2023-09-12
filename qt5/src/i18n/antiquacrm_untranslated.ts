@@ -760,18 +760,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
-        <location line="+136"/>
-        <source>&lt;a href=&apos;%1&apos;&gt;German National Library&lt;/a&gt;</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-133"/>
-        <source>German National Library</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+82"/>
+        <location line="+101"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -796,7 +785,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+93"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -831,7 +820,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+22"/>
+        <source>Missing a valid ISBN Number!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+74"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -853,12 +847,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-423"/>
+        <location line="-435"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-181"/>
+        <location line="-176"/>
         <source>Local Usage only</source>
         <translation type="unfinished"></translation>
     </message>
@@ -868,7 +862,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+185"/>
+        <location line="+180"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2494,6 +2488,44 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Reload</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DNBSearch</name>
+    <message>
+        <location filename="../widgets/dnbsearch.cpp" line="+13"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens the search page of the German National Library in your web browser.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Link: German National Library</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Search in everything</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Authors search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>ISBN search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6571,6 +6603,29 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Broken Orderdata!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ProvidersPageView</name>
+    <message>
+        <location filename="../tabs/providers/providerspageview.cpp" line="+26"/>
+        <source>In this area you can accept orders from your service providers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Select the desired order in the right half to display it here.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only orders are accepted here!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>For order processing, please see the Orders tab.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
