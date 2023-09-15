@@ -49,6 +49,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   c_careof = new LineEdit(this);
   c_careof->setObjectName("c_careof");
   c_careof->setInfo(tr("c/o"));
+  c_careof->setToolTip(tr("This recipient takes care of the package."));
   c_careof->setRequired(false);
   row1->addWidget(c_careof);
 

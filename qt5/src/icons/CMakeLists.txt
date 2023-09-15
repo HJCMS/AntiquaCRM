@@ -28,7 +28,9 @@ db_status.png
 db_update.png
 delete_table_col.png
 delete_table_row.png
+delivery48.png
 editclear.png
+edit-paste.png
 edit.png
 eu-flag.png
 filetypes.png
@@ -37,10 +39,12 @@ flag-red.png
 flag-yellow.png
 folder_pictures.png
 folder_txt.png
-kchart.png
 groups.png
+kchart.png
 network.png
+postgresql.png
 printer.png
+qtlogo-64.png
 splash.png
 spreadsheet.png
 star.png

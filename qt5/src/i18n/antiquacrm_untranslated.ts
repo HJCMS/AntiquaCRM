@@ -2034,6 +2034,11 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>This recipient takes care of the package.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+16"/>
         <source>Postalcode</source>
         <translation type="unfinished"></translation>

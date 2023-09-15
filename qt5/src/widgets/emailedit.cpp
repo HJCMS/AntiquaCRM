@@ -19,7 +19,7 @@ EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
   m_edit->setPlaceholderText(tr("usage.example@example.com"));
   m_edit->setClearButtonEnabled(false);
   // Copy Icon
-  ac_copy = m_edit->addAction(QIcon(":/icons/edit.png"), // TODO edit-paste
+  ac_copy = m_edit->addAction(QIcon(":/icons/edit-paste.png"),
                               QLineEdit::TrailingPosition);
   ac_copy->setToolTip(tr("Copy eMail into system clipboard."));
   ac_copy->setVisible(false);

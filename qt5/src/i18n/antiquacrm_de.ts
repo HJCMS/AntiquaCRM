@@ -2038,6 +2038,11 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>This recipient takes care of the package.</source>
+        <translation>Dieser Empfänger kümmert sich um das Paket.</translation>
+    </message>
+    <message>
         <location line="+16"/>
         <source>Postalcode</source>
         <translation>Postleitzahl</translation>
