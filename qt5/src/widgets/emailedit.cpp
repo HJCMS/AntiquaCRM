@@ -5,23 +5,37 @@
 #include "autil.h"
 
 #include <QApplication>
+#include <QClipboard>
 #include <QPalette>
 #include <QRegExp>
 #include <QRegularExpressionMatch>
+#include <QStatusTipEvent>
 #include <QUrl>
 
 EMailEdit::EMailEdit(QWidget *parent) : InputEdit{parent} {
+  // Editor
   m_edit = new AntiquaLineEdit(this);
   m_edit->setToolTip(tr("eMail edit"));
   m_edit->setPlaceholderText(tr("usage.example@example.com"));
+  m_edit->setClearButtonEnabled(false);
+  // Copy Icon
+  ac_copy = m_edit->addAction(QIcon(":/icons/edit.png"), // TODO edit-paste
+                              QLineEdit::TrailingPosition);
+  ac_copy->setToolTip(tr("Copy eMail into system clipboard."));
+  ac_copy->setVisible(false);
+
   m_layout->addWidget(m_edit);
+
   QRegExp pattern = AntiquaCRM::AUtil::emailRegExp();
   m_validator = new QRegExpValidator(pattern, m_edit);
   m_edit->setValidator(m_validator);
   setRequired(false);
   setModified(false);
+
   connect(m_edit, SIGNAL(textChanged(const QString &)),
           SLOT(dataChanged(const QString &)));
+
+  connect(ac_copy, SIGNAL(triggered()), SLOT(copyIntoClipboard()));
 }
 
 bool EMailEdit::validate(const QString &mail) const {
@@ -43,9 +57,27 @@ bool EMailEdit::validate(const QString &mail) const {
   return _check;
 }
 
+void EMailEdit::pushStatusEvent(const QString &info) {
+  QStatusTipEvent _event(info);
+  QApplication::sendEvent(this, &_event);
+}
+
 void EMailEdit::dataChanged(const QString &email) {
+  bool _b = validate(email);
+  if (!_b)
+    pushStatusEvent(tr("Invalid eMail detected!"));
+
+  ac_copy->setVisible(_b);
   setModified(true);
-  validate(email);
+}
+
+void EMailEdit::copyIntoClipboard() {
+  const QString _data = m_edit->text().toLower().trimmed();
+  if (_data.length() < 4)
+    return;
+
+  QApplication::clipboard()->setText(_data, QClipboard::Clipboard);
+  pushStatusEvent(tr("The email has been copied."));
 }
 
 void EMailEdit::reset() {
@@ -78,27 +110,29 @@ void EMailEdit::setProperties(const QSqlField &field) {
 
   if (field.requiredStatus() == QSqlField::Required) {
     setRequired((objectName().contains("mail_0")));
-    m_edit->setClearButtonEnabled(false);
   }
+
+  m_edit->setClearButtonEnabled(false);
 }
 
 const QVariant EMailEdit::value() {
-  QString email = m_edit->text();
-  return (isValid()) ? email : QString();
+  const QString _mail = m_edit->text().trimmed();
+  return (isValid()) ? _mail : QString();
 }
 
 bool EMailEdit::isValid() {
-  QString email = m_edit->text().trimmed();
-  // Erforderlich und Leer
-  if (isRequired() && email.isEmpty())
+  QString _mail = m_edit->text().trimmed();
+  // Erforderlich und zu kurz, abbrechen!
+  if (isRequired() && _mail.length() < 5)
     return false;
 
-  // Nicht Erforderlich und Leer
-  if (email.isEmpty())
+  // Nicht Erforderlich und zu kurz, aussteigen.
+  // - Keine sinnvolle Validierung notwendig!
+  if (_mail.length() < 5)
     return true;
 
-  // Nicht leer, dann test mit Regulären ausdruck!
-  return validate(email);
+  // Mit Regulären ausdruck validieren!
+  return validate(_mail);
 }
 
 void EMailEdit::setInfo(const QString &info) {

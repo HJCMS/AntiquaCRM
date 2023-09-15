@@ -2992,7 +2992,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>EMailEdit</name>
     <message>
-        <location filename="../widgets/emailedit.cpp" line="+15"/>
+        <location filename="../widgets/emailedit.cpp" line="+18"/>
         <source>eMail edit</source>
         <translation>E-Mail bearbeiten</translation>
     </message>
@@ -3002,12 +3002,27 @@ Bild - Artikel Nr: %2</translation>
         <translation></translation>
     </message>
     <message>
-        <location line="+58"/>
+        <location line="+5"/>
+        <source>Copy eMail into system clipboard.</source>
+        <translation>E-Mail in die Systemzwischenablage kopieren.</translation>
+    </message>
+    <message>
+        <location line="+44"/>
+        <source>Invalid eMail detected!</source>
+        <translation>Ungültige E-Mail erkannt!</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>The email has been copied.</source>
+        <translation>Die E-Mail wurde kopiert.</translation>
+    </message>
+    <message>
+        <location line="+26"/>
         <source>Max allowed length</source>
         <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+42"/>
+        <location line="+44"/>
         <source>a valid input for &apos;%1&apos; is required.</source>
         <translation>Eine gültige Eingabe für &apos;%1&apos; ist erforderlich.</translation>
     </message>

@@ -103,6 +103,18 @@ private Q_SLOTS:
    */
   void resetVisualFeedback();
 
+protected Q_SLOTS:
+  /**
+   * @brief Sends a StatusTipEvent to MainWindow StatusBar
+   * @note No timeout message will send to the Statusbar!
+   */
+  void pushStatusTipMessage(const QString &);
+
+  /**
+   * @brief Copy content into system clipboard
+   */
+  void copyIntoClipboard();
+
 Q_SIGNALS:
   /**
    * @brief Minimum Input Characters length has changed

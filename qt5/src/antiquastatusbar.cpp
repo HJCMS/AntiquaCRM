@@ -30,12 +30,12 @@ void AntiquaStatusBar::timerTriggered() {
   }
 }
 
-void AntiquaStatusBar::statusInfoMessage(const QString &text) {
-  showMessage(text, (timeout_seconds * 1000));
+void AntiquaStatusBar::statusInfoMessage(const QString &text, qint8 seconds) {
+  QStatusBar::showMessage(text, (seconds * 1000));
 }
 
-void AntiquaStatusBar::statusWarnMessage(const QString &text) {
-  showMessage(text, (timeout_seconds * 1000));
+void AntiquaStatusBar::statusWarnMessage(const QString &text, qint8 seconds) {
+  QStatusBar::showMessage(text, (seconds * 1000));
 }
 
 AntiquaStatusBar::~AntiquaStatusBar() {

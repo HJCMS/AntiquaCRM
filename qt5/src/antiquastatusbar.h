@@ -22,7 +22,6 @@ class AntiquaStatusBar final : public QStatusBar {
   Q_OBJECT
 
 private:
-  int timeout_seconds = 10;
   AntiquaDatabaseBar *m_toolBar;
   AntiquaTimer *m_timer;
 
@@ -30,8 +29,8 @@ private Q_SLOTS:
   void timerTriggered();
 
 public Q_SLOTS:
-  void statusInfoMessage(const QString &);
-  void statusWarnMessage(const QString &);
+  void statusInfoMessage(const QString &, qint8 seconds = 5);
+  void statusWarnMessage(const QString &, qint8 seconds = 10);
 
 public:
   explicit AntiquaStatusBar(QMainWindow *parent = nullptr);

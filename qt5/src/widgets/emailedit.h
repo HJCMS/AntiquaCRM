@@ -6,6 +6,7 @@
 #define ANTIQUACRM_EMAILEDIT_H
 
 #include <AntiquaInputEdit>
+#include <QAction>
 #include <QRegExpValidator>
 
 /**
@@ -17,12 +18,15 @@ class EMailEdit final : public InputEdit {
 
 private:
   AntiquaLineEdit *m_edit;
+  QAction *ac_copy;
   QRegExpValidator *m_validator;
   void loadDataset() override{};
   bool validate(const QString &mail) const;
 
 private Q_SLOTS:
+  void pushStatusEvent(const QString &);
   void dataChanged(const QString &);
+  void copyIntoClipboard();
 
 public Q_SLOTS:
   Q_INVOKABLE void reset() override;

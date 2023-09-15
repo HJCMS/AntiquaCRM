@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "emailedit.h"
+#include "antiquaicon.h"
 
 #include <AntiquaCRM>
 #include <QFontMetrics>
@@ -13,10 +14,17 @@ EMailEdit::EMailEdit(const QString &name, QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   setObjectName(name);
   m_edit = new AntiquaCRM::ALineEdit(this);
+
+  ac_copy = m_edit->addAction(AntiquaCRM::antiquaIcon("edit-copy"),
+                              QLineEdit::TrailingPosition);
+  ac_copy->setToolTip(tr("Copy eMail into system clipboard."));
+  ac_copy->setVisible(false);
+
   layout->addWidget(m_edit);
   initData();
   connect(m_edit, SIGNAL(textChanged(const QString &)),
           SLOT(valueChanged(const QString &)));
+  connect(ac_copy, SIGNAL(triggered()), m_edit, SLOT(copyIntoClipboard()));
 }
 
 EMailEdit::EMailEdit(QWidget *parent) : EMailEdit{"email_edit", parent} {}
@@ -41,6 +49,8 @@ void EMailEdit::initData() {
 void EMailEdit::valueChanged(const QString &email) {
   bool _b = validate(email);
   m_edit->setValidContent(_b);
+  ac_copy->setVisible(_b);
+
   if (isRequired())
     m_edit->setIconWarning(!_b);
 
@@ -75,7 +85,7 @@ void EMailEdit::setRestrictions(const QSqlField &field) {
     m_edit->setClearButtonEnabled(false);
   } else {
     setRequired(false);
-    m_edit->setClearButtonEnabled(true);
+    m_edit->setClearButtonEnabled(false);
   }
 
   m_edit->setPlaceholderText(tr("a.name@domain.tld"));

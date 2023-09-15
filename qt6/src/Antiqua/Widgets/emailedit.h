@@ -10,6 +10,7 @@
 #define ANTIQUACRM_WIDGETS_EMAILEDIT_H
 
 #include <AntiquaInput>
+#include <QAction>
 #include <QObject>
 #include <QWidget>
 
@@ -25,6 +26,7 @@ class ANTIQUACRM_LIBRARY EMailEdit final : public AntiquaCRM::AInputWidget {
 
 private:
   AntiquaCRM::ALineEdit *m_edit;
+  QAction *ac_copy;
 
   /**
    * @brief eMail validation

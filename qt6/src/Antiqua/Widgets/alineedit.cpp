@@ -7,9 +7,12 @@
 
 #include <AntiquaCRM>
 #include <QAbstractItemView>
+#include <QApplication>
+#include <QClipboard>
 #include <QCompleter>
 #include <QIcon>
 #include <QRegularExpressionValidator>
+#include <QStatusTipEvent>
 #include <QTimer>
 #include <QValidator>
 
@@ -78,6 +81,20 @@ void ALineEdit::skipReturnPressed() {
 
 void ALineEdit::resetVisualFeedback() { setValidContent(true); }
 
+void ALineEdit::pushStatusTipMessage(const QString &info) {
+  QStatusTipEvent _event(info);
+  QApplication::sendEvent(this, &_event);
+}
+
+void ALineEdit::copyIntoClipboard() {
+  const QString _data = text().trimmed();
+  if (_data.length() < 4)
+    return;
+
+  QApplication::clipboard()->setText(_data, QClipboard::Clipboard);
+  pushStatusTipMessage(tr("Copied data into clipboard."));
+}
+
 void ALineEdit::setMinLength(int length) {
   minLength = length;
   emit sendMinLengthChanged(minLength);
@@ -90,8 +107,10 @@ void ALineEdit::setIconWarning(bool b) {
 }
 
 void ALineEdit::setValidContent(bool b) {
-  QString _css = (b) ? "" : "QLineEdit {selection-background-color:red;}";
+  const QString _css = (b) ? "" : "QLineEdit {selection-background-color:red;}";
   setStyleSheet(_css);
+  if (!_css.isEmpty() && !text().isEmpty())
+    pushStatusTipMessage(tr("Invalid content detected."));
 }
 
 void ALineEdit::setVisualFeedback(int timeout) {
