@@ -72,7 +72,6 @@ SET (_library_SOURCES
   crowdedit.cpp
   datetimeinfo.cpp
   descripeeditor.cpp
-  emailedit.cpp
   genderedit.cpp
   groupboxedit.cpp
   imagethumbnail.cpp
@@ -112,6 +111,7 @@ SET (_library_SOURCES
   tableview.cpp
   textfield.cpp
   textline.cpp
+  urilineedit.cpp
   yearedit.cpp
 )
 
@@ -136,7 +136,6 @@ SET (_library_HEADERS
   crowdedit.h
   datetimeinfo.h
   descripeeditor.h
-  emailedit.h
   genderedit.h
   groupboxedit.h
   imagethumbnail.h
@@ -176,6 +175,7 @@ SET (_library_HEADERS
   tableview.h
   textfield.h
   textline.h
+  urilineedit.h
   yearedit.h
 )
 

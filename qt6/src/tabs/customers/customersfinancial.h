@@ -28,7 +28,7 @@ public:
   AntiquaCRM::TextLine *c_iban;
   AntiquaCRM::TextLine *c_swift_bic; /**< BIC Swift Code ISO 9362 */
   AntiquaCRM::TextLine *c_tax_id;
-  AntiquaCRM::EMailEdit *c_shipping_email;
+  AntiquaCRM::URILineEdit *c_shipping_email;
   AntiquaCRM::TextField *c_comments;
   explicit CustomersFinancial(QWidget *parent = nullptr);
 };

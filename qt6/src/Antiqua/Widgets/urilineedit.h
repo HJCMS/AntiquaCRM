@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS_EMAILEDIT_H
-#define ANTIQUACRM_WIDGETS_EMAILEDIT_H
+#ifndef ANTIQUACRM_WIDGETS_URI_LINEEDIT_H
+#define ANTIQUACRM_WIDGETS_URI_LINEEDIT_H
 
 #include <AntiquaInput>
 #include <QAction>
@@ -17,26 +17,30 @@
 namespace AntiquaCRM {
 
 /**
- * @class EMailEdit
- * @brief eMail input Editor
+ * @class URILineEdit
+ * @brief Uniform Resource Identifier input Editor
+ *
+ * Currently: eMail and Weblink supported
+ *
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY EMailEdit final : public AntiquaCRM::AInputWidget {
+class ANTIQUACRM_LIBRARY URILineEdit final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
   AntiquaCRM::ALineEdit *m_edit;
-  QAction *ac_copy;
+  QAction *ac_icon;
 
   /**
-   * @brief eMail validation
+   * @brief URI validation
    */
-  bool validate(const QString &) const;
+  bool validate(const QString &uri) const;
 
   void initData() override;
 
 private Q_SLOTS:
-  void valueChanged(const QString &);
+  void valueChanged(const QString &uri);
+  void openWeblink();
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
@@ -50,8 +54,8 @@ public:
    * @param name   - Object name
    * @param parent - parent Object
    */
-  explicit EMailEdit(const QString &name, QWidget *parent = nullptr);
-  explicit EMailEdit(QWidget *parent = nullptr);
+  explicit URILineEdit(const QString &name, QWidget *parent = nullptr);
+  explicit URILineEdit(QWidget *parent = nullptr);
 
   void setRestrictions(const QSqlField &) override;
 
@@ -72,4 +76,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS_EMAILEDIT_H
+#endif // ANTIQUACRM_WIDGETS_URI_LINEEDIT_H

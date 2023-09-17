@@ -119,18 +119,18 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   row2->addWidget(c_fax_0, gridRow, 0, 1, 1);
 
   /** Webseite */
-  c_website = new AntiquaCRM::TextLine(this);
+  c_website = new AntiquaCRM::URILineEdit(this);
   c_website->setObjectName("c_website");
   c_website->setBuddyLabel(tr("Website"));
   row2->addWidget(c_website, gridRow++, 1, 1, 1);
 
   /** E-Mail Primary */
-  c_email_0 = new AntiquaCRM::EMailEdit("c_email_0", this);
+  c_email_0 = new AntiquaCRM::URILineEdit("c_email_0", this);
   c_email_0->setBuddyLabel(tr("Primary eMail Address"));
   row2->addWidget(c_email_0, gridRow, 0, 1, 1);
 
   /** E-Mail Secundary */
-  c_email_1 = new AntiquaCRM::EMailEdit("c_email_1", this);
+  c_email_1 = new AntiquaCRM::URILineEdit("c_email_1", this);
   c_email_1->setBuddyLabel(tr("Secundary eMail Address"));
   row2->addWidget(c_email_1, gridRow++, 1, 1, 1);
   layout->addLayout(row2);

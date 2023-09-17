@@ -42,9 +42,6 @@
 // AntiquaCRM::DescripeEditor
 #include "descripeeditor.h"
 
-// AntiquaCRM::EMailEdit
-#include "emailedit.h"
-
 // AntiquaCRM::GenderEdit
 #include "genderedit.h"
 
@@ -149,6 +146,9 @@
 
 // AntiquaCRM::TextLine
 #include "textline.h"
+
+// AntiquaCRM::URILineEdit
+#include "urilineedit.h"
 
 // AntiquaCRM::YearEdit
 #include "yearedit.h"

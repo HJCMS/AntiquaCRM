@@ -47,7 +47,7 @@ CustomersFinancial::CustomersFinancial(QWidget *parent)
   infoComments->setText(tr("Comments"));
   row1->addWidget(infoComments, 2, 0, 1, 1);
 
-  c_shipping_email = new AntiquaCRM::EMailEdit(this);
+  c_shipping_email = new AntiquaCRM::URILineEdit(this);
   c_shipping_email->setObjectName("c_shipping_email");
   c_shipping_email->setBuddyLabel(tr("Billing E-Mail"));
   row1->addWidget(c_shipping_email, 2, 1, 1, 2);

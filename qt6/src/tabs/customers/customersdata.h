@@ -51,9 +51,9 @@ public:
   AntiquaCRM::PhoneEdit *c_mobil_0;             /**< Mobil number 1 */
   AntiquaCRM::PhoneEdit *c_mobil_1;             /**< Mobil number 2 */
   AntiquaCRM::PhoneEdit *c_fax_0;               /**< Fax number */
-  AntiquaCRM::EMailEdit *c_email_0;             /**< E-Mail Address */
-  AntiquaCRM::EMailEdit *c_email_1;             /**< E-Mail Address */
-  AntiquaCRM::TextLine *c_website;              /**< Webpage */
+  AntiquaCRM::URILineEdit *c_email_0;           /**< E-Mail Address */
+  AntiquaCRM::URILineEdit *c_email_1;           /**< E-Mail Address */
+  AntiquaCRM::URILineEdit *c_website;           /**< Webpage */
   AntiquaCRM::GroupBoxEdit *c_company;       /**< Company, Institut, Orga.. ? */
   AntiquaCRM::TextLine *c_company_name;      /**< Company name */
   AntiquaCRM::TextLine *c_company_employer;  /**< Company employer */
