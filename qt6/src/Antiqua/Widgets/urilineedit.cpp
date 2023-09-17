@@ -45,10 +45,11 @@ bool URILineEdit::validate(const QString &uri) const {
   if (uri.length() < 4)
     return false;
 
-  if (uri.startsWith("http")) {
-    return AntiquaCRM::AUtil::checkUrl(QUrl(uri));
+  const QString _uri = uri.toLower();
+  if (_uri.startsWith("http")) {
+    return AntiquaCRM::AUtil::checkUrl(QUrl(_uri));
   } else if (uri.contains("@")) {
-    return AntiquaCRM::AUtil::checkMail(uri);
+    return AntiquaCRM::AUtil::checkMail(_uri);
   }
   return false;
 }
