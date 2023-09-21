@@ -578,26 +578,32 @@ void BookEditor::openDNBLink() {
     return;
 
   QString _search;
+  QString _buffer;
   if (_type == "tit") {
-    _search = AntiquaCRM::AUtil::urlSearchStr(ib_title->value().toString());
+    _buffer = QString("\"");
+    _buffer.append(ib_title->value().toString());
+    _buffer.append("\"");
+    _search = AntiquaCRM::AUtil::urlSearchStr(_buffer);
   } else if (_type == "num") {
-    QString _s = ib_isbn->value().toString();
-    if (_s.length() < 10) {
+    _buffer = ib_isbn->value().toString();
+    if (_buffer.length() < 10) {
       sendStatusMessage(tr("Missing a valid ISBN Number!"));
       return;
     }
-    _search = _s;
+    _search = _buffer;
   } else if (_type == "nam") {
-    _search = AntiquaCRM::AUtil::urlSearchStr(ib_author->value().toString());
+    _buffer = QString("\"");
+    _buffer.append(ib_author->value().toString());
+    _buffer.append("\"");
+    _search = AntiquaCRM::AUtil::urlSearchStr(_buffer);
   } else if (_type == "tit+nam") {
     _type = "cql";
-    QString _s;
-    _s.append("tit%3D\"");
-    _s.append(AntiquaCRM::AUtil::urlSearchStr(ib_title->value().toString()));
-    _s.append("\"+AND+nam%3D\"");
-    _s.append(AntiquaCRM::AUtil::urlSearchStr(ib_author->value().toString()));
-    _s.append("\"");
-    _search = _s.trimmed();
+    _buffer = QString("tit=\"");
+    _buffer.append(ib_title->value().toString());
+    _buffer.append("\" AND nam=\"");
+    _buffer.append(ib_author->value().toString());
+    _buffer.append("\"");
+    _search = AntiquaCRM::AUtil::urlSearchStr(_buffer.trimmed());
   } else {
     _type = "all";
     _search = AntiquaCRM::AUtil::urlSearchStr(ib_title->value().toString());
@@ -615,6 +621,10 @@ void BookEditor::openDNBLink() {
 #endif
 
   btn_dnbQuery->openLink(_query);
+
+  _buffer.clear();
+  _type.clear();
+  _search.clear();
 }
 
 void BookEditor::setSaveData() {

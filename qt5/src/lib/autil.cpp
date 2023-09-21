@@ -96,6 +96,7 @@ const QString AUtil::toMoney(double value,
 }
 
 const QString AUtil::urlSearchStr(const QString &txt) {
+  static const QRegExp spaces("\\s+");
   QString _o = txt.trimmed();
   _o.replace(".", "");
   _o.replace(",", "");
@@ -105,8 +106,10 @@ const QString AUtil::urlSearchStr(const QString &txt) {
   _o.replace("´", "");
   _o.replace("`", "");
   _o.replace("&", " ");
-  _o.replace(" ", "+");
-  _o.replace("\"", "");
+  _o.replace("\"", "%22");
+  _o.replace("=", "%3D");
+  // finally replace spaces
+  _o.replace(spaces, "+");
   return _o;
 }
 
