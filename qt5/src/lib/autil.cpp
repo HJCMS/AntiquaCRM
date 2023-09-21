@@ -52,7 +52,7 @@ const QRegExp AUtil::emailRegExp() {
 }
 
 bool AUtil::checkMail(const QString &mail) {
-  if(mail.isEmpty())
+  if (mail.isEmpty())
     return false;
 
   QRegularExpression expr(emailRegExp().pattern());
@@ -69,7 +69,7 @@ const QRegExp AUtil::phoneRegExp() {
 }
 
 bool AUtil::checkPhone(const QString &phone) {
-  if(phone.isEmpty())
+  if (phone.isEmpty())
     return false;
 
   QRegularExpression expr(phoneRegExp().pattern());
@@ -95,20 +95,19 @@ const QString AUtil::toMoney(double value,
   return lc.toCurrencyString(value, cs, 2);
 }
 
-const QString AUtil::urlSearchString(const QString &txt) {
+const QString AUtil::urlSearchStr(const QString &txt) {
   QString _o = txt.trimmed();
   _o.replace(".", "");
   _o.replace(",", "");
   _o.replace(":", " ");
   _o.replace("-", " ");
-  _o.replace("\"", "");
   _o.replace("'", "");
   _o.replace("´", "");
   _o.replace("`", "");
   _o.replace("&", " ");
   _o.replace(" ", "+");
-
-  return _o.toLower().trimmed();
+  _o.replace("\"", "");
+  return _o;
 }
 
 }; // namespace AntiquaCRM

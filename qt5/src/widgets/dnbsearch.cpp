@@ -21,6 +21,7 @@ DNBSearch::DNBSearch(QWidget *parent) : QPushButton{parent} {
   _map.insert("all", tr("Search in everything"));
   _map.insert("tit", tr("Title search"));
   _map.insert("nam", tr("Authors search"));
+  _map.insert("tit+nam", tr("Title and Author search"));
   _map.insert("num", tr("ISBN search"));
 
   m_menu = new QMenu(this);
@@ -70,7 +71,7 @@ void DNBSearch::prepareAction(QAction *action) {
   emit sendQuery();
 }
 
-void DNBSearch::sendQuery(const QUrlQuery &query) {
+void DNBSearch::openLink(const QUrlQuery &query) {
   QUrlQuery _query(query);
   _query.addQueryItem("v", "plist");
 
@@ -85,5 +86,5 @@ void DNBSearch::sendQuery(const QUrlQuery &query) {
 const QString DNBSearch::getSearchType() { return p_type; }
 
 const QStringList DNBSearch::params() {
-  return QStringList({"all", "tit", "nam", "num"});
+  return QStringList({"all", "tit", "nam", "num", "tit+nam"});
 }

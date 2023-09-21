@@ -579,7 +579,7 @@ void BookEditor::openDNBLink() {
 
   QString _search;
   if (_type == "tit") {
-    _search = AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+    _search = AntiquaCRM::AUtil::urlSearchStr(ib_title->value().toString());
   } else if (_type == "num") {
     QString _s = ib_isbn->value().toString();
     if (_s.length() < 10) {
@@ -588,10 +588,19 @@ void BookEditor::openDNBLink() {
     }
     _search = _s;
   } else if (_type == "nam") {
-    _search = AntiquaCRM::AUtil::urlSearchString(ib_author->value().toString());
+    _search = AntiquaCRM::AUtil::urlSearchStr(ib_author->value().toString());
+  } else if (_type == "tit+nam") {
+    _type = "cql";
+    QString _s;
+    _s.append("tit%3D\"");
+    _s.append(AntiquaCRM::AUtil::urlSearchStr(ib_title->value().toString()));
+    _s.append("\"+AND+nam%3D\"");
+    _s.append(AntiquaCRM::AUtil::urlSearchStr(ib_author->value().toString()));
+    _s.append("\"");
+    _search = _s.trimmed();
   } else {
     _type = "all";
-    _search = AntiquaCRM::AUtil::urlSearchString(ib_title->value().toString());
+    _search = AntiquaCRM::AUtil::urlSearchStr(ib_title->value().toString());
   }
 
   if (_search.length() < 5)
@@ -600,7 +609,12 @@ void BookEditor::openDNBLink() {
   QUrlQuery _query;
   _query.addQueryItem("key", _type);
   _query.addQueryItem("t", _search);
-  btn_dnbQuery->sendQuery(_query);
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << "DNB Search:" << Qt::endl << _query.toString();
+#endif
+
+  btn_dnbQuery->openLink(_query);
 }
 
 void BookEditor::setSaveData() {

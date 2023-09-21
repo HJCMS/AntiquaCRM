@@ -48,7 +48,7 @@ public Q_SLOTS:
    *
    * @param query - prepared query
    */
-  void sendQuery(const QUrlQuery &query);
+  void openLink(const QUrlQuery &query);
 
 public:
   /**

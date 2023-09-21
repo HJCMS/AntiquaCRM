@@ -81,7 +81,7 @@ public:
    * @brief Convert String to URL Query String with '+' delimiter for spaces!
    * @param txt
    */
-  static const QString urlSearchString(const QString &txt);
+  static const QString urlSearchStr(const QString &txt);
 };
 
 }; // namespace AntiquaCRM

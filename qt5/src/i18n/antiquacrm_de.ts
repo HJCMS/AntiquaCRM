@@ -825,7 +825,7 @@
         <translation>Es fehlt eine gültige ISBN-Nummer!</translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+88"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -849,7 +849,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-435"/>
+        <location line="-449"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -2531,6 +2531,11 @@ Bild - Artikel Nr: %2</translation>
         <location line="+1"/>
         <source>Authors search</source>
         <translation>Autorensuche</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title and Author search</source>
+        <translation>Titel und Autorensuche</translation>
     </message>
     <message>
         <location line="+1"/>

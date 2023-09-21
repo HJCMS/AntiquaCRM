@@ -825,7 +825,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+88"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -847,7 +847,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-435"/>
+        <location line="-449"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2526,6 +2526,11 @@ Image - Article Id: %2</source>
     <message>
         <location line="+1"/>
         <source>Authors search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title and Author search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
