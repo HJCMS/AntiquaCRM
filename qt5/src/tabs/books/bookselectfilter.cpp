@@ -6,7 +6,8 @@
 #include <QIcon>
 
 BookSelectFilter::BookSelectFilter(QWidget *parent) : QComboBox{parent} {
-  setWhatsThis(tr("With this button you can optimize your search with some filters."));
+  setWhatsThis(
+      tr("With this button you can optimize your search with some filters."));
   setSizeAdjustPolicy(QComboBox::AdjustToContents);
   QIcon icon(":icons/view_search.png");
 
@@ -28,8 +29,9 @@ BookSelectFilter::BookSelectFilter(QWidget *parent) : QComboBox{parent} {
   insertItem(5, icon, tr("Book Publisher"), Filter::Publisher);
   setItemData(5, tr("Search Book Publishers"), Qt::ToolTipRole);
 
-  insertItem(6, icon, tr("Duration by Keyword"), Filter::Storage);
-  setItemData(6, tr("Search by keyword and storage location"), Qt::ToolTipRole);
+  insertItem(6, icon, tr("Storage Location"), Filter::Storage);
+  setItemData(6, tr("Search by Storage Location and Compartment"),
+              Qt::ToolTipRole);
 }
 
 const QJsonObject BookSelectFilter::getFilter(int index) {

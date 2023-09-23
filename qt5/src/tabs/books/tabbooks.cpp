@@ -112,6 +112,7 @@ void TabBooks::createSearchQuery(const QString &query) {
   if (query.isEmpty()) {
     // Die Standardabfrage wird aufgerufen!
     QString w_sql = m_searchBar->getSearchStatement();
+    // qDebug() << Q_FUNC_INFO << w_sql;
     if (m_searchBar->searchLength() > 0 && w_sql.length() > 1) {
       m_table->setQuery(w_sql);
       // Nur Aktivieren wenn eine Suche ausgeführt wurde.

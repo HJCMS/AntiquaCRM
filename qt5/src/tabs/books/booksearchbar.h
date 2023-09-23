@@ -20,6 +20,7 @@ class BookSearchBar final : public TabSearchBar {
   Q_OBJECT
 
 private:
+  int p_length = 2;
   BookSelectFilter *m_selectFilter;
   BookSearchLine *m_searchLeft;
   BookSearchLine *m_searchRight;

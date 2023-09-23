@@ -820,12 +820,12 @@
         <translation>Buch deaktivierung</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+26"/>
         <source>Missing a valid ISBN Number!</source>
         <translation>Es fehlt eine gültige ISBN-Nummer!</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+94"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -849,7 +849,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-449"/>
+        <location line="-459"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -892,28 +892,27 @@ Bild - Artikel Nr: %2</translation>
         <translation>Drücken Sie STRG+UMSCHALT+F, um dieses Menü schnell zu öffnen.</translation>
     </message>
     <message>
-        <location line="+55"/>
-        <location line="+84"/>
-        <source>Keyword</source>
-        <translation>Schlüsselwort</translation>
-    </message>
-    <message>
-        <location line="-45"/>
+        <location line="+99"/>
         <source>Your input is too short, increase your search!</source>
         <translation>Ihre Eingabe ist zu kurz, erweitern Sie Ihre Suche!</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Search Booktitle</source>
-        <translation>Suche Buchtitel</translation>
+        <location line="+5"/>
+        <source>Search by Booktitle</source>
+        <translation>Suche nach Buchtitel</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Authors search</source>
-        <translation>Autorensuche</translation>
+        <source>disabled</source>
+        <translation>deaktiviert</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
+        <source>Article Number</source>
+        <translation>Artikelnummer</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Single Article number or multiple separated by comma.</source>
         <translation>Einzelne Artikelnummer oder mehrere durch Komma getrennt.</translation>
     </message>
@@ -927,11 +926,31 @@ Bild - Artikel Nr: %2</translation>
         <source>and Authors</source>
         <translation>und Autoren</translation>
     </message>
+    <message>
+        <location line="+9"/>
+        <source>and Keyword</source>
+        <translation>und Schlüsselwort</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Search by Author</source>
+        <translation>Suche nach Autor</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Storage</source>
+        <translation>Lager</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>and Compartment</source>
+        <translation>und Lagerfach</translation>
+    </message>
 </context>
 <context>
     <name>BookSelectFilter</name>
     <message>
-        <location filename="../tabs/books/bookselectfilter.cpp" line="+9"/>
+        <location filename="../tabs/books/bookselectfilter.cpp" line="+10"/>
         <source>With this button you can optimize your search with some filters.</source>
         <translation>Mit dieser Schaltfläche können Sie Ihre Suche mit einigen Filtern optimieren.</translation>
     </message>
@@ -997,13 +1016,13 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Duration by Keyword</source>
-        <translation>Lager und Schlüsselwort</translation>
+        <source>Storage Location</source>
+        <translation>Lagerort</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search by keyword and storage location</source>
-        <translation>Suche mit Schlüsselwort und Lagerzuordnung</translation>
+        <source>Search by Storage Location and Compartment</source>
+        <translation>Suche nach Lagerort und Lagerfach</translation>
     </message>
 </context>
 <context>
@@ -7762,7 +7781,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+30"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+29"/>
         <source>Push to start search.</source>
         <translation>Drücken, um die Suche zu starten.</translation>
     </message>

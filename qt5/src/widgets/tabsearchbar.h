@@ -137,11 +137,17 @@ Q_SIGNALS:
 public Q_SLOTS:
   /**
    * @brief start search from minimal length
+   * @param length - Set current allowed min length. Default: 2
    */
-  void setMinLength(int);
+  void setMinLength(int length = 2);
 
 public:
   explicit TabSearchBar(QWidget *parent = nullptr);
+
+  /**
+   * @brief Default Search string length!
+   */
+  int getDefaultLength();
 
   /**
    * @brief present the selected Search syntax

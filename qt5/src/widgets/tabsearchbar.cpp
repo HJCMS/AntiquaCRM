@@ -12,8 +12,7 @@ TabSearchBar::TabSearchBar(QWidget *parent) : QToolBar{parent} {
   setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
   setContentsMargins(0, 0, 0, 0);
 
-  AntiquaCRM::ASettings cfg(this);
-  p_minLength = cfg.value("search/startlength", 5).toInt();
+  p_minLength = getDefaultLength();
 }
 
 void TabSearchBar::searchPatternChanged(int i) {
@@ -170,11 +169,16 @@ const QString TabSearchBar::prepareFieldSearch(const QString &field,
   return sql.replace(jokerPattern, "%");
 }
 
-void TabSearchBar::setMinLength(int l) {
-  if (l != p_minLength)
-    emit sendMinLengthChanged(l);
+void TabSearchBar::setMinLength(int length) {
+  if (length != p_minLength)
+    emit sendMinLengthChanged(length);
 
-  p_minLength = l;
+  p_minLength = length;
+}
+
+int TabSearchBar::getDefaultLength() {
+  AntiquaCRM::ASettings cfg(this);
+  return cfg.value("search/startlength", 3).toInt();
 }
 
 TabSearchBar::SearchPattern TabSearchBar::searchPattern() const {

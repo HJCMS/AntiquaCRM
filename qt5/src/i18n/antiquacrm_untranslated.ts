@@ -820,12 +820,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+26"/>
         <source>Missing a valid ISBN Number!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+94"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -847,7 +847,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-449"/>
+        <location line="-459"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -890,28 +890,27 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
-        <location line="+84"/>
-        <source>Keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="-45"/>
+        <location line="+99"/>
         <source>Your input is too short, increase your search!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Search Booktitle</source>
+        <location line="+5"/>
+        <source>Search by Booktitle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Authors search</source>
+        <source>disabled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
+        <source>Article Number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Single Article number or multiple separated by comma.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -925,11 +924,31 @@ Image - Article Id: %2</source>
         <source>and Authors</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+9"/>
+        <source>and Keyword</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Search by Author</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>and Compartment</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BookSelectFilter</name>
     <message>
-        <location filename="../tabs/books/bookselectfilter.cpp" line="+9"/>
+        <location filename="../tabs/books/bookselectfilter.cpp" line="+10"/>
         <source>With this button you can optimize your search with some filters.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -995,12 +1014,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>Duration by Keyword</source>
+        <source>Storage Location</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search by keyword and storage location</source>
+        <source>Search by Storage Location and Compartment</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7756,7 +7775,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabSearchBar</name>
     <message>
-        <location filename="../widgets/tabsearchbar.cpp" line="+30"/>
+        <location filename="../widgets/tabsearchbar.cpp" line="+29"/>
         <source>Push to start search.</source>
         <translation type="unfinished"></translation>
     </message>
