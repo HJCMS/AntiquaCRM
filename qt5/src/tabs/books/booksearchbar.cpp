@@ -266,7 +266,7 @@ const QString BookSearchBar::getSearchStatement() {
     _s.replace(jokerPattern, "%");
 
     QStringList _left;
-    _left << "sl_storage ILIKE '" + _s + "%'";
+    _left << "sl_storage ILIKE '" + _s + "'";
     if (_s.length() > p_length) {
       _left << prepareFieldSearch("sl_identifier", _s);
       _left << prepareFieldSearch("ib_keyword", _s);
