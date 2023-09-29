@@ -37,6 +37,20 @@ bool ANetworkIface::checkRemotePort(const QString &host, int port, int wait) {
   sock.connectToHost(host, port, QIODevice::ReadOnly);
   if (sock.waitForConnected((wait * 1000))) {
     b = true;
+  } else {
+    switch (sock.error()) {
+    case (QAbstractSocket::HostNotFoundError):
+      qWarning("CheckPort: Host not found error!");
+      break;
+
+    case (QAbstractSocket::RemoteHostClosedError):
+      qWarning("CheckPort: Host request rejected!");
+      break;
+
+    default:
+      qWarning("Unknown Socker error!");
+      break;
+    }
   }
   sock.close();
   return b;

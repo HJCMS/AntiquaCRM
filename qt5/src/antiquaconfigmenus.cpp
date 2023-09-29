@@ -5,9 +5,10 @@
 #include "companydata.h"
 #include "configdialog.h"
 #include "deliverservicedialog.h"
+#include "designationsdialog.h"
 #include "keywordedit.h"
 #include "messagetemplates.h"
-#include "designationsdialog.h"
+#include "publishersedit.h"
 #include "storageeditdialog.h"
 
 AntiquaConfigMenus::AntiquaConfigMenus(QMenuBar *parent) : QMenu{parent} {
@@ -29,6 +30,10 @@ AntiquaConfigMenus::AntiquaConfigMenus(QMenuBar *parent) : QMenu{parent} {
   ac_designations = m_tables->addAction(tr("Book cover description"));
   ac_designations->setIcon(configIcon);
   connect(ac_designations, SIGNAL(triggered()), SLOT(openDesignationsDialog()));
+
+  ac_publishers = m_tables->addAction(tr("Book Publishers"));
+  ac_publishers->setIcon(configIcon);
+  connect(ac_publishers, SIGNAL(triggered()), SLOT(openBookPublisherDialog()));
 
   ac_storage = m_tables->addAction(tr("Storage"));
   ac_storage->setIcon(configIcon);
@@ -85,6 +90,12 @@ void AntiquaConfigMenus::openDeliveryDialog() {
 
 void AntiquaConfigMenus::openTemplatesDialog() {
   MessageTemplates *d = new MessageTemplates(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void AntiquaConfigMenus::openBookPublisherDialog() {
+  PublishersEdit *d = new PublishersEdit(this);
   d->exec();
   d->deleteLater();
 }

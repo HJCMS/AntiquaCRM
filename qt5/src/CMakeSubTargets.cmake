@@ -1,54 +1,56 @@
 SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_BINARY_DIR}/widgets
 	${CMAKE_CURRENT_SOURCE_DIR}/widgets
-	${CMAKE_CURRENT_BINARY_DIR}/utils/designations
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/designations
-	${CMAKE_CURRENT_BINARY_DIR}/utils/companydata
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/companydata
-	${CMAKE_CURRENT_BINARY_DIR}/utils/returnorder
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/returnorder
-	${CMAKE_CURRENT_BINARY_DIR}/utils/helper
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/helper
-	${CMAKE_CURRENT_BINARY_DIR}/utils/aboutdialogs
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/aboutdialogs
-	${CMAKE_CURRENT_BINARY_DIR}/utils/printing
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/printing
-	${CMAKE_CURRENT_BINARY_DIR}/utils/purchasetable
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/purchasetable
+	${CMAKE_CURRENT_BINARY_DIR}/utils/publishers
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/publishers
 	${CMAKE_CURRENT_BINARY_DIR}/utils/templates
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/templates
-	${CMAKE_CURRENT_BINARY_DIR}/utils/mailing
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/mailing
-	${CMAKE_CURRENT_BINARY_DIR}/utils/imgedit
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/imgedit
-	${CMAKE_CURRENT_BINARY_DIR}/utils/deliveryservice
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/deliveryservice
 	${CMAKE_CURRENT_BINARY_DIR}/utils/storage
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/storage
-	${CMAKE_CURRENT_BINARY_DIR}/utils/keywordedit
-	${CMAKE_CURRENT_SOURCE_DIR}/utils/keywordedit
 	${CMAKE_CURRENT_BINARY_DIR}/utils/settings
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/settings
+	${CMAKE_CURRENT_BINARY_DIR}/utils/returnorder
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/returnorder
+	${CMAKE_CURRENT_BINARY_DIR}/utils/purchasetable
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/purchasetable
+	${CMAKE_CURRENT_BINARY_DIR}/utils/printing
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/printing
+	${CMAKE_CURRENT_BINARY_DIR}/utils/mailing
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/mailing
+	${CMAKE_CURRENT_BINARY_DIR}/utils/keywordedit
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/keywordedit
+	${CMAKE_CURRENT_BINARY_DIR}/utils/imgedit
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/imgedit
+	${CMAKE_CURRENT_BINARY_DIR}/utils/helper
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/helper
+	${CMAKE_CURRENT_BINARY_DIR}/utils/designations
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/designations
+	${CMAKE_CURRENT_BINARY_DIR}/utils/deliveryservice
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/deliveryservice
+	${CMAKE_CURRENT_BINARY_DIR}/utils/companydata
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/companydata
 	${CMAKE_CURRENT_BINARY_DIR}/utils/cache
 	${CMAKE_CURRENT_SOURCE_DIR}/utils/cache
+	${CMAKE_CURRENT_BINARY_DIR}/utils/aboutdialogs
+	${CMAKE_CURRENT_SOURCE_DIR}/utils/aboutdialogs
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/views
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/views
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/various
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/various
-	${CMAKE_CURRENT_BINARY_DIR}/tabs/cdsvinyl
-	${CMAKE_CURRENT_SOURCE_DIR}/tabs/cdsvinyl
-	${CMAKE_CURRENT_BINARY_DIR}/tabs/prints
-	${CMAKE_CURRENT_SOURCE_DIR}/tabs/prints
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/statistics
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/statistics
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/reports
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/reports
-	${CMAKE_CURRENT_BINARY_DIR}/tabs/views
-	${CMAKE_CURRENT_SOURCE_DIR}/tabs/views
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/providers
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/providers
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/prints
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/prints
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/orders
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/orders
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/customers
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/customers
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/cdsvinyl
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/cdsvinyl
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/books
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/books
 	${CMAKE_CURRENT_BINARY_DIR}/plugins
@@ -62,30 +64,31 @@ INCLUDE_DIRECTORIES (${PROJECT_INCLUDE_DIRS})
 
 SET(PROJECT_LIBRARIES
 	AntiquaWidgets
-	AntiquaDesignations
-	AntiquaCompanyData
-	AntiquaReturnOrder
-	AntiquaHelper
-	AntiquaAbout
-	AntiquaPrinting
-	AntiquaPurchaseTable
+	BookPublishers
 	AntiquaTemplates
-	AntiquaMailing
-	AntiquaImgEdit
-	DeliveryService
 	AntiquaStorage
-	AntiquaKeywords
 	AntiquaSettings
+	AntiquaReturnOrder
+	AntiquaPurchaseTable
+	AntiquaPrinting
+	AntiquaMailing
+	AntiquaKeywords
+	AntiquaImgEdit
+	AntiquaHelper
+	AntiquaDesignations
+	DeliveryService
+	AntiquaCompanyData
 	AntiquaCache
+	AntiquaAbout
+	AntiquaViews
 	AntiquaVarious
-	AntiquaCDsVinyl
-	AntiquaPrintsStitches
 	AntiquaStatistics
 	AntiquaReports
-	AntiquaViews
 	AntiquaProviders
+	AntiquaPrintsStitches
 	AntiquaOrders
 	AntiquaCustomers
+	AntiquaCDsVinyl
 	AntiquaBooks
 	AntiquaCRMPlugin
 	AntiquaCRM

@@ -22,6 +22,7 @@ private:
   QAction *ac_company;
   QAction *ac_keywords;
   QAction *ac_designations;
+  QAction *ac_publishers;
   QAction *ac_storage;
   QAction *ac_delivery;
   QAction *ac_templates;
@@ -35,6 +36,7 @@ private Q_SLOTS:
   void openStorageDialog();
   void openDeliveryDialog();
   void openTemplatesDialog();
+  void openBookPublisherDialog();
 
 public:
   explicit AntiquaConfigMenus(QMenuBar *parent);

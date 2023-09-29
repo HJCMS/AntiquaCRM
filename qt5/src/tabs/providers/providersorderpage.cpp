@@ -106,12 +106,18 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
     clause.append("')");
     query.setWhereClause(clause);
 
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << Qt::endl
+             << customer << Qt::endl
+             << query.getQueryContent();
+#endif
+
     QSqlQuery q = m_sql->query(query.getQueryContent());
     if (q.size() > 0) {
       q.next();
       qint64 id = q.value("c_id").toInt();
       QString name = q.value("display_name").toString();
-      if (id > 0 && !name.isEmpty()) {
+      if (id > 0 && name.length() > 1) {
         m_header->setHeader(name, id);
         // qDebug() << Q_FUNC_INFO << name;
         return true;
@@ -255,7 +261,7 @@ void ProvidersOrderPage::openPrinting(qint64 aid) {
   }
   _q.clear();
 
-  if(_data.size() < 2)
+  if (_data.size() < 2)
     return;
 
   BookCard *m_d = new BookCard(this);

@@ -94,7 +94,7 @@ bool AntiquaAppl::checkRemotePort() {
   if (!iface.checkRemotePort(host, port)) {
     QMessageBox::critical(nullptr, tr("SQL Server Connection"),
                           tr("The SQL Server '%1' is unreachable!").arg(host));
-    qFatal("Sql Server unreachable!");
+    qFatal("Sql Server port is unreachable!");
     return false;
   }
   return true;
@@ -207,7 +207,7 @@ int AntiquaAppl::exec() {
   if (!checkInterfaces()) {
     p_splashScreen.setMessage(tr("No Networkconnection found!"));
     mutex.unlock();
-    return 1;
+    return 0;
   }
   p_splashScreen.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
@@ -218,7 +218,7 @@ int AntiquaAppl::exec() {
   if (!checkRemotePort()) {
     p_splashScreen.setMessage(tr("SQL Server unreachable!"));
     mutex.unlock();
-    return 1;
+    return 0;
   }
   p_splashScreen.setMessage(tr("SQL Server found!"));
   mutex.unlock();
@@ -229,7 +229,7 @@ int AntiquaAppl::exec() {
   if (!checkDatabase()) {
     qFatal("No Database connected!");
     mutex.unlock();
-    return 1;
+    return 0;
   }
   p_splashScreen.setMessage(tr("Database connected!"));
   mutex.unlock();
