@@ -150,7 +150,7 @@
 <context>
     <name>AntiquaConfigMenus</name>
     <message>
-        <location filename="../antiquaconfigmenus.cpp" line="+15"/>
+        <location filename="../antiquaconfigmenus.cpp" line="+16"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -172,6 +172,11 @@
     <message>
         <location line="+4"/>
         <source>Book cover description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book Publishers</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6574,7 +6579,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+108"/>
         <source>CD/Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6723,6 +6728,92 @@ Image - Article Id: %2</source>
     <message>
         <location line="+10"/>
         <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublisherSearchbar</name>
+    <message>
+        <location filename="../utils/publishers/publishersearchbar.cpp" line="+15"/>
+        <source>Search publisher in table</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublishersEdit</name>
+    <message>
+        <location filename="../utils/publishers/publishersedit.cpp" line="+16"/>
+        <source>Publisher Editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Save current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Close this editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>new entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Clear input mask for a new entry.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <location line="+11"/>
+        <source>Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Missing values for action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublishersInput</name>
+    <message>
+        <location filename="../utils/publishers/publishersinput.cpp" line="+16"/>
+        <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublishersView</name>
+    <message>
+        <location filename="../utils/publishers/publishersview.cpp" line="+50"/>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublishersViewModel</name>
+    <message>
+        <location filename="../utils/publishers/publishersviewmodel.cpp" line="+13"/>
+        <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

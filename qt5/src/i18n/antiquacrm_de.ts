@@ -150,7 +150,7 @@
 <context>
     <name>AntiquaConfigMenus</name>
     <message>
-        <location filename="../antiquaconfigmenus.cpp" line="+15"/>
+        <location filename="../antiquaconfigmenus.cpp" line="+16"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
@@ -173,6 +173,11 @@
         <location line="+4"/>
         <source>Book cover description</source>
         <translation>Buchumschlag Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book Publishers</source>
+        <translation>Bücherverlag</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -6580,7 +6585,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+108"/>
         <source>CD/Vinyl</source>
         <translation></translation>
     </message>
@@ -6730,6 +6735,92 @@ Bild - Artikel Nr: %2</translation>
         <location line="+10"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
+    </message>
+</context>
+<context>
+    <name>PublisherSearchbar</name>
+    <message>
+        <location filename="../utils/publishers/publishersearchbar.cpp" line="+15"/>
+        <source>Search publisher in table</source>
+        <translation>Suche Verlag in Tabelle</translation>
+    </message>
+</context>
+<context>
+    <name>PublishersEdit</name>
+    <message>
+        <location filename="../utils/publishers/publishersedit.cpp" line="+16"/>
+        <source>Publisher Editor</source>
+        <translation>Verleger Editor</translation>
+    </message>
+    <message>
+        <location line="+22"/>
+        <source>Save current changes</source>
+        <translation>Aktuelle Änderungen speichern</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Close this editor</source>
+        <translation>Editor Schließen</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>new entry</source>
+        <translation>Neuer Eintrag</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Clear input mask for a new entry.</source>
+        <translation>Eingabefelder für neuen Eintrag leeren.</translation>
+    </message>
+    <message>
+        <location line="+31"/>
+        <location line="+11"/>
+        <source>Success</source>
+        <translation>Erfolgreich</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Missing values for action.</source>
+        <translation>Fehlende Werte für diese Operation.</translation>
+    </message>
+</context>
+<context>
+    <name>PublishersInput</name>
+    <message>
+        <location filename="../utils/publishers/publishersinput.cpp" line="+16"/>
+        <source>Publisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Location</source>
+        <translation>Lokation</translation>
+    </message>
+</context>
+<context>
+    <name>PublishersView</name>
+    <message>
+        <location filename="../utils/publishers/publishersview.cpp" line="+50"/>
+        <source>Delete</source>
+        <translation>Löschen</translation>
+    </message>
+</context>
+<context>
+    <name>PublishersViewModel</name>
+    <message>
+        <location filename="../utils/publishers/publishersviewmodel.cpp" line="+13"/>
+        <source>Publisher</source>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Location</source>
+        <translation>Lokation</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
