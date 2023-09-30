@@ -7,6 +7,7 @@
 
 #include <QHeaderView>
 #include <QModelIndex>
+#include <QContextMenuEvent>
 #include <QObject>
 #include <QTableView>
 #include <QWidget>
@@ -19,17 +20,23 @@ class PublishersView final : public QTableView {
 private:
   PublishersViewModel *m_model;
   QHeaderView *m_headerView;
+  const QString queryContent() const;
+  void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:
   void selected(const QModelIndex &, const QModelIndex &);
+  void deleteItem();
 
 public Q_SLOTS:
-  void showPublisher(const QString &);
+  void showPublisher(const QString &name);
+  void reload();
 
 public:
   explicit PublishersView(QWidget *parent = nullptr);
+  const QString getTableName() const;
+  bool commitQuery(const QString &query);
   QPair<QString, QString> getData(const QModelIndex &index);
-  const QModelIndex find(const QString &publisher, bool strict = true);
+  const QModelIndex index(const QString &publisher, bool strict = true);
   bool init();
 };
 

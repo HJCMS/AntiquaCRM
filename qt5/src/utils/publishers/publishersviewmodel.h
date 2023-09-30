@@ -14,7 +14,7 @@ class PublishersViewModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 
 public:
-  explicit PublishersViewModel(QObject *parent = nullptr);
+  explicit PublishersViewModel(const QString &table, QObject *parent = nullptr);
   const QMap<int, QString> headerList() const override;
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;

@@ -3,8 +3,10 @@
 
 #include "publishersviewmodel.h"
 
-PublishersViewModel::PublishersViewModel(QObject *parent)
-    : AntiquaCRM::ASqlQueryModel{QString("ref_book_publisher_de"), parent} {}
+PublishersViewModel::PublishersViewModel(const QString &table, QObject *parent)
+    : AntiquaCRM::ASqlQueryModel{table, parent} {
+  setObjectName(table + "_model");
+}
 
 const QMap<int, QString> PublishersViewModel::headerList() const {
   QMap<int, QString> _m;

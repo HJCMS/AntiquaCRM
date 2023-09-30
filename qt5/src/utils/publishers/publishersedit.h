@@ -12,7 +12,6 @@
 #include <QKeyEvent>
 #include <QModelIndex>
 #include <QObject>
-#include <QPushButton>
 #include <QStatusBar>
 #include <QWidget>
 
@@ -33,18 +32,15 @@ private:
   PublishersView *m_view;
   PublishersInput *m_input;
   QDialogButtonBox *m_buttonsBar;
-  QPushButton *btn_save;
-  QPushButton *btn_close;
   QStatusBar *m_statusBar;
 
 private:
-  void deleteEntry();
-  void updateEntry();
+  void updateEntry(const QString &publisher);
   void insertEntry();
-
-private Q_SLOTS:
   void keyPressEvent(QKeyEvent *) override;
   bool event(QEvent *) override;
+
+private Q_SLOTS:
   void rowSelected(const QModelIndex &);
   void prepareAction();
 
