@@ -9,6 +9,7 @@
 #ifdef ANTIQUACRM_DBUS_ENABLED
 #include "abusadaptor.h"
 #endif
+#include "switchdbconnection.h"
 
 #include <QDebug>
 #ifdef Q_OS_WIN
@@ -90,14 +91,9 @@ bool AntiquaAppl::checkRemotePort() {
   AntiquaCRM::ASqlSettings sqlConfig(applicationName(), this);
   QString host = sqlConfig.getParam("pg_hostname").toString();
   int port = sqlConfig.getParam("pg_port").toInt();
+  int timeout = sqlConfig.getParam("pg_timeout").toInt();
   AntiquaCRM::ANetworkIface iface;
-  if (!iface.checkRemotePort(host, port)) {
-    QMessageBox::critical(nullptr, tr("SQL Server Connection"),
-                          tr("The SQL Server '%1' is unreachable!").arg(host));
-    qFatal("Sql Server port is unreachable!");
-    return false;
-  }
-  return true;
+  return iface.checkRemotePort(host, port, timeout);
 }
 
 bool AntiquaAppl::checkDatabase() {
@@ -212,22 +208,25 @@ int AntiquaAppl::exec() {
   p_splashScreen.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-  // Step 4 - sql connection test
+  // Step 4 - sql port test
   mutex.lock();
   p_splashScreen.setMessage(tr("Check SQL Server connection!"));
   if (!checkRemotePort()) {
-    p_splashScreen.setMessage(tr("SQL Server unreachable!"));
+    SwitchDBConnection _dbd(&p_splashScreen);
+    if (_dbd.exec() == QDialog::Rejected) {
+      p_splashScreen.setMessage(tr("SQL Server unreachable!"));
+    }
     mutex.unlock();
     return 0;
   }
   p_splashScreen.setMessage(tr("SQL Server found!"));
   mutex.unlock();
 
-  // Step 5 - test database
+  // Step 5 - sql database test
   mutex.lock();
   p_splashScreen.setMessage(tr("Open Database connection."));
   if (!checkDatabase()) {
-    qFatal("No Database connected!");
+    qWarning("No Database connected!");
     mutex.unlock();
     return 0;
   }

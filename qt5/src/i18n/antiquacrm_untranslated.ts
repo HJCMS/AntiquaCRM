@@ -46,17 +46,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+95"/>
-        <source>SQL Server Connection</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>The SQL Server &apos;%1&apos; is unreachable!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location filename="../antiquaappl.cpp" line="+114"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -81,12 +71,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>SQL Server unreachable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>SQL Server found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7637,6 +7627,40 @@ Image - Article Id: %2</source>
     <message>
         <location line="+3"/>
         <source>successful saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SwitchDBConnection</name>
+    <message>
+        <location filename="../utils/settings/switchdbconnection.cpp" line="+11"/>
+        <source>Database connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Either there is no Internet connection at the target level or the DynDns registration isn&apos;t available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>You can wait until the server is available again or contact the system administrator.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>If you have configured more than one connection profile, you can alternatively switch.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>SQL Server is temporarily unavailable.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+1"/>
+        <source>Database profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -25,6 +25,7 @@ SET (subproject_HEADERS
  printsettings.cpp
  providersettings.cpp
  settingswidget.cpp
+ switchdbconnection.cpp
 )
 
 SET (subproject_SOURCES
@@ -38,6 +39,7 @@ SET (subproject_SOURCES
  printsettings.h
  providersettings.h
  settingswidget.h
+ switchdbconnection.h
 )
 
 INCLUDE_DIRECTORIES (

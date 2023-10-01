@@ -40,15 +40,27 @@ bool ANetworkIface::checkRemotePort(const QString &host, int port, int wait) {
   } else {
     switch (sock.error()) {
     case (QAbstractSocket::HostNotFoundError):
-      qWarning("CheckPort: Host not found error!");
+      qWarning("Host not found error!");
       break;
 
     case (QAbstractSocket::RemoteHostClosedError):
-      qWarning("CheckPort: Host request rejected!");
+      qWarning("Host request rejected!");
+      break;
+
+    case (QAbstractSocket::SocketTimeoutError):
+      qWarning("Connection timeout!");
+      break;
+
+    case (QAbstractSocket::ConnectionRefusedError):
+      qWarning("Connection refused!");
+      break;
+
+    case (QAbstractSocket::NetworkError):
+      qWarning("Connection unavailable!");
       break;
 
     default:
-      qWarning("Unknown Socker error!");
+      qWarning("Unknown Socket error!");
       break;
     }
   }

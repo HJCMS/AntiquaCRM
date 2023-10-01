@@ -46,17 +46,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+95"/>
-        <source>SQL Server Connection</source>
-        <translation>SQL Server Verbindung</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>The SQL Server &apos;%1&apos; is unreachable!</source>
-        <translation>Der SQL Server &apos;%1&apos; ist nicht erreichbar!</translation>
-    </message>
-    <message>
-        <location line="+22"/>
+        <location filename="../antiquaappl.cpp" line="+114"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
@@ -81,12 +71,12 @@
         <translation>Überprüfen die SQL Serverberbindung!</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>SQL Server unreachable!</source>
         <translation>SQL-Server nicht erreichbar!</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>SQL Server found!</source>
         <translation>SQL-Server gefunden!</translation>
     </message>
@@ -7644,6 +7634,40 @@ Bild - Artikel Nr: %2</translation>
         <location line="+3"/>
         <source>successful saved</source>
         <translation>erfolgreich gespeichert</translation>
+    </message>
+</context>
+<context>
+    <name>SwitchDBConnection</name>
+    <message>
+        <location filename="../utils/settings/switchdbconnection.cpp" line="+11"/>
+        <source>Database connection</source>
+        <translation>Datenbankverbindung</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Either there is no Internet connection at the target level or the DynDns registration isn&apos;t available.</source>
+        <translation>Entweder besteht auf der Zielebene keine Internetverbindung oder die DynDns-Registrierung ist nicht verfügbar.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>You can wait until the server is available again or contact the system administrator.</source>
+        <translation>Sie können warten, bis der Server wieder verfügbar ist, oder sich an den Systemadministrator wenden.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>If you have configured more than one connection profile, you can alternatively switch.</source>
+        <translation>Wenn Sie mehr als ein Verbindungsprofil konfiguriert haben, können Sie alternativ wechseln.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>SQL Server is temporarily unavailable.</source>
+        <translation>SQL Server ist vorübergehend nicht verfügbar.</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <location line="+1"/>
+        <source>Database profile</source>
+        <translation>Datenbank Profil</translation>
     </message>
 </context>
 <context>
