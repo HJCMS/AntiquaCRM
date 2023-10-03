@@ -71,9 +71,18 @@ bool ProvidersOrderPage::findCustomer(const QJsonObject &customer) {
   m_header->setHeader(fullname);
   if (customer.contains("c_postal_address")) {
     QString address = customer.value("c_postal_address").toString();
+    address.append("\n");
+
     if (customer.contains("c_phone_0")) {
-      address.append("\nTel: ");
-      address.append(customer.value("c_phone_0").toString());
+      QString _phone = customer.value("c_phone_0").toString();
+      if (_phone.length() > 3)
+        address.append("\n" + tr("Phone") + ": " + _phone);
+    }
+
+    if (customer.contains("c_email_0")) {
+      QString _email = customer.value("c_email_0").toString();
+      if (_email.length() > 3)
+        address.append("\n" + tr("eMail") + ": " + _email);
     }
     m_buyerInfo->setAddress(address);
   }
