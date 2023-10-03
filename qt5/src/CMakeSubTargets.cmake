@@ -43,6 +43,8 @@ SET (PROJECT_INCLUDE_DIRS
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/reports
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/providers
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/providers
+	${CMAKE_CURRENT_BINARY_DIR}/tabs/providers/importsedit
+	${CMAKE_CURRENT_SOURCE_DIR}/tabs/providers/importsedit
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/prints
 	${CMAKE_CURRENT_SOURCE_DIR}/tabs/prints
 	${CMAKE_CURRENT_BINARY_DIR}/tabs/orders
@@ -85,6 +87,7 @@ SET(PROJECT_LIBRARIES
 	AntiquaStatistics
 	AntiquaReports
 	AntiquaProviders
+	AntiquaImportsEdit
 	AntiquaPrintsStitches
 	AntiquaOrders
 	AntiquaCustomers

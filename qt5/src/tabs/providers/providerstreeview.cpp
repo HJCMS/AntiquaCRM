@@ -2,10 +2,15 @@
 // vim: set fileencoding=utf-8
 
 #include "providerstreeview.h"
+#include "importsedit.h"
 
+#include <QAction>
+#include <QApplication>
+#include <QClipboard>
 #include <QDate>
 #include <QDebug>
 #include <QIcon>
+#include <QMenu>
 
 ProvidersTreeView::ProvidersTreeView(QWidget *parent) : QTreeWidget{parent} {
   setColumnCount(3);
@@ -78,6 +83,35 @@ void ProvidersTreeView::addProvider(const QString &provider) {
   item->setExpanded(true);
   addTopLevelItem(item);
   resizeColumnToContents(0);
+}
+
+void ProvidersTreeView::contextMenuEvent(QContextMenuEvent *event) {
+  QModelIndex _index = indexAt(event->pos());
+  if (!_index.isValid())
+    return;
+
+  QTreeWidgetItem *_item = itemFromIndex(_index);
+  if (_item == nullptr || _item->parent() == nullptr)
+    return;
+
+  QString _id = _item->text(0);
+  if (_id.length() < 3)
+    return;
+
+  p_pair.first = _item->parent()->text(0);
+  p_pair.second = _id;
+
+  QMenu *m = new QMenu("Actions", this);
+  QAction *ac_copy = m->addAction(QIcon("://icons/edit-paste.png"),
+                                  tr("Copy Ordering Id"));
+  connect(ac_copy, SIGNAL(triggered()), SLOT(copyProviderId()));
+
+  QAction *ac_edit = m->addAction(QIcon("://icons/edit.png"),
+                                  tr("Repair Customer data"));
+  connect(ac_edit, SIGNAL(triggered()), SLOT(editProviderData()));
+
+  m->exec(event->globalPos());
+  m->deleteLater();
 }
 
 void ProvidersTreeView::itemSelected(QTreeWidgetItem *item, int) {
@@ -209,6 +243,22 @@ void ProvidersTreeView::updateItemStatus(const QString &provider,
       updateOrderStatus(item, status);
     }
   }
+}
+
+void ProvidersTreeView::editProviderData() {
+  if (p_pair.second.length() < 3)
+    return;
+
+  ImportsEdit *d = new ImportsEdit(p_pair.first, p_pair.second, this);
+  d->exec();
+  d->deleteLater();
+}
+
+void ProvidersTreeView::copyProviderId() {
+  if (p_pair.second.length() < 3)
+    return;
+
+  qApp->clipboard()->setText(p_pair.second);
 }
 
 void ProvidersTreeView::loadUpdate() {

@@ -9,6 +9,8 @@ INCLUDE_DIRECTORIES (
   ${PROJECT_INCLUDE_DIRS}
 )
 
+ADD_SUBDIRECTORY(importsedit)
+
 SET (projectLibrary_LINKER
  AntiquaCRM
  AntiquaWidgets
@@ -54,4 +56,5 @@ TARGET_LINK_LIBRARIES (${_projectLibrary} PRIVATE
   Qt${QT_VERSION_MAJOR}::Sql
   Qt${QT_VERSION_MAJOR}::Widgets
   ${projectLibrary_LINKER}
+  AntiquaImportsEdit
 )

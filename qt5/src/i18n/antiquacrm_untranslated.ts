@@ -3538,6 +3538,102 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>ImportCustomerEdit</name>
+    <message>
+        <location filename="../tabs/providers/importsedit/importcustomeredit.cpp" line="+17"/>
+        <source>Firstname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lastname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>eMail</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Phone</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Postalcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Key</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Read only</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invoice Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delivery Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ImportsEdit</name>
+    <message>
+        <location filename="../tabs/providers/importsedit/importsedit.cpp" line="+24"/>
+        <source>You can use this input mask to repair customer data imports from your service provider.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Save current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Close this editor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Failed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Edit %1 order %2</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>IntSpinBox</name>
     <message>
         <location filename="../widgets/intspinbox.cpp" line="+98"/>
@@ -4005,7 +4101,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+82"/>
         <source>is required and can&apos;t empty.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6671,7 +6767,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../tabs/providers/providerstreeview.cpp" line="+18"/>
+        <location filename="../tabs/providers/providerstreeview.cpp" line="+23"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6693,6 +6789,16 @@ Image - Article Id: %2</source>
     <message>
         <location line="+46"/>
         <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Copy Ordering Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Repair Customer data</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

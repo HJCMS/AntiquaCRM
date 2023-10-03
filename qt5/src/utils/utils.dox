@@ -24,5 +24,7 @@
  *  @defgroup _returnorder Payment returning
  *  @defgroup _companydata Company data
  *  @defgroup _designations Article Designations
+ *  @defgroup _publishersedit Publisher Editor
+ *  @defgroup _importsedit Modify Provider Imports
  * @}
  */

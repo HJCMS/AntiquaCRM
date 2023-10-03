@@ -6,9 +6,11 @@
 #define ANTIQUACRM_PROVIDERSTREEVIEW_H
 
 #include <AntiquaCRM>
+#include <QContextMenuEvent>
 #include <QDateTime>
 #include <QLabel>
 #include <QObject>
+#include <QPair>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
 #include <QWidget>
@@ -21,6 +23,11 @@ class ProvidersTreeView final : public QTreeWidget {
   Q_OBJECT
 
 private:
+  /**
+   * @brief OrderId für Kontextmenüs
+   */
+  QPair<QString, QString> p_pair;
+
   /**
    * @brief Unterklasse für die Einträge
    */
@@ -50,6 +57,11 @@ private:
    * @brief Dienstleister hinzufügen!
    */
   void addProvider(const QString &provider);
+
+  /**
+   * @brief Dienstleister Kontexteinträge
+   */
+  void contextMenuEvent(QContextMenuEvent *) override;
 
 private Q_SLOTS:
   /**
@@ -81,6 +93,16 @@ private Q_SLOTS:
    */
   void updateItemStatus(const QString &provider, const QString &orderId,
                         AntiquaCRM::OrderStatus status = AntiquaCRM::OPEN);
+
+  /**
+   * @brief Öffnet den @class ImportsEdit Dialog
+   */
+  void editProviderData();
+
+  /**
+   * @brief Bestellnumber in das Clipboard kopieren
+   */
+  void copyProviderId();
 
 Q_SIGNALS:
   /**

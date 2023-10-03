@@ -68,7 +68,7 @@
     <message>
         <location line="+5"/>
         <source>Check SQL Server connection!</source>
-        <translation>Überprüfen die SQL Serverberbindung!</translation>
+        <translation>Überprüfung der Datenbank- Serververbindung!</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3542,6 +3542,102 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>ImportCustomerEdit</name>
+    <message>
+        <location filename="../tabs/providers/importsedit/importcustomeredit.cpp" line="+17"/>
+        <source>Firstname</source>
+        <translation>Vorname</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lastname</source>
+        <translation>Nachname</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Phone</source>
+        <translation>Telefon</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Country</source>
+        <translation>Land</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Postalcode</source>
+        <translation>Postleitzahl</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Location</source>
+        <translation>Ort</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Street</source>
+        <translation>Straße</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Key</source>
+        <translation>Schlüssel</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Read only</source>
+        <translation>nur lesen</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Invoice Address</source>
+        <translation>Rechnungsanschrift</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delivery Address</source>
+        <translation>Lieferadresse</translation>
+    </message>
+</context>
+<context>
+    <name>ImportsEdit</name>
+    <message>
+        <location filename="../tabs/providers/importsedit/importsedit.cpp" line="+24"/>
+        <source>You can use this input mask to repair customer data imports from your service provider.</source>
+        <translation>Mit dieser Eingabemaske können Sie Kundendaten importe von Ihrem Dienstleister reparieren.</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Save current changes</source>
+        <translation>Aktuelle Änderungen speichern</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Close this editor</source>
+        <translation>Editor Schließen</translation>
+    </message>
+    <message>
+        <location line="+53"/>
+        <source>Success</source>
+        <translation>Erfolgreich</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Failed</source>
+        <translation>Fehlgeschlagen</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Edit %1 order %2</source>
+        <translation>Bearbeite %1 Bestellung %2</translation>
+    </message>
+</context>
+<context>
     <name>IntSpinBox</name>
     <message>
         <location filename="../widgets/intspinbox.cpp" line="+98"/>
@@ -4009,7 +4105,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Maximal zulässige Zeichenlänge</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+82"/>
         <source>is required and can&apos;t empty.</source>
         <translation>ist erforderlich und darf nicht leer sein.</translation>
     </message>
@@ -6677,7 +6773,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ProvidersTreeView</name>
     <message>
-        <location filename="../tabs/providers/providerstreeview.cpp" line="+18"/>
+        <location filename="../tabs/providers/providerstreeview.cpp" line="+23"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>
@@ -6700,6 +6796,16 @@ Bild - Artikel Nr: %2</translation>
         <location line="+46"/>
         <source>Status</source>
         <translation></translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>Copy Ordering Id</source>
+        <translation>Bestellnummer kopieren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Repair Customer data</source>
+        <translation>Kundendaten reparieren</translation>
     </message>
     <message>
         <location line="+30"/>

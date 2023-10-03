@@ -116,6 +116,7 @@ void LineEdit::setReadOnly(bool b) {
   m_edit->setReadOnly(b);
   if (b) {
     m_edit->setStyleSheet("QLineEdit {background:transparent;border:none;}");
+    m_edit->setClearButtonEnabled(false);
   } else {
     m_edit->setStyleSheet(QString());
   }
