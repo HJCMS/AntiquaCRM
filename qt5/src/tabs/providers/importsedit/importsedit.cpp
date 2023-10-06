@@ -3,11 +3,13 @@
 
 #include "importsedit.h"
 #include "importcustomeredit.h"
+#include "importsfindexisting.h"
 
 #include <QIcon>
 #include <QJsonDocument>
 #include <QLayout>
 #include <QPushButton>
+#include <QSqlRecord>
 
 ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
                          QWidget *parent)
@@ -25,8 +27,15 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
                    "imports from your service provider."));
   layout->addWidget(info);
 
+  m_mainWidget = new QStackedWidget(this);
+
+  m_finder = new ImportsFindExisting(this);
+  m_mainWidget->insertWidget(0, m_finder);
+
   m_cedit = new ImportCustomerEdit(this);
-  layout->addWidget(m_cedit);
+  m_mainWidget->insertWidget(1, m_cedit);
+
+  layout->addWidget(m_mainWidget);
   layout->setStretch(1, 1);
 
   m_buttonsBar = new QDialogButtonBox(Qt::Horizontal, this);
@@ -54,6 +63,14 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
   // ButtonBox
   connect(btn_save, SIGNAL(clicked()), SLOT(updateData()));
   connect(btn_close, SIGNAL(clicked()), SLOT(reject()));
+  // Search
+  connect(m_cedit, SIGNAL(sendFindClause(const QString &)),
+          SLOT(findSystemCustomer(const QString &)));
+  connect(m_finder, SIGNAL(sendFindClause(const QString &)),
+          SLOT(findSystemCustomer(const QString &)));
+  connect(m_finder, SIGNAL(sendUseClause(const QString &)),
+          SLOT(findSystemCustomer(const QString &)));
+  connect(m_finder, SIGNAL(sendNextPage()), SLOT(setEditPage()));
 }
 
 void ImportsEdit::keyPressEvent(QKeyEvent *e) {
@@ -76,6 +93,11 @@ bool ImportsEdit::event(QEvent *e) {
   return QDialog::event(e);
 }
 
+void ImportsEdit::setEditPage() {
+  if (m_mainWidget->currentIndex() != 1)
+    m_mainWidget->setCurrentIndex(1);
+}
+
 void ImportsEdit::updateData() {
   QJsonObject _json(p_json);
   _json.remove("customer");
@@ -86,11 +108,41 @@ void ImportsEdit::updateData() {
   _sql.append(_doc.toJson(QJsonDocument::Compact));
   _sql.append("' WHERE (pr_order='" + p_orderid + "'");
   _sql.append(" AND pr_name ILIKE '" + p_provider + "');");
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << Qt::endl << _sql;
+  return;
+#endif
   m_sql->query(_sql);
   if (m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("Success"));
     setWindowModified(false);
   } else {
+    m_statusBar->showMessage(tr("Failed"));
+    setWindowModified(true);
+  }
+}
+
+void ImportsEdit::findSystemCustomer(const QString &clause) {
+  bool _merge_call = (clause.contains("c_id", Qt::CaseSensitive));
+  QString _sql("SELECT * FROM customers WHERE " + clause + ";");
+  QSqlQuery _q = m_sql->query(_sql);
+  if (m_sql->lastError().isEmpty()) {
+    if (_q.size() > 0) {
+      QSqlRecord _r = _q.record();
+      while (_q.next()) {
+        QJsonObject _item;
+        for (int c = 0; c < _r.count(); c++) {
+          QSqlField _field = _r.field(c);
+          _item.insert(_field.name(), _q.value(_field.name()).toJsonValue());
+        }
+        if (_merge_call) // only one entry called by c_id
+          m_cedit->setOriginData(_item);
+        else
+          m_finder->addCustomer(_item);
+      }
+    }
+  } else {
+    qDebug() << Q_FUNC_INFO << _sql;
     m_statusBar->showMessage(tr("Failed"));
     setWindowModified(true);
   }
@@ -124,7 +176,6 @@ int ImportsEdit::exec() {
   _buffer.clear();
   _q.clear();
 
-  m_cedit->setData(p_json.value("customer").toObject());
-
+  m_cedit->setImportData(p_json.value("customer").toObject());
   return QDialog::exec();
 }

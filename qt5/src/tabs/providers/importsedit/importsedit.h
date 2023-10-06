@@ -13,9 +13,11 @@
 #include <QKeyEvent>
 #include <QModelIndex>
 #include <QObject>
+#include <QStackedWidget>
 #include <QStatusBar>
 #include <QWidget>
 
+class ImportsFindExisting;
 class ImportCustomerEdit;
 
 /**
@@ -30,6 +32,8 @@ private:
   const QString p_orderid;
   QJsonObject p_json;
   AntiquaCRM::ASqlCore *m_sql = nullptr;
+  QStackedWidget *m_mainWidget;
+  ImportsFindExisting *m_finder;
   ImportCustomerEdit *m_cedit;
   QDialogButtonBox *m_buttonsBar;
   QStatusBar *m_statusBar;
@@ -38,7 +42,9 @@ private:
   bool event(QEvent *) override;
 
 private Q_SLOTS:
+  void setEditPage();
   void updateData();
+  void findSystemCustomer(const QString &);
 
 public:
   explicit ImportsEdit(const QString &provider, const QString &order,

@@ -17,11 +17,13 @@ SET (subproject_LINKER
 SET (subproject_SOURCES
   importsedit.cpp
   importcustomeredit.cpp
+  importsfindexisting.cpp
 )
 
 SET (subproject_HEADERS
   importsedit.h
   importcustomeredit.h
+  importsfindexisting.h
 )
 
 ADD_LIBRARY (${_subproject} STATIC
