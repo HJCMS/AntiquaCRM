@@ -10,28 +10,35 @@
 #include <QTableWidgetItem>
 
 ImportsFindExisting::ImportsFindExisting(QWidget *parent) : QWidget{parent} {
-  setContentsMargins(2, 2, 2, 2);
-
+  setContentsMargins(0, 0, 0, 0);
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
   // BEGIN::Search
-  QGroupBox *search_group = new QGroupBox(tr("Search existing Customer"), this);
-  QHBoxLayout *search_layout = new QHBoxLayout(search_group);
-  m_firstname = new LineEdit(this);
+  QGroupBox *m_sgroup = new QGroupBox(tr("Search existing Customer"), this);
+  QHBoxLayout *m_slayout = new QHBoxLayout(m_sgroup);
+  m_slayout->setContentsMargins(2, 2, 2, 2);
+  m_firstname = new LineEdit(m_sgroup);
   m_firstname->setObjectName("c_firstname");
   m_firstname->setInfo(tr("Firstname"));
-  search_layout->addWidget(m_firstname);
-  m_lastname = new LineEdit(this);
+  m_slayout->addWidget(m_firstname);
+  m_lastname = new LineEdit(m_sgroup);
   m_lastname->setObjectName("c_lastname");
   m_lastname->setInfo(tr("Lastname"));
-  search_layout->addWidget(m_lastname);
-  QPushButton *btn_search = new QPushButton(tr("Search"), this);
-  search_layout->addWidget(btn_search);
-  layout->addWidget(search_group);
+  m_slayout->addWidget(m_lastname);
+
+  QPushButton *btn_search = new QPushButton(tr("Search"), m_sgroup);
+  m_slayout->addWidget(btn_search);
+
+  layout->addWidget(m_sgroup);
   // End::Search
 
   // BEGIN::Found
-  m_table = new QTableWidget(this);
+  const QString _info =
+      tr("Result of current customer search in the system database.");
+  QGroupBox *m_fgroup = new QGroupBox(_info, this);
+  QVBoxLayout *m_flayout = new QVBoxLayout(m_fgroup);
+  m_flayout->setContentsMargins(2, 2, 2, 2);
+  m_table = new QTableWidget(m_fgroup);
   QStringList _labels({tr("Id"), tr("Fullname"), tr("Adress")});
   m_table->setColumnCount(_labels.size());
   m_table->setHorizontalHeaderLabels(_labels);
@@ -49,19 +56,17 @@ ImportsFindExisting::ImportsFindExisting(QWidget *parent) : QWidget{parent} {
   QHeaderView *_view = m_table->horizontalHeader();
   _view->setSectionResizeMode(QHeaderView::ResizeToContents);
   _view->setStretchLastSection(true);
-  layout->addWidget(m_table);
-  // End::Found
 
-  btn_next = new QPushButton(tr("Next"), this);
-  btn_next->setEnabled(false);
-  layout->addWidget(btn_next, 0, Qt::AlignRight);
+  m_flayout->addWidget(m_table);
+  m_fgroup->setLayout(m_flayout);
+  layout->addWidget(m_fgroup);
+  // End::Found
 
   layout->addStretch();
   setLayout(layout);
 
   // Signal
   connect(btn_search, SIGNAL(clicked()), SLOT(prepareSearch()));
-  connect(btn_next, SIGNAL(clicked()), SIGNAL(sendNextPage()));
   connect(m_table, SIGNAL(cellClicked(int, int)), SLOT(itemClicked(int, int)));
 }
 
@@ -73,7 +78,6 @@ QLabel *ImportsFindExisting::info(const QString &title) {
 
 void ImportsFindExisting::itemClicked(int row, int column) {
   Q_UNUSED(column);
-  btn_next->setEnabled((row >= 0));
   emit sendUseClause("c_id=" + m_table->item(row, 0)->text());
 }
 

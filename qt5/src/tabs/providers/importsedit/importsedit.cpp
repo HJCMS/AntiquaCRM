@@ -4,6 +4,7 @@
 #include "importsedit.h"
 #include "importcustomeredit.h"
 #include "importsfindexisting.h"
+#include "importsnavbar.h"
 
 #include <QIcon>
 #include <QJsonDocument>
@@ -17,10 +18,10 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
   setObjectName("imports_edit_dialog");
   setSizeGripEnabled(true);
   setMinimumSize(550, 450);
-  setContentsMargins(2, 2, 2, 2);
+  setContentsMargins(0, 0, 0, 0);
 
   QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(0, 0, 0, 0);
+  layout->setContentsMargins(5, 0, 5, 0);
 
   QLabel *info = new QLabel(this);
   info->setText(tr("You can use this input mask to repair customer data "
@@ -38,7 +39,14 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
   layout->addWidget(m_mainWidget);
   layout->setStretch(1, 1);
 
+  m_navbar = new ImportsNavBar(this);
+  layout->addWidget(m_navbar);
+
   m_buttonsBar = new QDialogButtonBox(Qt::Horizontal, this);
+  QPushButton *btn_clear = m_buttonsBar->addButton(QDialogButtonBox::Reset);
+  btn_clear->setToolTip(tr("Clear search input"));
+  btn_clear->setStatusTip(btn_clear->toolTip());
+
   QPushButton *btn_save = m_buttonsBar->addButton(QDialogButtonBox::Save);
   btn_save->setToolTip(tr("Save current changes"));
   btn_save->setStatusTip(btn_save->toolTip());
@@ -48,6 +56,7 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
   btn_close->setStatusTip(btn_close->toolTip());
 
 #ifdef Q_OS_WIN
+  btn_clear->setIcon(QIcon(":/icons/action_reload.png"));
   btn_save->setIcon(QIcon(":/icons/action_save.png"));
   btn_close->setIcon(QIcon(":/icons/action_quit.png"));
 #endif
@@ -60,7 +69,11 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
 
   setLayout(layout);
 
+  // ImportsNavBar
+  connect(m_navbar, SIGNAL(sendPrevPage()), SLOT(setStartPage()));
+  connect(m_navbar, SIGNAL(sendNextPage()), SLOT(setEditPage()));
   // ButtonBox
+  connect(btn_clear, SIGNAL(clicked()), m_finder, SLOT(clear()));
   connect(btn_save, SIGNAL(clicked()), SLOT(updateData()));
   connect(btn_close, SIGNAL(clicked()), SLOT(reject()));
   // Search
@@ -70,7 +83,6 @@ ImportsEdit::ImportsEdit(const QString &provider, const QString &order,
           SLOT(findSystemCustomer(const QString &)));
   connect(m_finder, SIGNAL(sendUseClause(const QString &)),
           SLOT(findSystemCustomer(const QString &)));
-  connect(m_finder, SIGNAL(sendNextPage()), SLOT(setEditPage()));
 }
 
 void ImportsEdit::keyPressEvent(QKeyEvent *e) {
@@ -93,9 +105,14 @@ bool ImportsEdit::event(QEvent *e) {
   return QDialog::event(e);
 }
 
+void ImportsEdit::setStartPage() {
+  m_mainWidget->setCurrentIndex(0);
+  m_navbar->setCurrentIndex(0);
+}
+
 void ImportsEdit::setEditPage() {
-  if (m_mainWidget->currentIndex() != 1)
-    m_mainWidget->setCurrentIndex(1);
+  m_mainWidget->setCurrentIndex(1);
+  m_navbar->setCurrentIndex(1);
 }
 
 void ImportsEdit::updateData() {
@@ -108,10 +125,6 @@ void ImportsEdit::updateData() {
   _sql.append(_doc.toJson(QJsonDocument::Compact));
   _sql.append("' WHERE (pr_order='" + p_orderid + "'");
   _sql.append(" AND pr_name ILIKE '" + p_provider + "');");
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << Qt::endl << _sql;
-  return;
-#endif
   m_sql->query(_sql);
   if (m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("Success"));
@@ -135,10 +148,14 @@ void ImportsEdit::findSystemCustomer(const QString &clause) {
           QSqlField _field = _r.field(c);
           _item.insert(_field.name(), _q.value(_field.name()).toJsonValue());
         }
-        if (_merge_call) // only one entry called by c_id
+        if (_merge_call) {
+          // only one entry called by c_id
           m_cedit->setOriginData(_item);
-        else
+          // enable it
+          m_navbar->setCurrentIndex(0);
+        } else {
           m_finder->addCustomer(_item);
+        }
       }
     }
   } else {

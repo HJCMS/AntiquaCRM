@@ -9,14 +9,16 @@
 #include <QJsonObject>
 #include <QLabel>
 #include <QObject>
+#include <QScrollArea>
 #include <QSignalMapper>
 #include <QToolButton>
 #include <QWidget>
 
-class ImportCustomerEdit final : public QWidget {
+class ImportCustomerEdit final : public QScrollArea {
   Q_OBJECT
 
 private:
+  QWidget *m_widget;
   LineEdit *c_provider_import;      // display unique key
   LineEdit *o_firstname;            // origin firstname
   LineEdit *c_firstname;            // edit firstname

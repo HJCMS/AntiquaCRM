@@ -3544,7 +3544,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImportCustomerEdit</name>
     <message>
-        <location filename="../tabs/providers/importsedit/importcustomeredit.cpp" line="+20"/>
+        <location filename="../tabs/providers/importsedit/importcustomeredit.cpp" line="+25"/>
         <source>Unique Key</source>
         <translation>Eindeutiger Schlüssel</translation>
     </message>
@@ -3589,12 +3589,12 @@ Bild - Artikel Nr: %2</translation>
         <translation>Straße</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+53"/>
         <source>merge data</source>
         <translation>Daten zusammenführen</translation>
     </message>
     <message>
-        <location line="-129"/>
+        <location line="-133"/>
         <source>Read only</source>
         <translation>nur lesen</translation>
     </message>
@@ -3604,7 +3604,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Rechnungsanschrift</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+13"/>
         <source>Delivery Address</source>
         <translation>Lieferadresse</translation>
     </message>
@@ -3612,12 +3612,17 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImportsEdit</name>
     <message>
-        <location filename="../tabs/providers/importsedit/importsedit.cpp" line="+26"/>
+        <location filename="../tabs/providers/importsedit/importsedit.cpp" line="+27"/>
         <source>You can use this input mask to repair customer data imports from your service provider.</source>
         <translation>Mit dieser Eingabemaske können Sie Kundendaten importe von Ihrem Dienstleister reparieren.</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+20"/>
+        <source>Clear search input</source>
+        <translation>Suche leeren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Save current changes</source>
         <translation>Aktuelle Änderungen speichern</translation>
     </message>
@@ -3627,13 +3632,13 @@ Bild - Artikel Nr: %2</translation>
         <translation>Editor Schließen</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+79"/>
         <source>Success</source>
         <translation>Erfolgreich</translation>
     </message>
     <message>
         <location line="+3"/>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Failed</source>
         <translation>Fehlgeschlagen</translation>
     </message>
@@ -3646,12 +3651,12 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>ImportsFindExisting</name>
     <message>
-        <location filename="../tabs/providers/importsedit/importsfindexisting.cpp" line="+18"/>
+        <location filename="../tabs/providers/importsedit/importsfindexisting.cpp" line="+17"/>
         <source>Search existing Customer</source>
         <translation>Bestehenden Kunden suchen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Firstname</source>
         <translation>Vorname</translation>
     </message>
@@ -3661,12 +3666,17 @@ Bild - Artikel Nr: %2</translation>
         <translation>Nachname</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Search</source>
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
+        <source>Result of current customer search in the system database.</source>
+        <translation>Ergebnis der aktuellen Kundensuche in der Systemdatenbank.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
@@ -3685,8 +3695,16 @@ Bild - Artikel Nr: %2</translation>
         <source>Current article purchases</source>
         <translation>Aktuelle Artikelkäufe</translation>
     </message>
+</context>
+<context>
+    <name>ImportsNavBar</name>
     <message>
-        <location line="+17"/>
+        <location filename="../tabs/providers/importsedit/importsnavbar.cpp" line="+11"/>
+        <source>Back</source>
+        <translation>Zurück</translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Next</source>
         <translation>Weiter</translation>
     </message>

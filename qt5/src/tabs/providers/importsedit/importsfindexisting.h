@@ -20,7 +20,6 @@ private:
   LineEdit *m_firstname;
   LineEdit *m_lastname;
   QTableWidget *m_table;
-  QPushButton *btn_next;
   QLabel *info(const QString &title);
 
 private Q_SLOTS:
@@ -30,7 +29,6 @@ private Q_SLOTS:
 Q_SIGNALS:
   void sendUseClause(const QString &);
   void sendFindClause(const QString &);
-  void sendNextPage();
 
 public Q_SLOTS:
   void clear();

@@ -19,6 +19,7 @@
 
 class ImportsFindExisting;
 class ImportCustomerEdit;
+class ImportsNavBar;
 
 /**
  * @ingroup _importsedit
@@ -35,6 +36,7 @@ private:
   QStackedWidget *m_mainWidget;
   ImportsFindExisting *m_finder;
   ImportCustomerEdit *m_cedit;
+  ImportsNavBar *m_navbar;
   QDialogButtonBox *m_buttonsBar;
   QStatusBar *m_statusBar;
 
@@ -42,6 +44,7 @@ private:
   bool event(QEvent *) override;
 
 private Q_SLOTS:
+  void setStartPage();
   void setEditPage();
   void updateData();
   void findSystemCustomer(const QString &);
