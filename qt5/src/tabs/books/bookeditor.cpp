@@ -300,7 +300,8 @@ void BookEditor::setInputFields() {
 
   // Herausgeber
   AntiquaCRM::ACompleterData publishers("publishers");
-  ib_publisher->setCompleter(publishers.completition("name"));
+  const QStringList _publisherKeys({"name", "location"});
+  ib_publisher->setCompleter(publishers.completition(_publisherKeys));
 
   // Lager
   ib_storage->reset();
@@ -613,6 +614,7 @@ void BookEditor::openDNBLink() {
     return;
 
   QUrlQuery _query;
+  _query.addQueryItem("categoryId", "books");
   _query.addQueryItem("key", _type);
   _query.addQueryItem("t", _search);
 

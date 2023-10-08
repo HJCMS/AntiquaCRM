@@ -10,7 +10,7 @@
 DNBSearch::DNBSearch(QWidget *parent) : QPushButton{parent} {
   setObjectName("dnb_search_button");
   setIcon(QIcon(":/icons/network.png"));
-  setText(tr("Search"));
+  setText(tr("Search") + " (Beta)");
   setToolTip(tr("Opens the search page of the German National "
                 "Library in your web browser."));
   setStatusTip(tr("Link: German National Library"));
@@ -48,6 +48,8 @@ const QUrl DNBSearch::home() const {
   _url.setScheme("https");
   _url.setHost("katalog.dnb.de");
   _url.setPath("/DE/home.html");
+  //_url.setHost("portal.dnb.de");
+  //_url.setPath("/opac/enhancedSearch");
   return _url;
 }
 
@@ -56,6 +58,8 @@ const QUrl DNBSearch::list() const {
   _url.setScheme("https");
   _url.setHost("katalog.dnb.de");
   _url.setPath("/DE/list.html");
+  //_url.setHost("portal.dnb.de");
+  //_url.setPath("/opac/enhancedSearch");
   return _url;
 }
 

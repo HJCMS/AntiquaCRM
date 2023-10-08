@@ -6,6 +6,7 @@
 #define ANTIQUACRM_ACOMPLETERDATA_H
 
 #include <AGlobal>
+#include <QJsonObject>
 #include <QString>
 #include <QStringList>
 
@@ -18,9 +19,11 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY ACompleterData final {
 private:
   const QString p_basename;
+  const QJsonObject getTreeObject() const;
 
 public:
   explicit ACompleterData(const QString &basename);
+  const QStringList completition(const QStringList &keys);
   const QStringList completition(const QString &section);
 };
 
