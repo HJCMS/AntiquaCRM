@@ -17,6 +17,7 @@ DNBSearch::DNBSearch(QWidget *parent) : QPushButton{parent} {
 
   p_type = "all";
 
+  // NOTE Deprecated
   QMap<QString, QString> _map;
   _map.insert("all", tr("Search in everything"));
   _map.insert("tit", tr("Title search"));
@@ -48,8 +49,6 @@ const QUrl DNBSearch::home() const {
   _url.setScheme("https");
   _url.setHost("katalog.dnb.de");
   _url.setPath("/DE/home.html");
-  //_url.setHost("portal.dnb.de");
-  //_url.setPath("/opac/enhancedSearch");
   return _url;
 }
 
@@ -58,8 +57,6 @@ const QUrl DNBSearch::list() const {
   _url.setScheme("https");
   _url.setHost("katalog.dnb.de");
   _url.setPath("/DE/list.html");
-  //_url.setHost("portal.dnb.de");
-  //_url.setPath("/opac/enhancedSearch");
   return _url;
 }
 
@@ -85,6 +82,16 @@ void DNBSearch::openLink(const QUrlQuery &query) {
     QDesktopServices::openUrl(_url);
   else
     QDesktopServices::openUrl(home());
+}
+
+const QMap<DNBSearch::Option, QString> DNBSearch::options() const {
+  QMap<DNBSearch::Option, QString> _m;
+  _m.insert(Option::ANY, tr("Search in everything"));
+  _m.insert(Option::TITLE, tr("Title search"));
+  _m.insert(Option::AUTHOR, tr("Authors search"));
+  _m.insert(Option::TITAUT, tr("Title and Author search"));
+  _m.insert(Option::NUMERIC, tr("ISBN search"));
+  return _m;
 }
 
 const QString DNBSearch::getSearchType() { return p_type; }

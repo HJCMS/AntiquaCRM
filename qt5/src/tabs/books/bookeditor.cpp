@@ -614,8 +614,11 @@ void BookEditor::openDNBLink() {
     return;
 
   QUrlQuery _query;
-  _query.addQueryItem("categoryId", "books");
   _query.addQueryItem("key", _type);
+  _query.addQueryItem("key.GROUP", "1");
+  _query.addQueryItem("sortA", "bez");
+  _query.addQueryItem("pr", "0");
+  _query.addQueryItem("v", "plist");
   _query.addQueryItem("t", _search);
 
 #ifdef ANTIQUA_DEVELOPEMENT

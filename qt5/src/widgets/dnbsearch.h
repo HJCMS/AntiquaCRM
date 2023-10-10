@@ -22,6 +22,10 @@
  *
  * @note It does not prepare the search query, this must done by subclasses.
  *
+ * Documentations and Urls:
+ * @li https://katalog.dnb.de/
+ * @li https://blog.dnb.de/dnbkatalogbeta/
+ *
  * @ingroup widgets
  */
 class DNBSearch final : public QPushButton {
@@ -31,7 +35,17 @@ private:
   QString p_type;
   QMenu *m_menu;
   const QIcon icon() const;
+
+  /**
+   * @brief Default catalog Homepage
+   * @li https://katalog.dnb.de/DE/home.html
+   */
   const QUrl home() const;
+
+  /**
+   * @brief Query catalog in list mode
+   * @li https://katalog.dnb.de/DE/list.html
+   */
   const QUrl list() const;
 
 private Q_SLOTS:
@@ -55,6 +69,23 @@ public:
    * @param parent - parent object
    */
   explicit DNBSearch(QWidget *parent = nullptr);
+
+  enum Option {
+    ANY = 0x1,     /**< @brief Search in everything */
+    TITLE = 0x2,   /**< @brief Title search */
+    AUTHOR = 0x4,  /**< @brief Authors search */
+    TITAUT = 0x8,  /**< @brief Title and Author search */
+    NUMERIC = 0x10 /**< @brief ISBN search */
+  };
+
+  /**
+   * @brief Current Button Options
+   * @code
+   *   QMap<DNBSearch::Option, QString>
+   *   QMap<ENUM, Description>
+   * @endcode
+   */
+  const QMap<DNBSearch::Option, QString> options() const;
 
   /**
    * @brief Responses the current search type.
