@@ -18,6 +18,9 @@
 #include "apluginconfigwidget.h"
 #endif
 
+// AntiquaCRM::ADialog
+#include "adialog.h"
+
 // AntiquaCRM::AColorLuminance
 #include "acolorluminance.h"
 

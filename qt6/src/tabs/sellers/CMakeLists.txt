@@ -11,7 +11,10 @@ INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_PLUGIN_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
   ${CMAKE_CURRENT_SOURCE_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/repair
 )
+
+ADD_SUBDIRECTORY(repair)
 
 SET (plugin_SOURCES
   buyerinfo.cpp
@@ -66,4 +69,5 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaTabs
   AntiquaPrinting
   AntiquaProviders
+  SellerImportRepair
 )

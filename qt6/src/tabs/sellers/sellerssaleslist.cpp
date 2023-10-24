@@ -2,6 +2,15 @@
 // vim: set fileencoding=utf-8
 
 #include "sellerssaleslist.h"
+#include "sellerimportrepair.h"
+
+#include <QAction>
+#include <QApplication>
+#include <QClipboard>
+#include <QDate>
+#include <QDebug>
+#include <QIcon>
+#include <QMenu>
 
 SellersSalesList::SellersSalesList(QWidget *parent) : QTreeWidget{parent} {
   setColumnCount(3);
@@ -20,6 +29,35 @@ SellersSalesList::SellersSalesList(QWidget *parent) : QTreeWidget{parent} {
 
   connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this,
           SLOT(itemSelected(QTreeWidgetItem *, int)));
+}
+
+void SellersSalesList::contextMenuEvent(QContextMenuEvent *event) {
+  QModelIndex _index = indexAt(event->pos());
+  if (!_index.isValid())
+    return;
+
+  QTreeWidgetItem *_item = itemFromIndex(_index);
+  if (_item == nullptr || _item->parent() == nullptr)
+    return;
+
+  QString _id = _item->text(0);
+  if (_id.length() < 3)
+    return;
+
+  p_pair.first = _item->parent()->text(0);
+  p_pair.second = _id;
+
+  QMenu *m = new QMenu("Actions", this);
+  QAction *ac_copy = m->addAction(AntiquaCRM::antiquaIcon("edit-paste"),
+                                  tr("Copy Ordering Id"));
+  connect(ac_copy, SIGNAL(triggered()), SLOT(copyProviderId()));
+
+  QAction *ac_edit = m->addAction(AntiquaCRM::antiquaIcon("document-edit"),
+                                  tr("Repair Customer data"));
+  connect(ac_edit, SIGNAL(triggered()), SLOT(editProviderData()));
+
+  m->exec(event->globalPos());
+  m->deleteLater();
 }
 
 const QString SellersSalesList::setDateString(const QDateTime &dt) const {
@@ -203,6 +241,23 @@ void SellersSalesList::updateItemStatus(const QString &provider,
       updateOrderStatus(item, status);
     }
   }
+}
+
+void SellersSalesList::editProviderData() {
+  if (p_pair.second.length() < 3)
+    return;
+
+  SellerImportRepair *d =
+      new SellerImportRepair(p_pair.first, p_pair.second, this);
+  d->exec();
+  d->deleteLater();
+}
+
+void SellersSalesList::copyProviderId() {
+  if (p_pair.second.length() < 3)
+    return;
+
+  qApp->clipboard()->setText(p_pair.second);
 }
 
 void SellersSalesList::loadUpdate() {

@@ -10,6 +10,7 @@
 #define ANTIQUACRM_PLUGIN_SELLERS_SALESLIST_H
 
 #include <AntiquaWidgets>
+#include <QContextMenuEvent>
 #include <QDateTime>
 #include <QTreeWidget>
 #include <QTreeWidgetItem>
@@ -27,6 +28,16 @@ private:
     QString buyer;                  /**< Käufername des Dienstleisters */
     AntiquaCRM::OrderStatus status; /**< Aktueller Auftrags-Status */
   };
+
+  /**
+   * @brief OrderId für Kontextmenüs
+   */
+  QPair<QString, QString> p_pair;
+
+  /**
+   * @brief Dienstleister Kontexteinträge
+   */
+  void contextMenuEvent(QContextMenuEvent *) override;
 
   /**
    * @brief Datumskonvertierung
@@ -78,6 +89,16 @@ private Q_SLOTS:
    */
   void updateItemStatus(const QString &provider, const QString &orderId,
                         AntiquaCRM::OrderStatus status = AntiquaCRM::OPEN);
+
+  /**
+   * @brief Öffnet den @class ImportsEdit Dialog
+   */
+  void editProviderData();
+
+  /**
+   * @brief Bestellnumber in das Clipboard kopieren
+   */
+  void copyProviderId();
 
 Q_SIGNALS:
   /**

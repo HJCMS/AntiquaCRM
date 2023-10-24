@@ -56,6 +56,7 @@ SET (_library_SOURCES
   acolorluminance.cpp
   acombobox.cpp
   adatetimeedit.cpp
+  adialog.cpp
   adoublebox.cpp
   ainputwidget.cpp
   alabel.cpp
@@ -119,6 +120,7 @@ SET (_library_HEADERS
   acolorluminance.h
   acombobox.h
   adatetimeedit.h
+  adialog.h
   adoublebox.h
   ainputwidget.h
   alabel.h

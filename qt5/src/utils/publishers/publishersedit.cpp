@@ -137,8 +137,8 @@ void PublishersEdit::prepareAction() {
 }
 
 int PublishersEdit::exec() {
-  if (m_view->init()) {
-    qDebug() << Q_FUNC_INFO << "__TODO__";
-  }
+  if (!m_view->init())
+    return QDialog::Rejected;
+
   return QDialog::exec();
 }
