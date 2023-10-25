@@ -8,23 +8,16 @@ SET (ANTIQUACRM_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (_library_SOURCES
-  keywordsdialog.cpp
-)
-
-SET (_library_HEADERS
-  keywordsdialog.h
-)
-
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 ADD_LIBRARY (${_library} STATIC
-  ${_library_HEADERS}
-  ${_library_SOURCES}
   ${_library_FILES}
+  keywordsdialog.h keywordsdialog.cpp
+  keywordstable.h keywordstable.cpp
+  keywordsedit.h keywordsedit.cpp
 )
 
 SET_TARGET_PROPERTIES (${_library} PROPERTIES

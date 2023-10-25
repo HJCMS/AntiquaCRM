@@ -37,7 +37,7 @@ protected:
    *
    * Default vertical layout for sub classes.
    *
-   * @note The Main Layout is a privat QVBoxLayout
+   * @note The Main Layout is a privat QBoxLayout
    */
   QBoxLayout *layout;
 

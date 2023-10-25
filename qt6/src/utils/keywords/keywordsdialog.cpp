@@ -2,7 +2,51 @@
 // vim: set fileencoding=utf-8
 
 #include "keywordsdialog.h"
+#include "keywordsedit.h"
+#include "keywordstable.h"
 
-KeywordsDialog::KeywordsDialog(QWidget *parent) : QDialog{parent} {}
+KeywordsDialog::KeywordsDialog(QWidget *parent)
+    : AntiquaCRM::ADialog{parent}, p_queryTable{} {
+  setWindowTitle(tr("Keywords editor") + " [*]");
+  setWindowIcon(AntiquaCRM::antiquaIcon("document-edit"));
 
-int KeywordsDialog::exec() { return QDialog::exec(); }
+  m_table = new KeywordsTable(this);
+  m_table->setObjectName("query_table_view");
+  layout->addWidget(m_table);
+  layout->setStretch(0, 1);
+
+  m_edit = new KeywordsEdit(this);
+  layout->addWidget(m_edit);
+
+  btn_commit = m_buttonsBar->addButton(QDialogButtonBox::Save);
+  btn_commit->setIcon(AntiquaCRM::antiquaIcon("action-save"));
+
+  btn_create = m_buttonsBar->addButton(QDialogButtonBox::Reset);
+  btn_create->setText(tr("Clear"));
+  btn_create->setIcon(AntiquaCRM::antiquaIcon("action-add"));
+
+  // Signals
+  connect(btn_create, SIGNAL(clicked()), m_edit, SLOT(clear()));
+  connect(btn_commit, SIGNAL(clicked()), SLOT(commit()));
+  connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
+  connect(m_table, SIGNAL(signalRowSelected(const QSqlRecord &)), m_edit,
+          SLOT(setData(const QSqlRecord &)));
+}
+
+const QString KeywordsDialog::tableName() const {
+    return QString("categories_intern");
+}
+
+void KeywordsDialog::commit() {
+  QSqlRecord _r = m_edit->getData(tableName());
+  if (_r.count() > 2)
+    m_table->commitQuery(_r);
+}
+
+int KeywordsDialog::exec() {
+  if (p_queryTable.isEmpty())
+    m_table->initTable(tableName());
+
+  m_table->select();
+  return QDialog::exec();
+}

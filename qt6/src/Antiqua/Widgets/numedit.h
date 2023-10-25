@@ -45,6 +45,8 @@ public:
    */
   explicit NumEdit(QWidget *parent = nullptr);
 
+  void setReadOnly(bool b = false);
+
   void setRestrictions(const QSqlField &) override;
 
   void setRange(int min, int max = 99999);

@@ -6,18 +6,33 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_UTILS_KEYWORDSDIALOG_H
-#define ANTIQUACRM_UTILS_KEYWORDSDIALOG_H
+#ifndef ANTIQUACRM_UTILS_KEYWORDS_DIALOG_H
+#define ANTIQUACRM_UTILS_KEYWORDS_DIALOG_H
 
 #include <AntiquaWidgets>
 #include <QDialog>
+#include <QPushButton>
 
-class KeywordsDialog final : public QDialog {
- Q_OBJECT
+class KeywordsTable;
+class KeywordsEdit;
+
+class KeywordsDialog final : public AntiquaCRM::ADialog {
+  Q_OBJECT
+
+private:
+  QString p_queryTable;
+  KeywordsTable *m_table;
+  KeywordsEdit *m_edit;
+  QPushButton *btn_create;
+  QPushButton *btn_commit;
+  const QString tableName() const;
+
+private Q_SLOTS:
+  void commit();
 
 public:
   explicit KeywordsDialog(QWidget *parent = nullptr);
   int exec() override;
 };
 
-#endif
+#endif // ANTIQUACRM_UTILS_KEYWORDS_DIALOG_H

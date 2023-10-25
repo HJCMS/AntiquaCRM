@@ -62,6 +62,14 @@ void NumEdit::reset() {
   setWindowModified(false);
 }
 
+void NumEdit::setReadOnly(bool b) {
+  m_edit->setReadOnly(b);
+  if (!b)
+    m_edit->setButtonSymbols(QAbstractSpinBox::UpDownArrows);
+  else
+    m_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
+}
+
 void NumEdit::setRestrictions(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
@@ -92,9 +100,7 @@ bool NumEdit::isValid() {
   return true;
 }
 
-const QMetaType NumEdit::getType() const {
-  return QMetaType(QMetaType::Int);
-}
+const QMetaType NumEdit::getType() const { return QMetaType(QMetaType::Int); }
 
 const QVariant NumEdit::getValue() { return m_edit->value(); }
 
