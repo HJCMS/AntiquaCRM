@@ -22,9 +22,16 @@ private:
   AntiquaCRM::TextLine *m_keyword;
   AntiquaCRM::BoolBox *m_usage;
 
+private Q_SLOTS:
+  void keywordChanged();
+
+Q_SIGNALS:
+  void search(const QString &);
+
 public Q_SLOTS:
   void clear();
   void setData(const QSqlRecord &);
+  void changeId(qint64);
 
 public:
   explicit KeywordsEdit(QWidget *parent = nullptr);

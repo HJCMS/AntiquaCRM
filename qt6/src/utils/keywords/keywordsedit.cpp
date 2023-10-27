@@ -32,6 +32,14 @@ KeywordsEdit::KeywordsEdit(QWidget *parent) : QWidget{parent} {
   layout->addWidget(m_keyword, 1, 0, 1, 2);
 
   setLayout(layout);
+
+  connect(m_keyword, SIGNAL(sendInputChanged()), SLOT(keywordChanged()));
+}
+
+void KeywordsEdit::keywordChanged() {
+  const QString _str = m_keyword->getValue().toString().trimmed();
+  if (_str.length() > 2)
+    emit search(_str);
 }
 
 void KeywordsEdit::clear() {
@@ -63,6 +71,11 @@ void KeywordsEdit::setData(const QSqlRecord &record) {
     e->setValue(_field.value());
   }
   p_record = record;
+}
+
+void KeywordsEdit::changeId(qint64 id) {
+  if (id > 0)
+    m_id->setValue(id);
 }
 
 const QSqlRecord KeywordsEdit::getData(const QString &tableName) {

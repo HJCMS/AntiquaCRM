@@ -3,6 +3,9 @@
 
 #include "keywordstable.h"
 
+#include <QAction>
+#include <QMenu>
+
 KeywordsTable::KeywordsTable(QWidget *parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
@@ -13,19 +16,74 @@ KeywordsTable::KeywordsTable(QWidget *parent) : QTableView{parent} {
   setAlternatingRowColors(true);
   setSelectionBehavior(QAbstractItemView::SelectRows);
   setSelectionMode(QAbstractItemView::SingleSelection);
+  setContextMenuPolicy(Qt::CustomContextMenu);
+
   m_horizontalHeader = new AntiquaCRM::TableHeader(this);
   setHorizontalHeader(m_horizontalHeader);
 
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
-          SLOT(setItemRow(const QModelIndex &)));
+          SLOT(itemSelected(const QModelIndex &)));
+  connect(this, SIGNAL(customContextMenuRequested(const QPoint &)),
+          SLOT(contextMenuRequested(const QPoint &)));
 }
 
-void KeywordsTable::setItemRow(const QModelIndex &index) {
+const QModelIndex KeywordsTable::searchKeyword(const QString &search) {
+  QModelIndex _found = QModelIndex();
+  const QModelIndex _parent = indexAt(QPoint(1, 1));
+  for (int r = 0; r < m_tableModel->rowCount(); r++) {
+    const QModelIndex _index = _parent.sibling(r, 1);
+    QVariant _v = m_tableModel->data(_index, Qt::EditRole);
+    if (_v.isNull())
+      continue;
+
+    const QString _cell = _v.toString().trimmed();
+    if (_cell.startsWith(search, Qt::CaseInsensitive)) {
+      _found = _index;
+      break;
+    }
+  }
+  return _found;
+}
+
+void KeywordsTable::contextMenuRequested(const QPoint &p) {
+  const QModelIndex _idx = indexAt(p);
+  if (_idx.isValid()) {
+    qint64 _id =
+        m_tableModel->data(_idx.sibling(_idx.row(), 0), Qt::EditRole).toInt();
+    if (_id < 1)
+      return;
+
+    QPoint _p = mapToGlobal(p);
+    QMenu *m = new QMenu(tr("Action"), this);
+    QAction *_ac = m->addAction(tr("Delete"));
+    _ac->setObjectName("ci_id=" + QString::number(_id));
+    _ac->setIcon(AntiquaCRM::antiquaIcon("action-remove"));
+    connect(_ac, SIGNAL(triggered()), SLOT(deleteItem()));
+    m->exec(_p);
+    m->deleteLater();
+  }
+}
+
+void KeywordsTable::itemSelected(const QModelIndex &index) {
   if (index.isValid()) {
     const QSqlRecord _r = m_tableModel->record(index.row());
     if (_r.count() == m_horizontalHeader->count()) {
       emit signalRowSelected(_r);
     }
+  }
+}
+
+void KeywordsTable::deleteItem() {
+  QAction *_obj = qobject_cast<QAction *>(sender());
+  if (_obj == nullptr)
+    return;
+
+  if (_obj->objectName().startsWith("ci_id=")) {
+    QString _sql("DELETE FROM " + m_tableModel->tableName());
+    _sql.append(" WHERE " + _obj->objectName() + ";");
+    m_sql->query(_sql);
+    if (m_sql->lastError().isNull())
+      select();
   }
 }
 
@@ -47,6 +105,19 @@ void KeywordsTable::select() {
   }
 }
 
+void KeywordsTable::find(const QString &search) {
+  if (m_tableModel == nullptr || search.length() < 3)
+    return;
+
+  const QModelIndex _index = searchKeyword(search);
+  if (_index.isValid() && _index.row() > 0) {
+    int _row = _index.row();
+    selectRow(_row);
+    QVariant _id = m_tableModel->data(_index.sibling(_row, 0));
+    emit signalFound(_id.toInt());
+  }
+}
+
 bool KeywordsTable::initTable(const QString &name) {
   if (m_sql == nullptr)
     m_sql = new AntiquaCRM::ASqlCore(this);
@@ -65,12 +136,48 @@ bool KeywordsTable::initTable(const QString &name) {
   return true;
 }
 
-void KeywordsTable::commitQuery(const QSqlRecord &r) {
-  QString _sql;
+bool KeywordsTable::commitQuery(const QSqlRecord &r) {
+  qint64 _id = -1;
+  QString _keyword = r.field("ci_name").value().toString();
+  bool _usage = r.field("ci_company_usage").value().toBool();
   if (r.field("ci_id").value().toInt() == 0) {
-    _sql.append("INSERT");
+    const QModelIndex _index = searchKeyword(_keyword);
+    if (_index.isValid()) {
+      foreach (QModelIndex _index, selectedIndexes()) {
+        const QModelIndex _idm = _index.sibling(_index.row(), 0);
+        _id = m_tableModel->data(_idm, Qt::EditRole).toInt();
+        if (_id > 0)
+          break;
+      }
+    }
   } else {
-    _sql.append("UPDATE");
+    _id = r.field("ci_id").value().toInt();
   }
-  qDebug() << Q_FUNC_INFO << r << _sql;
+
+  QString _key = _keyword.trimmed();
+  QString _use = (_usage ? "true" : "false");
+  QString _sql;
+  if (_id > 0) {
+    _sql.append("UPDATE " + m_tableModel->tableName() + " SET ");
+    _sql.append(" ci_name='" + _key + "',");
+    _sql.append(" ci_company_usage='" + _use + "'");
+    _sql.append(" WHERE ci_id=" + QString::number(_id) + ";");
+  } else {
+    _sql.append("INSERT INTO " + m_tableModel->tableName());
+    _sql.append(" (ci_name,ci_company_usage) VALUES (");
+    _sql.append("'" + _key + "','" + _use + "');");
+  }
+
+  if (m_sql == nullptr)
+    m_sql = new AntiquaCRM::ASqlCore(this);
+
+  m_sql->query(_sql);
+  if (m_sql->lastError().isNull()) {
+    select();
+    return true;
+  }
+
+  const QSqlError _err = m_sql->lastError();
+  qDebug() << Q_FUNC_INFO << _err.type() << _err.text();
+  return false;
 }

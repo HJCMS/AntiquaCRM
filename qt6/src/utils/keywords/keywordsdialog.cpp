@@ -18,7 +18,11 @@ KeywordsDialog::KeywordsDialog(QWidget *parent)
   m_edit = new KeywordsEdit(this);
   layout->addWidget(m_edit);
 
-  btn_commit = m_buttonsBar->addButton(QDialogButtonBox::Save);
+  // ButtonsBar
+  btn_reject->setText(tr("Close"));
+  btn_reject->setIcon(AntiquaCRM::antiquaIcon("action-quit"));
+
+  btn_commit = m_buttonsBar->addButton(QDialogButtonBox::Apply);
   btn_commit->setIcon(AntiquaCRM::antiquaIcon("action-save"));
 
   btn_create = m_buttonsBar->addButton(QDialogButtonBox::Reset);
@@ -31,16 +35,25 @@ KeywordsDialog::KeywordsDialog(QWidget *parent)
   connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
   connect(m_table, SIGNAL(signalRowSelected(const QSqlRecord &)), m_edit,
           SLOT(setData(const QSqlRecord &)));
+
+  connect(m_table, SIGNAL(signalFound(qint64)), m_edit, SLOT(changeId(qint64)));
+
+  connect(m_edit, SIGNAL(search(const QString &)), m_table,
+          SLOT(find(const QString &)));
 }
 
 const QString KeywordsDialog::tableName() const {
-    return QString("categories_intern");
+  return QString("categories_intern");
 }
 
 void KeywordsDialog::commit() {
   QSqlRecord _r = m_edit->getData(tableName());
-  if (_r.count() > 2)
-    m_table->commitQuery(_r);
+  if (_r.count() > 2) {
+    if (m_table->commitQuery(_r))
+      m_statusBar->showMessage(tr("Update Success"), 5000);
+    else
+      m_statusBar->showMessage(tr("Update failed!"), 10000);
+  }
 }
 
 int KeywordsDialog::exec() {
