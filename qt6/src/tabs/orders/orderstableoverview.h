@@ -27,7 +27,6 @@ private:
   qint64 getTableID(const QModelIndex &index, int column = 0) override;
   bool sqlModelQuery(const QString &query) override;
   void contextMenuEvent(QContextMenuEvent *) override;
-  void createOrderReturning(qint64 oid);
 
 private Q_SLOTS:
   void contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
@@ -35,6 +34,9 @@ private Q_SLOTS:
   void setSortByColumn(int column, Qt::SortOrder order) override;
   void getSelectedItem(const QModelIndex &) override;
   void createSocketOperation(const QModelIndex &) override;
+
+Q_SIGNALS:
+  void signalCreateRefund(qint64);
 
 public Q_SLOTS:
   void setReloadView() override;

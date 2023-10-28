@@ -16,6 +16,7 @@ TextLine::TextLine(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
 
   connect(m_edit, SIGNAL(textChanged(const QString &)),
           SLOT(valueChanged(const QString &)));
+  connect(m_edit, SIGNAL(returnPressed()), SIGNAL(signalEnterPressed()));
 }
 
 void TextLine::valueChanged(const QString &) {

@@ -32,6 +32,9 @@ private Q_SLOTS:
 protected:
   void initData() override;
 
+Q_SIGNALS:
+  void signalEnterPressed();
+
 public Q_SLOTS:
   void setValue(const QVariant &) override;
 

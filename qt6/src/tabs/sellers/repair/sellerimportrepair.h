@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_SELLERS_REPAIR_IMPORT
 #define ANTIQUACRM_SELLERS_REPAIR_IMPORT
 
-#include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QEvent>
@@ -23,9 +23,8 @@
 
 class ImportRepairFinder;
 class ImportRepairEdit;
-class ImportRepairNavBar;
 
-class SellerImportRepair final : public QDialog {
+class SellerImportRepair final : public AntiquaCRM::ADialog {
   Q_OBJECT
 
 private:
@@ -36,12 +35,9 @@ private:
   QStackedWidget *m_mainWidget;
   ImportRepairFinder *m_finder;
   ImportRepairEdit *m_cedit;
-  ImportRepairNavBar *m_navbar;
-  QDialogButtonBox *m_buttonsBar;
-  QStatusBar *m_statusBar;
-
-  void keyPressEvent(QKeyEvent *) override;
-  bool event(QEvent *) override;
+  QPushButton *btn_clear;
+  AntiquaCRM::ANavigationBar *m_navbar;
+  bool init();
 
 private Q_SLOTS:
   void setStartPage();

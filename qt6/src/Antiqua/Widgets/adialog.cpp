@@ -21,6 +21,14 @@ ADialog::ADialog(QWidget *parent) : QDialog{parent} {
 
   m_buttonsBar = new QDialogButtonBox(this);
   btn_reject = m_buttonsBar->addButton(QDialogButtonBox::Cancel);
+  btn_reject->setToolTip(tr("Close without saving"));
+  btn_reject->setStatusTip(btn_reject->toolTip());
+
+  btn_apply = m_buttonsBar->addButton(QDialogButtonBox::Apply);
+  btn_apply->setToolTip(tr("Apply current changes"));
+  btn_apply->setStatusTip(btn_apply->toolTip());
+  btn_apply->setEnabled(false);
+
   mLayout->addWidget(m_buttonsBar);
 
   m_statusBar = new QStatusBar(this);

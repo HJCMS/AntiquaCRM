@@ -12,6 +12,8 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
+ADD_SUBDIRECTORY(refunding)
+
 SET (plugin_SOURCES
   orderarticledialog.cpp
   ordersconfigwidget.cpp
@@ -70,4 +72,5 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaWidgets
   AntiquaPrinting
   AntiquaTabs
+  OrdersRefunding
 )

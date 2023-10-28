@@ -54,13 +54,13 @@ void KeywordsTable::contextMenuRequested(const QPoint &p) {
       return;
 
     QPoint _p = mapToGlobal(p);
-    QMenu *m = new QMenu(tr("Action"), this);
-    QAction *_ac = m->addAction(tr("Delete"));
-    _ac->setObjectName("ci_id=" + QString::number(_id));
-    _ac->setIcon(AntiquaCRM::antiquaIcon("action-remove"));
-    connect(_ac, SIGNAL(triggered()), SLOT(deleteItem()));
-    m->exec(_p);
-    m->deleteLater();
+    QMenu *m_m = new QMenu(tr("Action"), this);
+    QAction *m_ac = m_m->addAction(tr("Delete"));
+    m_ac->setObjectName("ci_id=" + QString::number(_id));
+    m_ac->setIcon(AntiquaCRM::antiquaIcon("action-remove"));
+    connect(m_ac, SIGNAL(triggered()), SLOT(deleteItem()));
+    m_m->exec(_p);
+    m_m->deleteLater();
   }
 }
 

@@ -56,4 +56,9 @@
 #include "atextedit.h"
 #endif
 
+// AntiquaCRM::ANavigationBar
+#ifndef ANTIQUACRM_INPUT_NAVIGATIONBAR_H
+#include "anavigationbar.h"
+#endif
+
 // EOF

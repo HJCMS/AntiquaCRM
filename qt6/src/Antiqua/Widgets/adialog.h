@@ -51,7 +51,7 @@ protected:
    *
    * It can modify in subclasses ...
    */
-  QPushButton *btn_reject;
+  QPushButton *btn_apply, *btn_reject;
 
   /**
    * @brief Default StatusBar

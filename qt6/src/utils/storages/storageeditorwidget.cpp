@@ -53,7 +53,7 @@ StorageEditorWidget::StorageEditorWidget(QWidget *parent)
 
   QGroupBox *m_providers = new QGroupBox(this);
   m_providers->setObjectName("provider_bindings");
-  m_providers->setTitle(tr("Deprecated AbeBooks (ZVAB) Categories."));
+  m_providers->setTitle(tr("Deprecated Provider categories"));
   QHBoxLayout *provider_layout = new QHBoxLayout(m_providers);
   provider_layout->addWidget(subTitle("AbeBooks"));
   m_abebooks = new StorageCategory(m_providers);

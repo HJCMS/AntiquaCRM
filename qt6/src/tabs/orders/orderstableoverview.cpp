@@ -93,7 +93,7 @@ void OrdersTableOverView::contextMenuAction(
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Undo):
-    createOrderReturning(_oid);
+    emit signalCreateRefund(_oid);
     break;
 
   default:
@@ -102,13 +102,6 @@ void OrdersTableOverView::contextMenuAction(
 #endif
     break;
   };
-}
-
-void OrdersTableOverView::createOrderReturning(qint64 oid) {
-  qDebug() << Q_FUNC_INFO << "__TODO__" << oid;
-  // ReturnOrder *d = new ReturnOrder(this);
-  // if (d->exec(oid) == QDialog::Accepted) { setReloadView(); }
-  // d->deleteLater();
 }
 
 void OrdersTableOverView::setSortByColumn(int column, Qt::SortOrder order) {

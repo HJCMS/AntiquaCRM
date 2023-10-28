@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET (_sublib "SellerImportRepair")
+SET (_sublib "OrdersRefunding")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
@@ -16,9 +16,7 @@ INCLUDE_DIRECTORIES (
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_sublib} STATIC
-  sellerimportrepair.h sellerimportrepair.cpp
-  importrepairfinder.h importrepairfinder.cpp
-  importrepairedit.h importrepairedit.cpp
+  refunddialog.h refunddialog.cpp
 )
 
 SET_TARGET_PROPERTIES (${_sublib} PROPERTIES
@@ -32,6 +30,7 @@ TARGET_LINK_LIBRARIES (${_sublib} PUBLIC
   Qt6::Sql
   Qt6::Network
   Qt6::Xml
+  Qt6::PrintSupport
   AntiquaCRM
   AntiquaWidgets
   AntiquaTabs

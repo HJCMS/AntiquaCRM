@@ -21,6 +21,7 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   m_slayout->addWidget(m_lastname);
 
   QPushButton *btn_search = new QPushButton(tr("Search"), m_sgroup);
+  btn_search->setIcon(AntiquaCRM::antiquaIcon("action-search"));
   m_slayout->addWidget(btn_search);
 
   layout->addWidget(m_sgroup);
@@ -60,6 +61,7 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 
   // Signal
+  connect(m_lastname, SIGNAL(signalEnterPressed()), SLOT(prepareSearch()));
   connect(btn_search, SIGNAL(clicked()), SLOT(prepareSearch()));
   connect(m_table, SIGNAL(cellClicked(int, int)), SLOT(itemClicked(int, int)));
 }
@@ -80,7 +82,7 @@ void ImportRepairFinder::prepareSearch() {
   _query.append(m_firstname->getValue().toString());
   _query.append("' AND c_lastname ILIKE '");
   _query.append(m_lastname->getValue().toString());
-  _query.append("')");
+  _query.append("%')");
   emit sendFindClause(_query);
 }
 
@@ -88,6 +90,7 @@ void ImportRepairFinder::clear() {
   m_firstname->reset();
   m_lastname->reset();
   m_table->clearContents();
+  m_table->setRowCount(0);
 }
 
 void ImportRepairFinder::addCustomer(const QJsonObject &customer) {
