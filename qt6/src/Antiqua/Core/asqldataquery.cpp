@@ -48,14 +48,21 @@ ASqlDataQuery::ASqlDataQuery(const ASqlDataQuery &other)
   }
 }
 
+bool ASqlDataQuery::checkMetaType(QMetaType from, QMetaType cur) const {
+  if (from.id() == cur.id())
+    return true;
+
+  return QMetaType::hasRegisteredConverterFunction(from, cur);
+}
+
 const QSqlRecord ASqlDataQuery::record() const { return p_record; }
 
 int ASqlDataQuery::size() const { return p_data.size(); }
 
 const QString ASqlDataQuery::tableName() const {
-  if (isValid()) {
+  if (isValid())
     return p_record.field(0).tableName();
-  }
+
   return QString();
 }
 
@@ -106,7 +113,7 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
     return;
 
   const QMetaType _type = _field.metaType();
-  if (_type != value.metaType()) {
+  if (!checkMetaType(_type, value.metaType())) {
     qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
              qPrintable(column), _type.name(), value.metaType().name());
   }

@@ -128,7 +128,9 @@ const QVariant GenderEdit::getValue() {
   return static_cast<AntiquaCRM::Gender>(_g);
 }
 
-const QString GenderEdit::popUpHints() { return tr("__TODO__"); }
+const QString GenderEdit::popUpHints() {
+  return tr("A valid Gender is not selected and required for this Input.");
+}
 
 const QString GenderEdit::statusHints() { return tr("Gender not selected!"); }
 

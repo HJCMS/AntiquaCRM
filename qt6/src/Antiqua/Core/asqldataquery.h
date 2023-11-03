@@ -7,6 +7,7 @@
 
 #include <AGlobal>
 #include <QHash>
+#include <QMap>
 #include <QMetaType>
 #include <QSqlField>
 #include <QSqlRecord>
@@ -32,6 +33,16 @@ public:
   explicit ASqlDataQuery(const QString &tableName);
   explicit ASqlDataQuery(const QSqlRecord &record);
   explicit ASqlDataQuery(const ASqlDataQuery &other);
+
+  /**
+   * @brief Suppresses some conversion messages.
+   * @param from - MetaType how required from System.
+   * @param cur  - MetaType from Current value.
+   *
+   * Some Meta types conversion messages are not equal to current operation
+   * system. This function make a workaround to suppress this messages.
+   */
+  bool checkMetaType(QMetaType from, QMetaType cur) const;
 
   /**
    * @brief Current SQL Table Record

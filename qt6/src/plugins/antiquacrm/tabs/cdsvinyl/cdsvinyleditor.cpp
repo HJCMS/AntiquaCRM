@@ -580,7 +580,7 @@ void CDsVinylEditor::setFinalLeaveEditor(bool force) {
 }
 
 void CDsVinylEditor::setStorageCompartments() {
-  // TODO
+  qInfo("TODO CDsVinylEditor::setStorageCompartments");
 }
 
 void CDsVinylEditor::setLoadThumbnail(qint64 articleId) {
@@ -762,6 +762,6 @@ bool CDsVinylEditor::createNewEntry() {
 }
 
 bool CDsVinylEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << Q_FUNC_INFO << "TODO" << object;
+  qDebug() << "TODO CDsVinylEditor::createCustomEntry" << object;
   return true;
 }

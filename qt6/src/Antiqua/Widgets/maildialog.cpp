@@ -133,10 +133,9 @@ void MailDialog::setRecipientData() {
             _value.toString().isEmpty())
           continue;
 
-        if (_name == "c_gender") {
-          // TODO tplData
+        if (_name == "c_gender")
           p_gender = _value.toInt();
-        }
+
         _map.insert(_name, _value);
       }
     }

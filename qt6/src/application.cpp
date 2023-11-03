@@ -207,6 +207,5 @@ int Application::exec() {
   m_systray->show();
   m_window->openWindow();
 
-  // TODO
   return QApplication::exec();
 }

@@ -41,6 +41,5 @@ AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
 }
 
 bool TabBooks::createInterface(QObject *parent) {
-  // TODO
   return (parent != nullptr);
 }

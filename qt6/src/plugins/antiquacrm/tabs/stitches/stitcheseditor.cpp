@@ -147,7 +147,10 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_format = new AntiquaCRM::TextLine(this);
   ip_format->setObjectName("ip_format");
   ip_format->setInputToolTip(infoText->text());
-  tempWhatsThis = tr("FORMAT __TODO__");
+  tempWhatsThis =
+      tr("The format information depends on the metric unit system of the "
+         "local user. Images have standard formats which are defined "
+         "elsewhere. Mainly dimensions are given here.");
   ip_format->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_format, row2c++, 1, 1, 1);
 
@@ -293,7 +296,7 @@ void StitchesEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ip_since";
   ignoreFields << "ip_changed";
-  ignoreFields << "ip_type"; // only for orders!
+  ignoreFields << "ip_type";          // only for orders!
   ignoreFields << "ip_including_vat"; /* DEPRECATED */
 
   m_tableData = initTableData(STITCHES_TABLE_NAME);
@@ -782,6 +785,6 @@ bool StitchesEditor::createNewEntry() {
 }
 
 bool StitchesEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << Q_FUNC_INFO << "TODO" << object;
+  qDebug() << "TODO StitchesEditor::createCustomEntry" << object;
   return true;
 }
