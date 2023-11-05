@@ -22,6 +22,7 @@ SET (plugin_SOURCES
   orderseditor.cpp
   orderssearchbar.cpp
   ordersstatusbar.cpp
+  orderstatusactionframe.cpp
   orderstabledelegate.cpp
   orderstablemodel.cpp
   orderstableoverview.cpp
@@ -40,6 +41,7 @@ SET (plugin_HEADERS
   orderseditor.h
   orderssearchbar.h
   ordersstatusbar.h
+  orderstatusactionframe.h
   orderstabledelegate.h
   orderstablemodel.h
   orderstableoverview.h

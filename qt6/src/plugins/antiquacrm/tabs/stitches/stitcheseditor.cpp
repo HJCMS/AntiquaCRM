@@ -785,6 +785,7 @@ bool StitchesEditor::createNewEntry() {
 }
 
 bool StitchesEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << "TODO StitchesEditor::createCustomEntry" << object;
+  Q_UNUSED(object);
+  qInfo("Unused function for this plugin, skipped!");
   return true;
 }

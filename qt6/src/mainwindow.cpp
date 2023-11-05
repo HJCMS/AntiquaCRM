@@ -44,7 +44,7 @@ bool MainWindow::createSocketListener() {
   connect(m_rx, SIGNAL(sendOperation(const QString &, const QJsonObject &)),
           SLOT(setAction(const QString &, const QJsonObject &)));
   connect(m_rx, SIGNAL(sendMessage(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
+          SLOT(statusInfoMessage(const QString &)));
 
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
 }

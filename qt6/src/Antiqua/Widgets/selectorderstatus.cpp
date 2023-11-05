@@ -11,12 +11,17 @@ SelectOrderStatus::SelectOrderStatus(QWidget *parent)
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setMinimumContentsLength(m_edit->withoutDisclosures().length());
   layout->addWidget(m_edit);
+  p_onload_status = AntiquaCRM::OrderStatus::OPEN;
   initData();
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void SelectOrderStatus::valueChanged(int) {
-  setWindowModified(true);
+void SelectOrderStatus::valueChanged(int index) {
+  int _id = m_edit->itemData(index, Qt::UserRole).toInt();
+  if (_id >= 0) {
+    setWindowModified(true);
+    emit sendStatusChanged(static_cast<AntiquaCRM::OrderStatus>(_id));
+  }
   emit sendInputChanged();
 }
 
@@ -65,8 +70,10 @@ void SelectOrderStatus::setValue(const QVariant &value) {
     return;
   }
   int _index = m_edit->findData(value.toInt(), Qt::UserRole);
-  if (_index > 0)
+  if (_index > 0) {
     m_edit->setCurrentIndex(_index);
+    p_onload_status = static_cast<AntiquaCRM::OrderStatus>(value.toInt());
+  }
 }
 
 void SelectOrderStatus::setFocus() { m_edit->setFocus(); }
@@ -77,6 +84,10 @@ void SelectOrderStatus::reset() {
 }
 
 void SelectOrderStatus::setReadOnly(bool b) { m_edit->setEnabled(!b); }
+
+void SelectOrderStatus::setReject() {
+  setValue(p_onload_status);
+}
 
 void SelectOrderStatus::setRestrictions(const QSqlField &field) {
   setRequired((field.requiredStatus() == QSqlField::Required));

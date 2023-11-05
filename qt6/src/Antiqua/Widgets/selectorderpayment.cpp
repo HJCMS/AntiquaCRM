@@ -11,12 +11,17 @@ SelectOrderPayment::SelectOrderPayment(QWidget *parent)
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setMinimumContentsLength(m_edit->withoutDisclosures().length());
   layout->addWidget(m_edit);
+  p_onload_status = AntiquaCRM::OrderPayment::NOTPAID;
   initData();
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void SelectOrderPayment::valueChanged(int) {
-  setWindowModified(true);
+void SelectOrderPayment::valueChanged(int index) {
+  int _id = m_edit->itemData(index, Qt::UserRole).toInt();
+  if (_id >= 0) {
+    setWindowModified(true);
+    emit sendStatusChanged(static_cast<AntiquaCRM::OrderPayment>(_id));
+  }
   emit sendInputChanged();
 }
 
@@ -31,26 +36,36 @@ void SelectOrderPayment::initData() {
   int _c = 1;
   // Warte auf Zahlung
   m_edit->insertItem(_c, tr("Open"), AntiquaCRM::OrderPayment::NOTPAID);
+  m_edit->setItemData(_c, tr("Waiting for payment."), Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("dialog-warning"));
 
-  // Bezahlt
+  // Bezahlstatus
   m_edit->insertItem(_c, tr("Payed"), AntiquaCRM::OrderPayment::PAYED);
+  m_edit->setItemData(_c, tr("Order is already paid."), Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("dialog-ok-apply"));
 
-  // Erinnert
-  m_edit->insertItem(_c, tr("Remind"), AntiquaCRM::OrderPayment::REMIND);
+  // Erinnerung
+  m_edit->insertItem(_c, tr("Reminded"), AntiquaCRM::OrderPayment::REMIND);
+  m_edit->setItemData(_c, tr("The recipient was reminded."), Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("flag-yellow"));
 
-  // Ermahnt
-  m_edit->insertItem(_c, tr("Admonish"), AntiquaCRM::OrderPayment::ADMONISH);
+  // Ermahnung
+  m_edit->insertItem(_c, tr("Admonished"), AntiquaCRM::OrderPayment::ADMONISH);
+  m_edit->setItemData(_c, tr("The recipient has been admonished."),
+                      Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("flag-yellow"));
 
-  // Retour
-  m_edit->insertItem(_c, tr("Returned"), AntiquaCRM::OrderPayment::RETURN);
+  // Rücksendung
+  m_edit->insertItem(_c, tr("Refunding"), AntiquaCRM::OrderPayment::RETURN);
+  m_edit->setItemData(_c, tr("Creates a refunding for this order."),
+                      Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("action-redo"));
 
   // Inkasso
-  m_edit->insertItem(_c, tr("Collproc"), AntiquaCRM::OrderPayment::COLLPROC);
+  m_edit->insertItem(_c, tr("Collection process"),
+                     AntiquaCRM::OrderPayment::COLLPROC);
+  m_edit->setItemData(_c, tr("This order containing a collection transaction."),
+                      Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("flag-red"));
 
   setWindowModified(false);
@@ -64,8 +79,10 @@ void SelectOrderPayment::setValue(const QVariant &value) {
     return;
   }
   int _index = m_edit->findData(value.toInt(), Qt::UserRole);
-  if (_index > 0)
+  if (_index > 0) {
     m_edit->setCurrentIndex(_index);
+    p_onload_status = static_cast<AntiquaCRM::OrderPayment>(value.toInt());
+  }
 }
 
 void SelectOrderPayment::setFocus() { m_edit->setFocus(); }
@@ -75,9 +92,9 @@ void SelectOrderPayment::reset() {
   setWindowModified(false);
 }
 
-void SelectOrderPayment::setReadOnly(bool b) {
-  m_edit->setEnabled(!b);
-}
+void SelectOrderPayment::setReadOnly(bool b) { m_edit->setEnabled(!b); }
+
+void SelectOrderPayment::setReject() { setValue(p_onload_status); }
 
 void SelectOrderPayment::setRestrictions(const QSqlField &field) {
   setRequired((field.requiredStatus() == QSqlField::Required));

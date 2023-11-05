@@ -7,6 +7,7 @@
 #include "orderscostsettings.h"
 #include "orderscustomerinfo.h"
 #include "orderstableview.h"
+#include "orderstatusactionframe.h"
 
 #include <AntiquaMail>
 #include <AntiquaPrinting>
@@ -37,22 +38,10 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   o_invoice_id->setRequired(true);
   row0->addWidget(o_invoice_id);
   row0->addStretch(1);
-  // Auftragsstatus
-  o_order_status = new AntiquaCRM::SelectOrderStatus(this);
-  o_order_status->setObjectName("o_order_status");
-  o_order_status->setBuddyLabel(tr("Order status"));
-  o_order_status->setValue(AntiquaCRM::OrderStatus::OPEN);
-  _infotxt = tr("Set the order status for the current order.");
-  o_order_status->setWhatsThisText(_infotxt);
-  row0->addWidget(o_order_status);
-  // Zahlungsstatus
-  o_payment_status = new AntiquaCRM::SelectOrderPayment(this);
-  o_payment_status->setObjectName("o_payment_status");
-  o_payment_status->setBuddyLabel(tr("Payment status"));
-  o_payment_status->setValue(AntiquaCRM::OrderPayment::NOTPAID);
-  _infotxt = tr("Set the payment status for the current order.");
-  o_payment_status->setWhatsThisText(_infotxt);
-  row0->addWidget(o_payment_status);
+
+  // Delivery and Payment status
+  m_orderStatus = new OrderStatusActionFrame(this);
+  row0->addWidget(m_orderStatus);
 
   mainLayout->addLayout(row0);
   // END:Row0
@@ -107,6 +96,12 @@ OrdersEditor::OrdersEditor(QWidget *parent)
 
   // Register modified changes
   registerInputChanged();
+
+  // Signals::OrderStatusActionFrame
+  connect(m_orderStatus, SIGNAL(sendNoticeMessage(const QString &)),
+          SLOT(openNoticeMessage(const QString &)));
+  connect(m_orderStatus, SIGNAL(sendNotifyStatus(const QString &)),
+          SLOT(pushStatusMessage(const QString &)));
 
   // Signals:ActionsBar
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
@@ -308,7 +303,7 @@ void OrdersEditor::createSqlUpdate() {
   // Wenn der Status der Datenbank nicht auf abschließen steht
   // und der Anwender den Auftrag abschließt.
   // Muss das Datum für geliefert hier gesetzt werden!
-  if (!databaseOrderStatus() && currentOrderStatus()) {
+  if (!databaseOrderStatus() && m_orderStatus->currentOrderStatus()) {
     _set.append("o_delivered=CURRENT_TIMESTAMP");
     _changes++;
   }
@@ -634,11 +629,6 @@ bool OrdersEditor::databaseOrderStatus() {
           ps_t == AntiquaCRM::OrderPayment::PAYED);
 }
 
-bool OrdersEditor::currentOrderStatus() {
-  return (paymentStatus() == AntiquaCRM::OrderPayment::PAYED &&
-          orderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
-}
-
 qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 cid) {
   QStringList _clause;
   QStringList _fields("c_firstname");
@@ -715,11 +705,6 @@ void OrdersEditor::setDefaultValues() {
   // Payment Method
   setDataField(m_tableData->getProperties("o_payment_method"),
                AntiquaCRM::INVOICE_PREPAYMENT_RESERVED);
-}
-
-void OrdersEditor::setStatusProtection(bool b) {
-  o_payment_status->setReadOnly(b);
-  o_order_status->setReadOnly(b);
 }
 
 void OrdersEditor::setSaveData() {
@@ -847,16 +832,6 @@ void OrdersEditor::setRestore() {
   setEnabled(true);
 }
 
-AntiquaCRM::OrderPayment OrdersEditor::paymentStatus() {
-  int _id = o_payment_status->getValue().toInt();
-  return static_cast<AntiquaCRM::OrderPayment>(_id);
-}
-
-AntiquaCRM::OrderStatus OrdersEditor::orderStatus() {
-  int _id = o_order_status->getValue().toInt();
-  return static_cast<AntiquaCRM::OrderStatus>(_id);
-}
-
 bool OrdersEditor::addArticle(qint64 aid) {
   if (aid < 1)
     return false;
@@ -877,7 +852,6 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
 
   setInputFields();
   setResetModified(inputFields);
-  o_order_status->setValue(AntiquaCRM::OrderStatus::STARTED);
 
   AntiquaCRM::ASqlFiles _tpl("query_order_by_oid");
   if (!_tpl.openTemplate())
@@ -912,7 +886,7 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
     setEnabled(true);
   }
 
-  setStatusProtection(databaseOrderStatus());
+  m_orderStatus->setStatusProtection(databaseOrderStatus());
   return _retval;
 }
 
@@ -1038,7 +1012,7 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
     if (orderinfo.contains("o_payment_confirmed")) {
       bool paypal_status = (!orderinfo.value("o_payment_confirmed").isNull());
       if (paypal_status)
-        o_payment_status->setValue(AntiquaCRM::OrderPayment::PAYED);
+        m_orderStatus->setOrderPayment(AntiquaCRM::OrderPayment::PAYED);
     }
 
     foreach (QString key, orderinfo.keys()) {

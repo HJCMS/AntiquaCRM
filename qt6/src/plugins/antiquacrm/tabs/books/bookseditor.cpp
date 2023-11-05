@@ -394,7 +394,7 @@ void BooksEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "ib_since";
   ignoreFields << "ib_changed";
-  ignoreFields << "ib_type"; // only for orders!
+  ignoreFields << "ib_type";          // only for orders!
   ignoreFields << "ib_including_vat"; /* DEPRECATED */
 
   // Load default table data
@@ -895,6 +895,7 @@ bool BooksEditor::createNewEntry() {
 }
 
 bool BooksEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << Q_FUNC_INFO << "TODO" << object;
+  Q_UNUSED(object);
+  qInfo("Unused function for this plugin, skipped!");
   return true;
 }

@@ -27,12 +27,16 @@ class ANTIQUACRM_LIBRARY SelectOrderPayment final
 
 private:
   AComboBox *m_edit;
+  AntiquaCRM::OrderPayment p_onload_status;
 
 private Q_SLOTS:
   void valueChanged(int);
 
 protected:
   void initData() override;
+
+Q_SIGNALS:
+  void sendStatusChanged(AntiquaCRM::OrderPayment);
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
@@ -42,6 +46,11 @@ public Q_SLOTS:
   void reset() override;
 
   void setReadOnly(bool b = false);
+
+  /**
+   * @brief Reject last operation and setValue(p_onload_status)
+   */
+  void setReject();
 
 public:
   /**

@@ -13,6 +13,7 @@
 #include <AntiquaWidgets>
 #include <QObject>
 
+class OrderStatusActionFrame;
 class OrdersCustomerInfo;
 class OrdersCostSettings;
 class OrdersTableView;
@@ -29,8 +30,7 @@ private:
   // Layout Row0
   AntiquaCRM::SerialId *o_id;
   AntiquaCRM::SerialId *o_invoice_id;
-  AntiquaCRM::SelectOrderStatus *o_order_status;
-  AntiquaCRM::SelectOrderPayment *o_payment_status;
+  OrderStatusActionFrame *m_orderStatus;
 
   // Layout Row1
   OrdersCustomerInfo *m_customerInfo;
@@ -176,23 +176,9 @@ private:
    * @li ASqlDataQuery:o_order_status == AntiquaCRM::OrderStatus::DELIVERED
    *
    * Wenn beide Werte ok sind wird true zurück gegeben!
-   * @sa setStatusProtection
+   * @sa OrderStatusActionFrame::setStatusProtection
    */
   bool databaseOrderStatus();
-
-  /**
-   * @brief Eingabemasken Status des Auftrags
-   *
-   * Wird verwendet um zu Prüfen ob der Eintrag geschlossen werden soll.
-   *
-   * Prüft wiefolgt ob die Eingabemasken Werte gesetzt sind:
-   * @li AInputWidget::o_payment_status == AntiquaCRM::OrderPayment::PAYED
-   * @li AInputWidget::o_order_status == AntiquaCRM::OrderStatus::DELIVERED
-   *
-   * Wenn beide Werte ok sind wird true zurück gegeben!
-   * @sa setStatusProtection
-   */
-  bool currentOrderStatus();
 
   /**
    * @brief Kundennummer Suchen/Prüfen
@@ -226,11 +212,6 @@ private:
   void setDefaultValues();
 
 private Q_SLOTS:
-  /**
-   * @brief OrderStatus und PaymentStatus sperren?
-   */
-  void setStatusProtection(bool b = false);
-
   /**
    * @brief Speichern einleiten
    *
@@ -308,16 +289,6 @@ public Q_SLOTS:
 public:
   explicit OrdersEditor(QWidget *parent = nullptr);
   virtual ~OrdersEditor() override;
-
-  /**
-   * @brief Zahlungsstatus abfragen
-   */
-  AntiquaCRM::OrderPayment paymentStatus();
-
-  /**
-   * @brief Auftragsstatus abfragen
-   */
-  AntiquaCRM::OrderStatus orderStatus();
 
   /**
    * @brief Insert Article to Current Order

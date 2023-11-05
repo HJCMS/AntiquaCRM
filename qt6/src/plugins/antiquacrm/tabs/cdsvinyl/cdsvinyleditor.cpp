@@ -762,6 +762,7 @@ bool CDsVinylEditor::createNewEntry() {
 }
 
 bool CDsVinylEditor::createCustomEntry(const QJsonObject &object) {
-  qDebug() << "TODO CDsVinylEditor::createCustomEntry" << object;
+  Q_UNUSED(object);
+  qInfo("Unused function for this plugin, skipped!");
   return true;
 }
