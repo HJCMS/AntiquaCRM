@@ -7,7 +7,6 @@
 #include "orderssearchbar.h"
 #include "ordersstatusbar.h"
 #include "orderstableoverview.h"
-#include "refunding/refunddialog.h"
 
 #include <AntiquaCRM>
 #include <QtWidgets>
@@ -68,8 +67,8 @@ OrdersWidget::OrdersWidget(QWidget *parent)
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
-  connect(m_table, SIGNAL(signalCreateRefund(qint64)),
-          SLOT(createRefund(qint64)));
+  connect(m_table, SIGNAL(signalCreateRefund(qint64)), m_editorWidget,
+          SLOT(setRefunding(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
@@ -95,17 +94,6 @@ void OrdersWidget::popupWarningTabInEditMode() {
   info.append(tr("You need to save and close the editor first."));
   info.append("</p>");
   QMessageBox::information(this, windowTitle(), info);
-}
-
-void OrdersWidget::createRefund(qint64 oid) {
-  if (oid < 1)
-    return;
-
-  RefundingDialog *d = new RefundingDialog(oid, this);
-  if (d->exec() == QDialog::Accepted) {
-    qDebug() << Q_FUNC_INFO << "TODO Quit Refunding dialog";
-  }
-  d->deleteLater();
 }
 
 void OrdersWidget::setDefaultTableView() {

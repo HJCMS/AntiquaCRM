@@ -42,21 +42,54 @@ private:
   // BEGIN:Row3
   AntiquaCRM::TabsEditActionBar *m_actionBar;
 
+  /**
+   * @brief Standardfelder setzen
+   */
   void setInputFields() override;
 
   /**
-   * @brief Editor Eingabefeld befüllen
+   * @brief Alle Editor Eingabefeld befüllen
    */
   bool setDataField(const QSqlField &field, const QVariant &value) override;
 
+  /**
+   * @brief Lese Daten von AntiquaCRM::ASqlDataQuery
+   *
+   * Erstelle Iterator auf m_tableData->getDataset() und Rufe setDataField auf.
+   */
   void importSqlResult() override;
 
+  /**
+   * @brief SQL INSERT/UPDATE/DELETE senden und verarbeiten.
+   *
+   * Wenn bei einem INSERT eine neue o_id mit "RETRURN o_id" zurück gegeben
+   * wurde, werden folgende Methoden in dieser Reihenfolge verarbeitet.
+   * @li m_tableData->setValue("o_id", _oid);
+   * @li setDataField(m_tableData->getProperties("o_id"), _oid);
+   * @li setOrderPaymentNumbers(_oid);
+   * @li setResetModified(inputFields);
+   *
+   * @return bool - Wenn kein Fehler vorhanden gibt es true zurück.
+   */
   bool sendSqlQuery(const QString &query) override;
 
+  /**
+   * @brief Datensätze aus den Eingabefelder lesen.
+   *
+   * Mit @ref fieldPattern und @ref getInputEditList die Eingabefelder auslesen.
+   *
+   * @return Feld-Eingabe-Datensätze
+   */
   const QHash<QString, QVariant> createSqlDataset() override;
 
+  /**
+   * @brief Erstelle PgSQL UPDATE Statement
+   */
   void createSqlUpdate() override;
 
+  /**
+   * @brief Erstelle PgSQL INSERT Statement
+   */
   void createSqlInsert() override;
 
   /**
@@ -244,6 +277,7 @@ private Q_SLOTS:
   /**
    * @defgroup UNUSED
    * @{
+   * @brief Werden in diesem Kontext nicht verwendet.
    */
   void setStorageCompartments() override{/* unused */};
   void setLoadThumbnail(qint64) override{/* unused */};
@@ -286,7 +320,12 @@ public Q_SLOTS:
    */
   void setRestore() override;
 
+  void setRefunding(qint64 orderId);
+
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit OrdersEditor(QWidget *parent = nullptr);
   virtual ~OrdersEditor() override;
 
@@ -308,7 +347,7 @@ public:
   bool createNewEntry() override;
 
   /**
-   * @brief Auftrag mit Kunden numemr erstellen.
+   * @brief Auftrag mit Kunden nummer erstellen.
    * @param cid - Kunden Nummer
    * @sa prepareCreateEntry
    * @sa setDefaultValues
@@ -316,7 +355,7 @@ public:
   bool createNewOrder(qint64 cid);
 
   /**
-   * @brief Auftrag aus Json Object erstellen
+   * @brief Auftrag aus Json Objekt erstellen
    * @param object - Datenstruktur
    * @sa prepareCreateEntry
    * @sa setDefaultValues

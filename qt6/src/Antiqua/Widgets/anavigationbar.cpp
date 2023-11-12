@@ -8,7 +8,8 @@
 
 namespace AntiquaCRM {
 
-ANavigationBar::ANavigationBar(QWidget *parent) : QWidget{parent} {
+ANavigationBar::ANavigationBar(QWidget *parent, int count)
+    : QWidget{parent}, p_count{count - 1} {
   QHBoxLayout *layout = new QHBoxLayout(this);
   btn_back = new QPushButton(tr("Back"), this);
   btn_back->setIcon(style()->standardIcon(QStyle::SP_ArrowBack));
@@ -33,12 +34,12 @@ void ANavigationBar::setIndex(int index) {
 
   case 1:
     btn_back->setEnabled(true);
-    btn_next->setEnabled(false);
+    btn_next->setEnabled((p_count > 1));
     break;
 
   default:
-    btn_back->setEnabled(false);
-    btn_next->setEnabled(false);
+    btn_back->setEnabled((index > 0));
+    btn_next->setEnabled((p_count > index));
     break;
   }
 }

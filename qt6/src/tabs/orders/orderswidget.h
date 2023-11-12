@@ -33,9 +33,6 @@ private:
 
   void setDefaultTableView() override;
 
-private Q_SLOTS:
-  void createRefund(qint64);
-
 public:
   explicit OrdersWidget(QWidget *parent = nullptr);
 

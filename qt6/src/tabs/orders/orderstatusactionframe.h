@@ -19,8 +19,7 @@
  * This subclass control the user input of Order and Payment status.
  * Some status modi collidate with different order or payment status selection.
  * If an collidation exists.
- * The Ui inform with a PopUp message will opened and the status will rested to
- * the last selection.
+ * A PopUp message will opened and the status resets to the last selection.
  */
 class ANTIQUACRM_LIBRARY OrderStatusActionFrame final : public QFrame {
   Q_OBJECT

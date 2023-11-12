@@ -12,9 +12,12 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-ADD_SUBDIRECTORY(refunding)
-
 SET (plugin_SOURCES
+  refunddialog.cpp
+  refundingpage.cpp
+  refundintroduction.cpp
+  refundstepone.cpp
+  refundsteptwo.cpp
   orderarticledialog.cpp
   ordersconfigwidget.cpp
   orderscostsettings.cpp
@@ -33,6 +36,12 @@ SET (plugin_SOURCES
 )
 
 SET (plugin_HEADERS
+  refunddialog.h
+  refundingpage.h
+  refundingpages.h
+  refundintroduction.h
+  refundstepone.h
+  refundsteptwo.h
   ordersconfig.h
   orderarticledialog.h
   ordersconfigwidget.h
@@ -74,5 +83,4 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   AntiquaWidgets
   AntiquaPrinting
   AntiquaTabs
-  OrdersRefunding
 )

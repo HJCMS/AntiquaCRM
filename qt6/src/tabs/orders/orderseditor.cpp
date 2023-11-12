@@ -8,6 +8,7 @@
 #include "orderscustomerinfo.h"
 #include "orderstableview.h"
 #include "orderstatusactionframe.h"
+#include "refunddialog.h"
 
 #include <AntiquaMail>
 #include <AntiquaPrinting>
@@ -21,7 +22,6 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
 
-  QString _infotxt;
   // BEGIN:Row0
   QHBoxLayout *row0 = new QHBoxLayout();
   row0->setContentsMargins(5, 2, 5, 2);
@@ -830,6 +830,17 @@ void OrdersEditor::openSearchInsertArticle() {
 void OrdersEditor::setRestore() {
   importSqlResult();
   setEnabled(true);
+}
+
+void OrdersEditor::setRefunding(qint64 orderId) {
+  if (orderId < 1)
+    return;
+
+  RefundingDialog *d = new RefundingDialog(orderId, this);
+  if (d->exec() == QDialog::Rejected) {
+    pushStatusMessage(tr("Refunding dialog aborted."));
+  }
+  d->deleteLater();
 }
 
 bool OrdersEditor::addArticle(qint64 aid) {
