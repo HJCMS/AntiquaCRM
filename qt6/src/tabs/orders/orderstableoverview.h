@@ -35,9 +35,6 @@ private Q_SLOTS:
   void getSelectedItem(const QModelIndex &) override;
   void createSocketOperation(const QModelIndex &) override;
 
-Q_SIGNALS:
-  void signalCreateRefund(qint64);
-
 public Q_SLOTS:
   void setReloadView() override;
 

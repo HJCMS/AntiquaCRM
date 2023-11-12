@@ -309,6 +309,11 @@ private Q_SLOTS:
   void createPrintPaymentReminder();
 
   /**
+   * @brief Open Refunding Dialog if Order Id exists!
+   */
+  void createRefunding(AntiquaCRM::OrderPayment);
+
+  /**
    * @brief Dialog zum Suchen und Einfügen eines Artikels.
    */
   void openSearchInsertArticle();
@@ -319,8 +324,6 @@ public Q_SLOTS:
    * @sa importSqlResult
    */
   void setRestore() override;
-
-  void setRefunding(qint64 orderId);
 
 public:
   /**

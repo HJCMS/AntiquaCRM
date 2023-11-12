@@ -67,9 +67,6 @@ OrdersWidget::OrdersWidget(QWidget *parent)
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
-  connect(m_table, SIGNAL(signalCreateRefund(qint64)), m_editorWidget,
-          SLOT(setRefunding(qint64)));
-
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
   connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),

@@ -85,9 +85,7 @@ void SelectOrderStatus::reset() {
 
 void SelectOrderStatus::setReadOnly(bool b) { m_edit->setEnabled(!b); }
 
-void SelectOrderStatus::setReject() {
-  setValue(p_onload_status);
-}
+void SelectOrderStatus::setReject() { setValue(p_onload_status); }
 
 void SelectOrderStatus::setRestrictions(const QSqlField &field) {
   setRequired((field.requiredStatus() == QSqlField::Required));

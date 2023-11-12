@@ -117,9 +117,19 @@ void OrderStatusActionFrame::setOrderPayment(AntiquaCRM::OrderPayment p) {
   o_payment_status->setValue(p);
 }
 
-void OrderStatusActionFrame::setStatusProtection(bool b) {
-  o_payment_status->setReadOnly(b);
-  o_order_status->setReadOnly(b);
+void OrderStatusActionFrame::initProtection() {
+  if (isProtectable()) {
+    o_payment_status->setReadOnly(true);
+    o_order_status->setReadOnly(true);
+  } else {
+    o_payment_status->setReadOnly(false);
+    o_order_status->setReadOnly(false);
+  }
+}
+
+bool OrderStatusActionFrame::isProtectable() {
+  return (getOrderPayment() == AntiquaCRM::OrderPayment::RETURN &&
+          getOrderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
 }
 
 bool OrderStatusActionFrame::currentOrderStatus() {

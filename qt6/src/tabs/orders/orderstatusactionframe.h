@@ -55,11 +55,6 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   /**
-   * @brief Block OrderStatus and PaymentStatus?
-   */
-  void setStatusProtection(bool b = false);
-
-  /**
    * @brief set order status
    */
   void setOrderStatus(AntiquaCRM::OrderStatus);
@@ -86,6 +81,16 @@ public:
    * @param parent - parent object
    */
   explicit OrderStatusActionFrame(QWidget *parent = nullptr);
+
+  /**
+   * @brief Block OrderStatus and PaymentStatus if needet?
+   */
+  void initProtection();
+
+  /**
+   * @brief get Protection status for current dialog.
+   */
+  bool isProtectable();
 
   /**
    * @brief Input masks status of the order.

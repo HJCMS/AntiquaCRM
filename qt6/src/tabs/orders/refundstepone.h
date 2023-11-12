@@ -13,6 +13,8 @@
 
 #include <QSqlRecord>
 
+class OrdersTableView;
+
 class ANTIQUACRM_LIBRARY RefundStepOne final : public RefundingPage {
   Q_OBJECT
 
@@ -22,6 +24,8 @@ private:
   AntiquaCRM::SerialId *m_cid; /**< @brief Customer Id */
   AntiquaCRM::TextLine *m_did; /**< @brief Delivery Id */
   AntiquaCRM::TextField *m_address;
+
+  OrdersTableView *m_table;
 
 public:
   explicit RefundStepOne(QWidget *parent = nullptr);

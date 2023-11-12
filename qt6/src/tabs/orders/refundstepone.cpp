@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "refundstepone.h"
+#include "orderstableview.h"
 
 #include <QGroupBox>
 #include <QLayout>
@@ -9,7 +10,7 @@
 RefundStepOne::RefundStepOne(QWidget *parent) : RefundingPage{parent} {
   setObjectName("refund_stepone");
   QGridLayout *main_layout = new QGridLayout(this);
-  // Begin:Group
+  // BEGIN:Row0
   QGroupBox *m_ids_group = new QGroupBox(this);
   m_ids_group->setTitle(tr("Order data"));
   QVBoxLayout *g_layout0 = new QVBoxLayout(m_ids_group);
@@ -41,8 +42,6 @@ RefundStepOne::RefundStepOne(QWidget *parent) : RefundingPage{parent} {
   g_layout0->addStretch(0);
   m_ids_group->setLayout(g_layout0);
   main_layout->addWidget(m_ids_group, 0, 0, 1, 1);
-  // End:Group
-
   // Invoice address group
   QGroupBox *m_addr_group = new QGroupBox(this);
   m_addr_group->setTitle(tr("Invoice address"));
@@ -55,9 +54,19 @@ RefundStepOne::RefundStepOne(QWidget *parent) : RefundingPage{parent} {
   g_layout1->addWidget(m_address);
   m_addr_group->setLayout(g_layout1);
   main_layout->addWidget(m_addr_group, 0, 1, 1, 1);
+  // END:Row0
 
-  // Todo Table
+  // BEGIN:Row1
+  m_table = new OrdersTableView(this, true);
+  QStringList _hide_columns("a_payment_id");
+  _hide_columns << "a_order_id";
+  _hide_columns << "a_customer_id";
+  _hide_columns << "a_modified";
+  _hide_columns << "a_provider_id";
+  m_table->hideColumns(_hide_columns);
+  main_layout->addWidget(m_table, 1, 0, 1, 2);
   main_layout->setRowStretch(1, 1);
+  // END:Row1
 
   setLayout(main_layout);
 }
@@ -87,6 +96,25 @@ bool RefundStepOne::addDataRecord(qint64 id) {
     }
   }
   _q.clear();
+
+  QList<AntiquaCRM::OrderArticleItems> _list;
+  QString sql("SELECT * FROM article_orders WHERE a_order_id=");
+  sql.append(QString::number(id) + ";");
+  QSqlQuery _query = m_sql->query(sql);
+  if (_query.size() > 0) {
+    const QSqlRecord _record = _query.record();
+    while (_query.next()) {
+      AntiquaCRM::OrderArticleItems _items;
+      for (int i = 0; i < _record.count(); i++) {
+        const QString _fn = _record.field(i).name();
+        _items.append(
+            AntiquaCRM::AProviderOrder::createItem(_fn, _query.value(_fn)));
+      }
+      _list.append(_items);
+    }
+  }
+  if (_list.size() > 0)
+    m_table->addArticles(_list);
 
   return true;
 }

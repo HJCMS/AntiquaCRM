@@ -102,6 +102,8 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(openNoticeMessage(const QString &)));
   connect(m_orderStatus, SIGNAL(sendNotifyStatus(const QString &)),
           SLOT(pushStatusMessage(const QString &)));
+  connect(m_orderStatus, SIGNAL(sendOrderPayment(AntiquaCRM::OrderPayment)),
+          SLOT(createRefunding(AntiquaCRM::OrderPayment)));
 
   // Signals:ActionsBar
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
@@ -809,6 +811,42 @@ void OrdersEditor::createPrintPaymentReminder() {
   d->deleteLater();
 }
 
+void OrdersEditor::createRefunding(AntiquaCRM::OrderPayment stat) {
+  if (stat != AntiquaCRM::OrderPayment::RETURN)
+    return; // Nur bei Rückerstattung ausführen!
+
+  /*
+   * Es kann an diesem Punkt nur der Status abgefragt werden.
+   * Die Methode OrderStatusActionFrame::initProtection() kann an dieser
+   * stelle nicht aufgerufen werden weil, das setzen von OrderStatus und
+   * PaymentStatus neim laden des Auftrages asyncron erfolgen!
+   */
+  if (m_tableData->getValue("o_payment_status").toInt() == stat)
+    return; // Der Auftrag wurde bereits rückerstattet!
+
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  // Ein Auftrag der nicht abgeschlossen ist kann nicht rückerstattet werden!
+  if (!databaseOrderStatus()) {
+    openNoticeMessage(
+        tr("You can't execute a refunding, if current order wasn't finished."));
+    m_orderStatus->o_payment_status->setReject();
+    return;
+  }
+
+  RefundingDialog *d = new RefundingDialog(_ids.or_id, this);
+  if (d->exec() == QDialog::Rejected) {
+    pushStatusMessage(tr("Refunding dialog aborted."));
+    m_orderStatus->o_payment_status->setReject();
+  } else {
+    pushStatusMessage(tr("Refunding finished."));
+    qInfo("TODO An dieser Stelle muss die Bestelltabelle neu gesetzt werden!");
+  }
+  d->deleteLater();
+}
+
 void OrdersEditor::openSearchInsertArticle() {
   if (!identities().isValid)
     return;
@@ -830,17 +868,6 @@ void OrdersEditor::openSearchInsertArticle() {
 void OrdersEditor::setRestore() {
   importSqlResult();
   setEnabled(true);
-}
-
-void OrdersEditor::setRefunding(qint64 orderId) {
-  if (orderId < 1)
-    return;
-
-  RefundingDialog *d = new RefundingDialog(orderId, this);
-  if (d->exec() == QDialog::Rejected) {
-    pushStatusMessage(tr("Refunding dialog aborted."));
-  }
-  d->deleteLater();
 }
 
 bool OrdersEditor::addArticle(qint64 aid) {
@@ -897,7 +924,7 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
     setEnabled(true);
   }
 
-  m_orderStatus->setStatusProtection(databaseOrderStatus());
+  m_orderStatus->initProtection();
   return _retval;
 }
 
