@@ -305,7 +305,7 @@ void OrdersEditor::createSqlUpdate() {
   // Wenn der Status der Datenbank nicht auf abschließen steht
   // und der Anwender den Auftrag abschließt.
   // Muss das Datum für geliefert hier gesetzt werden!
-  if (!databaseOrderStatus() && m_orderStatus->currentOrderStatus()) {
+  if (!isOrderStatusFinished() && m_orderStatus->currentOrderStatus()) {
     _set.append("o_delivered=CURRENT_TIMESTAMP");
     _changes++;
   }
@@ -410,32 +410,18 @@ void OrdersEditor::createSqlInsert() {
   }
 }
 
-void OrdersEditor::generateDeliveryNumber(qint64 orderId) {
-  QDate _date;
-  QString _sql("SELECT o_since FROM inventory_orders WHERE o_id=");
-  _sql.append(QString::number(orderId) + ";");
-  QSqlQuery _query = m_sql->query(_sql);
-  if (_query.size() == 1) {
-    _query.next();
-    _date = _query.value("o_since").toDate();
-  }
-  QString _dn; // DeliveryNumber
-  _dn.append(QString::number(_date.year()));
-  _dn.append(QString::number(_date.dayOfYear()));
-  _dn.append(QString::number(orderId));
-  // Muss leer sein und wird nach dem Speichern eingefügt.
-  m_tableData->setValue("o_delivery", QString());
-  // o_delivery_note_id
-  setDataField(m_tableData->getProperties("o_delivery"), _dn);
-}
-
-bool OrdersEditor::checkDeliveryNumber() {
-  const QString _id = getDataValue("o_delivery").toString();
-  if (_id.isEmpty() || _id.length() < 8) {
-    pushStatusMessage(tr("Missing Deliverynote Number"));
-    return false;
-  }
-  return true;
+/**
+ * Generiert eine neue Lieferscheinnummer.
+ * Mit dem Datum und der Auftragsnummer "o_invoice_id" wird die
+ * Lieferscheinnummer erstellt.
+ * Das Format ist "{Year}{DayOfYear}{InvoiceNr}"
+ */
+const QString OrdersEditor::createDeliveryNumber(const QDate d, qint64 id) {
+  // DeliveryNumber
+  QString _dn(QString::number(d.year()));
+  _dn.append(AntiquaCRM::AUtil::zerofill(d.dayOfYear(), 3));
+  _dn.append(AntiquaCRM::AUtil::zerofill(id, 3));
+  return _dn;
 }
 
 void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
@@ -445,19 +431,24 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
   }
 
   // Siehe PgSQL::new_invoice_id()
-  QString _sql("SELECT o_invoice_id FROM inventory_orders WHERE o_id=");
+  QString _sql("SELECT o_invoice_id,o_since FROM inventory_orders WHERE o_id=");
   _sql.append(QString::number(oid) + ";");
   QSqlQuery _query = m_sql->query(_sql);
   if (_query.size() == 1) {
     _query.next();
     qint64 _iid = _query.value("o_invoice_id").toLongLong();
-    const QString _did = AntiquaCRM::AUtil::zerofill(_iid);
+    if (_iid < 1) {
+      pushStatusMessage(tr("Missing invoice id, aborted."));
+      return;
+    }
+    const QDate _date = _query.value("o_since").toDate();
+    // Rechnungs Nummer
     m_tableData->setValue("o_invoice_id", _iid);
     setDataField(m_tableData->getProperties("o_invoice_id"), _iid);
+    // Lieferschein Nummer
+    const QString _did = createDeliveryNumber(_date, _iid);
     m_tableData->setValue("o_delivery", _did);
     setDataField(m_tableData->getProperties("o_delivery"), _did);
-  } else {
-    qWarning("SQL ERROR: %s", qPrintable(m_sql->lastError()));
   }
 }
 
@@ -620,8 +611,11 @@ const QString OrdersEditor::getOrderSqlArticleQuery() {
   return QString();
 }
 
-bool OrdersEditor::databaseOrderStatus() {
-  // AntiquaCRM::OrderStatus
+/**
+ * Ermittelt mit "o_order_status" und "o_payment_status" den aktuellen Auftrags
+ * Status. Wurde der Auftrag geliefert und Bezahlt, gilt er als abgeschlossen.
+ */
+bool OrdersEditor::isOrderStatusFinished() {
   int i_os = m_tableData->getValue("o_order_status").toInt();
   AntiquaCRM::OrderStatus os_t = static_cast<AntiquaCRM::OrderStatus>(i_os);
   // AntiquaCRM::OrderPayment
@@ -726,6 +720,9 @@ void OrdersEditor::setCheckLeaveEditor() {
 }
 
 void OrdersEditor::setFinalLeaveEditor(bool force) {
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO << "FORCE" << force;
+#endif
   if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 
@@ -811,27 +808,34 @@ void OrdersEditor::createPrintPaymentReminder() {
   d->deleteLater();
 }
 
+/**
+ * Weil der SLOT mit einem Signal von OrderStatusActionFrame ausgelöst wird.
+ * Müssen einige Abfragen durchgeführt werden damit dder RefundingDialog nicht
+ * beim öffnen des Editors ausgelöst wird.
+ *
+ * Es kann an diesem Punkt nur der Status abgefragt werden.
+ * Die Methode OrderStatusActionFrame::initProtection() kann an dieser
+ * stelle nicht aufgerufen werden weil, das setzen von OrderStatus und
+ * PaymentStatus beim laden des Auftrages asyncron erfolgen!
+ */
 void OrdersEditor::createRefunding(AntiquaCRM::OrderPayment stat) {
   if (stat != AntiquaCRM::OrderPayment::RETURN)
     return; // Nur bei Rückerstattung ausführen!
 
-  /*
-   * Es kann an diesem Punkt nur der Status abgefragt werden.
-   * Die Methode OrderStatusActionFrame::initProtection() kann an dieser
-   * stelle nicht aufgerufen werden weil, das setzen von OrderStatus und
-   * PaymentStatus neim laden des Auftrages asyncron erfolgen!
-   */
   if (m_tableData->getValue("o_payment_status").toInt() == stat)
     return; // Der Auftrag wurde bereits rückerstattet!
 
   OrdersEditor::Idset _ids = identities();
   if (!_ids.isValid)
-    return;
+    return; // Keine Bestellnummer vorhanden dann aussteigen!
 
   // Ein Auftrag der nicht abgeschlossen ist kann nicht rückerstattet werden!
-  if (!databaseOrderStatus()) {
-    openNoticeMessage(
-        tr("You can't execute a refunding, if current order wasn't finished."));
+  if (!isOrderStatusFinished()) {
+    openNoticeMessage(tr(
+        "<b>You cannot issue a refund</b>:<ul>"
+        "<li>If delivery process is not completely finished.</li>"
+        "<li>If this order has not yet been paid for.</li></ul>"
+        "<p>In this case it's better, to set order status to canceled.</p>"));
     m_orderStatus->o_payment_status->setReject();
     return;
   }
@@ -842,7 +846,10 @@ void OrdersEditor::createRefunding(AntiquaCRM::OrderPayment stat) {
     m_orderStatus->o_payment_status->setReject();
   } else {
     pushStatusMessage(tr("Refunding finished."));
-    qInfo("TODO An dieser Stelle muss die Bestelltabelle neu gesetzt werden!");
+    // An dieser Stelle muss die Bestelltabelle neu geladen werden!
+    // Damit der Klient durch ein Speichern nicht die Daten verfälscht.
+    // Note: Das Refunding erfolgt asyncron zum aktuellen Datensatz!
+    qInfo("TODO Update payment table");
   }
   d->deleteLater();
 }

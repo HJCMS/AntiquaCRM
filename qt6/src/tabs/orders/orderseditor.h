@@ -98,12 +98,7 @@ private:
    * Wenn die Lieferscheinnummer fehlt, diese generieren und Parameter Werte
    * o_delivery setzen.
    */
-  void generateDeliveryNumber(qint64 orderId);
-
-  /**
-   * @brief Gültigkeitsprüfung der Lieferschein Nummer.
-   */
-  inline bool checkDeliveryNumber();
+  const QString createDeliveryNumber(const QDate d, qint64 id);
 
   /**
    * @brief Generiere Rechnungs- Lieferscheinnummer.
@@ -112,7 +107,7 @@ private:
    * Es wird bei einem INSERT der Trigger „BEFORE INSERT new_invoice_id()“
    * aufgerufen und eine neue Rechnungsnummer generiert.
    * Diese „invoice_id“ wird hier abgefragt und in die Temporären Container
-   * eingefügt!
+   * eingefügt! Gleichzeitig wird createDeliveryNumber aufgerufen und erzeugt!
    */
   void setOrderPaymentNumbers(qint64 oid);
 
@@ -203,15 +198,8 @@ private:
    * @brief SQL Datenbank Status des Auftrags
    *
    * Wird verwendet um zu Prüfen ob der SQL-Eintrag geschlossen ist.
-   *
-   * Prüft wiefolgt ob die SQL Tabellen Werte gesetzt sind:
-   * @li ASqlDataQuery:o_payment_status == AntiquaCRM::OrderPayment::PAYED
-   * @li ASqlDataQuery:o_order_status == AntiquaCRM::OrderStatus::DELIVERED
-   *
-   * Wenn beide Werte ok sind wird true zurück gegeben!
-   * @sa OrderStatusActionFrame::setStatusProtection
    */
-  bool databaseOrderStatus();
+  bool isOrderStatusFinished();
 
   /**
    * @brief Kundennummer Suchen/Prüfen

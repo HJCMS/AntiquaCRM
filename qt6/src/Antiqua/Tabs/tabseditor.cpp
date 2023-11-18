@@ -292,40 +292,29 @@ bool TabsEditor::isModifiedCompare(const QString &name,
 }
 
 void TabsEditor::openErrnoMessage(const QString &info, const QString &error) {
-  QMessageBox *d = new QMessageBox(this);
-  d->setIcon(QMessageBox::Critical);
-  d->setDefaultButton(QMessageBox::Ok);
-  d->setTextFormat(Qt::PlainText);
-  d->setTextInteractionFlags(Qt::TextSelectableByMouse);
-  d->setSizeGripEnabled(true);
-  d->setWindowTitle(tr("Error"));
-  d->setDetailedText(info);
-  d->setInformativeText(error);
+  AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+  d->setErrorMessage(info, error);
   d->exec();
+  d->deleteLater();
 }
 
 void TabsEditor::openSuccessMessage(const QString &info) {
-  QMessageBox *d = new QMessageBox(this);
-  d->setIcon(QMessageBox::Information);
-  d->setDefaultButton(QMessageBox::Ok);
-  d->setTextFormat(Qt::PlainText);
-  d->setTextInteractionFlags(Qt::TextSelectableByMouse);
-  d->setSizeGripEnabled(true);
-  d->setWindowTitle(tr("Success"));
-  d->setText(info);
+  AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+  d->setSuccessMessage(info);
 
   QTimer *m_t = new QTimer(d);
   m_t->setInterval((messages_timeout * 1000));
   connect(m_t, SIGNAL(timeout()), d, SLOT(close()));
   m_t->start();
   d->exec();
+  d->deleteLater();
 }
 
 void TabsEditor::openNoticeMessage(const QString &info) {
-  QString t = tr("Notice");
-  QMessageBox *d = new QMessageBox(QMessageBox::Warning, t, info,
-                                   QMessageBox::Ok, this, Qt::Popup);
+  AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+  d->setNoticeMessage(info);
   d->exec();
+  d->deleteLater();
 }
 
 void TabsEditor::checkInputModified(const QString &name) {
@@ -356,12 +345,11 @@ void TabsEditor::checkInputModified(const QString &name) {
 }
 
 void TabsEditor::unsavedChangesPopup() {
-  QString ti = tr("Warning");
-  QString txt(tr("Unsaved Changes") + "\n");
-  txt.append(tr("Do not leave this page until you have saved your changes!"));
-  QMessageBox *d = new QMessageBox(QMessageBox::Warning, ti, txt,
-                                   QMessageBox::Ok, this, Qt::Popup);
+  AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+  d->setUnsavedMessage(
+      tr("Do not leave this page until you have saved your changes!"));
   d->exec();
+  d->deleteLater();
 }
 
 void TabsEditor::pushStatusMessage(const QString &message) {

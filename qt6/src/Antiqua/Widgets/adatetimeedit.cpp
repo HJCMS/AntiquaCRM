@@ -7,10 +7,6 @@
 
 namespace AntiquaCRM {
 
-#ifndef FALLBACK_DATE
-#define FALLBACK_DATE QDate(1900, 01, 01)
-#endif
-
 ADateTimeEdit::ADateTimeEdit(QWidget *parent, bool mouseEvents)
     : QDateTimeEdit{parent}, wheel_support{mouseEvents} {
   setObjectName("ADateTimeEdit");
@@ -26,7 +22,7 @@ void ADateTimeEdit::wheelEvent(QWheelEvent *e) {
 void ADateTimeEdit::setSqlTimestamp(const QString &d) {
   QString _str = d.trimmed();
   if (_str.isEmpty()) {
-    setDate(FALLBACK_DATE);
+    setDate(ANTIQUACRM_DEFAULT_STARTDATE);
     return;
   }
 
@@ -34,7 +30,7 @@ void ADateTimeEdit::setSqlTimestamp(const QString &d) {
   if (_dt.isValid())
     setDateTime(_dt);
   else
-    setDate(FALLBACK_DATE);
+    setDate(ANTIQUACRM_DEFAULT_STARTDATE);
 }
 
 void ADateTimeEdit::setReadOnlyMode() {

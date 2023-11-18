@@ -21,6 +21,9 @@
 // AntiquaCRM::ADialog
 #include "adialog.h"
 
+// AntiquaCRM::APopUpMessage
+#include "apopupmessage.h"
+
 // AntiquaCRM::AColorLuminance
 #include "acolorluminance.h"
 

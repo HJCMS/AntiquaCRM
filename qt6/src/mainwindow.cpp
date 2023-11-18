@@ -205,13 +205,14 @@ bool MainWindow::openWindow() {
 
 bool MainWindow::closeWindow() {
   if (isWindowModified()) {
-    const QString _title = tr("Save request");
-    QStringList _warn(tr("<b>You have unsaved changes.</b>"));
-    _warn << tr("<p>Do you really want to close the application?</p>");
-    int _ret = QMessageBox::question(this, _title, _warn.join("\n"));
-    if (_ret == QMessageBox::No) {
+    AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+    d->setUnsavedMessage(tr("Do you really want to close the application?</p>"),
+                         true);
+
+    if (d->exec() == QDialog::Rejected) {
       return false;
     }
+    d->deleteLater();
   }
 
   QByteArray _geometry = saveGeometry();

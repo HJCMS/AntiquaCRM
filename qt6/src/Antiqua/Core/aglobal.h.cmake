@@ -15,6 +15,7 @@
 #define ANTIQUACRM_GLOBAL_H
 
 #include <QtGlobal>
+#include <QDate>
 #include <QString>
 #include <QIODevice>
 
@@ -181,6 +182,16 @@
 # define ANTIQUACRM_LIBRARY Q_DECL_EXPORT
 #else
 # define ANTIQUACRM_LIBRARY Q_DECL_IMPORT
+#endif
+
+/**
+ * @ingroup AMacros
+ * @brief Default initialisation Date
+ * 
+ * Used in DateEdit and DateTimeEdit Widgets for global fallback detection.
+ */
+#ifndef ANTIQUACRM_DEFAULT_STARTDATE
+#define ANTIQUACRM_DEFAULT_STARTDATE QDate(1900, 01, 01)
 #endif
 
 /**
