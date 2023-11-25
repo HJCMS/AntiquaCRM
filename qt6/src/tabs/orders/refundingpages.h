@@ -17,12 +17,12 @@
 #include "refundintroduction.h"
 #endif
 
-#ifndef ANTIQUACRM_REFUNDING_STEPONE_H
-#include "refundstepone.h"
+#ifndef ANTIQUACRM_REFUNDING_SELECTER_H
+#include "refundselecter.h"
 #endif
 
-#ifndef ANTIQUACRM_REFUNDING_STEPTWO_H
-#include "refundsteptwo.h"
+#ifndef ANTIQUACRM_REFUNDING_FINALIZE_H
+#include "refundfinalize.h"
 #endif
 
 #endif

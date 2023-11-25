@@ -9,7 +9,7 @@
 namespace AntiquaCRM {
 
 ANavigationBar::ANavigationBar(QWidget *parent, int count)
-    : QWidget{parent}, p_count{count - 1} {
+    : QWidget{parent}, p_count{count - 1}, p_index{0} {
   QHBoxLayout *layout = new QHBoxLayout(this);
   btn_back = new QPushButton(tr("Back"), this);
   btn_back->setIcon(style()->standardIcon(QStyle::SP_ArrowBack));
@@ -25,23 +25,28 @@ ANavigationBar::ANavigationBar(QWidget *parent, int count)
   connect(btn_next, SIGNAL(clicked()), SIGNAL(sendNext()));
 }
 
-void ANavigationBar::setIndex(int index) {
-  switch (index) {
-  case 0:
-    btn_back->setEnabled(false);
-    btn_next->setEnabled(true);
-    break;
+void ANavigationBar::setCurrentIndex(int index) {
+  if (index < 0 || index > p_count)
+    return;
 
-  case 1:
-    btn_back->setEnabled(true);
-    btn_next->setEnabled((p_count > 1));
-    break;
-
-  default:
-    btn_back->setEnabled((index > 0));
-    btn_next->setEnabled((p_count > index));
-    break;
-  }
+  p_index = index;
 }
+
+void ANavigationBar::setAllowPrev(int index) {
+  if (index > 0)
+    btn_back->setEnabled(true);
+  else
+    btn_back->setEnabled(false);
+}
+
+void ANavigationBar::setAllowNext(int index, bool status) {
+  if (index == 0 || index < p_count) {
+    btn_next->setEnabled(status);
+    return;
+  }
+  btn_next->setEnabled(false);
+}
+
+int ANavigationBar::getCurrentIndex() { return p_index; }
 
 } // namespace AntiquaCRM

@@ -1,4 +1,22 @@
+# general stuff
+.DS_Store
+perf.data
+build-*
+build_*
+
+# kde temporary files
 *~
+
+# xemacs temporary files
+*.flc
+
+# vim temporary files
+.*.swp
+
+# project files
+CMakeLists.txt.user
+
+# with extension
 *.log
 *.bak
 *.old
@@ -9,7 +27,5 @@
 *.job
 *.pdf
 *.csv
-perf.data
-build-*
-build_*
-CMakeLists.txt.user
+
+##EOF

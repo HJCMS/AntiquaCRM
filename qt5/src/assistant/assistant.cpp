@@ -247,6 +247,11 @@ void Assistant::save() {
       cfg->setValue(sql.key(), pw);
     }
   }
+  // SSL is always used in this settings
+  cfg->setValue("pg_ssl", true);
+  if (cfg->value("pg_timeout").toInt() < 1) {
+    cfg->setValue("pg_timeout", 10);
+  }
   cfg->endGroup();
 
   QMapIterator<QString, QString> ssl(m_configSSL->configuration());
@@ -257,6 +262,9 @@ void Assistant::save() {
       continue;
 
     cfg->setValue(ssl.key(), ssl.value());
+  }
+  if (cfg->value("ssl_mode").toString().isEmpty()) {
+    cfg->setValue("ssl_mode", "verify-ca");
   }
   cfg->endGroup();
 

@@ -31,6 +31,8 @@ class RefundingDialog final : public AntiquaCRM::ADialog {
   Q_OBJECT
 
 private:
+  AntiquaCRM::ASqlCore *m_sql = nullptr;
+
   /**
    * @brief current order id
    *
@@ -39,8 +41,8 @@ private:
   const qint64 p_orderid;
 
   RefundIntroduction *m_intro;
-  RefundStepOne *m_page1;
-  RefundStepTwo *m_page2;
+  RefundSelecter *m_select;
+  RefundFinalize *m_final;
 
   /**
    * @brief submit button
@@ -60,6 +62,12 @@ private:
 private Q_SLOTS:
   void goForward();
   void goBackward();
+  void pageChanged(int);
+
+  /**
+   * @brief Page status update
+   */
+  void statusFromPage(bool);
 
   /**
    * @brief execute refunding action

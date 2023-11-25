@@ -361,6 +361,7 @@ void BookLooker::query() {
   q.addQueryItem("dateTo", dateString());
   url.setQuery(q);
 
+  // qDebug() << Q_FUNC_INFO << url;
   m_networker->getRequest(url);
 }
 

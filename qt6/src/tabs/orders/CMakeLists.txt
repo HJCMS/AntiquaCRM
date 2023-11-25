@@ -16,8 +16,8 @@ SET (plugin_SOURCES
   refunddialog.cpp
   refundingpage.cpp
   refundintroduction.cpp
-  refundstepone.cpp
-  refundsteptwo.cpp
+  refundselecter.cpp
+  refundfinalize.cpp
   orderarticledialog.cpp
   ordersconfigwidget.cpp
   orderscostsettings.cpp
@@ -40,8 +40,8 @@ SET (plugin_HEADERS
   refundingpage.h
   refundingpages.h
   refundintroduction.h
-  refundstepone.h
-  refundsteptwo.h
+  refundselecter.h
+  refundfinalize.h
   ordersconfig.h
   orderarticledialog.h
   ordersconfigwidget.h

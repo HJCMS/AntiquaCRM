@@ -5,6 +5,7 @@
 #include "antiquaicon.h"
 
 #include <QMetaType>
+#include <QModelRoleData>
 
 #ifdef ANTIQUA_DEVELOPEMENT
 void __debug_article_items(AntiquaCRM::OrderArticleItems items) {
@@ -31,6 +32,22 @@ const QString OrdersTableModel::displayPrice(double price) const {
   QString str = QString::number(price, 'f', 2);
   str.append(" " + currency);
   return str.trimmed();
+}
+
+bool OrdersTableModel::updateRow(int index,
+                                 const AntiquaCRM::OrderArticleItems &data) {
+  if (index < 0 || data.size() < 1 || articles.size() < 1)
+    return false;
+
+  beginResetModel();
+  articles[index] = data;
+  endResetModel();
+
+  const QModelIndex topLeft = createIndex(0, 0);
+  const QModelIndex bottomRight = createIndex(articles.size(), p_columns);
+  emit dataChanged(topLeft, bottomRight);
+
+  return QAbstractTableModel::submit();
 }
 
 void OrdersTableModel::clearContents() {
@@ -76,22 +93,22 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
 }
 
 QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
+  QModelRoleData _item(role);
   if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
-    return QVariant();
+    return _item.data();
 
-  QVariant _buffer;
   AntiquaCRM::ATableHeaderColumn _info = headerColumn(index.column());
   AntiquaCRM::OrderArticleItems _list = articles.value(index.row());
   for (int c = 0; c < _list.size(); c++) {
     if (_list.at(c).key == _info.field()) {
-      _buffer = _list.at(c).value;
+      _item.setData(_list.at(c).value);
       break;
     }
   }
   _list.clear();
 
   const QString _fname = _info.field();
-  const QMetaType _type = _buffer.metaType();
+  const QMetaType _type = _item.data().metaType();
 #ifdef ANTIQUA_DEVELOPEMENT
   if (_type.id() == QMetaType::UnknownType) {
     qDebug() << Q_FUNC_INFO << "Invalid MetaType:" << _fname;
@@ -99,85 +116,85 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 #endif
 
   // BEGIN::EditRole
-  if (role == Qt::EditRole) {
+  if (_item.role() == Qt::EditRole) {
     switch (_type.id()) {
     case QMetaType::Bool:
-      return _buffer.toBool();
+      return _item.data().toBool();
 
     case QMetaType::Int:
     case QMetaType::Long:
     case QMetaType::ULong:
-      return _buffer.toInt();
+      return _item.data().toInt();
 
     case QMetaType::LongLong:
     case QMetaType::ULongLong:
-      return _buffer.toLongLong();
+      return _item.data().toLongLong();
 
     case QMetaType::Float:
     case QMetaType::Double:
-      return _buffer.toDouble();
+      return _item.data().toDouble();
 
     case QMetaType::QDateTime:
-      return _buffer.toDateTime();
+      return _item.data().toDateTime();
 
-    default: {
-      // FIXME Max. Zeichenlänge beim Titel ist 80!
-      QString _str = _buffer.toString();
-      if (_str.length() > max_string_length) {
-        int l = (max_string_length - 4);
-        return _str.left(l) + "...";
-      }
-      return _str;
-    }
+    default:
+      return _item.data();
     };
   }
   // END::EditRole
 
   // BEGIN::DisplayRole
   if (_fname == "a_type") {
-    return articleType(_buffer.toInt());
+    return articleType(_item.data().toInt());
   }
 
   if (_fname == "a_tax") {
-    const TaxType _t = static_cast<TaxType>(_buffer.toInt());
+    const TaxType _t = static_cast<TaxType>(_item.data().toInt());
     return QString::number(taxValue(_t)) + "%";
   }
 
   if (_fname.contains("_price") || _fname.contains("_cost")) {
-    return displayPrice(_buffer.toDouble());
+    return displayPrice(_item.data().toDouble());
   }
 
   switch (_type.id()) {
   case QMetaType::Bool:
-    return _buffer.toBool() ? tr("Yes") : tr("No");
+    return _item.data().toBool() ? tr("Yes") : tr("No");
 
   case QMetaType::Int:
   case QMetaType::Long:
   case QMetaType::ULong: {
-    return _buffer.toInt();
+    return _item.data().toInt();
   }
 
   case QMetaType::LongLong:
   case QMetaType::ULongLong:
-    return _buffer.toLongLong();
+    return _item.data().toLongLong();
 
   case QMetaType::Float:
   case QMetaType::Double: {
-    return _buffer.toDouble();
+    return _item.data().toDouble();
   }
 
   case QMetaType::QDate: {
-    QDate dt = _buffer.toDate();
+    QDate dt = _item.data().toDate();
     return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   }
 
   case QMetaType::QDateTime: {
-    QDateTime dt = _buffer.toDateTime();
+    QDateTime dt = _item.data().toDateTime();
     return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   }
 
-  default:
-    return _buffer.toString();
+  default: {
+    // FIXME Max. Zeichenlänge beim Titel ist 80!
+    QString _str = _item.data().toString();
+    if (_str.length() > max_string_length) {
+      int l = (max_string_length - 4);
+      return _str.left(l) + "...";
+    }
+    return _str;
+  }
   };
   // END::DisplayRole
 
@@ -205,11 +222,7 @@ bool OrdersTableModel::setData(const QModelIndex &index, const QVariant &value,
     }
     _row.append(_col);
   }
-  articles[index.row()] = _row;
-  const QModelIndex topLeft = createIndex(0, 0);
-  const QModelIndex bottomRight = createIndex(articles.size(), p_columns);
-  emit dataChanged(topLeft, bottomRight);
-  return true;
+  return updateRow(index.row(), _row);
 }
 
 Qt::ItemFlags OrdersTableModel::flags(const QModelIndex &index) const {

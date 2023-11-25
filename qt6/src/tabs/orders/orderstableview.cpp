@@ -54,6 +54,8 @@ OrdersTableView::OrdersTableView(QWidget *parent, bool readOnly)
   connect(m_model,
           SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
           SLOT(articleChanged(const QModelIndex &, const QModelIndex &)));
+  connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
+          SLOT(rowSelected(const QModelIndex &)));
 }
 
 void OrdersTableView::changeEvent(QEvent *event) {
@@ -67,7 +69,7 @@ void OrdersTableView::changeEvent(QEvent *event) {
 void OrdersTableView::paintEvent(QPaintEvent *event) {
   if (rowCount() == 0) {
     QStringList _info;
-    _info << tr("Please insert here the required Order article.");
+    _info << tr("Please insert here, the required Order article.");
     _info << tr("An Order requires minimum one Article!");
     QPainter painter(viewport());
     painter.setBrush(palette().text());
@@ -79,6 +81,9 @@ void OrdersTableView::paintEvent(QPaintEvent *event) {
 }
 
 void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
+  if (editTriggers() == QAbstractItemView::NoEditTriggers)
+    return;
+
   p_modelIndex = indexAt(event->pos());
   if (!p_modelIndex.isValid())
     return;
@@ -93,12 +98,23 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   delete m;
 }
 
-void OrdersTableView::articleChanged(const QModelIndex &current,
-                                     const QModelIndex &previous) {
-  Q_UNUSED(current);
-  resizeColumnToContents(previous.column());
+void OrdersTableView::articleChanged(const QModelIndex &topLeft,
+                                     const QModelIndex &bottomRight) {
+  Q_UNUSED(topLeft);
+  resizeColumnToContents(bottomRight.column());
   horizontalHeader()->setStretchLastSection(true);
   setWindowModified(true);
+  // qDebug() << Q_FUNC_INFO;
+}
+
+void OrdersTableView::rowSelected(const QModelIndex &index) {
+  QModelIndex _index = index.sibling(index.row(), 0);
+  if (!_index.isValid())
+    return;
+
+  qint64 _id = m_model->data(_index, Qt::EditRole).toInt();
+  if (_id > 0)
+    emit sendPaymentId(_id);
 }
 
 void OrdersTableView::addDeleteQuery() {
@@ -106,12 +122,12 @@ void OrdersTableView::addDeleteQuery() {
   if (!_index.isValid())
     return;
 
-  qint64 id = m_model->data(_index, Qt::EditRole).toInt();
+  qint64 _id = m_model->data(_index, Qt::EditRole).toInt();
   if (m_model->removeRow(_index.row())) {
     setWindowModified(true);
-    if (id > 0) { // SQL DELETE call
+    if (_id > 0) { // SQL DELETE call
       QString _sql("DELETE FROM article_orders WHERE a_payment_id=");
-      _sql.append(QString::number(id) + ";");
+      _sql.append(QString::number(_id) + ";");
       sql_cache << _sql;
     }
   }
@@ -135,6 +151,19 @@ void OrdersTableView::addArticle(const AntiquaCRM::OrderArticleItems &order) {
 #endif
 }
 
+bool OrdersTableView::updateRefundCoast(double price) {
+  if (rowCount() < 1)
+    return false;
+
+  int _count = 0;
+  int _column = m_model->columnIndex("a_refunds_cost");
+  for (int r = 0; r < rowCount(); r++) {
+    if (m_model->setData(m_model->index(r, _column), price, Qt::EditRole))
+      _count++;
+  }
+  return (_count > 0);
+}
+
 int OrdersTableView::rowCount() { return m_model->rowCount(); }
 
 bool OrdersTableView::isEmpty() { return (m_model->rowCount() < 1); }
@@ -149,12 +178,7 @@ void OrdersTableView::hideColumns(const QStringList &list) {
 bool OrdersTableView::addArticles(
     const QList<AntiquaCRM::OrderArticleItems> &items) {
   clearContents();
-  if (m_model->addArticles(items)) {
-    setWindowModified(false);
-    horizontalHeader()->setStretchLastSection(true);
-    return true;
-  }
-  return false;
+  return m_model->addArticles(items);
 }
 
 bool OrdersTableView::setOrderId(qint64 orderId) {

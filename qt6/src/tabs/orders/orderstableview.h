@@ -59,6 +59,9 @@ private:
    */
   void contextMenuEvent(QContextMenuEvent *) override;
 
+Q_SIGNALS:
+  void sendPaymentId(qint64);
+
 private Q_SLOTS:
   /**
    * @brief This Slot checks watched Table Cell changes.
@@ -67,7 +70,10 @@ private Q_SLOTS:
    * With positive values it calls QTableView::setWindowModified and
    * QHeaderView::setStretchLastSection.
    */
-  void articleChanged(const QModelIndex &, const QModelIndex &);
+  void articleChanged(const QModelIndex &topLeft,
+                      const QModelIndex &bottomRight);
+
+  void rowSelected(const QModelIndex &);
 
   /**
    * @brief Creates SQL-Delete Statement from current selected row.
@@ -91,6 +97,11 @@ public:
    * @param readOnly - enable/disable ItemDelegation
    */
   explicit OrdersTableView(QWidget *parent = nullptr, bool readOnly = true);
+
+  /**
+   * @brief Update field "a_refunds_cost" in all rows
+   */
+  bool updateRefundCoast(double);
 
   /**
    * @brief Aktuelle Tabellenzeilenanzahl.

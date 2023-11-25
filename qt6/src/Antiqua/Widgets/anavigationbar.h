@@ -27,6 +27,7 @@ class ANTIQUACRM_LIBRARY ANavigationBar : public QWidget {
 
 private:
   int p_count;
+  int p_index;
   QPushButton *btn_back;
   QPushButton *btn_next;
 
@@ -35,10 +36,13 @@ Q_SIGNALS:
   void sendNext();
 
 public Q_SLOTS:
-  void setIndex(int index = -1);
+  void setCurrentIndex(int index = -1);
+  void setAllowPrev(int index = -1);
+  void setAllowNext(int index, bool status = false);
 
 public:
   explicit ANavigationBar(QWidget *parent = nullptr, int count = 0);
+  int getCurrentIndex();
 };
 
 } // namespace AntiquaCRM

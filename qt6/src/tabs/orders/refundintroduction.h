@@ -30,7 +30,7 @@ public:
    * @param parent - pointer to parent object
    */
   explicit RefundIntroduction(QWidget *parent = nullptr);
-  bool addDataRecord(qint64 id) override;
+  bool initPageData(AntiquaCRM::ASqlCore *con, qint64 id) override;
 };
 
 #endif // ANTIQUACRM_REFUNDING_INTRODUCTION_H

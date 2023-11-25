@@ -93,13 +93,15 @@ bool SellerImportRepair::init() {
 
 void SellerImportRepair::setStartPage() {
   m_mainWidget->setCurrentIndex(0);
-  m_navbar->setIndex(0);
+  m_navbar->setAllowPrev(0);
+  m_navbar->setAllowNext(0, false);
   btn_apply->setEnabled(false);
 }
 
 void SellerImportRepair::setEditPage() {
   m_mainWidget->setCurrentIndex(1);
-  m_navbar->setIndex(1);
+  m_navbar->setAllowPrev(1);
+  m_navbar->setAllowNext(1, false);
   btn_apply->setEnabled(true);
 }
 
@@ -144,7 +146,7 @@ void SellerImportRepair::findSystemCustomer(const QString &clause) {
           // only one entry called by c_id
           m_cedit->setOriginData(_item);
           // enable it
-          m_navbar->setIndex(0);
+          m_navbar->setAllowNext(0, true);
         } else {
           m_finder->addCustomer(_item);
         }

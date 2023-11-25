@@ -39,7 +39,10 @@ RefundIntroduction::RefundIntroduction(QWidget *parent)
   connect(btn_ready, SIGNAL(clicked()), SIGNAL(sendForward()));
 }
 
-bool RefundIntroduction::addDataRecord(qint64 id) {
+bool RefundIntroduction::initPageData(AntiquaCRM::ASqlCore *con, qint64 id) {
+  if (m_sql == nullptr)
+    m_sql = con;
+
   Q_UNUSED(id);
   return false;
 }

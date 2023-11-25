@@ -26,13 +26,31 @@ class ANTIQUACRM_LIBRARY OrdersTableModel final : public QAbstractTableModel {
   Q_OBJECT
 
 private:
-  QString currency;
-  int vat_normal;
-  int vat_reduced;
-  int p_columns = 13;
-  int max_string_length = 79;
+  QString currency;           /**< Currency symbol */
+  int vat_normal;             /**< Default Tax value */
+  int vat_reduced;            /**< Reduced Tax value */
+  int p_columns = 13;         /**< Will overridden in addArticles */
+  int max_string_length = 79; /**< Reduces the Title Display size to ... */
+
+  /**
+   * @brief All article items
+   */
   mutable QMap<int, AntiquaCRM::OrderArticleItems> articles;
+
+  /**
+   * @brief Convert double to Currency with System locales
+   */
   const QString displayPrice(double) const;
+
+  /**
+   * @brief Update item with index from \b articles.
+   * @param index - Current row
+   * @param data  - OrderArticleItems to change,
+   *                data must equal to column count!
+   *
+   * This will emitted dataChanged(QModelIndex,QModelIndex) on success!
+   */
+  bool updateRow(int index, const AntiquaCRM::OrderArticleItems &data);
 
 public Q_SLOTS:
   /**
