@@ -94,12 +94,14 @@ int RefundingDialog::exec() {
   }
 
   QJsonObject _conf;
-  _conf.insert("default", QJsonValue(1.25));
+  _conf.insert("default", QJsonValue(1.00));
 
-  const QString _sql("SELECT DISTINCT cfg_jsconfig FROM antiquacrm_configs "
-                     "WHERE cfg_group='CONFIG_REFUNDING';");
+  AntiquaCRM::ASqlFiles _tpl("query_antiquacrm_config");
+  if (!_tpl.openTemplate())
+    return false;
 
-  QSqlQuery _q = m_sql->query(_sql);
+  _tpl.setWhereClause("cfg_group='CONFIG_REFUNDING';");
+  QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
   if (_q.size() == 1) {
     _q.next();
     _conf = QJsonDocument::fromJson(_q.value(0).toByteArray()).object();
