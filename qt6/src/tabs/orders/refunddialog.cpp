@@ -88,17 +88,20 @@ void RefundingDialog::saveAndQuit() {
     return;
   }
 
-  // Order Id
+  // Start SQL UPDATES
   const QString _oid = QString::number(p_orderid);
+  const QString _status = QString::number(AntiquaCRM::OrderPayment::RETURN);
+  AntiquaCRM::ASqlFiles _tpl("query_returning_articles");
+  if (!_tpl.openTemplate()) {
+    m_statusBar->showMessage(tr("Database template error!"), 8000);
+    return;
+  }
 
-  // Begin:Update
   QStringList _upd;
-  QString _payment_status = QString::number(AntiquaCRM::OrderPayment::RETURN);
-  QString _order("UPDATE inventory_orders SET ");
-  _order.append("o_payment_status=" + _payment_status);
-  _order.append(", o_modified=CURRENT_TIMESTAMP");
-  _order.append(" WHERE o_id=" + _oid + ";");
-  _upd << _order;
+  // Den Verkaufsstatus setzen
+  _upd << QString("UPDATE inventory_orders SET o_payment_status=%1"
+                  ", o_modified=CURRENT_TIMESTAMP WHERE o_id=%2;")
+              .arg(_status, _oid);
 
   QStringList _payment_ids;
   QListIterator<qint64> _keys(_costs.keys());
@@ -108,12 +111,7 @@ void RefundingDialog::saveAndQuit() {
       _payment_ids << QString::number(_i);
   }
 
-  AntiquaCRM::ASqlFiles _tpl("query_returning_articles");
-  if (!_tpl.openTemplate()) {
-    m_statusBar->showMessage(tr("Database template error!"), 8000);
-    return;
-  }
-
+  // Suche die Artikel welche erstattet werden und setze Wert neu.
   QString _sql("a_order_id=" + _oid);
   _sql.append(" AND a_payment_id IN (" + _payment_ids.join(",") + ")");
   _tpl.setWhereClause(_sql);
@@ -140,13 +138,13 @@ void RefundingDialog::saveAndQuit() {
     return;
   }
 
-  // Create final update statement
+  // ok jetzt abfeuern
   const QString _sql_update(_upd.join("\n"));
   m_sql->query(_sql_update);
   if (m_sql->lastError().isEmpty()) {
-    qDebug() << "SUCCSESS:" << _sql_update;
     accept();
   } else {
+    qDebug() << "FAILED:" << _sql_update;
     m_statusBar->showMessage(tr("An error has occurred!"), 10000);
   }
 }

@@ -298,7 +298,7 @@ QMap<qint64, double> OrdersTableView::getRefundingCosts() {
   for (int r = 0; r < rowCount(); r++) {
     qint64 _id = getPaymentId(r);
     double _cost = getRefundingCost(r);
-    if (_id > 0 && _cost >= 0.0)
+    if (_id > 0)
       _m.insert(_id, _cost);
   }
   return _m;
