@@ -29,13 +29,7 @@ OrdersTableView::OrdersTableView(QWidget *parent, bool readOnly)
   setWordWrap(false);
   // Einfaches Auswählen kein Strg+Shift+Mausklick
   setSelectionMode(QAbstractItemView::SingleSelection);
-  if (readOnly) {
-    setSelectionBehavior(QAbstractItemView::SelectRows);
-    setEditTriggers(QAbstractItemView::NoEditTriggers);
-  } else {
-    setSelectionBehavior(QAbstractItemView::SelectItems);
-    setEditTriggers(QAbstractItemView::DoubleClicked);
-  }
+  setProtected(readOnly);
 
   m_model = new OrdersTableModel(this);
   setModel(m_model);
@@ -133,6 +127,16 @@ void OrdersTableView::addDeleteQuery() {
   }
 }
 
+void OrdersTableView::setProtected(bool readOnly) {
+  if (readOnly) {
+    setSelectionBehavior(QAbstractItemView::SelectRows);
+    setEditTriggers(QAbstractItemView::NoEditTriggers);
+  } else {
+    setSelectionBehavior(QAbstractItemView::SelectItems);
+    setEditTriggers(QAbstractItemView::DoubleClicked);
+  }
+}
+
 void OrdersTableView::clearContents() {
   if (rowCount() > 0) {
     m_model->clearContents();
@@ -177,7 +181,10 @@ void OrdersTableView::hideColumns(const QStringList &list) {
 
 bool OrdersTableView::addArticles(
     const QList<AntiquaCRM::OrderArticleItems> &items) {
-  clearContents();
+  if (items.size() < 1)
+    return false;
+
+  // Note clear not need at this point!
   return m_model->addArticles(items);
 }
 
@@ -267,8 +274,32 @@ bool OrdersTableView::articleExists(qint64 articleId) {
 
 qint64 OrdersTableView::getPaymentId(int row) {
   if (row >= 0) {
-    QModelIndex pIndex = m_model->index(row, 0);
-    return m_model->data(pIndex, Qt::EditRole).toInt();
+    int _column = m_model->columnIndex("a_payment_id");
+    const QModelIndex _index(m_model->index(row, _column));
+    return m_model->data(_index, Qt::EditRole).toInt();
   }
   return -1;
+}
+
+double OrdersTableView::getRefundingCost(int row) {
+  if (row >= 0) {
+    int _column = m_model->columnIndex("a_refunds_cost");
+    const QModelIndex _index(m_model->index(row, _column));
+    return m_model->data(_index, Qt::EditRole).toDouble();
+  }
+  return 0.00;
+}
+
+QMap<qint64, double> OrdersTableView::getRefundingCosts() {
+  QMap<qint64, double> _m;
+  if (rowCount() == 0)
+    return _m;
+
+  for (int r = 0; r < rowCount(); r++) {
+    qint64 _id = getPaymentId(r);
+    double _cost = getRefundingCost(r);
+    if (_id > 0 && _cost >= 0.0)
+      _m.insert(_id, _cost);
+  }
+  return _m;
 }

@@ -84,6 +84,7 @@ public:
 
   /**
    * @brief Block OrderStatus and PaymentStatus if needet?
+   * @return true if protected otherwise false
    */
   void initProtection();
 

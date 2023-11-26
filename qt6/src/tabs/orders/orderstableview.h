@@ -11,6 +11,7 @@
 
 #include <AntiquaCRM>
 #include <QContextMenuEvent>
+#include <QMap>
 #include <QModelIndex>
 #include <QObject>
 #include <QPaintEvent>
@@ -82,6 +83,11 @@ private Q_SLOTS:
 
 public Q_SLOTS:
   /**
+   * @brief Set Table in readonly mode!
+   */
+  void setProtected(bool);
+
+  /**
    * @brief Clears the Table content and his buffer.
    */
   void clearContents();
@@ -145,8 +151,23 @@ public:
 
   /**
    * @brief Readout Payment Id
+   * @param row
    */
-  qint64 getPaymentId(int);
+  qint64 getPaymentId(int row);
+
+  /**
+   * @brief Refundings cost from row.
+   * @param row
+   */
+  double getRefundingCost(int row);
+
+  /**
+   * @brief Refundings cost from all rows.
+   * @return QMap<Cell::'a_payment_id',Cell::'a_refunds_cost'>
+   *
+   * This will return all refundings cost with payment id.
+   */
+  QMap<qint64, double> getRefundingCosts();
 };
 
 #endif // ANTIQUACRM_PLUGIN_ORDERSTABLEVIEW_H

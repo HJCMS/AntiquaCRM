@@ -33,7 +33,10 @@ protected:
    */
   QJsonObject p_refunds_config;
 
-  double refundsCost();
+  /**
+   * @brief Default Refunding cost from Config
+   */
+  double refundingCost();
 
 Q_SIGNALS:
   /**

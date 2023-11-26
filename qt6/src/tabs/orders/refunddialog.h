@@ -36,18 +36,24 @@ private:
   /**
    * @brief current order id
    *
-   * Will set in constructor and can not changed.
+   * Order Id will set in constructor and can not changed.
    */
   const qint64 p_orderid;
 
+  /**
+   * @brief Introduction to the process
+   */
   RefundIntroduction *m_intro;
-  RefundSelecter *m_select;
-  RefundFinalize *m_final;
 
   /**
-   * @brief submit button
+   * @brief Select return item from order.
    */
-  QPushButton *btn_commit;
+  RefundSelecter *m_select;
+
+  /**
+   * @brief Set and send cancellation costs.
+   */
+  RefundFinalize *m_final;
 
   /**
    * @brief Dialog follow context widget
@@ -74,7 +80,7 @@ private Q_SLOTS:
    *
    * @todo final process description
    */
-  void commit();
+  void saveAndQuit();
 
 public:
   /**

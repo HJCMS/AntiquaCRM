@@ -9,6 +9,6 @@ void RefundingPage::setRefundingConfig(const QJsonObject &conf) {
   p_refunds_config = conf;
 }
 
-double RefundingPage::refundsCost() {
+double RefundingPage::refundingCost() {
   return p_refunds_config.value("default").toDouble();
 }

@@ -33,9 +33,10 @@ RefundingDialog::RefundingDialog(qint64 orderId, QWidget *parent)
   // ButtonsBar
   btn_reject->setText(tr("Close"));
   btn_reject->setIcon(AntiquaCRM::antiquaIcon("action-quit"));
-  btn_commit = m_buttonsBar->addButton(QDialogButtonBox::Apply);
-  btn_commit->setIcon(AntiquaCRM::antiquaIcon("action-save"));
-  btn_commit->setEnabled(false);
+
+  const QString ptip(tr("Starts refunding and closes this dialog on success!"));
+  btn_apply->setToolTip(ptip);
+  btn_apply->setStatusTip(btn_apply->toolTip());
 
   // Signals
   connect(m_navBar, SIGNAL(sendNext()), SLOT(goForward()));
@@ -43,10 +44,13 @@ RefundingDialog::RefundingDialog(qint64 orderId, QWidget *parent)
   connect(m_navBar, SIGNAL(sendPrev()), SLOT(goBackward()));
   connect(m_intro, SIGNAL(sendBackward()), SLOT(goBackward()));
   connect(m_stackedWidget, SIGNAL(currentChanged(int)), SLOT(pageChanged(int)));
-  connect(btn_commit, SIGNAL(clicked()), SLOT(commit()));
   connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
   connect(m_select, SIGNAL(sendStatus(bool)), SLOT(statusFromPage(bool)));
   connect(m_final, SIGNAL(sendStatus(bool)), SLOT(statusFromPage(bool)));
+  // Apply button handling
+  connect(m_final, SIGNAL(sendEnableButton(bool)), btn_apply,
+          SLOT(setEnabled(bool)));
+  connect(btn_apply, SIGNAL(clicked()), SLOT(saveAndQuit()));
 }
 
 void RefundingDialog::goForward() {
@@ -77,12 +81,74 @@ void RefundingDialog::statusFromPage(bool status) {
     m_navBar->setAllowNext(_index, status);
 }
 
-void RefundingDialog::commit() {
-  qDebug() << Q_FUNC_INFO << "__TODO__ FINAL COMMIT";
-  if (false)
-    m_statusBar->showMessage(tr("Update Success"), 5000);
-  else
-    m_statusBar->showMessage(tr("Update failed!"), 10000);
+void RefundingDialog::saveAndQuit() {
+  QMap<qint64, double> _costs = m_final->getFinalRefunding();
+  if (_costs.size() < 1 || p_orderid < 1) {
+    m_statusBar->showMessage(tr("Nothing todo."), 5000);
+    return;
+  }
+
+  // Order Id
+  const QString _oid = QString::number(p_orderid);
+
+  // Begin:Update
+  QStringList _upd;
+  QString _payment_status = QString::number(AntiquaCRM::OrderPayment::RETURN);
+  QString _order("UPDATE inventory_orders SET ");
+  _order.append("o_payment_status=" + _payment_status);
+  _order.append(", o_modified=CURRENT_TIMESTAMP");
+  _order.append(" WHERE o_id=" + _oid + ";");
+  _upd << _order;
+
+  QStringList _payment_ids;
+  QListIterator<qint64> _keys(_costs.keys());
+  while (_keys.hasNext()) {
+    qint64 _i = _keys.next();
+    if (_i > 0)
+      _payment_ids << QString::number(_i);
+  }
+
+  AntiquaCRM::ASqlFiles _tpl("query_returning_articles");
+  if (!_tpl.openTemplate()) {
+    m_statusBar->showMessage(tr("Database template error!"), 8000);
+    return;
+  }
+
+  QString _sql("a_order_id=" + _oid);
+  _sql.append(" AND a_payment_id IN (" + _payment_ids.join(",") + ")");
+  _tpl.setWhereClause(_sql);
+
+  QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
+  if (_q.size() > 0) {
+    while (_q.next()) {
+      qint64 p_id = _q.value("a_payment_id").toLongLong();
+      QString _rc = QString::number(_costs.value(p_id), 'f', 2);
+      if (p_id > 0 && _rc.length() > 0) {
+        const QString _id = QString::number(p_id);
+        _upd << QString("UPDATE article_orders SET "
+                        "a_sell_price=CONCAT('-', a_sell_price)::NUMERIC,"
+                        "a_modified=CURRENT_TIMESTAMP,"
+                        "o_delivered=CURRENT_TIMESTAMP,"
+                        "a_refunds_cost=%1 WHERE a_payment_id=%2;")
+                    .arg(_rc, _id);
+      }
+    }
+  }
+
+  if (_upd.size() < 2) {
+    m_statusBar->showMessage(tr("Nothing todo."), 5000);
+    return;
+  }
+
+  // Create final update statement
+  const QString _sql_update(_upd.join("\n"));
+  m_sql->query(_sql_update);
+  if (m_sql->lastError().isEmpty()) {
+    qDebug() << "SUCCSESS:" << _sql_update;
+    accept();
+  } else {
+    m_statusBar->showMessage(tr("An error has occurred!"), 10000);
+  }
 }
 
 int RefundingDialog::exec() {

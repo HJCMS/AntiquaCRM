@@ -7,11 +7,12 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QLayout>
+#include <QList>
 
 RefundFinalize::RefundFinalize(QWidget *parent) : RefundingPage{parent} {
   setObjectName("refund_steptwo");
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QGridLayout *layout = new QGridLayout(this);
 
   m_refundings = new OrdersTableView(this, true);
   QStringList _hide_columns("a_payment_id");
@@ -21,7 +22,7 @@ RefundFinalize::RefundFinalize(QWidget *parent) : RefundingPage{parent} {
   _hide_columns << "a_modified";
   _hide_columns << "a_provider_id";
   m_refundings->hideColumns(_hide_columns);
-  layout->addWidget(m_refundings);
+  layout->addWidget(m_refundings, 0, 1, 1, 2);
 
   m_refundCost = new AntiquaCRM::PriceEdit(this);
   m_refundCost->setObjectName("a_refunds_cost");
@@ -29,16 +30,25 @@ RefundFinalize::RefundFinalize(QWidget *parent) : RefundingPage{parent} {
   m_refundCost->setSingleStep(0.10);
   m_refundCost->setBuddyLabel(tr("Setting refundcost"));
   m_refundCost->appendStretch();
-  layout->addWidget(m_refundCost);
-  layout->addStretch(1);
+  layout->addWidget(m_refundCost, 1, 1, 1, 1);
+
+  m_divideCost = new QCheckBox(this);
+  m_divideCost->setText(tr("Dividing refunds cost to article count."));
+  m_divideCost->setChecked(true);
+  layout->addWidget(m_divideCost, 1, 2, 1, 1);
+  layout->setRowStretch(2, 1);
 
   setLayout(layout);
 
   connect(m_refundCost, SIGNAL(sendInputChanged()), SLOT(refundsCostChanged()));
+  connect(m_divideCost, SIGNAL(released()), SLOT(refundsCostChanged()));
 }
 
 void RefundFinalize::refundsCostChanged() {
   double _price = m_refundCost->getValue().toDouble();
+  if (m_divideCost->isChecked()) {
+    _price = (_price / m_refundings->rowCount());
+  }
   m_refundings->updateRefundCoast(_price);
 }
 
@@ -83,11 +93,17 @@ void RefundFinalize::addArticles(const QList<qint64> &list) {
   _query1.clear();
   // End:QueryRefundArticles
 
-  if (_articles.size() < 1)
+  if (_articles.size() < 1) {
+    // disable apply button
+    emit sendEnableButton(false);
     return;
+  }
 
   m_refundings->addArticles(_articles);
-  m_refundCost->setValue(refundsCost());
+  // Setting defaults
+  m_refundCost->setValue(refundingCost());
+  // Enable apply button
+  emit sendEnableButton(true);
 }
 
 bool RefundFinalize::initPageData(AntiquaCRM::ASqlCore *con, qint64 id) {
@@ -96,4 +112,8 @@ bool RefundFinalize::initPageData(AntiquaCRM::ASqlCore *con, qint64 id) {
 
   p_order_id = id;
   return true;
+}
+
+QMap<qint64, double> RefundFinalize::getFinalRefunding() {
+  return m_refundings->getRefundingCosts();
 }

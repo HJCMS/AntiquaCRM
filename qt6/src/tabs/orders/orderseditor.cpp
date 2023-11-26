@@ -849,7 +849,7 @@ void OrdersEditor::createRefunding(AntiquaCRM::OrderPayment stat) {
     // An dieser Stelle muss die Bestelltabelle neu geladen werden!
     // Damit der Klient durch ein Speichern nicht die Daten verfälscht.
     // Note: Das Refunding erfolgt asyncron zum aktuellen Datensatz!
-    qInfo("TODO Update payment table");
+    m_ordersTable->addArticles(queryArticles(_ids.or_id));
   }
   d->deleteLater();
 }
@@ -857,6 +857,13 @@ void OrdersEditor::createRefunding(AntiquaCRM::OrderPayment stat) {
 void OrdersEditor::openSearchInsertArticle() {
   if (!identities().isValid)
     return;
+
+  if (m_orderStatus->isProtectable()) {
+    QString _info(tr("<b>You cannot add a new item to a refund!</b>"
+                     "<p>A better choice is to create a new order.</p>"));
+    openNoticeMessage(_info);
+    return;
+  }
 
   OrderArticleDialog *d = new OrderArticleDialog(this);
   if (d->exec() == QDialog::Rejected)
@@ -932,6 +939,12 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
   }
 
   m_orderStatus->initProtection();
+
+  if (m_orderStatus->isProtectable()) {
+    qInfo("Protected order refunding.");
+    m_ordersTable->setProtected(true);
+  }
+
   return _retval;
 }
 

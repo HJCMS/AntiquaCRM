@@ -10,7 +10,8 @@
 #define ANTIQUACRM_REFUNDING_FINALIZE_H
 
 #include <AntiquaWidgets>
-#include <QList>
+#include <QCheckBox>
+#include <QMap>
 
 #include "refundingpage.h"
 
@@ -22,9 +23,13 @@ class ANTIQUACRM_LIBRARY RefundFinalize final : public RefundingPage {
 private:
   OrdersTableView *m_refundings;
   AntiquaCRM::PriceEdit *m_refundCost;
+  QCheckBox *m_divideCost;
 
 private Q_SLOTS:
   void refundsCostChanged();
+
+Q_SIGNALS:
+  void sendEnableButton(bool);
 
 public Q_SLOTS:
   void addArticles(const QList<qint64> &);
@@ -32,6 +37,7 @@ public Q_SLOTS:
 public:
   explicit RefundFinalize(QWidget *parent = nullptr);
   bool initPageData(AntiquaCRM::ASqlCore *m_sql, qint64 id) override;
+  QMap<qint64, double> getFinalRefunding();
 };
 
 #endif // ANTIQUACRM_REFUNDING_FINALIZE_H

@@ -355,6 +355,8 @@ bool OrdersTableModel::addArticles(
   int row = 0;
 
   clearContents();
+  if (articles.size() > 0)
+    return false;
 
   QListIterator<AntiquaCRM::OrderArticleItems> it(items);
   beginInsertRows(createIndex(row, 0), 0, items.size());
