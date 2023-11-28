@@ -63,6 +63,8 @@ public:
 
   explicit OrdersTableModel(QObject *parent = nullptr);
 
+  const QModelIndex parentIndex() const;
+
   /**
    * @brief Returns the size of payment articles.
    */

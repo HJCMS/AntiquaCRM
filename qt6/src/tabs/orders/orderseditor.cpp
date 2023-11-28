@@ -86,9 +86,10 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   m_actionBar->setRestoreable(false); // ResetButton off
   m_actionBar->setViewRestoreButton(false);
   m_actionBar->setViewActionAddButton(true);
-  m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_DELIVERY |
-                              AntiquaCRM::PRINT_INVOICE |
-                              AntiquaCRM::PRINT_REMINDER);
+  m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_DELIVERY   // Delivery
+                              | AntiquaCRM::PRINT_INVOICE  // Invoice
+                              | AntiquaCRM::PRINT_REMINDER // Reminder
+                              | AntiquaCRM::PRINT_REFUND); // Refunding
   mainLayout->addWidget(m_actionBar);
   // END:Row3
 
@@ -103,7 +104,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   connect(m_orderStatus, SIGNAL(sendNotifyStatus(const QString &)),
           SLOT(pushStatusMessage(const QString &)));
   connect(m_orderStatus, SIGNAL(sendOrderPayment(AntiquaCRM::OrderPayment)),
-          SLOT(createRefunding(AntiquaCRM::OrderPayment)));
+          SLOT(hintsAboutRefund(AntiquaCRM::OrderPayment)));
 
   // Signals:ActionsBar
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
@@ -113,6 +114,8 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(createPrintInvoice()));
   connect(m_actionBar, SIGNAL(sendPrintPaymentReminder()),
           SLOT(createPrintPaymentReminder()));
+  connect(m_actionBar, SIGNAL(sendPrintRefunding()),
+          SLOT(createPrintRefundInvoice()));
   connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
           SLOT(createMailMessage(const QString &)));
   connect(m_actionBar, SIGNAL(sendAddCustomAction()),
@@ -803,55 +806,61 @@ void OrdersEditor::createPrintPaymentReminder() {
 
   AntiquaCRM::PrintReminder *d = new AntiquaCRM::PrintReminder(this);
   if (d->exec(_obj) == QDialog::Accepted) {
-    pushStatusMessage(tr("Invoice printed."));
+    pushStatusMessage(tr("Reminder printed."));
+  }
+  d->deleteLater();
+}
+
+void OrdersEditor::createPrintRefundInvoice() {
+  if (m_orderStatus->getOrderPayment() != AntiquaCRM::OrderPayment::RETURN) {
+    pushStatusMessage(tr("This order is not a refund!"));
+    return;
+  }
+
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  QJsonObject _obj = createDialogData(_ids.or_id);
+  if (_obj.isEmpty())
+    return;
+
+  if (_obj.value("o_delivery_add_price").toBool()) {
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
+  } else {
+    _obj.insert("package_price", 0.00);
+  }
+
+  AntiquaCRM::PrintRefund *d = new AntiquaCRM::PrintRefund(this);
+  if (d->exec(_obj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Refund printed."));
   }
   d->deleteLater();
 }
 
 /**
- * Weil der SLOT mit einem Signal von OrderStatusActionFrame ausgelöst wird.
- * Müssen einige Abfragen durchgeführt werden damit dder RefundingDialog nicht
- * beim öffnen des Editors ausgelöst wird.
- *
- * Es kann an diesem Punkt nur der Status abgefragt werden.
- * Die Methode OrderStatusActionFrame::initProtection() kann an dieser
- * stelle nicht aufgerufen werden weil, das setzen von OrderStatus und
- * PaymentStatus beim laden des Auftrages asyncron erfolgen!
+ * Es kann hier keine Rückerstattung erfolgen!
  */
-void OrdersEditor::createRefunding(AntiquaCRM::OrderPayment stat) {
+void OrdersEditor::hintsAboutRefund(AntiquaCRM::OrderPayment stat) {
   if (stat != AntiquaCRM::OrderPayment::RETURN)
     return; // Nur bei Rückerstattung ausführen!
 
   if (m_tableData->getValue("o_payment_status").toInt() == stat)
     return; // Der Auftrag wurde bereits rückerstattet!
 
-  OrdersEditor::Idset _ids = identities();
-  if (!_ids.isValid)
-    return; // Keine Bestellnummer vorhanden dann aussteigen!
+  openNoticeMessage(
+      tr("<b>You cannot issue a refund in this Interface!</b>"
+         "<ul><li>The Order status must set to Delivered.</li>"
+         "<li>The Payment status must have paid.</li></ul>"
+         "<p>If this Order hasn't paid, use Order status Canceled.</p>"
+         "<p>To create a refund, return to the main view, right-click on the "
+         "completed order you want to refund, and select 'Create refund' "
+         "option.</p>"));
 
-  // Ein Auftrag der nicht abgeschlossen ist kann nicht rückerstattet werden!
-  if (!isOrderStatusFinished()) {
-    openNoticeMessage(tr(
-        "<b>You cannot issue a refund</b>:<ul>"
-        "<li>If delivery process is not completely finished.</li>"
-        "<li>If this order has not yet been paid for.</li></ul>"
-        "<p>In this case it's better, to set order status to canceled.</p>"));
-    m_orderStatus->o_payment_status->setReject();
-    return;
-  }
-
-  RefundingDialog *d = new RefundingDialog(_ids.or_id, this);
-  if (d->exec() == QDialog::Rejected) {
-    pushStatusMessage(tr("Refunding dialog aborted."));
-    m_orderStatus->o_payment_status->setReject();
-  } else {
-    pushStatusMessage(tr("Refunding finished."));
-    // An dieser Stelle muss die Bestelltabelle neu geladen werden!
-    // Damit der Klient durch ein Speichern nicht die Daten verfälscht.
-    // Note: Das Refunding erfolgt asyncron zum aktuellen Datensatz!
-    m_ordersTable->addArticles(queryArticles(_ids.or_id));
-  }
-  d->deleteLater();
+  m_orderStatus->o_payment_status->setReject();
+  if (m_orderStatus->isWindowModified())
+    m_orderStatus->setWindowModified(false);
 }
 
 void OrdersEditor::openSearchInsertArticle() {
@@ -946,6 +955,59 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
   }
 
   return _retval;
+}
+
+/**
+ * Weil der SLOT mit einem Signal von OrderStatusActionFrame ausgelöst wird.
+ * Müssen einige Abfragen durchgeführt werden damit dder RefundingDialog nicht
+ * beim öffnen des Editors ausgelöst wird.
+ *
+ * Es kann an diesem Punkt nur der Status abgefragt werden.
+ * Die Methode OrderStatusActionFrame::initProtection() kann an dieser
+ * stelle nicht aufgerufen werden weil, das setzen von OrderStatus und
+ * PaymentStatus beim laden des Auftrages asyncron erfolgen!
+ */
+bool OrdersEditor::createOrderRefund(qint64 oid) {
+  if (!openEditEntry(oid))
+    return false;
+
+  if (!m_orderStatus->currentOrderStatus()) {
+    openNoticeMessage(tr("<b>You cannot issue a refund for this Order!</b>"
+                         "<ul><li>The Order status must have Delivered.</li>"
+                         "<li>The Payment status must have Paid.</li></ul>"
+                         "<p>If this Order hasn't paid, open it and change "
+                         "status to Canceled.</p>"));
+
+    return false;
+  }
+
+  // Restore for a new Entry!
+  foreach (QString _n, QStringList({"o_id", "o_invoice_id"})) {
+    m_tableData->setValue(_n, 0);
+    setDataField(m_tableData->getProperties(_n), 0);
+  }
+  m_tableData->setValue("o_payment_status", AntiquaCRM::OrderPayment::RETURN);
+  setDataField(m_tableData->getProperties("o_payment_status"),
+               AntiquaCRM::OrderPayment::RETURN);
+
+  RefundingDialog *d = new RefundingDialog(oid, this);
+  if (d->exec() == QDialog::Rejected) {
+    pushStatusMessage(tr("Refunding dialog aborted."));
+    return false;
+  } else {
+    // An dieser Stelle muss die Bestelltabelle neu geladen werden!
+    // Damit der Klient durch ein Speichern nicht die Daten verfälscht.
+    // Note: Das Refunding erfolgt asyncron zum aktuellen Datensatz!
+    QList<AntiquaCRM::OrderArticleItems> _articles = d->refundArticles();
+    if (_articles.size() > 0)
+      m_ordersTable->addArticles(_articles);
+
+    m_ordersTable->setWindowModified(true);
+    setWindowModified(true);
+  }
+  d->deleteLater();
+  pushStatusMessage(tr("Refund created."));
+  return true;
 }
 
 bool OrdersEditor::createNewEntry() {

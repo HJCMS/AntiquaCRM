@@ -72,6 +72,8 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
           SLOT(sendSocketOperation(const QJsonObject &)));
 
+  connect(m_table, SIGNAL(sendStartRefund(qint64)), SLOT(refundEntry(qint64)));
+
   // Signals::OrdersEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
@@ -134,6 +136,20 @@ void OrdersWidget::openEntry(qint64 oid) {
   }
 
   if (m_editorWidget->openEditEntry(oid)) {
+    setCurrentWidget(m_editorPage);
+  }
+}
+
+void OrdersWidget::refundEntry(qint64 oid) {
+  if (oid < 1)
+    return;
+
+  if (currentIndex() != 0) {
+    popupWarningTabInEditMode();
+    return;
+  }
+
+  if (m_editorWidget->createOrderRefund(oid)) {
     setCurrentWidget(m_editorPage);
   }
 }

@@ -36,7 +36,8 @@ public:
     Delete = 3, /**< @brief Delete Item Action */
     Order = 4,  /**< @brief Create/Add Order action */
     Undo = 5,   /**< @brief Undo action */
-    Custom = 6  /**< @brief Custom Item action */
+    Custom = 6, /**< @brief Custom Item action */
+    Refund = 8  /**< @brief Refunding */
   };
 
   /**
@@ -115,6 +116,12 @@ public:
    * @note sendAction(TableContextMenu::Actions::Undo,index);
    */
   QAction *addUndoAction(const QString &title);
+
+  /**
+   * @brief add Refund Order
+   * @note sendAction(TableContextMenu::Actions::Refund,index);
+   */
+  QAction *addRefundAction(const QString &title);
 
   /**
    * @brief add Custom TableView action

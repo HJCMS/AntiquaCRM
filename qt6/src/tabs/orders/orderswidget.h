@@ -28,23 +28,19 @@ private:
   OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;
-
   void popupWarningTabInEditMode() override;
-
   void setDefaultTableView() override;
+
+public Q_SLOTS:
+  void openStartPage() override;
+  void createSearchQuery(const QString &history = QString()) override;
+  void createNewEntry() override;
+  void openEntry(qint64 oid) override;
+  void refundEntry(qint64 oid);
+  void onEnterChanged() override;
 
 public:
   explicit OrdersWidget(QWidget *parent = nullptr);
-
-  void openStartPage() override;
-
-  void createSearchQuery(const QString &history = QString()) override;
-
-  void createNewEntry() override;
-
-  void openEntry(qint64 oid) override;
-
-  void onEnterChanged() override;
 
   const QString getTitle() const override;
 

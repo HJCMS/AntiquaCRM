@@ -21,7 +21,7 @@ class ANTIQUACRM_LIBRARY RefundFinalize final : public RefundingPage {
   Q_OBJECT
 
 private:
-  OrdersTableView *m_refundings;
+  OrdersTableView *m_refundTable;
   AntiquaCRM::PriceEdit *m_refundCost;
   QCheckBox *m_divideCost;
 
@@ -37,7 +37,7 @@ public Q_SLOTS:
 public:
   explicit RefundFinalize(QWidget *parent = nullptr);
   bool initPageData(AntiquaCRM::ASqlCore *m_sql, qint64 id) override;
-  QMap<qint64, double> getFinalRefunding();
+  const QList<AntiquaCRM::OrderArticleItems> getFinalRefunding();
 };
 
 #endif // ANTIQUACRM_REFUNDING_FINALIZE_H

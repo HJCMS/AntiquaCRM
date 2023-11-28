@@ -35,6 +35,8 @@ void TableContextMenu::triggerAction(QAction *action) {
         emit sendAction(TableContextMenu::Actions::Undo, p_index);
       } else if (name == "ac_custom") {
         emit sendAction(TableContextMenu::Actions::Custom, p_index);
+      } else if (name == "ac_refund") {
+        emit sendAction(TableContextMenu::Actions::Refund, p_index);
       } else {
         qWarning("Unknown Context Action");
         return;
@@ -98,12 +100,19 @@ QAction *TableContextMenu::addUndoAction(const QString &title) {
   return ac;
 }
 
-QAction *TableContextMenu::addCustomAction(const QIcon &icon,
-                                           const QString &title) {
-  QAction *ac = addAction(icon, title);
-  ac->setObjectName("ac_custom");
+QAction *TableContextMenu::addRefundAction(const QString &title) {
+  QAction *ac = addAction(antiquaIcon("action-redo"), title);
+  ac->setObjectName("ac_refund");
   p_modelList.append(ac);
   return ac;
+}
+
+QAction *TableContextMenu::addCustomAction(const QIcon &icon,
+                                           const QString &title) {
+  QAction *m_ac = addAction(icon, title);
+  m_ac->setObjectName("ac_custom");
+  p_modelList.append(m_ac);
+  return m_ac;
 }
 
 } // namespace AntiquaCRM

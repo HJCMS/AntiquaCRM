@@ -54,6 +54,7 @@ SET (_library_SOURCES
   printbookcard.cpp
   printdeliverynote.cpp
   printinvoice.cpp
+  printrefund.cpp
   printreminder.cpp
 )
 
@@ -67,6 +68,7 @@ SET (_library_HEADERS
   printbookcard.h
   printdeliverynote.h
   printinvoice.h
+  printrefund.h
   printreminder.h
 )
 

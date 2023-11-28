@@ -8,7 +8,7 @@ OrdersTableDelegate::OrdersTableDelegate(QObject *parent)
     : QItemDelegate{parent} {
   AntiquaCRM::ASettings cfg(this);
   cfg.beginGroup("payment");
-  config.minPrice = cfg.value("min_price", 5.00).toDouble();
+  config.minPrice = cfg.value("min_price", -999999.00).toDouble();
   config.maxPrice = cfg.value("max_price", 999999.00).toDouble();
   config.minCount = cfg.value("min_count", 1).toInt();
   config.maxCount = cfg.value("max_count", 10).toInt();

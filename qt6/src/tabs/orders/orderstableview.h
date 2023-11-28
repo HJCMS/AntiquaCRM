@@ -168,6 +168,11 @@ public:
    * This will return all refundings cost with payment id.
    */
   QMap<qint64, double> getRefundingCosts();
+
+  /**
+   * @brief Get all entries with Refunded with a cost.
+   */
+  const QList<AntiquaCRM::OrderArticleItems> getRefundData();
 };
 
 #endif // ANTIQUACRM_PLUGIN_ORDERSTABLEVIEW_H

@@ -7,6 +7,7 @@ SET (query_tables_FILES
   query_articles_exists.sql
   query_book_binding.sql
   query_book_publisher_de.sql
+  query_build_refunding.sql
   query_company_data.sql
   query_connection_info.sql
   query_customer_data.sql
@@ -29,6 +30,7 @@ SET (query_tables_FILES
   query_printing_cards.sql
   query_printing_delivery_note.sql
   query_printing_invoice.sql
+  query_printing_refunding.sql
   query_provider_order_exists.sql
   query_provider_orders.sql
   query_returning_articles.sql

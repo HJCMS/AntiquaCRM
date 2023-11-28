@@ -297,9 +297,14 @@ private Q_SLOTS:
   void createPrintPaymentReminder();
 
   /**
-   * @brief Open Refunding Dialog if Order Id exists!
+   * @brief Dialog zum erstellen und Drucken einer Rückerstattung.
    */
-  void createRefunding(AntiquaCRM::OrderPayment);
+  void createPrintRefundInvoice();
+
+  /**
+   * @brief A Refund hase been selected
+   */
+  void hintsAboutRefund(AntiquaCRM::OrderPayment);
 
   /**
    * @brief Dialog zum Suchen und Einfügen eines Artikels.
@@ -331,6 +336,12 @@ public:
    * @param oid - Order Id
    */
   bool openEditEntry(qint64 oid) override;
+
+  /**
+   * @brief Mit vorhandenen Auftrag eine Rückerstattung erstellen.
+   * @param oid - Auftrags Nummer
+   */
+  bool createOrderRefund(qint64 oid);
 
   /**
    * @brief Manuelles Auftrag erstellen...

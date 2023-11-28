@@ -90,6 +90,11 @@ public:
   explicit RefundingDialog(qint64 orderId, QWidget *parent = nullptr);
 
   /**
+   * @brief Call Refundings after accept
+   */
+  const QList<AntiquaCRM::OrderArticleItems> refundArticles();
+
+  /**
    * @brief opens this dialog with some checks
    *
    * @li inital PgSQL connection

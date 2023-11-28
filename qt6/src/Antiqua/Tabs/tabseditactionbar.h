@@ -70,6 +70,7 @@ Q_SIGNALS:
   void sendPrintInvoiceNote();
   void sendPrintPaymentReminder();
   void sendPrintBookCard();
+  void sendPrintRefunding();
   void sendCancelClicked();
   void sendAddCustomAction();
   void sendSaveClicked();

@@ -82,71 +82,15 @@ void RefundingDialog::statusFromPage(bool status) {
 }
 
 void RefundingDialog::saveAndQuit() {
-  QMap<qint64, double> _costs = m_final->getFinalRefunding();
-  if (_costs.size() < 1 || p_orderid < 1) {
+  if (m_final->getFinalRefunding().size() < 1 || p_orderid < 1) {
     m_statusBar->showMessage(tr("Nothing todo."), 5000);
     return;
   }
+  accept();
+}
 
-  // Start SQL UPDATES
-  const QString _oid = QString::number(p_orderid);
-  const QString _status = QString::number(AntiquaCRM::OrderPayment::RETURN);
-  AntiquaCRM::ASqlFiles _tpl("query_returning_articles");
-  if (!_tpl.openTemplate()) {
-    m_statusBar->showMessage(tr("Database template error!"), 8000);
-    return;
-  }
-
-  QStringList _upd;
-  // Den Verkaufsstatus setzen
-  _upd << QString("UPDATE inventory_orders SET o_payment_status=%1"
-                  ", o_modified=CURRENT_TIMESTAMP WHERE o_id=%2;")
-              .arg(_status, _oid);
-
-  QStringList _payment_ids;
-  QListIterator<qint64> _keys(_costs.keys());
-  while (_keys.hasNext()) {
-    qint64 _i = _keys.next();
-    if (_i > 0)
-      _payment_ids << QString::number(_i);
-  }
-
-  // Suche die Artikel welche erstattet werden und setze Wert neu.
-  QString _sql("a_order_id=" + _oid);
-  _sql.append(" AND a_payment_id IN (" + _payment_ids.join(",") + ")");
-  _tpl.setWhereClause(_sql);
-
-  QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
-  if (_q.size() > 0) {
-    while (_q.next()) {
-      qint64 p_id = _q.value("a_payment_id").toLongLong();
-      QString _rc = QString::number(_costs.value(p_id), 'f', 2);
-      if (p_id > 0 && _rc.length() > 0) {
-        const QString _id = QString::number(p_id);
-        _upd << QString("UPDATE article_orders SET "
-                        "a_sell_price=CONCAT('-', a_sell_price)::NUMERIC,"
-                        "a_modified=CURRENT_TIMESTAMP,"
-                        "o_delivered=CURRENT_TIMESTAMP,"
-                        "a_refunds_cost=%1 WHERE a_payment_id=%2;")
-                    .arg(_rc, _id);
-      }
-    }
-  }
-
-  if (_upd.size() < 2) {
-    m_statusBar->showMessage(tr("Nothing todo."), 5000);
-    return;
-  }
-
-  // ok jetzt abfeuern
-  const QString _sql_update(_upd.join("\n"));
-  m_sql->query(_sql_update);
-  if (m_sql->lastError().isEmpty()) {
-    accept();
-  } else {
-    qDebug() << "FAILED:" << _sql_update;
-    m_statusBar->showMessage(tr("An error has occurred!"), 10000);
-  }
+const QList<AntiquaCRM::OrderArticleItems> RefundingDialog::refundArticles() {
+  return m_final->getFinalRefunding();
 }
 
 int RefundingDialog::exec() {

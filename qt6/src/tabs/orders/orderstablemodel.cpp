@@ -56,6 +56,10 @@ void OrdersTableModel::clearContents() {
   endResetModel();
 }
 
+const QModelIndex OrdersTableModel::parentIndex() const {
+  return index(0, 0, QModelIndex());
+}
+
 int OrdersTableModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent);
   return articles.size();
@@ -111,7 +115,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   const QMetaType _type = _item.data().metaType();
 #ifdef ANTIQUA_DEVELOPEMENT
   if (_type.id() == QMetaType::UnknownType) {
-    qDebug() << Q_FUNC_INFO << "Invalid MetaType:" << _fname;
+    qDebug() << Q_FUNC_INFO << "Invalid MetaType:" << _fname << _item.data();
   }
 #endif
 

@@ -14,15 +14,15 @@ RefundFinalize::RefundFinalize(QWidget *parent) : RefundingPage{parent} {
 
   QGridLayout *layout = new QGridLayout(this);
 
-  m_refundings = new OrdersTableView(this, true);
+  m_refundTable = new OrdersTableView(this, true);
   QStringList _hide_columns("a_payment_id");
   _hide_columns << "a_order_id";
   _hide_columns << "a_customer_id";
   _hide_columns << "a_price";
   _hide_columns << "a_modified";
   _hide_columns << "a_provider_id";
-  m_refundings->hideColumns(_hide_columns);
-  layout->addWidget(m_refundings, 0, 1, 1, 2);
+  m_refundTable->hideColumns(_hide_columns);
+  layout->addWidget(m_refundTable, 0, 1, 1, 2);
 
   m_refundCost = new AntiquaCRM::PriceEdit(this);
   m_refundCost->setObjectName("a_refunds_cost");
@@ -47,9 +47,9 @@ RefundFinalize::RefundFinalize(QWidget *parent) : RefundingPage{parent} {
 void RefundFinalize::refundsCostChanged() {
   double _price = m_refundCost->getValue().toDouble();
   if (m_divideCost->isChecked()) {
-    _price = (_price / m_refundings->rowCount());
+    _price = (_price / m_refundTable->rowCount());
   }
-  m_refundings->updateRefundCoast(_price);
+  m_refundTable->updateRefundCoast(_price);
 }
 
 void RefundFinalize::addArticles(const QList<qint64> &list) {
@@ -67,11 +67,13 @@ void RefundFinalize::addArticles(const QList<qint64> &list) {
   }
 
   // Begin:QueryRefundArticles
-  QString _sql("SELECT * FROM article_orders WHERE a_payment_id IN (");
-  _sql.append(_ids.join(",") + ") AND ");
-  _sql.append("a_order_id=" + QString::number(p_order_id) + ";");
+  AntiquaCRM::ASqlFiles _tpl("query_build_refunding");
+  if (!_tpl.openTemplate() || p_order_id < 1)
+    return;
 
-  QSqlQuery _query1 = m_sql->query(_sql);
+  _tpl.setWhereClause("a_payment_id IN (" + _ids.join(",") + ")");
+
+  QSqlQuery _query1 = m_sql->query(_tpl.getQueryContent());
   if (_query1.size() < 1)
     return;
 
@@ -99,7 +101,7 @@ void RefundFinalize::addArticles(const QList<qint64> &list) {
     return;
   }
 
-  m_refundings->addArticles(_articles);
+  m_refundTable->addArticles(_articles);
   // Setting defaults
   m_refundCost->setValue(refundingCost());
   // Enable apply button
@@ -114,6 +116,6 @@ bool RefundFinalize::initPageData(AntiquaCRM::ASqlCore *con, qint64 id) {
   return true;
 }
 
-QMap<qint64, double> RefundFinalize::getFinalRefunding() {
-  return m_refundings->getRefundingCosts();
+const QList<AntiquaCRM::OrderArticleItems> RefundFinalize::getFinalRefunding() {
+  return m_refundTable->getRefundData();
 }

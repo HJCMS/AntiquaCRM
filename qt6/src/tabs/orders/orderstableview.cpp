@@ -303,3 +303,26 @@ QMap<qint64, double> OrdersTableView::getRefundingCosts() {
   }
   return _m;
 }
+
+const QList<AntiquaCRM::OrderArticleItems> OrdersTableView::getRefundData() {
+  QList<AntiquaCRM::OrderArticleItems> _refunds;
+  QModelIndex _parent = m_model->parentIndex();
+  QStringList _forceNull({"a_payment_id", "a_order_id"});
+  for (int r = 0; r < rowCount(); ++r) {
+    AntiquaCRM::OrderArticleItems _items;
+    for (int c = 0; c < m_model->columnCount(); c++) {
+      QModelIndex _index = _parent.sibling(r, c);
+      AntiquaCRM::ArticleOrderItem _item;
+      _item.key = m_model->field(_index);
+      if (_forceNull.contains(_item.key))
+        _item.value = 0;
+      else
+        _item.value = m_model->data(_index, Qt::EditRole);
+
+      _items.append(_item);
+    }
+    if (_items.size() > 0)
+      _refunds.append(_items);
+  }
+  return _refunds;
+}

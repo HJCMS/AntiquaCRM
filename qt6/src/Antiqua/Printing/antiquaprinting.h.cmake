@@ -11,6 +11,11 @@
 #include "printinvoice.h"
 #endif
 
+// AntiquaCRM::PrintRefund
+#ifndef ANTIQUACRM_PRINTING_REFUND_H
+#include "printrefund.h"
+#endif
+
 // AntiquaCRM::PrintReminder
 #ifndef ANTIQUACRM_PRINTING_REMINDER_H
 #include "printreminder.h"

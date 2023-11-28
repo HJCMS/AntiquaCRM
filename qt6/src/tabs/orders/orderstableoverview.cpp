@@ -56,6 +56,7 @@ void OrdersTableOverView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->addCopyAction(tr("Copy Order Id"));
   QAction *ac_customer = m_menu->addOrderAction(tr("View Customer"));
   ac_customer->setIcon(AntiquaCRM::antiquaIcon("system-users"));
+  m_menu->addRefundAction(tr("Create refund"));
   m_menu->addReloadAction(tr("Update"));
   connect(m_menu,
           SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
@@ -89,6 +90,10 @@ void OrdersTableOverView::contextMenuAction(
 
   case (AntiquaCRM::TableContextMenu::Actions::Copy):
     emit sendCopyToClibboard(QString::number(_oid));
+    break;
+
+  case (AntiquaCRM::TableContextMenu::Actions::Refund):
+    emit sendStartRefund(_oid);
     break;
 
   case (AntiquaCRM::TableContextMenu::Actions::Undo):

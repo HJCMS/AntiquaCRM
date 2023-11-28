@@ -84,6 +84,8 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
           SIGNAL(sendPrintPaymentReminder()));
   connect(m_printerButton, SIGNAL(sendPrintBookcard()),
           SIGNAL(sendPrintBookCard()));
+  connect(m_printerButton, SIGNAL(sendPrintRefunding()),
+          SIGNAL(sendPrintRefunding()));
   // Signals:MailButton
   connect(m_mailButton, SIGNAL(sendMailAction(const QString &)),
           SIGNAL(sendCreateMailMessage(const QString &)));

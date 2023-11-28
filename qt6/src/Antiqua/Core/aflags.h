@@ -29,7 +29,8 @@ namespace AntiquaCRM {
     PRINT_DELIVERY = 0x1, /**< enable delivery button */
     PRINT_INVOICE = 0x2,  /**< enable invoice button */
     PRINT_REMINDER = 0x4, /**< enable reminder button */
-    PRINT_BOOKCARD = 0x8  /**< enable bookcard button */
+    PRINT_BOOKCARD = 0x8, /**< enable bookcard button */
+    PRINT_REFUND = 0x16   /**< enable refunding button */
   };
   Q_DECLARE_FLAGS(PrinterGroups, PrinterGroup);
 

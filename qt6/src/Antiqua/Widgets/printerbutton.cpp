@@ -45,6 +45,12 @@ PrinterButton::PrinterButton(QWidget *parent, AntiquaCRM::PrinterGroups flags)
   ac_bookcard->setVisible(false);
   connect(ac_bookcard, SIGNAL(triggered()), this, SIGNAL(sendPrintBookcard()));
 
+  ac_refunds = m_menu->addAction(_icon, tr("Refunding"));
+  ac_refunds->setToolTip(tr("Printing a refund invoice"));
+  ac_refunds->setEnabled(false);
+  ac_refunds->setVisible(false);
+  connect(ac_refunds, SIGNAL(triggered()), this, SIGNAL(sendPrintRefunding()));
+
   setMenu(m_menu);
   setButtons(flags);
 }
@@ -75,6 +81,12 @@ void PrinterButton::setButtons(AntiquaCRM::PrinterGroups flags) {
   if (flags.testFlag(PRINT_BOOKCARD)) {
     ac_bookcard->setEnabled(true);
     ac_bookcard->setVisible(true);
+    setEnabled(true);
+  }
+
+  if (flags.testFlag(PRINT_REFUND)) {
+    ac_refunds->setEnabled(true);
+    ac_refunds->setVisible(true);
     setEnabled(true);
   }
   emit sendButtonsChanged();
