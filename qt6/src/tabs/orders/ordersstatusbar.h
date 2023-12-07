@@ -20,16 +20,33 @@ class ANTIQUACRM_LIBRARY OrdersStatusBar final
   Q_OBJECT
 
 private:
+  /**
+   * @brief Internal selection handling
+   */
   enum FilterQuery {
     QF_DEFAULT = 0,
     QF_NOT_PAID = 1,
     QF_DELIVERED_NOT_PAID = 2,
-    QF_PAYMENT_REMINDED = 3,
-    QF_COMPLETED = 4,
-    QF_CANCELED = 5
+    QF_COMPLETED = 3,
+    QF_CANCELED = 4,
+    QF_REFUNDS = 5
   };
+
+  /**
+   * @brief History Button
+   */
   QPushButton *btn_history;
+
+  /**
+   * @brief History button actions
+   */
+  QAction *m_ac;
+
+  /**
+   * @brief Get year from OrdersSearchBar and build sql statement.
+   */
   const QString yearStatement() const;
+
   void setHistoryActionMenu(QPushButton *parent) override;
 
 private Q_SLOTS:

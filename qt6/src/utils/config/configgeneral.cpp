@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "configgeneral.h"
+#include "paymentrefundsettings.h"
 #include "paymentsettingsgroup.h"
 
 #include <QLocale>
@@ -20,6 +21,9 @@ ConfigGeneral::ConfigGeneral(QWidget *parent)
 
   m_paymentGroup = new PaymentSettingsGroup(m_central);
   layout->addWidget(m_paymentGroup);
+
+  m_refundSettings = new PaymentRefundSettings(m_central);
+  layout->addWidget(m_refundSettings);
 
   m_central->setLayout(layout);
   layout->addStretch(1);
@@ -53,6 +57,7 @@ void ConfigGeneral::loadSectionConfig() {
 
     m_inp->setValue(_val);
   }
+  m_refundSettings->setConfig(getDatabaseConfig("CONFIG_REFUNDING"));
   registerInputChangeSignals(this);
 }
 
@@ -65,6 +70,7 @@ void ConfigGeneral::saveSectionConfig() {
 
     config->setValue(m_inp->objectName(), m_inp->getValue());
   }
+  saveDatabaseConfig("CONFIG_REFUNDING", m_refundSettings->getConfig());
   setWindowModified(false);
 }
 

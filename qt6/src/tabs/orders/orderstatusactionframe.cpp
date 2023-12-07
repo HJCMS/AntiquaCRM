@@ -65,10 +65,10 @@ void OrderStatusActionFrame::orderStatusChanged(AntiquaCRM::OrderStatus s) {
     case (AntiquaCRM::OrderPayment::PAYED):
     case (AntiquaCRM::OrderPayment::REMIND):
     case (AntiquaCRM::OrderPayment::ADMONISH): {
-      _notify = tr("<b>You cannot cancel this order!</b><p>"
-                   "This order has already been paid.</p><p>"
-                   "Please issue a refund or if delivery is not made, refund "
-                   "the money and cancel later!</p>");
+      _notify = tr("<b>You cannot cancel this order!</b>"
+                   "<p>This order has already been paid.</p>"
+                   "<p>If this Order hasn't delivered, but paid, send back the "
+                   "money and set Paid to Open.</p>");
       emit sendNoticeMessage(_notify);
       o_order_status->setReject();
       return;
@@ -87,14 +87,29 @@ void OrderStatusActionFrame::orderStatusChanged(AntiquaCRM::OrderStatus s) {
 void OrderStatusActionFrame::orderPaymentChanged(AntiquaCRM::OrderPayment s) {
   QString _notify;
   switch (s) {
-  case (AntiquaCRM::OrderPayment::PAYED):
+  case (AntiquaCRM::OrderPayment::PAYED): {
+    if (getOrderStatus() == AntiquaCRM::OrderStatus::CANCELED) {
+      _notify = tr("<b>You cannot set this Status.</b>"
+                   "<p>This order was already canceled!</p>");
+      emit sendNoticeMessage(_notify);
+      o_payment_status->setReject();
+      return;
+    }
+  } break;
+
   case (AntiquaCRM::OrderPayment::REMIND):
   case (AntiquaCRM::OrderPayment::ADMONISH):
   case (AntiquaCRM::OrderPayment::RETURN):
   case (AntiquaCRM::OrderPayment::COLLPROC): {
     if (getOrderStatus() == AntiquaCRM::OrderStatus::CANCELED) {
-      _notify = tr("<b>You cannot set this Status.</b><p>"
-                   "This order was already canceled!</p>");
+      _notify = tr("<b>You cannot set this Status.</b>"
+                   "<p>This order was already canceled!</p>");
+      emit sendNoticeMessage(_notify);
+      o_payment_status->setReject();
+      return;
+    } else if (getOrderStatus() != AntiquaCRM::OrderStatus::DELIVERED) {
+      _notify = tr("<b>You cannot set this Status.</b>"
+                   "<p>This order isn't delivered!</p>");
       emit sendNoticeMessage(_notify);
       o_payment_status->setReject();
       return;

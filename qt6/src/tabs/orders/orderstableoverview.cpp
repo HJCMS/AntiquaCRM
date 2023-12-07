@@ -190,10 +190,11 @@ bool OrdersTableOverView::setQuery(const QString &clause) {
 }
 
 const QString OrdersTableOverView::defaultWhereClause() {
-  QString _sql("o_order_status<4 AND (");
-  _sql.append("DATE_PART('year',o_since)=DATE_PART('year',CURRENT_DATE) OR ");
-  _sql.append("DATE_PART('month',o_modified)=DATE_PART('year',CURRENT_DATE)");
-  _sql.append(")");
-  // qDebug() << Q_FUNC_INFO << _sql << Qt::endl;
+  QStringList _l(QString::number(AntiquaCRM::OrderStatus::DELIVERED));
+  _l.append(QString::number(AntiquaCRM::OrderStatus::CANCELED));
+  QString _sql("o_order_status NOT IN (" + _l.join(",") + ")");
+  _sql.append(" AND o_since BETWEEN ");
+  _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
+  _sql.append(" AND CURRENT_TIMESTAMP");
   return _sql;
 }

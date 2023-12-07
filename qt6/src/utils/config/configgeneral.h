@@ -14,12 +14,14 @@
 #include <QObject>
 
 class PaymentSettingsGroup;
+class PaymentRefundSettings;
 
 class ConfigGeneral final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
   PaymentSettingsGroup *m_paymentGroup;
+  PaymentRefundSettings *m_refundSettings;
   void setPaymentDefaults();
 
 public Q_SLOTS:

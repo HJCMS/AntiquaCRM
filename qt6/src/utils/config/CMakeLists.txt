@@ -22,6 +22,7 @@ SET (_library_HEADERS
  databaseprofile.cpp
  iconthemes.cpp
  paymentsettingsgroup.cpp
+ paymentrefundsettings.cpp
  pathsettingsgroup.cpp
  pluginlistwidget.cpp
  printerfonts.cpp
@@ -48,6 +49,7 @@ SET (_library_SOURCES
  databaseprofile.h
  iconthemes.h
  paymentsettingsgroup.h
+ paymentrefundsettings.h
  pathsettingsgroup.h
  pluginlistwidget.h
  printerfonts.h

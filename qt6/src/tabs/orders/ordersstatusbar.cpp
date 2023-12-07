@@ -4,8 +4,9 @@
 #include "ordersstatusbar.h"
 #include "orderssearchbar.h"
 
-OrdersStatusBar::OrdersStatusBar(QWidget *parent)
-    : AntiquaCRM::TabsStatusBar{parent} {
+using namespace AntiquaCRM;
+
+OrdersStatusBar::OrdersStatusBar(QWidget *parent) : TabsStatusBar{parent} {
   setCreateButtonEnabled(false);
   defaultViewButton();
   btn_history = historyButton();
@@ -27,37 +28,36 @@ void OrdersStatusBar::setHistoryActionMenu(QPushButton *parent) {
   QMenu *m = new QMenu(parent);
   m->setTitle(tr("Orders History"));
 
-  QAction *ac1 = m->addAction(historyIcon(), tr("Default view"));
-  ac1->setStatusTip(tr("Current orders in progress to delivered."));
-  m_mapper->setMapping(ac1, OrdersStatusBar::QF_DEFAULT);
-  connect(ac1, SIGNAL(triggered()), m_mapper, SLOT(map()));
-  m->setDefaultAction(ac1);
+  m_ac = m->addAction(historyIcon(), tr("Default view"));
+  m_ac->setStatusTip(tr("Current orders in progress to delivered."));
+  m_mapper->setMapping(m_ac, OrdersStatusBar::QF_DEFAULT);
+  connect(m_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
+  m->setDefaultAction(m_ac);
 
-  QAction *ac2 = m->addAction(historyIcon(), tr("Orders without payment."));
-  ac2->setStatusTip(tr("Current orders without a payment."));
-  m_mapper->setMapping(ac2, OrdersStatusBar::QF_NOT_PAID);
-  connect(ac2, SIGNAL(triggered()), m_mapper, SLOT(map()));
+  m_ac = m->addAction(historyIcon(), tr("Orders without payment"));
+  m_ac->setStatusTip(tr("Current orders without a payment."));
+  m_mapper->setMapping(m_ac, OrdersStatusBar::QF_NOT_PAID);
+  connect(m_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
-  QAction *ac3 = m->addAction(historyIcon(), tr("Delivered and not payed."));
-  ac3->setStatusTip(tr("Delivered and waiting for payment."));
-  m_mapper->setMapping(ac3, OrdersStatusBar::QF_DELIVERED_NOT_PAID);
-  connect(ac3, SIGNAL(triggered()), m_mapper, SLOT(map()));
+  m_ac = m->addAction(historyIcon(), tr("Delivered and not paid"));
+  m_ac->setStatusTip(tr("Delivered and waiting for payment."));
+  m_mapper->setMapping(m_ac, OrdersStatusBar::QF_DELIVERED_NOT_PAID);
+  connect(m_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
-  QAction *ac4 = m->addAction(historyIcon(),
-                              tr("Reminded, admonished - Payment Collection."));
-  ac4->setStatusTip(tr("Without payment with reminder or Payment Collection."));
-  m_mapper->setMapping(ac4, OrdersStatusBar::QF_PAYMENT_REMINDED);
-  connect(ac4, SIGNAL(triggered()), m_mapper, SLOT(map()));
+  m_ac = m->addAction(historyIcon(), tr("Refundings"));
+  m_ac->setStatusTip(tr("Refundings from Year."));
+  m_mapper->setMapping(m_ac, OrdersStatusBar::QF_REFUNDS);
+  connect(m_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
-  QAction *ac5 = m->addAction(historyIcon(), tr("Completed from Year."));
-  ac5->setStatusTip(tr("Completed orders from Year."));
-  m_mapper->setMapping(ac5, OrdersStatusBar::QF_COMPLETED);
-  connect(ac5, SIGNAL(triggered()), m_mapper, SLOT(map()));
+  m_ac = m->addAction(historyIcon(), tr("Completed"));
+  m_ac->setStatusTip(tr("Completed orders from Year."));
+  m_mapper->setMapping(m_ac, OrdersStatusBar::QF_COMPLETED);
+  connect(m_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
-  QAction *ac6 = m->addAction(historyIcon(), tr("Canceled from Year."));
-  ac6->setStatusTip(tr("Canceled orders from Year."));
-  m_mapper->setMapping(ac6, OrdersStatusBar::QF_CANCELED);
-  connect(ac6, SIGNAL(triggered()), m_mapper, SLOT(map()));
+  m_ac = m->addAction(historyIcon(), tr("Canceled"));
+  m_ac->setStatusTip(tr("Canceled orders from Year."));
+  m_mapper->setMapping(m_ac, OrdersStatusBar::QF_CANCELED);
+  connect(m_ac, SIGNAL(triggered()), m_mapper, SLOT(map()));
 
   parent->setMenu(m);
   connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
@@ -65,60 +65,62 @@ void OrdersStatusBar::setHistoryActionMenu(QPushButton *parent) {
 
 void OrdersStatusBar::setHistoryAction(int index) {
   FilterQuery _filter = static_cast<FilterQuery>(index);
+  const QString _delivered = QString::number(OrderStatus::DELIVERED);
   QString _status, _sql;
   switch (_filter) {
   case QF_DEFAULT: {
-    // Zeige alle Nicht bezahlten
-    _status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    _sql = "o_order_status<" + _status;
+    // Zeige alle Nicht gelieferten
+    _sql = "o_order_status<" + _delivered;
   } break;
 
   case QF_NOT_PAID: {
     // Zeige "nicht Bezahlt" und "nicht Storniert"
-    _status = QString::number(AntiquaCRM::OrderPayment::PAYED);
-    _sql = "(o_payment_status!=" + _status;
-    _status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
-    _sql.append(" AND o_order_status!=" + _status + ")");
+    _status = QString::number(OrderPayment::PAYED);
+    _sql = "o_payment_status!=" + _status;
+    _status = QString::number(OrderPayment::RETURN);
+    _sql.append(" AND o_payment_status!=" + _status);
+    _status = QString::number(OrderStatus::CANCELED);
+    _sql.append(" AND o_order_status!=" + _status);
   } break;
 
   case QF_DELIVERED_NOT_PAID: {
-    // Zeige geliefert und Nicht bezahlt
-    _status = QString::number(AntiquaCRM::OrderPayment::PAYED);
-    _sql = "(o_payment_status!=" + _status;
-    _status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    _sql.append(" AND o_order_status=" + _status + ")");
-  } break;
-
-  case QF_PAYMENT_REMINDED: {
-    // Zeige geliefert mit Zahlungserinnerung oder Mahnung
-    _status = QString::number(AntiquaCRM::OrderPayment::REMIND);
-    _sql = "(o_payment_status IN (" + _status;
-    _status = QString::number(AntiquaCRM::OrderPayment::ADMONISH);
-    _sql.append("," + _status);
-    _status = QString::number(AntiquaCRM::OrderPayment::COLLPROC);
-    _sql.append("," + _status + ")");
-    _status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    _sql.append(" AND o_order_status=" + _status + ")");
+    // Zeige geliefert, nicht Bezahlt ohne Erinnerungen.
+    _sql = "(o_order_status=" + _delivered + " AND ";
+    _sql.append("o_payment_status IN (");
+    _sql.append(QString::number(OrderPayment::REMIND));
+    _sql.append(",");
+    _sql.append(QString::number(OrderPayment::ADMONISH));
+    _sql.append(",");
+    _sql.append(QString::number(OrderPayment::COLLPROC));
+    _sql.append("))");
   } break;
 
   case QF_COMPLETED: {
     // Zeige angeschlossene
-    _status = QString::number(AntiquaCRM::OrderPayment::PAYED);
+    _status = QString::number(OrderPayment::PAYED);
     _sql = "(o_payment_status=" + _status;
-    _status = QString::number(AntiquaCRM::OrderStatus::DELIVERED);
-    _sql.append(" AND o_order_status=" + _status + ")");
+    _sql.append(" AND o_order_status=" + _delivered + ")");
   } break;
 
   case QF_CANCELED: {
     // Zeige stornierte
-    _status = QString::number(AntiquaCRM::OrderStatus::CANCELED);
+    _status = QString::number(OrderStatus::CANCELED);
     _sql = "o_order_status=" + _status;
+  } break;
+
+  case QF_REFUNDS: {
+    // Zeige Rückertattungen
+    _status = QString::number(OrderStatus::CANCELED);
+    _sql = "(o_order_status=" + _delivered;
+    _status = QString::number(OrderPayment::RETURN);
+    _sql.append(" AND o_payment_status=" + _status + ")");
   } break;
 
   default:
     break;
   }
 
+  _status.clear();
   if (_sql.isEmpty())
     return;
 

@@ -11,6 +11,7 @@
 
 #include <AntiquaInput>
 #include <QIcon>
+#include <QJsonObject>
 #include <QMap>
 #include <QMetaType>
 #include <QObject>
@@ -110,6 +111,16 @@ public:
   explicit PluginConfigWidget(const QString &id, QWidget *parent = nullptr);
 
   virtual ~PluginConfigWidget();
+
+  /**
+   * @brief read configuration from database
+   */
+  const QJsonObject getDatabaseConfig(const QString &key);
+
+  /**
+   * @brief write configuration to database
+   */
+  bool saveDatabaseConfig(const QString &key, const QJsonObject &obj);
 
   /**
    * @brief configuration id for config section pointer

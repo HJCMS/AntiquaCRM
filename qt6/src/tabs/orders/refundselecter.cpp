@@ -145,9 +145,13 @@ bool RefundSelecter::initPageData(AntiquaCRM::ASqlCore *con, qint64 id) {
   // End:QueryOrderData
 
   // Begin:QueryOrderArticles
-  QString sql("SELECT * FROM article_orders WHERE a_order_id=");
-  sql.append(QString::number(id) + ";");
-  QSqlQuery _query1 = m_sql->query(sql);
+  AntiquaCRM::ASqlFiles _atpl("query_article_to_refunding");
+  if (!_atpl.openTemplate() || id < 1)
+    return false;
+
+  _atpl.setWhereClause("o_id=" + QString::number(id));
+
+  QSqlQuery _query1 = m_sql->query(_atpl.getQueryContent());
   if (_query1.size() < 1)
     return false;
 

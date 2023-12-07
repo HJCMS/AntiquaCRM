@@ -34,7 +34,7 @@ void RefundPage::setBodyLayout() {
 
   QTextTableCell hcl = m_table->cellAt(0, 0);
   hcl.setFormat(m_body->tableCellFormat());
-  m_body->setCellItem(hcl, tr("Invoice"), Qt::AlignLeft);
+  m_body->setCellItem(hcl, tr("Refund"), Qt::AlignLeft);
 
   QTextTableCell hcr = m_table->cellAt(0, 1);
   hcr.setFormat(m_body->tableCellFormat());
@@ -69,78 +69,36 @@ int RefundPage::addArticleRows(int row, const QSqlQuery &result) {
     return row;
 
   int _row = row;
-  // Article
+  // Begin:ArticleRow
+  // Article cell
   setArticleCell(_row, result.value("a_article_id"));
-  // Title
+  // Title cell
   setDescripeCell(_row, result.value("a_title"));
-  // Quantity
-  int _count = result.value("a_count").toInt();
-  setQuantityCell(_row, _count);
-
-  // Price
-  QString _vat_prefix;
+  // Quantity cell
+  setQuantityCell(_row, result.value("a_count").toInt());
+  // Price cell
   double _price = result.value("a_sell_price").toDouble();
-  refund_cost += result.value("a_refunds_cost").toDouble();
   AntiquaCRM::ATaxCalculator _calc(_price, result.value("a_tax").toInt());
-  _calc.setBillingMode(config.value("vat_level").toInt());
-
-  switch (_calc.getBillingMode()) {
-  case TAX_INCL:
-    _vat_prefix = tr("incl."); // including sales tax
-    break;
-
-  case TAX_WITH:
-    _vat_prefix = tr("with"); // with sales tax
-    break;
-
-  default:
-    _vat_prefix = tr("without"); // without sales tax
-    break;
-  }
+  double _refund_cost = result.value("a_refunds_cost").toDouble();
 
   QTextTableCell _price_cell = m_articles->cellAt(_row, 3);
   _price_cell.setFormat(m_body->articleTableCellFormat((_row > 1)));
   m_body->setCellItem(_price_cell, _calc.money(_price),
                       (Qt::AlignRight | Qt::AlignVCenter));
-
+  // End:ArticleRow
   _row++;
-  // m_articles->mergeCells(row, 0, 0, 3);
-  QTextTableCell _vat_cell = m_articles->cellAt(_row, 2);
-  _vat_cell.setFormat(m_body->articleTableCellFormat());
+  // Refund Cells
+  QTextTableCell _rf_info_cell = m_articles->cellAt(_row, 2);
+  m_body->setCellItem(_rf_info_cell, tr("refund cost"),
+                      (Qt::AlignRight | Qt::AlignVCenter));
 
-  QTextTableCell _subtotal_cell = m_articles->cellAt(_row, 3);
-  _subtotal_cell.setFormat(m_body->articleTableCellFormat(true));
+  QTextTableCell _rf_cost_cell = m_articles->cellAt(_row, 3);
+  _rf_cost_cell.setFormat(m_body->articleTableCellFormat(true));
+  m_body->setCellItem(_rf_cost_cell, _calc.money(_refund_cost),
+                      (Qt::AlignRight | Qt::AlignVCenter));
 
-  int _type = result.value("a_type").toInt();
-  switch (static_cast<AntiquaCRM::ArticleType>(_type)) {
-  case (AntiquaCRM::ArticleType::BOOK): {
-    QString _str(_vat_prefix);
-    _str.append(" ");
-    if (_calc.salesTaxRate() > 0) {
-      _str.append(QString::number(_calc.salesTaxRate()));
-      _str.append("% ");
-    }
-    _str.append(tr("VAT"));
-    m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
-                        (Qt::AlignRight | Qt::AlignVCenter));
-  } break;
-
-  default: {
-    QString _str(_vat_prefix);
-    _str.append(" ");
-    if (_calc.salesTaxRate() > 0) {
-      _str.append(QString::number(_calc.salesTaxRate()));
-      _str.append("% ");
-    }
-    _str.append(tr("VAT"));
-    m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
-                        (Qt::AlignRight | Qt::AlignVCenter));
-  } break;
-  }
-
-  summary += _calc.salesPrice();
+  refund_cost  += _refund_cost;
+  summary += _calc.netPrice();
   return _row;
 }
 
@@ -221,11 +179,10 @@ bool RefundPage::setContentData(QJsonObject &data) {
                       Qt::AlignRight);
 
   _row++;
-  // Delivery cost summary
+  // Refunding cost summary
   QTextTableCell _dc0 = m_articles->cellAt(_row, 2);
   _dc0.setFormat(m_body->articleTableCellFormat(false));
-  m_body->setCellItem(_dc0, tr("refund cost"), Qt::AlignRight);
-  // Delivery cost
+  m_body->setCellItem(_dc0, tr("total refund cost"), Qt::AlignRight);
   QTextTableCell _dc1 = m_articles->cellAt(_row, 3);
   _dc1.setFormat(m_body->articleTableCellFormat(true));
   m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(refund_cost),

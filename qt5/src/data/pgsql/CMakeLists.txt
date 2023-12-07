@@ -5,6 +5,7 @@ SET (query_tables_FILES
   query_antiquacrm_config.sql
   query_article_order_with_id.sql
   query_articles_exists.sql
+  query_article_to_refunding.sql
   query_book_binding.sql
   query_book_publisher_de.sql
   query_build_refunding.sql

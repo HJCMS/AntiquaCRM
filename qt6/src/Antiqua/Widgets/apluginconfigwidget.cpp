@@ -4,6 +4,8 @@
 #include "apluginconfigwidget.h"
 
 #include <QDate>
+#include <QJsonDocument>
+#include <QJsonParseError>
 
 namespace AntiquaCRM {
 
@@ -62,6 +64,54 @@ void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
     connect(inp, SIGNAL(sendInputChanged()), signalMapper, SLOT(map()));
     signalMapper->setMapping(inp, this);
   }
+}
+
+const QJsonObject PluginConfigWidget::getDatabaseConfig(const QString &key) {
+  QJsonObject _errno;
+  _errno.insert("status", false);
+
+  if (!key.startsWith("CONFIG_"))
+    return _errno;
+
+  if (pgsql == nullptr)
+    pgsql = new AntiquaCRM::ASqlCore(this);
+
+  QString _sql("SELECT cfg_jsconfig::json FROM antiquacrm_configs ");
+  _sql.append(" WHERE cfg_group='" + key + "';");
+  QSqlQuery _q = pgsql->query(_sql);
+  if (_q.size() == 1) {
+    _q.next();
+    QString _buffer = _q.value("cfg_jsconfig").toString();
+    if (_buffer.isEmpty()) {
+      qWarning("No data for configuration %s", qPrintable(key));
+      return _errno;
+    }
+    QJsonDocument _doc;
+    QJsonParseError _parser;
+    _doc = QJsonDocument::fromJson(_buffer.toLocal8Bit(), &_parser);
+    if (_parser.error != QJsonParseError::NoError) {
+      qWarning("Json Document Error: '%s'.", qPrintable(_parser.errorString()));
+      return _errno;
+    }
+    return _doc.object();
+  }
+  return _errno;
+}
+
+bool PluginConfigWidget::saveDatabaseConfig(const QString &key,
+                                            const QJsonObject &obj) {
+  if (!key.startsWith("CONFIG_") || obj.isEmpty())
+    return false;
+
+  if (pgsql == nullptr)
+    pgsql = new AntiquaCRM::ASqlCore(this);
+
+  QJsonDocument _doc(obj);
+  QString _sql("UPDATE antiquacrm_configs SET cfg_jsconfig='");
+  _sql.append(_doc.toJson(QJsonDocument::Compact));
+  _sql.append("' WHERE cfg_group='" + key + "';");
+  pgsql->query(_sql);
+  return pgsql->lastError().isEmpty();
 }
 
 const QString PluginConfigWidget::getIdentifier() {
