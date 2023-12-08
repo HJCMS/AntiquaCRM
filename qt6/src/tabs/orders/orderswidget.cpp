@@ -85,12 +85,16 @@ OrdersWidget::OrdersWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void OrdersWidget::popupWarningTabInEditMode() {
-  QString info(tr("Can't open this Order"));
+void OrdersWidget::popupWarningTabInEditMode(const QString &custom) {
+  QString info(tr("Can't open the Order tab."));
   info.append("<p>");
-  info.append(tr("Because Orders tab is in edit mode."));
-  info.append("</p><p>");
-  info.append(tr("You need to save and close the editor first."));
+  if (custom.length() > 0) {
+    info.append(custom);
+  } else {
+    info.append(tr("Because Orders tab is in edit mode."));
+    info.append("</p><p>");
+    info.append(tr("You need to save and close the editor first."));
+  }
   info.append("</p>");
   QMessageBox::information(this, windowTitle(), info);
 }
@@ -170,27 +174,36 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
   // first call?
   onEnterChanged();
 
+  // get operation
+  const QString _action = obj.value("ACTION").toString().toLower();
+
   if (currentIndex() != 0) {
+    // Add Article to opened order
+    if (_action == "add_article" && currentIndex() == 1) {
+      qint64 _aid = obj.value("VALUE").toInt();
+      if (m_editorWidget->addArticle(_aid)) {
+        setCurrentIndex(1);
+        return true;
+      }
+    } else {
+      const QString _txt = tr("Please open a order before use this operation.");
+      popupWarningTabInEditMode(_txt);
+    }
     popupWarningTabInEditMode();
     return false;
   }
 
-  /*
-  QJsonObject({
-
-  )
-  */
-  const QString _action = obj.value("ACTION").toString().toLower();
+  // operations that needs the main view
   if (_action == "open_order") {
     // Open Order
-    int _oid = obj.value("VALUE").toInt();
+    qint64 _oid = obj.value("VALUE").toInt();
     if (m_editorWidget->openEditEntry(_oid)) {
       setCurrentIndex(1);
       return true;
     }
   } else if (_action == "create_order") {
     // Create New Order with Customer id
-    int _cid = obj.value("VALUE").toInt();
+    qint64 _cid = obj.value("VALUE").toInt();
     if (_cid < 1)
       return false;
 
@@ -200,7 +213,7 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
     }
   } else if (_action == "import_order") {
     // Create Import Orders from Provider data.
-    int _cid = obj.value("VALUE").toInt();
+    qint64 _cid = obj.value("VALUE").toInt();
     if (_cid < 1)
       return false;
 
@@ -216,5 +229,8 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
 }
 
 const QStringList OrdersWidget::acceptsCustomActions() const {
-  return QStringList({"open_order", "create_order", "import_order"});
+  return QStringList({"add_article",  /**< Add Article to opened tab */
+                      "open_order",   /**< Open Order */
+                      "create_order", /**< Craete new empty order */
+                      "import_order"});
 }

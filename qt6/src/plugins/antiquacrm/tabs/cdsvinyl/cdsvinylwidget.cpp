@@ -91,7 +91,8 @@ CDsVinylWidget::CDsVinylWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void CDsVinylWidget::popupWarningTabInEditMode() {
+void CDsVinylWidget::popupWarningTabInEditMode(const QString &custom) {
+  Q_UNUSED(custom);
   QString info(tr("Can't open this Article"));
   info.append("<p>");
   info.append(tr("Because CDs && Vinyl tab is in edit mode."));

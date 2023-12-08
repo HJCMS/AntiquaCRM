@@ -95,7 +95,8 @@ CustomersWidget::CustomersWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void CustomersWidget::popupWarningTabInEditMode() {
+void CustomersWidget::popupWarningTabInEditMode(const QString &custom) {
+  Q_UNUSED(custom);
   QString info(tr("Can't open this Article"));
   info.append("<p>");
   info.append(tr("Because Customers tab is in edit mode."));

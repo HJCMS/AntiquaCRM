@@ -139,7 +139,7 @@ protected Q_SLOTS:
    * This Slot is reserved to do prepare PopUp Message if Editor is in use or
    * unsaved changes exists.
    */
-  virtual void popupWarningTabInEditMode() = 0;
+  virtual void popupWarningTabInEditMode(const QString &custom = QString()) = 0;
 
   /**
    * @brief Call standard table query

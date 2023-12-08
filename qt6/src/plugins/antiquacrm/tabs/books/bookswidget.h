@@ -31,7 +31,7 @@ private:
   QScrollArea *m_editorPage;
   BooksEditor *m_editorWidget;
 
-  void popupWarningTabInEditMode() override;
+  void popupWarningTabInEditMode(const QString &custom = QString()) override;
 
   void setDefaultTableView() override;
 

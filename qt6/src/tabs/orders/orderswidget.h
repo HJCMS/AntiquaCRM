@@ -28,7 +28,7 @@ private:
   OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;
-  void popupWarningTabInEditMode() override;
+  void popupWarningTabInEditMode(const QString &custom = QString()) override;
   void setDefaultTableView() override;
 
 public Q_SLOTS:
@@ -61,6 +61,7 @@ public:
    * @endcode
    *
    * Acceptable "ACTION" operations:
+   * @li add_article   - Add to current order
    * @li open_order    - Open order with OrderId
    * @li create_order  - Create new order with Customer Id
    * @li import_order  - Import Order from Provider

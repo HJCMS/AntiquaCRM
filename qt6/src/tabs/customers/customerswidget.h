@@ -32,7 +32,7 @@ private:
   CustomersEditor *m_editorWidget;
 
 private Q_SLOTS:
-  void popupWarningTabInEditMode() override;
+  void popupWarningTabInEditMode(const QString &custom = QString()) override;
   void setDefaultTableView() override;
   void setDeleteCustomer(qint64 customerId = -1);
   void setCreateNewOrder(qint64 customerId = -1);
