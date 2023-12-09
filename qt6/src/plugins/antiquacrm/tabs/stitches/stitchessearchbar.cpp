@@ -44,7 +44,7 @@ StitchesSearchBar::StitchesSearchBar(QWidget *parent)
   m_views->setToolTip(tr("With Views or not."));
   addWidget(m_views);
 
-  // isChecked() == "ip_count>0"
+  addWidget(searchImageOptions());
   addWidget(stockCheckBox());
 
   m_searchBtn = startSearchButton();
@@ -158,6 +158,11 @@ const QString StitchesSearchBar::getSearchStatement() {
 
   // start SqlClause with or without stock
   QString _sql(withStock() ? "ip_count>0 AND " : "");
+
+  // im_id Image filter
+  if (!imageFilter().isEmpty()) {
+    _sql.append(imageFilter() + " AND ");
+  }
 
   // ip_kolorit
   if (m_kolorit->isChecked())

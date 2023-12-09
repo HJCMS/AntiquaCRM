@@ -33,6 +33,7 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
   m_signed->setToolTip(tr("Signed Version"));
   addWidget(m_signed);
 
+  addWidget(searchImageOptions());
   addWidget(stockCheckBox());
 
   m_searchBtn = startSearchButton();
@@ -250,6 +251,11 @@ const QString BooksSearchBar::getSearchStatement() {
   QString _operation = _js.value("search").toString();
   QString _input;
 
+  // im_id Image filter
+  if (!imageFilter().isEmpty()) {
+    _sql.append(imageFilter() + " AND ");
+  }
+
   // ib_signed
   if (m_signed->isChecked()) {
     _sql.append("ib_signed=true AND ");
@@ -300,14 +306,13 @@ const QString BooksSearchBar::getSearchStatement() {
     return _sql;
   }
 
-  // Lager & Stichwortsuche
+  // Lagerort
   if (_operation == "storage") {
     _input = m_searchInput->text();
     _input.replace(jokerPattern, "%");
     QStringList _buf;
     _buf << prepareFieldSearch("sl_storage", _input);
     _buf << prepareFieldSearch("sl_identifier", _input);
-    _buf << prepareFieldSearch("ib_keyword", _input);
     _sql.append("(" + _buf.join(" OR ") + ")");
     _buf.clear();
     return _sql;

@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "tabsstatusbar.h"
+#include "tabssearchbar.h"
 
 #include <AntiquaWidgets>
 #include <QDebug>

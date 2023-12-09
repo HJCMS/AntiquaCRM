@@ -262,9 +262,7 @@ void OrdersEditor::createSqlUpdate() {
   if (_oid < 1)
     return;
 
-  /*
-   * Ein UPDATE ohne Artikel wird feige verweigert!
-   */
+  // Ein UPDATE ohne Artikel wird feige verweigert!
   if (m_ordersTable->isEmpty()) {
     openNoticeMessage(tr("No Article has been added to this order!"));
     QPushButton *btn = m_actionBar->findChild<QPushButton *>("article");
@@ -406,7 +404,6 @@ void OrdersEditor::createSqlInsert() {
       if (sendSqlQuery(articles_sql)) {
         // Bestehende Artikelliste neu einlesen!
         m_ordersTable->addArticles(queryArticles(oid));
-        m_ordersTable->setWindowModified(false);
         pushStatusMessage(tr("Save Articles success!"));
       }
     }
@@ -595,6 +592,7 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
       }
       if (_items.size() > 0) {
         m_ordersTable->addArticle(_items);
+        m_ordersTable->setWindowModified(true);
         return true;
       }
     }

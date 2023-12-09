@@ -43,7 +43,11 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
     sql_query.append("o_since BETWEEN '");
     sql_query.append(p_util.startTimeStamp(startDate));
     sql_query.append("' AND '");
-    endDate = QDate(p_date.year(), p_date.month() + 1, 1);
+    if (p_date.month() == 12) {
+      endDate = QDate(p_date.year(), p_date.month(), 31);
+    } else {
+      endDate = QDate(p_date.year(), p_date.month() + 1, 1);
+    }
     sql_query.append(p_util.endTimeStamp(endDate));
     sql_query.append("'");
     axispoints = p_util.dayRangeFromDate(startDate, endDate);
@@ -54,9 +58,13 @@ PaymentsInYear::PaymentsInYear(const QDate &date, QWidget *parent)
     axispoints = p_util.dayRangeFromYear(_year);
   }
 
+  // statistics_payments_month_in_year.sql
+  // @SQL_WHERE_CLAUSE@ = Year
+
   AntiquaCRM::ASqlFiles sqf("statistics_payments_year");
   if (sqf.openTemplate()) {
     sqf.setWhereClause(sql_query);
+    qDebug() << Q_FUNC_INFO << sql_query;
     AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
     QSqlQuery q = m_sql->query(sqf.getQueryContent());
     int max_count = 8;

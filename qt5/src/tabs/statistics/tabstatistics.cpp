@@ -4,8 +4,9 @@
 #include "tabstatistics.h"
 #include "categoriesinyear.h"
 #include "paymentsinyear.h"
-#include "providerstatistics.h"
+#include "paymentsmonthyear.h"
 #include "providerpricevolume.h"
+#include "providerstatistics.h"
 #include "statsmainpage.h"
 
 #include <QComboBox>
@@ -60,7 +61,9 @@ void TabStatistics::openChartView(const QString &name, const QDate &date) {
   QRegExp volumeChart("^ProviderVolume[\\w]+Year$");
 
   int index = count();
-  if (name.contains(countCharts)) {
+  if (name == "MonthyOrdersInYear") {
+    insertWidget(index, new PaymentsMonthYear(date, this));
+  } else if (name.contains(countCharts)) {
     insertWidget(index, new PaymentsInYear(date, this));
   } else if (name.contains(barChart)) {
     insertWidget(index, new CategoriesInYear(date, this));

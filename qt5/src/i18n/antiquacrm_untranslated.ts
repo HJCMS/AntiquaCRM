@@ -457,7 +457,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+218"/>
         <source>Unfinished Assistant</source>
         <translation type="unfinished"></translation>
     </message>
@@ -780,7 +780,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+94"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -820,7 +820,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+98"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -842,7 +842,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-459"/>
+        <location line="-464"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1738,7 +1738,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Quantity supplied</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2528,27 +2528,32 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+67"/>
         <source>Search in everything</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>Title search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>Authors search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>Title and Author search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>ISBN search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3628,7 +3633,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+75"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5481,8 +5486,31 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+63"/>
         <source>Orders</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PaymentsMonthYear</name>
+    <message>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+17"/>
+        <source>Sales in Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Compare Sales from last and this year.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Current Year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last Year</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7609,6 +7637,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+15"/>
+        <source>Sales in Month</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <location line="+18"/>
         <source>Daily average</source>
         <translation type="unfinished"></translation>
@@ -8161,7 +8194,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+18"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+19"/>
         <source>Statistics</source>
         <translation type="unfinished"></translation>
     </message>

@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_TABS_SEARCHBAR_H
 #define ANTIQUACRM_TABS_SEARCHBAR_H
 
-#include <AGlobal>
+#include <AntiquaWidgets>
 #include <QObject>
 #include <QRegularExpression>
 #include <QtWidgets>
@@ -42,11 +42,21 @@ public:
     ENDING = 3      /**< @brief Restrict to word ending */
   };
 
+  /**
+   * @brief Images Search options
+   */
+  enum ImageFilter {
+    IGNORE_IMAGE = 0, /**< @brief no image filter */
+    WITH_IMAGE = 1,   /**< @brief only with images */
+    WITHOUT_IMAGE = 2 /**< @brief onlx without images */
+  };
+
 private:
   int p_minLength = 2;
 
 private Q_SLOTS:
   void searchPatternChanged(int);
+  void imageFilterChanged(int);
 
 protected:
   /**
@@ -82,18 +92,24 @@ protected:
 
   /**
    * @brief Predefined with Stock CheckBox
+   * @param title info text
    */
-  QCheckBox *stockCheckBox(const QString &text = QString());
+  QCheckBox *stockCheckBox(const QString &title = QString());
+
+  /**
+   * @brief Predefined with Image CheckBox
+   */
+  AntiquaCRM::AComboBox *searchImageOptions();
+
+  /**
+   * @brief Predefined Search button
+   */
+  QPushButton *customSearchButton(const QString &title = QString());
 
   /**
    * @brief Predefined Search Button
    */
   QPushButton *startSearchButton(const QString &text = QString());
-
-  /**
-   * @brief Predefined Search button
-   */
-  QPushButton *customSearchButton(const QString &text = QString());
 
   /**
    * @brief Search confiness settings
@@ -150,9 +166,9 @@ Q_SIGNALS:
   void sendMinLengthChanged(int);
 
   /**
-   * @brief With „Stock“ search enabled or not!
+   * @brief With Stock search enabled or not!
    */
-  void sendStockEnabled(bool);
+  void sendWithStockEnabled(bool);
 
   /**
    * @brief Searchfilter has changed
@@ -174,6 +190,11 @@ Q_SIGNALS:
    * @brief Search pattern chenged
    */
   void sendSearchPattern(TabsSearchBar::SearchPattern);
+
+  /**
+   * @brief Send current Image search filter
+   */
+  void sendImageFilter(int);
 
   /**
    * @brief send notification
@@ -198,6 +219,11 @@ public:
    * @brief present the selected Search syntax
    */
   TabsSearchBar::SearchPattern searchPattern() const;
+
+  /**
+   * @brief present the selected Image sql statement filter
+   */
+  const QString imageFilter();
 
   /**
    * @brief get start search from minimal length

@@ -58,7 +58,7 @@ BooksWidget::BooksWidget(QWidget *parent)
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(m_searchBar, SIGNAL(sendStockEnabled(bool)), m_statusBar,
+  connect(m_searchBar, SIGNAL(sendWithStockEnabled(bool)), m_statusBar,
           SLOT(setStockEnabled(bool)));
   connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));

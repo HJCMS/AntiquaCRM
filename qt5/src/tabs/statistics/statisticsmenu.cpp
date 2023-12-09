@@ -33,6 +33,7 @@ StatisticsMenu::StatisticsMenu(QWidget *parent)
 void StatisticsMenu::setThisYearGroup() {
   QActionGroup *m_acg = new QActionGroup(m_thisYear);
   QMap<QString, QString> m;
+  m.insert("MonthyOrdersInYear", tr("Sales in Month"));
   m.insert("DailyOrdersThisYear", tr("Daily average"));
   m.insert("SelledCategoriesThisYear", tr("Categories sales"));
   m.insert("ProviderOrderThisYear", tr("Provider sales"));

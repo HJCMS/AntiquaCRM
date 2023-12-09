@@ -18,13 +18,24 @@ TabsSearchBar::TabsSearchBar(QWidget *parent) : QToolBar{parent} {
   p_minLength = cfg.value("search/startlength", 5).toInt();
 }
 
-void TabsSearchBar::searchPatternChanged(int i) {
-  if (i > 4 || i < 0)
+void TabsSearchBar::searchPatternChanged(int index) {
+  if (index > 4 || index < 0)
     return;
 
   TabsSearchBar::SearchPattern sp =
-      static_cast<TabsSearchBar::SearchPattern>(i);
+      static_cast<TabsSearchBar::SearchPattern>(index);
   emit sendSearchPattern(sp);
+}
+
+void TabsSearchBar::imageFilterChanged(int index) {
+  AntiquaCRM::AComboBox *m_box =
+      findChild<AntiquaCRM::AComboBox *>("search_image_filter");
+  if (m_box == nullptr)
+    return;
+
+  int _index = m_box->itemData(index, Qt::UserRole).toInt();
+  if (_index >= 0)
+    emit sendImageFilter(_index);
 }
 
 QPushButton *TabsSearchBar::startSearchButton(const QString &text) {
@@ -40,18 +51,31 @@ QPushButton *TabsSearchBar::startSearchButton(const QString &text) {
   return btn;
 }
 
-QCheckBox *TabsSearchBar::stockCheckBox(const QString &text) {
+QCheckBox *TabsSearchBar::stockCheckBox(const QString &title) {
   QCheckBox *m_box = new QCheckBox(this);
   m_box->setObjectName("search_with_stock");
-  QString title = (text.isEmpty()) ? tr("Stock") : text;
-  m_box->setText(title);
-  m_box->setToolTip(tr("Only search with %1").arg(title));
-  connect(m_box, SIGNAL(toggled(bool)), SIGNAL(sendStockEnabled(bool)));
+  QString _t = (title.isEmpty()) ? tr("Stock") : title.trimmed();
+  m_box->setText(_t);
+  m_box->setToolTip(tr("Display with %1 only.").arg(title));
+  connect(m_box, SIGNAL(toggled(bool)), SIGNAL(sendWithStockEnabled(bool)));
   return m_box;
 }
 
-QPushButton *TabsSearchBar::customSearchButton(const QString &text) {
-  QPushButton *btn = new QPushButton(text, this);
+AntiquaCRM::AComboBox *TabsSearchBar::searchImageOptions() {
+  const QIcon _icon = antiquaIcon("view-image");
+  AntiquaCRM::AComboBox *m_box = new AntiquaCRM::AComboBox(this);
+  m_box->setObjectName("search_image_filter");
+  m_box->addItem(_icon, tr("Image Filter"), 0);
+  m_box->addItem(_icon, tr("Only with image"), 1);
+  m_box->addItem(_icon, tr("Without images"), 2);
+  m_box->setToolTip(tr("Search only entries with Images."));
+  connect(m_box, SIGNAL(currentIndexChanged(int)),
+          SLOT(imageFilterChanged(int)));
+  return m_box;
+}
+
+QPushButton *TabsSearchBar::customSearchButton(const QString &title) {
+  QPushButton *btn = new QPushButton(title, this);
   btn->setIcon(getIcon("system-search"));
   btn->setToolTip(tr("Custom queries"));
   btn->setStatusTip(tr("Click to open Dialog for custom queries."));
@@ -189,6 +213,30 @@ TabsSearchBar::SearchPattern TabsSearchBar::searchPattern() const {
     return static_cast<TabsSearchBar::SearchPattern>(box->currentIndex());
 
   return TabsSearchBar::SearchPattern::ANYWHERE;
+}
+
+const QString TabsSearchBar::imageFilter() {
+  QString _filter;
+  AntiquaCRM::AComboBox *m_box =
+      findChild<AntiquaCRM::AComboBox *>("search_image_filter");
+  if (m_box == nullptr)
+    return _filter;
+
+  int _index = m_box->itemData(m_box->currentIndex(), Qt::UserRole).toInt();
+  switch (static_cast<TabsSearchBar::ImageFilter>(_index)) {
+  case (TabsSearchBar::ImageFilter::WITH_IMAGE): {
+    _filter = QString("im_id IS NOT NULL");
+  } break;
+
+  case (TabsSearchBar::ImageFilter::WITHOUT_IMAGE): {
+    _filter = QString("im_id IS NULL");
+  } break;
+
+  default:
+    _filter = QString();
+    break;
+  }
+  return _filter;
 }
 
 int TabsSearchBar::getMinLength() { return p_minLength; }

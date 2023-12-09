@@ -20,7 +20,7 @@ CDsVinylSearchBar::CDsVinylSearchBar(QWidget *parent)
   m_searchInput->setPlaceholderText(tr("Default search"));
   addWidget(m_searchInput);
 
-  // isChecked() == "cv_count>0"
+  addWidget(searchImageOptions());
   addWidget(stockCheckBox());
 
   m_searchBtn = startSearchButton();
@@ -134,6 +134,11 @@ const QString CDsVinylSearchBar::getSearchStatement() {
 
   // start SqlClause with or without stock
   QString _sql(withStock() ? "cv_count>0 AND " : "");
+
+  // im_id Image filter
+  if (!imageFilter().isEmpty()) {
+    _sql.append(imageFilter() + " AND ");
+  }
 
   // table columns from filter
   QStringList _cols = _data.split(",");

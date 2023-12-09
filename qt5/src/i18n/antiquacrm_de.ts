@@ -457,7 +457,7 @@
         <translation>Verbindung erfolgreich!</translation>
     </message>
     <message>
-        <location line="+210"/>
+        <location line="+218"/>
         <source>Unfinished Assistant</source>
         <translation>Unvollendeter Assistent</translation>
     </message>
@@ -780,7 +780,7 @@
         <translation>Autorenteam</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+94"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten erfolgreich gespeichert!</translation>
     </message>
@@ -820,7 +820,7 @@
         <translation>Es fehlt eine gültige ISBN-Nummer!</translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+98"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>
@@ -844,7 +844,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
-        <location line="-459"/>
+        <location line="-464"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
@@ -1742,7 +1742,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Anzahl der Verkauften Artikel nach Kategorie im Jahr</translation>
     </message>
     <message>
-        <location line="+27"/>
+        <location line="+25"/>
         <source>Quantity supplied</source>
         <translation>Liefermenge</translation>
     </message>
@@ -2532,27 +2532,32 @@ Bild - Artikel Nr: %2</translation>
         <translation>Verknüpfung: Deutsche Nationalbibliothek</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
+        <location line="+67"/>
         <source>Search in everything</source>
         <translation>Suchen Sie in allem</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>Title search</source>
         <translation>Titelsuche</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>Authors search</source>
         <translation>Autorensuche</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>Title and Author search</source>
         <translation>Titel und Autorensuche</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-66"/>
+        <location line="+67"/>
         <source>ISBN search</source>
         <translation>ISBN Suche</translation>
     </message>
@@ -3632,7 +3637,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Editor Schließen</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+75"/>
         <source>Success</source>
         <translation>Erfolgreich</translation>
     </message>
@@ -5485,9 +5490,32 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellungen im Jahr %1.</translation>
     </message>
     <message>
-        <location line="+55"/>
+        <location line="+63"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
+    </message>
+</context>
+<context>
+    <name>PaymentsMonthYear</name>
+    <message>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+17"/>
+        <source>Sales in Month</source>
+        <translation>Verkäufe im Monat</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Compare Sales from last and this year.</source>
+        <translation>Vergleich Verkäufe vom letzten und diesem Jahr.</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>Current Year</source>
+        <translation>Laufendes Jahr</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last Year</source>
+        <translation>Letztes Jahr</translation>
     </message>
 </context>
 <context>
@@ -7615,6 +7643,11 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+15"/>
+        <source>Sales in Month</source>
+        <translation>Verkäufe im Monat</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <location line="+18"/>
         <source>Daily average</source>
         <translation>Tagesdurchschnitt</translation>
@@ -8167,7 +8200,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TabStatistics</name>
     <message>
-        <location filename="../tabs/statistics/tabstatistics.cpp" line="+18"/>
+        <location filename="../tabs/statistics/tabstatistics.cpp" line="+19"/>
         <source>Statistics</source>
         <translation>Statistiken</translation>
     </message>

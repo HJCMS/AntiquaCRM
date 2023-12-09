@@ -43,11 +43,9 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
 
   m_countSeries = new AHorizontalBarSeries(this);
   m_countSeries->setLabelsFormat("@value.");
-  m_countSeries->setBarWidth(0.5);
 
   m_doubleSeries = new AHorizontalBarSeries(this);
   m_doubleSeries->setLabelsFormat("@value " + currency);
-  m_doubleSeries->setBarWidth(1.0);
 
   QBarSet *m_quantity = new QBarSet(tr("Quantity supplied"), m_chart);
   m_quantity->setLabelFont(barFont);
