@@ -20,10 +20,11 @@ class PaymentsMonthYear final : public QScrollArea {
 private:
   const QDate p_date;
   QtCharts::QChartView *m_view;
-  QtCharts::QBarSet *m_lastYear;
-  QtCharts::QBarSet *m_currYear;
+  QtCharts::QChart *m_chart;
   QtCharts::QBarCategoryAxis *m_label;
   AHorizontalBarSeries *m_monthyBar;
+
+  QtCharts::QBarSet *createBarset(int year);
   bool initialChartView();
 
 public:

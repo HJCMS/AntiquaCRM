@@ -20,8 +20,8 @@ PaymentsMonthYear::PaymentsMonthYear(const QDate &date, QWidget *parent)
   m_view->setRenderHint(QPainter::Antialiasing);
   setWidget(m_view);
 
-  QtCharts::QChart *m_chart = new QtCharts::QChart;
-  m_chart->setTitle(tr("Compare Sales from last and this year."));
+  m_chart = new QtCharts::QChart;
+  m_chart->setTitle(tr("Compare Sales from this to past years."));
   m_chart->setMargins(QMargins(0, 0, 0, 0));
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
@@ -32,72 +32,88 @@ PaymentsMonthYear::PaymentsMonthYear(const QDate &date, QWidget *parent)
   m_monthyBar = new AHorizontalBarSeries(this);
   m_monthyBar->setBarWidth(0.95);
 
-  m_currYear = new QtCharts::QBarSet(tr("Current Year"), m_chart);
-  m_currYear->setObjectName("average_curr_year");
-  m_currYear->setLabelFont(barFont);
-  m_currYear->setLabelColor(Qt::black);
-
-  m_lastYear = new QtCharts::QBarSet(tr("Last Year"), m_chart);
-  m_lastYear->setObjectName("average_last_year");
-  m_lastYear->setLabelFont(barFont);
-  m_lastYear->setLabelColor(Qt::black);
-
   if (initialChartView()) {
     m_chart->addSeries(m_monthyBar);
     // Vertikale Achse
     m_chart->addAxis(m_label, Qt::AlignLeft);
     m_monthyBar->attachAxis(m_label);
     m_view->setChart(m_chart);
+  } else {
+    qWarning("No Sales in Month Charts data");
   }
 }
 
-bool PaymentsMonthYear::initialChartView() {
-  QMap<int, qint64> _pastMap;
-  QMap<int, qint64> _currMap;
-  for (int i = 1; i < 12; i++) {
-    _pastMap.insert(i, 0);
-    _currMap.insert(i, 0);
-  }
+QtCharts::QBarSet *PaymentsMonthYear::createBarset(int year) {
+  const QString _title(QString::number(year));
+  QtCharts::QBarSet *bs = new QtCharts::QBarSet(_title, m_chart);
+  bs->setObjectName("average_curr_year");
+  bs->setLabelFont(m_label->labelsFont());
+  bs->setLabelColor(Qt::black);
+  return bs;
+}
 
-  const QString _curYear(QString::number(p_date.year()));
-  AntiquaCRM::ASqlFiles sqf("statistics_payments_month_in_year");
-  if (sqf.openTemplate()) {
-    sqf.setWhereClause(_curYear); // @SQL_WHERE_CLAUSE@ = Year
-    AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
-    QSqlQuery q = m_sql->query(sqf.getQueryContent());
+bool PaymentsMonthYear::initialChartView() {
+  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+  QString _sql("SELECT DISTINCT");
+  _sql.append(" date_part('year', o_delivered)::NUMERIC AS year");
+  _sql.append(" FROM inventory_orders WHERE (o_delivered IS NOT NULL)");
+  _sql.append(" GROUP BY year ORDER BY year");
+  QSqlQuery _qy = m_sql->query(_sql);
+  if (_qy.size() < 1)
+    return false;
+
+  // Create existing years maps
+  QMap<int, QMap<int, qint64>> _map;
+  while (_qy.next()) {
+    int _year = _qy.value("year").toInt();
+    QMap<int, qint64> _sub;
+    for (int i = 1; i < 12; i++) {
+      _sub.insert(i, 0);
+    }
+    _map.insert(_year, _sub);
+  }
+  _qy.clear();
+
+  _sql = AntiquaCRM::ASqlFiles::queryStatement(
+      "statistics_payments_month_in_year");
+  if (!_sql.isEmpty()) {
+    QSqlQuery q = m_sql->query(_sql);
     if (q.size() > 0) {
       while (q.next()) {
         int count = q.value("counts").toInt();
         QDateTime dt = QDateTime::fromSecsSinceEpoch(q.value("sepoch").toInt(),
                                                      Qt::LocalTime);
 
-        const QString _key(dt.toString("yyyy-MM"));
-        int _month = dt.date().month();
-        if (_key.startsWith(_curYear)) {
-          _currMap[_month] = (_currMap[_month] + count);
-        } else {
-          _pastMap[_month] = (_pastMap[_month] + count);
+        bool b;
+        int _y = dt.toString("yyyy").toInt(&b);
+        if (b) {
+          QMap<int, qint64> _m = _map[_y];
+          int _month = dt.date().month();
+          _m[_month] = (_m[_month] + count);
+          _map[_y] = _m;
         }
       }
+    } else {
+      return false;
     }
     q.clear();
   } else {
-    qWarning("No Charts data");
     return false;
   }
 
-  for (int m = 1; m <= 12; m++) {
-    QDate _curr(p_date.year(), m, 1);
-    m_currYear->append(_currMap[m]);
-    m_lastYear->append(_pastMap[m]);
-    m_label->insert((m - 1), _curr.toString("MMMM"));
-    // qDebug() << _curr.toString("MMMM") << _currMap[m] << _pastMap[m];
+  foreach (int y, _map.keys()) {
+    QMap<int, qint64> _m = _map[y];
+    QtCharts::QBarSet *m_set = createBarset(y);
+    for (int m = 1; m <= 12; m++) {
+      QDate _curr(y, m, 1);
+      m_set->append(_m[m]);
+      m_label->insert((m - 1), _curr.toString("MMMM"));
+      // qDebug() << _curr.toString("MMMM") << _m[m];
+    }
+    m_monthyBar->insert(0, m_set);
   }
 
-  m_monthyBar->insert(0, m_currYear);
-  m_monthyBar->insert(1, m_lastYear);
-  _currMap.clear();
-  _pastMap.clear();
+  _map.clear();
   return true;
 }
 
