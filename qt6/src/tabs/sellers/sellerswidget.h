@@ -27,10 +27,6 @@ private:
   SellersSalesList *m_tree;
   QList<AntiquaCRM::ProviderInterface *> p_list;
   bool loadProviderPlugins();
-  void popupWarningTabInEditMode(const QString &custom = QString()) override {
-    Q_UNUSED(custom);
-  };
-
   void setDefaultTableView() override{/* unused */};
   bool findPage(const QString &provider, const QString &oid);
 

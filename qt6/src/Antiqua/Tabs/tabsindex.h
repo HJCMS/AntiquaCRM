@@ -135,11 +135,9 @@ protected Q_SLOTS:
 
   /**
    * @brief Open PopUp Warning - Editor is in edit mode!
-   *
-   * This Slot is reserved to do prepare PopUp Message if Editor is in use or
-   * unsaved changes exists.
+   * @param title WindowTitle
    */
-  virtual void popupWarningTabInEditMode(const QString &custom = QString()) = 0;
+  void openWarningPopUpPageIndex(const QString &title);
 
   /**
    * @brief Call standard table query

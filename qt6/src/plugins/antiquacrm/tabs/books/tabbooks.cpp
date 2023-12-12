@@ -27,7 +27,7 @@ bool TabBooks::addIndexOnInit() const { return BOOKS_ALWAYS_ADD_ONLOAD; }
 
 const QJsonObject TabBooks::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Books"));
+  _jo.insert("title", displayName());
   _jo.insert("id", QString(BOOKS_INTERFACE_TABID));
   _jo.insert("tip", tr("Inventory Books"));
   _jo.insert("icon", "kjournal");
@@ -35,11 +35,9 @@ const QJsonObject TabBooks::menuEntry() const {
 }
 
 AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
-  BooksWidget *_widget = new BooksWidget(parent);
-  Q_CHECK_PTR(_widget);
-  return _widget;
+  BooksWidget *_w = new BooksWidget(parent);
+  _w->setWindowTitle(displayName() + "[*]");
+  return _w;
 }
 
-bool TabBooks::createInterface(QObject *parent) {
-  return (parent != nullptr);
-}
+bool TabBooks::createInterface(QObject *parent) { return (parent != nullptr); }

@@ -98,6 +98,24 @@ void TabsIndex::openWarningPopUp(const QString &title, const QString &message) {
   QMessageBox::warning(this, tr("Warning"), _info);
 }
 
+void TabsIndex::openWarningPopUpPageIndex(const QString &title) {
+  QString _wt(title);
+  _wt.replace("[*]", "");
+  QString _bt = _wt.trimmed();
+  _bt.prepend("„");
+  _bt.append("“");
+
+  QString _m(tr("Can't open %1 tab.").arg(_bt));
+  _m.append("<p>");
+  _m.append(tr("Because %1 tab is in edit mode.").arg(_bt));
+  _m.append("<br/>");
+  _m.append(tr("You have first to check, complete the %1 edit mode.").arg(_bt));
+  _m.append("<br/>");
+  _m.append("Otherwise you can lose changes.");
+  _m.append("</p>");
+  QMessageBox::information(this, _wt, _m);
+}
+
 AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentView() {
   switch (currentIndex()) {
   case 0:

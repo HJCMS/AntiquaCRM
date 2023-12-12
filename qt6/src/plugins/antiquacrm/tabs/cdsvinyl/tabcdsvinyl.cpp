@@ -42,9 +42,7 @@ const QJsonObject TabCDsVinyl::menuEntry() const {
 
 AntiquaCRM::TabsIndex *TabCDsVinyl::indexWidget(QWidget *parent) const {
   CDsVinylWidget *_w = new CDsVinylWidget(parent);
-  if (_w == nullptr)
-    qFatal("Unable to load CDsVinylWidget!");
-
+  _w->setWindowTitle(displayName() + "[*]");
   return _w;
 }
 

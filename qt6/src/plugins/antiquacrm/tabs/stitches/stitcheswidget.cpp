@@ -90,17 +90,6 @@ StitchesWidget::StitchesWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void StitchesWidget::popupWarningTabInEditMode(const QString &custom) {
-  Q_UNUSED(custom);
-  QString info(tr("Can't open this Article"));
-  info.append("<p>");
-  info.append(tr("Because Stitches tab is in edit mode."));
-  info.append("</p><p>");
-  info.append(tr("You need to save and close this tab first."));
-  info.append("</p>");
-  QMessageBox::information(this, windowTitle(), info);
-}
-
 void StitchesWidget::setDefaultTableView() {
   if (currentIndex() != 0)
     return;
@@ -163,7 +152,7 @@ void StitchesWidget::openEntry(qint64 articleId) {
     return;
 
   if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
+    openWarningPopUpPageIndex(windowTitle());
     return;
   }
 
@@ -191,7 +180,7 @@ bool StitchesWidget::customAction(const QJsonObject &obj) {
   onEnterChanged();
 
   if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
+    openWarningPopUpPageIndex(windowTitle());
     return false;
   }
 

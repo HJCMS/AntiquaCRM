@@ -90,17 +90,6 @@ BooksWidget::BooksWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void BooksWidget::popupWarningTabInEditMode(const QString &custom) {
-  Q_UNUSED(custom);
-  QString info(tr("Can't open this Article"));
-  info.append("<p>");
-  info.append(tr("Because books tab is in edit mode."));
-  info.append("</p><p>");
-  info.append(tr("You need to save and close that open book first."));
-  info.append("</p>");
-  QMessageBox::information(this, windowTitle(), info);
-}
-
 void BooksWidget::setDefaultTableView() {
   if (currentIndex() != 0)
     return;
@@ -162,7 +151,7 @@ void BooksWidget::openEntry(qint64 articleId) {
     return;
 
   if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
+    openWarningPopUpPageIndex(windowTitle());
     return;
   }
 
@@ -188,7 +177,7 @@ bool BooksWidget::customAction(const QJsonObject &obj) {
   onEnterChanged();
 
   if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
+    openWarningPopUpPageIndex(windowTitle());
     return false;
   }
 

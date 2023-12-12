@@ -28,7 +28,6 @@ private:
   OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;
-  void popupWarningTabInEditMode(const QString &custom = QString()) override;
   void setDefaultTableView() override;
 
 public Q_SLOTS:

@@ -24,9 +24,7 @@ const QString TabStitches::sqlFieldPrefix() const { return QString("ip"); }
 
 AntiquaCRM::PluginConfigWidget *TabStitches::configWidget(QWidget *parent) const {
   StitchesConfigWidget *_w = new StitchesConfigWidget(parent);
-  if (_w == nullptr)
-    qFatal("Unable to load StitchesConfigWidget!");
-
+  _w->setWindowTitle(displayName() + "[*]");
   return _w;
 }
 

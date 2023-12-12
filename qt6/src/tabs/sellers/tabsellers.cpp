@@ -35,7 +35,7 @@ bool TabSellers::addIndexOnInit() const { return true; }
 
 const QJsonObject TabSellers::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Providers"));
+  _jo.insert("title", displayName());
   _jo.insert("id", QString(SELLERS_INTERFACE_TABID));
   _jo.insert("tip", tr("Inventory Sellers"));
   _jo.insert("icon", "view-financial-transfer");
@@ -43,9 +43,9 @@ const QJsonObject TabSellers::menuEntry() const {
 }
 
 AntiquaCRM::TabsIndex *TabSellers::indexWidget(QWidget *parent) const {
-  SellersWidget *_widget = new SellersWidget(parent);
-  Q_CHECK_PTR(_widget);
-  return _widget;
+  SellersWidget *_w = new SellersWidget(parent);
+  _w->setWindowTitle(displayName() + "[*]");
+  return _w;
 }
 
 bool TabSellers::createInterface(QObject *parent) {

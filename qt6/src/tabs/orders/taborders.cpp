@@ -30,7 +30,7 @@ bool TabOrders::addIndexOnInit() const { return true; }
 
 const QJsonObject TabOrders::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Orders"));
+  _jo.insert("title", displayName());
   _jo.insert("id", QString(ORDERS_INTERFACE_TABID));
   _jo.insert("tip", tr("Inventory orders"));
   _jo.insert("icon", "view-financial-transfer");
@@ -38,9 +38,9 @@ const QJsonObject TabOrders::menuEntry() const {
 }
 
 AntiquaCRM::TabsIndex *TabOrders::indexWidget(QWidget *parent) const {
-  OrdersWidget *_widget = new OrdersWidget(parent);
-  Q_CHECK_PTR(_widget);
-  return _widget;
+  OrdersWidget *_w = new OrdersWidget(parent);
+  _w->setWindowTitle(displayName() + "[*]");
+  return _w;
 }
 
 bool TabOrders::createInterface(QObject *parent) {

@@ -32,7 +32,7 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   m_p1Layout->addWidget(m_statusBar);
 
   m_mainPage->setLayout(m_p1Layout);
-  insertWidget(0, m_mainPage);
+  insertWidget(ViewPage::MainView, m_mainPage);
   // End
 
   // Begin Editor
@@ -42,10 +42,10 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   m_editorWidget = new OrdersEditor(this);
   m_editorWidget->installEventFilter(this);
   m_editorPage->setWidget(m_editorWidget);
-  insertWidget(1, m_editorPage);
+  insertWidget(ViewPage::EditorView, m_editorPage);
   // End
 
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
 
   // Signals::OrdersSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
@@ -83,23 +83,9 @@ OrdersWidget::OrdersWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void OrdersWidget::popupWarningTabInEditMode(const QString &custom) {
-  QString info(tr("Can't open the Order tab."));
-  info.append("<p>");
-  if (custom.length() > 0) {
-    info.append(custom);
-  } else {
-    info.append(tr("Because Orders tab is in edit mode."));
-    info.append("</p><p>");
-    info.append(tr("You need to save and close the editor first."));
-  }
-  info.append("</p>");
-  QMessageBox::information(this, windowTitle(), info);
-}
-
 void OrdersWidget::setDefaultTableView() {
   m_searchBar->setClearAndFocus();
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
   m_table->setQuery(m_table->defaultWhereClause());
 }
 
@@ -107,7 +93,7 @@ void OrdersWidget::openStartPage() {
   if (m_table->isAutoRefreshEnabled())
     m_table->setReloadView();
 
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
 }
 
 void OrdersWidget::createSearchQuery(const QString &history) {
@@ -124,16 +110,15 @@ void OrdersWidget::createSearchQuery(const QString &history) {
 }
 
 void OrdersWidget::createNewEntry() {
-  //
-  qDebug() << Q_FUNC_INFO << "__TODO__";
+  qInfo("createNewEntry not used in this section!");
 }
 
 void OrdersWidget::openEntry(qint64 oid) {
   if (oid < 1)
     return;
 
-  if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
+  if (currentIndex() != ViewPage::MainView) {
+    openWarningPopUpPageIndex(windowTitle());
     return;
   }
 
@@ -146,8 +131,8 @@ void OrdersWidget::refundEntry(qint64 oid) {
   if (oid < 1)
     return;
 
-  if (currentIndex() != 0) {
-    popupWarningTabInEditMode();
+  if (currentIndex() != ViewPage::MainView) {
+    openWarningPopUpPageIndex(windowTitle());
     return;
   }
 
@@ -159,7 +144,7 @@ void OrdersWidget::refundEntry(qint64 oid) {
 void OrdersWidget::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
-    setCurrentIndex(0);
+    setCurrentIndex(ViewPage::MainView);
   }
 }
 
@@ -175,28 +160,24 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
   // get operation
   const QString _action = obj.value("ACTION").toString().toLower();
 
-  if (currentIndex() != 0) {
+  // operations that needs the editors page
+  if (currentIndex() == ViewPage::EditorView) {
     // Add Article to opened order
-    if (_action == "add_article" && currentIndex() == 1) {
+    if (_action == "add_article") {
       qint64 _aid = obj.value("VALUE").toInt();
-      if (m_editorWidget->addArticle(_aid)) {
-        setCurrentIndex(1);
+      if (m_editorWidget->addArticle(_aid))
         return true;
-      }
-    } else {
-      const QString _txt = tr("Please open a order before use this operation.");
-      popupWarningTabInEditMode(_txt);
     }
-    popupWarningTabInEditMode();
+    // if editor is already opened!
+    openWarningPopUpPageIndex(windowTitle());
     return false;
   }
-
   // operations that needs the main view
   if (_action == "open_order") {
     // Open Order
     qint64 _oid = obj.value("VALUE").toInt();
     if (m_editorWidget->openEditEntry(_oid)) {
-      setCurrentIndex(1);
+      setCurrentIndex(ViewPage::EditorView);
       return true;
     }
   } else if (_action == "create_order") {
@@ -206,7 +187,7 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
       return false;
 
     if (m_editorWidget->createNewOrder(_cid)) {
-      setCurrentIndex(1);
+      setCurrentIndex(ViewPage::EditorView);
       return true;
     }
   } else if (_action == "import_order") {
@@ -216,7 +197,7 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
       return false;
 
     if (m_editorWidget->createCustomEntry(obj)) {
-      setCurrentIndex(1);
+      setCurrentIndex(ViewPage::EditorView);
       return true;
     }
   }
