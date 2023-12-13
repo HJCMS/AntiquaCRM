@@ -117,7 +117,7 @@ void OrdersWidget::openEntry(qint64 oid) {
   if (oid < 1)
     return;
 
-  if (currentIndex() != ViewPage::MainView) {
+  if (currentPage() != ViewPage::MainView) {
     openWarningPopUpPageIndex(windowTitle());
     return;
   }
@@ -131,7 +131,7 @@ void OrdersWidget::refundEntry(qint64 oid) {
   if (oid < 1)
     return;
 
-  if (currentIndex() != ViewPage::MainView) {
+  if (currentPage() != ViewPage::MainView) {
     openWarningPopUpPageIndex(windowTitle());
     return;
   }
@@ -161,7 +161,7 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
   const QString _action = obj.value("ACTION").toString().toLower();
 
   // operations that needs the editors page
-  if (currentIndex() == ViewPage::EditorView) {
+  if (currentPage() == ViewPage::EditorView) {
     // Add Article to opened order
     if (_action == "add_article") {
       qint64 _aid = obj.value("VALUE").toInt();

@@ -233,7 +233,7 @@ public Q_SLOTS:
 public:
   /**
    * @brief Enumeration to find the right Stacked page.
-   * @sa currentView
+   * @sa currentPage
    *
    * Used to find the right Page on load and exit.
    * The Application will reject close functions, if current index is in
@@ -245,7 +245,8 @@ public:
   enum ViewPage {
     MainView = 0,   /**< @brief Main page Normally Index:0 */
     EditorView = 1, /**< @brief Editor page Normally Index:1 */
-    CustomView = 2  /**< @brief Additional pages Index:2 and greater! */
+    CustomView = 2, /**< @brief Additional page Index:2 */
+    PluginView = 3  /**< @brief Additional page Index:3 */
   };
 
   /**
@@ -258,11 +259,6 @@ public:
    * @brief Fixed Title for Window and Message boxes
    */
   virtual const QString getTitle() const = 0;
-
-  /**
-   * @brief Which Page is currently in use?
-   */
-  TabsIndex::ViewPage currentView();
 
   /**
    * @brief Create Custom Action for Open/Edit Import.
@@ -290,6 +286,11 @@ public:
    * READ Property from @ref closable
    */
   bool isClosable();
+
+  /**
+   * @brief Which Page is currently in use?
+   */
+  TabsIndex::ViewPage currentPage();
 };
 
 } // namespace AntiquaCRM

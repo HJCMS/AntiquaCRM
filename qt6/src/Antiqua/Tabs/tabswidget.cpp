@@ -60,7 +60,7 @@ bool TabsWidget::removeIndex(int index) {
 
 void TabsWidget::setTabChanged(int index) {
   AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
-  if (m_ti != nullptr && m_ti->currentView() == TabsIndex::ViewPage::MainView)
+  if (m_ti != nullptr && m_ti->currentPage() == TabsIndex::ViewPage::MainView)
     m_ti->onEnterChanged();
 }
 
@@ -69,7 +69,7 @@ void TabsWidget::setTabClosed(int index) {
     return;
 
   AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
-  if (m_ti->currentView() != TabsIndex::ViewPage::MainView) {
+  if (m_ti->currentPage() != TabsIndex::ViewPage::MainView) {
     setCurrentIndex(index);
     emit sendMessage(tr("The tab cannot be closed in Edit mode!"));
     return;
@@ -148,7 +148,7 @@ bool TabsWidget::unloadTabs() {
     if (m_ti == nullptr)
       continue;
 
-    if (m_ti->currentView() != TabsIndex::ViewPage::MainView) {
+    if (m_ti->currentPage() != TabsIndex::ViewPage::MainView) {
       setCurrentIndex(t);
       emit sendMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
       return false;

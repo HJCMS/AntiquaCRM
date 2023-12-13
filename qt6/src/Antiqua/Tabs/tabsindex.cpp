@@ -38,17 +38,17 @@ void TabsIndex::addShortCutsAndSignals() {
 }
 
 void TabsIndex::prepareShortCutSearchFocus() {
-  if (currentView() == TabsIndex::ViewPage::MainView)
+  if (currentPage() == TabsIndex::ViewPage::MainView)
     emit sendSetSearchFocus();
 }
 
 void TabsIndex::prepareShortCutSearchFilter() {
-  if (currentView() == TabsIndex::ViewPage::MainView)
+  if (currentPage() == TabsIndex::ViewPage::MainView)
     emit sendSetSearchFilter();
 }
 
 void TabsIndex::prepareShortCutNewEntry() {
-  if (currentView() == TabsIndex::ViewPage::MainView)
+  if (currentPage() == TabsIndex::ViewPage::MainView)
     createNewEntry();
 }
 
@@ -116,7 +116,11 @@ void TabsIndex::openWarningPopUpPageIndex(const QString &title) {
   QMessageBox::information(this, _wt, _m);
 }
 
-AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentView() {
+const QString TabsIndex::tabIndexId() const { return tabIndex; }
+
+bool TabsIndex::isClosable() { return closable; }
+
+AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentPage() {
   switch (currentIndex()) {
   case 0:
     return AntiquaCRM::TabsIndex::MainView;
@@ -124,13 +128,12 @@ AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentView() {
   case 1:
     return AntiquaCRM::TabsIndex::EditorView;
 
-  default:
+  case 2:
     return AntiquaCRM::TabsIndex::CustomView;
+
+  default:
+    return AntiquaCRM::TabsIndex::PluginView;
   }
 }
-
-const QString TabsIndex::tabIndexId() const { return tabIndex; }
-
-bool TabsIndex::isClosable() { return closable; }
 
 } // namespace AntiquaCRM

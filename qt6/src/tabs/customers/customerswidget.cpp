@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "customersconfig.h"
 #include "customerswidget.h"
+#include "customersconfig.h"
 #include "customerseditor.h"
 #include "customerssearchbar.h"
 #include "customersstatusbar.h"
@@ -50,7 +50,7 @@ CustomersWidget::CustomersWidget(QWidget *parent)
   insertWidget(1, m_editorPage);
   // End
 
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
 
   // Signals::CustomersSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
@@ -94,7 +94,7 @@ CustomersWidget::CustomersWidget(QWidget *parent)
 }
 
 void CustomersWidget::setDefaultTableView() {
-  if (currentIndex() != 0)
+  if (currentPage() != ViewPage::MainView)
     return;
 
   m_searchBar->setClearAndFocus();
@@ -177,7 +177,7 @@ void CustomersWidget::setCreateNewOrder(qint64 customerId) {
 }
 
 void CustomersWidget::openStartPage() {
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
   if (m_table->isAutoRefreshEnabled()) {
     m_statusBar->setCreateButtonEnabled(false);
     m_table->setReloadView();
@@ -213,8 +213,8 @@ void CustomersWidget::createSearchQuery(const QString &history) {
 }
 
 void CustomersWidget::createNewEntry() {
-  if (currentIndex() == 0 && m_editorWidget->createNewEntry()) {
-    setCurrentIndex(1);
+  if (currentPage() == ViewPage::MainView && m_editorWidget->createNewEntry()) {
+    setCurrentIndex(ViewPage::EditorView);
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
@@ -227,13 +227,13 @@ void CustomersWidget::openEntry(qint64 articleId) {
   if (articleId < 1)
     return;
 
-  if (currentIndex() != 0) {
+  if (currentPage() != ViewPage::MainView) {
     openWarningPopUpPageIndex(windowTitle());
     return;
   }
 
   if (m_editorWidget->openEditEntry(articleId)) {
-    setCurrentIndex(1);
+    setCurrentIndex(ViewPage::EditorView);
   }
 }
 
@@ -253,7 +253,7 @@ bool CustomersWidget::customAction(const QJsonObject &obj) {
   // first call?
   onEnterChanged();
 
-  if (currentIndex() != 0) {
+  if (currentPage() != ViewPage::MainView) {
     openWarningPopUpPageIndex(windowTitle());
     return false;
   }
@@ -267,7 +267,7 @@ bool CustomersWidget::customAction(const QJsonObject &obj) {
     return false;
 
   if (m_editorWidget->openEditEntry(_cid)) {
-    setCurrentIndex(1);
+    setCurrentIndex(ViewPage::EditorView);
     return true;
   }
 

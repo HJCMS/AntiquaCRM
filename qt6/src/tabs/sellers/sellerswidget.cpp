@@ -24,7 +24,7 @@ SellersWidget::SellersWidget(QWidget *parent)
 
   insertWidget(0, m_splitter);
 
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
 
   // Signals:SellersSalesList
   connect(m_tree, SIGNAL(sendQueryOrder(const QString &, const QString &)),

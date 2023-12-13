@@ -50,7 +50,7 @@ StitchesWidget::StitchesWidget(QWidget *parent)
   insertWidget(1, m_editorPage);
   // End
 
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
 
   // Signals::StitchesSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
@@ -91,7 +91,7 @@ StitchesWidget::StitchesWidget(QWidget *parent)
 }
 
 void StitchesWidget::setDefaultTableView() {
-  if (currentIndex() != 0)
+  if (currentPage() != ViewPage::MainView)
     return;
 
   m_searchBar->setClearAndFocus();
@@ -100,7 +100,7 @@ void StitchesWidget::setDefaultTableView() {
 }
 
 void StitchesWidget::openStartPage() {
-  setCurrentIndex(0);
+  setCurrentIndex(ViewPage::MainView);
   if (m_table->isAutoRefreshEnabled()) {
     m_statusBar->setCreateButtonEnabled(false);
     m_table->setReloadView();
@@ -137,8 +137,8 @@ void StitchesWidget::createSearchQuery(const QString &history) {
 }
 
 void StitchesWidget::createNewEntry() {
-  if (currentIndex() == 0 && m_editorWidget->createNewEntry()) {
-    setCurrentIndex(1);
+  if (currentPage() == ViewPage::MainView && m_editorWidget->createNewEntry()) {
+    setCurrentIndex(ViewPage::EditorView);
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
@@ -151,13 +151,13 @@ void StitchesWidget::openEntry(qint64 articleId) {
   if (articleId < 1)
     return;
 
-  if (currentIndex() != 0) {
+  if (currentPage() != ViewPage::MainView) {
     openWarningPopUpPageIndex(windowTitle());
     return;
   }
 
   if (m_editorWidget->openEditEntry(articleId)) {
-    setCurrentIndex(1);
+    setCurrentIndex(ViewPage::EditorView);
   }
 }
 
@@ -179,7 +179,7 @@ bool StitchesWidget::customAction(const QJsonObject &obj) {
   // first call?
   onEnterChanged();
 
-  if (currentIndex() != 0) {
+  if (currentPage() != ViewPage::MainView) {
     openWarningPopUpPageIndex(windowTitle());
     return false;
   }
@@ -188,7 +188,7 @@ bool StitchesWidget::customAction(const QJsonObject &obj) {
   if (_action == "open_article") {
     qint64 _aid = obj.value("VALUE").toInt();
     if (m_editorWidget->openEditEntry(_aid)) {
-      setCurrentIndex(1);
+      setCurrentIndex(ViewPage::EditorView);
       return true;
     }
   }

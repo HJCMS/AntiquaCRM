@@ -219,9 +219,10 @@ const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
 }
 
 void CustomersEditor::createSqlUpdate() {
-  int articleId = c_id->getValue().toInt();
-  if (articleId < 0) {
-    openNoticeMessage(tr("Missing Article ID for Update."));
+  qint64 _cid = c_id->getValue().toInt();
+  const QString str_cid = QString::number(_cid);
+  if (_cid < 1 || str_cid.isEmpty()) {
+    openNoticeMessage(tr("Missing Customer-Id for Update."));
     return;
   }
   // UPDATE Anforderungen
@@ -260,9 +261,7 @@ void CustomersEditor::createSqlUpdate() {
 
   QString _sql("UPDATE customers SET ");
   _sql.append(_list.join(","));
-  _sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=");
-  _sql.append(c_id->getValue().toString());
-  _sql.append(";");
+  _sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=" + str_cid + ";");
   if (sendSqlQuery(_sql)) {
     qInfo("SQL UPDATE Inventory Customers success!");
     setWindowModified(false);
@@ -270,9 +269,9 @@ void CustomersEditor::createSqlUpdate() {
 }
 
 void CustomersEditor::createSqlInsert() {
-  int _aid = c_id->getValue().toInt();
-  if (_aid >= 1) {
-    qWarning("Skip INSERT, switch to UPDATE with (ArticleID > 0)!");
+  qint64 _cid = c_id->getValue().toInt();
+  if (_cid > 0) {
+    qWarning("Skip INSERT, switch to UPDATE (c_id=%lli)!", _cid);
     createSqlUpdate();
     return;
   }
@@ -280,7 +279,7 @@ void CustomersEditor::createSqlInsert() {
   c_id->setRequired(false);
 
   // Die Initialisierung erfolgt in setInputFields!
-  // Bei einem INSERT wird diese hier befüllt!
+  // Bei einem INSERT wird es hier befüllt!
   if (m_tableData == nullptr || !m_tableData->isValid()) {
     qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
     return;
@@ -289,6 +288,18 @@ void CustomersEditor::createSqlInsert() {
   QHash<QString, QVariant> _data = createSqlDataset();
   if (_data.size() < 1)
     return;
+
+  // »c_provider_import«
+  // Wird in der Datenbank durch ein »NOT NULL« eingeschränkt!
+  // Bei INSERT muss deshalb »c_provider_import« manuell befüllt werden!
+  QString _c_pr_import = _data["c_firstname"].toString().toLower();
+  _c_pr_import.append(" ");
+  _c_pr_import.append(_data["c_lastname"].toString().toLower());
+  if (_data.contains("c_provider_import")) {
+    _data["c_provider_import"] = _c_pr_import;
+  } else {
+    _data.insert("c_provider_import", _c_pr_import);
+  }
 
   QStringList _columns; // SQL Columns
   QStringList _values;  // SQL Values
@@ -476,6 +487,7 @@ bool CustomersEditor::createNewEntry() {
   }
   setResetModified(inputFields);
   m_tabWidget->setCurrentIndex(0);
+  m_tableData->setValue("c_provider_import", "");
   return isEnabled();
 }
 
