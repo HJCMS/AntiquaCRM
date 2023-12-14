@@ -7,6 +7,8 @@
 ## Dynamic
 ADD_SUBDIRECTORY(books)
 ADD_SUBDIRECTORY(stitches)
+ADD_SUBDIRECTORY(statistics)
+## ADD_SUBDIRECTORY(reports)
 
 ## MusicBrainz DiscID
 FIND_PACKAGE(DISCID)

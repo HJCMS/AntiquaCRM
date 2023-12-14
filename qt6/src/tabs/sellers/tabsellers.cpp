@@ -26,9 +26,8 @@ const QString TabSellers::sqlFieldPrefix() const {
 
 AntiquaCRM::PluginConfigWidget *
 TabSellers::configWidget(QWidget *parent) const {
-  SellersConfigWidget *_widget = new SellersConfigWidget(parent);
-  Q_CHECK_PTR(_widget);
-  return _widget;
+  SellersConfigWidget *_w = new SellersConfigWidget(parent);
+  return _w;
 }
 
 bool TabSellers::addIndexOnInit() const { return true; }

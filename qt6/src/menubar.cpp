@@ -20,21 +20,10 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   addMenu(m_applMenu);
 
   // BEGIN::Views
-  m_viewsMenu = addMenu(tr("Views"));
-
-  // AntiquaTabs
   tabsMenu = new AntiquaCRM::TabsMenu(this);
-  tabsMenu->setIcon(tabIcon());
-  m_viewsMenu->addMenu(tabsMenu);
+  tabsMenu->setTitle(tr("Views"));
+  addMenu(tabsMenu);
   // END::Views
-
-  // BEGIN:Reports
-  m_viewsMenu->addMenu(new ReportsMenu(this));
-  // END:Reports
-
-  // BEGIN:Statistics
-  m_viewsMenu->addMenu(new StatisticsMenu(this));
-  // END:Statistics
 
   // BEGIN::Configurations
   m_configMenu = addMenu(tr("Configuration"));

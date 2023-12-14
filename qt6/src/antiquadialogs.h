@@ -44,14 +44,4 @@
 #include "utils/storages/storagesdialog.h"
 #endif
 
-// AntiquaReports
-#ifndef ANTIQUACRM_UTILS_REPORTS_H
-#include "utils/reports/antiquareports.h"
-#endif
-
-// AntiquaReports
-#ifndef ANTIQUACRM_UTILS_STATISTICS_H
-#include "utils/statistics/antiquastatistics.h"
-#endif
-
 #endif // ANTIQUACRM_UTILS_DIALOGS_H

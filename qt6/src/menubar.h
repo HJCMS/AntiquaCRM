@@ -23,7 +23,6 @@ class MenuBar final : public QMenuBar {
 
 private:
   QMenu *m_applMenu;
-  QMenu *m_viewsMenu;
   QMenu *m_configMenu;
   QMenu *m_dialogMenu;
   QMenu *m_aboutMenu;
