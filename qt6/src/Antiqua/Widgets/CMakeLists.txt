@@ -62,6 +62,7 @@ SET (_library_SOURCES
   alabel.cpp
   alineedit.cpp
   anavigationbar.cpp
+  amenu.cpp
   apluginconfigwidget.cpp
   apopupmessage.cpp
   aslider.cpp
@@ -130,6 +131,7 @@ SET (_library_HEADERS
   anavigationbar.h
   antiquaicon.h
   apluginconfigwidget.h
+  amenu.h
   apopupmessage.h
   aslider.h
   aspinbox.h

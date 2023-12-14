@@ -21,6 +21,9 @@
 // AntiquaCRM::ADialog
 #include "adialog.h"
 
+// AntiquaCRM::AMenu
+#include "amenu.h"
+
 // AntiquaCRM::APopUpMessage
 #include "apopupmessage.h"
 

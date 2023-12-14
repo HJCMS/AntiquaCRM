@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_WIDGETS__H
-#define ANTIQUACRM_WIDGETS__H
+#ifndef ANTIQUACRM_WIDGETS_CONDITIONEDIT_H
+#define ANTIQUACRM_WIDGETS_CONDITIONEDIT_H
 
 #include <AntiquaInput>
 #include <QObject>
@@ -65,4 +65,4 @@ public:
 
 } // namespace AntiquaCRM
 
-#endif // ANTIQUACRM_WIDGETS__H
+#endif // ANTIQUACRM_WIDGETS_CONDITIONEDIT_H

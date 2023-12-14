@@ -2,16 +2,14 @@
 // vim: set fileencoding=utf-8
 
 #include "tabsmenu.h"
-#include "antiquaicon.h"
 
 namespace AntiquaCRM {
 
-TabsMenu::TabsMenu(QMenuBar *parent) : QMenu{parent} {
+TabsMenu::TabsMenu(QMenuBar *parent) : AMenu{parent} {
   setTitle(tr("Tabs"));
-  m_mapper = new QSignalMapper(this);
-  connect(m_mapper, SIGNAL(mappedString(const QString &)),
-          SIGNAL(sendOpenTab(const QString &)));
 }
+
+void TabsMenu::addActions() {}
 
 void TabsMenu::addAction(const QJsonObject &jo) {
   const QString _id = jo.value("id").toString();

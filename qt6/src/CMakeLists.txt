@@ -68,6 +68,8 @@ SET(APPLICATION_LIBRARIES
   AntiquaImage
   AntiquaPrinting
   AntiquaTabs
+  AntiquaReports
+  AntiquaStatistics
   AboutDialog
   CompanyDialog
   ConfigDialog

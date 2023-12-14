@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_TABS_MENU_H
 #define ANTIQUACRM_TABS_MENU_H
 
-#include <AGlobal>
+#include <AntiquaWidgets>
 #include <QAction>
 #include <QIcon>
 #include <QJsonObject>
@@ -25,14 +25,11 @@ namespace AntiquaCRM {
  * @brief Menu for loaded Tabs
  * @ingroup TabsInterface
  */
-class ANTIQUACRM_LIBRARY TabsMenu final : public QMenu {
+class ANTIQUACRM_LIBRARY TabsMenu final : public AMenu {
   Q_OBJECT
 
 private:
-  QSignalMapper *m_mapper;
-
-Q_SIGNALS:
-  void sendOpenTab(const QString &);
+  void addActions() override;
 
 public Q_SLOTS:
   /**
