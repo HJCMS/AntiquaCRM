@@ -20,7 +20,7 @@ const QMap<qint64, int> StatsUtils::dayRangeFromYear(int year) {
   QPair<QTime, QTime> at = startEndDayTime();
   for (int i = 1; i <= year_days; i++) {
     QTime _t = (i < year_days) ? at.first : at.second;
-    QDateTime dt = QDateTime(d.addDays(i), _t);
+    QDateTime dt(d.addDays(i), _t);
     m.insert(dt.toMSecsSinceEpoch(), -1);
   }
   return m;
@@ -35,7 +35,7 @@ const QMap<qint64, int> StatsUtils::dayRangeFromDate(const QDate &from,
   QPair<QTime, QTime> at = startEndDayTime();
   for (int i = 1; i <= to_day; i++) {
     QTime _t = (i < to_day) ? at.first : at.second;
-    QDateTime dt = QDateTime(d.addDays(i), _t);
+    QDateTime dt(d.addDays(i), _t);
     m.insert(dt.toMSecsSinceEpoch(), -1);
   }
   return m;

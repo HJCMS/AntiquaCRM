@@ -34,6 +34,11 @@ ADD_LIBRARY (${_pluginTarget} MODULE
   statisticsselecter.h statisticsselecter.cpp
   salesinmonth.h salesinmonth.cpp
   horizontalbarseries.h horizontalbarseries.cpp
+  salesfromproviders.h salesfromproviders.cpp
+  salescategories.h salescategories.cpp
+  countaxis.h countaxis.cpp
+  yearaxis.h yearaxis.cpp
+  dailyaverage.h dailyaverage.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

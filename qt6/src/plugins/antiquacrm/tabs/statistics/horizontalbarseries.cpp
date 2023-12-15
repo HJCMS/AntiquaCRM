@@ -9,6 +9,7 @@ HorizontalBarSeries::HorizontalBarSeries(QObject *parent)
   setLabelsVisible(true);
   setLabelsFormat("@value");
   setBarWidth(1.0);
+  setVisible(true);
 }
 
 QAbstractSeries::SeriesType HorizontalBarSeries::type() const {

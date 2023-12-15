@@ -20,9 +20,14 @@ class ANTIQUACRM_LIBRARY StatisticsIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
+  const QDate p_date;
   AntiquaCRM::ASqlCore *m_sql = nullptr;
   QScrollArea *m_area;
   StatisticsSelecter *m_selecter;
+
+  /**
+   * @brief Used for clear ChartView
+   */
   void setDefaultTableView() override;
 
 public Q_SLOTS:
@@ -31,10 +36,10 @@ public Q_SLOTS:
 
 public:
   explicit StatisticsIndex(QWidget *parent = nullptr);
-  void openStartPage() override;
-  void createSearchQuery(const QString &) override;
-  void createNewEntry() override;
-  void openEntry(qint64) override;
+  void openStartPage() override {};
+  void createSearchQuery(const QString &) override {};
+  void createNewEntry() override {};
+  void openEntry(qint64) override {};
   void onEnterChanged() override;
   const QString getTitle() const override;
   bool customAction(const QJsonObject &obj) override;

@@ -15,7 +15,8 @@
  * @brief The AHorizontalBarSeries class
  * @ingroup _chartstat
  */
-class ANTIQUACRM_LIBRARY HorizontalBarSeries : public QHorizontalBarSeries {
+class ANTIQUACRM_LIBRARY HorizontalBarSeries final
+    : public QHorizontalBarSeries {
   Q_OBJECT
 
 public:

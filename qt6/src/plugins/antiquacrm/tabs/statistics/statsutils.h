@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_STATISTICS_UTILS_H
 #define ANTIQUACRM_STATISTICS_UTILS_H
 
+#include <AGlobal>
 #include <QDate>
 #include <QDateTime>
 #include <QMap>
@@ -15,7 +16,7 @@
  * @brief The StatsUtils class
  * @ingroup _chartstat
  */
-class StatsUtils final {
+class ANTIQUACRM_LIBRARY StatsUtils final {
 public:
   /**
    * @brief Start end DayTime: QPair<00:00:00,23:59:59>
