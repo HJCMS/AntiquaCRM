@@ -9,10 +9,12 @@
 #ifndef ANTIQUACRM_STATISTICS_SALESINMONTH_H
 #define ANTIQUACRM_STATISTICS_SALESINMONTH_H
 
-#include <AGlobal>
+#include <AntiquaCRM>
 #include <QBarCategoryAxis>
 #include <QBarSet>
 #include <QChartView>
+#include <QDateTime>
+#include <QMap>
 #include <QObject>
 #include <QWidget>
 
@@ -22,10 +24,17 @@ class ANTIQUACRM_LIBRARY SalesInMonth final : public QChartView {
   Q_OBJECT
 
 private:
+  QString p_currency;
+  mutable QMap<int, QMap<int, qint64>> p_voluMap;
+  mutable QMap<int, QMap<int, double>> p_soldMap;
+  AntiquaCRM::ASqlCore *m_sql;
   QChart *m_chart;
   QBarCategoryAxis *m_label;
-  HorizontalBarSeries *m_monthBar;
-  QBarSet *createBarset(int year);
+  HorizontalBarSeries *m_numsBar;
+  HorizontalBarSeries *m_paidBar;
+  bool initMaps();
+  QBarSet *createBarset(const QString &title);
+  inline const QDateTime fsepoch(qint64) const;
   bool initialChartView();
 
 public:

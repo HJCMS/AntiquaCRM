@@ -74,8 +74,7 @@ bool PaymentsMonthYear::initialChartView() {
   }
   _qy.clear();
 
-  _sql = AntiquaCRM::ASqlFiles::queryStatement(
-      "statistics_payments_month_in_year");
+  _sql = AntiquaCRM::ASqlFiles::queryStatement("statistics_payments_month");
   if (!_sql.isEmpty()) {
     QSqlQuery q = m_sql->query(_sql);
     if (q.size() > 0) {

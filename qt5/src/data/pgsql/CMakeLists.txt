@@ -52,7 +52,6 @@ SET (query_tables_FILES
   statistics_monthly_categories.sql
   statistics_payments_storage.sql
   statistics_payments_month.sql
-  statistics_payments_month_sold.sql
   statistics_payments_year.sql
   statistics_provider_orders_year.sql
   statistics_provider_volume_year.sql

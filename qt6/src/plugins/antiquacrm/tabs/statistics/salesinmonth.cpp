@@ -4,10 +4,12 @@
 #include "salesinmonth.h"
 #include "horizontalbarseries.h"
 
-#include <AntiquaCRM>
 #include <QSqlQuery>
 
 SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
+  AntiquaCRM::ASettings cfg(this);
+  p_currency = cfg.value("payment/currency", "§").toString();
+
   m_chart = new QChart;
   m_chart->setTitle(tr("Compare Sales from this to past years."));
   m_chart->setMargins(QMargins(0, 0, 0, 0));
@@ -17,14 +19,18 @@ SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
   QFont barFont = m_label->labelsFont();
   barFont.setPointSize(m_label->labelsFont().pointSize() - 4);
 
-  m_monthBar = new HorizontalBarSeries(this);
-  m_monthBar->setBarWidth(0.95);
+  m_numsBar = new HorizontalBarSeries(this);
+  m_numsBar->setBarWidth(0.95);
 
+  m_paidBar = new HorizontalBarSeries(this);
+  m_paidBar->setBarWidth(0.95);
+  m_paidBar->setLabelsFormat("@value " + p_currency);
+
+  m_sql = new AntiquaCRM::ASqlCore(this);
   if (initialChartView()) {
-    m_chart->addSeries(m_monthBar);
     // Vertikale Achse
     m_chart->addAxis(m_label, Qt::AlignLeft);
-    m_monthBar->attachAxis(m_label);
+    m_numsBar->attachAxis(m_label);
     setChart(m_chart);
   } else {
     qWarning("No Sales in Month Charts data");
@@ -34,78 +40,102 @@ SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
 SalesInMonth::~SalesInMonth() {
   if (m_chart != nullptr)
     m_chart->deleteLater();
+
+  // p_voluMap.clear();
 }
 
-QBarSet *SalesInMonth::createBarset(int year) {
-  const QString _title(QString::number(year));
-  QBarSet *bs = new QBarSet(_title, m_chart);
-  bs->setObjectName("average_curr_year");
+QBarSet *SalesInMonth::createBarset(const QString &title) {
+  QBarSet *bs = new QBarSet(title, m_chart);
   bs->setLabelFont(m_label->labelsFont());
   bs->setLabelColor(Qt::black);
   return bs;
 }
 
-bool SalesInMonth::initialChartView() {
-  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+bool SalesInMonth::initMaps() {
   QString _sql("SELECT DISTINCT");
   _sql.append(" date_part('year', o_delivered)::NUMERIC AS year");
   _sql.append(" FROM inventory_orders WHERE (o_delivered IS NOT NULL)");
   _sql.append(" GROUP BY year ORDER BY year");
-  QSqlQuery _qy = m_sql->query(_sql);
-  if (_qy.size() < 1)
+  QSqlQuery _q = m_sql->query(_sql);
+  if (_q.size() < 1) {
+    qWarning("Sales in Month chart, without ranges!");
     return false;
+  }
 
   // Create existing years maps
-  QMap<int, QMap<int, qint64>> _map;
-  while (_qy.next()) {
-    int _year = _qy.value("year").toInt();
-    QMap<int, qint64> _sub;
+  while (_q.next()) {
+    int _year = _q.value("year").toInt();
+    QMap<int, qint64> _vol;
+    QMap<int, double> _sel;
     for (int i = 1; i < 12; i++) {
-      _sub.insert(i, 0);
+      _vol.insert(i, 0);
+      _sel.insert(i, 0.00);
     }
-    _map.insert(_year, _sub);
+    p_voluMap.insert(_year, _vol);
+    p_soldMap.insert(_year, _sel);
   }
-  _qy.clear();
+  _q.clear();
+  return true;
+}
 
-  _sql = AntiquaCRM::ASqlFiles::queryStatement(
-      "statistics_payments_month_in_year");
-  if (!_sql.isEmpty()) {
-    QSqlQuery q = m_sql->query(_sql);
-    if (q.size() > 0) {
-      while (q.next()) {
-        int count = q.value("counts").toInt();
-        QDateTime dt = QDateTime::fromSecsSinceEpoch(q.value("sepoch").toInt(),
-                                                     Qt::LocalTime);
+const QDateTime SalesInMonth::fsepoch(qint64 t) const {
+  return QDateTime::fromSecsSinceEpoch(t, Qt::LocalTime);
+}
 
-        bool b;
-        int _y = dt.toString("yyyy").toInt(&b);
-        if (b) {
-          QMap<int, qint64> _m = _map[_y];
-          int _month = dt.date().month();
-          _m[_month] = (_m[_month] + count);
-          _map[_y] = _m;
-        }
+bool SalesInMonth::initialChartView() {
+  QString _query; // query statement
+  // init months range map
+  if (!initMaps())
+    return false;
+
+  // create volume chart data
+  _query = AntiquaCRM::ASqlFiles::queryStatement("statistics_payments_month");
+  if (_query.isEmpty())
+    return false;
+
+  QSqlQuery _qv = m_sql->query(_query);
+  if (_qv.size() > 0) {
+    while (_qv.next()) {
+      int _c = _qv.value("counts").toInt();
+      double _s = _qv.value("sell").toDouble();
+      QDateTime _dt = fsepoch(_qv.value("sepoch").toInt());
+      bool _b;
+      int _y = _dt.toString("yyyy").toInt(&_b);
+      if (_b) {
+        int _month = _dt.date().month();
+        // verkäufe
+        QMap<int, qint64> _mv = p_voluMap[_y];
+        _mv[_month] = (_mv[_month] + _c);
+        p_voluMap[_y] = _mv;
+        // preise
+        QMap<int, double> _ms = p_soldMap[_y];
+        _ms[_month] = (_ms[_month] + _s);
+        p_soldMap[_y] = _ms;
       }
-    } else {
-      return false;
     }
-    q.clear();
   } else {
     return false;
   }
+  _query.clear();
+  _qv.clear();
 
-  foreach (int y, _map.keys()) {
-    QMap<int, qint64> _m = _map[y];
-    QBarSet *m_set = createBarset(y);
+  // finally insert chart data
+  foreach (int y, p_voluMap.keys()) {
+    QMap<int, qint64> _m = p_voluMap[y];
+    QBarSet *m_counts = createBarset(tr("Volume(%1)").arg(y));
+    QMap<int, double> _s = p_soldMap[y];
+    QBarSet *m_solded = createBarset(tr("Sales(%1)").arg(y));
     for (int m = 1; m <= 12; m++) {
       QDate _curr(y, m, 1);
-      m_set->append(_m[m]);
+      m_counts->append(_m[m]);
+      m_solded->append(_s[m]);
       m_label->insert((m - 1), _curr.toString("MMMM"));
       // qDebug() << _curr.toString("MMMM") << _m[m];
     }
-    m_monthBar->insert(0, m_set);
+    m_numsBar->insert(0, m_counts);
+    m_paidBar->insert(0, m_solded);
   }
-
-  _map.clear();
+  m_chart->addSeries(m_numsBar);
+  m_chart->addSeries(m_paidBar);
   return true;
 }
