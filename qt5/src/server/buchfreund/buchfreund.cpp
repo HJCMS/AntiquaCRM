@@ -147,7 +147,10 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
   }
 
   // Einzelne Bestellung entgegen nehmen
+  // Tabellenfelder
+  const QMap<QString, int> _fieldSet = initDataInformation();
   const QHash<QString, QString> keys = translateIds();
+
   QJsonObject bf_order = response.toObject();
   QString bf_id = bf_order.value("id").toString();
   if (bf_id.isEmpty()) {
@@ -173,7 +176,6 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
 
   // AntiquaCRM::PaymentMethod
   AntiquaCRM::PaymentMethod payment_method;
-  payment_method = AntiquaCRM::PAYMENT_NOT_SET;
   QString bezahlart = bf_order.value("bezahlart").toString();
   if (bezahlart.contains("Banküberweisung", Qt::CaseInsensitive))
     payment_method = AntiquaCRM::BANK_PREPAYMENT;
@@ -242,6 +244,19 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
       } else if (naming.contains(field)) {
         antiqua_customer.insert(field, ucFirst(_v.toString()));
       } else {
+        int _msize = _fieldSet.value(field, 0);
+        if ((_msize > 0) && (_v.type() == QJsonValue::String) &&
+            (_msize < _v.toString().length())) {
+          QString _data(_v.toString().left(_msize));
+          if (_data.contains(" ")) {
+            QStringList _l = _data.split(" ");
+            _data = (_l.size() > 0) ? _l.first().trimmed() : _data.trimmed();
+          } else {
+            _data = _data.trimmed();
+          }
+          qInfo("Shrink data for key '%s'.", qPrintable(field));
+          _v = QJsonValue(_data);
+        }
         antiqua_customer.insert(field, _v.toString());
       }
     }
@@ -283,7 +298,15 @@ void Buchfreund::prepareContent(const QJsonDocument &doc) {
         if (!keys.value(k).isEmpty()) {
           QString key = keys.value(k);
           QJsonValue value = convert(key, jso.value(k));
-          antiqua_articles_item.insert(key, value);
+          int _msize = _fieldSet.value(key, 0);
+          if ((_msize > 0) && (value.type() == QJsonValue::String) &&
+              (_msize < value.toString().length())) {
+            QString _data = value.toString();
+            qInfo("Shrink data for key %s ", qPrintable(key));
+            antiqua_articles_item.insert(key, _data.left(_msize));
+          } else {
+            antiqua_articles_item.insert(key, value);
+          }
         }
       }
       antiqua_articles_item.insert("payment_id", QJsonValue(0));

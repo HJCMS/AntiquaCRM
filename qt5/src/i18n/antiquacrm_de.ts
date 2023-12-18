@@ -4388,6 +4388,14 @@ Bild - Artikel Nr: %2</translation>
     </message>
 </context>
 <context>
+    <name>MonthBarSet</name>
+    <message>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+24"/>
+        <source>Article sale %1</source>
+        <translation>Artikelverkauf %1</translation>
+    </message>
+</context>
+<context>
     <name>MonthSelecter</name>
     <message>
         <location filename="../tabs/reports/monthselecter.cpp" line="+17"/>
@@ -5498,24 +5506,14 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>PaymentsMonthYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+17"/>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+16"/>
         <source>Sales in Month</source>
         <translation>Verkäufe im Monat</translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Compare Sales from last and this year.</source>
-        <translation>Vergleich Verkäufe vom letzten und diesem Jahr.</translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Current Year</source>
-        <translation>Laufendes Jahr</translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Last Year</source>
-        <translation>Letztes Jahr</translation>
+        <location line="+10"/>
+        <source>Sales from past to current year.</source>
+        <translation>Verkäufe vom vergangenen bis zum aktuellen Jahr.</translation>
     </message>
 </context>
 <context>

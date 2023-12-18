@@ -13,7 +13,7 @@ TabStatistics::TabStatistics(QObject *parent)
 const QString TabStatistics::displayName() const { return tr("Statistics"); }
 
 const QString TabStatistics::interfaceName() const {
-  return QString("statistics");
+  return QString("statistics_tab");
 }
 
 const QString TabStatistics::sqlTableName() const { return QString(); }

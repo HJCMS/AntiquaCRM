@@ -18,7 +18,27 @@
 #include <QObject>
 #include <QWidget>
 
-class HorizontalBarSeries;
+class VerticalBarSeries;
+
+class ANTIQUACRM_LIBRARY MonthBarSet final : public QBarSet {
+  Q_OBJECT;
+
+private:
+  int p_year;
+  QMap<int, double> p_sales;
+
+private Q_SLOTS:
+  void showToolTip(bool, int);
+
+public Q_SLOTS:
+  void setSales(const QMap<int, double> &sales);
+
+public:
+  enum Type { Volume = 0, Sales = 1 };
+  explicit MonthBarSet(int year, QChart *parent = nullptr,
+                       MonthBarSet::Type type = MonthBarSet::Type::Volume);
+  int year() const;
+};
 
 class ANTIQUACRM_LIBRARY SalesInMonth final : public QChartView {
   Q_OBJECT
@@ -30,12 +50,16 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
   QChart *m_chart;
   QBarCategoryAxis *m_label;
-  HorizontalBarSeries *m_numsBar;
-  HorizontalBarSeries *m_paidBar;
+  VerticalBarSeries *m_numsBar;
+  VerticalBarSeries *m_paidBar;
   bool initMaps();
-  QBarSet *createBarset(const QString &title);
+  MonthBarSet *createBarset(int year,
+                            MonthBarSet::Type type = MonthBarSet::Type::Volume);
   inline const QDateTime fsepoch(qint64) const;
   bool initialChartView();
+
+private Q_SLOTS:
+  void updateHeight();
 
 public:
   explicit SalesInMonth(QWidget *parent = nullptr);

@@ -13,6 +13,7 @@
 #include <QList>
 #include <QNetworkCookie>
 #include <QObject>
+#include <QSqlRecord>
 #include <QUrl>
 
 /**
@@ -97,6 +98,13 @@ protected:
    * Je nach Redirected ist die Angabe ein Nachteil!
    */
   qint64 apiPort;
+
+  /**
+   * @brief max allowed data Length for columns!
+   *
+   * Contains the maximum character length for columns containing strings.
+   */
+  QMap<QString, int> initDataInformation();
 
   /**
    * @brief Dienstleistername Title in Groß-/Kleinschreibung!

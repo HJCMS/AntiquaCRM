@@ -33,7 +33,7 @@ ADD_LIBRARY (${_pluginTarget} MODULE
   statisticsconfigwidget.h statisticsconfigwidget.cpp
   statisticsselecter.h statisticsselecter.cpp
   salesinmonth.h salesinmonth.cpp
-  horizontalbarseries.h horizontalbarseries.cpp
+  statsbarseries.h statsbarseries.cpp
   salesfromproviders.h salesfromproviders.cpp
   salescategories.h salescategories.cpp
   countaxis.h countaxis.cpp

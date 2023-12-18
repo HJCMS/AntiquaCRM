@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "salescategories.h"
-#include "horizontalbarseries.h"
+#include "statsbarseries.h"
 
 #include <QBarCategoryAxis>
 #include <QDate>

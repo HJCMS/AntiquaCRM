@@ -40,6 +40,29 @@ void Provider::getNetworkResponse(const QDomDocument &doc) {
     responsed(data);
 }
 
+QMap<QString, int> Provider::initDataInformation() {
+  QString _query("SELECT column_name, character_maximum_length");
+  _query.append(" FROM information_schema.columns WHERE table_name IN");
+  _query.append(" ('customers', 'provider_orders','article_orders')");
+  _query.append(" AND data_type='character varying'");
+  _query.append(" ORDER BY column_name;");
+
+  QMap<QString, int> _m;
+  QSqlQuery _q = m_sql->query(_query);
+  if (_q.size() > 0) {
+    while (_q.next()) {
+      QSqlRecord _r = _q.record();
+      for (int i = 0; i < _r.count(); i++) {
+        const QString _k = _q.value("column_name").toString();
+        int _v = _q.value("character_maximum_length").toInt();
+        _m.insert(_k, _v);
+      }
+    }
+    return _m;
+  }
+  return _m;
+}
+
 const QString Provider::ucFirst(const QString &str) {
   QString convert = str.trimmed().toLower();
   // Wenn mehr als ein Leerzeichen, zusammenschieben!
@@ -245,10 +268,10 @@ bool Provider::createOrders(const QList<QJsonObject> &orders) {
 QPair<qint64, QString> Provider::findInsertCustomer(const QJsonObject &json) {
   Customers *mc = new Customers(m_sql, json);
   qint64 c_id = mc->getId();
-  //#ifdef ANTIQUA_DEVELOPEMENT
-  //  if (c_id < 1)
-  //    qDebug() << Q_FUNC_INFO << c_id;
-  //#endif
+#ifdef ANTIQUA_DEVELOPEMENT
+  if (c_id < 1)
+    qDebug() << Q_FUNC_INFO << c_id;
+#endif
 
   Q_ASSERT(c_id > 1);
 

@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "horizontalbarseries.h"
+#include "statsbarseries.h"
 
 HorizontalBarSeries::HorizontalBarSeries(QObject *parent)
     : QHorizontalBarSeries{parent} {
@@ -16,4 +16,14 @@ QAbstractSeries::SeriesType HorizontalBarSeries::type() const {
   return QAbstractSeries::SeriesTypeHorizontalBar;
 }
 
-HorizontalBarSeries::~HorizontalBarSeries() {}
+VerticalBarSeries::VerticalBarSeries(QObject *parent) : QBarSeries{parent} {
+  setLabelsPosition(QAbstractBarSeries::LabelsInsideEnd);
+  setLabelsVisible(true);
+  setLabelsFormat("@value");
+  setBarWidth(1.0);
+  setVisible(true);
+}
+
+QAbstractSeries::SeriesType VerticalBarSeries::type() const {
+  return QAbstractSeries::SeriesTypeBar;
+}

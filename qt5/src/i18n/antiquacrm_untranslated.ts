@@ -4384,6 +4384,14 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>MonthBarSet</name>
+    <message>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+24"/>
+        <source>Article sale %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MonthSelecter</name>
     <message>
         <location filename="../tabs/reports/monthselecter.cpp" line="+17"/>
@@ -5494,23 +5502,13 @@ Image - Article Id: %2</source>
 <context>
     <name>PaymentsMonthYear</name>
     <message>
-        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+17"/>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+16"/>
         <source>Sales in Month</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
-        <source>Compare Sales from last and this year.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Current Year</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Last Year</source>
+        <location line="+10"/>
+        <source>Sales from past to current year.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

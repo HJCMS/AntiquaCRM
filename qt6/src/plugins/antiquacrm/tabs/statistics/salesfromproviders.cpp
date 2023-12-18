@@ -16,9 +16,14 @@ SalesFromProviders::SalesFromProviders(QWidget *parent) : QWidget{parent} {
   m_averageView = new QChartView(this);
   m_averageView->setContentsMargins(contentsMargins());
   m_averageView->setRenderHint(QPainter::Antialiasing);
+
+  QFont _font(m_averageView->font().family(),
+              m_averageView->font().pointSize() - 2);
+
   m_averageChart = new QChart(m_averageView->itemAt(0, 0));
   m_averageChart->setMargins(m_averageView->contentsMargins());
   m_averageChart->setAnimationOptions(QChart::SeriesAnimations);
+  m_averageChart->setFont(_font);
   layout->addWidget(m_averageView);
 
   m_volumeView = new QChartView(this);
@@ -27,6 +32,7 @@ SalesFromProviders::SalesFromProviders(QWidget *parent) : QWidget{parent} {
   m_volumeChart = new QChart(m_volumeView->itemAt(0, 0));
   m_volumeChart->setMargins(m_averageView->contentsMargins());
   m_volumeChart->setAnimationOptions(QChart::SeriesAnimations);
+  m_volumeChart->setFont(_font);
   layout->addWidget(m_volumeView);
 
   setLayout(layout);
