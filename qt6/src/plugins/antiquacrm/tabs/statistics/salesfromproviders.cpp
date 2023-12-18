@@ -13,17 +13,20 @@ SalesFromProviders::SalesFromProviders(QWidget *parent) : QWidget{parent} {
 
   m_sql = new AntiquaCRM::ASqlCore(this);
 
+  AntiquaCRM::ASettings cfg(this);
+  cfg.beginGroup("statistics");
+  p_headerFont.fromString(cfg.value("stats_font_header").toString());
+  p_barsFont.fromString(cfg.value("stats_font_chart").toString());
+  cfg.endGroup();
+
   m_averageView = new QChartView(this);
   m_averageView->setContentsMargins(contentsMargins());
   m_averageView->setRenderHint(QPainter::Antialiasing);
 
-  QFont _font(m_averageView->font().family(),
-              m_averageView->font().pointSize() - 2);
-
   m_averageChart = new QChart(m_averageView->itemAt(0, 0));
   m_averageChart->setMargins(m_averageView->contentsMargins());
   m_averageChart->setAnimationOptions(QChart::SeriesAnimations);
-  m_averageChart->setFont(_font);
+  m_averageChart->setTitleFont(p_headerFont);
   layout->addWidget(m_averageView);
 
   m_volumeView = new QChartView(this);
@@ -32,7 +35,7 @@ SalesFromProviders::SalesFromProviders(QWidget *parent) : QWidget{parent} {
   m_volumeChart = new QChart(m_volumeView->itemAt(0, 0));
   m_volumeChart->setMargins(m_averageView->contentsMargins());
   m_volumeChart->setAnimationOptions(QChart::SeriesAnimations);
-  m_volumeChart->setFont(_font);
+  m_volumeChart->setTitleFont(p_headerFont);
   layout->addWidget(m_volumeView);
 
   setLayout(layout);
@@ -88,6 +91,7 @@ bool SalesFromProviders::initChartView(int year) {
       // Labels setzen
       for (int s = 0; s < m_series->count(); s++) {
         QPieSlice *_slice = m_series->slices().at(s);
+        _slice->setLabelFont(p_barsFont);
         _slice->setExplodeDistanceFactor(0.05);
         connect(_slice, SIGNAL(hovered(bool)), SLOT(highlight(bool)));
         if (_slice->value() > (summary / 100)) {
@@ -144,10 +148,11 @@ bool SalesFromProviders::initChartView(int year) {
       }
       // Labels setzen
       for (int s = 0; s < m_series->count(); s++) {
-        QPieSlice *slice = m_series->slices().at(s);
-        slice->setExplodeDistanceFactor(0.05);
-        connect(slice, SIGNAL(hovered(bool)), SLOT(highlight(bool)));
-        slice->setLabelVisible();
+        QPieSlice *_slice = m_series->slices().at(s);
+        _slice->setLabelFont(p_barsFont);
+        _slice->setExplodeDistanceFactor(0.05);
+        connect(_slice, SIGNAL(hovered(bool)), SLOT(highlight(bool)));
+        _slice->setLabelVisible();
       }
       m_volumeChart->addSeries(m_series);
       m_volumeChart->setTitle(tr("Volume in %1").arg(year));

@@ -16,11 +16,17 @@ SalesCategories::SalesCategories(QWidget *parent) : QChartView{parent} {
   setRenderHint(QPainter::Antialiasing);
 
   m_sql = new AntiquaCRM::ASqlCore(this);
+
   AntiquaCRM::ASettings cfg(this);
   p_year = QDate::currentDate().year();
   p_currency = cfg.value("payment/currency", "§").toString();
+  cfg.beginGroup("statistics");
+  p_headerFont.fromString(cfg.value("stats_font_header").toString());
+  p_barsFont.fromString(cfg.value("stats_font_chart").toString());
+  cfg.endGroup();
 
   m_chart = new QChart(itemAt(0, 0));
+  m_chart->setTitleFont(p_headerFont);
   m_chart->setTitle(windowTitle());
   m_chart->setMargins(contentsMargins());
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -37,6 +43,7 @@ SalesCategories::~SalesCategories() {}
 QBarSet *SalesCategories::createBarSet(const QString &title, QChart *parent) {
   QBarSet *m_b = new QBarSet(title, parent);
   m_b->setLabelColor(Qt::black);
+  m_b->setLabelFont(p_barsFont);
   return m_b;
 }
 

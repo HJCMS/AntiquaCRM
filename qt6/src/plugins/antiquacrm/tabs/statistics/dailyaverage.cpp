@@ -16,8 +16,14 @@ DailyAverage::DailyAverage(QWidget *parent)
 
   m_sql = new AntiquaCRM::ASqlCore(this);
 
+  AntiquaCRM::ASettings cfg(this);
+  cfg.beginGroup("statistics");
+  p_headerFont.fromString(cfg.value("stats_font_header").toString());
+  cfg.endGroup();
+
   m_chart = new QChart(itemAt(0, 0));
   m_chart->legend()->hide();
+  m_chart->setTitleFont(p_headerFont);
   m_chart->setAnimationOptions(QChart::NoAnimation);
 }
 
@@ -64,6 +70,7 @@ bool DailyAverage::initChartView(int year) {
 
   QLineSeries *_series = new QLineSeries(this);
   _series->setName(tr("Orders"));
+
   QMapIterator<qint64, int> it(_points);
   while (it.hasNext()) {
     it.next();

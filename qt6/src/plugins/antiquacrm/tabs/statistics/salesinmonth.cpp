@@ -38,15 +38,19 @@ int MonthBarSet::year() const { return p_year; }
 SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
   AntiquaCRM::ASettings cfg(this);
   p_currency = cfg.value("payment/currency", "§").toString();
+  cfg.beginGroup("statistics");
+  p_headerFont.fromString(cfg.value("stats_font_header").toString());
+  p_barsFont.fromString(cfg.value("stats_font_chart").toString());
+  cfg.endGroup();
 
-  m_chart = new QChart;
+  m_chart = new QChart(itemAt(0, 0));
+  m_chart->setTitleFont(p_headerFont);
   m_chart->setTitle(tr("Compare Sales from this to past years."));
   m_chart->setMargins(QMargins(0, 0, 0, 0));
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
   m_label = new QBarCategoryAxis(m_chart);
-  QFont barFont = m_label->labelsFont();
-  barFont.setPointSize(m_label->labelsFont().pointSize() - 4);
+  m_label->setLabelsFont(p_barsFont);
   m_chart->addAxis(m_label, Qt::AlignBottom);
 
   m_numsBar = new VerticalBarSeries(this);
@@ -67,13 +71,11 @@ SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
 SalesInMonth::~SalesInMonth() {
   if (m_chart != nullptr)
     m_chart->deleteLater();
-
-  // p_voluMap.clear();
 }
 
 MonthBarSet *SalesInMonth::createBarset(int year, MonthBarSet::Type type) {
   MonthBarSet *bs = new MonthBarSet(year, m_chart, type);
-  bs->setLabelFont(m_label->labelsFont());
+  bs->setLabelFont(p_barsFont);
   bs->setLabelColor(Qt::black);
   return bs;
 }
@@ -88,7 +90,6 @@ bool SalesInMonth::initMaps() {
     qWarning("Sales in Month chart, without ranges!");
     return false;
   }
-
   // Create existing years maps
   while (_q.next()) {
     int _year = _q.value("year").toInt();

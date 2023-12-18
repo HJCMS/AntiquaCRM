@@ -12,6 +12,7 @@
 #include <AntiquaCRM>
 #include <QChart>
 #include <QChartView>
+#include <QFont>
 #include <QObject>
 #include <QPieSeries>
 #include <QWidget>
@@ -23,6 +24,7 @@ private:
   AntiquaCRM::ASqlCore *m_sql;
   QChartView *m_averageView, *m_volumeView;
   QChart *m_averageChart, *m_volumeChart;
+  QFont p_headerFont, p_barsFont;
   QPieSeries *initSeries(QChart *chart);
 
 private Q_SLOTS:

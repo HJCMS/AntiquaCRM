@@ -11,6 +11,7 @@
 
 #include <AntiquaCRM>
 #include <QChartView>
+#include <QFont>
 #include <QObject>
 #include <QWidget>
 
@@ -19,6 +20,7 @@ class ANTIQUACRM_LIBRARY DailyAverage final : public QChartView {
 
 private:
   AntiquaCRM::ASqlCore *m_sql;
+  QFont p_headerFont;
   const QDate p_date;
   QChart *m_chart;
 

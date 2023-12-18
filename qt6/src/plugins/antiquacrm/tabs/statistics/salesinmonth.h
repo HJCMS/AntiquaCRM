@@ -14,6 +14,7 @@
 #include <QBarSet>
 #include <QChartView>
 #include <QDateTime>
+#include <QFont>
 #include <QMap>
 #include <QObject>
 #include <QWidget>
@@ -45,6 +46,7 @@ class ANTIQUACRM_LIBRARY SalesInMonth final : public QChartView {
 
 private:
   QString p_currency;
+  QFont p_headerFont, p_barsFont;
   mutable QMap<int, QMap<int, qint64>> p_voluMap;
   mutable QMap<int, QMap<int, double>> p_soldMap;
   AntiquaCRM::ASqlCore *m_sql;

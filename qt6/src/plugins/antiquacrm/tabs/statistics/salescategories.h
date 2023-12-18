@@ -13,6 +13,7 @@
 #include <QBarSet>
 #include <QChart>
 #include <QChartView>
+#include <QFont>
 #include <QObject>
 #include <QWidget>
 
@@ -24,6 +25,7 @@ class ANTIQUACRM_LIBRARY SalesCategories final : public QChartView {
 private:
   AntiquaCRM::ASqlCore *m_sql;
   int p_year;
+  QFont p_headerFont, p_barsFont;
   QString p_currency;
   QChart *m_chart;
   HorizontalBarSeries *m_doubleSeries, *m_countSeries;
