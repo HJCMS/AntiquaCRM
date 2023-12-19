@@ -31,10 +31,7 @@ void ProviderStatistics::setOrdersChart() {
     QChart *m_chart = new QChart;
     m_chart->setTitle(tr("Completed Orders in Year %1.").arg(str_year));
 
-    QStringList query("o_order_status=4");
-    query.append("o_payment_status=1");
-    query.append("date_part('year', o_since)=" + str_year);
-    sqf.setWhereClause(query.join(" AND "));
+    sqf.setWhereClause(str_year);
     QSqlQuery q = p_sql.query(sqf.getQueryContent());
     if (q.size() > 0) {
       QPieSeries *m_series = new QPieSeries(m_chart);

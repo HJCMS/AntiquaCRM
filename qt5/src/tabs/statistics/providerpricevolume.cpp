@@ -30,10 +30,7 @@ void ProviderPriceVolume::setVolumeChart() {
     AntiquaCRM::ASqlCore p_sql(this);
     QChart *m_chart = new QChart;
     m_chart->setTitle(windowTitle());
-    QStringList query("(o_order_status=4 OR o_order_status=6)");
-    query.append("(o_payment_status=1 OR o_payment_status=4)");
-    query.append("date_part('year', o_since)=" + str_year);
-    sqf.setWhereClause(query.join(" AND "));
+    sqf.setWhereClause(str_year);
     QSqlQuery q = p_sql.query(sqf.getQueryContent());
     if (q.size() > 0) {
       QMap<QString, double> m;
