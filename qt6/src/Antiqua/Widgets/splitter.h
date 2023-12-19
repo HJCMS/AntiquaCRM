@@ -22,7 +22,7 @@ namespace AntiquaCRM {
  * @brief AntiquaCRM Splitter handle
  * @ingroup AntiquaWidgets
  */
-class SplitterHandle final : public QSplitterHandle {
+class ANTIQUACRM_LIBRARY SplitterHandle final : public QSplitterHandle {
   Q_OBJECT
 
 protected:
@@ -40,7 +40,7 @@ public:
  * @brief Horizontal Splitter for EditorWidgets
  * @ingroup AntiquaWidgets
  */
-class Splitter final : public QSplitter {
+class ANTIQUACRM_LIBRARY Splitter final : public QSplitter {
   Q_OBJECT
 
 private:

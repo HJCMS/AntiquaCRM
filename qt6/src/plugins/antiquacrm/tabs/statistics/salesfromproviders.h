@@ -10,30 +10,25 @@
 #define ANTIQUACRM_STATISTICS_SALESFROMPROVIDERS_H
 
 #include <AntiquaCRM>
+#include <AntiquaStatistics>
 #include <QChart>
-#include <QChartView>
 #include <QFont>
 #include <QObject>
-#include <QPieSeries>
-#include <QWidget>
+#include <QSplitter>
 
-class ANTIQUACRM_LIBRARY SalesFromProviders final : public QWidget {
+class SoldCountChart;
+class SalesVolumeChart;
+
+class ANTIQUACRM_LIBRARY SalesFromProviders final : public QSplitter {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASqlCore *m_sql;
-  QChartView *m_averageView, *m_volumeView;
-  QChart *m_averageChart, *m_volumeChart;
-  QFont p_headerFont, p_barsFont;
-  QPieSeries *initSeries(QChart *chart);
-
-private Q_SLOTS:
-  void highlight(bool);
+  SoldCountChart *m_soldCountChart;
+  SalesVolumeChart *m_salesVolumeChart;
 
 public:
   explicit SalesFromProviders(QWidget *parent = nullptr);
-  virtual ~SalesFromProviders();
-  bool initChartView(int year);
+  bool initView(int year);
 };
 
 #endif // ANTIQUACRM_STATISTICS_SALESFROMPROVIDERS_H

@@ -2,55 +2,22 @@
 // vim: set fileencoding=utf-8
 
 #include "salesinmonth.h"
+#include "monthbarset.h"
 #include "statsbarseries.h"
 
 #include <QFontMetricsF>
 #include <QSqlQuery>
-#include <QToolTip>
 
-MonthBarSet::MonthBarSet(int year, QChart *parent, MonthBarSet::Type type)
-    : QBarSet{QString(), parent}, p_year{year} {
-  if (type == MonthBarSet::Type::Sales) {
-    setLabel(tr("Volume (%1)").arg(year));
-  } else {
-    setLabel(tr("Count (%1)").arg(year));
-  }
-  connect(this, SIGNAL(hovered(bool, int)), SLOT(showToolTip(bool, int)));
-}
-
-void MonthBarSet::showToolTip(bool b, int i) {
-  if (b && p_sales.size() == 12) {
-    double _cost = p_sales[(i + 1)];
-    if (_cost > 0.00) {
-      const QString _money = AntiquaCRM::ATaxCalculator::money(_cost);
-      const QString _info = tr("Summary %1 (%2)").arg(_money).arg(p_year);
-      QToolTip::showText(QCursor::pos(), _info, nullptr);
-      return;
-    }
-  }
-  QToolTip::hideText();
-}
-
-void MonthBarSet::setSales(const QMap<int, double> &sales) { p_sales = sales; }
-
-int MonthBarSet::year() const { return p_year; }
-
-SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
-  AntiquaCRM::ASettings cfg(this);
-  p_currency = cfg.value("payment/currency", "§").toString();
-  cfg.beginGroup("statistics");
-  p_headerFont.fromString(cfg.value("stats_font_header").toString());
-  p_barsFont.fromString(cfg.value("stats_font_chart").toString());
-  cfg.endGroup();
-
+SalesInMonth::SalesInMonth(QWidget *parent) : AntiquaCRM::AChartView{parent} {
+  setObjectName("statistics_sales_in_month");
   m_chart = new QChart(itemAt(0, 0));
-  m_chart->setTitleFont(p_headerFont);
-  m_chart->setTitle(tr("Compare Sales from this to past years."));
+  m_chart->setTitleFont(headersFont);
+  m_chart->setTitle(tr("Compare sales from past years with current."));
   m_chart->setMargins(QMargins(0, 0, 0, 0));
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
   m_label = new QBarCategoryAxis(m_chart);
-  m_label->setLabelsFont(p_barsFont);
+  m_label->setLabelsFont(labelsFont);
   m_chart->addAxis(m_label, Qt::AlignBottom);
 
   m_numsBar = new VerticalBarSeries(this);
@@ -58,9 +25,8 @@ SalesInMonth::SalesInMonth(QWidget *parent) : QChartView{parent} {
 
   m_paidBar = new VerticalBarSeries(this);
   m_paidBar->setBarWidth(0.95);
-  m_paidBar->setLabelsFormat(p_currency);
+  m_paidBar->setLabelsFormat(currency);
 
-  m_sql = new AntiquaCRM::ASqlCore(this);
   if (initialChartView()) {
     setChart(m_chart);
   } else {
@@ -73,9 +39,10 @@ SalesInMonth::~SalesInMonth() {
     m_chart->deleteLater();
 }
 
-MonthBarSet *SalesInMonth::createBarset(int year, MonthBarSet::Type type) {
-  MonthBarSet *bs = new MonthBarSet(year, m_chart, type);
-  bs->setLabelFont(p_barsFont);
+MonthBarSet *SalesInMonth::createBarset(int year, int type) {
+  MonthBarSet::Type _t = static_cast<MonthBarSet::Type>(type);
+  MonthBarSet *bs = new MonthBarSet(year, m_chart, _t);
+  bs->setLabelFont(labelsFont);
   bs->setLabelColor(Qt::black);
   return bs;
 }
@@ -85,7 +52,7 @@ bool SalesInMonth::initMaps() {
   _sql.append(" date_part('year', o_delivered)::NUMERIC AS year");
   _sql.append(" FROM inventory_orders WHERE (o_delivered IS NOT NULL)");
   _sql.append(" GROUP BY year ORDER BY year");
-  QSqlQuery _q = m_sql->query(_sql);
+  QSqlQuery _q = getSqlQuery(_sql);
   if (_q.size() < 1) {
     qWarning("Sales in Month chart, without ranges!");
     return false;
@@ -106,42 +73,32 @@ bool SalesInMonth::initMaps() {
   return true;
 }
 
-const QDateTime SalesInMonth::fsepoch(qint64 t) const {
-  return QDateTime::fromSecsSinceEpoch(t, Qt::LocalTime);
-}
-
-bool SalesInMonth::initialChartView() {
+bool SalesInMonth::initialChartView(int year) {
+  Q_UNUSED(year);
   QString _query; // query statement
   // init months range map
   if (!initMaps())
     return false;
 
   // create volume chart data
-  _query = AntiquaCRM::ASqlFiles::queryStatement("statistics_payments_month");
-  if (_query.isEmpty())
-    return false;
-
-  QSqlQuery _q = m_sql->query(_query);
+  QSqlQuery _q = getTplSqlQuery("statistics_payments_month");
   if (_q.size() < 1)
     return false;
 
   while (_q.next()) {
     int _c = _q.value("counts").toInt();
     double _s = _q.value("sell").toDouble();
-    QDateTime _dt = fsepoch(_q.value("sepoch").toInt());
-    bool _b;
-    int _y = _dt.toString("yyyy").toInt(&_b);
-    if (_b) {
-      int _month = _dt.date().month();
-      // verkäufe
-      QMap<int, qint64> _mv = p_voluMap[_y];
-      _mv[_month] = (_mv[_month] + _c);
-      p_voluMap[_y] = _mv;
-      // preise
-      QMap<int, double> _ms = p_soldMap[_y];
-      _ms[_month] = (_ms[_month] + _s);
-      p_soldMap[_y] = _ms;
-    }
+    const QDateTime _dt = getEpoch(_q.value("sepoch").toInt());
+    int _y = getYear(_dt);
+    int _m = getMonth(_dt);
+    // verkäufe
+    QMap<int, qint64> _vmap = p_voluMap[_y];
+    _vmap[_m] = (_vmap[_m] + _c);
+    p_voluMap[_y] = _vmap;
+    // preise
+    QMap<int, double> _smap = p_soldMap[_y];
+    _smap[_m] = (_smap[_m] + _s);
+    p_soldMap[_y] = _smap;
   }
   _query.clear();
   _q.clear();
@@ -167,9 +124,4 @@ bool SalesInMonth::initialChartView() {
   m_chart->addSeries(m_paidBar);
   // updateHeight();
   return true;
-}
-
-void SalesInMonth::updateHeight() {
-  QFontMetricsF fm(m_chart->font());
-  setMinimumHeight(qRound(fm.height() * (12 * 4)));
 }

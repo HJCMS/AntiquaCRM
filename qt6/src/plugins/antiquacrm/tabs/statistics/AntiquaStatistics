@@ -7,14 +7,5 @@
 //
 
 #ifndef ANTIQUACRM_PLUGIN_STATISTICS_H
-#define ANTIQUACRM_PLUGIN_STATISTICS_H
-
-#ifndef ANTIQUACRM_STATISTICS_MENU_H
-#include "statisticsmenu.h"
+#include "antiquastatistics.h"
 #endif
-
-#ifndef ANTIQUACRM_STATISTICS_CHARTVIEW_H
-#include "achartview.h"
-#endif
-
-#endif // ANTIQUACRM_PLUGIN_STATISTICS_H

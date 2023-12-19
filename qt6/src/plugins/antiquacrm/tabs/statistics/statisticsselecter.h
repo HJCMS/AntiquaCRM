@@ -11,6 +11,7 @@
 
 #include <AntiquaWidgets>
 #include <QToolBar>
+#include <QPushButton>
 
 class ANTIQUACRM_LIBRARY StatisticsSelecter : public QToolBar {
   Q_OBJECT
@@ -18,9 +19,10 @@ class ANTIQUACRM_LIBRARY StatisticsSelecter : public QToolBar {
 private:
   AntiquaCRM::ASpinBox *m_date;
   AntiquaCRM::AComboBox *m_box;
+  QPushButton *m_button;
 
 private Q_SLOTS:
-  void chartSelected(int);
+  void updateView();
 
 Q_SIGNALS:
   void sendChartSelected(qint64, const QString &);

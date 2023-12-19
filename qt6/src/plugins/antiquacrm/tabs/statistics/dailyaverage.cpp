@@ -9,30 +9,16 @@
 #include <QLineSeries>
 
 DailyAverage::DailyAverage(QWidget *parent)
-    : QChartView{parent}, p_date{QDate::currentDate()} {
+    : AntiquaCRM::AChartView{parent}, p_date{QDate::currentDate()} {
   setObjectName("daily_average_chart");
-  setContentsMargins(0, 0, 0, 0);
-  setRenderHint(QPainter::Antialiasing);
-
-  m_sql = new AntiquaCRM::ASqlCore(this);
-
-  AntiquaCRM::ASettings cfg(this);
-  cfg.beginGroup("statistics");
-  p_headerFont.fromString(cfg.value("stats_font_header").toString());
-  cfg.endGroup();
 
   m_chart = new QChart(itemAt(0, 0));
   m_chart->legend()->hide();
-  m_chart->setTitleFont(p_headerFont);
+  m_chart->setTitleFont(headersFont);
   m_chart->setAnimationOptions(QChart::NoAnimation);
 }
 
-DailyAverage::~DailyAverage() {
-  if (m_sql != nullptr)
-    m_sql->deleteLater();
-}
-
-bool DailyAverage::initChartView(int year) {
+bool DailyAverage::initialChartView(int year) {
   if (year < 2000)
     return false;
 
@@ -43,7 +29,7 @@ bool DailyAverage::initChartView(int year) {
 
   const QString _query("date_part('year', o_since)=" + strYear);
   _tpl.setWhereClause(_query);
-  QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
+  QSqlQuery _q = getSqlQuery(_tpl.getQueryContent());
   int _max = 8;
   if (_q.size() < 1)
     return false;
@@ -56,10 +42,8 @@ bool DailyAverage::initChartView(int year) {
     if (_c > _max)
       _max = _c;
 
-    QDateTime _d = QDateTime::fromSecsSinceEpoch(_q.value("sepoch").toInt(),
-                                                 Qt::LocalTime);
-
-    _points.insert(_d.toMSecsSinceEpoch(), _c);
+    const QDateTime _dt = getEpoch(_q.value("sepoch").toInt());
+    _points.insert(_dt.toMSecsSinceEpoch(), _c);
   }
 
   YearAxis *m_axisYear = new YearAxis(year, this);

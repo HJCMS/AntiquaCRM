@@ -10,6 +10,7 @@
 #define ANTIQUACRM_STATISTICS_SALESCATEGORIES_H
 
 #include <AntiquaCRM>
+#include <AntiquaStatistics>
 #include <QBarSet>
 #include <QChart>
 #include <QChartView>
@@ -19,18 +20,14 @@
 
 class HorizontalBarSeries;
 
-class ANTIQUACRM_LIBRARY SalesCategories final : public QChartView {
+class ANTIQUACRM_LIBRARY SalesCategories final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASqlCore *m_sql;
   int p_year;
-  QFont p_headerFont, p_barsFont;
-  QString p_currency;
   QChart *m_chart;
   HorizontalBarSeries *m_doubleSeries, *m_countSeries;
   QBarSet *createBarSet(const QString &title, QChart *parent);
-  double currencyRound(double) const;
 
 private Q_SLOTS:
   void onHoverTip(bool, int);
@@ -38,8 +35,7 @@ private Q_SLOTS:
 
 public:
   explicit SalesCategories(QWidget *parent = nullptr);
-  virtual ~SalesCategories();
-  bool initChartView(int year);
+  bool initialChartView(int year = -1) override;
 };
 
 #endif // ANTIQUACRM_STATISTICS_SALESCATEGORIES_H

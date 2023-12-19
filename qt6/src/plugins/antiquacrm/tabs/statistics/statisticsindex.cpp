@@ -57,7 +57,7 @@ void StatisticsIndex::setChart(qint64 year, const QString &chart) {
     return;
   } else if (chart == "daily_average") {
     DailyAverage *m_c = new DailyAverage(m_area);
-    if (m_c->initChartView(year)) {
+    if (m_c->initialChartView(year)) {
       m_area->setWidget(m_c);
     } else {
       m_c->deleteLater();
@@ -65,7 +65,7 @@ void StatisticsIndex::setChart(qint64 year, const QString &chart) {
     return;
   } else if (chart == "categories_sales") {
     SalesCategories *m_c = new SalesCategories(m_area);
-    if (m_c->initChartView(year)) {
+    if (m_c->initialChartView(year)) {
       m_area->setWidget(m_c);
     } else {
       m_c->deleteLater();
@@ -73,7 +73,7 @@ void StatisticsIndex::setChart(qint64 year, const QString &chart) {
     return;
   } else if (chart == "provider_sales") {
     SalesFromProviders *m_c = new SalesFromProviders(this);
-    if (m_c->initChartView(year)) {
+    if (m_c->initView(year)) {
       m_area->setWidget(m_c);
     } else {
       m_c->deleteLater();

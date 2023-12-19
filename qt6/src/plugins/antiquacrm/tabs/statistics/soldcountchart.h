@@ -6,25 +6,27 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_STATISTICS_DAILYAVERAGE_H
-#define ANTIQUACRM_STATISTICS_DAILYAVERAGE_H
+#ifndef ANTIQUACRM_STATISTICS_SOLDCOUNTCHART_H
+#define ANTIQUACRM_STATISTICS_SOLDCOUNTCHART_H
 
 #include <AntiquaCRM>
 #include <AntiquaStatistics>
-#include <QFont>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY DailyAverage final : public AntiquaCRM::AChartView {
+class ANTIQUACRM_LIBRARY SoldCountChart final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
   const QDate p_date;
   QChart *m_chart;
 
+private Q_SLOTS:
+  void highlight(bool);
+
 public:
-  explicit DailyAverage(QWidget *parent = nullptr);
+  explicit SoldCountChart(QWidget *parent = nullptr);
   bool initialChartView(int year = -1) override;
 };
 
-#endif // ANTIQUACRM_STATISTICS_DAILYAVERAGE_H
+#endif // ANTIQUACRM_STATISTICS_SOLDCOUNTCHART_H

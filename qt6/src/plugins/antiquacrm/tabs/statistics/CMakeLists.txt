@@ -24,8 +24,9 @@ CONFIGURE_FILE (antiquastatistics.h.cmake
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_pluginTarget} MODULE
-  ${plugin_FILES}
+  ${plugin_FILES} AntiquaStatistics
   antiquastatistics.h.cmake antiquastatistics.h
+  achartview.h achartview.cpp
   statsutils.h statsutils.cpp
   statisticsmenu.h statisticsmenu.cpp
   tabstatistics.h tabstatistics.cpp
@@ -39,6 +40,9 @@ ADD_LIBRARY (${_pluginTarget} MODULE
   countaxis.h countaxis.cpp
   yearaxis.h yearaxis.cpp
   dailyaverage.h dailyaverage.cpp
+  soldcountchart.h soldcountchart.cpp
+  salesvolumechart.h salesvolumechart.cpp
+  monthbarset.h monthbarset.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

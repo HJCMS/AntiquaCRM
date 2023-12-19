@@ -6,27 +6,14 @@
 
 #include <QBarCategoryAxis>
 #include <QDate>
-#include <QGuiApplication>
 #include <QPainter>
-#include <QScreen>
 
-SalesCategories::SalesCategories(QWidget *parent) : QChartView{parent} {
+SalesCategories::SalesCategories(QWidget *parent)
+    : AntiquaCRM::AChartView{parent} {
   setObjectName("categories_chart");
-  setContentsMargins(0, 0, 0, 0);
-  setRenderHint(QPainter::Antialiasing);
-
-  m_sql = new AntiquaCRM::ASqlCore(this);
-
-  AntiquaCRM::ASettings cfg(this);
   p_year = QDate::currentDate().year();
-  p_currency = cfg.value("payment/currency", "§").toString();
-  cfg.beginGroup("statistics");
-  p_headerFont.fromString(cfg.value("stats_font_header").toString());
-  p_barsFont.fromString(cfg.value("stats_font_chart").toString());
-  cfg.endGroup();
-
   m_chart = new QChart(itemAt(0, 0));
-  m_chart->setTitleFont(p_headerFont);
+  m_chart->setTitleFont(headersFont);
   m_chart->setTitle(windowTitle());
   m_chart->setMargins(contentsMargins());
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
@@ -35,21 +22,14 @@ SalesCategories::SalesCategories(QWidget *parent) : QChartView{parent} {
   m_countSeries->setLabelsFormat("@value.");
 
   m_doubleSeries = new HorizontalBarSeries(this);
-  m_doubleSeries->setLabelsFormat("@value " + p_currency);
+  m_doubleSeries->setLabelsFormat("@value " + currency);
 }
-
-SalesCategories::~SalesCategories() {}
 
 QBarSet *SalesCategories::createBarSet(const QString &title, QChart *parent) {
   QBarSet *m_b = new QBarSet(title, parent);
   m_b->setLabelColor(Qt::black);
-  m_b->setLabelFont(p_barsFont);
+  m_b->setLabelFont(labelsFont);
   return m_b;
-}
-
-double SalesCategories::currencyRound(double value) const {
-  double _precision = 0.01;
-  return std::round(value / _precision) * _precision;
 }
 
 void SalesCategories::onHoverTip(bool status, int index) {
@@ -67,7 +47,7 @@ void SalesCategories::onHoverTip(bool status, int index) {
   QStringList currencyBar({"average_bar", "volume_bar"});
   if (currencyBar.contains(m_bar->objectName())) {
     tip.append(" " + QString::number(value, 'f', 2));
-    tip.append(" " + p_currency);
+    tip.append(" " + currency);
   } else {
     tip.append(" " + QString::number(value));
   }
@@ -79,7 +59,7 @@ void SalesCategories::updateHeight(int rows) {
   setMinimumHeight(qRound(fm.height() * 3.15) * rows);
 }
 
-bool SalesCategories::initChartView(int year) {
+bool SalesCategories::initialChartView(int year) {
   p_year = year;
 
   const QString strYear(QString::number(year));
@@ -91,7 +71,7 @@ bool SalesCategories::initChartView(int year) {
   AntiquaCRM::ASqlFiles _tpl("statistics_payments_storage");
   if (_tpl.openTemplate()) {
     _tpl.setWhereClause(strYear);
-    QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
+    QSqlQuery _q = getSqlQuery(_tpl.getQueryContent());
     int _size = _q.size();
     if (_size > 0) {
       int _i = 0;
@@ -102,7 +82,7 @@ bool SalesCategories::initChartView(int year) {
 
         m_quantity->append(_c);
         double _v = _q.value("volume").toDouble();
-        m_average->append(currencyRound(_v / _c));
+        m_average->append(roundPrice(_v / _c));
         m_volume->append(_v);
         m_axisY->insert(_i++, _q.value("sl_identifier").toString());
       }
