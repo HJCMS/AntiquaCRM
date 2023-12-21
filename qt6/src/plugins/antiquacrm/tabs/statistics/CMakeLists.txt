@@ -43,6 +43,7 @@ ADD_LIBRARY (${_pluginTarget} MODULE
   soldcountchart.h soldcountchart.cpp
   salesvolumechart.h salesvolumechart.cpp
   monthbarset.h monthbarset.cpp
+  statisticsviewarea.h statisticsviewarea.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

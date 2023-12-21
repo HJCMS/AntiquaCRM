@@ -87,6 +87,8 @@ void OrdersStatusBar::setHistoryAction(int index) {
     // Zeige geliefert, nicht Bezahlt ohne Erinnerungen.
     _sql = "(o_order_status=" + _delivered + " AND ";
     _sql.append("o_payment_status IN (");
+    _sql.append(QString::number(OrderPayment::NOTPAID));
+    _sql.append(",");
     _sql.append(QString::number(OrderPayment::REMIND));
     _sql.append(",");
     _sql.append(QString::number(OrderPayment::ADMONISH));

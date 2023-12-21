@@ -67,8 +67,10 @@ int main(int argc, char *argv[]) {
         Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
   }
 #endif
+
   // We use a custom session manager
   QApplication::setAttribute(Qt::AA_DisableSessionManager, true);
+
   // Ensure that color palettes and font propagation are not inherited.
   QApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles,
                              false);

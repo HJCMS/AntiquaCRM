@@ -22,6 +22,7 @@ private:
   QPushButton *m_button;
 
 private Q_SLOTS:
+  void chartSelected(int);
   void updateView();
 
 Q_SIGNALS:

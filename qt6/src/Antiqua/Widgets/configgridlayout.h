@@ -9,11 +9,12 @@
 #ifndef ANTIQUACRM_DIALOGS_CONFIGGRIDLAYOUT_H
 #define ANTIQUACRM_DIALOGS_CONFIGGRIDLAYOUT_H
 
+#include <AGlobal>
 #include <QGridLayout>
 
 namespace AntiquaCRM {
 
-class ConfigGridLayout final : public QGridLayout {
+class ANTIQUACRM_LIBRARY ConfigGridLayout final : public QGridLayout {
   Q_OBJECT
 
 public:

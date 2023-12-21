@@ -7,6 +7,7 @@
 #include "salesfromproviders.h"
 #include "salesinmonth.h"
 #include "statisticsselecter.h"
+#include "statisticsviewarea.h"
 
 StatisticsIndex::StatisticsIndex(QWidget *parent)
     : AntiquaCRM::TabsIndex{"statistics_tab", parent},
@@ -22,10 +23,9 @@ StatisticsIndex::StatisticsIndex(QWidget *parent)
 
   QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);
   m_p1Layout->setContentsMargins(m_mainPage->contentsMargins());
-  m_area = new QScrollArea(m_mainPage);
-  m_area->setContentsMargins(m_mainPage->contentsMargins());
-  m_area->setWidgetResizable(true);
-  m_p1Layout->addWidget(m_area);
+  m_view = new StatisticsViewArea(m_mainPage);
+  m_view->setContentsMargins(m_mainPage->contentsMargins());
+  m_p1Layout->addWidget(m_view);
   m_p1Layout->setStretch(0, 1);
 
   m_selecter = new StatisticsSelecter(m_mainPage);
@@ -42,31 +42,31 @@ StatisticsIndex::StatisticsIndex(QWidget *parent)
 }
 
 void StatisticsIndex::setDefaultTableView() {
-  if (m_area->widget() == nullptr)
+  if (m_view->widget() == nullptr)
     return;
 
-  m_area->widget()->deleteLater();
+  m_view->widget()->deleteLater();
 }
 
 void StatisticsIndex::setChart(qint64 year, const QString &chart) {
   setDefaultTableView(); // cleanup
 
   if (chart == "monthly_sales") {
-    SalesInMonth *m_c = new SalesInMonth(m_area);
-    m_area->setWidget(m_c);
+    SalesInMonth *m_c = new SalesInMonth(m_view);
+    m_view->setWidget(m_c);
     return;
   } else if (chart == "daily_average") {
-    DailyAverage *m_c = new DailyAverage(m_area);
+    DailyAverage *m_c = new DailyAverage(m_view);
     if (m_c->initialChartView(year)) {
-      m_area->setWidget(m_c);
+      m_view->setWidget(m_c);
     } else {
       m_c->deleteLater();
     }
     return;
   } else if (chart == "categories_sales") {
-    SalesCategories *m_c = new SalesCategories(m_area);
+    SalesCategories *m_c = new SalesCategories(m_view);
     if (m_c->initialChartView(year)) {
-      m_area->setWidget(m_c);
+      m_view->setWidget(m_c);
     } else {
       m_c->deleteLater();
     }
@@ -74,7 +74,7 @@ void StatisticsIndex::setChart(qint64 year, const QString &chart) {
   } else if (chart == "provider_sales") {
     SalesFromProviders *m_c = new SalesFromProviders(this);
     if (m_c->initView(year)) {
-      m_area->setWidget(m_c);
+      m_view->setWidget(m_c);
     } else {
       m_c->deleteLater();
     }

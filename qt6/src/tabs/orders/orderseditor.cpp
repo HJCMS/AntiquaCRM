@@ -721,9 +721,7 @@ void OrdersEditor::setCheckLeaveEditor() {
 }
 
 void OrdersEditor::setFinalLeaveEditor(bool force) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "FORCE" << force;
-#endif
+  // qDebug() << Q_FUNC_INFO << "FORCE" << force;
   if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 

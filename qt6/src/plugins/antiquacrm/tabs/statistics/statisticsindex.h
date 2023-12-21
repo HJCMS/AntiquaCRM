@@ -11,9 +11,9 @@
 
 #include <AntiquaTabs>
 #include <QObject>
-#include <QScrollArea>
 #include <QWidget>
 
+class StatisticsViewArea;
 class StatisticsSelecter;
 
 class ANTIQUACRM_LIBRARY StatisticsIndex final : public AntiquaCRM::TabsIndex {
@@ -22,7 +22,7 @@ class ANTIQUACRM_LIBRARY StatisticsIndex final : public AntiquaCRM::TabsIndex {
 private:
   const QDate p_date;
   AntiquaCRM::ASqlCore *m_sql = nullptr;
-  QScrollArea *m_area;
+  StatisticsViewArea *m_view;
   StatisticsSelecter *m_selecter;
 
   /**

@@ -11,6 +11,9 @@
 
 #include <AntiquaCRM>
 #include <QApplication>
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include <QDBusConnection>
+#endif
 #include <QIcon>
 #include <QObject>
 
@@ -25,6 +28,10 @@ private:
   AntiquaCRM::ASqlCore *m_sql = nullptr; /**< @brief PostgreSQL Database */
   MainWindow *m_window = nullptr;        /**< @brief UI Window */
   SystemTrayIcon *m_systray = nullptr;   /**< @brief UI SystemTray */
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  QDBusConnection *m_dbus = nullptr; /**< @brief D-Bus Connection */
+  bool registerSessionBus();
+#endif
 
   /**
    * @brief Network Interfaces and connection check.
@@ -42,12 +49,7 @@ private:
   bool openDatabase();
 
   /**
-   * @brief Initial Icon Theme
-   */
-  void initIconTheme();
-
-  /**
-   * @brief Initial Stylesheet
+   * @brief Initial Stylesheet and Icon Theme
    * Loading Default Window Stylesheet theme and make some changes.
    */
   void initStyleTheme();
@@ -60,7 +62,7 @@ private:
   /**
    * @brief Load and initial components.
    */
-  void initInterface();
+  void initGUI();
 
 Q_SIGNALS:
   /**
@@ -72,7 +74,7 @@ public Q_SLOTS:
   /**
    * @brief Request to shutdown the application
    */
-  void applicationQuit();
+  Q_INVOKABLE void applicationQuit();
 
 public:
   explicit Application(int &argc, char **argv);

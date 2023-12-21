@@ -200,6 +200,7 @@ bool MainWindow::openWindow() {
 
   showNormal();
   m_statusBar->showMessage(tr("Window opened"), 5000);
+
   return true;
 }
 

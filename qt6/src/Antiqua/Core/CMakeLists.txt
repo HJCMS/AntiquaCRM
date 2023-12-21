@@ -92,12 +92,23 @@ SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
   LINKER_LANGUAGE CXX
 )
 
-TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
-  Qt6::Core
-  Qt6::Network
-  Qt6::Sql
-  Qt6::Xml
-)
+IF(Qt6DBus_FOUND)
+  ADD_DEFINITIONS (-DANTIQUACRM_DBUS_ENABLED)
+  TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
+    Qt6::Core
+    Qt6::Network
+    Qt6::Sql
+    Qt6::Xml
+    Qt6::DBus
+  )
+ELSE()
+  TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
+    Qt6::Core
+    Qt6::Network
+    Qt6::Sql
+    Qt6::Xml
+  )
+ENDIF()
 
 INSTALL (TARGETS ${_sharedLibrary}
   LIBRARY DESTINATION lib${LIB_SUFFIX}/

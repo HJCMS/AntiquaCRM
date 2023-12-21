@@ -184,7 +184,7 @@ bool CustomersEditor::sendSqlQuery(const QString &query) {
     }
   }
 
-  openSuccessMessage(tr("Bookdata saved successfully!"));
+  openSuccessMessage(tr("Customer saved successfully!"));
   setResetModified(inputFields);
   return true;
 }
@@ -263,7 +263,6 @@ void CustomersEditor::createSqlUpdate() {
   _sql.append(_list.join(","));
   _sql.append(",c_changed=CURRENT_TIMESTAMP WHERE c_id=" + str_cid + ";");
   if (sendSqlQuery(_sql)) {
-    qInfo("SQL UPDATE Inventory Customers success!");
     setWindowModified(false);
   }
 }

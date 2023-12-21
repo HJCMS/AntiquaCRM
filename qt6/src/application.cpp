@@ -4,6 +4,10 @@
 #include "application.h"
 #include "mainwindow.h"
 #include "systemtrayicon.h"
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#include "antiquabusadaptor.h"
+#include <QDBusMessage>
+#endif
 
 #include <AntiquaWidgets>
 #include <QScreen>
@@ -19,6 +23,19 @@ Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
   // WARNING - Do not init Database Connections in constructors!
   m_cfg = new AntiquaCRM::ASettings(this);
 }
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+bool Application::registerSessionBus() {
+  m_dbus = new QDBusConnection(QDBusConnection::sessionBus());
+  if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
+    m_dbus->registerObject(QString("/"), this);
+    m_dbus->registerObject(QString("/Window"), m_window);
+    m_dbus->registerObject(QString("/Systray"), m_systray);
+    return true;
+  }
+  return false;
+}
+#endif
 
 bool Application::checkInterfaces() {
   AntiquaCRM::ANetworkIface iface;
@@ -54,12 +71,6 @@ bool Application::openDatabase() {
   return false;
 }
 
-void Application::initIconTheme() {
-  const QString _fallback("oxygen");
-  QIcon::setFallbackThemeName(_fallback);
-  QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
-}
-
 void Application::initStyleTheme() {
   Q_INIT_RESOURCE(application);
 
@@ -68,6 +79,10 @@ void Application::initStyleTheme() {
 
   // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
+
+  const QString _fallback("hicolor");
+  QIcon::setFallbackThemeName(_fallback);
+  QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
 
   QPalette _palette = palette();
   // @fixme KDE theme
@@ -118,7 +133,7 @@ bool Application::initTranslations() {
   return false;
 }
 
-void Application::initInterface() {
+void Application::initGUI() {
   // Window
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
@@ -130,6 +145,21 @@ void Application::initInterface() {
   connect(m_systray, SIGNAL(sendToggleView()), m_window,
           SLOT(setToggleWindow()));
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage testing
+  if (registerSessionBus()) {
+    AntiquaBusAdaptor *m_adaptor = new AntiquaBusAdaptor(this);
+    m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
+    connect(m_adaptor, SIGNAL(sendMessage(const QString &)), m_systray,
+            SLOT(setMessage(const QString &)));
+    connect(m_adaptor, SIGNAL(sendToggleView()), m_window,
+            SLOT(setToggleWindow()));
+    connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
+  } else {
+    qWarning("No Dbus registration!");
+  }
+#endif
 }
 
 void Application::applicationQuit() {
@@ -141,6 +171,11 @@ void Application::applicationQuit() {
   }
   m_systray->setVisible(false);
   m_sql->close();
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
+  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
+#endif
 
   // Force destructers
   if (m_window != nullptr)
@@ -164,7 +199,16 @@ bool Application::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(AntiquaCRM::AUtil::socketName());
   if (socket.open(QLocalSocket::ReadWrite)) {
-    qInfo("Application already started.");
+#ifdef ANTIQUACRM_DBUS_ENABLED
+    QDBusConnection bus = QDBusConnection::connectToBus(
+        QDBusConnection::SessionBus, ANTIQUACRM_CONNECTION_DOMAIN);
+    if (bus.isConnected()) {
+      bus.call(QDBusMessage::createMethodCall(
+                   ANTIQUACRM_CONNECTION_DOMAIN, // Service
+                   "/", bus.name(), "toggle"),
+               QDBus::NoBlock);
+    }
+#endif
     socket.close();
     return true;
   }
@@ -176,7 +220,6 @@ int Application::exec() {
 
   mutex.lock();
   initStyleTheme();
-  initIconTheme();
   mutex.unlock();
 
   mutex.lock();
@@ -196,7 +239,7 @@ int Application::exec() {
   mutex.unlock();
 
   mutex.lock();
-  initInterface();
+  initGUI();
   if (m_window == nullptr) {
     qFatal("failed to initital window");
     return 2;

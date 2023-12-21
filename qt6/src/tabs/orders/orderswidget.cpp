@@ -98,7 +98,7 @@ void OrdersWidget::openStartPage() {
 
 void OrdersWidget::createSearchQuery(const QString &history) {
   if (!history.isEmpty()) {
-    qDebug() << "QUERY:" << history;
+    // qDebug() << "QUERY:" << history;
     m_table->setQuery(history);
     return;
   }
