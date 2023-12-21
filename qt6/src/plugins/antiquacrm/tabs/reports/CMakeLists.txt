@@ -25,6 +25,8 @@ ADD_LIBRARY (${_pluginTarget} MODULE
   reportstoolbar.h reportstoolbar.cpp
   reportsindex.h reportsindex.cpp
   tabreports.h tabreports.cpp
+  reportstableview.h reportstableview.cpp
+  reportstablemodel.h reportstablemodel.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
@@ -38,9 +40,11 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
  Qt6::Sql
  Qt6::Network
  Qt6::Xml
+ Qt6::PrintSupport
  AntiquaCRM
  AntiquaTabs
  AntiquaWidgets
+ AntiquaPrinting
 )
 
 ##EOF

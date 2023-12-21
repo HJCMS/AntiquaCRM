@@ -21,7 +21,7 @@ class ANTIQUACRM_LIBRARY ReportAction final : public QAction {
   Q_OBJECT
 
 private:
-  const QDate p_date;
+  QDate p_date;
 
 private Q_SLOTS:
   void clicked();
@@ -41,12 +41,13 @@ private:
   const QIcon p_icon;
   QPushButton *m_save;
   QPushButton *m_print;
-  QPushButton *m_create;
   QPushButton *m_months;
   QMenu *m_menu;
 
 Q_SIGNALS:
   void signalSelected(const QDate &);
+  void sendPrintReport();
+  void sendSaveReport();
 
 public:
   explicit ReportsToolBar(QWidget *parent = nullptr);

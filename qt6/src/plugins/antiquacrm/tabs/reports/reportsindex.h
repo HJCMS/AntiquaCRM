@@ -10,21 +10,29 @@
 #define ANTIQUACRM_REPORTS_INDEX_H
 
 #include <AntiquaTabs>
+#include <QDate>
 #include <QObject>
 #include <QWidget>
 
+class ReportsTableView;
 class ReportsToolBar;
 
 class ANTIQUACRM_LIBRARY ReportsIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
+  QDate p_date;
   AntiquaCRM::ASqlCore *m_sql = nullptr;
+  ReportsTableView *m_table;
   ReportsToolBar *m_toolBar;
   void setDefaultTableView() override;
+  const QString printHeader();
+  const QFileInfo getSaveFile();
 
 private Q_SLOTS:
-  void selectMonth(const QDate &);
+  void createReport(const QDate &date);
+  void printReport();
+  void saveReport();
 
 public:
   explicit ReportsIndex(QWidget *parent = nullptr);

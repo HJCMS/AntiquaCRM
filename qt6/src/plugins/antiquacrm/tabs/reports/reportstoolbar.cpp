@@ -4,10 +4,16 @@
 #include "reportstoolbar.h"
 
 #include <AntiquaWidgets>
+#include <QCalendar>
 
 ReportAction::ReportAction(const QIcon &icon, const QDate &date,
                            QObject *parent)
-    : QAction{icon, date.toString("MMMM"), parent}, p_date{date} {
+    : QAction{icon, date.toString("MMMM"), parent} {
+
+  QCalendar cal(QCalendar::System::Gregorian);
+  p_date = QDate(date.year(), date.month(),
+                 cal.daysInMonth(date.month(), date.year()));
+
   connect(this, SIGNAL(triggered()), SLOT(clicked()));
 }
 
@@ -21,22 +27,18 @@ ReportsToolBar::ReportsToolBar(QWidget *parent)
   m_save = new QPushButton(tr("Save"), this);
   m_save->setLayoutDirection(Qt::LeftToRight);
   m_save->setIcon(AntiquaCRM::antiquaIcon("document-save"));
+  connect(m_save, SIGNAL(clicked()), SIGNAL(sendSaveReport()));
   addWidget(m_save);
   addSeparator();
 
   m_print = new QPushButton(tr("Print"), this);
   m_print->setLayoutDirection(Qt::LeftToRight);
   m_print->setIcon(AntiquaCRM::antiquaIcon("document-print"));
+  connect(m_print, SIGNAL(clicked()), SIGNAL(sendPrintReport()));
   addWidget(m_print);
   addSeparator();
 
-  m_create = new QPushButton(tr("Create"), this);
-  m_create->setLayoutDirection(Qt::LeftToRight);
-  m_create->setIcon(AntiquaCRM::antiquaIcon("document-new"));
-  addWidget(m_create);
-  addSeparator();
-
-  m_months = new QPushButton(tr("Select month"), this);
+  m_months = new QPushButton(tr("Select report"), this);
   m_months->setLayoutDirection(Qt::LeftToRight);
   m_months->setIcon(p_icon);
   m_menu = new QMenu(m_months);
