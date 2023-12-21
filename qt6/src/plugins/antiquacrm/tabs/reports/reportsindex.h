@@ -13,13 +13,18 @@
 #include <QObject>
 #include <QWidget>
 
+class ReportsToolBar;
+
 class ANTIQUACRM_LIBRARY ReportsIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  const QDate p_date;
   AntiquaCRM::ASqlCore *m_sql = nullptr;
+  ReportsToolBar *m_toolBar;
   void setDefaultTableView() override;
+
+private Q_SLOTS:
+  void selectMonth(const QDate &);
 
 public:
   explicit ReportsIndex(QWidget *parent = nullptr);

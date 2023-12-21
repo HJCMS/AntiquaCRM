@@ -49,6 +49,7 @@ SET (query_tables_FILES
   query_views.sql
   select_statement_postalcode_tables.sql
   select_statement_template_body.sql
+  statistics_from_until_delivery_year.sql
   statistics_monthly_categories.sql
   statistics_payments_storage.sql
   statistics_payments_month.sql

@@ -48,26 +48,26 @@ MonthBarSet *SalesInMonth::createBarset(int year, int type) {
 }
 
 bool SalesInMonth::initMaps() {
-  QString _sql("SELECT DISTINCT");
-  _sql.append(" date_part('year', o_delivered)::NUMERIC AS year");
-  _sql.append(" FROM inventory_orders WHERE (o_delivered IS NOT NULL)");
-  _sql.append(" GROUP BY year ORDER BY year");
+  const QString _sql = AntiquaCRM::ASqlFiles::queryStatement(
+      "statistics_from_until_delivery_year");
   QSqlQuery _q = getSqlQuery(_sql);
   if (_q.size() < 1) {
     qWarning("Sales in Month chart, without ranges!");
     return false;
   }
   // Create existing years maps
-  while (_q.next()) {
-    int _year = _q.value("year").toInt();
+  _q.next();
+  const QDate _from = _q.value("min").toDate();
+  const QDate _until = _q.value("max").toDate();
+  for (int _y = _from.year(); _y <= _until.year(); _y++) {
     QMap<int, qint64> _vol;
     QMap<int, double> _sel;
-    for (int i = 1; i < 12; i++) {
-      _vol.insert(i, 0);
-      _sel.insert(i, 0.00);
+    for (int m = 1; m < 12; m++) {
+      _vol.insert(m, 0);
+      _sel.insert(m, 0.00);
     }
-    p_voluMap.insert(_year, _vol);
-    p_soldMap.insert(_year, _sel);
+    p_voluMap.insert(_y, _vol);
+    p_soldMap.insert(_y, _sel);
   }
   _q.clear();
   return true;

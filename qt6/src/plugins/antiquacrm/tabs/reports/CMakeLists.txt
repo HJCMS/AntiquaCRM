@@ -22,6 +22,7 @@ ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 ADD_LIBRARY (${_pluginTarget} MODULE
   ${plugin_FILES}
   reportsconfigwidget.h reportsconfigwidget.cpp
+  reportstoolbar.h reportstoolbar.cpp
   reportsindex.h reportsindex.cpp
   tabreports.h tabreports.cpp
 )
