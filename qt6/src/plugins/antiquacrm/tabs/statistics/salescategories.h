@@ -10,7 +10,7 @@
 #define ANTIQUACRM_STATISTICS_SALESCATEGORIES_H
 
 #include <AntiquaCRM>
-#include <AntiquaStatistics>
+#include <AChartView>
 #include <QBarSet>
 #include <QChart>
 #include <QChartView>

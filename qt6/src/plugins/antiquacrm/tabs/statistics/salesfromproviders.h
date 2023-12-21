@@ -10,7 +10,7 @@
 #define ANTIQUACRM_STATISTICS_SALESFROMPROVIDERS_H
 
 #include <AntiquaCRM>
-#include <AntiquaStatistics>
+#include <AChartView>
 #include <QChart>
 #include <QFont>
 #include <QObject>

@@ -10,7 +10,7 @@
 #define ANTIQUACRM_STATISTICS_SALESVOLUMECHART_H
 
 #include <AntiquaCRM>
-#include <AntiquaStatistics>
+#include <AChartView>
 #include <QObject>
 #include <QWidget>
 

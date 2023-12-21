@@ -6,6 +6,6 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_STATISTICS_H
-#include "antiquastatistics.h"
+#ifndef ANTIQUACRM_STATISTICS_ACHARTVIEW_H
+#include "achartview.h"
 #endif

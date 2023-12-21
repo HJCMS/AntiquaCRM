@@ -10,7 +10,7 @@
 #define ANTIQUACRM_STATISTICS_DAILYAVERAGE_H
 
 #include <AntiquaCRM>
-#include <AntiquaStatistics>
+#include <AChartView>
 #include <QFont>
 #include <QObject>
 #include <QWidget>

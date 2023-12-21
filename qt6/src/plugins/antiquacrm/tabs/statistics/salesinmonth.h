@@ -10,7 +10,7 @@
 #define ANTIQUACRM_STATISTICS_SALESINMONTH_H
 
 #include <AntiquaCRM>
-#include <AntiquaStatistics>
+#include <AChartView>
 #include <QBarCategoryAxis>
 #include <QBarSet>
 #include <QMap>

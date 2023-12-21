@@ -17,17 +17,13 @@ SET (plugin_FILES
   reports.json
 )
 
-CONFIGURE_FILE (antiquareports.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquareports.h
-)
-
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_pluginTarget} MODULE
   ${plugin_FILES}
-  antiquareports.h.cmake
-  antiquareports.h
-  reportsmenu.h reportsmenu.cpp
+  reportsconfigwidget.h reportsconfigwidget.cpp
+  reportsindex.h reportsindex.cpp
+  tabreports.h tabreports.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

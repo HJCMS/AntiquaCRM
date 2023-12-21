@@ -10,9 +10,9 @@
 #define ANTIQUACRM_STATISTICS_SOLDCOUNTCHART_H
 
 #include <AntiquaCRM>
-#include <AntiquaStatistics>
 #include <QObject>
 #include <QWidget>
+#include <AChartView>
 
 class ANTIQUACRM_LIBRARY SoldCountChart final : public AntiquaCRM::AChartView {
   Q_OBJECT

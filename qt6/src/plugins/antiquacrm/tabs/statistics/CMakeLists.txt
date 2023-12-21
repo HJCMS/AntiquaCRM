@@ -17,18 +17,12 @@ SET (plugin_FILES
   statistics.json
 )
 
-CONFIGURE_FILE (antiquastatistics.h.cmake
-  ${CMAKE_CURRENT_SOURCE_DIR}/antiquastatistics.h
-)
-
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_pluginTarget} MODULE
-  ${plugin_FILES} AntiquaStatistics
-  antiquastatistics.h.cmake antiquastatistics.h
+  ${plugin_FILES} AChartView
   achartview.h achartview.cpp
   statsutils.h statsutils.cpp
-  statisticsmenu.h statisticsmenu.cpp
   tabstatistics.h tabstatistics.cpp
   statisticsindex.h statisticsindex.cpp
   statisticsconfigwidget.h statisticsconfigwidget.cpp

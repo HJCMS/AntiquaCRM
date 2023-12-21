@@ -138,7 +138,7 @@ AntiquaCRM::ConfigType StatisticsConfigWidget::getType() const {
 
 const QJsonObject StatisticsConfigWidget::getMenuEntry() const {
   QJsonObject _o;
-  _o.insert("icon", "office-chart-area");
+  _o.insert("icon", "view-list-details");
   _o.insert("title", tr("Statistics"));
   _o.insert("tooltip", tr("Additional Statistics settings."));
   return _o;
