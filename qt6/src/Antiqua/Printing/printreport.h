@@ -16,6 +16,19 @@
 
 namespace AntiquaCRM {
 
+class ANTIQUACRM_LIBRARY PrintReportPage final : public QWidget,
+                                                 public APrintTools {
+  Q_OBJECT
+
+private:
+  QPageLayout pageLayout;
+  APrintingBody *m_body;
+
+public:
+  explicit PrintReportPage(QWidget *parent, QPageSize::PageSizeId id);
+  bool setContentData(QJsonObject &data);
+};
+
 /**
  * @class PrintReport
  * @brief Printing monthly report
@@ -26,7 +39,7 @@ class ANTIQUACRM_LIBRARY PrintReport final : public AntiquaCRM::APrintDialog {
   Q_OBJECT
 
 private:
-  APrintingBody *page;
+  PrintReportPage *m_page;
 
 private Q_SLOTS:
   void renderPage(QPrinter *printer) override;

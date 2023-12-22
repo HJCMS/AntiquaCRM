@@ -157,7 +157,8 @@ const QJsonObject ReportsTableView::printingData() {
     if (calc_section == c || refunds_section == c)
       continue;
 
-    _header.insert(_map[c], m_model->headerData(c, Qt::Horizontal).toString());
+    _header.insert(QString::number(c),
+                   m_model->headerData(c, Qt::Horizontal).toString());
   }
   _obj.insert("header", _header);
   // Sold
@@ -168,13 +169,14 @@ const QJsonObject ReportsTableView::printingData() {
       if (calc_section == c || refunds_section == c)
         continue;
 
+      const QString _param = QString::number(c);
       const QModelIndex _index = m_model->index(r, c);
       QVariant _value = m_model->data(_index, Qt::EditRole);
       if (_map[c].startsWith("date")) {
         const QString _str = _value.toDate().toString("dd.MM.yyyy");
-        _jso.insert(_map[c], QJsonValue(_str));
+        _jso.insert(_param, QJsonValue(_str));
       } else {
-        _jso.insert(_map[c], _value.toJsonValue());
+        _jso.insert(_param, _value.toJsonValue());
       }
     }
     _arr.append(_jso);

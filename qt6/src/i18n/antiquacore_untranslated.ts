@@ -12,7 +12,17 @@
 <context>
     <name>AntiquaCRM::ADialog</name>
     <message>
-        <location filename="../Antiqua/Widgets/adialog.cpp" line="+56"/>
+        <location filename="../Antiqua/Widgets/adialog.cpp" line="+24"/>
+        <source>Close without saving</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Apply current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
         <source>You have unsafed changes!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -52,6 +62,42 @@
     <message>
         <location line="+43"/>
         <source>Max allowed length</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::ANavigationBar</name>
+    <message>
+        <location filename="../Antiqua/Widgets/anavigationbar.cpp" line="+14"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::APopUpMessage</name>
+    <message>
+        <location filename="../Antiqua/Widgets/apopupmessage.cpp" line="+20"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>You have unsaved changes!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -124,7 +170,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+100"/>
+        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+103"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -360,12 +406,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
-        <source>__TODO__</source>
+        <location line="+46"/>
+        <source>A valid Gender is not selected and required for this Input.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Gender not selected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -875,7 +921,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+106"/>
         <source>No Template data loaded!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1100,6 +1146,44 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::PrintRefund</name>
+    <message>
+        <location filename="../Antiqua/Printing/printrefund.cpp" line="+247"/>
+        <source>Invoice PDF created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Invoice printed!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invoice No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Order No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Costumer No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivery No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::PrintReminder</name>
     <message>
         <location filename="../Antiqua/Printing/printreminder.cpp" line="+285"/>
@@ -1134,6 +1218,22 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <message>
         <location line="+5"/>
         <source>Delivery No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::PrintReport</name>
+    <message>
+        <location filename="../Antiqua/Printing/printreport.cpp" line="+108"/>
+        <source>PDF Document created!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::PrintReportPage</name>
+    <message>
+        <location line="-44"/>
+        <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1185,6 +1285,16 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <source>Printing a Book card</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+5"/>
+        <source>Refunding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Printing a refund invoice</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AntiquaCRM::ProviderActionDialog</name>
@@ -1224,6 +1334,59 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <message>
         <location line="+8"/>
         <source>Forward</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::RefundPage</name>
+    <message>
+        <location filename="../Antiqua/Printing/printrefund.cpp" line="-296"/>
+        <source>Refund</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>on</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+50"/>
+        <source>refund cost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+49"/>
+        <source>Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Price</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>subtotal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>total refund cost</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>total</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1586,8 +1749,13 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectOrderPayment</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectorderpayment.cpp" line="+33"/>
+        <location filename="../Antiqua/Widgets/selectorderpayment.cpp" line="+38"/>
         <source>Open</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Waiting for payment.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1596,27 +1764,52 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Remind</source>
+        <location line="+1"/>
+        <source>Order is already paid.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Admonish</source>
+        <source>Reminded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The recipient was reminded.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Returned</source>
+        <source>Admonished</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>Collproc</source>
+        <location line="+1"/>
+        <source>The recipient has been admonished.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+5"/>
+        <source>Refunding</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Creates a refunding for this order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Collection process</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>This order containing a collection transaction.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+66"/>
         <source>a valid Order status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1624,7 +1817,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectOrderStatus</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectorderstatus.cpp" line="+33"/>
+        <location filename="../Antiqua/Widgets/selectorderstatus.cpp" line="+38"/>
         <source>Open</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1659,7 +1852,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+65"/>
         <source>a valid Order status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1954,32 +2147,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+247"/>
-        <source>Error</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Success</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+11"/>
-        <source>Notice</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+34"/>
-        <source>Warning</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Unsaved Changes</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+296"/>
         <source>Do not leave this page until you have saved your changes!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2009,11 +2177,26 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+10"/>
+        <source>Can&apos;t open %1 tab.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Because %1 tab is in edit mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>You have first to check, complete the %1 edit mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AntiquaCRM::TabsMenu</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsmenu.cpp" line="+10"/>
+        <location filename="../Antiqua/Tabs/tabsmenu.cpp" line="+9"/>
         <source>Tabs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2021,7 +2204,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TabsSearchBar</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabssearchbar.cpp" line="+33"/>
+        <location filename="../Antiqua/Tabs/tabssearchbar.cpp" line="+44"/>
         <source>Push to start search.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2037,11 +2220,31 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+2"/>
-        <source>Only search with %1</source>
+        <source>Display with %1 only.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
+        <source>Image Filter</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Only with image</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Without images</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Search only entries with Images.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
         <source>Custom queries</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2104,7 +2307,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TabsStatusBar</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+26"/>
+        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+27"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2226,7 +2429,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TextLine</name>
     <message>
-        <location filename="../Antiqua/Widgets/textline.cpp" line="+106"/>
+        <location filename="../Antiqua/Widgets/textline.cpp" line="+107"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>

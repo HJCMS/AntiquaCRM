@@ -91,7 +91,7 @@ void ReportsIndex::printReport() {
   obj.insert("file", getBasename());
 
   AntiquaCRM::PrintReport *m_p = new AntiquaCRM::PrintReport(this);
-  if (m_p->exec(obj) == QDialog::Accepted) {
+  if (m_p->exec(obj, true) == QDialog::Accepted) {
     qInfo("Report printed");
   }
   m_p->deleteLater();

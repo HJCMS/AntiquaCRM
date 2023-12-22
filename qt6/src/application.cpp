@@ -27,10 +27,17 @@ Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
 #ifdef ANTIQUACRM_DBUS_ENABLED
 bool Application::registerSessionBus() {
   m_dbus = new QDBusConnection(QDBusConnection::sessionBus());
-  if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
-    m_dbus->registerObject(QString("/"), this);
-    m_dbus->registerObject(QString("/Window"), m_window);
-    m_dbus->registerObject(QString("/Systray"), m_systray);
+  if (m_dbus->isConnected()) {
+    if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
+      m_dbus->registerObject(QString("/"), this);
+      m_dbus->registerObject(QString("/Window"), m_window);
+      m_dbus->registerObject(QString("/Systray"), m_systray);
+    }
+#ifdef ANTIQUA_DEVELOPEMENT
+    else {
+      qDebug() << Q_FUNC_INFO << m_dbus->lastError().message();
+    }
+#endif
     return true;
   }
   return false;
@@ -147,8 +154,8 @@ void Application::initGUI() {
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
-  // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage testing
   if (registerSessionBus()) {
+    // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage testing
     AntiquaBusAdaptor *m_adaptor = new AntiquaBusAdaptor(this);
     m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
     connect(m_adaptor, SIGNAL(sendMessage(const QString &)), m_systray,
@@ -156,8 +163,6 @@ void Application::initGUI() {
     connect(m_adaptor, SIGNAL(sendToggleView()), m_window,
             SLOT(setToggleWindow()));
     connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
-  } else {
-    qWarning("No Dbus registration!");
   }
 #endif
 }
