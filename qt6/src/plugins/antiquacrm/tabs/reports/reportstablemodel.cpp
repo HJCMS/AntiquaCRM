@@ -8,6 +8,23 @@ ReportsTableModel::ReportsTableModel(QObject *parent)
   setObjectName("preview_table_model");
 }
 
+const QMap<int, QString> ReportsTableModel::headerIndex() const {
+  QMap<int, QString> m;
+  int i = 0;
+  m.insert(i++, "date");
+  m.insert(i++, "invoice");
+  m.insert(i++, "article");
+  m.insert(i++, "price");
+  m.insert(i++, "inclusive");
+  m.insert(i++, "vat");
+  m.insert(i++, "tax");
+  m.insert(i++, "porto");
+  m.insert(i++, "total");
+  m.insert(i++, "calc");
+  m.insert(i++, "refundscost");
+  return m;
+}
+
 const QMap<int, QString> ReportsTableModel::headerList() const {
   QMap<int, QString> m;
   int i = 0;

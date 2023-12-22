@@ -2,12 +2,15 @@
 // vim: set fileencoding=utf-8
 
 #include "reportsindex.h"
+#include "printreport.h"
 #include "reportstableview.h"
 #include "reportstoolbar.h"
 
 #include <AntiquaPrinting>
 #include <QDir>
 #include <QFile>
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QLabel>
 #include <QLocale>
 #include <QVBoxLayout>
@@ -41,29 +44,28 @@ ReportsIndex::ReportsIndex(QWidget *parent)
 
 void ReportsIndex::setDefaultTableView() {}
 
+const QString ReportsIndex::getBasename() {
+  QString _name(p_date.toString("yyyy-MM"));
+  _name.append("_" + tr("report") + "_");
+  QDateTime _ts = QDateTime::currentDateTime();
+  _name.append(_ts.toString("ddMMyyhh"));
+  _name.append("_utf8");
+  return _name;
+}
+
 const QString ReportsIndex::printHeader() {
   AntiquaCRM::ASettings cfg(this);
-  QString total = m_table->salesVolume();
   QString info = cfg.value("company_fullname", "").toString();
   info.append("\n");
   info.append(tr("Report for "));
-  info.append(p_date.toString("MMM MM.yyyy") + " - ");
-  info.append(tr("total sales") + " " + total);
-  info.append(cfg.value("payment/currency", "$").toString());
+  info.append(p_date.toString("MMM MM.yyyy") + ".");
   return info;
 }
 
 const QFileInfo ReportsIndex::getSaveFile() {
   AntiquaCRM::ASettings cfg(this);
-  QDir p_dir(cfg.value("dirs/reports", QDir::homePath()).toString());
-  QString filename;
-  filename.append(p_date.toString("yyyy-MM"));
-  filename.append("_" + tr("report") + "_");
-  QDateTime timeStamp = QDateTime::currentDateTime();
-  filename.append(timeStamp.toString("ddMMyyhh"));
-  filename.append("_utf8");
-  QFileInfo info(QDir(p_dir), filename);
-  return info;
+  QDir p_dir(cfg.getArchivPath(ANTIQUACRM_ARCHIVE_REPORTS));
+  return QFileInfo(p_dir, getBasename());
 }
 
 void ReportsIndex::createReport(const QDate &date) {
@@ -74,23 +76,25 @@ void ReportsIndex::createReport(const QDate &date) {
   QString _sql("o_delivered BETWEEN '");
   _sql.append(date.toString("01.MM.yyyy") + "T00:00:00");
   _sql.append("' AND '");
-  _sql.append(date.toString("dd.MM.yyyy") + "T23:59:00");
+  _sql.append(date.toString("dd.MM.yyyy") + "T23:59:59");
   _sql.append("'");
   _tpl.setWhereClause(_sql);
 
   p_date = date;
   m_table->setQuery(_tpl.getQueryContent());
+  m_toolBar->updateInfoLabel(date, m_table->salesVolume());
 }
 
 void ReportsIndex::printReport() {
-  QStringList list = m_table->dataRows();
-  QString info = printHeader();
-  if (list.size() > 0 && !info.isEmpty()) {
-    // Reports *m_print = new Reports(this);
-    // m_print->setHeaderInfo(info, m_table->dataHeader());
-    // m_print->exec(list);
-    qDebug() << Q_FUNC_INFO << "TODO" << info;
+  QJsonObject obj = m_table->printingData();
+  obj.insert("info", printHeader());
+  obj.insert("file", getBasename());
+
+  AntiquaCRM::PrintReport *m_p = new AntiquaCRM::PrintReport(this);
+  if (m_p->exec(obj) == QDialog::Accepted) {
+    qInfo("Report printed");
   }
+  m_p->deleteLater();
 }
 
 void ReportsIndex::saveReport() {
@@ -99,8 +103,9 @@ void ReportsIndex::saveReport() {
     qWarning("Save target not exists or no file name!");
     return;
   }
+
   QString header = m_table->dataHeader();
-  QStringList rows = m_table->dataRows();
+  QStringList rows = m_table->csvExport();
   if (rows.count() > 0) {
     QString filePath = dest.filePath().append(".csv");
     QFile fp(filePath);
@@ -111,7 +116,7 @@ void ReportsIndex::saveReport() {
       out << rows.join(QChar::LineFeed) + QChar::LineFeed;
       fp.close();
 #ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << "Export:" << dest.filePath();
+      qDebug() << "Save:" << dest.filePath();
 #endif
       emit sendStatusMessage(tr("Report saved: %1").arg(dest.fileName()));
     }
@@ -126,6 +131,8 @@ void ReportsIndex::onEnterChanged() {
     m_sql = new AntiquaCRM::ASqlCore(this);
 
   initialed = m_toolBar->initSelection(m_sql);
+  if (initialed) // current month
+    createReport(m_toolBar->lastDayInMonth(QDate::currentDate()));
 }
 
 const QString ReportsIndex::getTitle() const { return tr("Reports"); }

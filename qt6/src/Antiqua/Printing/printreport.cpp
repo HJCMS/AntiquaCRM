@@ -1,40 +1,21 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "printbookcard.h"
-#include "bookcardpage.h"
+#include "printreport.h"
 
+#include <QJsonArray>
+#include <QJsonDocument>
 #include <QPrintDialog>
 
 namespace AntiquaCRM {
 
-PrintBookCard::PrintBookCard(QWidget *parent)
-    : AntiquaCRM::APrintDialog{parent} {
-  setObjectName("print_bookcard_dialog");
-  setMinimumSize(300, 500);
-  pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(QPageSize::A6));
-  pageLayout.setMinimumMargins(QMargins(0, 0, 0, 0));
-  pageLayout.setMargins(QMargins(0, 0, 0, 0));
-  pageLayout.setUnits(QPageLayout::Millimeter);
-  pageLayout.setMode(QPageLayout::FullPageMode);
+PrintReport::PrintReport(QWidget *parent) : AntiquaCRM::APrintDialog{parent} {
+  setObjectName("print_report_dialog");
+  page = new APrintingBody(this);
+  viewPort->setWidget(page);
 }
 
-bool PrintBookCard::notValid(const QJsonValue &value) const {
-  switch (value.type()) {
-  case (QJsonValue::Double):
-    return (value.toInteger(0) == 0);
-
-  case (QJsonValue::String):
-    return (value.toString().length() < 1);
-
-  default: // null or unknown = not valid
-    return true;
-  }
-  return true;
-}
-
-void PrintBookCard::renderPage(QPrinter *printer) {
+void PrintReport::renderPage(QPrinter *printer) {
   Q_CHECK_PTR(page);
   QPainter _painter(printer);
   _painter.setWindow(page->rect());
@@ -43,8 +24,8 @@ void PrintBookCard::renderPage(QPrinter *printer) {
   _painter.end();
 }
 
-void PrintBookCard::createPDF() {
-  const QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_CARDS);
+void PrintReport::createPDF() {
+  const QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_REPORTS);
   if (!_dir.exists()) {
     qWarning("Bookcard destination not exists or writeable!");
     return;
@@ -61,7 +42,7 @@ void PrintBookCard::createPDF() {
     sendStatusMessage(tr("PDF Document created!"));
 }
 
-void PrintBookCard::openPrintDialog() {
+void PrintReport::openPrintDialog() {
   QPrinterInfo p_info;
   QString _device = config->value("printer/device_secondary").toString();
   if (_device.isEmpty()) {
@@ -86,27 +67,14 @@ void PrintBookCard::openPrintDialog() {
   }
 }
 
-int PrintBookCard::exec(const QJsonObject &opts, bool pdfbtn) {
+int PrintReport::exec(const QJsonObject &opts, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
-  if (!opts.contains("aid") || !opts.contains("basename")) {
-    qWarning("Missing Article Id!");
-    return QDialog::Rejected;
-  }
-
-  if (notValid(opts.value("aid")) || notValid(opts.value("basename"))) {
-    qWarning("Missing Article Id!");
-    return QDialog::Rejected;
-  }
-
   pdfFileName = opts.value("basename").toString();
   pdfFileName.append(".pdf");
 
-  // #ifdef ANTIQUA_DEVELOPEMENT
-  //   qDebug() << Q_FUNC_INFO << opts;
-  // #endif
+  QJsonDocument _doc(opts);
+  page->setText(_doc.toJson());
 
-  page = new BookCardPage(opts, this);
-  viewPort->setWidget(page);
   update();
 
   return QDialog::exec();

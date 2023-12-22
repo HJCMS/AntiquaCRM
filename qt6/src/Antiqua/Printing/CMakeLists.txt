@@ -56,6 +56,7 @@ SET (_library_SOURCES
   printinvoice.cpp
   printrefund.cpp
   printreminder.cpp
+  printreport.cpp
 )
 
 SET (_library_HEADERS
@@ -70,6 +71,7 @@ SET (_library_HEADERS
   printinvoice.h
   printrefund.h
   printreminder.h
+  printreport.h
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED

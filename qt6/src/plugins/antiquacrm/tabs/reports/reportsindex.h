@@ -26,12 +26,28 @@ private:
   ReportsTableView *m_table;
   ReportsToolBar *m_toolBar;
   void setDefaultTableView() override;
+  const QString getBasename();
   const QString printHeader();
   const QFileInfo getSaveFile();
 
 private Q_SLOTS:
+  /**
+   * @brief Erstelle einen Bericht für den Monat
+   * @param date - ISO-8601
+   * @see ReportAction::lastDayInMonth
+   *
+   * Das Datum muss immer den letzten Tag des Monats enthalten!
+   */
   void createReport(const QDate &date);
+
+  /**
+   * @brief Standard Drucken Dialog
+   */
   void printReport();
+
+  /**
+   * @brief Standard CSV Export/Speichern
+   */
   void saveReport();
 
 public:

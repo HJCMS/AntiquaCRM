@@ -18,6 +18,7 @@ class ANTIQUACRM_LIBRARY ReportsTableModel final
 
 public:
   explicit ReportsTableModel(QObject *parent = nullptr);
+  const QMap<int, QString> headerIndex() const;
   const QMap<int, QString> headerList() const override;
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;

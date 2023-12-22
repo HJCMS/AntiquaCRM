@@ -10,7 +10,9 @@
 #define ANTIQUACRM_REPORTS_TABLEVIEW_H
 
 #include <AntiquaWidgets>
+#include <QJsonObject>
 #include <QObject>
+#include <QPaintEvent>
 #include <QTableView>
 #include <QWidget>
 
@@ -24,6 +26,7 @@ private:
   int refunds_section = -1;
   ReportsTableModel *m_model;
   QHeaderView *m_tableHeader;
+  virtual void paintEvent(QPaintEvent *) override;
 
 Q_SIGNALS:
   void sendFinished();
@@ -36,7 +39,10 @@ public:
   const QString headerName(const QString &key);
   const QString dataHeader(const QChar &delimiter = QChar::Tabulation);
   const QStringList dataRows(const QChar &delimiter = QChar::Tabulation);
-  const QString salesVolume();
+  const QStringList csvExport(const QChar &delimiter = QChar::Tabulation);
+  const QJsonObject printingData();
+  double salesVolume();
+  const QString moneyVolume();
 };
 
 #endif // ANTIQUACRM_REPORTS_TABLEVIEW_H

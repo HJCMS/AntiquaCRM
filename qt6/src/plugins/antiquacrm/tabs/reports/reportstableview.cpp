@@ -4,7 +4,13 @@
 #include "reportstableview.h"
 #include "reportstablemodel.h"
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#include <QChar>
+#include <QJsonArray>
+#include <QJsonValue>
+#include <QPainter>
+#include <QTime>
+
+#ifdef DEBUG_REPORTS_VIEW
 #include <QDebug>
 
 static void debugCalculate(QString &id, double calc, double summary) {
@@ -31,6 +37,18 @@ ReportsTableView::ReportsTableView(QWidget *parent) : QTableView{parent} {
   m_tableHeader = horizontalHeader();
   m_tableHeader->setDefaultAlignment(Qt::AlignCenter);
   m_tableHeader->setStretchLastSection(false);
+}
+
+void ReportsTableView::paintEvent(QPaintEvent *ev) {
+  if (m_model->rowCount() == 0) {
+    QPainter painter(viewport());
+    painter.setBrush(palette().text());
+    painter.setFont(font());
+    painter.setOpacity(0.8);
+    painter.drawText(rect(), Qt::AlignCenter,
+                     tr("No result for current selection."));
+  }
+  QTableView::paintEvent(ev);
 }
 
 void ReportsTableView::setQuery(const QString &query) {
@@ -83,14 +101,38 @@ const QStringList ReportsTableView::dataRows(const QChar &delimiter) {
   return list;
 }
 
-const QString ReportsTableView::salesVolume() {
+const QStringList ReportsTableView::csvExport(const QChar &delimiter) {
+  int columns = horizontalHeader()->count();
+  QStringList list;
+  for (int r = 0; r < m_model->rowCount(); r++) {
+    QStringList cells;
+    for (int c = 0; c < columns; c++) {
+      if (calc_section == c || refunds_section == c)
+        continue;
+
+      QModelIndex _index = m_model->index(r, c);
+      QString _buffer = m_model->data(_index, Qt::DisplayRole).toString();
+      _buffer = _buffer.trimmed();
+      if (c > 0 && c < 3) { // Invoice && Article ID's
+        _buffer.prepend(QChar(34));
+        _buffer.append(QChar(34));
+        cells << _buffer;
+      } else {
+        cells << _buffer;
+      }
+    }
+    list << cells.join(delimiter);
+  }
+  return list;
+}
+
+double ReportsTableView::salesVolume() {
   if (calc_section < 1 || refunds_section < 1) {
     qWarning("Invalid Report configuration!");
-    return QString();
+    return 0.00;
   }
 
   double sum_price = 0.00;
-  // int columns = horizontalHeader()->count();
   QStringList list;
   for (int r = 0; r < m_model->rowCount(); r++) {
     QModelIndex calc_index = m_model->index(r, calc_section);
@@ -102,13 +144,47 @@ const QString ReportsTableView::salesVolume() {
     if (refunds != 0) {
       sum_price += refunds;
     }
-#ifdef ANTIQUA_DEVELOPEMENT
-    QString article = m_model->data(m_model->index(r, 2)).toString();
-    debugCalculate(article, calc, sum_price);
-#endif
   }
-  char buffer[10];
-  int len = std::sprintf(buffer, "%0.2f", sum_price);
-  QByteArray array(buffer, len);
-  return QString::fromLocal8Bit(array);
+  return sum_price;
+}
+
+const QJsonObject ReportsTableView::printingData() {
+  QJsonObject _obj;
+  QMap<int, QString> _map = m_model->headerIndex();
+  // Header
+  QJsonObject _header;
+  for (int c = 0; c < m_model->columnCount(); c++) {
+    if (calc_section == c || refunds_section == c)
+      continue;
+
+    _header.insert(_map[c], m_model->headerData(c, Qt::Horizontal).toString());
+  }
+  _obj.insert("header", _header);
+  // Sold
+  QJsonArray _arr;
+  for (int r = 0; r < m_model->rowCount(); r++) {
+    QJsonObject _jso;
+    for (int c = 0; c < m_model->columnCount(); c++) {
+      if (calc_section == c || refunds_section == c)
+        continue;
+
+      const QModelIndex _index = m_model->index(r, c);
+      QVariant _value = m_model->data(_index, Qt::EditRole);
+      if (_map[c].startsWith("date")) {
+        const QString _str = _value.toDate().toString("dd.MM.yyyy");
+        _jso.insert(_map[c], QJsonValue(_str));
+      } else {
+        _jso.insert(_map[c], _value.toJsonValue());
+      }
+    }
+    _arr.append(_jso);
+  }
+  _obj.insert("sold", _arr);
+  _obj.insert("total", salesVolume());
+  _obj.insert("money", moneyVolume());
+  return _obj;
+}
+
+const QString ReportsTableView::moneyVolume() {
+  return AntiquaCRM::ATaxCalculator::money(salesVolume());
 }
