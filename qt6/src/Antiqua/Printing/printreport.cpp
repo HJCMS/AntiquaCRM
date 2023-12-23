@@ -5,36 +5,29 @@
 
 #include <QJsonArray>
 #include <QJsonDocument>
+#include <QPagedPaintDevice>
 #include <QPdfWriter>
 #include <QPrintDialog>
 
 namespace AntiquaCRM {
 
-PrintReportPage::PrintReportPage(QWidget *parent, QPageSize::PageSizeId id)
-    : QWidget{parent}, APrintTools{id} {
+PrintReportPage::PrintReportPage(QWidget *parent, QPageLayout pl)
+    : QWidget{parent}, APrintTools{pl.pageSize().id()}, p_pageLayout{pl} {
   setContentsMargins(0, 0, 0, 0);
-  pageLayout.setOrientation(QPageLayout::Portrait);
-  pageLayout.setPageSize(QPageSize(id), QMarginsF(0, 0, 0, 0));
-  pageLayout.setMode(QPageLayout::StandardMode);
-  pageLayout.setUnits(QPageLayout::Millimeter);
-
-  QRectF pageRect = pageLayout.pageSize().rect(QPageSize::Point);
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(contentsMargins());
-  m_body = new APrintingBody(this);
-  m_body->setContentsMargins(contentsMargins());
-  m_body->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Expanding);
-  m_body->setMinimumWidth(pageRect.width());
-  m_body->setMinimumHeight(pageRect.height());
-  layout->addWidget(m_body);
+  body = new APrintingBody(this);
+  body->setContentsMargins(contentsMargins());
+  body->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
+  layout->addWidget(body);
   setLayout(layout);
 }
 
 bool PrintReportPage::setContentData(QJsonObject &data) {
-  QTextCursor cursor = m_body->textCursor();
-  m_body->insertText(cursor, data.value("info").toString());
+  QTextCursor cursor = body->textCursor();
+  body->insertText(cursor, data.value("info").toString());
 
-  QTextTableFormat _tFormat = m_body->tableFormat();
+  QTextTableFormat _tFormat = body->tableFormat();
   _tFormat.setBottomMargin(10);
 
   QJsonObject _header = data.value("header").toObject();
@@ -44,48 +37,50 @@ bool PrintReportPage::setContentData(QJsonObject &data) {
   QTextTable *table = cursor.insertTable(1, _columns, _tFormat);
   for (int c = 0; c < _columns; c++) {
     QTextTableCell _tc = table->cellAt(0, c);
-    _tc.setFormat(m_body->tableCellFormat());
+    _tc.setFormat(body->tableCellFormat());
     QString _txt = _header.value(QString::number(c)).toString();
-    m_body->setCellItem(_tc, _txt, Qt::AlignCenter);
+    body->setCellItem(_tc, _txt, Qt::AlignCenter);
   }
   table->appendRows(_rows);
   for (int r = 1; r < (_rows + 1); r++) {
     QJsonObject _line = _data[r].toObject();
     for (int c = 0; c < _columns; c++) {
       QTextTableCell _tc = table->cellAt(r, c);
-      _tc.setFormat(m_body->tableCellFormat());
+      _tc.setFormat(body->tableCellFormat());
       QString _txt = _line.value(QString::number(c)).toString();
-      m_body->setCellItem(_tc, _txt, Qt::AlignCenter);
+      body->setCellItem(_tc, _txt, Qt::AlignCenter);
     }
   }
 
   QTextTableCell _stc = table->cellAt(_rows, (_columns - 2));
-  _stc.setFormat(m_body->tableCellFormat());
-  m_body->setCellItem(_stc, tr("Total") + ":", Qt::AlignRight);
+  _stc.setFormat(body->tableCellFormat());
+  body->setCellItem(_stc, tr("Total") + ":", Qt::AlignRight);
 
   QTextTableCell _ttc = table->cellAt(_rows, (_columns - 1));
-  _ttc.setFormat(m_body->tableCellFormat());
+  _ttc.setFormat(body->tableCellFormat());
 
   QString _txt = data.value("money").toString();
-  m_body->setCellItem(_ttc, _txt, Qt::AlignCenter);
-  m_body->document()->setModified(true);
+  body->setCellItem(_ttc, _txt, Qt::AlignCenter);
+  body->document()->setModified(true);
   update();
   return true;
 }
 
 PrintReport::PrintReport(QWidget *parent) : AntiquaCRM::APrintDialog{parent} {
   setObjectName("print_report_dialog");
-  m_page = new PrintReportPage(this, QPageSize::A4);
+
+  pageLayout.setOrientation(QPageLayout::Portrait);
+  pageLayout.setPageSize(QPageSize::A4, QMarginsF(30, 20, 20, 20));
+  pageLayout.setMode(QPageLayout::StandardMode);
+  pageLayout.setUnits(QPageLayout::Millimeter);
+
+  m_page = new PrintReportPage(this, pageLayout);
   viewPort->setWidget(m_page);
 }
 
 void PrintReport::renderPage(QPrinter *printer) {
-  Q_CHECK_PTR(m_page);
-  QPainter _painter(printer);
-  _painter.setWindow(m_page->rect());
-  _painter.translate(0, 0);
-  m_page->render(&_painter);
-  _painter.end();
+  printer->setPageLayout(pageLayout);
+  m_page->body->print(printer);
 }
 
 void PrintReport::createPDF() {
@@ -95,15 +90,14 @@ void PrintReport::createPDF() {
     return;
   }
 
-  // QPdfWriter _pdf(m_page);
-
   QFileInfo _file(_dir, pdfFileName);
   QPrinter *printer = new QPrinter(QPrinter::HighResolution);
   printer->setPageLayout(pageLayout);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
   printer->setOutputFileName(_file.filePath());
-  renderPage(printer);
+  m_page->body->print(printer);
+
   if (_file.isReadable())
     sendStatusMessage(tr("PDF Document created!"));
 }
@@ -126,8 +120,9 @@ void PrintReport::openPrintDialog() {
   QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   dialog->setOption(QAbstractPrintDialog::PrintShowPageSize, true);
+  connect(dialog, SIGNAL(accepted(QPrinter *)),
+          SLOT(renderPage(QPrinter *)));
 
-  connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
   }

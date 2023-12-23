@@ -21,11 +21,11 @@ class ANTIQUACRM_LIBRARY PrintReportPage final : public QWidget,
   Q_OBJECT
 
 private:
-  QPageLayout pageLayout;
-  APrintingBody *m_body;
+  QPageLayout p_pageLayout;
 
 public:
-  explicit PrintReportPage(QWidget *parent, QPageSize::PageSizeId id);
+  APrintingBody *body;
+  explicit PrintReportPage(QWidget *parent, QPageLayout pl);
   bool setContentData(QJsonObject &data);
 };
 
@@ -39,6 +39,7 @@ class ANTIQUACRM_LIBRARY PrintReport final : public AntiquaCRM::APrintDialog {
   Q_OBJECT
 
 private:
+  QPageLayout pageLayout;
   PrintReportPage *m_page;
 
 private Q_SLOTS:
