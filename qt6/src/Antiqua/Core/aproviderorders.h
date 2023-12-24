@@ -10,6 +10,7 @@
 #include <QList>
 #include <QMetaType>
 #include <QRegularExpression>
+#include <QSqlField>
 #include <QVariant>
 
 namespace AntiquaCRM {
@@ -122,6 +123,8 @@ public:
    */
   static AntiquaCRM::ArticleOrderItem createItem(const QString &key,
                                                  const QVariant &value);
+
+  static AntiquaCRM::ArticleOrderItem createItem(const QSqlField &field);
 
   /**
    * @brief Current Article Ordered Items

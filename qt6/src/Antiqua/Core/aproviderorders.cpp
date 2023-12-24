@@ -382,13 +382,16 @@ bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
         p_data.insert(key, value);
 
       return true;
-    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::LongLong)) {
+    } else if ((it.key() == key) &&
+               (value.metaType().id() == QMetaType::LongLong)) {
       p_data.insert(key, value.toInt());
       return true;
-    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::Double)) {
+    } else if ((it.key() == key) &&
+               (value.metaType().id() == QMetaType::Double)) {
       p_data.insert(key, value.toDouble());
       return true;
-    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::QDateTime)) {
+    } else if ((it.key() == key) &&
+               (value.metaType().id() == QMetaType::QDateTime)) {
       p_data.insert(key, value.toDateTime());
       return true;
     }
@@ -416,6 +419,26 @@ AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString &key,
   item.key = key;
   item.value = value;
   return item;
+}
+
+AntiquaCRM::ArticleOrderItem
+AProviderOrder::createItem(const QSqlField &field) {
+  const QString _name = field.name();
+  QVariant _value = field.value();
+  if (field.metaType().id() == QMetaType::QString) {
+    // FIXME Zeichenkettenüberlängen vermeiden.
+    // Bestelltitel der Dienstleister weicht von Ui und Datenbankvorgabe ab.
+    // Deshalb müssen wir an dieser Stelle noch mal die Feldgrenzen prüfen,
+    // bei Bedarf diese entsprechend kürzen!
+    QString _str = field.value().toString();
+    if (_str.length() > field.length()) {
+      qWarning("Shrink oversized field '%s' value.", qPrintable(_name));
+      _value = _str.first(field.length());
+    }
+  } else if (field.metaType().id() == QMetaType::UnknownType) {
+    qWarning("Unknown Metatype for '%s'!", qPrintable(_name));
+  }
+  return createItem(_name, _value);
 }
 
 const QList<OrderArticleItems> AProviderOrder::orders() { return p_orderItems; }

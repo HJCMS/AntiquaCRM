@@ -168,10 +168,20 @@ private:
 
   /**
    * @brief Artikel einfügen
+   * @param key - Sql column fieldName
+   * @param value - Sql column value
    * @see AntiquaCRM::AProviderOrder::createItem
    */
   inline AntiquaCRM::ArticleOrderItem
   addArticleItem(const QString &key, const QVariant &value) const;
+
+  /**
+   * @brief Artikel mit befüllten QSqlField einfügen
+   * @param field - current value
+   * @note contains oversize length protection
+   */
+  inline AntiquaCRM::ArticleOrderItem
+  addArticleItem(const QSqlField &field) const;
 
   /**
    * @brief Artikel in die Auftrags Tabelle einfügen!

@@ -547,6 +547,11 @@ OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
+AntiquaCRM::ArticleOrderItem
+OrdersEditor::addArticleItem(const QSqlField &field) const {
+  return AntiquaCRM::AProviderOrder::createItem(field);
+}
+
 bool OrdersEditor::addOrderTableArticle(qint64 aid) {
   if (aid < 1)
     return false;
@@ -584,11 +589,9 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
       _items.append(addArticleItem("a_order_id", _oid));
       _items.append(addArticleItem("a_customer_id", _cid));
       for (int i = 0; i < _record.count(); i++) {
-        const QSqlField _field = _record.field(i);
-        if (_field.metaType().id() == QMetaType::UnknownType) {
-          qWarning("Unknown Metatype for '%s'!", qPrintable(_field.name()));
-        }
-        _items.append(addArticleItem(_field.name(), _field.value()));
+        QSqlField _field = _record.field(i);
+        _field.setValue(_q.value(_field.name()));
+        _items.append(addArticleItem(_field));
       }
       if (_items.size() > 0) {
         m_ordersTable->addArticle(_items);
