@@ -15,7 +15,8 @@
 
 namespace AntiquaCRM {
 
-TabsInterface::TabsInterface(QObject *parent) : QObject{parent} {}
+TabsInterface::TabsInterface(QObject *parent)
+    : QObject{parent}, p_serial_id{"UNKNOWN_PLUGIN_SERIAL"} {}
 
 const QJsonObject TabsInterface::menuObject() {
   QJsonObject _jo;
@@ -25,6 +26,10 @@ const QJsonObject TabsInterface::menuObject() {
   _jo.insert("icon", QJsonValue(QJsonValue::String));
   return _jo;
 }
+
+void TabsInterface::setSerialId(const QString &id) { p_serial_id = id; }
+
+const QString TabsInterface::getSerialId() { return p_serial_id; }
 
 bool TabsInterface::createInterface(QObject *parent) {
   Q_UNUSED(parent);

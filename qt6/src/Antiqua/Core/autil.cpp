@@ -154,4 +154,22 @@ const QString AUtil::md5sum(const QString &data) {
   return QString::fromLocal8Bit(_hash.result().toHex());
 }
 
+const QString AUtil::strEncode(const QString &query) {
+  static const QRegularExpression spaces("[\\s\\t]+");
+  QString _o = query.trimmed();
+  _o.replace(".", "");
+  _o.replace(",", "");
+  _o.replace(":", " ");
+  _o.replace("-", " ");
+  _o.replace("'", "");
+  _o.replace("´", "");
+  _o.replace("`", "");
+  _o.replace("&", " ");
+  _o.replace("\"", "%22");
+  _o.replace("=", "%3D");
+  // finally replace spaces
+  _o.replace(spaces, "+");
+  return _o;
+}
+
 }; // namespace AntiquaCRM

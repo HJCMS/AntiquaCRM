@@ -81,8 +81,13 @@ bool MainWindow::loadPluginTabs() {
       AntiquaCRM::TabsInterface *_iface = it.next();
       if (_iface != nullptr) {
         m_menuBar->tabsMenu->addAction(_iface->menuEntry());
-        if (!_iface->addIndexOnInit())
-          continue;
+        bool _load =
+            config->value("plugin/tabs/enable/" + _iface->getSerialId(), false)
+                .toBool();
+        if (!_iface->addIndexOnInit()) {
+          if (!_load)
+            continue;
+        }
 
         AntiquaCRM::TabsIndex *_tab = _iface->indexWidget(m_tabWidget);
         if (_tab == nullptr) {

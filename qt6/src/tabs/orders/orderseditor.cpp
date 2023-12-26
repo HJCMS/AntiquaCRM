@@ -590,7 +590,7 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
       _items.append(addArticleItem("a_customer_id", _cid));
       for (int i = 0; i < _record.count(); i++) {
         QSqlField _field = _record.field(i);
-        _field.setValue(_q.value(_field.name()));
+        // ??? _field.setValue(_q.value(_field.name()));
         _items.append(addArticleItem(_field));
       }
       if (_items.size() > 0) {

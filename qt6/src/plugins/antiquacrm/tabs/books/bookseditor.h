@@ -13,6 +13,8 @@
 #include <AntiquaWidgets>
 #include <QObject>
 
+class CatalogSearchButton;
+
 /**
  * @class BooksEditor
  * @brief Editor class for all Books ...
@@ -145,6 +147,11 @@ private:
    */
   AntiquaCRM::IsbnEdit *ib_isbn;
 
+  /**
+   * @brief DNB Search Button
+   */
+  CatalogSearchButton *btn_dnbQuery;
+
   // Layout::Row 3
   AntiquaCRM::TabsWidget *m_tabWidget;
 
@@ -253,6 +260,11 @@ private:
   bool realyDeactivateEntry();
 
 private Q_SLOTS:
+  /**
+   * @brief Create DNB Search from current selection
+   */
+  void createDNBSearch();
+
   /**
    * @brief Save Data slot
    * „ib_id“ check decides the caller function!

@@ -11,9 +11,7 @@ TabReports::TabReports(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
 
 const QString TabReports::displayName() const { return tr("Monthly report"); }
 
-const QString TabReports::interfaceName() const {
-  return QString("reports_tab");
-}
+const QString TabReports::interfaceName() const { return QString("reports"); }
 
 const QString TabReports::sqlTableName() const { return QString(); }
 

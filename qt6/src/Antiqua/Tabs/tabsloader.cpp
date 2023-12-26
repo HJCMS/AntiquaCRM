@@ -78,6 +78,7 @@ TabsLoader::interfaces(QObject *parent) {
       AntiquaCRM::TabsInterface *m_iface =
           qobject_cast<AntiquaCRM::TabsInterface *>(m_plugin);
       if (m_iface != nullptr && m_iface->createInterface(parent)) {
+        m_iface->setSerialId(info.value("SerialId").toString());
         m_iface->setObjectName(objName);
         _list << m_iface;
       } else {

@@ -152,6 +152,12 @@ public:
    * @param data
    */
   static const QString md5sum(const QString &data);
+
+  /**
+   * @brief Convert String to URL Query String with '+' delimiter for spaces!
+   * @param query
+   */
+  static const QString strEncode(const QString &query);
 };
 
 }; // namespace AntiquaCRM

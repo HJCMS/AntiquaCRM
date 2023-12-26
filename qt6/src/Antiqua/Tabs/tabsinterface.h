@@ -32,12 +32,25 @@ class ANTIQUACRM_LIBRARY TabsInterface : public QObject {
   Q_CLASSINFO("Description", "AntiquaCRM TabWidgets Interface")
   Q_CLASSINFO("Version", ANTIQUACRM_VERSION)
   Q_CLASSINFO("Url", ANTIQUACRM_HOMEPAGE)
+  Q_PROPERTY(QString serialId READ getSerialId WRITE setSerialId CONSTANT)
+
+private:
+  QString p_serial_id;
+
+public Q_SLOTS:
+  void setSerialId(const QString &);
 
 public:
   /**
    * @param parent - parent object
    */
   explicit TabsInterface(QObject *parent = nullptr);
+
+  /**
+   * @brief Required for Configuration
+   * @return unique interface id
+   */
+  const QString getSerialId();
 
   /**
    * @brief Interface Title and Display name
@@ -82,7 +95,8 @@ public:
    *
    * Widget for AntiquaCRM Configuration system.
    */
-  virtual AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const = 0;
+  virtual AntiquaCRM::PluginConfigWidget *
+  configWidget(QWidget *parent) const = 0;
 
   /**
    * @brief if true - load this interface on application start into main
