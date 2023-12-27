@@ -25,6 +25,7 @@ SET (_library_HEADERS
  paymentrefundsettings.cpp
  pathsettingsgroup.cpp
  pluginlistwidget.cpp
+ pluginlistwidgetitem.cpp
  printerfonts.cpp
  printerattachments.cpp
  printersetborder.cpp
@@ -52,6 +53,7 @@ SET (_library_SOURCES
  paymentrefundsettings.h
  pathsettingsgroup.h
  pluginlistwidget.h
+ pluginlistwidgetitem.h
  printerfonts.h
  printerattachments.h
  printersetborder.h

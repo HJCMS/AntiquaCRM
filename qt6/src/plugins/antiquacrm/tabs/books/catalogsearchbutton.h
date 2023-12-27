@@ -18,15 +18,15 @@
 
 /**
  * @class CatalogSearchButton
- * @brief The DNB Catalog search Button class
+ * @brief DNB Catalog search button with menu class
  *
  * This Button Class opens the search page of the German National Library in
- * your web browser. It creates a query urn to the katalog.dnb.de Library with
- * call QDesktopServices::openUrl.
+ * your web browser. It creates a query urn to the katalog.dnb.de Library to
+ * call a get request with QDesktopServices::openUrl.
  *
  * @note It does not prepare the search query, this must done by subclasses.
  *
- * Documentations and Urls:
+ * Documentations:
  * @li https://katalog.dnb.de/
  * @li https://blog.dnb.de/dnbkatalogbeta/
  */
@@ -36,6 +36,10 @@ class ANTIQUACRM_LIBRARY CatalogSearchButton final : public QPushButton {
 private:
   QString p_type;
   QMenu *m_menu;
+
+  /**
+   * @brief Default search icon
+   */
   const QIcon icon() const;
 
   /**
@@ -54,6 +58,11 @@ private Q_SLOTS:
   void prepareAction(QAction *);
 
 Q_SIGNALS:
+  /**
+   * @brief Send query if button has clicked.
+   *
+   * This Signal is emitted when prepareAction has finished successfully.
+   */
   void sendQuery();
 
 public Q_SLOTS:
@@ -72,6 +81,9 @@ public:
    */
   explicit CatalogSearchButton(QWidget *parent = nullptr);
 
+  /**
+   * @brief Available button options.
+   */
   enum Option {
     ANY = 0x1,     /**< @brief Search in everything */
     TITLE = 0x2,   /**< @brief Title search */
@@ -81,10 +93,10 @@ public:
   };
 
   /**
-   * @brief Current Button Options
+   * @brief Map with configured button options
    * @code
    *   QMap<CatalogSearchButton::Option, QString>
-   *   QMap<ENUM, Description>
+   *   QMap<ENUM, „Translated title“>
    * @endcode
    */
   const QMap<CatalogSearchButton::Option, QString> options() const;

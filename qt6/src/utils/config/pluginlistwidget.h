@@ -10,35 +10,26 @@
 #define ANTIQUACRM_PLUGIN_LISTVIEW_H
 
 #include <QJsonObject>
-#include <QMap>
 #include <QListWidget>
-#include <QListWidgetItem>
+#include <QMap>
+#include <QModelIndex>
 #include <QString>
 #include <QWidget>
 
-class PluginListWidgetItem final : public QListWidgetItem {
-private:
-  const QString p_id;
-
-public:
-  explicit PluginListWidgetItem(const QString id, QListWidget *parent);
-  inline const QString id() { return p_id; }
-  void setChecked(bool b = false);
-  bool getChecked();
-};
+class PluginListWidgetItem;
 
 class PluginListWidget final : public QListWidget {
   Q_OBJECT
 
 private:
   PluginListWidgetItem *rowItem(int r);
-  PluginListWidgetItem *removeItem(int r);
+  const QString itemTip() const;
 
 private Q_SLOTS:
-  void switchItemState(QListWidgetItem *);
+  void changeState(const QModelIndex &index);
 
 public Q_SLOTS:
-  void addListItem(const QJsonObject &jso);
+  void addListItem(const QJsonObject &meta);
 
 public:
   explicit PluginListWidget(QWidget *parent = nullptr);
