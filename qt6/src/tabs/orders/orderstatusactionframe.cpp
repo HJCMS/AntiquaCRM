@@ -46,29 +46,29 @@ OrderStatusActionFrame::OrderStatusActionFrame(QWidget *parent)
   o_payment_status->setWhatsThisText(_info);
   layout->addWidget(o_payment_status);
   setLayout(layout);
-
+  // OrderStatus
   connect(o_order_status, SIGNAL(sendStatusChanged(AntiquaCRM::OrderStatus)),
           SLOT(orderStatusChanged(AntiquaCRM::OrderStatus)));
-
+  // OrderPayment
   connect(o_payment_status, SIGNAL(sendStatusChanged(AntiquaCRM::OrderPayment)),
           SLOT(orderPaymentChanged(AntiquaCRM::OrderPayment)));
+
+  blockSignals(true);
 }
 
 void OrderStatusActionFrame::orderStatusChanged(AntiquaCRM::OrderStatus s) {
-  QString _notify;
   if (s == AntiquaCRM::OrderStatus::OPEN)
     return;
 
   if (s == AntiquaCRM::OrderStatus::CANCELED) {
-    _notify = tr("Payment reminder selected");
     switch (getOrderPayment()) {
     case (AntiquaCRM::OrderPayment::PAYED):
     case (AntiquaCRM::OrderPayment::REMIND):
     case (AntiquaCRM::OrderPayment::ADMONISH): {
-      _notify = tr("<b>You cannot cancel this order!</b>"
-                   "<p>This order has already been paid.</p>"
-                   "<p>If this Order hasn't delivered, but paid, send back the "
-                   "money and set Paid to Open.</p>");
+      QString _notify = tr("<b>You cannot cancel this order!</b>"
+                           "<p>This order has already been paid.</p>"
+                           "<p>If this Order hasn't delivered, but paid, "
+                           "send back the money and set Paid to Open.</p>");
       emit sendNoticeMessage(_notify);
       o_order_status->setReject();
       return;
@@ -78,20 +78,16 @@ void OrderStatusActionFrame::orderStatusChanged(AntiquaCRM::OrderStatus s) {
       break;
     }
   }
-
   emit sendOrderStatus(s);
-  if (_notify.length() > 3)
-    emit sendNotifyStatus(_notify);
 }
 
 void OrderStatusActionFrame::orderPaymentChanged(AntiquaCRM::OrderPayment s) {
-  QString _notify;
   switch (s) {
   case (AntiquaCRM::OrderPayment::PAYED): {
     if (getOrderStatus() == AntiquaCRM::OrderStatus::CANCELED) {
-      _notify = tr("<b>You cannot set this Status.</b>"
-                   "<p>This order was already canceled!</p>");
-      emit sendNoticeMessage(_notify);
+      QString _m = tr("<b>You cannot set this Status.</b>"
+                      "<p>This order was already canceled!</p>");
+      emit sendNoticeMessage(_m);
       o_payment_status->setReject();
       return;
     }
@@ -102,15 +98,15 @@ void OrderStatusActionFrame::orderPaymentChanged(AntiquaCRM::OrderPayment s) {
   case (AntiquaCRM::OrderPayment::RETURN):
   case (AntiquaCRM::OrderPayment::COLLPROC): {
     if (getOrderStatus() == AntiquaCRM::OrderStatus::CANCELED) {
-      _notify = tr("<b>You cannot set this Status.</b>"
-                   "<p>This order was already canceled!</p>");
-      emit sendNoticeMessage(_notify);
+      QString _m = tr("<b>You cannot set this Status.</b>"
+                      "<p>This order was already canceled!</p>");
+      emit sendNoticeMessage(_m);
       o_payment_status->setReject();
       return;
     } else if (getOrderStatus() != AntiquaCRM::OrderStatus::DELIVERED) {
-      _notify = tr("<b>You cannot set this Status.</b>"
-                   "<p>This order isn't delivered!</p>");
-      emit sendNoticeMessage(_notify);
+      QString _m = tr("<b>You cannot set this Status.</b>"
+                      "<p>This order isn't delivered!</p>");
+      emit sendNoticeMessage(_m);
       o_payment_status->setReject();
       return;
     }
@@ -120,8 +116,6 @@ void OrderStatusActionFrame::orderPaymentChanged(AntiquaCRM::OrderPayment s) {
     break;
   }
   emit sendOrderPayment(s);
-  if (_notify.length() > 3)
-    emit sendNotifyStatus(_notify);
 }
 
 void OrderStatusActionFrame::setOrderStatus(AntiquaCRM::OrderStatus s) {
@@ -132,14 +126,9 @@ void OrderStatusActionFrame::setOrderPayment(AntiquaCRM::OrderPayment p) {
   o_payment_status->setValue(p);
 }
 
-void OrderStatusActionFrame::initProtection() {
-  if (isProtectable()) {
-    o_payment_status->setReadOnly(true);
-    o_order_status->setReadOnly(true);
-  } else {
-    o_payment_status->setReadOnly(false);
-    o_order_status->setReadOnly(false);
-  }
+bool OrderStatusActionFrame::currentOrderStatus() {
+  return (getOrderPayment() == AntiquaCRM::OrderPayment::PAYED &&
+          getOrderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
 }
 
 bool OrderStatusActionFrame::isProtectable() {
@@ -147,17 +136,31 @@ bool OrderStatusActionFrame::isProtectable() {
           getOrderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
 }
 
-bool OrderStatusActionFrame::currentOrderStatus() {
-  return (getOrderPayment() == AntiquaCRM::OrderPayment::PAYED &&
-          getOrderStatus() == AntiquaCRM::OrderStatus::DELIVERED);
-}
-
 AntiquaCRM::OrderStatus OrderStatusActionFrame::getOrderStatus() {
   int _id = o_order_status->getValue().toInt();
-  return static_cast<AntiquaCRM::OrderStatus>(_id);
+  if (_id >= 0)
+    return static_cast<AntiquaCRM::OrderStatus>(_id);
+  else
+    return AntiquaCRM::OrderStatus::OPEN;
 }
 
 AntiquaCRM::OrderPayment OrderStatusActionFrame::getOrderPayment() {
   int _id = o_payment_status->getValue().toInt();
-  return static_cast<AntiquaCRM::OrderPayment>(_id);
+  if (_id >= 0)
+    return static_cast<AntiquaCRM::OrderPayment>(_id);
+  else
+    return AntiquaCRM::OrderPayment::NOTPAID;
 }
+
+void OrderStatusActionFrame::stepIn() {
+  if (isProtectable()) {
+    o_payment_status->setReadOnly(true);
+    o_order_status->setReadOnly(true);
+  } else {
+    o_payment_status->setReadOnly(false);
+    o_order_status->setReadOnly(false);
+  }
+  blockSignals(false);
+}
+
+void OrderStatusActionFrame::stepOut() { blockSignals(true); }

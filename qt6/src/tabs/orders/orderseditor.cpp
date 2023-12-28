@@ -729,6 +729,7 @@ void OrdersEditor::setFinalLeaveEditor(bool force) {
     setWindowModified(false);
 
   m_ordersTable->clearContents(); // Artikel Tabelle leeren!
+  m_orderStatus->stepOut(); // Signale wieder sperren
   setResetInputFields();
   emit sendLeaveEditor(); // Zurück zur Hauptsansicht
 }
@@ -945,14 +946,11 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
     setResetModified(inputFields);
     setEnabled(true);
   }
-
-  m_orderStatus->initProtection();
-
+  m_orderStatus->stepIn();
   if (m_orderStatus->isProtectable()) {
     qInfo("Protected order refunding.");
     m_ordersTable->setProtected(true);
   }
-
   return _retval;
 }
 
@@ -1040,6 +1038,7 @@ bool OrdersEditor::createNewOrder(qint64 cid) {
       return true;
     }
   }
+  m_orderStatus->stepIn();
   return false;
 }
 
@@ -1243,7 +1242,10 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
   // 4) Datensätze Importieren
   importSqlResult();
 
-  // 5) Erst nach einfügen reset
+  // 5) Signale initialisieren
+  m_orderStatus->stepIn();
+
+  // 6) Erst nach einfügen reset
   setResetModified(inputFields);
   setResetModified(customInput);
 

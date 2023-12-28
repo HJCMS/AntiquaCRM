@@ -6,11 +6,12 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_ORDER_STATUS_ACTION_FRAME_H
-#define ANTIQUACRM_PLUGIN_ORDER_STATUS_ACTION_FRAME_H
+#ifndef ANTIQUACRM_PLUGIN_ORDER_STATUSACTIONFRAME_H
+#define ANTIQUACRM_PLUGIN_ORDER_STATUSACTIONFRAME_H
 
 #include <AntiquaWidgets>
 #include <QFrame>
+#include <QObject>
 
 /**
  * @class OrderStatusActionFrame
@@ -79,19 +80,9 @@ public:
 
   /**
    * @param parent - parent object
+   * @note do not forget to init signals after first fill
    */
   explicit OrderStatusActionFrame(QWidget *parent = nullptr);
-
-  /**
-   * @brief Block OrderStatus and PaymentStatus if needet?
-   * @return true if protected otherwise false
-   */
-  void initProtection();
-
-  /**
-   * @brief get Protection status for current dialog.
-   */
-  bool isProtectable();
 
   /**
    * @brief Input masks status of the order.
@@ -108,6 +99,12 @@ public:
   bool currentOrderStatus();
 
   /**
+   * @brief get Protection status for current dialog.
+   * @return true if protected otherwise false
+   */
+  bool isProtectable();
+
+  /**
    * @brief Query order status
    */
   AntiquaCRM::OrderStatus getOrderStatus();
@@ -116,6 +113,16 @@ public:
    * @brief Query payment status
    */
   AntiquaCRM::OrderPayment getOrderPayment();
+
+  /**
+   * @brief Initialize status and signals
+   */
+  void stepIn();
+
+  /**
+   * @brief Leave and block signals
+   */
+  void stepOut();
 };
 
-#endif // ANTIQUACRM_PLUGIN_ORDER_STATUS_ACTION_FRAME_H
+#endif // ANTIQUACRM_PLUGIN_ORDER_STATUSACTIONFRAME_H
