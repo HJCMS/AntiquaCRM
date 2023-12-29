@@ -32,6 +32,12 @@ private:
   BooksEditor *m_editorWidget;
   void setDefaultTableView() override;
 
+Q_SIGNALS:
+  /**
+   * @brief a query process has started
+   */
+  void queryStarted();
+
 public:
   explicit BooksWidget(QWidget *parent = nullptr);
 

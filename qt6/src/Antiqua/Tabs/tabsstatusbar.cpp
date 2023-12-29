@@ -2,32 +2,41 @@
 // vim: set fileencoding=utf-8
 
 #include "tabsstatusbar.h"
-#include "tabssearchbar.h"
+#include "tabsstatusprogress.h"
 
 #include <AntiquaWidgets>
 #include <QDebug>
 #include <QHash>
 #include <QSignalMapper>
+#include <QSizePolicy>
 
 namespace AntiquaCRM {
 
-TabsStatusBar::TabsStatusBar(QWidget *parent) : QStatusBar{parent} {
-  setSizeGripEnabled(false);
+TabsStatusBar::TabsStatusBar(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 4, 5);
+
+  QHBoxLayout *mainLayout = new QHBoxLayout(this);
+  mainLayout->setContentsMargins(4, 0, 0, 0);
+
+  m_status = new TabsStatusProgress(this);
+  m_status->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Preferred);
+  mainLayout->insertWidget(0, m_status, 1);
 
   m_frame = new QFrame(this);
   m_frame->setContentsMargins(0, 0, 0, 0);
   layout = new QHBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
   m_frame->setLayout(layout);
-  insertPermanentWidget(0, m_frame, 0);
+  mainLayout->addWidget(m_frame);
 
   btn_refresh = new QPushButton(this);
   btn_refresh->setIcon(antiquaIcon("view-refresh"));
   btn_refresh->setText(tr("Update"));
   btn_refresh->setToolTip(tr("Update current View"));
   btn_refresh->setWhatsThis(tr("When pressed the table query will reloaded."));
-  insertPermanentWidget(1, btn_refresh, 0);
+  mainLayout->addWidget(btn_refresh);
+
+  setLayout(mainLayout);
 
   connect(btn_refresh, SIGNAL(clicked()), this, SIGNAL(sendReloadView()));
 }
@@ -108,6 +117,14 @@ QPushButton *TabsStatusBar::defaultViewButton(const QString &title) {
 
 const QIcon TabsStatusBar::historyIcon() const {
   return AntiquaCRM::antiquaIcon("view-history");
+}
+
+void TabsStatusBar::startProgress() {
+  m_status->start(tr("Query started, waiting for response."));
+}
+
+void TabsStatusBar::showMessage(const QString &message, int timeout) {
+  m_status->showMessage(message, timeout);
 }
 
 void TabsStatusBar::setStockEnabled(bool b) { SearchWithStock = b; }

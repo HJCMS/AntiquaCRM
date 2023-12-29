@@ -21,7 +21,9 @@
 
 namespace AntiquaCRM {
 
-class ANTIQUACRM_LIBRARY TabsStatusBar : public QStatusBar {
+class TabsStatusProgress;
+
+class ANTIQUACRM_LIBRARY TabsStatusBar : public QFrame {
   Q_OBJECT
 
 public:
@@ -53,6 +55,11 @@ public:
   static const QMap<TabsStatusBar::History, QString> historyItems();
 
 private:
+  /**
+   * @brief Info Widget
+   */
+  TabsStatusProgress *m_status;
+
   /**
    * @brief Buttonsets frame
    */
@@ -144,6 +151,18 @@ Q_SIGNALS:
   void sendDefaultView();
 
 public Q_SLOTS:
+  /**
+   * @brief Set message query has initiated
+   */
+  void startProgress();
+
+  /**
+   * @brief Status bar message
+   * @param message
+   * @param timeout
+   */
+  void showMessage(const QString &message, int timeout = 0);
+
   /**
    * @brief With „Stock“ search enabled or not!
    */

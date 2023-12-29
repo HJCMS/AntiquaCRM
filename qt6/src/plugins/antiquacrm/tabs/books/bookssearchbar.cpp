@@ -123,8 +123,9 @@ void BooksSearchBar::setCustomSearch(const QString &info) {
 }
 
 void BooksSearchBar::setSearch() {
-  BooksSelectFilter::Filter _filter = m_selectFilter->currentFilter();
-  if (_filter == BooksSelectFilter::BOOK_ARTICLE_ID) {
+  BooksSelectFilter::Filter _f = m_selectFilter->currentFilter();
+  setMinLength((_f == BooksSelectFilter::BOOK_STORAGE) ? 2 : getMinLength());
+  if (_f == BooksSelectFilter::BOOK_ARTICLE_ID) {
     emit sendSearchClicked();
   } else if (lineInputsEnabled() && requiredLengthExists()) {
     emit sendSearchClicked();
@@ -278,7 +279,8 @@ const QString BooksSearchBar::getSearchStatement() {
 
   // Buch Autorensuche
   if (_operation == "author") {
-    _sql.append("(" + getTitleSearch(_columns) + ")");
+    _input = m_searchInput->text();
+    _sql.append("(" + prepareFieldSearch("ib_author", _input) + ")");
     return _sql;
   }
 

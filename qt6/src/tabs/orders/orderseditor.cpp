@@ -729,7 +729,7 @@ void OrdersEditor::setFinalLeaveEditor(bool force) {
     setWindowModified(false);
 
   m_ordersTable->clearContents(); // Artikel Tabelle leeren!
-  m_orderStatus->stepOut(); // Signale wieder sperren
+  m_orderStatus->stepOut();       // Signale wieder sperren
   setResetInputFields();
   emit sendLeaveEditor(); // Zurück zur Hauptsansicht
 }
@@ -1150,19 +1150,18 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
     for (int i = 0; i < _array.size(); i++) {
       QList<AntiquaCRM::ArticleOrderItem> items;
       QJsonObject article = _array[i].toObject();
+      // Add Missing Fields
       // NOTE: Das Feld 'a_tax' ist noch nicht in „antiquacmd“ eingebunden!
       // o_media_type | a_type
       if (!article.contains("a_tax") && article.contains("a_type")) {
         article.insert("a_tax",
                        getSalesTaxType(article.value("a_type").toInt()));
       }
-
-      // Add Missing Fields
       if (!article.contains("a_refunds_cost")) {
         article.insert("a_refunds_cost", 0.00);
       }
       if (!article.contains("a_modified")) {
-        article.insert("a_modified", QDateTime::currentDateTime().toString());
+        article.insert("a_modified", m_sql->getDateTime());
       }
 
       qint64 _article_id = article.value("a_article_id").toInt();

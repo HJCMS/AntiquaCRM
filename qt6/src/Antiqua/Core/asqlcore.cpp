@@ -5,17 +5,21 @@
 #include "asqlprofile.h"
 #include "asqlsettings.h"
 
+#include <QDateTime>
 #include <QDebug>
+#include <QMutexLocker>
 #include <QSysInfo>
 
 namespace AntiquaCRM {
 
+inline QMutex ASqlCore::s_mutex;
+
 ASqlCore::ASqlCore(QObject *parent) : QObject{parent} {
   setObjectName("antiquacrm_sqlcore");
-  m_cfg = new ASqlSettings(this);
+  config = new ASqlSettings(this);
   database = nullptr;
 
-  QSqlDatabase db = QSqlDatabase::database(m_cfg->connectionName());
+  QSqlDatabase db = QSqlDatabase::database(config->connectionName());
   if (db.isValid()) {
     database = new QSqlDatabase(db);
   } else {
@@ -28,8 +32,9 @@ bool ASqlCore::initDatabase() {
     return database->isValid();
 
   // https://www.postgresql.org/docs/current/libpq-connect.html
-  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL", m_cfg->connectionName());
-  ASqlProfile profile = m_cfg->connectionProfile();
+  QSqlDatabase db =
+      QSqlDatabase::addDatabase("QPSQL", config->connectionName());
+  ASqlProfile profile = config->connectionProfile();
   db.setHostName(profile.getHostname());
   db.setPort(profile.getPort());
   db.setDatabaseName(profile.getDatabaseName());
@@ -126,6 +131,21 @@ const QString ASqlCore::identifier() {
   return _name.trimmed();
 }
 
+const QString ASqlCore::getDateTime() const {
+  return QDateTime::currentDateTime().toString();
+}
+
+const QString ASqlCore::getTimeStamp() {
+  QMutexLocker locker(&s_mutex);
+  QSqlQuery _q = ASqlCore::query("SELECT CURRENT_TIMESTAMP;");
+  if (_q.size() == 1) {
+    _q.next();
+    return _q.value(0).toString();
+  }
+  qWarning("ASqlCore::getTimeStamp - fallback to QDateTime");
+  return QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm.dd.ssss t");
+}
+
 bool ASqlCore::open() {
   if (database->isOpen())
     return true;
@@ -134,21 +154,21 @@ bool ASqlCore::open() {
 }
 
 const QSqlDatabase ASqlCore::db() {
-  return QSqlDatabase::database(m_cfg->connectionName(), isConnected());
+  return QSqlDatabase::database(config->connectionName(), isConnected());
 }
 
 const QSqlRecord ASqlCore::record(const QString &table) {
+  QMutexLocker locker(&s_mutex);
   if (!isConnected())
     return QSqlRecord();
 
   QSqlRecord re;
-  p_mutex.lock();
   re = database->record(table);
-  p_mutex.unlock();
   return re;
 }
 
 const QStringList ASqlCore::fieldNames(const QString &table) {
+  QMutexLocker locker(&s_mutex);
   if (!isConnected())
     return QStringList();
 
@@ -164,13 +184,12 @@ const QStringList ASqlCore::fieldNames(const QString &table) {
 }
 
 const QSqlQuery ASqlCore::query(const QString &statement) {
-  if (!isConnected())
+  QMutexLocker locker(&s_mutex);
+  if (!isConnected() || statement.isEmpty())
     return QSqlQuery();
 
   QSqlQuery _query;
-  p_mutex.lock();
   _query = database->exec(statement);
-  p_mutex.unlock();
 
   if (_query.lastError().isValid())
     prepareSqlError(_query.lastError());
@@ -187,6 +206,7 @@ const QString ASqlCore::lastError() {
 }
 
 void ASqlCore::close() {
+  QMutexLocker locker(&s_mutex);
   if (database != nullptr && database->isOpen()) {
     qInfo("Close Database to '%s'.", qPrintable(database->hostName()));
     database->close();

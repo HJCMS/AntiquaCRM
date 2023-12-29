@@ -132,7 +132,7 @@ const QString TabsSearchBar::prepareFieldSearch(const QString &field,
     if (sf.isEmpty())
       return QString(field + "='INVALID_QUERY_STATEMENT'");
     else
-      return QString(field + "='" + sf + "'");
+      return QString(field + " ILIKE '" + sf + "'");
   }
 
   QString _prefix, _suffix;

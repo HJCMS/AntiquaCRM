@@ -126,6 +126,8 @@ void BooksWidget::createSearchQuery(const QString &history) {
     return;
   }
 
+  m_statusBar->startProgress();
+
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << "Books:Search" << _sql;
 #endif
