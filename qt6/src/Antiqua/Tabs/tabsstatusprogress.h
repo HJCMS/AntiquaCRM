@@ -40,6 +40,11 @@ public Q_SLOTS:
    */
   void showMessage(const QString &message, int timeout = 0);
 
+  /**
+   * @brief Status reset
+   */
+  void reset();
+
 public:
   explicit TabsStatusProgress(QWidget *parent = nullptr);
   void start(const QString &message);

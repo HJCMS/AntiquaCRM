@@ -7,7 +7,6 @@
 
 #include <QDateTime>
 #include <QDebug>
-#include <QMutexLocker>
 #include <QSysInfo>
 
 namespace AntiquaCRM {
@@ -136,7 +135,6 @@ const QString ASqlCore::getDateTime() const {
 }
 
 const QString ASqlCore::getTimeStamp() {
-  QMutexLocker locker(&s_mutex);
   QSqlQuery _q = ASqlCore::query("SELECT CURRENT_TIMESTAMP;");
   if (_q.size() == 1) {
     _q.next();
@@ -158,7 +156,6 @@ const QSqlDatabase ASqlCore::db() {
 }
 
 const QSqlRecord ASqlCore::record(const QString &table) {
-  QMutexLocker locker(&s_mutex);
   if (!isConnected())
     return QSqlRecord();
 
@@ -168,7 +165,6 @@ const QSqlRecord ASqlCore::record(const QString &table) {
 }
 
 const QStringList ASqlCore::fieldNames(const QString &table) {
-  QMutexLocker locker(&s_mutex);
   if (!isConnected())
     return QStringList();
 
@@ -184,12 +180,13 @@ const QStringList ASqlCore::fieldNames(const QString &table) {
 }
 
 const QSqlQuery ASqlCore::query(const QString &statement) {
-  QMutexLocker locker(&s_mutex);
   if (!isConnected() || statement.isEmpty())
     return QSqlQuery();
 
   QSqlQuery _query;
+  s_mutex.lock();
   _query = database->exec(statement);
+  s_mutex.unlock();
 
   if (_query.lastError().isValid())
     prepareSqlError(_query.lastError());
@@ -206,7 +203,6 @@ const QString ASqlCore::lastError() {
 }
 
 void ASqlCore::close() {
-  QMutexLocker locker(&s_mutex);
   if (database != nullptr && database->isOpen()) {
     qInfo("Close Database to '%s'.", qPrintable(database->hostName()));
     database->close();

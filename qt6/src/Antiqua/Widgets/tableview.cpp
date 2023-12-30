@@ -39,9 +39,6 @@ TableView::TableView(QWidget *parent) : QTableView{parent} {
 
   connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
           SLOT(setSortByColumn(int, Qt::SortOrder)));
-
-  connect(this, SIGNAL(sendResultExists(bool)), m_header,
-          SLOT(resizeToContents(bool)));
 }
 
 void TableView::paintEvent(QPaintEvent *ev) {
@@ -63,6 +60,11 @@ void TableView::paintEvent(QPaintEvent *ev) {
 void TableView::setEnableTableViewSorting(bool b) {
   setSortingEnabled(b);
   m_header->setSectionsClickable(b);
+}
+
+void TableView::queryFinished(bool b) {
+  m_header->resizeToContents(b);
+  emit sendQueryFinished();
 }
 
 void TableView::sqlModelError(const QString &table, const QString &message) {

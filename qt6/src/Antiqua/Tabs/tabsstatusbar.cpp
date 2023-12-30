@@ -5,9 +5,6 @@
 #include "tabsstatusprogress.h"
 
 #include <AntiquaWidgets>
-#include <QDebug>
-#include <QHash>
-#include <QSignalMapper>
 #include <QSizePolicy>
 
 namespace AntiquaCRM {
@@ -27,14 +24,14 @@ TabsStatusBar::TabsStatusBar(QWidget *parent) : QFrame{parent} {
   layout = new QHBoxLayout(m_frame);
   layout->setContentsMargins(0, 0, 0, 0);
   m_frame->setLayout(layout);
-  mainLayout->addWidget(m_frame);
+  mainLayout->insertWidget(1, m_frame);
 
   btn_refresh = new QPushButton(this);
   btn_refresh->setIcon(antiquaIcon("view-refresh"));
   btn_refresh->setText(tr("Update"));
   btn_refresh->setToolTip(tr("Update current View"));
   btn_refresh->setWhatsThis(tr("When pressed the table query will reloaded."));
-  mainLayout->addWidget(btn_refresh);
+  mainLayout->insertWidget(2, btn_refresh);
 
   setLayout(mainLayout);
 
@@ -122,6 +119,8 @@ const QIcon TabsStatusBar::historyIcon() const {
 void TabsStatusBar::startProgress() {
   m_status->start(tr("Query started, waiting for response."));
 }
+
+void TabsStatusBar::finalizeProgress() { m_status->reset(); }
 
 void TabsStatusBar::showMessage(const QString &message, int timeout) {
   m_status->showMessage(message, timeout);

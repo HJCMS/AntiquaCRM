@@ -55,11 +55,15 @@ BooksWidget::BooksWidget(QWidget *parent)
   // Signals::BooksSearchBar
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
           SLOT(setSearchFocus()));
+
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
           SLOT(setFilterFocus()));
+
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
+
   connect(m_searchBar, SIGNAL(sendWithStockEnabled(bool)), m_statusBar,
           SLOT(setStockEnabled(bool)));
+
   connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
 
@@ -115,26 +119,24 @@ void BooksWidget::openStartPage() {
 void BooksWidget::createSearchQuery(const QString &history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
+    m_statusBar->startProgress();
     m_table->setQuery(history);
+    // Nur Aktivieren wenn eine Suche ausgeführt wurde.
     m_statusBar->setCreateButtonEnabled(false);
+    m_statusBar->finalizeProgress();
     return;
   }
   // Die Standardabfrage wird aufgerufen!
-  QString _sql = m_searchBar->getSearchStatement();
+  const QString _sql = m_searchBar->getSearchStatement();
   if (_sql.isEmpty()) {
     qWarning("BooksWidget::createSearchQuery „length()“, to small!");
     return;
   }
-
+  // qDebug() << "Books:Search" << _sql;
   m_statusBar->startProgress();
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "Books:Search" << _sql;
-#endif
-
   m_table->setQuery(_sql);
-  // Nur Aktivieren wenn eine Suche ausgeführt wurde.
   m_statusBar->setCreateButtonEnabled(true);
+  m_statusBar->finalizeProgress();
 }
 
 void BooksWidget::createNewEntry() {

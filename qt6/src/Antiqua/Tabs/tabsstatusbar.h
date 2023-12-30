@@ -155,6 +155,7 @@ public Q_SLOTS:
    * @brief Set message query has initiated
    */
   void startProgress();
+  void finalizeProgress();
 
   /**
    * @brief Status bar message

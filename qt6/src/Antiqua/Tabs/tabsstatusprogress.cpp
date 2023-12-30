@@ -41,6 +41,8 @@ void TabsStatusProgress::showMessage(const QString &message, int timeout) {
   m_info->setText(message);
 }
 
+void TabsStatusProgress::reset() { setValue(0); }
+
 void TabsStatusProgress::start(const QString &message) {
   m_info->setText(message);
   setValue(100);

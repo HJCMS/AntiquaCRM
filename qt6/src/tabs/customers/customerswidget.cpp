@@ -192,24 +192,24 @@ void CustomersWidget::openStartPage() {
 void CustomersWidget::createSearchQuery(const QString &history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
+    m_statusBar->startProgress();
     m_table->setQuery(history);
+    // Nur Aktivieren wenn eine Suche ausgeführt wurde.
     m_statusBar->setCreateButtonEnabled(false);
+    m_statusBar->finalizeProgress();
     return;
   }
   // Die Standardabfrage wird aufgerufen!
-  QString _sql = m_searchBar->getSearchStatement();
+  const QString _sql = m_searchBar->getSearchStatement();
   if (_sql.isEmpty()) {
     qWarning("CustomersWidget::createSearchQuery „length()“, to small!");
     return;
   }
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << "Customers:Search" << _sql;
-#endif
-
+  // qDebug() << "Customers:Search" << _sql;
+  m_statusBar->startProgress();
   m_table->setQuery(_sql);
-  // Nur Aktivieren wenn eine Suche ausgeführt wurde.
   m_statusBar->setCreateButtonEnabled(true);
+  m_statusBar->finalizeProgress();
 }
 
 void CustomersWidget::createNewEntry() {

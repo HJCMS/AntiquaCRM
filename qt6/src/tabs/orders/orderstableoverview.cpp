@@ -13,9 +13,9 @@ OrdersTableOverView::OrdersTableOverView(QWidget *parent)
   m_model = new OrdersTableOverViewModel(this);
   where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          this, SLOT(sqlModelError(const QString &, const QString &)));
+          SLOT(sqlModelError(const QString &, const QString &)));
 
-  connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
+  connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
@@ -35,16 +35,14 @@ bool OrdersTableOverView::sqlModelQuery(const QString &query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
-    emit sendQueryReport(m_model->queryResultInfo());
-    emit sendResultExists((m_model->rowCount() > 0));
     // Table Record und NICHT QueryRecord abfragen!
+    // Siehe: setSortByColumn
     p_tableRecord = m_model->tableRecord();
+    emit sendQueryReport(m_model->queryResultInfo());
+    queryFinished(m_model->rowCount() > 0);
     return true;
   }
-  emit sendQueryReport(m_model->queryResultInfo());
-  bool _status = (m_model->rowCount() > 0);
-  emit sendResultExists(_status);
-  return _status;
+  return false;
 }
 
 void OrdersTableOverView::contextMenuEvent(QContextMenuEvent *event) {

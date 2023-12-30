@@ -97,16 +97,23 @@ void OrdersWidget::openStartPage() {
 }
 
 void OrdersWidget::createSearchQuery(const QString &history) {
-  if (!history.isEmpty()) {
-    // qDebug() << "QUERY:" << history;
+  // Verlaufs und Suchanfrage
+  if (history.length() > 10) {
+    m_statusBar->startProgress();
     m_table->setQuery(history);
+    m_statusBar->finalizeProgress();
     return;
   }
-
-  QString w_sql = m_searchBar->getSearchStatement();
-  if (m_searchBar->searchLength() > 1 && w_sql.length() > 1) {
-    m_table->setQuery(w_sql);
+  // Die Standardabfrage wird aufgerufen!
+  const QString _sql = m_searchBar->getSearchStatement();
+  if (_sql.isEmpty()) {
+    qWarning("OrdersWidget::createSearchQuery „length()“, to small!");
+    return;
   }
+  // qDebug() << "Orders:Search" << _sql;
+  m_statusBar->startProgress();
+  m_table->setQuery(_sql);
+  m_statusBar->finalizeProgress();
 }
 
 void OrdersWidget::createNewEntry() {

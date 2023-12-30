@@ -12,6 +12,7 @@
 #include <AGlobal>
 #include <ASettings>
 #include <QTableView>
+#include <QThread>
 
 // required by contextMenuAction
 #include "tablecontextmenu.h"
@@ -67,6 +68,11 @@ protected:
    * @brief enable/disable Table sorting
    */
   void setEnableTableViewSorting(bool);
+
+  /**
+   * @brief this slot is used to finalize queries from model.
+   */
+  void queryFinished(bool);
 
   /**
    * @brief Get table ID from column
@@ -141,9 +147,10 @@ Q_SIGNALS:
   void sendSocketOperation(const QJsonObject &);
 
   /**
-   * @brief Signal to inform Horizontal Table Header, update or not.
+   * @brief Automatically emitted when a query has been finished.
+   * @note called inside of @ref resizeTableHeaders
    */
-  void sendResultExists(bool);
+  void sendQueryFinished();
 
   /**
    * @brief A Query report was send ...
