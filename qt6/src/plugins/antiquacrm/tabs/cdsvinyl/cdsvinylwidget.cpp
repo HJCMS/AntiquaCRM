@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "cdsvinylconfig.h"
 #include "cdsvinylwidget.h"
+#include "cdsvinylconfig.h"
 #include "cdsvinyleditor.h"
 #include "cdsvinylsearchbar.h"
 #include "cdsvinylstatusbar.h"
@@ -116,25 +116,24 @@ void CDsVinylWidget::openStartPage() {
 void CDsVinylWidget::createSearchQuery(const QString &history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
+    m_statusBar->startProgress();
     m_table->setQuery(history);
+    // Nur Aktivieren wenn eine Suche ausgeführt wurde.
     m_statusBar->setCreateButtonEnabled(false);
+    m_statusBar->finalizeProgress();
     return;
   }
-
   // Die Standardabfrage wird aufgerufen!
   QString _sql = m_searchBar->getSearchStatement();
   if (_sql.isEmpty()) {
     qWarning("CDsVinylWidget::createSearchQuery „length()“, to small!");
     return;
   }
-
-#ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << _sql;
-#endif
-
+  // qDebug() << "CDsVinyl:Search" << _sql;
+  m_statusBar->startProgress();
   m_table->setQuery(_sql);
-  // Nur Aktivieren wenn eine Suche ausgeführt wurde.
   m_statusBar->setCreateButtonEnabled(true);
+  m_statusBar->finalizeProgress();
 }
 
 void CDsVinylWidget::createNewEntry() {

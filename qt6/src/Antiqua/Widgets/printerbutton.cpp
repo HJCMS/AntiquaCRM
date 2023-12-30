@@ -24,32 +24,31 @@ PrinterButton::PrinterButton(QWidget *parent, AntiquaCRM::PrinterGroups flags)
   ac_delivery->setToolTip(tr("Open Print Deliverynote"));
   ac_delivery->setEnabled(false);
   ac_delivery->setVisible(false);
-  connect(ac_delivery, SIGNAL(triggered()), this, SIGNAL(sendPrintDelivery()));
+  connect(ac_delivery, SIGNAL(triggered()), SIGNAL(sendPrintDelivery()));
 
   ac_invoice = m_menu->addAction(_icon, tr("Invoice"));
   ac_invoice->setToolTip(tr("Open Print Invoice"));
   ac_invoice->setEnabled(false);
   ac_invoice->setVisible(false);
-  connect(ac_invoice, SIGNAL(triggered()), this, SIGNAL(sendPrintInvoice()));
+  connect(ac_invoice, SIGNAL(triggered()), SIGNAL(sendPrintInvoice()));
 
   ac_reminder = m_menu->addAction(_icon, tr("Payment Reminder"));
   ac_reminder->setToolTip(tr("Open Print Invoice"));
   ac_reminder->setEnabled(false);
   ac_reminder->setVisible(false);
-  connect(ac_reminder, SIGNAL(triggered()), this,
-          SIGNAL(sendPaymentReminder()));
+  connect(ac_reminder, SIGNAL(triggered()), SIGNAL(sendPaymentReminder()));
 
   ac_bookcard = m_menu->addAction(_icon, tr("Book card"));
   ac_bookcard->setToolTip(tr("Printing a Book card"));
   ac_bookcard->setEnabled(false);
   ac_bookcard->setVisible(false);
-  connect(ac_bookcard, SIGNAL(triggered()), this, SIGNAL(sendPrintBookcard()));
+  connect(ac_bookcard, SIGNAL(triggered()), SIGNAL(sendPrintBookcard()));
 
   ac_refunds = m_menu->addAction(_icon, tr("Refunding"));
   ac_refunds->setToolTip(tr("Printing a refund invoice"));
   ac_refunds->setEnabled(false);
   ac_refunds->setVisible(false);
-  connect(ac_refunds, SIGNAL(triggered()), this, SIGNAL(sendPrintRefunding()));
+  connect(ac_refunds, SIGNAL(triggered()), SIGNAL(sendPrintRefunding()));
 
   setMenu(m_menu);
   setButtons(flags);

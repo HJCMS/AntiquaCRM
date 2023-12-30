@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QStyleOptionProgressBar>
 #include <QStylePainter>
+#include <QTimer>
 
 namespace AntiquaCRM {
 
@@ -37,8 +38,9 @@ TabsStatusProgress::TabsStatusProgress(QWidget *parent) : QProgressBar{parent} {
 TabsStatusProgress::~TabsStatusProgress() { m_info->clear(); }
 
 void TabsStatusProgress::showMessage(const QString &message, int timeout) {
-  Q_UNUSED(timeout);
   m_info->setText(message);
+  if (timeout > 0)
+    QTimer::singleShot((timeout * 1000), m_info, SLOT(clear()));
 }
 
 void TabsStatusProgress::reset() { setValue(0); }
