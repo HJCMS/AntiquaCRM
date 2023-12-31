@@ -6,19 +6,21 @@
 
 SET(_sub_application "antiquacmd")
 
-SET(ANTIQUACRM_INCLUDE_DIRS
+SET(ANTIQUACMD_INCLUDE_DIRS
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_SOURCE_DIR}
   ${CMAKE_CURRENT_BINARY_DIR}
+  ${CMAKE_CURRENT_SOURCE_DIR}/providers
+  ${CMAKE_CURRENT_BINARY_DIR}/providers
 )
 
-INCLUDE_DIRECTORIES (${ANTIQUACRM_INCLUDE_DIRS})
+ADD_SUBDIRECTORY(providers)
+
+INCLUDE_DIRECTORIES (${ANTIQUACMD_INCLUDE_DIRS})
 
 ADD_EXECUTABLE(${_sub_application}
   main.cpp
   antiquacmd.h antiquacmd.cpp
-  acmdproviders.h acmdproviders.cpp
-  acmdcustomers.h acmdcustomers.cpp
 )
 
 TARGET_COMPILE_FEATURES(${_sub_application} PUBLIC cxx_std_17)
@@ -29,6 +31,7 @@ TARGET_LINK_LIBRARIES(${_sub_application} PRIVATE
   Qt6::Sql
   Qt6::Xml
   AntiquaCRM
+  ACmdProviders
 )
 
 SET_TARGET_PROPERTIES(${_sub_application} PROPERTIES

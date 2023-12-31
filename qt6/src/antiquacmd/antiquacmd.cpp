@@ -4,22 +4,36 @@
 #include "antiquacmd.h"
 #include "acmdproviders.h"
 
-#include <QDebug>
 #include <QEventLoop>
-#include <QMutexLocker>
+#include <QPluginLoader>
+#include <QStaticPlugin>
 #include <QTimer>
-
-QMutex AntiquaCMD::s_mutex;
 
 AntiquaCMD::AntiquaCMD(int &argc, char **argv) : QCoreApplication{argc, argv} {
   setApplicationName("antiquacmd");
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
-  m_cfg = new AntiquaCRM::ASettings(this);
+}
+
+const QStringList AntiquaCMD::providers() {
+  QStringList _l;
+  const QStringList nFilter({"*.so"});
+  QDir _dir(QCoreApplication::applicationDirPath() + "/providers");
+  QDir::Filters sFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
+  foreach (QString p, _dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
+    if (_dir.cd(p)) {
+      foreach (QFileInfo info, _dir.entryInfoList(nFilter, sFilter)) {
+        const QString _shared = info.filePath();
+        if (QLibrary::isLibrary(_shared))
+          _l.append(_shared);
+      }
+      _dir.cdUp();
+    }
+  }
+  return _l;
 }
 
 int AntiquaCMD::update(ACmdProviders *provider) {
-  QMutexLocker locker(&s_mutex);
   QTimer timer;
   QEventLoop loop;
   connect(&timer, SIGNAL(timeout()), &loop, SLOT(quit()));
@@ -38,9 +52,24 @@ int AntiquaCMD::update(ACmdProviders *provider) {
 }
 
 void AntiquaCMD::queryAll() {
-  // update(new AbeBooks(this));
-  // update(new BookLooker(this));
-  // update(new Buchfreund(this));
+  const QStringList _plugins = providers();
+  QPluginLoader _loader;
+  for (int i = 0; i < _plugins.size(); i++) {
+    _loader.setFileName(_plugins.at(i));
+    QJsonObject _pinfo = _loader.metaData().value("MetaData").toObject();
+    QObject *obj = _loader.instance();
+    if (obj == nullptr) {
+      qWarning("Can not load '%s' plugin!",
+               qPrintable(_pinfo.value("Name").toString()));
+      continue;
+    }
+    ACmdProviders *prv = qobject_cast<ACmdProviders *>(obj);
+    if (prv == nullptr)
+      continue;
+
+    if (update(prv) == 0)
+      prv->deleteLater();
+  }
 }
 
 int AntiquaCMD::exec() {

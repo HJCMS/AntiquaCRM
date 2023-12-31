@@ -9,20 +9,28 @@
 
 ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject *parent)
     : QObject{parent} {
-  m_config = new AntiquaCRM::ASettings(this);
-  m_sql = new AntiquaCRM::ASqlCore(this);
-  m_networker = new AntiquaCRM::ANetworker(type, this);
+  setObjectName("acmdproviders");
+  cfg = new AntiquaCRM::ASettings("antiquacmd", this);
+  pgsql = new AntiquaCRM::ASqlCore(this);
+  netw = new AntiquaCRM::ANetworker(type, this);
 
   // Verlaufsabfrage
-  if (!m_config->contains("history_query"))
-    m_config->setValue("history_query", -3);
+  if (!cfg->contains("history_query"))
+    cfg->setValue("history_query", -3);
 
-  history_query = m_config->value("history_query", -3).toInt();
+  history_query = cfg->value("history_query", -3).toInt();
 
-  connect(m_networker, SIGNAL(sendJsonResponse(const QJsonDocument &)),
+  connect(netw, SIGNAL(sendJsonResponse(const QJsonDocument &)),
           SLOT(getNetworkResponse(const QJsonDocument &)));
-  connect(m_networker, SIGNAL(sendXmlResponse(const QDomDocument &)),
+
+  connect(netw, SIGNAL(sendXmlResponse(const QDomDocument &)),
           SLOT(getNetworkResponse(const QDomDocument &)));
+}
+
+ACmdProviders::~ACmdProviders() {
+  pgsql->deleteLater();
+  cfg->deleteLater();
+  netw->deleteLater();
 }
 
 void ACmdProviders::getNetworkResponse(const QJsonDocument &doc) {
@@ -51,7 +59,7 @@ QMap<QString, int> ACmdProviders::initDataInformation() {
   _query.append(" ORDER BY column_name;");
 
   QMap<QString, int> _m;
-  QSqlQuery _q = m_sql->query(_query);
+  QSqlQuery _q = pgsql->query(_query);
   if (_q.size() > 0) {
     while (_q.next()) {
       QSqlRecord _r = _q.record();
@@ -73,7 +81,6 @@ const QString ACmdProviders::ucFirst(const QString &str) {
   for (int i = 0; i < array.size(); i++) {
     array[i].replace(0, 1, array[i][0].toUpper());
   }
-  qDebug() << Q_FUNC_INFO << str << convert << array.join(" ");
   return array.join(" ");
 }
 
@@ -99,7 +106,7 @@ const QString ACmdProviders::findBCP47(const QString &country) const {
   sql.append("rc_country_en ILIKE '" + country + "'");
   sql.append("OR rc_country_de ILIKE '" + country + "';");
   QStringList found;
-  QSqlQuery q = m_sql->query(sql);
+  QSqlQuery q = pgsql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       found << q.value("rc_iso2").toString();
@@ -108,9 +115,10 @@ const QString ACmdProviders::findBCP47(const QString &country) const {
   if (found.size() < 1)
     return "DE";
 
-  if (found.size() > 1) {
-    qWarning("Found more then one BCP47 Code use first!");
-  }
+  if (found.size() > 1)
+    qInfo("Providers (%d): Found more then one BCP47 Code use first!",
+          __LINE__);
+
   return found.first();
 }
 
@@ -118,17 +126,17 @@ const QString ACmdProviders::getCountry(const QString &bcp47) const {
   QString sql("SELECT COALESCE(rc_country_de, rc_country_en)");
   sql.append("FROM ref_countries WHERE rc_iso2='" + bcp47 + "';");
   QStringList found;
-  QSqlQuery q = m_sql->query(sql);
+  QSqlQuery q = pgsql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       found << q.value(0).toString();
     }
   }
   if (found.size() < 1)
-    return "Deutschland";
+    return tr("Germany");
 
   if (found.size() > 1) {
-    qInfo("Found more then one Countries use first!");
+    qInfo("Providers (%d): Found more then one Country, use first!", __LINE__);
   }
   return found.first();
 }
@@ -160,9 +168,9 @@ const QDateTime ACmdProviders::timeSpecDate(const QDateTime &dateTime,
   return dt;
 }
 
-const QJsonValue ACmdProviders::convert(const QString &key,
+const QJsonValue ACmdProviders::convert(const QString &field,
                                         const QJsonValue &value) const {
-  if (key == "a_article_id") {
+  if (field == "a_article_id") {
     if (value.type() == QJsonValue::String) {
       QString str = value.toString();
       return str.toInt();
@@ -171,7 +179,7 @@ const QJsonValue ACmdProviders::convert(const QString &key,
     }
   }
 
-  if (key.contains("_price")) {
+  if (field.contains("_price")) {
     if (value.type() == QJsonValue::String) {
       QString str = value.toString();
       return str.toDouble();
@@ -187,23 +195,27 @@ const QJsonValue ACmdProviders::convert(const QString &key,
   case QJsonValue::Double:
     return value.toInt();
 
-  default:
+  case QJsonValue::String:
     return value.toString();
+
+  default:
+    break;
   };
 
-  return value;
+  qWarning("Providers (%d): Invalid type detected!", __LINE__);
+  return QString();
 }
 
 const QStringList ACmdProviders::currProviderIds(const QString &provider) {
   QStringList ids;
   if (provider.isEmpty()) {
-    qWarning("Required query field 'pr_name' is empty!");
+    qWarning("Providers (%d): Query field 'pr_name' is empty!", __LINE__);
     return ids;
   }
 
   QString sql("SELECT pr_order FROM provider_orders");
   sql.append(" WHERE pr_name='" + provider + "';");
-  QSqlQuery q = m_sql->query(sql);
+  QSqlQuery q = pgsql->query(sql);
   if (q.size() > 0) {
     while (q.next()) {
       ids << q.value("pr_order").toString();
@@ -254,9 +266,9 @@ bool ACmdProviders::createOrders(const QList<QJsonObject> &orders) {
     inserts.append(sql);
   }
 
-  m_sql->query(inserts.join("\n"));
-  if (!m_sql->lastError().isEmpty()) {
-    qWarning("SQL Provider insert answers with errors!");
+  pgsql->query(inserts.join("\n"));
+  if (!pgsql->lastError().isEmpty()) {
+    qWarning("Providers (%d): Insert answers with errors!", __LINE__);
     return false;
   }
 
@@ -265,7 +277,7 @@ bool ACmdProviders::createOrders(const QList<QJsonObject> &orders) {
 
 QPair<qint64, QString>
 ACmdProviders::findInsertCustomer(const QJsonObject &json) {
-  ACmdCustomers *mc = new ACmdCustomers(m_sql, json);
+  ACmdCustomers *mc = new ACmdCustomers(pgsql, json);
   qint64 c_id = mc->getId();
 #ifdef ANTIQUA_DEVELOPEMENT
   if (c_id < 1)

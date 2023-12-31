@@ -26,7 +26,6 @@ class ANTIQUACRM_LIBRARY ASqlCore final : public QObject {
   Q_OBJECT
 
 private:
-  static QMutex s_mutex;
   ASqlSettings *config;
   QSqlDatabase *database;
 

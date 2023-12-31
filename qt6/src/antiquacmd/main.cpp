@@ -16,20 +16,21 @@
 void SyslogMessageHandler(QtMsgType type, // Message Type
                           const QMessageLogContext &context,
                           const QString &msg) {
-  QByteArray localMsg = msg.toLocal8Bit();
+  QByteArray _data = msg.toLocal8Bit();
   switch (type) {
   case QtInfoMsg:
-    syslog(LOG_INFO, "%s", localMsg.constData());
+    syslog(LOG_INFO, "%s", _data.constData());
     break;
 
+  case QtDebugMsg:
   case QtWarningMsg:
-    syslog(LOG_WARNING, "%s", localMsg.constData());
+    syslog(LOG_WARNING, "%s", _data.constData());
     break;
 
   case QtCriticalMsg:
   case QtFatalMsg: {
     QString _context = QString::asprintf("’%s’", context.function);
-    syslog(LOG_ERR, "%s %s", localMsg.constData(),
+    syslog(LOG_ERR, "%s %s", _data.constData(),
            _context.toLocal8Bit().constData());
 
     abort();
@@ -38,12 +39,14 @@ void SyslogMessageHandler(QtMsgType type, // Message Type
   default:
     break;
   }
+  _data.clear();
 }
 
 int main(int argc, char *argv[]) {
 #ifndef ANTIQUA_DEVELOPEMENT
   qInstallMessageHandler(SyslogMessageHandler);
 #endif
+  // qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));
   AntiquaCMD *m_appl = new AntiquaCMD(argc, argv);
   return m_appl->exec();
 }

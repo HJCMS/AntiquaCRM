@@ -20,9 +20,8 @@ class AntiquaCMD final : public QCoreApplication {
   Q_OBJECT
 
 private:
-  static QMutex s_mutex;
-  AntiquaCRM::ASettings *m_cfg;
   qint8 timeout = 15;
+  const QStringList providers();
   int update(ACmdProviders *);
   void queryAll();
 

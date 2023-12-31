@@ -33,6 +33,7 @@ public:
    * @param parent - parent object
    */
   explicit ASettings(QObject *parent = nullptr);
+  explicit ASettings(const QString &applName, QObject *parent = nullptr);
 
   /**
    * @brief AntiquaCRM Configuration Domain

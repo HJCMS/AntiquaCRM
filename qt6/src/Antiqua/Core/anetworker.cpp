@@ -33,7 +33,9 @@ ANetworker::ANetworker(AntiquaCRM::NetworkQueryType type, QObject *parent)
 
 ANetworker::~ANetworker() {
   if (m_reply != nullptr) {
-    m_reply->close();
+    if (m_reply->isFinished())
+      m_reply->close();
+
     m_reply->deleteLater();
   }
 }
@@ -321,13 +323,13 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   request.setHeaderCacheControl();
 
   m_reply = get(request);
-  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+  connect(m_reply, SIGNAL(readyRead()), SLOT(slotReadResponse()));
+
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
 
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)),
           SLOT(slotSslErrors(QList<QSslError>)));
-
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
 
   return m_reply;
 }

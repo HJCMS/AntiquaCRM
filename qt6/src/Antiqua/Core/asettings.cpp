@@ -17,6 +17,13 @@ ASettings::ASettings(QObject *parent)
   setValue("version", ANTIQUACRM_VERSION);
 }
 
+ASettings::ASettings(const QString &applName, QObject *parent)
+    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
+                applName, parent) {
+  setValue("name", applName);
+  setValue("version", ANTIQUACRM_VERSION);
+}
+
 const QString ASettings::configDomain() {
   QString str = QString::fromUtf8(HJCMS_CONFIG_DOMAIN);
   str.append(QDir::separator());
@@ -121,7 +128,7 @@ QDir::Filters ASettings::directoryFilter() {
 
 const QStringList ASettings::pluginSearchFilter() {
 #ifdef Q_OS_LINUX
-  return QStringList({"*.a","*.so"});
+  return QStringList({"*.a", "*.so"});
 #else
   return QStringList("*.dll");
 #endif

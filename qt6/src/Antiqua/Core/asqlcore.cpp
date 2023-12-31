@@ -11,8 +11,6 @@
 
 namespace AntiquaCRM {
 
-inline QMutex ASqlCore::s_mutex;
-
 ASqlCore::ASqlCore(QObject *parent) : QObject{parent} {
   setObjectName("antiquacrm_sqlcore");
   config = new ASqlSettings(this);
@@ -184,9 +182,7 @@ const QSqlQuery ASqlCore::query(const QString &statement) {
     return QSqlQuery();
 
   QSqlQuery _query;
-  s_mutex.lock();
   _query = database->exec(statement);
-  s_mutex.unlock();
 
   if (_query.lastError().isValid())
     prepareSqlError(_query.lastError());
