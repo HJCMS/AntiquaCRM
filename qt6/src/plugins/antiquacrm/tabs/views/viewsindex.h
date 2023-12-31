@@ -22,6 +22,7 @@ class ANTIQUACRM_LIBRARY ViewsIndex final : public AntiquaCRM::TabsIndex {
 
 private:
   AntiquaCRM::ASqlCore *m_sql = nullptr;
+  QLabel *m_info;
   AntiquaCRM::AComboBox *m_comboBox;
   QTableView *m_tableView;
   ViewsTableModel *m_tableModel;

@@ -18,7 +18,7 @@ SET (plugin_FILES
 
 SET (plugin_SOURCES
  tabbooks.cpp
- bookswidget.cpp
+ booksindex.cpp
  bookssearchbar.cpp
  booksselectfilter.cpp
  bookstableview.cpp
@@ -32,7 +32,7 @@ SET (plugin_SOURCES
 SET (plugin_HEADERS
  booksconfig.h
  tabbooks.h
- bookswidget.h
+ booksindex.h
  bookssearchbar.h
  booksselectfilter.h
  bookstableview.h

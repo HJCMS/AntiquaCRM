@@ -10,11 +10,14 @@
 #define ANTIQUACRM_PLUGIN_CATALOG_SEARCHBUTTON_H
 
 #include <AntiquaWidgets>
+#include <QAction>
 #include <QIcon>
 #include <QMap>
 #include <QMenu>
 #include <QObject>
 #include <QPushButton>
+#include <QStringList>
+#include <QUrlQuery>
 
 /**
  * @class CatalogSearchButton

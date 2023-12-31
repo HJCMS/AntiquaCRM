@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_BOOKSWIDGET_H
-#define ANTIQUACRM_PLUGIN_BOOKSWIDGET_H
+#ifndef ANTIQUACRM_PLUGIN_BOOKSINDEX_H
+#define ANTIQUACRM_PLUGIN_BOOKSINDEX_H
 
 #include <AntiquaTabs>
 #include <QObject>
@@ -19,7 +19,7 @@ class BooksTableView;
 class BooksStatusBar;
 class BooksEditor;
 
-class ANTIQUACRM_LIBRARY BooksWidget final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_LIBRARY BooksIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
@@ -27,35 +27,20 @@ private:
   BooksSearchBar *m_searchBar;
   BooksTableView *m_table;
   BooksStatusBar *m_statusBar;
-
   QScrollArea *m_editorPage;
   BooksEditor *m_editorWidget;
   void setDefaultTableView() override;
 
-Q_SIGNALS:
-  /**
-   * @brief a query process has started
-   */
-  void queryStarted();
-
 public:
-  explicit BooksWidget(QWidget *parent = nullptr);
-
+  explicit BooksIndex(QWidget *parent = nullptr);
   void openStartPage() override;
-
   void createSearchQuery(const QString &history = QString()) override;
-
   void createNewEntry() override;
-
   void openEntry(qint64 articleId) override;
-
   void onEnterChanged() override;
-
   const QString getTitle() const override;
-
   bool customAction(const QJsonObject &obj) override;
-
   const QStringList acceptsCustomActions() const override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_BOOKSWIDGET_H
+#endif // ANTIQUACRM_PLUGIN_BOOKSINDEX_H

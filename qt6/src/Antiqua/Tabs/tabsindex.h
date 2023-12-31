@@ -71,9 +71,7 @@ private Q_SLOTS:
 
 protected:
   /**
-   * @brief Is this Tab already loaded and initialed?
-   *
-   * This property is used to verify if this Widget is already loaded or not.
+   * @brief indicates if this Tab already loaded and initialized.
    *
    * The primary goal is to prevent multiple functional initial calls.
    *
@@ -82,24 +80,35 @@ protected:
   bool initialed = false;
 
   /**
-   * @brief is this tab closeable?
+   * @brief indicates if this Tab is closable or not.
    *
    * This property must set in Constructor and can not changed afterwards.
    */
   bool closable = false;
 
   /**
-   * @brief Register signals, editor reports unsaved records!
-   * @note Must be installed with obj->installEventFilter(this)!
-   */
-  virtual bool eventFilter(QObject *, QEvent *) override final;
-
-  /**
    * @brief Set it Closable.
    *
-   * WRITE Property from @ref closable
+   * Q_PROPERTY WRITE - for @ref closable
    */
   void setClosable(bool b = false);
+
+  /**
+   * @brief Register signals, editor reports unsaved records!
+   *
+   * This event filter search for isWindowModified in AntiquaCRM::TabsEditor
+   * classes and have installed manual in subclass from AntiquaCRM::TabsIndex.
+   *
+   * @code
+   * m_scrollArea = new QScrollArea(this);
+   * m_scrollArea->setWidgetResizable(true);
+   * m_editor = new PluginTabEditor(m_scrollArea);
+   * m_editor->installEventFilter(this);
+   * m_scrollArea->setWidget(m_editor);
+   * insertWidget(1, m_scrollArea);
+   * @endcode
+   */
+  virtual bool eventFilter(QObject *, QEvent *) override final;
 
 protected Q_SLOTS:
   /**
@@ -119,8 +128,11 @@ protected Q_SLOTS:
 
   /**
    * @brief Send a operation to the internal socket.
+   * @param obj - socket operation
    *
-   * Create Socket call @ref AntiquaCRM::ATransmitter::pushOperation
+   * Creates a socket call to @ref AntiquaCRM::ATransmitter::pushOperation
+   *
+   * About operation definition @see AntiquaCRM::ATransmitter class.
    */
   void sendSocketOperation(const QJsonObject &obj);
 
@@ -157,24 +169,25 @@ Q_SIGNALS:
   /**
    * @brief Send Tab closeable changed
    *
-   * NOTIFY Property from @ref closable
+   * Q_PROPERTY NOTIFY - for @ref closable
    */
   void sendClosableChanged();
 
   /**
-   * @brief If Shortcut m_focusSearch was triggered.
+   * @brief If Shortcut (Ctrl+Shift+S) was triggered.
    */
   void sendSetSearchFocus();
 
   /**
-   * @brief If Shortcut from m_focusFilter was triggered.
+   * @brief If Shortcut (Ctrl+Shift+F) was triggered.
    */
   void sendSetSearchFilter();
 
   /**
    * @brief Article Id
    *
-   * Send selected ArticleId
+   * Predefined signal for Article Id selection.
+   * Mostly needed by Subclasses and not used in this main class abstraction.
    */
   void sendArticleId(qint64 id);
 
@@ -212,8 +225,7 @@ public Q_SLOTS:
    *
    * This Slot is reserved to do some  initialisation on first start.
    *
-   * For example - read configuration settings or call first database queries on
-   * start.
+   * e.g. Read configuration settings to call first database queries on start.
    *
    * See also @ref initialed
    * @code
@@ -221,8 +233,7 @@ public Q_SLOTS:
    *  if (initialed)
    *    return; // already initialed
    *
-   *  // code example for first initial
-   *  setCurrentIndex(0);
+   *  setCurrentIndex(ViewPage::MainView);
    *  setDefaultTableView();
    *  initialed = true;
    * }
@@ -240,13 +251,12 @@ public:
    * ViewPage::EditorView mode.
    *
    * Only "MainView" and "EditorView" will called from the Application, other
-   * Pages not known by the System and only useable from current plugin.
+   * Pages not known by the System and only useable from current tab plugin.
    */
   enum ViewPage {
     MainView = 0,   /**< @brief Main page Normally Index:0 */
     EditorView = 1, /**< @brief Editor page Normally Index:1 */
-    CustomView = 2, /**< @brief Additional page Index:2 */
-    PluginView = 3  /**< @brief Additional page Index:3 */
+    CustomView = 2  /**< @brief Additional page Index:2 */
   };
 
   /**
@@ -283,12 +293,15 @@ public:
   /**
    * @brief Is this tab closable or not?
    *
-   * READ Property from @ref closable
+   * Q_PROPERTY READ - for @ref closable
    */
   bool isClosable();
 
   /**
    * @brief Which Page is currently in use?
+   *
+   * Only Enumeration will returned. If you have more pages write your own
+   * operation.
    */
   TabsIndex::ViewPage currentPage();
 };

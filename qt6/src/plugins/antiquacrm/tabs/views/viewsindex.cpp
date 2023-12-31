@@ -45,8 +45,15 @@ ViewsIndex::ViewsIndex(QWidget *parent)
 
   m_layout->addWidget(m_tableView);
 
-  m_comboBox = new AntiquaCRM::AComboBox(this);
-  m_layout->addWidget(m_comboBox);
+  QFrame *m_frame = new QFrame(this);
+  QHBoxLayout *f_layout = new QHBoxLayout(m_frame);
+  f_layout->setContentsMargins(contentsMargins());
+  m_info = new QLabel(m_frame);
+  f_layout->addWidget(m_info, 1);
+  m_comboBox = new AntiquaCRM::AComboBox(m_frame);
+  f_layout->addWidget(m_comboBox);
+  m_frame->setLayout(f_layout);
+  m_layout->addWidget(m_frame);
 
   centralWidget->setLayout(m_layout);
   insertWidget(0, centralWidget);
@@ -67,9 +74,12 @@ void ViewsIndex::setDefaultTableView() {
   QSqlQuery q = m_sql->query(sql);
   if (q.size() > 0) {
     m_comboBox->clear();
+    int i = 0;
     while (q.next()) {
-      m_comboBox->addItem(q.value("comment").toString(),
-                          q.value("table_name").toString());
+      m_comboBox->insertItem(i, q.value("comment").toString(),
+                             q.value("table_name").toString());
+      m_comboBox->setItemData(i, windowIcon(), Qt::DecorationRole);
+      i++;
     }
   }
 }
@@ -82,6 +92,9 @@ void ViewsIndex::createSearchQuery(const QString &title) {
   m_tableView->setToolTip(title);
   m_tableModel->setTable(_table);
   m_tableModel->select();
+
+  const QString _info = tr("View with %1 rows.").arg(m_tableModel->rowCount());
+  m_info->setText(_info);
 }
 
 void ViewsIndex::openStartPage() { setCurrentIndex(ViewPage::MainView); }

@@ -3,7 +3,6 @@
 
 #include "catalogsearchbutton.h"
 
-#include <QDebug>
 #include <QDesktopServices>
 
 CatalogSearchButton::CatalogSearchButton(QWidget *parent)

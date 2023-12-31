@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "bookswidget.h"
+#include "booksindex.h"
 #include "booksconfig.h"
 #include "bookseditor.h"
 #include "bookssearchbar.h"
@@ -12,7 +12,7 @@
 #include <QLayout>
 #include <QMessageBox>
 
-BooksWidget::BooksWidget(QWidget *parent)
+BooksIndex::BooksIndex(QWidget *parent)
     : AntiquaCRM::TabsIndex{BOOKS_INTERFACE_TABID, parent} {
   setObjectName("books_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("kjournal"));
@@ -94,7 +94,7 @@ BooksWidget::BooksWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
-void BooksWidget::setDefaultTableView() {
+void BooksIndex::setDefaultTableView() {
   if (currentPage() != ViewPage::MainView)
     return;
 
@@ -103,7 +103,7 @@ void BooksWidget::setDefaultTableView() {
   m_statusBar->setCreateButtonEnabled(false);
 }
 
-void BooksWidget::openStartPage() {
+void BooksIndex::openStartPage() {
   setCurrentIndex(ViewPage::MainView);
   if (m_table->isAutoRefreshEnabled()) {
     m_statusBar->setCreateButtonEnabled(false);
@@ -116,7 +116,7 @@ void BooksWidget::openStartPage() {
 #endif
 }
 
-void BooksWidget::createSearchQuery(const QString &history) {
+void BooksIndex::createSearchQuery(const QString &history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
     m_statusBar->startProgress();
@@ -129,7 +129,7 @@ void BooksWidget::createSearchQuery(const QString &history) {
   // Die Standardabfrage wird aufgerufen!
   const QString _sql = m_searchBar->getSearchStatement();
   if (_sql.isEmpty()) {
-    qWarning("BooksWidget::createSearchQuery „length()“, to small!");
+    qWarning("BooksIndex::createSearchQuery „length()“, to small!");
     return;
   }
   // qDebug() << "Books:Search" << _sql;
@@ -139,18 +139,18 @@ void BooksWidget::createSearchQuery(const QString &history) {
   m_statusBar->finalizeProgress();
 }
 
-void BooksWidget::createNewEntry() {
+void BooksIndex::createNewEntry() {
   if (currentPage() == ViewPage::MainView && m_editorWidget->createNewEntry()) {
     setCurrentIndex(ViewPage::EditorView);
   }
 #ifdef ANTIQUA_DEVELOPEMENT
   else {
-    qWarning("Reject BooksWidget::createNewEntry - no main page view!");
+    qWarning("Reject BooksIndex::createNewEntry - no main page view!");
   }
 #endif
 }
 
-void BooksWidget::openEntry(qint64 articleId) {
+void BooksIndex::openEntry(qint64 articleId) {
   if (articleId < 1)
     return;
 
@@ -164,16 +164,16 @@ void BooksWidget::openEntry(qint64 articleId) {
   }
 }
 
-void BooksWidget::onEnterChanged() {
+void BooksIndex::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
   }
 }
 
-const QString BooksWidget::getTitle() const { return tr("Books"); }
+const QString BooksIndex::getTitle() const { return tr("Books"); }
 
-bool BooksWidget::customAction(const QJsonObject &obj) {
+bool BooksIndex::customAction(const QJsonObject &obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 
@@ -197,6 +197,6 @@ bool BooksWidget::customAction(const QJsonObject &obj) {
   return false;
 }
 
-const QStringList BooksWidget::acceptsCustomActions() const {
+const QStringList BooksIndex::acceptsCustomActions() const {
   return QStringList({"open_article"});
 }

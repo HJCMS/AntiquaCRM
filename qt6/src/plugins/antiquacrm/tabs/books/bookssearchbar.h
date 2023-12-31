@@ -29,21 +29,8 @@ private:
   QCheckBox *m_signed;
   QPushButton *m_searchBtn;
 
-  /**
-   * @brief Prepare SQL-Titlesearch statement
-   * @param fields - append Fields to WHERE clause
-   */
   const QString getTitleSearch(const QStringList &fields);
-
-  /**
-   * @brief Check if one LineInput isEnabled
-   */
   bool lineInputsEnabled();
-
-  /**
-   * @brief Custom Search Input
-   * @param info - QLineEdit::PlaceholderText
-   */
   void setCustomSearch(const QString &info = QString());
 
 private Q_SLOTS:
@@ -57,11 +44,8 @@ public Q_SLOTS:
 
 public:
   explicit BooksSearchBar(QWidget *parent = nullptr);
-
   int searchLength() override;
-
   bool requiredLengthExists();
-
   const QString getSearchStatement() override;
 };
 

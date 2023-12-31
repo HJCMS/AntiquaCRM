@@ -10,8 +10,10 @@
 #define ANTIQUACRM_PLUGIN_BOOKSTABLEMODEL_H
 
 #include <AntiquaCRM>
+#include <QMap>
 #include <QModelIndex>
 #include <QObject>
+#include <QVariant>
 
 class ANTIQUACRM_LIBRARY BooksTableModel final
     : public AntiquaCRM::ASqlQueryModel {

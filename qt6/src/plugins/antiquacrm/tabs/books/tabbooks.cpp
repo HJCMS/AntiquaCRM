@@ -4,7 +4,7 @@
 #include "tabbooks.h"
 #include "booksconfig.h"
 #include "bookstabconfigwidget.h"
-#include "bookswidget.h"
+#include "booksindex.h"
 
 TabBooks::TabBooks(QObject *parent) : AntiquaCRM::TabsInterface{parent} {}
 
@@ -35,7 +35,7 @@ const QJsonObject TabBooks::menuEntry() const {
 }
 
 AntiquaCRM::TabsIndex *TabBooks::indexWidget(QWidget *parent) const {
-  BooksWidget *_w = new BooksWidget(parent);
+  BooksIndex *_w = new BooksIndex(parent);
   _w->setWindowTitle(displayName() + "[*]");
   return _w;
 }

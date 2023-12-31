@@ -10,8 +10,11 @@
 #define ANTIQUACRM_PLUGIN_BOOKSTABLEVIEW_H
 
 #include <AntiquaWidgets>
+#include <QContextMenuEvent>
+#include <QModelIndex>
 #include <QObject>
 #include <QSqlRecord>
+#include <QString>
 #include <QWidget>
 
 class BooksTableModel;

@@ -52,6 +52,12 @@ void TabsIndex::prepareShortCutNewEntry() {
     createNewEntry();
 }
 
+void TabsIndex::setClosable(bool b) {
+  closable = b;
+  if (b)
+    emit sendClosableChanged();
+}
+
 bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
   if (event->type() == QEvent::ModifiedChange) {
     AntiquaCRM::TabsEditor *m_te = qobject_cast<AntiquaCRM::TabsEditor *>(obj);
@@ -63,12 +69,6 @@ bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
     }
   }
   return QStackedWidget::eventFilter(obj, event);
-}
-
-void TabsIndex::setClosable(bool b) {
-  closable = b;
-  if (b)
-    emit sendClosableChanged();
 }
 
 void TabsIndex::copyToClipboard(const QString &data) {
@@ -132,7 +132,7 @@ AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentPage() {
     return AntiquaCRM::TabsIndex::CustomView;
 
   default:
-    return AntiquaCRM::TabsIndex::PluginView;
+    return AntiquaCRM::TabsIndex::MainView;
   }
 }
 

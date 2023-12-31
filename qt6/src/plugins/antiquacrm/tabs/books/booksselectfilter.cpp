@@ -39,6 +39,16 @@ BooksSelectFilter::Filter BooksSelectFilter::currentFilter(int index) {
   return qvariant_cast<BooksSelectFilter::Filter>(itemData(_i, Qt::UserRole));
 }
 
+/**
+ * @brief Nehme aktuellen Suchfilter
+ * @note Wenn -1 dann wird currentIndex() verwendet!
+ * @code
+ *  QJsonObject(
+ *    "search" => QJSonValue().toString()
+ *    "fields" => QJSonValue().toString(),
+ *  );
+ * @endcode
+ */
 const QJsonObject BooksSelectFilter::getFilter(int index) {
   QJsonObject obj;
   switch (currentFilter(index)) {
@@ -90,9 +100,6 @@ const QJsonObject BooksSelectFilter::getFilter(int index) {
     break;
   };
 
-  //#ifdef ANTIQUA_DEVELOPEMENT
-  //  qDebug() << Q_FUNC_INFO << obj;
-  //#endif
-
+  // qDebug() << Q_FUNC_INFO << obj;
   return obj;
 }

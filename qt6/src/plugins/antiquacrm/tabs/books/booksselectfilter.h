@@ -15,7 +15,7 @@
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BooksSelectFilter : public QComboBox {
+class ANTIQUACRM_LIBRARY BooksSelectFilter final : public QComboBox {
   Q_OBJECT
 
 public:
@@ -30,19 +30,7 @@ public:
   };
 
   explicit BooksSelectFilter(QWidget *parent = nullptr);
-
   BooksSelectFilter::Filter currentFilter(int index = -1);
-
-  /**
-   * @brief Nehme aktuellen Suchfilter
-   * @note Wenn -1 dann wird currentIndex() verwendet!
-   * @code
-   *  QJsonObject(
-   *    "search" => QJSonValue().toString()
-   *    "fields" => QJSonValue().toString(),
-   *  );
-   * @endcode
-   */
   const QJsonObject getFilter(int index = -1);
 };
 

@@ -11,6 +11,8 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
+#include <QJsonObject>
+#include <QWidget>
 
 class ANTIQUACRM_LIBRARY BooksTabConfigWidget final
     : public AntiquaCRM::PluginConfigWidget {

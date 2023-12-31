@@ -10,6 +10,8 @@
 #define ANTIQUACRM_PLUGIN_BOOKSSTATUSBAR_H
 
 #include <AntiquaTabs>
+#include <QPushButton>
+#include <QWidget>
 
 class ANTIQUACRM_LIBRARY BooksStatusBar final
     : public AntiquaCRM::TabsStatusBar {
