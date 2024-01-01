@@ -1,15 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "booklookerconfigwidget.h"
-#include "booklookerconfig.h"
+#include "buchfreundconfigwidget.h"
 
 #include <QGroupBox>
 #include <QLayout>
 
-BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
-    : AntiquaCRM::PluginConfigWidget{"booklooker", parent} {
-  setObjectName("config_booklooker");
+BuchfreundConfigWidget::BuchfreundConfigWidget(QWidget *parent)
+    : AntiquaCRM::PluginConfigWidget{"Buchfreund", parent} {
+  setObjectName("config_buchfreund");
 
   QJsonObject _jobj = getMenuEntry();
   setWindowTitle(_jobj.value("title").toString() + " [*]");
@@ -30,19 +29,19 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   m_api_host = new AntiquaCRM::TextLine(this);
   m_api_host->setObjectName("api_host");
   m_api_host->setInputToolTip(tr("API Hostname"));
-  m_api_host->setValue("api.booklooker.de");
+  m_api_host->setValue("www.buchfreund.de");
   gb1_layout->addWidget(label(tr("Host")), _row, 0, 1, 1);
   gb1_layout->addWidget(m_api_host, _row, 1, 1, 1);
-  _info = tr("API Hostname. Default: api.booklooker.de");
+  _info = tr("API Hostname. Default: www.buchfreund.de");
   gb1_layout->addToolTip(_row++, 2, _info);
 
   m_api_path = new AntiquaCRM::TextLine(this);
   m_api_path->setObjectName("m_api_path");
-  m_api_path->setInputToolTip(tr("API Hostname"));
-  m_api_path->setValue("/2.0/");
+  m_api_path->setInputToolTip(tr("API path"));
+  m_api_path->setValue("/verkaeufer/api/");
   gb1_layout->addWidget(label(tr("Path")), _row, 0, 1, 1);
   gb1_layout->addWidget(m_api_path, _row, 1, 1, 1);
-  _info = tr("API Query path. Default: /2.0/");
+  _info = tr("API Query path. Default: /verkaeufer/api/");
   gb1_layout->addToolTip(_row++, 2, _info);
 
   m_api_key = new AntiquaCRM::TextLine(this);
@@ -75,20 +74,18 @@ BookLookerConfigWidget::BookLookerConfigWidget(QWidget *parent)
   setLayout(layout);
 }
 
-QLabel *BookLookerConfigWidget::label(const QString &text) {
+QLabel *BuchfreundConfigWidget::label(const QString &text) {
   QLabel *lb = new QLabel(this);
   lb->setAlignment(Qt::AlignVCenter | Qt::AlignRight);
   lb->setText(text + ":");
   return lb;
 }
 
-void BookLookerConfigWidget::loadSectionConfig() {
+void BuchfreundConfigWidget::loadSectionConfig() {
   QJsonDocument jsDocument;
   AntiquaCRM::ASqlCore dbsql(this);
   QString _sql("SELECT cfg_jsconfig FROM antiquacrm_configs ");
-  _sql.append(" WHERE cfg_group='");
-  _sql.append(BOOKLOOKER_CONFIG_POINTER);
-  _sql.append("';");
+  _sql.append(" WHERE cfg_group='CONFIG_BUCHFREUND';");
   QSqlQuery _q = dbsql.query(_sql);
   if (_q.size() > 0) {
     _q.next();
@@ -114,7 +111,7 @@ void BookLookerConfigWidget::loadSectionConfig() {
   }
 }
 
-void BookLookerConfigWidget::saveSectionConfig() {
+void BuchfreundConfigWidget::saveSectionConfig() {
   QJsonObject _jsObject;
   QList<AntiquaCRM::AInputWidget *> _list =
       findChildren<AntiquaCRM::AInputWidget *>(QString());
@@ -125,9 +122,9 @@ void BookLookerConfigWidget::saveSectionConfig() {
 
   QJsonDocument jsDocument(_jsObject);
   QString _sql("DELETE FROM antiquacrm_configs WHERE");
-  _sql.append(" cfg_group='" + BOOKLOOKER_CONFIG_POINTER + "';\n");
+  _sql.append(" cfg_group='CONFIG_BUCHFREUND';\n");
   _sql.append("INSERT INTO antiquacrm_configs (cfg_group,cfg_jsconfig)");
-  _sql.append(" VALUES ('" + BOOKLOOKER_CONFIG_POINTER + "','");
+  _sql.append(" VALUES ('CONFIG_BUCHFREUND','");
   _sql.append(jsDocument.toJson(QJsonDocument::Compact));
   _sql.append("');");
 
@@ -141,16 +138,15 @@ void BookLookerConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::ConfigType
-BookLookerConfigWidget::getType() const {
+AntiquaCRM::ConfigType BuchfreundConfigWidget::getType() const {
   return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
-const QJsonObject BookLookerConfigWidget::getMenuEntry() const {
+const QJsonObject BuchfreundConfigWidget::getMenuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("BookLooker"));
-  _jo.insert("id", tr("booklooker_tab"));
+  _jo.insert("title", tr("Buchfreund"));
+  _jo.insert("id", tr("buchfreund_tab"));
   _jo.insert("icon", tr("antiquacrm"));
-  _jo.insert("tooltip", tr("BookLooker - booklooker.de"));
+  _jo.insert("tooltip", tr("Buchfreund - www.buchfreund.de"));
   return _jo;
 }

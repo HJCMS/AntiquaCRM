@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET (_pluginTarget "AbeBooks")
+SET (_pluginTarget "Buchfreund")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
@@ -15,11 +15,10 @@ INCLUDE_DIRECTORIES (
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_pluginTarget} MODULE
- abebooks.json abebooksconfig.h
- abebooks.h abebooks.cpp
- abebooksconfigwidget.h abebooksconfigwidget.cpp
- abebooksactionsdialog.h abebooksactionsdialog.cpp
- abebooksordermaininfo.h abebooksordermaininfo.cpp
+  buchfreund.json
+  buchfreund.h buchfreund.cpp
+  buchfreundconfigwidget.h buchfreundconfigwidget.cpp
+  buchfreundoperations.h buchfreundoperations.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

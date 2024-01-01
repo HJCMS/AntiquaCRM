@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACMD_BOOKLOOKER_H
-#define ANTIQUACMD_BOOKLOOKER_H
+#ifndef ANTIQUACMD_CMDABEBOOKS_H
+#define ANTIQUACMD_CMDABEBOOKS_H
 
 #include <QByteArray>
 #include <QJsonDocument>
@@ -17,21 +17,20 @@
 #include "acmdproviders.h"
 #endif
 
-class Booklooker final : public ACmdProviders {
+class AbeBooksDocument;
+
+class CmdAbeBooks final : public ACmdProviders {
   Q_OBJECT
-  Q_PLUGIN_METADATA(IID ANTIQUACMD_INTERFACE FILE "booklooker.json")
+  Q_PLUGIN_METADATA(IID ANTIQUACMD_INTERFACE FILE "cmdabebooks.json")
   Q_INTERFACES(ACmdProviders)
 
 private:
+  AbeBooksDocument initDocument();
   const QString provider() const override;
   void initConfiguration() override;
   const QUrl apiQuery(const QString &action) override;
   void prepareContent(const QJsonDocument &document) override;
-  const QString dateString(const QDate &date = QDate::currentDate()) const;
-  void setTokenCookie(const QString &token);
-  bool isCookieExpired();
-  void authenticate();
-  void query();
+  void prepareContent(const QDomDocument &document);
 
 private Q_SLOTS:
   void responsed(const QByteArray &bread) override;
@@ -40,8 +39,8 @@ public Q_SLOTS:
   void start() override;
 
 public:
-  explicit Booklooker(QObject *parent = nullptr);
+  explicit CmdAbeBooks(QObject *parent = nullptr);
   bool init() override;
 };
 
-#endif // ANTIQUACMD_BOOKLOOKER_H
+#endif // ANTIQUACMD_CMDABEBOOKS_H

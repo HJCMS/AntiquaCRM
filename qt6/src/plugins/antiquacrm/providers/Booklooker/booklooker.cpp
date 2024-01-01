@@ -33,7 +33,7 @@ bool BookLooker::operationWidget(QWidget *parent,
 
 const QJsonObject BookLooker::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("BookLooker"));
+  _jo.insert("title", tr("Booklooker"));
   _jo.insert("id", tr("booklooker_tab"));
   _jo.insert("icon", tr("antiquacrm"));
   return _jo;

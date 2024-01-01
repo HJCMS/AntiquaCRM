@@ -1,6 +1,6 @@
 {
-  "Keys": [ "libBooklooker" ],
-  "Name": "Booklooker",
+  "Keys": [ "libCmdBooklooker" ],
+  "Name": "CmdBooklooker",
   "Title": "Booklooker cmd query",
   "Description": "AntiquaCMD integration for booklooker."
 }

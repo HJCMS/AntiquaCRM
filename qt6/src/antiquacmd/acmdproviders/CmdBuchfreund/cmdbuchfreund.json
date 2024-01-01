@@ -1,0 +1,6 @@
+{
+  "Keys": [ "libCmdBuchfreund" ],
+  "Name": "CmdBuchfreund",
+  "Title": "Buchfreund cmd query",
+  "Description": "AntiquaCMD integration for Buchfreund."
+}

@@ -1,7 +1,7 @@
 {
-  "Keys": [ "libBookLooker" ],
-  "Name": "BookLooker",
-  "Title": "BookLooker",
+  "Keys": [ "libBooklooker" ],
+  "Name": "Booklooker",
+  "Title": "Booklooker",
   "Description": "Provider Integration for booklooker.de",
   "SerialId": "1369bc5a9d606bdceee736ea5a7cd6a6",
   "Category": "provider"

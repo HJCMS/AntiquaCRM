@@ -4,8 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-
-SET (_static "ACmdProviders")
+SET (_lib "ACmdProviders")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACMD_INCLUDE_DIRS}
@@ -13,17 +12,17 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-ADD_LIBRARY (${_static} STATIC
+ADD_LIBRARY (${_lib} STATIC
   acmdproviders.h acmdproviders.cpp
   acmdcustomers.h acmdcustomers.cpp
 )
 
-SET_TARGET_PROPERTIES (${_static} PROPERTIES
+SET_TARGET_PROPERTIES (${_lib} PROPERTIES
   LINKER_LANGUAGE CXX
-  OUTPUT_NAME ${_static}
+  OUTPUT_NAME ${_lib}
 )
 
-TARGET_LINK_LIBRARIES (${_static} LINK_PRIVATE
+TARGET_LINK_LIBRARIES (${_lib} LINK_PRIVATE
   Qt6::Core
   Qt6::Sql
   Qt6::Network
@@ -31,9 +30,8 @@ TARGET_LINK_LIBRARIES (${_static} LINK_PRIVATE
   AntiquaCRM
 )
 
-
-ADD_SUBDIRECTORY(Booklooker)
-# ADD_SUBDIRECTORY(AbeBooks)
-# ADD_SUBDIRECTORY(Buchfreund)
+ADD_SUBDIRECTORY(CmdAbeBooks)
+ADD_SUBDIRECTORY(CmdBooklooker)
+ADD_SUBDIRECTORY(CmdBuchfreund)
 
 ##EOF

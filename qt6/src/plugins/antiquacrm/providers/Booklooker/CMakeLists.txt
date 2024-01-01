@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET (_pluginTarget "BookLooker")
+SET (_pluginTarget "Booklooker")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
@@ -12,31 +12,14 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (plugin_FILES
- booklooker.json
-)
-
-SET (plugin_SOURCES
- booklooker.cpp
- booklookerconfigwidget.cpp
- booklookeractions.cpp
- booklookeroperations.cpp
-)
-
-SET (plugin_HEADERS
- booklooker.h
- booklookerconfig.h
- booklookerconfigwidget.h
- booklookeractions.h
- booklookeroperations.h
-)
-
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_pluginTarget} MODULE
- ${plugin_SOURCES}
- ${plugin_HEADERS}
- ${plugin_FILES}
+ booklooker.json booklookerconfig.h
+ booklooker.h booklooker.cpp
+ booklookerconfigwidget.h booklookerconfigwidget.cpp
+ booklookeractions.h booklookeractions.cpp
+ booklookeroperations.h booklookeroperations.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
@@ -50,7 +33,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
   Qt6::Sql
   Qt6::Network
   Qt6::Xml
-  Qt6::PrintSupport
   AntiquaCRM
   AntiquaWidgets
   AntiquaProviders

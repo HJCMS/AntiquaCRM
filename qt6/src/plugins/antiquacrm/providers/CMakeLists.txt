@@ -5,6 +5,7 @@
 #
 ## Provider Configuration Plugins
 ADD_SUBDIRECTORY(AbeBooks)
-ADD_SUBDIRECTORY(BookLooker)
+ADD_SUBDIRECTORY(Booklooker)
+ADD_SUBDIRECTORY(Buchfreund)
 
 ##EOF

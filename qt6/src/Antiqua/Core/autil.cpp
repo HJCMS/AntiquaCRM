@@ -135,6 +135,10 @@ const QRegularExpression AUtil::numericRegExp() {
   return QRegularExpression("^\\d+$");
 }
 
+const QRegularExpression AUtil::nonDigitsRegExp() {
+  return QRegularExpression("\\D+");
+}
+
 const QRegularExpression AUtil::articleRegExp() {
   return QRegularExpression("^(\\d{1,9}[\\,]?)+$");
 }

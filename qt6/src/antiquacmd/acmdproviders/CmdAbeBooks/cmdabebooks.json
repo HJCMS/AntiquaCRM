@@ -1,0 +1,6 @@
+{
+  "Keys": [ "libCmdAbeBooks" ],
+  "Name": "CmdAbeBooks",
+  "Title": "AbeBooks cmd query",
+  "Description": "AntiquaCMD integration for AbeBooks."
+}

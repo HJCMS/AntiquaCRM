@@ -1,0 +1,8 @@
+{
+  "Keys": [ "libBuchfreund" ],
+  "Name": "Buchfreund",
+  "Title": "Buchfreund",
+  "Description": "Provider Integration for buchfreund.de",
+  "SerialId": "179886b771595b7308380f4ae2e8d3f9",
+  "Category": "provider"
+}

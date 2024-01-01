@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET (_pluginTarget "Booklooker")
+SET (_pluginTarget "CmdBuchfreund")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACMD_INCLUDE_DIRS}
@@ -15,8 +15,8 @@ INCLUDE_DIRECTORIES (
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_pluginTarget} SHARED
-  booklooker.json
-  booklooker.h booklooker.cpp
+  cmdbuchfreund.json
+  cmdbuchfreund.h cmdbuchfreund.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

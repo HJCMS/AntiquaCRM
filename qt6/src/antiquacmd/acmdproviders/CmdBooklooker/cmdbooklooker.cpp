@@ -1,21 +1,24 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "booklooker.h"
+#include "cmdbooklooker.h"
 
-Booklooker::Booklooker(QObject *parent)
+CmdBooklooker::CmdBooklooker(QObject *parent)
     : ACmdProviders{AntiquaCRM::JSON_QUERY, parent} {
   setObjectName("booklooker_cmd");
 }
 
-const QString Booklooker::provider() const { return QString("Booklooker"); }
+const QString CmdBooklooker::provider() const { return QString("Booklooker"); }
 
-void Booklooker::initConfiguration() {
+void CmdBooklooker::initConfiguration() {
   QString _sql("SELECT cfg_jsconfig::json FROM antiquacrm_configs");
   _sql.append(" WHERE cfg_group='CONFIG_BOOKLOOKER';");
   QSqlQuery _q = pgsql->query(_sql);
-  if (_q.size() == 0)
+  if (_q.size() == 0) {
+    qWarning("Booklooker: Configuration not found, abort!");
+    emit sendDisjointed();
     return;
+  }
 
   _q.next();
   QJsonObject _o = QJsonDocument::fromJson(_q.value(0).toByteArray()).object();
@@ -27,7 +30,7 @@ void Booklooker::initConfiguration() {
   apiPath = _o.value("m_api_path").toString();
 }
 
-const QUrl Booklooker::apiQuery(const QString &action) {
+const QUrl CmdBooklooker::apiQuery(const QString &action) {
   QUrl url(baseUrl);
   url.setPath("/2.0/" + action);
   actionsCookie = QNetworkCookie("action", action.toLocal8Bit());
@@ -36,7 +39,7 @@ const QUrl Booklooker::apiQuery(const QString &action) {
   return url;
 }
 
-void Booklooker::prepareContent(const QJsonDocument &document) {
+void CmdBooklooker::prepareContent(const QJsonDocument &document) {
   const QJsonObject obj = document.object();
   if (obj.value("status").toString().toUpper() != "OK") {
     qWarning("Booklooker Document not OK!");
@@ -315,14 +318,14 @@ void Booklooker::prepareContent(const QJsonDocument &document) {
   }
 
   qInfo("%s: Nothing todo!", qPrintable(provider()));
-  emit sendDisjointed();
+  emit sendFinished();
 }
 
-const QString Booklooker::dateString(const QDate &date) const {
+const QString CmdBooklooker::dateString(const QDate &date) const {
   return date.toString("yyyy-MM-dd");
 }
 
-void Booklooker::setTokenCookie(const QString &token) {
+void CmdBooklooker::setTokenCookie(const QString &token) {
   QDateTime dt = QDateTime::currentDateTime();
   dt.setTimeSpec(Qt::UTC);
   qint64 cookie_lifetime = (9 * 60);
@@ -333,7 +336,7 @@ void Booklooker::setTokenCookie(const QString &token) {
   start();
 }
 
-bool Booklooker::isCookieExpired() {
+bool CmdBooklooker::isCookieExpired() {
   if (authenticCookie.value().isNull())
     return true;
 
@@ -342,7 +345,7 @@ bool Booklooker::isCookieExpired() {
   return (authenticCookie.expirationDate() <= dt);
 }
 
-void Booklooker::authenticate() {
+void CmdBooklooker::authenticate() {
   QUrl url = apiQuery("authenticate");
 
   QString pd("apiKey=");
@@ -351,7 +354,7 @@ void Booklooker::authenticate() {
   netw->loginRequest(url, pd.toLocal8Bit());
 }
 
-void Booklooker::query() {
+void CmdBooklooker::query() {
   QUrl url = apiQuery("order");
 
   QDate past = QDate::currentDate().addDays(history_query);
@@ -365,12 +368,12 @@ void Booklooker::query() {
   netw->getRequest(url);
 }
 
-void Booklooker::responsed(const QByteArray &bread) {
+void CmdBooklooker::responsed(const QByteArray &bread) {
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(bread, &parser);
   if (parser.error != QJsonParseError::NoError) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qWarning("Booklooker::ParseError:(%s)!", qPrintable(parser.errorString()));
+    qWarning("CmdBooklooker::ParseError:(%s)!", qPrintable(parser.errorString()));
 #endif
     emit sendDisjointed();
     return;
@@ -389,14 +392,14 @@ void Booklooker::responsed(const QByteArray &bread) {
   prepareContent(doc);
 }
 
-void Booklooker::start() {
+void CmdBooklooker::start() {
   if (isCookieExpired())
     authenticate();
   else
     query();
 }
 
-bool Booklooker::init() {
+bool CmdBooklooker::init() {
   if (pgsql == nullptr)
     return false;
 

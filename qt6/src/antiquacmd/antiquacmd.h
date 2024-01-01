@@ -11,8 +11,8 @@
 
 #include <AGlobal>
 #include <ASettings>
-#include <QMutex>
 #include <QCoreApplication>
+#include <QMutex>
 
 class ACmdProviders;
 
@@ -20,6 +20,7 @@ class AntiquaCMD final : public QCoreApplication {
   Q_OBJECT
 
 private:
+  static QMutex s_mutex;
   qint8 timeout = 15;
   const QStringList providers();
   int update(ACmdProviders *);

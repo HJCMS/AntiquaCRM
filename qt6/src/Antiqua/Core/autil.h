@@ -122,6 +122,14 @@ public:
   static const QRegularExpression numericRegExp();
 
   /**
+   * @short Search in characters for none digits.
+   * @code
+   *  "\\D+"
+   * @endcode
+   */
+  static const QRegularExpression nonDigitsRegExp();
+
+  /**
    * @short AntiquaCRM find TABs and SPACEs
    * @code
    *  "[\\s\\t]+"
