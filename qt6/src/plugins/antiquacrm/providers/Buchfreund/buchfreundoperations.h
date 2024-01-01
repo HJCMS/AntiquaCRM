@@ -9,9 +9,12 @@
 #ifndef ANTIQUACRM_PLUGIN_BUCHFREUND_OPERATIONS_H
 #define ANTIQUACRM_PLUGIN_BUCHFREUND_OPERATIONS_H
 
-#include <AGlobal>
 #include <AntiquaProviders>
+#include <AntiquaWidgets>
+#include <QComboBox>
+#include <QDateTimeEdit>
 #include <QJsonObject>
+#include <QLabel>
 #include <QMap>
 #include <QUrl>
 #include <QWidget>
@@ -21,12 +24,22 @@ class ANTIQUACRM_LIBRARY BuchfreundOperations final
   Q_OBJECT
 
 private:
+  AntiquaCRM::ANetworker *m_networker;
+  QLabel *m_info;
+  AntiquaCRM::TextLine *m_id;
+  AntiquaCRM::SelectDeliverService *m_service;
+  QComboBox *m_type;
+  AntiquaCRM::TextLine *m_srv_number;
+  QDateTimeEdit *m_dlv_date;
   QString p_order_id;
   QMap<QString, QVariant> p_config;
+  QLabel *label(const QString &text);
+  const QString deliveryDate();
   bool initConfiguration() override;
   const QUrl apiQuery(const QString &target) override;
 
 private Q_SLOTS:
+  void networkResponse(const QJsonDocument &document);
   void prepareOperation() override;
 
 public:

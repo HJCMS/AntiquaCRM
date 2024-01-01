@@ -37,9 +37,7 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void setValue(const QVariant &) override;
-
   void setFocus() override;
-
   void reset() override;
 
 public:

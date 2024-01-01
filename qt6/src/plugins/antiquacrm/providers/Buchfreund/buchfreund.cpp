@@ -5,9 +5,6 @@
 #include "buchfreundconfigwidget.h"
 #include "buchfreundoperations.h"
 
-#include <AntiquaWidgets>
-#include <QDebug>
-
 Buchfreund::Buchfreund(QObject *parent)
     : AntiquaCRM::ProviderInterface{parent} {
   setObjectName("provider_plugin_buchfreund");
@@ -15,7 +12,9 @@ Buchfreund::Buchfreund(QObject *parent)
 
 const QString Buchfreund::displayName() const { return QString("Buchfreund"); }
 
-const QString Buchfreund::interfaceName() const { return QString("buchfreund"); }
+const QString Buchfreund::interfaceName() const {
+  return QString("buchfreund");
+}
 
 AntiquaCRM::PluginConfigWidget *
 Buchfreund::configWidget(QWidget *parent) const {

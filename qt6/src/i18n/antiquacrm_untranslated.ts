@@ -12,7 +12,7 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+196"/>
+        <location filename="../mainwindow.cpp" line="+201"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>

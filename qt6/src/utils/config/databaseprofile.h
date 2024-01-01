@@ -38,6 +38,7 @@ Q_SIGNALS:
 public Q_SLOTS:
   void findProfile(const QString &name);
   void loadEntries();
+  void setTestFocus();
 
 public:
   explicit DatabaseProfile(AntiquaCRM::ASettings *config,

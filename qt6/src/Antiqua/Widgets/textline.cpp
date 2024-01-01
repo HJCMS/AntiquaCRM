@@ -57,7 +57,11 @@ void TextLine::setValue(const QVariant &value) {
   m_edit->setText(_data);
 }
 
-void TextLine::setFocus() { m_edit->setFocus(); }
+void TextLine::setFocus() {
+  m_edit->setFocus();
+  if (!isValid())
+    m_edit->setVisualFeedback(2500);
+}
 
 void TextLine::reset() {
   m_edit->clear();
@@ -134,7 +138,7 @@ void TextLine::setBuddyLabel(const QString &text) {
 }
 
 bool TextLine::isValid() {
-  if (isRequired() && m_edit->text().isEmpty())
+  if (isRequired() && (m_edit->text().length() < 3))
     return false;
 
   return true;

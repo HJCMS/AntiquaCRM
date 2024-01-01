@@ -134,6 +134,8 @@ void DatabaseProfile::loadEntries() {
   connect(m_select, SIGNAL(currentIndexChanged(int)), SLOT(setProfile(int)));
 }
 
+void DatabaseProfile::setTestFocus() { m_test->setFocus(); }
+
 const QString DatabaseProfile::currentProfile() {
   return m_select->currentText();
 }

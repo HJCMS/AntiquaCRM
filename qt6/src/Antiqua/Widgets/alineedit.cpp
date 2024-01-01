@@ -11,6 +11,7 @@
 #include <QClipboard>
 #include <QCompleter>
 #include <QIcon>
+#include <QPropertyAnimation>
 #include <QRegularExpressionValidator>
 #include <QStatusTipEvent>
 #include <QTimer>

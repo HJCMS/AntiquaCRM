@@ -323,7 +323,7 @@ void ConfigDatabase::updateProfile() {
     return;
 
   if (resetInput())
-    pg_hostname->setFocus();
+    m_profil->setTestFocus();
 
   loadProfile(_id);
   setWindowModified(true);

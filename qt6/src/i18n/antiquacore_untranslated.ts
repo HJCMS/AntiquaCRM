@@ -23,12 +23,12 @@
     </message>
     <message>
         <location line="+36"/>
-        <source>You have unsafed changes!</source>
+        <source>You have unsaved changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Do your really want to close?</source>
+        <source>Do you really want to close?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -40,7 +40,7 @@
 <context>
     <name>AntiquaCRM::ALineEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+27"/>
+        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+28"/>
         <source>Show Completer Popup.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1224,7 +1224,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::PrintReport</name>
     <message>
-        <location filename="../Antiqua/Printing/printreport.cpp" line="+108"/>
+        <location filename="../Antiqua/Printing/printreport.cpp" line="+102"/>
         <source>PDF Document created!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1232,7 +1232,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::PrintReportPage</name>
     <message>
-        <location line="-44"/>
+        <location line="-45"/>
         <source>Total</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1276,7 +1276,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Book card</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2066,7 +2066,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TableView</name>
     <message>
-        <location filename="../Antiqua/Widgets/tableview.cpp" line="+50"/>
+        <location filename="../Antiqua/Widgets/tableview.cpp" line="+47"/>
         <source>The query at %1 returned no result.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2307,7 +2307,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TabsStatusBar</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+27"/>
+        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+31"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2322,7 +2322,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+23"/>
         <source>Today</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2386,6 +2386,11 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <source>Default view</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <location line="+14"/>
+        <source>Query started, waiting for response.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AntiquaCRM::TabsTable</name>
@@ -2429,7 +2434,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TextLine</name>
     <message>
-        <location filename="../Antiqua/Widgets/textline.cpp" line="+107"/>
+        <location filename="../Antiqua/Widgets/textline.cpp" line="+111"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>

@@ -61,8 +61,8 @@ void ADialog::closeEvent(QCloseEvent *event) {
   if (event->type() == QEvent::Close) {
     if (isWindowModified()) {
       event->setAccepted(false);
-      QString info = tr("You have unsafed changes!");
-      info.append("<p>" + tr("Do your really want to close?") + "</p>");
+      QString info = tr("You have unsaved changes!");
+      info.append("<p>" + tr("Do you really want to close?") + "</p>");
       int ret = QMessageBox::question(this, tr("Unsaved Changes!"), info);
       if (ret == QMessageBox::No)
         return;
