@@ -25,15 +25,12 @@ private:
 
 public:
   explicit ANetworkRequest(const QUrl &remoteUrl);
-  static const QByteArray antiquaCharset();
-
-  void setHeaderAcceptLanguage();
+  void setHeaderAcceptLanguage(const QByteArray &charset = ANTIQUACRM_CHARSET);
   void setHeaderUserAgent();
   void setHeaderAcceptText();
   void setHeaderAcceptJson();
-
-  void setHeaderContentTypeJson();
-  void setHeaderContentTypeXml(const QByteArray &charset = antiquaCharset());
+  void setHeaderContentTypeJson(const QByteArray &charset = ANTIQUACRM_CHARSET);
+  void setHeaderContentTypeXml(const QByteArray &charset = ANTIQUACRM_CHARSET);
 
   /**
    * @brief Header Cache Control Settings

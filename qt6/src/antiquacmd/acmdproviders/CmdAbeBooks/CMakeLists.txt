@@ -33,3 +33,8 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} LINK_PRIVATE
   AntiquaCRM
   ACmdProviders
 )
+
+INSTALL (TARGETS ${_pluginTarget}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}/antiquacmd/acmdproviders
+  COMPONENT Core
+)

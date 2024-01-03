@@ -5,18 +5,9 @@
 #include "anetworkcache.h"
 #include "anetworkrequest.h"
 
-#ifdef ANTIQUA_DEVELOPEMENT
-#ifndef ANTIQUACRM_NETWORK_DEBUG
-#define ANTIQUACRM_NETWORK_DEBUG true
-#endif
-#endif
-
 #include <ASettings>
-#include <QBuffer>
-#include <QHttpMultiPart>
-#include <QHttpPart>
-#include <QJsonParseError>
-#include <QTextStream>
+#include <QtCore>
+#include <QtNetwork>
 
 namespace AntiquaCRM {
 
@@ -109,6 +100,13 @@ void ANetworker::slotReadResponse() {
   //    return;
   //  }
 
+#ifdef ANTIQUA_DEVELOPEMENT
+  qInfo("Host: %s", qPrintable(m_reply->url().host()));
+  foreach (QByteArray a, m_reply->rawHeaderList()) {
+    qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
+  }
+#endif
+
   QVector<char> buf;
   QByteArray data;
   qint64 chunk;
@@ -126,15 +124,10 @@ void ANetworker::slotReadResponse() {
   }
   buf.clear();
 
-#if (ANTIQUACRM_NETWORK_DEBUG == true)
-  qInfo("Host: %s", qPrintable(m_reply->url().host()));
-  foreach (QByteArray a, m_reply->rawHeaderList()) {
-    qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
-  }
-#else
+#ifdef ANTIQUA_DEVELOPEMENT
   QByteArray byte_info;
   QTextStream(&byte_info) << "bytes=" << data.size();
-  qDebug("Bytes responses (%s).", byte_info.data());
+  qInfo("-- Bytes responses (%s).", byte_info.data());
 #endif
 
   // JSON Request
@@ -163,6 +156,7 @@ void ANetworker::slotReadResponse() {
       emit sendFinishedWithErrors();
       return;
     }
+
     data.clear();
     emit sendXmlResponse(xml);
     return;
@@ -201,13 +195,14 @@ QNetworkReply *ANetworker::loginRequest(const QUrl &url,
 }
 
 QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
-                                           const QJsonDocument &body) {
+                                           const QJsonDocument &body,
+                                           const QByteArray &charset) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
-  request.setHeaderAcceptLanguage();
+  request.setHeaderAcceptLanguage(charset);
   request.setHeaderAcceptText();
   request.setHeaderCacheControl();
-  request.setHeaderContentTypeJson();
+  request.setHeaderContentTypeJson(charset);
   request.setTransferTimeout((transfer_timeout * 1000));
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
@@ -227,19 +222,20 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
 }
 
 QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
-                                          const QDomDocument &body) {
-  ANetworkRequest request(url);
-  request.setHeaderUserAgent();
-  request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptText();
-  request.setHeaderCacheControl();
-  request.setHeaderContentTypeXml();
-  request.setTransferTimeout((transfer_timeout * 1000));
+                                          const QDomDocument &body,
+                                          const QByteArray &charset) {
+  ANetworkRequest _req(url);
+  _req.setHeaderUserAgent();
+  _req.setHeaderAcceptLanguage(charset);
+  _req.setHeaderAcceptText();
+  _req.setHeaderCacheControl();
+  _req.setHeaderContentTypeXml(charset);
+  _req.setTransferTimeout((transfer_timeout * 1000));
 
   QByteArray data = body.toByteArray(-1);
-  request.setHeaderContentLength(data.size());
+  _req.setHeaderContentLength(data.size());
 
-  m_reply = post(request, data);
+  m_reply = post(_req, data);
 
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
           SLOT(slotError(QNetworkReply::NetworkError)));
@@ -255,16 +251,16 @@ QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
 QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
                                                 const QString &name,
                                                 const QJsonDocument &body) {
-  ANetworkRequest request(url);
-  request.setHeaderUserAgent();
-  request.setHeaderAcceptLanguage();
-  request.setHeaderAcceptText();
-  request.setHeaderCacheControl();
-  request.setTransferTimeout((transfer_timeout * 1000));
+  ANetworkRequest _req(url);
+  _req.setHeaderUserAgent();
+  _req.setHeaderAcceptLanguage();
+  _req.setHeaderAcceptText();
+  _req.setHeaderCacheControl();
+  _req.setTransferTimeout((transfer_timeout * 1000));
 
   QByteArray data = body.toJson(QJsonDocument::Compact);
   QHttpPart json_part;
-  QString _t("application/json; charset=" + ANetworkRequest::antiquaCharset());
+  QString _t("application/json; charset=" + ANTIQUACRM_CHARSET);
   json_part.setRawHeader("ContentTypeHeader", _t.toLocal8Bit());
   QString _n("form-data; name=\"" + name + "\"");
   json_part.setRawHeader("ContentDispositionHeader", _n.toLocal8Bit());
@@ -274,7 +270,7 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   QHttpMultiPart *m_form = new QHttpMultiPart(QHttpMultiPart::FormDataType);
   m_form->append(json_part);
 
-  m_reply = post(request, m_form);
+  m_reply = post(_req, m_form);
   m_form->setParent(m_reply);
 
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,

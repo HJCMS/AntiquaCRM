@@ -253,8 +253,8 @@
  * @ingroup AMacros
  * @brief Default Charset for Database Connections, Application files, is utf8!
  */
-#ifndef ANTIQUACRM_TEXTCODEC
-#define ANTIQUACRM_TEXTCODEC "UTF8"
+#ifndef ANTIQUACRM_CHARSET
+#define ANTIQUACRM_CHARSET QByteArray("UTF8")
 #endif
 
 /**

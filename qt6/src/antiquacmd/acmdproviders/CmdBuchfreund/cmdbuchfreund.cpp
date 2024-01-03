@@ -11,7 +11,7 @@
 #define BUCHFREUND_DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
 #endif
 
-constexpr bool BUCHFREUND_DEBUG = true;
+constexpr bool BUCHFREUND_DEBUG = false;
 
 /**
  * @brief Translate Article Ids

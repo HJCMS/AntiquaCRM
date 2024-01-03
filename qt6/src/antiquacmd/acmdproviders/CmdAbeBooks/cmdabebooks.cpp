@@ -19,6 +19,12 @@ AbeBooksDocument CmdAbeBooks::initDocument() {
   return AbeBooksDocument(ac);
 }
 
+const QRegularExpression CmdAbeBooks::charsetPattern() const {
+  QRegularExpression _regexp("\\b(iso\\-8859)[\\-\\d]*",
+                             QRegularExpression::CaseInsensitiveOption);
+  return _regexp;
+}
+
 const QString CmdAbeBooks::provider() const { return QString("AbeBooks"); }
 
 void CmdAbeBooks::initConfiguration() {
@@ -60,26 +66,47 @@ void CmdAbeBooks::prepareContent(const QJsonDocument &document) {
 }
 
 void CmdAbeBooks::prepareContent(const QDomDocument &document) {
-#ifdef ANTIQUA_DEVELOPEMENT
-  QDir dir = AntiquaCRM::ASettings::getUserTempDir();
-  QFileInfo info(dir, "abebooks_orders_log.xml");
-  QFile fp(info.filePath());
-  if (fp.open(QIODevice::WriteOnly)) {
-    QTextStream data(&fp);
-    data << document.toString(1); // Indented: 1
-    fp.close();
-  }
-#endif
-
-  AbeBooksDocument xml(document);
+  // Bei fehlern sofort aussteigen!
   if (document.documentElement().tagName() == "requestError") {
-    QPair<int, QString> err = xml.errorResponseCode();
+    AbeBooksDocument errXml(document);
+    QPair<int, QString> err = errXml.errorResponseCode();
     qWarning("AbeBooks Request Error %d (%s)", err.first,
              qPrintable(err.second));
     emit sendDisjointed();
     return;
   }
+  // Konvertiere LATIN1 zu UTF-8 und ändere den XML Header!
+  const QFileInfo _tempfile(AntiquaCRM::ASettings::getUserTempDir(),
+                            "abebooks_orders_temp.xml");
 
+  QString _buffer = document.toString(1);
+  _buffer.replace(charsetPattern(), "utf8");
+
+  QFile _fp(_tempfile.filePath());
+  if (_fp.open(QIODevice::WriteOnly)) {
+    QTextStream writer(&_fp);
+    writer.setEncoding(QStringConverter::Latin1);
+    writer << _buffer;
+    _buffer.clear();
+    _fp.close();
+  } else {
+    qWarning("CmdAbeBooks: Can not write tempfile, abort import!");
+    emit sendDisjointed();
+    return;
+  }
+  // Wieder öffnen und neu einlesen!
+  QDomDocument _import;
+  if (_fp.open(QIODevice::ReadOnly)) {
+    QString _errno;
+    if (!_import.setContent(&_fp, false, &_errno)) {
+      qWarning("CmdAbeBooks: XML Errors '%s'.", qPrintable(_errno));
+      emit sendDisjointed();
+      return;
+    }
+    _fp.close();
+  }
+  // Starte Verarbeitung
+  AbeBooksDocument xml(_import);
   // purchaseOrderList
   QList<QJsonObject> ordersList;
   QStringList imported = currProviderIds(provider());
@@ -261,10 +288,9 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
 
 void CmdAbeBooks::responsed(const QByteArray &bread) {
   QDomDocument xml("response");
-  // WARNING: We need a Header with codec
-  const QString _charset(ABEBOOKS_XML_CHARSET);
+  // WARNING: We need a Header with ABEBOOKS_CHARSET
   QDomProcessingInstruction pir = xml.createProcessingInstruction(
-      "xml", "version=\"1.0\" encoding=\"" + _charset + "\"");
+      "xml", "version=\"1.0\" encoding=\"" + ABEBOOKS_CHARSET + "\"");
   xml.appendChild(pir);
 
   QString errorMsg;
@@ -279,11 +305,10 @@ void CmdAbeBooks::responsed(const QByteArray &bread) {
 }
 
 void CmdAbeBooks::start() {
-  QString operation("getAllNewOrders");
-  AbeBooksDocument doc = initDocument();
-  doc.createAction(operation);
-  QUrl url(apiQuery(operation));
-  netw->xmlPostRequest(url, doc);
+  const QString _action("getAllNewOrders");
+  AbeBooksDocument _doc = initDocument();
+  _doc.createAction(_action);
+  netw->xmlPostRequest(apiQuery(_action), _doc, ABEBOOKS_CHARSET);
 }
 
 bool CmdAbeBooks::init() {

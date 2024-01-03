@@ -6,10 +6,10 @@
 #include "asettings.h"
 
 #include <QCoreApplication>
-#include <QRegularExpression>
 #include <QDir>
 #include <QFileInfo>
 #include <QLocale>
+#include <QRegularExpression>
 
 namespace AntiquaCRM {
 
@@ -28,10 +28,6 @@ ANetworkRequest::ANetworkRequest(const QUrl &remoteUrl)
     QSslConfiguration sslConfig = sslConfigguration();
     setSslConfiguration(sslConfig);
   }
-}
-
-const QByteArray ANetworkRequest::antiquaCharset() {
-  return QByteArray(ANTIQUACRM_TEXTCODEC).toLower();
 }
 
 const QString ANetworkRequest::findCaBundleFile() const {
@@ -70,13 +66,13 @@ const QSslConfiguration ANetworkRequest::sslConfigguration() {
   return cfg;
 }
 
-void ANetworkRequest::setHeaderAcceptLanguage() {
+void ANetworkRequest::setHeaderAcceptLanguage(const QByteArray &charset) {
   QLocale locale = QLocale::system();
   QString str = locale.bcp47Name();
   str.append(", ");
   str.append(locale.name());
   str.append(".");
-  str.append(antiquaCharset());
+  str.append(charset);
   str.append("; q=0.8, en;q=0.7");
   setRawHeader(QByteArray("Accept-Language"), str.toLocal8Bit());
 }
@@ -110,9 +106,9 @@ void ANetworkRequest::setHeaderAcceptJson() {
   setRawHeader(QByteArray("Accept"), accept);
 }
 
-void ANetworkRequest::setHeaderContentTypeJson() {
+void ANetworkRequest::setHeaderContentTypeJson(const QByteArray &charset) {
   QByteArray contentType("application/json charset=");
-  contentType.append(antiquaCharset());
+  contentType.append(charset);
   setRawHeader(QByteArray("Content-Type"), contentType);
 }
 

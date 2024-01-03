@@ -11,6 +11,7 @@
 
 #include <QByteArray>
 #include <QJsonDocument>
+#include <QRegularExpression>
 #include <QObject>
 
 #ifndef ANTIQUACMD_PROVIDERS_H
@@ -26,6 +27,7 @@ class CmdAbeBooks final : public ACmdProviders {
 
 private:
   AbeBooksDocument initDocument();
+  inline const QRegularExpression charsetPattern() const;
   const QString provider() const override;
   void initConfiguration() override;
   const QUrl apiQuery(const QString &action) override;

@@ -10,6 +10,7 @@
 #include <QJsonDocument>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QNetworkRequest>
 #include <QObject>
 #include <QSslError>
 #include <QUrl>
@@ -77,30 +78,34 @@ public:
 
   /**
    * @brief Create a Login Request
-   * @param url
-   * @param data
+   * @param url  - query url
+   * @param body - HTTP_FORM_DATA_BODY
    */
   QNetworkReply *loginRequest(const QUrl &url, const QByteArray &data);
 
   /**
    * @brief Create a Json HTTP_POST request
-   * @param url
-   * @param body  HTTP_FORM_DATA_BODY
+   * @param url  - query url
+   * @param body - HTTP_FORM_DATA_BODY
    *
    * If it's an https connection and the host is set with QUrl:setHost() in the
    * URL. Is SSL encryption used (otherwise not)!
    */
-  QNetworkReply *jsonPostRequest(const QUrl &url, const QJsonDocument &body);
+  QNetworkReply *
+  jsonPostRequest(const QUrl &url, const QJsonDocument &body,
+                  const QByteArray &charset = ANTIQUACRM_CHARSET);
 
   /**
    * @brief Create a Soap HTTP_POST request
-   * @param url
-   * @param body  HTTP_FORM_DATA_BODY
+   * @param url  - query url
+   * @param body - HTTP_FORM_DATA_BODY
+   * @param charset - some providers didn't support utf8!
    *
    * If it's an https connection and the host is set with QUrl:setHost() in the
    * URL. Is SSL encryption used (otherwise not)!
    */
-  QNetworkReply *xmlPostRequest(const QUrl &url, const QDomDocument &body);
+  QNetworkReply *xmlPostRequest(const QUrl &url, const QDomDocument &body,
+                                const QByteArray &charset = ANTIQUACRM_CHARSET);
 
   /**
    * @brief Create a Multipart request

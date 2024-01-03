@@ -9,6 +9,7 @@
 #ifndef ANTIQUACMD_CMDABEBOOKS_DOCUMENT_H
 #define ANTIQUACMD_CMDABEBOOKS_DOCUMENT_H
 
+#include <QByteArray>
 #include <QDateTime>
 #include <QDomDocument>
 #include <QDomElement>
@@ -16,8 +17,8 @@
 #include <QString>
 #include <QTimeZone>
 
-#ifndef ABEBOOKS_XML_CHARSET
-#define ABEBOOKS_XML_CHARSET "ISO-8859-1"
+#ifndef ABEBOOKS_CHARSET
+#define ABEBOOKS_CHARSET QByteArray("ISO-8859-1")
 #endif
 
 struct AbeBooksAccess {

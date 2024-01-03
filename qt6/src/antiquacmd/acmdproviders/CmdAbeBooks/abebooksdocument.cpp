@@ -21,7 +21,7 @@ AbeBooksDocument::AbeBooksDocument(const AbeBooksAccess &config,
   apiLogin = config.user;
   apiKey = config.key;
   const QDomProcessingInstruction _dpir = createProcessingInstruction(
-      "xml", "version=\"1.0\" encoding=\"ISO-8859-1\"");
+      "xml", "version=\"1.0\" encoding=\"" + ABEBOOKS_CHARSET + "\"");
   appendChild(_dpir);
 
   QDomElement _actionNode = createElement(element);
