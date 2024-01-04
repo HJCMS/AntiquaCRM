@@ -46,7 +46,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+114"/>
+        <location filename="../antiquaappl.cpp" line="+117"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie vor dem Beenden bitte alle Editoren!</translation>
     </message>
@@ -67,18 +67,18 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Check SQL Server connection!</source>
-        <translation>Überprüfung der Datenbank- Serververbindung!</translation>
+        <source>Check Server connection!</source>
+        <translation>Überprüfen der Serververbindung!</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>SQL Server unreachable!</source>
-        <translation>SQL-Server nicht erreichbar!</translation>
+        <location line="+2"/>
+        <source>Server unreachable!</source>
+        <translation>Server nicht erreichbar!</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>SQL Server found!</source>
-        <translation>SQL-Server gefunden!</translation>
+        <source>Server connection successfully!</source>
+        <translation>Serververbindung erfolgreich!</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -86,7 +86,7 @@
         <translation>Öffne die Datenbankverbindung.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Database connected!</source>
         <translation>Datenbankverbindung erstellt!</translation>
     </message>
@@ -5498,7 +5498,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Bestellungen im Jahr %1.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+45"/>
         <source>Orders</source>
         <translation>Bestellungen</translation>
     </message>

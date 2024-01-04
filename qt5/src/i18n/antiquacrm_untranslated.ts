@@ -46,7 +46,7 @@
 <context>
     <name>AntiquaAppl</name>
     <message>
-        <location filename="../antiquaappl.cpp" line="+114"/>
+        <location filename="../antiquaappl.cpp" line="+117"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -67,17 +67,17 @@
     </message>
     <message>
         <location line="+5"/>
-        <source>Check SQL Server connection!</source>
+        <source>Check Server connection!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>SQL Server unreachable!</source>
+        <location line="+2"/>
+        <source>Server unreachable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>SQL Server found!</source>
+        <source>Server connection successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -86,7 +86,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+9"/>
         <source>Database connected!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5494,7 +5494,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+45"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
