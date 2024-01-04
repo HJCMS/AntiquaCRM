@@ -45,8 +45,6 @@ SET (plugin_SOURCES
   tabcustomers.cpp
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_pluginTarget} STATIC
  ${plugin_SOURCES}
  ${plugin_HEADERS}

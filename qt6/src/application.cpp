@@ -3,16 +3,25 @@
 
 #include "application.h"
 #include "mainwindow.h"
+#include "splashscreen.h"
+#include "switchdatabaseprofile.h"
 #include "systemtrayicon.h"
 #ifdef ANTIQUACRM_DBUS_ENABLED
-#include "antiquabusadaptor.h"
+#include "abusadaptor.h"
 #include <QDBusMessage>
+#endif
+
+#ifdef Q_OS_WIN
+#include <Windows.h>
+#else
+#include <unistd.h>
 #endif
 
 #include <AntiquaWidgets>
 #include <QScreen>
 #include <QStyle>
 #include <QStyleFactory>
+#include <QTimer>
 #include <QtCore>
 
 Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
@@ -60,8 +69,7 @@ bool Application::checkRemotePort() {
   if (iface.checkRemotePort(_pr.getHostname(), _pr.getPort()))
     return true;
 
-  qWarning("PostgreSQL Connection profile „%s“, is unreachable!",
-           qPrintable(_csql.getProfile()));
+  qWarning("Remote port „%d“, is unreachable!", _pr.getPort());
   return false;
 }
 
@@ -140,12 +148,12 @@ bool Application::initTranslations() {
   return false;
 }
 
-void Application::initGUI() {
-  // Window
+bool Application::initGUI() {
+  // MainWindow
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
-  // SysTray
+  // SystemTray
   m_systray = new SystemTrayIcon(applIcon(), this);
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
@@ -156,7 +164,7 @@ void Application::initGUI() {
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {
     // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage testing
-    AntiquaBusAdaptor *m_adaptor = new AntiquaBusAdaptor(this);
+    ABusAdaptor *m_adaptor = new ABusAdaptor(this);
     m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
     connect(m_adaptor, SIGNAL(sendMessage(const QString &)), m_systray,
             SLOT(setMessage(const QString &)));
@@ -165,6 +173,8 @@ void Application::initGUI() {
     connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
   }
 #endif
+
+  return (m_window != nullptr);
 }
 
 void Application::applicationQuit() {
@@ -222,38 +232,82 @@ bool Application::isRunning() {
 
 int Application::exec() {
   QMutex mutex;
+  // Init user interface for member bindings
+  if (!initGUI()) {
+    qFatal("failed to initital window");
+    return 2;
+  }
 
+  // start splash
+  SplashScreen p_splash(m_window);
+  p_splash.show();
+
+  // Step 1 - init stylesheet
+  p_splash.setMessage("Initial Themes & styles.");
   mutex.lock();
   initStyleTheme();
   mutex.unlock();
 
+  // Step 2 - show translations
+  p_splash.setMessage("Initial Translations.");
   mutex.lock();
   initTranslations();
   mutex.unlock();
 
-  mutex.lock();
-  checkInterfaces();
-  mutex.unlock();
-
-  mutex.lock();
-  checkRemotePort();
-  mutex.unlock();
-
-  mutex.lock();
-  openDatabase();
-  mutex.unlock();
-
-  mutex.lock();
-  initGUI();
-  if (m_window == nullptr) {
-    qFatal("failed to initital window");
-    return 2;
-  }
-  mutex.unlock();
-
-  // last step - open components
+  // Step 3 - show systemtray
+  p_splash.setMessage("Open Systemtray icon.");
   m_systray->show();
-  m_window->openWindow();
+
+  // Step 4 - network
+  p_splash.setMessage("Search Networkconnection!");
+  mutex.lock();
+  if (!checkInterfaces()) {
+    p_splash.errorMessage(tr("No Networkconnection found!"));
+    mutex.unlock();
+    return 0;
+  }
+  p_splash.setMessage(tr("Valid Networkconnection found!"));
+  mutex.unlock();
+
+  // Step 5 - SQL Server
+  p_splash.setMessage(tr("Check Network server port!"));
+  mutex.lock();
+  if (!checkRemotePort()) {
+    p_splash.errorMessage(tr("Network server port isn't reachable!"));
+    mutex.unlock();
+    sleep(3); // wait 3 seconds before exit
+    return 0;
+  }
+  p_splash.setMessage(tr("Network connection to remote port exists."));
+  mutex.unlock();
+
+  // Step 6 - SQL Database
+  p_splash.setMessage(tr("Open Database connection."));
+  mutex.lock();
+  if (!openDatabase()) {
+    p_splash.errorMessage(tr("SQL Server connection unsuccessful!"));
+    SwitchDatabaseProfile _dbd(m_cfg, &p_splash);
+    if (_dbd.exec() == QDialog::Rejected) {
+      qInfo("No database profile changes.");
+    } else {
+      qInfo("Database profile changed, application restart required.");
+    }
+    mutex.unlock();
+    return 0;
+  }
+  p_splash.setMessage(tr("Database connection successfully."));
+  mutex.unlock();
+
+  // Step 7 - create cache files
+  p_splash.setMessage(tr("Update application cache."));
+  // TODO
+
+  // Step 8 - finish splash and unlock
+  p_splash.setMessage(tr("Open AntiquaCRM application ..."));
+
+  // Step 9 - open application window
+  if (m_window->openWindow())
+    p_splash.finish(m_window);
 
   return QApplication::exec();
 }

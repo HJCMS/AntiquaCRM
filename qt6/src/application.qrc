@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>icons/antiquacrm-splash.png</file>
         <file>icons/action-add.png</file>
         <file>icons/action-clear.png</file>
         <file>icons/action-cut.png</file>

@@ -49,22 +49,20 @@ INCLUDE_DIRECTORIES (${ANTIQUA_APPL_INCLUDE_DIRS})
 
 QT_ADD_RESOURCES(APPLICATION_QRC application.qrc)
 
-SET(APPLICATION_HEADERS
- antiquadialogs.h
- application.h
- mainwindow.h
- menubar.h
- statusbar.h
- systemtrayicon.h
+SET(APPLICATION_FILES
+  data/antiquacrm.qcss
 )
 
 SET(APPLICATION_SOURCES
  main.cpp
- application.cpp
- mainwindow.cpp
- menubar.cpp
- statusbar.cpp
- systemtrayicon.cpp
+ antiquadialogs.h
+ application.h application.cpp
+ mainwindow.h mainwindow.cpp
+ menubar.h menubar.cpp
+ statusbar.h statusbar.cpp
+ systemtrayicon.h systemtrayicon.cpp
+ switchdatabaseprofile.h switchdatabaseprofile.cpp
+ splashscreen.h splashscreen.cpp
 )
 
 SET(APPLICATION_LIBRARIES
@@ -87,29 +85,24 @@ SET(APPLICATION_LIBRARIES
 
 IF(Qt6WinExtras_FOUND)
   SET(APPLICATION_LIBRARIES
-   Qt6::WinExtras
    ${APPLICATION_LIBRARIES}
+   Qt6::WinExtras
   )
 ENDIF()
 
 IF(Qt6DBus_FOUND)
   ADD_DEFINITIONS (-DANTIQUACRM_DBUS_ENABLED)
   SET(APPLICATION_LIBRARIES
-   Qt6::DBus
    ${APPLICATION_LIBRARIES}
+   Qt6::DBus
   )
   SET(APPLICATION_SOURCES
    ${APPLICATION_SOURCES}
-   antiquabusadaptor.cpp
+   abusadaptor.h abusadaptor.cpp
   )
-  SET(APPLICATION_HEADERS
-   ${APPLICATION_HEADERS}
-   antiquabusadaptor.h
-  )
-ENDIF(Qt6DBus_FOUND)
+ENDIF()
 
 ADD_EXECUTABLE(${PROJECTNAME}
- ${APPLICATION_HEADERS}
  ${APPLICATION_SOURCES}
  ${APPLICATION_QRC}
  ${APPLICATION_FILES}

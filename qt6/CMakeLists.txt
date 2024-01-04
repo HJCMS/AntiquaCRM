@@ -57,6 +57,7 @@ SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W -Wall -Wno-implicit-fallt
 SET(CMAKE_AUTOUIC OFF)
 SET(CMAKE_AUTORCC OFF)
 SET(CMAKE_AUTOMOC ON)
+SET(CMAKE_CONFIGURATION_TYPES Debug Release MinSizeRel)
 
 ## Enables some Development options and tracing
 OPTION (ANTIQUA_DEVELOPEMENT "Enable development macro code" OFF)

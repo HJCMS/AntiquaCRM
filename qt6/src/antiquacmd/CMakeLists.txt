@@ -31,7 +31,7 @@ TARGET_LINK_LIBRARIES(${_sub_application} PRIVATE
   Qt6::Sql
   Qt6::Xml
   AntiquaCRM
-  ACmdProviders
+  ACmdPlugin
 )
 
 SET_TARGET_PROPERTIES(${_sub_application} PROPERTIES
@@ -40,6 +40,6 @@ SET_TARGET_PROPERTIES(${_sub_application} PROPERTIES
 )
 
 INSTALL (TARGETS ${_sub_application}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}/antiquacmd
+  RUNTIME DESTINATION lib${LIB_SUFFIX}/antiquacmd/
   COMPONENT Core
 )

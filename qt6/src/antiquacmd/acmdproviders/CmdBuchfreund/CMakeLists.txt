@@ -30,10 +30,10 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} LINK_PRIVATE
   Qt6::Network
   Qt6::Xml
   AntiquaCRM
-  ACmdProviders
+  ACmdPlugin
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  RUNTIME DESTINATION ${CMAKE_INSTALL_LIBDIR}/antiquacmd/acmdproviders
+  RUNTIME DESTINATION lib${LIB_SUFFIX}/antiquacmd/acmdproviders
   COMPONENT Core
 )

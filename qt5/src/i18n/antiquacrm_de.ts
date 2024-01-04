@@ -5513,7 +5513,7 @@ Bild - Artikel Nr: %2</translation>
     <message>
         <location line="+10"/>
         <source>Sales from past to current year.</source>
-        <translation>Verkäufe vom vergangenen bis zum aktuellen Jahr.</translation>
+        <translation>Verkäufe von vergangenen bis zum aktuellen Jahr.</translation>
     </message>
 </context>
 <context>

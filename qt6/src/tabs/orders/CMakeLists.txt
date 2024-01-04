@@ -60,8 +60,6 @@ SET (plugin_HEADERS
   taborders.h
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_pluginTarget} STATIC
  ${plugin_SOURCES}
  ${plugin_HEADERS}

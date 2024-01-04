@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: LGPL-3.0-or-later
 #
 
-SET (_lib "ACmdProviders")
+SET (_static_lib "ACmdPlugin")
 
 INCLUDE_DIRECTORIES (
   ${ANTIQUACMD_INCLUDE_DIRS}
@@ -12,17 +12,17 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-ADD_LIBRARY (${_lib} STATIC
+ADD_LIBRARY (${_static_lib} STATIC
   acmdproviders.h acmdproviders.cpp
   acmdcustomers.h acmdcustomers.cpp
 )
 
-SET_TARGET_PROPERTIES (${_lib} PROPERTIES
+SET_TARGET_PROPERTIES (${_static_lib} PROPERTIES
   LINKER_LANGUAGE CXX
-  OUTPUT_NAME ${_lib}
+  OUTPUT_NAME ${_static_lib}
 )
 
-TARGET_LINK_LIBRARIES (${_lib} LINK_PRIVATE
+TARGET_LINK_LIBRARIES (${_static_lib} LINK_PRIVATE
   Qt6::Core
   Qt6::Sql
   Qt6::Network

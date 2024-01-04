@@ -6,8 +6,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUA_UI_BUSADAPTOR_H
-#define ANTIQUA_UI_BUSADAPTOR_H
+#ifndef ANTIQUA_UI_ABUSADAPTOR_H
+#define ANTIQUA_UI_ABUSADAPTOR_H
 
 #include <AGlobal>
 #include <QDBusAbstractAdaptor>
@@ -16,10 +16,10 @@
 #include <QObject>
 
 /**
- * @class AntiquaBusAdaptor
+ * @class ABusAdaptor
  * @brief AntiquaCRM D-Bus Adaptor
  */
-class AntiquaBusAdaptor final : public QDBusAbstractAdaptor {
+class ABusAdaptor final : public QDBusAbstractAdaptor {
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", ANTIQUACRM_CONNECTION_DOMAIN)
   Q_PROPERTY(QString message READ message WRITE pushMessage NOTIFY received)
@@ -68,7 +68,7 @@ public:
   /**
    * @param parent - object handle
    */
-  explicit AntiquaBusAdaptor(QObject *parent = nullptr);
+  explicit ABusAdaptor(QObject *parent = nullptr);
 
   /**
    * @brief receive push message
@@ -76,4 +76,4 @@ public:
   const QString message() const;
 };
 
-#endif // ANTIQUA_UI_BUSADAPTOR_H
+#endif // ANTIQUA_UI_ABUSADAPTOR_H

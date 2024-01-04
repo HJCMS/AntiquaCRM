@@ -62,7 +62,7 @@ private:
   /**
    * @brief Load and initial components.
    */
-  void initGUI();
+  bool initGUI();
 
 Q_SIGNALS:
   /**

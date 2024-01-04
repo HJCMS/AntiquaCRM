@@ -15,6 +15,9 @@
 #ifdef Q_OS_WIN
 #include <QColor>
 #include <QPalette>
+#include <Windows.h>
+#else
+#include <unistd.h>
 #endif
 #include <QLocalSocket>
 #include <QMessageBox>
@@ -210,23 +213,24 @@ int AntiquaAppl::exec() {
 
   // Step 4 - sql port test
   mutex.lock();
-  p_splashScreen.setMessage(tr("Check SQL Server connection!"));
+  p_splashScreen.setMessage(tr("Check Server connection!"));
   if (!checkRemotePort()) {
-    SwitchDBConnection _dbd(&p_splashScreen);
-    if (_dbd.exec() == QDialog::Rejected) {
-      p_splashScreen.setMessage(tr("SQL Server unreachable!"));
-    }
+    p_splashScreen.setMessage(tr("Server unreachable!"));
     mutex.unlock();
+    sleep(3);
     return 0;
   }
-  p_splashScreen.setMessage(tr("SQL Server found!"));
+  p_splashScreen.setMessage(tr("Server connection successfully!"));
   mutex.unlock();
 
   // Step 5 - sql database test
   mutex.lock();
   p_splashScreen.setMessage(tr("Open Database connection."));
   if (!checkDatabase()) {
-    qWarning("No Database connected!");
+    SwitchDBConnection _dbd(&p_splashScreen);
+    if (_dbd.exec() == QDialog::Rejected) {
+      qWarning("No Database connected!");
+    }
     mutex.unlock();
     return 0;
   }
