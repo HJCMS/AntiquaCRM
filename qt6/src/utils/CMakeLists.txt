@@ -8,5 +8,6 @@ ADD_SUBDIRECTORY(delivery)
 ADD_SUBDIRECTORY(designation)
 ADD_SUBDIRECTORY(keywords)
 ADD_SUBDIRECTORY(storages)
+ADD_SUBDIRECTORY(datacache)
 
 ##EOF

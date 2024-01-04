@@ -74,6 +74,7 @@ SET(APPLICATION_LIBRARIES
   AboutDialog
   CompanyDialog
   ConfigDialog
+  DataCache
   DeliveryDialog
   DesignationDialog
   KeywordsDialog

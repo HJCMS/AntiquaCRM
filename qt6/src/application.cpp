@@ -6,6 +6,7 @@
 #include "splashscreen.h"
 #include "switchdatabaseprofile.h"
 #include "systemtrayicon.h"
+#include "utils/datacache/datacache.h"
 #ifdef ANTIQUACRM_DBUS_ENABLED
 #include "abusadaptor.h"
 #include <QDBusMessage>
@@ -300,7 +301,21 @@ int Application::exec() {
 
   // Step 7 - create cache files
   p_splash.setMessage(tr("Update application cache."));
-  // TODO
+  if (m_sql->db().isOpen()) {
+    mutex.lock();
+    p_splash.setMessage(tr("Creating Cachefiles."));
+    DataCache *m_cache = new DataCache(this);
+    connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splash,
+            SLOT(setMessage(const QString &)));
+
+    if (m_cache->createCaches()) {
+      p_splash.setMessage(tr("Cachefiles completed ..."));
+    } else {
+      p_splash.setMessage(tr("Create Cachefile failed ..."));
+    }
+    m_cache->deleteLater();
+    mutex.unlock();
+  }
 
   // Step 8 - finish splash and unlock
   p_splash.setMessage(tr("Open AntiquaCRM application ..."));
