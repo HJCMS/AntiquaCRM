@@ -6,12 +6,14 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#ifndef ANTIQUACRM_PLUGIN_STITCHESSTATUSBAR_H
-#define ANTIQUACRM_PLUGIN_STITCHESSTATUSBAR_H
+#ifndef ANTIQUACRM_PLUGIN_VARIOUSSTATUSBAR_H
+#define ANTIQUACRM_PLUGIN_VARIOUSSTATUSBAR_H
 
 #include <AntiquaTabs>
+#include <QPushButton>
+#include <QWidget>
 
-class ANTIQUACRM_LIBRARY StitchesStatusBar final
+class ANTIQUACRM_LIBRARY VariousStatusBar final
     : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
@@ -24,8 +26,8 @@ public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit StitchesStatusBar(QWidget *parent = nullptr);
+  explicit VariousStatusBar(QWidget *parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 
-#endif // ANTIQUACRM_PLUGIN_STITCHESSTATUSBAR_H
+#endif // ANTIQUACRM_PLUGIN_VARIOUSSTATUSBAR_H

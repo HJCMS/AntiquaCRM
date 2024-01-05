@@ -1,0 +1,9 @@
+{
+  "Keys": [ "libVarious" ],
+  "Name": "Various",
+  "Title": "Various Tab",
+  "Description": "Inventory Integration for Edit Various.",
+  "SerialId": "b77a010fad27630d86f8810067cac6e2",
+  "Selectable": true,
+  "Category": "tabs"
+}

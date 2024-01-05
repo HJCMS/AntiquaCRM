@@ -1,13 +1,13 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "bookstableview.h"
-#include "bookstablemodel.h"
+#include "varioustableview.h"
+#include "varioustablemodel.h"
 
-BooksTableView::BooksTableView(QWidget *parent)
+VariousTableView::VariousTableView(QWidget *parent)
     : AntiquaCRM::TableView{parent} {
   setEnableTableViewSorting(true);
-  m_model = new BooksTableModel(this);
+  m_model = new VariousTableModel(this);
   where_clause = defaultWhereClause();
   connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
           SLOT(sqlModelError(const QString &, const QString &)));
@@ -16,7 +16,7 @@ BooksTableView::BooksTableView(QWidget *parent)
           SLOT(getSelectedItem(const QModelIndex &)));
 }
 
-qint64 BooksTableView::getTableID(const QModelIndex &index, int column) {
+qint64 VariousTableView::getTableID(const QModelIndex &index, int column) {
   QModelIndex id(index);
   if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
     return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
@@ -24,11 +24,7 @@ qint64 BooksTableView::getTableID(const QModelIndex &index, int column) {
   return -1;
 }
 
-int BooksTableView::getArticleCount(const QModelIndex &index) {
-  return getTableID(index, 1);
-}
-
-bool BooksTableView::sqlModelQuery(const QString &query) {
+bool VariousTableView::sqlModelQuery(const QString &query) {
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
@@ -43,7 +39,7 @@ bool BooksTableView::sqlModelQuery(const QString &query) {
   return false;
 }
 
-void BooksTableView::contextMenuEvent(QContextMenuEvent *event) {
+void VariousTableView::contextMenuEvent(QContextMenuEvent *event) {
   QModelIndex index = indexAt(event->pos());
   qint64 rows = m_model->rowCount();
   AntiquaCRM::TableContextMenu *m_menu =
@@ -67,9 +63,8 @@ void BooksTableView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->deleteLater();
 }
 
-void BooksTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
-                                       const QModelIndex &index) {
-
+void VariousTableView::contextMenuAction(
+    AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
   qint64 aid = getTableID(index);
   if (aid < 1)
     return;
@@ -93,7 +88,7 @@ void BooksTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
   };
 }
 
-void BooksTableView::setSortByColumn(int column, Qt::SortOrder order) {
+void VariousTableView::setSortByColumn(int column, Qt::SortOrder order) {
   if (column < 0)
     return;
 
@@ -109,7 +104,7 @@ void BooksTableView::setSortByColumn(int column, Qt::SortOrder order) {
     }
     if (fieldList.contains(order_by)) {
       order_by.prepend("(");
-      order_by.append(",ib_changed)");
+      order_by.append(",va_changed)");
     }
   }
 
@@ -118,7 +113,7 @@ void BooksTableView::setSortByColumn(int column, Qt::SortOrder order) {
   if (order == Qt::AscendingOrder)
     sort = Qt::DescendingOrder;
 
-  AntiquaCRM::ASqlFiles query("query_tab_books_main");
+  AntiquaCRM::ASqlFiles query("query_tab_various_main");
   if (query.openTemplate()) {
     query.setWhereClause(where_clause);
     query.setOrderBy(order_by);
@@ -128,15 +123,15 @@ void BooksTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlModelQuery(query.getQueryContent());
 }
 
-void BooksTableView::getSelectedItem(const QModelIndex &index) {
+void VariousTableView::getSelectedItem(const QModelIndex &index) {
   qint64 aid = getTableID(index);
   if (aid >= 1)
     emit sendOpenEntry(aid);
 }
 
-void BooksTableView::createSocketOperation(const QModelIndex &index) {
+void VariousTableView::createSocketOperation(const QModelIndex &index) {
   qint64 aid = getTableID(index);
-  if (aid >= 1 && getArticleCount(index) > 0) {
+  if (aid >= 1) {
     QJsonObject obj;
     obj.insert("ACTION", "add_article");
     obj.insert("TARGET", "orders_tab");
@@ -147,24 +142,24 @@ void BooksTableView::createSocketOperation(const QModelIndex &index) {
   }
 }
 
-void BooksTableView::setReloadView() {
+void VariousTableView::setReloadView() {
   sqlModelQuery(m_model->query().lastQuery());
 }
 
-int BooksTableView::rowCount() { return m_model->rowCount(); }
+int VariousTableView::rowCount() { return m_model->rowCount(); }
 
-bool BooksTableView::setQuery(const QString &clause) {
-  AntiquaCRM::ASqlFiles query("query_tab_books_main");
+bool VariousTableView::setQuery(const QString &clause) {
+  AntiquaCRM::ASqlFiles query("query_tab_various_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
     query.setWhereClause(where_clause);
-    query.setOrderBy("(ib_count,ib_changed,ib_id)");
+    query.setOrderBy("(va_count,va_changed,va_id)");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
   return sqlModelQuery(query.getQueryContent());
 }
 
-const QString BooksTableView::defaultWhereClause() {
-  return QString("DATE(ib_changed)=CURRENT_DATE");
+const QString VariousTableView::defaultWhereClause() {
+  return QString("DATE(va_changed)=CURRENT_DATE");
 }

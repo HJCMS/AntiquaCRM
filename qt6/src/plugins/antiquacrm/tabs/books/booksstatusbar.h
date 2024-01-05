@@ -22,9 +22,6 @@ private:
   QPushButton *btn_history;
   void setHistoryActionMenu(QPushButton *parent) override;
 
-private Q_SLOTS:
-  void setHistoryAction(int) override;
-
 public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 

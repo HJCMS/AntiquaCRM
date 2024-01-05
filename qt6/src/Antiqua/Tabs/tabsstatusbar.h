@@ -25,6 +25,10 @@ class TabsStatusProgress;
 
 class ANTIQUACRM_LIBRARY TabsStatusBar : public QFrame {
   Q_OBJECT
+  Q_PROPERTY(QString filterName READ getFilterName WRITE setFilterName NOTIFY
+                 sendFilterNameChanged);
+  Q_PROPERTY(QString stockName READ getStockName WRITE setStockName NOTIFY
+                 sendStockNameChanged);
 
 public:
   enum History {
@@ -35,7 +39,8 @@ public:
     ThisWeek = 5,
     ThisMonth = 6,
     ThisYear = 7,
-    NOIMAGE = 8
+    NOIMAGE = 8,
+    Customized = 9
   };
   explicit TabsStatusBar(QWidget *parent = nullptr);
 
@@ -75,6 +80,17 @@ private:
    */
   QPushButton *btn_refresh;
 
+  /**
+   * @brief SQL field names used by @ref setHistoryAction
+   * @{
+   */
+  QString filterName;
+  QString stockName;
+  QString imgFilter = QString("AND im_id IS NULL");
+  /**
+   * @}
+   */
+
 protected:
   /**
    * @brief Predifined Signal Mapper for History Menu
@@ -113,6 +129,18 @@ protected:
   const QIcon historyIcon() const;
 
   /**
+   * @brief Set Fieldname for filter by TIMESTAMP
+   * @param name - Fieldname for filtering date times
+   */
+  void setFilterName(const QString &name);
+
+  /**
+   * @brief Set Fieldname for filter by stock
+   * @param name - Fieldname for filtering with crowd
+   */
+  void setStockName(const QString &name);
+
+  /**
    * @brief Create History action menu for History Button.
    *
    * In this function you can create customized History Action Menu.
@@ -123,17 +151,33 @@ protected:
 
 protected Q_SLOTS:
   /**
-   * @brief History actions Slot
-   * @note Because of SignalMapper the parameter is an integer!
-   * @sa setHistoryActionMenu
+   * @brief History actions slot
+   * @note Some hints before use it
+   *  @li Because of SignalMapper the parameter is an integer!
+   *  @li This slot requires some filter name settings before you can use it.
+   *  @li The signal processing must enabled in subclasses.
+   *
+   * @sa setHistoryActionMenu, setFilterName, setStockName
+   *
+   * Alternatively you can override this method to create your own actions.
    */
-  virtual void setHistoryAction(int) = 0;
+  virtual void setHistoryAction(int);
 
 Q_SIGNALS:
   /**
+   * @brief This signal will emitted when filterName has changed
+   */
+  void sendFilterNameChanged(const QString &);
+
+  /**
+   * @brief This signal will emitted when stockName has changed
+   */
+  void sendStockNameChanged(const QString &);
+
+  /**
    * @brief Reserved signal for History queries
    */
-  void sendHistoryQuery(const QString &query);
+  void sendHistoryQuery(const QString &);
 
   /**
    * @brief Triggered by „Create Button“
@@ -156,6 +200,16 @@ public Q_SLOTS:
    */
   void startProgress();
   void finalizeProgress();
+
+  /**
+   * @brief current field name for date filter selection
+   */
+  const QString getFilterName();
+
+  /**
+   * @brief current field name for crowd filtering
+   */
+  const QString getStockName();
 
   /**
    * @brief Status bar message

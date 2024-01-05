@@ -1,15 +1,15 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "booksstatusbar.h"
+#include "variousstatusbar.h"
 
-BooksStatusBar::BooksStatusBar(QWidget *parent)
+VariousStatusBar::VariousStatusBar(QWidget *parent)
     : AntiquaCRM::TabsStatusBar{parent} {
   // sql feldname für filter setzen
-  setFilterName("ib_changed");
-  setStockName("ib_count");
+  setFilterName("va_changed");
+  setStockName("va_count");
 
-  btn_create = createButton(tr("New entry"), tr("Create a new Book entry."));
+  btn_create = createButton(tr("New entry"), tr("Create a new entry."));
   setCreateButtonEnabled(false);
 
   defaultViewButton();
@@ -18,7 +18,7 @@ BooksStatusBar::BooksStatusBar(QWidget *parent)
   setHistoryActionMenu(btn_history);
 }
 
-void BooksStatusBar::setHistoryActionMenu(QPushButton *parent) {
+void VariousStatusBar::setHistoryActionMenu(QPushButton *parent) {
   // Mapper für Verlaufssignale
   m_mapper = new QSignalMapper(parent);
   QMenu *m_menu = new QMenu(parent);
@@ -33,8 +33,10 @@ void BooksStatusBar::setHistoryActionMenu(QPushButton *parent) {
   connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
 }
 
-void BooksStatusBar::setCreateButtonEnabled(bool b) {
+void VariousStatusBar::setCreateButtonEnabled(bool b) {
   btn_create->setEnabled(b);
 }
 
-bool BooksStatusBar::isCreateButtonEnabled() { return btn_create->isEnabled(); }
+bool VariousStatusBar::isCreateButtonEnabled() {
+  return btn_create->isEnabled();
+}
