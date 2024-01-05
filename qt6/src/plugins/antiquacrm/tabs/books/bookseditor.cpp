@@ -674,7 +674,7 @@ void BooksEditor::createSqlInsert() {
     }
   }
 
-  QString sql("INSERT INTO inventory_books (");
+  QString sql("INSERT INTO " + QString(BOOKS_SQL_TABLE_NAME) + " (");
   sql.append(column.join(","));
   sql.append(",ib_changed) VALUES (");
   sql.append(values.join(","));

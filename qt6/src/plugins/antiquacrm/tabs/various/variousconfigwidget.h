@@ -18,6 +18,10 @@ class ANTIQUACRM_LIBRARY VariousConfigWidget final
     : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
+private:
+  AntiquaCRM::PriceEdit *m_minPrice;
+  AntiquaCRM::PriceEdit *m_normalPrice;
+
 public Q_SLOTS:
   void loadSectionConfig() override;
   void saveSectionConfig() override;
