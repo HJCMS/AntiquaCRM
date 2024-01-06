@@ -34,7 +34,7 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   QVBoxLayout *m_flayout = new QVBoxLayout(m_fgroup);
   m_flayout->setContentsMargins(2, 2, 2, 2);
   m_table = new QTableWidget(m_fgroup);
-  QStringList _labels({tr("Id"), tr("Fullname"), tr("Adress")});
+  QStringList _labels({tr("Id"), tr("Fullname"), tr("Address")});
   m_table->setColumnCount(_labels.size());
   m_table->setHorizontalHeaderLabels(_labels);
   m_table->setToolTip(tr("Current article purchases"));

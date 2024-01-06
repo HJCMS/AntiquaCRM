@@ -54,8 +54,8 @@ const QString OrdersTableOverViewModel::getPaymentStatus(int status) const {
   case AntiquaCRM::OrderPayment::ADMONISH: /**< Mahnen */
     return tr("Admonished");
 
-  case AntiquaCRM::OrderPayment::RETURN: /**< Retour */
-    return tr("Returned");
+  case AntiquaCRM::OrderPayment::RETURN: /**< Zurückerstattet */
+    return tr("Refunded");
 
   case AntiquaCRM::OrderPayment::COLLPROC: /**< Inkasso */
     return tr("Payment Collection");

@@ -137,9 +137,13 @@ void Application::initStyleTheme() {
 }
 
 bool Application::initTranslations() {
-  const QString _path(m_cfg->getTranslationDir().path());
+  const QDir _dir(m_cfg->getTranslationDir());
+  if (!_dir.isReadable()) {
+    qWarning("No access to %s", qPrintable(_dir.path()));
+    return false;
+  }
   QTranslator *m_qtr = new QTranslator(this);
-  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _path, ".qm"))
+  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _dir.path(), ".qm"))
     return installTranslator(m_qtr);
 
   return false;

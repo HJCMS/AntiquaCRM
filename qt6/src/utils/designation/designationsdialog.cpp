@@ -112,7 +112,7 @@ bool DesignationsDialog::loadBookDesignations() {
 void DesignationsDialog::setSaveQuery(const QString &sql) {
   m_sql->query(sql);
   if (m_sql->lastError().isEmpty()) {
-    m_statusBar->showMessage(tr("Saving success!"));
+    m_statusBar->showMessage(tr("Successfully saved!"));
     loadBookDesignations();
     m_edit->setClear();
   } else {

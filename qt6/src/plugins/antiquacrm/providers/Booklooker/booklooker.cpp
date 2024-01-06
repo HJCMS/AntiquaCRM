@@ -15,7 +15,9 @@ BookLooker::BookLooker(QObject *parent)
 
 const QString BookLooker::displayName() const { return QString("Booklooker"); }
 
-const QString BookLooker::interfaceName() const { return QString("booklooker"); }
+const QString BookLooker::interfaceName() const {
+  return QString("booklooker");
+}
 
 AntiquaCRM::PluginConfigWidget *
 BookLooker::configWidget(QWidget *parent) const {
@@ -33,9 +35,9 @@ bool BookLooker::operationWidget(QWidget *parent,
 
 const QJsonObject BookLooker::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Booklooker"));
-  _jo.insert("id", tr("booklooker_tab"));
-  _jo.insert("icon", tr("antiquacrm"));
+  _jo.insert("title", "Booklooker");
+  _jo.insert("id", "booklooker_tab");
+  _jo.insert("icon", "antiquacrm");
   return _jo;
 }
 

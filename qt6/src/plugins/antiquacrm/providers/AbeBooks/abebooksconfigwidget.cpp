@@ -159,16 +159,15 @@ void AbeBooksConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::ConfigType
-AbeBooksConfigWidget::getType() const {
+AntiquaCRM::ConfigType AbeBooksConfigWidget::getType() const {
   return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject AbeBooksConfigWidget::getMenuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("AbeBooks"));
-  _jo.insert("id", tr("abebooks_tab"));
-  _jo.insert("icon", tr("antiquacrm"));
+  _jo.insert("title", "AbeBooks");
+  _jo.insert("id", "abebooks_tab");
+  _jo.insert("icon", "antiquacrm");
   _jo.insert("tooltip", tr("AbeBooks & ZVAB (abebooks.com)"));
   return _jo;
 }

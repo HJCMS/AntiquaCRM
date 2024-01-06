@@ -117,7 +117,7 @@ void ConfigDialog::closeEvent(QCloseEvent *e) {
   if (e->type() == QEvent::Close) {
     if (isWindowModified()) {
       e->setAccepted(false);
-      QString info = tr("You have unsafed changes!");
+      QString info = tr("You have unsaved changes!");
       info.append("<p>" + tr("Do your really want to close?") + "</p>");
       int ret = QMessageBox::question(this, tr("Unsaved Changes!"), info);
       if (ret == QMessageBox::No)
@@ -211,7 +211,7 @@ void ConfigDialog::aboutToSave() {
 
 void ConfigDialog::aboutToClose() {
   if (isWindowModified()) {
-    m_statusbar->showMessage(tr("Unsafed changes!"));
+    m_statusbar->showMessage(tr("unsaved changes!"));
     return;
   }
 

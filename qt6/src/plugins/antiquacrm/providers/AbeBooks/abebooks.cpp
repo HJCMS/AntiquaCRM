@@ -31,9 +31,9 @@ bool AbeBooks::operationWidget(QWidget *parent,
 
 const QJsonObject AbeBooks::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("AbeBooks"));
-  _jo.insert("id", tr("abebooks_tab"));
-  _jo.insert("icon", tr("antiquacrm"));
+  _jo.insert("title", "AbeBooks");
+  _jo.insert("id", "abebooks_tab");
+  _jo.insert("icon", "antiquacrm");
   return _jo;
 }
 

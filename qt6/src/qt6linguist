@@ -7,4 +7,4 @@ set +x
 _ts_files=$(find ./i18n -maxdepth 1 -type f -name "*_de.ts")
 _linguist="`ls ~/Programme/Qt/6*/gcc_64/bin/linguist`"
 
-${_linguist} ./i18n/antiquacore_de.ts
+${_linguist} ./i18n/antiquacrm_de.ts

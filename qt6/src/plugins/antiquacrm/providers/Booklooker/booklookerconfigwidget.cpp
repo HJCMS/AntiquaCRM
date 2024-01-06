@@ -141,16 +141,15 @@ void BookLookerConfigWidget::saveSectionConfig() {
 #endif
 }
 
-AntiquaCRM::ConfigType
-BookLookerConfigWidget::getType() const {
+AntiquaCRM::ConfigType BookLookerConfigWidget::getType() const {
   return AntiquaCRM::ConfigType::CONFIG_DATABASE;
 }
 
 const QJsonObject BookLookerConfigWidget::getMenuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Booklooker"));
-  _jo.insert("id", tr("booklooker_tab"));
-  _jo.insert("icon", tr("antiquacrm"));
+  _jo.insert("title", "Booklooker");
+  _jo.insert("id", "booklooker_tab");
+  _jo.insert("icon", "antiquacrm");
   _jo.insert("tooltip", tr("Booklooker - booklooker.de"));
   return _jo;
 }

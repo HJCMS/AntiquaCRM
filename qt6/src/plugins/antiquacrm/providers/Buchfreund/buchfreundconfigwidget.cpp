@@ -144,9 +144,9 @@ AntiquaCRM::ConfigType BuchfreundConfigWidget::getType() const {
 
 const QJsonObject BuchfreundConfigWidget::getMenuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Buchfreund"));
-  _jo.insert("id", tr("buchfreund_tab"));
-  _jo.insert("icon", tr("antiquacrm"));
+  _jo.insert("title", QString("Buchfreund"));
+  _jo.insert("id", QString("buchfreund_tab"));
+  _jo.insert("icon", QString("antiquacrm"));
   _jo.insert("tooltip", tr("Buchfreund - www.buchfreund.de"));
   return _jo;
 }

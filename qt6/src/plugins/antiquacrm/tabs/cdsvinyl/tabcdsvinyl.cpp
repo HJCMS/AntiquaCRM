@@ -36,7 +36,7 @@ const QJsonObject TabCDsVinyl::menuEntry() const {
   _jo.insert("id", QString(CDSVINYL_INVENTORY_TABID));
   _jo.insert("title", displayName());
   _jo.insert("tip", tr("Media Inventory, CD’s and Vinyl"));
-  _jo.insert("icon", tr("media-optical-dvd-video"));
+  _jo.insert("icon", "media-optical-dvd-video");
   return _jo;
 }
 

@@ -32,10 +32,10 @@ bool TabStitches::addIndexOnInit() const { return false; }
 
 const QJsonObject TabStitches::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("id", tr("stitches_tab"));
+  _jo.insert("id", "stitches_tab");
   _jo.insert("title", tr("Prints && Stitches"));
   _jo.insert("tip", tr("Inventory Prints and Stitches"));
-  _jo.insert("icon", tr("kjournal"));
+  _jo.insert("icon", "kjournal");
   return _jo;
 }
 

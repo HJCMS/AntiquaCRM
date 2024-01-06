@@ -32,9 +32,9 @@ bool Buchfreund::operationWidget(QWidget *parent,
 
 const QJsonObject Buchfreund::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("title", tr("Buchfreund"));
-  _jo.insert("id", tr("booklooker_tab"));
-  _jo.insert("icon", tr("antiquacrm"));
+  _jo.insert("title", "Buchfreund");
+  _jo.insert("id", "booklooker_tab");
+  _jo.insert("icon", "antiquacrm");
   return _jo;
 }
 

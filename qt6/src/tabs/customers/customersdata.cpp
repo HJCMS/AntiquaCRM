@@ -45,7 +45,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   c_careof = new AntiquaCRM::TextLine(this);
   c_careof->setObjectName("c_careof");
   c_careof->setBuddyLabel(tr("c/o"));
-  c_careof->setToolTip(tr("care of"));
+  c_careof->setToolTip(tr("take care of package"));
   row1->addWidget(c_careof);
 
   row1->addStretch(1);

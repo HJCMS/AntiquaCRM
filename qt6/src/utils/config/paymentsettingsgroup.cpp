@@ -74,7 +74,7 @@ PaymentSettingsGroup::PaymentSettingsGroup(QWidget *parent) : QFrame{parent} {
   m_minPrice = new AntiquaCRM::PriceEdit(m_limitsGroup);
   m_minPrice->setObjectName("payment/price_limit_lowest");
   m_minPrice->setToolTip(tr("Price limit"));
-  m_minPrice->setBuddyLabel(tr("Price minimal"));
+  m_minPrice->setBuddyLabel(tr("Price minimum"));
   grLayout2->addWidget(m_minPrice, 1, 0, 1, 1);
   m_normalPrice = new AntiquaCRM::PriceEdit(m_limitsGroup);
   m_normalPrice->setObjectName("payment/price_limit_normal");

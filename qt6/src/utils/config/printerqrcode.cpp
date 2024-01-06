@@ -27,7 +27,6 @@ PrinterQRCode::PrinterQRCode(QWidget *parent) : QGroupBox{parent} {
 
   layout->addWidget(label(tr("Query")), row, 0, 1, 1);
   m_query = new AntiquaCRM::ALineEdit(this);
-  m_query->setPlaceholderText(tr("article_number"));
   layout->addWidget(m_query, row++, 1, 1, 1);
 
   setLayout(layout);

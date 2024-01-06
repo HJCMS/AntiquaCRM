@@ -37,10 +37,10 @@ bool TabCustomers::addIndexOnInit() const {
 
 const QJsonObject TabCustomers::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("id", tr("customers_tab"));
+  _jo.insert("id", "customers_tab");
   _jo.insert("title", displayName());
   _jo.insert("tip", tr("Inventory Customers"));
-  _jo.insert("icon", tr("system-users"));
+  _jo.insert("icon", "system-users");
   return _jo;
 }
 
