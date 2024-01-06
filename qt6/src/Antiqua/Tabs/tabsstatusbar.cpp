@@ -87,7 +87,7 @@ QPushButton *TabsStatusBar::createButton(const QString &title,
 QPushButton *TabsStatusBar::historyButton(const QString &title) {
   QPushButton *btn = new QPushButton(m_frame);
   btn->setIcon(historyIcon());
-  btn->setToolTip(tr("History menue"));
+  btn->setToolTip(tr("History menu"));
   btn->setStatusTip(btn->toolTip());
   if (title.isEmpty())
     btn->setText(tr("History"));

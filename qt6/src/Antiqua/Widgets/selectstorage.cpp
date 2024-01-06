@@ -14,7 +14,7 @@ SelectStorage::SelectStorage(QWidget *parent)
     : AntiquaCRM::AInputWidget{parent} {
   m_select = new AntiquaCRM::AComboBox(this);
   m_select->setToolTip(tr("Storage Location"));
-  m_select->setWithoutDisclosures(QString());
+  m_select->setWithoutDisclosures();
   m_select->setMaxVisibleItems(20);
   m_select->setWhatsThis(tr("Changes the Storage location for this Article."));
   layout->addWidget(m_select);
@@ -23,6 +23,8 @@ SelectStorage::SelectStorage(QWidget *parent)
   m_edit->setPlaceholderText(tr("Search location"));
   m_edit->setMinimumWidth(130);
   layout->addWidget(m_edit);
+
+  layout->addStretch(0);
 
   QSqlField _f;
   _f.setMetaType(getType());

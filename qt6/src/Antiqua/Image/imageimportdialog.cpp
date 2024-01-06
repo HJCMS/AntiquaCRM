@@ -119,7 +119,7 @@ void ImageImportDialog::initialConfiguration() {
   p_target = config->getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES);
   p_import = config->getArchivPath(ANTIQUACRM_ARCHIVE_IMPORT);
   if (!p_import.exists() || !p_target.exists()) {
-    QMessageBox::warning(this, tr("Configurtion Error"),
+    QMessageBox::warning(this, tr("Configuration Error"),
                          tr("Can not find Import Directory. Please Check your "
                             "Archive settings."));
   }

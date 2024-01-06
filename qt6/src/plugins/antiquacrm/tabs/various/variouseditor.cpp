@@ -25,14 +25,15 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_id->setObjectName("va_id");
   va_id->setBuddyLabel(tr("Article ID"));
   va_id->setRequired(true);
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Unique article number for this listing.");
   va_id->setWhatsThisText(_whatsThis);
   row0->addWidget(va_id);
   // va_count
   va_count = new AntiquaCRM::CrowdEdit(this);
   va_count->setObjectName("va_count");
   va_count->setBuddyLabel(tr("Count"));
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Current number of articles in stock. If the number is 0, "
+                  "the item will be deleted from the sales portals!");
   va_count->setWhatsThisText(_whatsThis);
   row0->addWidget(va_count);
   // va_price
@@ -42,7 +43,8 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_price->setRequired(true);
   va_price->setBuddyLabel(tr("Price"));
   va_price->setMinimum(minPrice);
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Enter your selling price for the article here. This is the "
+                  "net price, VAT and delivery costs will be added later.");
   va_price->setWhatsThisText(_whatsThis);
   row0->addWidget(va_price);
   // va_year
@@ -51,16 +53,21 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_year->setRequired(true);
   va_year->setBuddyLabel(tr("Year"));
   va_year->setValue(1800);
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Optional year, a date is required for articles, but the "
+                  "year may differ from the actual year of manufacture. You "
+                  "then write this information in the description section.");
   va_year->setWhatsThisText(_whatsThis);
   row0->addWidget(va_year);
   // va_restricted
   va_restricted = new AntiquaCRM::BoolBox(this);
   va_restricted->setObjectName("va_restricted");
   va_restricted->setBuddyLabel(tr("Local Usage only"));
-  _whatsThis = tr("When this Options is marked. Then this Article will not "
-                  "exported to your Providers.");
+  _whatsThis = tr("If checked, the article will not be exported to your "
+                  "sellers.<br><b>Warning:</b> If you activate this option "
+                  "later this will have no impact to your providers.<br>The "
+                  "entries must then be removed manually!");
   va_restricted->setWhatsThisText(_whatsThis);
+  va_restricted->setValue(true);
   row0->addWidget(va_restricted);
   row0->addStretch(1);
   mainLayout->addLayout(row0, 0);
@@ -84,7 +91,8 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_title = new AntiquaCRM::TextLine(this);
   va_title->setObjectName("va_title");
   va_title->setToolTip(infolabel->text());
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Current title of the article. This is displayed first in "
+                  "the sales portal and is limited to 80 characters.");
   va_title->setWhatsThisText(_whatsThis);
   row1->addWidget(va_title, row1c++, 1, 1, 1);
   // va_title_extended
@@ -93,7 +101,8 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_title_extended = new AntiquaCRM::TextLine(this);
   va_title_extended->setObjectName("va_title_extended");
   va_title_extended->setToolTip(infolabel->text());
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Additional sales title of the article. A supplement to the "
+                  "primary title.");
   va_title_extended->setWhatsThisText(_whatsThis);
   row1->addWidget(va_title_extended, row1c++, 1, 1, 1);
   // va_designation
@@ -102,7 +111,7 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_designation = new AntiquaCRM::TextLine(this);
   va_designation->setObjectName("va_designation");
   va_designation->setToolTip(infolabel->text());
-  _whatsThis = tr("__TODO__");
+  _whatsThis = tr("Article designation for sales.");
   va_designation->setWhatsThisText(_whatsThis);
   row1->addWidget(va_designation, row1c++, 1, 1, 1);
   // va_condition
@@ -110,7 +119,7 @@ VariousEditor::VariousEditor(QWidget *parent)
   row1->addWidget(infolabel, row1c, 0, 1, 1);
   va_condition = new AntiquaCRM::ConditionEdit(this);
   va_condition->setObjectName("va_condition");
-  va_condition->setToolTip(infolabel->toolTip());
+  va_condition->setToolTip(tr("Predefined item condition."));
   va_condition->appendStretch(0);
   row1->addWidget(va_condition, row1c++, 1, 1, 1);
   // va_storage
@@ -119,9 +128,10 @@ VariousEditor::VariousEditor(QWidget *parent)
   va_storage = new AntiquaCRM::SelectStorage(this);
   va_storage->setObjectName("va_storage");
   va_storage->setToolTip(infolabel->text());
-  _whatsThis = tr("The Storage location where this Book has been stored. "
+  _whatsThis = tr("The Storage location where this %1 has been stored. "
                   "You need to Configure Storage locations first in your "
-                  "Database Configuration Menu before you can use it.");
+                  "Database Configuration Menu before you can use it.")
+                   .arg(tr("Article"));
   va_storage->setWhatsThisText(_whatsThis);
   row1->addWidget(va_storage, row1c++, 1, 1, 1);
   // image toolbar

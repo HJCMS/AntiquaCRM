@@ -163,9 +163,10 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_storage = new AntiquaCRM::SelectStorage(this);
   ip_storage->setObjectName("ip_storage");
   ip_storage->setInputToolTip(tr("Storage location"));
-  tempWhatsThis = tr("The Storage location where this Article has been stored. "
+  tempWhatsThis = tr("The Storage location where this %1 has been stored. "
                      "You need to Configure Storage locations first in your "
-                     "Database Configuration Menu before you can use it.");
+                     "Database Configuration Menu before you can use it.")
+                      .arg(tr("Article"));
   ip_storage->setWhatsThisText(tempWhatsThis);
   ip_storage->appendStretch();
   storageLayout->addWidget(ip_storage);

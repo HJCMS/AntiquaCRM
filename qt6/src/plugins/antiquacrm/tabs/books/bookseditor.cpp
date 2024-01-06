@@ -256,9 +256,10 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_storage = new AntiquaCRM::SelectStorage(row2Widget);
   ib_storage->setObjectName("ib_storage");
   ib_storage->setInputToolTip(tr("Storage location"));
-  tempWhatsThis = tr("The Storage location where this Book has been stored. "
+  tempWhatsThis = tr("The Storage location where this %1 has been stored. "
                      "You need to Configure Storage locations first in your "
-                     "Database Configuration Menu before you can use it.");
+                     "Database Configuration Menu before you can use it.")
+                      .arg(tr("Book"));
   ib_storage->setWhatsThisText(tempWhatsThis);
   ib_storage->appendStretch(1);
   m_storageLayout->addWidget(ib_storage);

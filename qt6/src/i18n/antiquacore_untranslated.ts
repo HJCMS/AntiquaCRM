@@ -448,7 +448,7 @@
     </message>
     <message>
         <location line="+48"/>
-        <source>Configurtion Error</source>
+        <source>Configuration Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -963,7 +963,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <name>AntiquaCRM::NumEdit</name>
     <message>
         <location filename="../Antiqua/Widgets/numedit.cpp" line="+108"/>
-        <source>A Numeric Input is requierd</source>
+        <source>A Numeric Input is required!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1098,7 +1098,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
+        <source>Customer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1136,7 +1136,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
+        <source>Customer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1174,7 +1174,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
+        <source>Customer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1212,7 +1212,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
+        <source>Customer No.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -1691,7 +1691,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectMediaType</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectmediatype.cpp" line="+16"/>
+        <location filename="../Antiqua/Widgets/selectmediatype.cpp" line="+15"/>
         <source>Compact Disc</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1991,7 +1991,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+201"/>
         <source>Storage location is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2307,7 +2307,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TabsStatusBar</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+31"/>
+        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+32"/>
         <source>Update</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2362,13 +2362,18 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Customized</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+13"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>History menue</source>
+        <source>History menu</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2387,7 +2392,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+113"/>
         <source>Query started, waiting for response.</source>
         <translation type="unfinished"></translation>
     </message>

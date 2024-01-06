@@ -137,15 +137,11 @@ void Application::initStyleTheme() {
 }
 
 bool Application::initTranslations() {
-  qInfo("Translation is not activated!");
-  return true;
-
-  QString _p = m_cfg->getTranslationDir().path();
+  const QString _path(m_cfg->getTranslationDir().path());
   QTranslator *m_qtr = new QTranslator(this);
-  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _p, ".qm")) {
-    installTranslator(m_qtr);
-    return true;
-  }
+  if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _path, ".qm"))
+    return installTranslator(m_qtr);
+
   return false;
 }
 
@@ -252,7 +248,9 @@ int Application::exec() {
   // Step 2 - show translations
   p_splash.setMessage("Initial Translations.");
   mutex.lock();
-  initTranslations();
+  if (initTranslations()) {
+    p_splash.setMessage("Translations initialed");
+  }
   mutex.unlock();
 
   // Step 3 - show systemtray

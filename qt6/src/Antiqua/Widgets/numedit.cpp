@@ -105,7 +105,7 @@ const QMetaType NumEdit::getType() const { return QMetaType(QMetaType::Int); }
 const QVariant NumEdit::getValue() { return m_edit->value(); }
 
 const QString NumEdit::popUpHints() {
-  return tr("A Numeric Input is requierd");
+  return tr("A Numeric Input is required!");
 }
 
 const QString NumEdit::statusHints() { return popUpHints(); }

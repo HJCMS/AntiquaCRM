@@ -233,7 +233,7 @@ int PrintDeliveryNote::exec(const QJsonObject &options, bool pdfbtn) {
   _content.insert("order_id", _array);
 
   _array = QJsonArray();
-  _array.append(tr("Costumer No."));
+  _array.append(tr("Customer No."));
   _array.append(AntiquaCRM::AUtil::zerofill(c_id, 10));
   _content.insert("customer_id", _array);
 

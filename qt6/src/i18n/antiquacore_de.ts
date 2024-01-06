@@ -448,8 +448,8 @@
     </message>
     <message>
         <location line="+48"/>
-        <source>Configurtion Error</source>
-        <translation type="unfinished"></translation>
+        <source>Configuration Error</source>
+        <translation>Konfigurationsfehler</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -937,17 +937,17 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/private/mailtemplatekeys.cpp" line="+44"/>
         <source>Dear Mr.</source>
-        <translation type="unfinished"></translation>
+        <translation>Herr</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dear Mrs.</source>
-        <translation type="unfinished"></translation>
+        <translation>Frau</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Dear Ladies and Gentlemen</source>
-        <translation type="unfinished"></translation>
+        <translation>Sehr geehrte Damen und Herren</translation>
     </message>
     <message>
         <location line="+60"/>
@@ -964,8 +964,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <name>AntiquaCRM::NumEdit</name>
     <message>
         <location filename="../Antiqua/Widgets/numedit.cpp" line="+108"/>
-        <source>A Numeric Input is requierd</source>
-        <translation type="unfinished"></translation>
+        <source>A Numeric Input is required!</source>
+        <translation>Eine numerische Eingabe ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -1099,8 +1099,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
-        <translation type="unfinished"></translation>
+        <source>Customer No.</source>
+        <translation>Kunden-Nr.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1137,8 +1137,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
-        <translation type="unfinished"></translation>
+        <source>Customer No.</source>
+        <translation>Kunden-Nr.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1151,37 +1151,37 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Printing/printrefund.cpp" line="+247"/>
         <source>Invoice PDF created!</source>
-        <translation type="unfinished">Rechnungs-PDF erstellt!</translation>
+        <translation>PDF-Rechnung erstellt!</translation>
     </message>
     <message>
         <location line="+19"/>
         <source>Invoice printed!</source>
-        <translation type="unfinished">Rechnung gedruckt!</translation>
+        <translation>Rechnung gedruckt!</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Invoice</source>
-        <translation type="unfinished">Rechnung</translation>
+        <translation>Rechnung</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Invoice No.</source>
-        <translation type="unfinished">Rechnungsnr.</translation>
+        <translation>Rechnungsnr.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Order No.</source>
-        <translation type="unfinished">Auftragsnr.</translation>
+        <translation>Auftragsnr.</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
-        <translation type="unfinished"></translation>
+        <source>Customer No.</source>
+        <translation>Kunden-Nr.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Delivery No.</source>
-        <translation type="unfinished">Lieferscheinnr.</translation>
+        <translation>Lieferscheinnr.</translation>
     </message>
 </context>
 <context>
@@ -1213,8 +1213,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+5"/>
-        <source>Costumer No.</source>
-        <translation type="unfinished"></translation>
+        <source>Customer No.</source>
+        <translation>Kunden-Nr.</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -1248,53 +1248,53 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location line="+2"/>
         <source>Selection for different printings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Auswahl für verschiedene Drucke.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Deliverynote</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferschein</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Open Print Deliverynote</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Lieferschein drucken</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Invoice</source>
-        <translation type="unfinished">Rechnung</translation>
+        <translation>Rechnung</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+6"/>
         <source>Open Print Invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Öffne Rechnungsdrucken</translation>
     </message>
     <message>
         <location line="-1"/>
         <source>Payment Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlungserinnerung</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Book card</source>
-        <translation type="unfinished"></translation>
+        <translation>Buchkarte</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Printing a Book card</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke eine Buchkarte</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Refunding</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückerstattung</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Printing a refund invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucke Rückerstattungsrechnung</translation>
     </message>
 </context>
 <context>
@@ -1302,27 +1302,27 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Providers/provideractiondialog.cpp" line="+19"/>
         <source>Provider Actions Dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Anbieteraktionen Dialog</translation>
     </message>
     <message>
         <location line="+25"/>
         <source>Submit</source>
-        <translation type="unfinished"></translation>
+        <translation>Einreichen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Sends selected changes to your provider.</source>
-        <translation type="unfinished"></translation>
+        <translation>Sendet ausgewählte Änderungen an den Dienstleister.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Cancel all operations and close this Dialog.</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Vorgänge abbrechen und den Dialog schließen.</translation>
     </message>
     <message>
         <location line="+43"/>
         <source>This Dialog have changes, close request rejected!</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Dialog hat Änderungen, das beenden wurde abgelehnt!</translation>
     </message>
 </context>
 <context>
@@ -1330,12 +1330,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Providers/provideractionnavigator.cpp" line="+21"/>
         <source>Previous</source>
-        <translation type="unfinished"></translation>
+        <translation>Vorherige</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Forward</source>
-        <translation type="unfinished"></translation>
+        <translation>Nächste</translation>
     </message>
 </context>
 <context>
@@ -1343,52 +1343,52 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Printing/printrefund.cpp" line="-296"/>
         <source>Refund</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückerstattung</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>on</source>
-        <translation type="unfinished">den</translation>
+        <translation>den</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>refund cost</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstattungskosten</translation>
     </message>
     <message>
         <location line="+49"/>
         <source>Article</source>
-        <translation type="unfinished">Artikel</translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Description</source>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Quantity</source>
-        <translation type="unfinished">Menge</translation>
+        <translation>Menge</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+21"/>
         <source>subtotal</source>
-        <translation type="unfinished">Zwischensumme</translation>
+        <translation>Zwischensumme</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>total refund cost</source>
-        <translation type="unfinished"></translation>
+        <translation>Gesamtkosten der Rückerstattung</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>total</source>
-        <translation type="unfinished">Gesamt</translation>
+        <translation>Gesamt</translation>
     </message>
 </context>
 <context>
@@ -1396,68 +1396,68 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Printing/printreminder.cpp" line="-333"/>
         <source>Reminder</source>
-        <translation type="unfinished"></translation>
+        <translation>Erinnerung</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>on</source>
-        <translation type="unfinished">den</translation>
+        <translation>den</translation>
     </message>
     <message>
         <location line="+46"/>
         <source>incl.</source>
-        <translation type="unfinished">inkl.</translation>
+        <translation>inkl.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>with</source>
-        <translation type="unfinished">mit</translation>
+        <translation>mit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>without</source>
-        <translation type="unfinished">ohne</translation>
+        <translation>ohne</translation>
     </message>
     <message>
         <location line="+26"/>
         <location line="+13"/>
         <source>VAT</source>
-        <translation type="unfinished">MwSt</translation>
+        <translation>USt</translation>
     </message>
     <message>
         <location line="+48"/>
         <source>Article</source>
-        <translation type="unfinished">Artikel</translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Description</source>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Quantity</source>
-        <translation type="unfinished">Menge</translation>
+        <translation>Menge</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>subtotal</source>
-        <translation type="unfinished">Zwischensumme</translation>
+        <translation>Zwischensumme</translation>
     </message>
     <message>
         <location line="+12"/>
         <source>delivery cost</source>
-        <translation type="unfinished">Versandkosten</translation>
+        <translation>Versandkosten</translation>
     </message>
     <message>
         <location line="+11"/>
         <source>total</source>
-        <translation type="unfinished">Gesamt</translation>
+        <translation>Gesamt</translation>
     </message>
 </context>
 <context>
@@ -1465,12 +1465,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/salutationedit.cpp" line="+16"/>
         <source>Salutation</source>
-        <translation type="unfinished"></translation>
+        <translation>Anrede</translation>
     </message>
     <message>
         <location line="+110"/>
         <source>A salutation is missing!</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Anrede fehlt!</translation>
     </message>
 </context>
 <context>
@@ -1478,67 +1478,67 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectcurrency.cpp" line="+155"/>
         <source>A valid currency is required for this entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für diesen Eintrag ist eine gültige Währung erforderlich.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Please enter a valid currency.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte geben Sie eine gültige Währung ein.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>European Union</source>
-        <translation type="unfinished"></translation>
+        <translation>Europäische Union</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Switzerland</source>
-        <translation type="unfinished"></translation>
+        <translation>Schweiz</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>United Kingdom</source>
-        <translation type="unfinished"></translation>
+        <translation>Großbritannien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>United States</source>
-        <translation type="unfinished"></translation>
+        <translation>Vereinigte Staaten</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>China</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Japan</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>India</source>
-        <translation type="unfinished"></translation>
+        <translation>Indien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Australia</source>
-        <translation type="unfinished"></translation>
+        <translation>Australien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Brazil</source>
-        <translation type="unfinished"></translation>
+        <translation>Brasilien</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>South Africa</source>
-        <translation type="unfinished"></translation>
+        <translation>Südafrika</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>South Korea</source>
-        <translation type="unfinished"></translation>
+        <translation>Südkorea</translation>
     </message>
 </context>
 <context>
@@ -1546,7 +1546,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectdeliverpackage.cpp" line="+129"/>
         <source>a Deliver Package is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es ist ein Lieferpaket erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1554,7 +1554,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectdeliverservice.cpp" line="+111"/>
         <source>a Deliver Service is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Lieferservice ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1562,7 +1562,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+217"/>
         <source>A valid Country selection is required!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine gültige Länderauswahl ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -1570,12 +1570,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location line="-138"/>
         <source>Without disclosures</source>
-        <translation type="unfinished">Ohne Angaben</translation>
+        <translation>Ohne Angaben</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Non European Country</source>
-        <translation type="unfinished">Außereuropäisches Land</translation>
+        <translation>Außereuropäisches Land</translation>
     </message>
 </context>
 <context>
@@ -1583,22 +1583,22 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectfile.cpp" line="+15"/>
         <source>set file path</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateipfad festlegen</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Change file path</source>
-        <translation type="unfinished"></translation>
+        <translation>Dateipfad ändern</translation>
     </message>
     <message>
         <location line="+95"/>
         <source>This entry requires a file path specification.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Eintrag erfordert eine Dateipfadangabe.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Required file or application path is missing!</source>
-        <translation type="unfinished"></translation>
+        <translation>Erforderlicher Datei- oder Anwendungspfad fehlt!</translation>
     </message>
 </context>
 <context>
@@ -1606,145 +1606,145 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectlanguage.cpp" line="+30"/>
         <source>Language</source>
-        <translation type="unfinished"></translation>
+        <translation>Sprache</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>German</source>
-        <translation type="unfinished"></translation>
+        <translation>Deutsch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>European</source>
-        <translation type="unfinished"></translation>
+        <translation>Europäisch (Mehrsprachig)</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Czech</source>
-        <translation type="unfinished"></translation>
+        <translation>Tschechisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Danish</source>
-        <translation type="unfinished"></translation>
+        <translation>Dänisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>English</source>
-        <translation type="unfinished"></translation>
+        <translation>Englisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Spanish</source>
-        <translation type="unfinished"></translation>
+        <translation>Spanisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Finnish</source>
-        <translation type="unfinished"></translation>
+        <translation>Finnisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>French</source>
-        <translation type="unfinished"></translation>
+        <translation>Französisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Italian</source>
-        <translation type="unfinished"></translation>
+        <translation>Italienisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Dutch</source>
-        <translation type="unfinished"></translation>
+        <translation>Niederländisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Norwegian</source>
-        <translation type="unfinished"></translation>
+        <translation>Norwegisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Polish</source>
-        <translation type="unfinished"></translation>
+        <translation>Polnisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Portuguese</source>
-        <translation type="unfinished"></translation>
+        <translation>Portugiesisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Slovenian</source>
-        <translation type="unfinished"></translation>
+        <translation>Slowenisch</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Swedish</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwedisch</translation>
     </message>
     <message>
         <location line="+64"/>
         <source>Language field is required and must set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Sprache ist erforderlich und muss festgelegt werden.</translation>
     </message>
 </context>
 <context>
     <name>AntiquaCRM::SelectMediaType</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectmediatype.cpp" line="+16"/>
+        <location filename="../Antiqua/Widgets/selectmediatype.cpp" line="+15"/>
         <source>Compact Disc</source>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Mini Compact Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Mini-CD</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Video Compact Disc</source>
-        <translation type="unfinished"></translation>
+        <translation>Video-CD</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Vinyl single record</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinyl-Single-Schallplatte</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Vinyl longplay record</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinyl-Longplay-Platte</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Vinyl Multi Groove</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinyl Multi Groove</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Vinyl colored record</source>
-        <translation type="unfinished"></translation>
+        <translation>Farbige Vinyl-Schallplatte</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Vinyl video record</source>
-        <translation type="unfinished"></translation>
+        <translation>Vinyl-Videoaufzeichnung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Vinyl record and DISC</source>
-        <translation type="unfinished"></translation>
+        <translation>Schallplatte und DISC</translation>
     </message>
     <message>
         <location line="+70"/>
         <source>Please select a valid Media type for this Input.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte wählen Sie einen gültiges Medium für diese Eingabe aus.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>A valid Media type is required!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültiger Medientyp ist erforderlich!</translation>
     </message>
 </context>
 <context>
@@ -1752,67 +1752,67 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectorderpayment.cpp" line="+38"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Waiting for payment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten auf Zahlung.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Payed</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Order is already paid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellung ist bereits bezahlt.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Reminded</source>
-        <translation type="unfinished"></translation>
+        <translation>Erinnert</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The recipient was reminded.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Empfänger wurde erinnert.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Admonished</source>
-        <translation type="unfinished"></translation>
+        <translation>Angemahnt</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>The recipient has been admonished.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Empfänger wurde ermahnt.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Refunding</source>
-        <translation type="unfinished"></translation>
+        <translation>Rückerstattung</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Creates a refunding for this order.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine Rückerstattung für diese Bestellung.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Collection process</source>
-        <translation type="unfinished"></translation>
+        <translation>Inkassoprozess</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>This order containing a collection transaction.</source>
-        <translation type="unfinished"></translation>
+        <translation>Dieser Auftrag enthält eine Inkassotransaktion.</translation>
     </message>
     <message>
         <location line="+66"/>
         <source>a valid Order status is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es ist ein gültiger Bestellstatus erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1820,42 +1820,42 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectorderstatus.cpp" line="+38"/>
         <source>Open</source>
-        <translation type="unfinished"></translation>
+        <translation>Offen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Status open</source>
-        <translation type="unfinished"></translation>
+        <translation>Status offen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Created</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstellt</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Fetchet</source>
-        <translation type="unfinished"></translation>
+        <translation>Abholbereit</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delivery</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferung</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Delivered</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgesagt</translation>
     </message>
     <message>
         <location line="+65"/>
         <source>a valid Order status is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Es ist ein gültiger Bestellstatus erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1863,77 +1863,77 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectpaymentmethod.cpp" line="+36"/>
         <source>Bank transfer in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Banküberweisung im Voraus</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Delivery with open invoice</source>
-        <translation type="unfinished"></translation>
+        <translation>Lieferung mit offener Rechnung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Direct debit payment in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlung per Lastschrift per Vorkasse</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Credit card in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Kreditkarte im Voraus</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Cash on delivery payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlung per Nachnahme</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>PayPal prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>PayPal-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Skrill prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>Skrill-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>GiroPay prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>GiroPay-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>GooglePay prepayment</source>
-        <translation type="unfinished"></translation>
+        <translation>Google Pay-Vorauszahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Payment in advance from an unknown provider</source>
-        <translation type="unfinished"></translation>
+        <translation>Zahlung per Vorkasse von einem unbekannten Anbieter</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Pickup - cash payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Abholung - Barzahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Instant bank transfer</source>
-        <translation type="unfinished"></translation>
+        <translation>Sofortige Überweisung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Open account - advance payment reserved</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohne Profil - Vorkasse vorbehalten</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Check - payment in advance</source>
-        <translation type="unfinished"></translation>
+        <translation>Scheck – Zahlung im Voraus</translation>
     </message>
     <message>
         <location line="+72"/>
         <source>a Valid payment method is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine gültige Zahlungsmethode ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1941,37 +1941,37 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectpaymentstatus.cpp" line="+39"/>
         <source>Waiting for payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Warten auf Zahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Ready for shipping</source>
-        <translation type="unfinished"></translation>
+        <translation>Zum Versenden bereit</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Delivered waiting for payment</source>
-        <translation type="unfinished"></translation>
+        <translation>Geliefert und wartet auf Zahlung</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Paid and shipped</source>
-        <translation type="unfinished"></translation>
+        <translation>Bezahlt und versendet</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>No reaction from buyer</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine Reaktion des Käufers</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>order canceled</source>
-        <translation type="unfinished"></translation>
+        <translation>Bestellung storniert</translation>
     </message>
     <message>
         <location line="+66"/>
         <source>a valid Payment status is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültiger Zahlungsstatus erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -1979,22 +1979,22 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectstorage.cpp" line="+16"/>
         <source>Storage Location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerbereich</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Changes the Storage location for this Article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ändert den Speicherort für diesen Artikel.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Search location</source>
-        <translation type="unfinished"></translation>
+        <translation>Lager suchen</translation>
     </message>
     <message>
-        <location line="+199"/>
+        <location line="+201"/>
         <source>Storage location is required and must set.</source>
-        <translation type="unfinished"></translation>
+        <translation>Lagerort ist erforderlich und muss festgelegt werden.</translation>
     </message>
 </context>
 <context>
@@ -2002,22 +2002,22 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selecttargets.cpp" line="+26"/>
         <source>Target directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Zielverzeichnis</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Change target directory</source>
-        <translation type="unfinished"></translation>
+        <translation>Zielverzeichnis ändern</translation>
     </message>
     <message>
         <location line="+114"/>
         <source>This entry requires a directory specification.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für den Eintrag ist eine Verzeichnisangabe erforderlich.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Required directory is missing!</source>
-        <translation type="unfinished"></translation>
+        <translation>Erforderliches Verzeichnis fehlt!</translation>
     </message>
 </context>
 <context>
@@ -2025,22 +2025,22 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/selectvat.cpp" line="+24"/>
         <source>Without sales tax</source>
-        <translation type="unfinished"></translation>
+        <translation>Ohne Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Including sales tax</source>
-        <translation type="unfinished"></translation>
+        <translation>Inklusive Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>With sales tax</source>
-        <translation type="unfinished"></translation>
+        <translation>Mit Umsatzsteuer</translation>
     </message>
     <message>
         <location line="+60"/>
         <source>a valid VAT is required.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eine gültige Mehrwertsteuer ist erforderlich.</translation>
     </message>
 </context>
 <context>
@@ -2048,12 +2048,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/serialid.cpp" line="+92"/>
         <source>Id field is required and can not empty.</source>
-        <translation type="unfinished"></translation>
+        <translation>ID-Feld ist erforderlich und darf nicht leer sein.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>a valid Id is important!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein gültige Id ist wichtig!</translation>
     </message>
 </context>
 <context>
@@ -2061,7 +2061,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/sqlinfopopup.cpp" line="+14"/>
         <source>Databaseinfo</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenbankinfo</translation>
     </message>
 </context>
 <context>
@@ -2069,12 +2069,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Widgets/tableview.cpp" line="+47"/>
         <source>The query at %1 returned no result.</source>
-        <translation type="unfinished">Die Abfrage bei %1 hat kein Ergebnis zurückgegeben.</translation>
+        <translation>Die Abfrage %1 hat kein Ergebnis zurückgegeben.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Change the search query or choose a different history query.</source>
-        <translation type="unfinished">Ändern Sie die Suchabfrage oder wählen Sie eine andere Verlaufsabfrage.</translation>
+        <translation>Ändern Sie die Suchabfrage oder wählen Sie eine andere Verlaufsabfrage.</translation>
     </message>
 </context>
 <context>
@@ -2082,52 +2082,52 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Tabs/tabseditactionbar.cpp" line="+14"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Exit without saving.</source>
-        <translation type="unfinished"></translation>
+        <translation>Beenden ohne Speichern.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Restore</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurücksetzen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Restore dataset to last save operation.</source>
-        <translation type="unfinished"></translation>
+        <translation>Datensatz bis zum letzten Speichervorgang zurücksetzen.</translation>
     </message>
     <message>
         <location line="+18"/>
         <source>Add Article</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikel hinzufügen</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Add a new Article.</source>
-        <translation type="unfinished"></translation>
+        <translation>Einen neuen Artikel hinzufügen.</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Save current dataset</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuellen Datensatz speichern</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Back to Mainview</source>
-        <translation type="unfinished"></translation>
+        <translation>Zurück zur Hauptansicht</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Go back to Mainview</source>
-        <translation type="unfinished"></translation>
+        <translation>Gehen zurück zur Hauptansicht</translation>
     </message>
 </context>
 <context>
@@ -2135,22 +2135,22 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Tabs/tabseditor.cpp" line="+52"/>
         <source>An error has occurred!</source>
-        <translation type="unfinished"></translation>
+        <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Can&apos;t load input datafields!</source>
-        <translation type="unfinished"></translation>
+        <translation>Datenfelder konnten nicht geladen werden!</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>When getting this Message, please check your Network and Database connection!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
         <location line="+296"/>
         <source>Do not leave this page until you have saved your changes!</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte verlassen Sie diese Seite erst, wenn Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
 </context>
 <context>
@@ -2159,39 +2159,39 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+25"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
-        <translation type="unfinished"></translation>
+        <translation>Suche</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Ctrl+Shift+F</source>
         <comment>Filter</comment>
-        <translation type="unfinished"></translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Ctrl+Shift+N</source>
         <comment>New</comment>
-        <translation type="unfinished"></translation>
+        <translation>Neu</translation>
     </message>
     <message>
         <location line="+63"/>
         <source>Warning</source>
-        <translation type="unfinished">Warnung</translation>
+        <translation>Warnung</translation>
     </message>
     <message>
         <location line="+10"/>
         <source>Can&apos;t open %1 tab.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registerkarte %1 kann nicht geöffnet werden.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Because %1 tab is in edit mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Registerkarte %1 befindet sich im Bearbeitungsmodus.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>You have first to check, complete the %1 edit mode.</source>
-        <translation type="unfinished"></translation>
+        <translation>Bitte erst prüfen, ob der %1-Bearbeitungsmodus abgeschlossen ist.</translation>
     </message>
 </context>
 <context>
@@ -2199,7 +2199,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location filename="../Antiqua/Tabs/tabsmenu.cpp" line="+9"/>
         <source>Tabs</source>
-        <translation type="unfinished"></translation>
+        <translation>Registerkarten</translation>
     </message>
 </context>
 <context>
@@ -2252,63 +2252,63 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location line="+1"/>
         <source>Click to open Dialog for custom queries.</source>
-        <translation type="unfinished"></translation>
+        <translation>Hier klicken, um den Dialog für benutzerdefinierte Abfragen zu öffnen.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Limit search to</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche einschränken auf</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Select a search confiness</source>
-        <translation type="unfinished"></translation>
+        <translation>Wählen Sie eine Suchgrenze aus</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>default filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardfilter</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>search anywhere</source>
-        <translation type="unfinished"></translation>
+        <translation>Überall suchen</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>exact</source>
-        <translation type="unfinished"></translation>
+        <translation>genau</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>search exact</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche exakt</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>beginning</source>
-        <translation type="unfinished"></translation>
+        <translation>Anfang</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>beginning of sentence</source>
-        <translation type="unfinished"></translation>
+        <translation>Satzanfang</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>end</source>
-        <translation type="unfinished"></translation>
+        <translation>Ende</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>end of sentence</source>
-        <translation type="unfinished"></translation>
+        <translation>Satzende</translation>
     </message>
 </context>
 <context>
     <name>AntiquaCRM::TabsStatusBar</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+31"/>
+        <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+32"/>
         <source>Update</source>
         <translation>Aktualisieren</translation>
     </message>
@@ -2363,19 +2363,24 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Vergangene Tage bearbeitet (kein Bild)</translation>
     </message>
     <message>
+        <location line="+1"/>
+        <source>Customized</source>
+        <translation>Maßgeschneidert</translation>
+    </message>
+    <message>
         <location line="+13"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
     <message>
         <location line="+12"/>
-        <source>History menue</source>
-        <translation type="unfinished"></translation>
+        <source>History menu</source>
+        <translation>Verlaufsmenü</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>History</source>
-        <translation type="unfinished"></translation>
+        <translation>Verlauf</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -2388,7 +2393,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Standardansicht</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+113"/>
         <source>Query started, waiting for response.</source>
         <translation>Die Abfrage wurde gestartet und wartet auf Antwort.</translation>
     </message>
@@ -2470,12 +2475,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <message>
         <location line="+31"/>
         <source>Please enter a valid URI.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie eine gültige Adresse an.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Missing URI ...</source>
-        <translation type="unfinished"></translation>
+        <translation>Fehlende Adresse ...</translation>
     </message>
 </context>
 <context>

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+
+set +x
+
+_ts_files=$(find ./i18n -maxdepth 1 -type f -name "*_de.ts")
+_lrelease="`ls ~/Programme/Qt/6*/gcc_64/bin/lrelease`"
+
+${_lrelease} -compress ./i18n/antiquacore_de.ts

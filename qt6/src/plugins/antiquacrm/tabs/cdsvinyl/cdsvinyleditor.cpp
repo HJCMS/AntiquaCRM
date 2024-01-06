@@ -131,6 +131,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_mtype = new AntiquaCRM::SelectMediaType(this);
   cv_mtype->setObjectName("cv_mtype");
   cv_mtype->setToolTip(infolabel->text());
+  cv_mtype->appendStretch(0);
   row2->addWidget(cv_mtype, row2c, 1, 1, 1);
   // cv_condition
   infolabel = new AntiquaCRM::ALabel(tr("Condition"), row2Widget);
@@ -162,6 +163,11 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_storage = new AntiquaCRM::SelectStorage(this);
   cv_storage->setObjectName("cv_storage");
   cv_storage->setToolTip(infolabel->text());
+  tempWhatsThis = tr("The Storage location where this %1 has been stored. "
+                     "You need to Configure Storage locations first in your "
+                     "Database Configuration Menu before you can use it.")
+                      .arg(tr("Media"));
+  cv_storage->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_storage, row2c++, 1, 1, 4);
 
   // cv_keywords
