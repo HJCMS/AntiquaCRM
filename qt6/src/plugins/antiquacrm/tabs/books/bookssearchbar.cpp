@@ -28,11 +28,6 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
 
   addWidget(searchConfines());
 
-  // ib_signed
-  m_signed = new QCheckBox(tr("Signed"), this);
-  m_signed->setToolTip(tr("Signed Version"));
-  addWidget(m_signed);
-
   addWidget(searchImageOptions());
   addWidget(stockCheckBox());
 
@@ -123,9 +118,9 @@ void BooksSearchBar::setCustomSearch(const QString &info) {
 }
 
 void BooksSearchBar::setSearch() {
-  BooksSelectFilter::Filter _f = m_selectFilter->currentFilter();
-  setMinLength((_f == BooksSelectFilter::BOOK_STORAGE) ? 2 : getMinLength());
-  if (_f == BooksSelectFilter::BOOK_ARTICLE_ID) {
+  AntiquaCRM::SearchBarFilter _f = m_selectFilter->getValue();
+  setMinLength((_f == AntiquaCRM::SBF_STORAGES) ? 2 : getMinLength());
+  if (_f == AntiquaCRM::SearchBarFilter::SBF_ARTICLE_IDS) {
     emit sendSearchClicked();
   } else if (lineInputsEnabled() && requiredLengthExists()) {
     emit sendSearchClicked();
@@ -140,8 +135,8 @@ void BooksSearchBar::setFilter(int index) {
   m_searchInput->setToolTip(QString());
   m_customSearch->setToolTip(QString());
 
-  switch (m_selectFilter->currentFilter(index)) {
-  case (BooksSelectFilter::BOOK_ARTICLE_ID): {
+  switch (m_selectFilter->getValue(index)) {
+  case (AntiquaCRM::SearchBarFilter::SBF_ARTICLE_IDS): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
     m_searchInput->setPlaceholderText(tr("Article number"));
@@ -151,7 +146,7 @@ void BooksSearchBar::setFilter(int index) {
     break;
   }
 
-  case (BooksSelectFilter::BOOK_ISBN): {
+  case (AntiquaCRM::SearchBarFilter::SBF_ISBN_GTIN): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::NUMERIC);
     m_searchInput->setPlaceholderText(tr("ISBN search"));
@@ -160,7 +155,7 @@ void BooksSearchBar::setFilter(int index) {
     break;
   }
 
-  case (BooksSelectFilter::BOOK_TITLE_KEYWORD): {
+  case (AntiquaCRM::SearchBarFilter::SBF_TITLES_KEYWORDS): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Booktitle"));
@@ -172,19 +167,19 @@ void BooksSearchBar::setFilter(int index) {
     break;
   }
 
-  case (BooksSelectFilter::BOOK_TITLE_AUTHOR): {
+  case (AntiquaCRM::SearchBarFilter::SBF_TITLES_AUTHORS): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    m_searchInput->setPlaceholderText(tr("Booktitle and Author"));
-    m_searchInput->setToolTip(tr("Search Book in title"));
-    setCustomSearch(tr("and Author."));
+    m_searchInput->setPlaceholderText(tr("Booktitle and Authors"));
+    m_searchInput->setToolTip(tr("Searches Book in title"));
+    setCustomSearch(tr("and Authors."));
     m_customSearch->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_customSearch->setToolTip(" " + tr("and Authors."));
     break;
   }
 
-  case (BooksSelectFilter::BOOK_STORAGE): {
+  case (AntiquaCRM::SearchBarFilter::SBF_STORAGES): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("In Storages search"));
@@ -194,7 +189,7 @@ void BooksSearchBar::setFilter(int index) {
     break;
   }
 
-  case (BooksSelectFilter::BOOK_AUTHORS): {
+  case (AntiquaCRM::SearchBarFilter::SBF_AUTHORS_ARTISTS): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Authors search"));
@@ -202,7 +197,7 @@ void BooksSearchBar::setFilter(int index) {
     break;
   }
 
-  case (BooksSelectFilter::BOOK_PUBLISHER): {
+  case (AntiquaCRM::SearchBarFilter::SBF_PUBLISHERS): {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     m_searchInput->setPlaceholderText(tr("Publishers search"));
@@ -255,11 +250,6 @@ const QString BooksSearchBar::getSearchStatement() {
   // im_id Image filter
   if (!imageFilter().isEmpty()) {
     _sql.append(imageFilter() + " AND ");
-  }
-
-  // ib_signed
-  if (m_signed->isChecked()) {
-    _sql.append("ib_signed=true AND ");
   }
 
   if (_operation.isEmpty())

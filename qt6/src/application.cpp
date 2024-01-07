@@ -136,20 +136,20 @@ void Application::initStyleTheme() {
   }
 }
 
-bool Application::initTranslations() {
+void Application::initTranslations() {
   const QDir _dir(m_cfg->getTranslationDir());
   if (!_dir.isReadable()) {
     qWarning("No access to %s", qPrintable(_dir.path()));
-    return false;
+    return;
   }
   QTranslator *m_qtr = new QTranslator(this);
   if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _dir.path(), ".qm"))
-    return installTranslator(m_qtr);
-
-  return false;
+    installTranslator(m_qtr);
 }
 
 bool Application::initGUI() {
+  // Übersetzung muss vor dem UI initialisiert werden!
+  initTranslations();
   // MainWindow
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
@@ -249,19 +249,11 @@ int Application::exec() {
   initStyleTheme();
   mutex.unlock();
 
-  // Step 2 - show translations
-  p_splash.setMessage("Initial Translations.");
-  mutex.lock();
-  if (initTranslations()) {
-    p_splash.setMessage("Translations initialed");
-  }
-  mutex.unlock();
-
-  // Step 3 - show systemtray
+  // Step 2 - show systemtray
   p_splash.setMessage("Open Systemtray icon.");
   m_systray->show();
 
-  // Step 4 - network
+  // Step 3 - network
   p_splash.setMessage("Search Networkconnection!");
   mutex.lock();
   if (!checkInterfaces()) {
@@ -272,7 +264,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-  // Step 5 - SQL Server
+  // Step 4 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
   mutex.lock();
   if (!checkRemotePort()) {
@@ -284,7 +276,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Network connection to remote port exists."));
   mutex.unlock();
 
-  // Step 6 - SQL Database
+  // Step 5 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
   mutex.lock();
   if (!openDatabase()) {
@@ -301,7 +293,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Database connection successfully."));
   mutex.unlock();
 
-  // Step 7 - create cache files
+  // Step 6 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->db().isOpen()) {
     mutex.lock();
@@ -319,10 +311,10 @@ int Application::exec() {
     mutex.unlock();
   }
 
-  // Step 8 - finish splash and unlock
+  // Step 7 - finish splash and unlock
   p_splash.setMessage(tr("Open AntiquaCRM application ..."));
 
-  // Step 9 - open application window
+  // Step 8 - open application window
   if (m_window->openWindow())
     p_splash.finish(m_window);
 

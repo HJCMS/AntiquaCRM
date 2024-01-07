@@ -42,6 +42,9 @@
 // AntiquaCRM::TabsTable
 #include "tabstable.h"
 
+// AntiquaCRM::TabsSearchBarFilter
+#include "tabssearchbarfilter.h"
+
 // AntiquaCRM::TabsSearchBar
 #include "tabssearchbar.h"
 

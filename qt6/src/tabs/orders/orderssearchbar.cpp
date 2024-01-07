@@ -14,11 +14,10 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
 
   m_filter = new AntiquaCRM::AComboBox(this);
   m_filter->setToolTip(_tip);
-  m_filter->addItem(_icon, tr("Customer or Company")); // customer
-  m_filter->addItem(_icon, tr("Order Id"));            // o_id
-  m_filter->addItem(_icon, tr("Delivery Service"));    // d_name
-  m_filter->addItem(_icon, tr("Provider"));            // o_provider_name
-  m_filter->setSizeAdjustPolicy(QComboBox::AdjustToContents);
+  m_filter->addItem(_icon, tr("Recipient"));        // customer
+  m_filter->addItem(_icon, tr("Order Id"));         // o_id
+  m_filter->addItem(_icon, tr("Delivery Service")); // d_name
+  m_filter->addItem(_icon, tr("Provider"));         // o_provider_name
   addWidget(m_filter);
 
   QToolButton *m_icontb = new QToolButton(this);

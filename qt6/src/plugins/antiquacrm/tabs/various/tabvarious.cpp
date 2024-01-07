@@ -36,9 +36,9 @@ bool TabVarious::addIndexOnInit() const { return false; }
 const QJsonObject TabVarious::menuEntry() const {
   QJsonObject _jo;
   _jo.insert("id", QString(VARIOUS_INTERFACE_TABID));
-  _jo.insert("title", tr("Various"));
+  _jo.insert("title", displayName());
   _jo.insert("tip", tr("Inventory Various"));
-  _jo.insert("icon", tr("applications-other"));
+  _jo.insert("icon", "applications-other");
   return _jo;
 }
 

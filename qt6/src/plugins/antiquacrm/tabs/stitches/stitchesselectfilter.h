@@ -9,18 +9,19 @@
 #ifndef ANTIQUACRM_PLUGIN_STITCHESSELECTFILTER_H
 #define ANTIQUACRM_PLUGIN_STITCHESSELECTFILTER_H
 
-#include <AGlobal>
-#include <QComboBox>
+#include <AntiquaTabs>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY StitchesSelectFilter final : public QComboBox {
+class ANTIQUACRM_LIBRARY StitchesSelectFilter final
+    : public AntiquaCRM::TabsSearchBarFilter {
   Q_OBJECT
+
+private:
+  virtual void createItemData() override;
 
 public:
   explicit StitchesSelectFilter(QWidget *parent = nullptr);
-  const QString currentFilter(int index = -1);
-  const QString currentToolTip(int index = -1);
 };
 
 #endif // ANTIQUACRM_PLUGIN_STITCHESSELECTFILTER_H

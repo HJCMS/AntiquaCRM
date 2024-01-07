@@ -20,7 +20,7 @@ const QMap<int, QString> BooksTableModel::headerList() const {
   map.insert(i++, tr("Price"));
   map.insert(i++, tr("Storage"));
   map.insert(i++, tr("Changed"));
-  map.insert(i++, tr("Author"));
+  map.insert(i++, tr("Authors"));
   map.insert(i++, tr("Publisher"));
   map.insert(i++, tr("Year"));
   map.insert(i++, tr("Since"));

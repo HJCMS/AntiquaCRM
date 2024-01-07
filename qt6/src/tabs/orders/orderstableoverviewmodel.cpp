@@ -135,7 +135,7 @@ const QString OrdersTableOverViewModel::getToolTip(int column) const {
   map.insert(1, tr("Order Since"));
   map.insert(2, tr("Order status"));
   map.insert(3, tr("Payment status"));
-  map.insert(4, tr("Customer"));
+  map.insert(4, tr("Payment recipients"));
   map.insert(5, tr("Delivery Service"));
   map.insert(6, tr("Provider info"));
   map.insert(7, tr("Order lifetime"));
@@ -149,7 +149,7 @@ const QMap<int, QString> OrdersTableOverViewModel::headerList() const {
   map.insert(1, tr("Since"));
   map.insert(2, tr("Status"));
   map.insert(3, tr("Payed"));
-  map.insert(4, tr("Customer"));
+  map.insert(4, tr("Recipients"));
   map.insert(5, tr("Service"));
   map.insert(6, tr("Provider"));
   map.insert(7, tr("Runtime"));

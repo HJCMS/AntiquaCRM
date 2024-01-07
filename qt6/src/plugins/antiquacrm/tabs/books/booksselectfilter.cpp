@@ -2,93 +2,86 @@
 // vim: set fileencoding=utf-8
 
 #include "booksselectfilter.h"
-#include "antiquaicon.h"
 
-BooksSelectFilter::BooksSelectFilter(QWidget *parent) : QComboBox{parent} {
-  setWhatsThis(
-      tr("With this button you can optimize your search with some filters."));
-  setSizeAdjustPolicy(QComboBox::AdjustToContents);
-  setToolTip(tr("Press CTRL+Shift+F, to quickly open this Menu."));
-
-  QString _prefix = tr("Search Book with") + " ";
-  QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
-  insertItem(0, _icon, tr("Title and Author"), BOOK_TITLE_AUTHOR);
-  setItemData(0, _prefix + tr("Title and Author"), Qt::ToolTipRole);
-
-  insertItem(1, _icon, tr("Title and Keyword"), BOOK_TITLE_KEYWORD);
-  setItemData(1, _prefix + tr("Title and Keyword"), Qt::ToolTipRole);
-
-  insertItem(2, _icon, tr("Article Id"), BOOK_ARTICLE_ID);
-  setItemData(2, tr("Multiple searches separated by commas!"), Qt::ToolTipRole);
-
-  insertItem(3, _icon, tr("ISBN"), BOOK_ISBN);
-  setItemData(3, tr("Only Numbers are allowed for input!"), Qt::ToolTipRole);
-
-  insertItem(4, _icon, tr("Author"), BOOK_AUTHORS);
-  setItemData(4, _prefix + tr("Author"), Qt::ToolTipRole);
-
-  insertItem(5, _icon, tr("Publisher"), BOOK_PUBLISHER);
-  setItemData(5, _prefix + tr("Publisher"), Qt::ToolTipRole);
-
-  insertItem(6, _icon, tr("Storage"), BOOK_STORAGE);
-  setItemData(6, tr("In Storage location by Keyword"), Qt::ToolTipRole);
+BooksSelectFilter::BooksSelectFilter(QWidget *parent)
+    : AntiquaCRM::TabsSearchBarFilter{parent} {
+  setObjectName("books_filter_selecter");
+  createItemData();
 }
 
-BooksSelectFilter::Filter BooksSelectFilter::currentFilter(int index) {
-  qint8 _i = (index >= 0) ? index : currentIndex();
-  return qvariant_cast<BooksSelectFilter::Filter>(itemData(_i, Qt::UserRole));
+void BooksSelectFilter::createItemData() {
+  int _i = 0;
+  const QString _prefix(tr("Searches books") + " ");
+  insertItem(_i, defaultIcon(), tr("Title and Authors"),
+             AntiquaCRM::SearchBarFilter::SBF_TITLES_AUTHORS);
+  setItemData(_i++, _prefix + tr("by title and authors."), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Title and Keyword"),
+             AntiquaCRM::SearchBarFilter::SBF_TITLES_KEYWORDS);
+  setItemData(_i++, _prefix + tr("by title and keywords."), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Article Id"),
+             AntiquaCRM::SearchBarFilter::SBF_ARTICLE_IDS);
+  setItemData(_i++, tr("Multiple Article numbers separated by commas!"),
+              Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("ISBN"),
+             AntiquaCRM::SearchBarFilter::SBF_ISBN_GTIN);
+  setItemData(_i++, tr("Only Numbers are allowed here!"), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Authors"),
+             AntiquaCRM::SearchBarFilter::SBF_AUTHORS_ARTISTS);
+  setItemData(_i++, _prefix + tr("for authors."), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Publisher"),
+             AntiquaCRM::SearchBarFilter::SBF_PUBLISHERS);
+  setItemData(_i++, _prefix + tr("for publishers."), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Storage"),
+             AntiquaCRM::SearchBarFilter::SBF_STORAGES);
+  setItemData(_i++, tr("by keywords or storage location."), Qt::ToolTipRole);
 }
 
-/**
- * @brief Nehme aktuellen Suchfilter
- * @note Wenn -1 dann wird currentIndex() verwendet!
- * @code
- *  QJsonObject(
- *    "search" => QJSonValue().toString()
- *    "fields" => QJSonValue().toString(),
- *  );
- * @endcode
- */
 const QJsonObject BooksSelectFilter::getFilter(int index) {
   QJsonObject obj;
-  switch (currentFilter(index)) {
-  case (BOOK_TITLE_AUTHOR): {
+  switch (getValue(index)) {
+  case (AntiquaCRM::SearchBarFilter::SBF_TITLES_AUTHORS): {
     obj.insert("search", QJsonValue("title_and_author"));
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_author"));
     break;
   }
 
-  case (BOOK_TITLE_KEYWORD): {
+  case (AntiquaCRM::SearchBarFilter::SBF_TITLES_KEYWORDS): {
     obj.insert("search", QJsonValue("title"));
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_keyword"));
     break;
   }
 
-  case (BOOK_ARTICLE_ID): {
+  case (AntiquaCRM::SearchBarFilter::SBF_ARTICLE_IDS): {
     obj.insert("search", QJsonValue("articleId"));
     obj.insert("fields", QJsonValue("ib_id"));
     break;
   }
 
-  case (BOOK_ISBN): {
+  case (AntiquaCRM::SearchBarFilter::SBF_ISBN_GTIN): {
     obj.insert("search", QJsonValue("isbn"));
     obj.insert("fields", QJsonValue("ib_isbn"));
     break;
   }
 
-  case (BOOK_AUTHORS): {
+  case (AntiquaCRM::SearchBarFilter::SBF_AUTHORS_ARTISTS): {
     obj.insert("search", QJsonValue("author"));
     obj.insert("fields", QJsonValue("ib_author"));
     break;
   }
 
-  case (BOOK_PUBLISHER): {
+  case (AntiquaCRM::SearchBarFilter::SBF_PUBLISHERS): {
     obj.insert("search", QJsonValue("publisher"));
     obj.insert("fields", QJsonValue("ib_publisher"));
     break;
   }
 
-  case (BOOK_STORAGE): {
+  case (AntiquaCRM::SearchBarFilter::SBF_STORAGES): {
     obj.insert("search", QJsonValue("storage"));
     obj.insert("fields", QJsonValue("ib_storage"));
     break;

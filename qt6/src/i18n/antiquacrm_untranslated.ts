@@ -2527,6 +2527,19 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::TabsSearchBarFilter</name>
+    <message>
+        <location filename="../Antiqua/Tabs/tabssearchbarfilter.cpp" line="+18"/>
+        <source>Select here your optimal search filter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Press CTRL+Shift+F, to quickly open this filter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::TabsStatusBar</name>
     <message>
         <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+32"/>
@@ -2720,7 +2733,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+75"/>
         <source>No Networkconnection found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3084,7 +3097,7 @@ Example: „first edition“ is equal to 1.</source>
     </message>
     <message>
         <location line="+6"/>
-        <source>Author</source>
+        <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3399,17 +3412,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Signed</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Signed Version</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+48"/>
+        <location line="+58"/>
         <source>Keyword</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3460,20 +3463,16 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+7"/>
-        <source>Booktitle and Author</source>
+        <source>Booktitle and Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search Book in title</source>
+        <source>Searches Book in title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>and Author.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+3"/>
         <source>and Authors.</source>
         <translation type="unfinished"></translation>
@@ -3507,62 +3506,68 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksSelectFilter</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+9"/>
-        <source>With this button you can optimize your search with some filters.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Search Book with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+1"/>
-        <source>Title and Author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+1"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+19"/>
         <source>Title and Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="-9"/>
+        <source>Searches books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+1"/>
-        <source>Multiple searches separated by commas!</source>
+        <source>Title and Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
+        <source>by title and authors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>by title and keywords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Multiple Article numbers separated by commas!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>ISBN</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Only Numbers are allowed for input!</source>
+        <location line="+2"/>
+        <source>Only Numbers are allowed here!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1"/>
-        <source>Author</source>
+        <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1"/>
+        <source>for authors.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>for publishers.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3571,8 +3576,8 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>In Storage location by Keyword</source>
+        <location line="+2"/>
+        <source>by keywords or storage location.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3666,7 +3671,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Author</source>
+        <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4271,12 +4276,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+3"/>
-        <source>Author or Artist</source>
+        <source>Authors or Artist</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Search for Author or Artist.</source>
+        <source>Search for Authors or Artist.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4445,7 +4450,7 @@ Image - Article Id: %2</source>
     <message>
         <location line="-67"/>
         <location line="+68"/>
-        <source>Title and Author search</source>
+        <source>Title and Authors search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6561,7 +6566,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+4"/>
-        <source>Customer or Company</source>
+        <source>Recipient</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -6580,7 +6585,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Search Company or Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6979,12 +6984,11 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+1"/>
-        <location line="+14"/>
-        <source>Customer</source>
+        <source>Payment recipients</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="+1"/>
         <source>Delivery Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7019,7 +7023,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
+        <source>Recipients</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Service</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8409,10 +8418,6 @@ Notes: You cannot do this afterwards, there are no remote deletion processes wit
     </message>
     <message>
         <location line="+5"/>
-        <source>Author</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location line="+4"/>
         <source>Authors</source>
         <translation type="unfinished"></translation>
@@ -8714,78 +8719,68 @@ Image - Article Id: %2</source>
 <context>
     <name>StitchesSelectFilter</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitchesselectfilter.cpp" line="+9"/>
-        <source>Select search filter.</source>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitchesselectfilter.cpp" line="+14"/>
+        <source>Searches prints, stitches and engravings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Search Prints with</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Search with Title or extended Title!</source>
+        <source>in title or extended title!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>in keywords or storage compartment!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+3"/>
+        <source>Article No.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Multiple article numbers separated by comma!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Authors or Artists</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>in authors or artists field.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keyword- or Storage location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Searches in storage location or in storage keywords.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Created/modified in year</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Searches by created or modified in Year!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-20"/>
         <source>Keywords</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Search for Keyword or compartment!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Article Id</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Multiple article ids separated by comma!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Author or Artist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Search for Author or Artist.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Storage and Keyword</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>In Storage location with Keyword or name.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Created/Modified in Year</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Search created or modified in Year!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8841,7 +8836,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>Author</source>
+        <source>Authors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9203,18 +9198,12 @@ Image - Article Id: %2</source>
     <name>TabVarious</name>
     <message>
         <location filename="../plugins/antiquacrm/tabs/various/tabvarious.cpp" line="+13"/>
-        <location line="+26"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+27"/>
         <source>Inventory Various</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>applications-other</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9263,7 +9252,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Underlimit price.</source>
+        <source>Minimum price.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

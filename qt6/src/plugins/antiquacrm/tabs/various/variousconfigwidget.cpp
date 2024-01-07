@@ -21,7 +21,7 @@ VariousConfigWidget::VariousConfigWidget(QWidget *parent)
   grLayout2->setContentsMargins(5, 5, 5, 5);
   m_minPrice = new AntiquaCRM::PriceEdit(m_group0);
   m_minPrice->setObjectName("various_price_lowest");
-  m_minPrice->setToolTip(tr("Underlimit price."));
+  m_minPrice->setToolTip(tr("Minimum price."));
   m_minPrice->setBuddyLabel(tr("Price underlimit"));
   grLayout2->addWidget(m_minPrice, 1, 0, 1, 1);
   m_normalPrice = new AntiquaCRM::PriceEdit(m_group0);
@@ -95,7 +95,7 @@ AntiquaCRM::ConfigType VariousConfigWidget::getType() const {
 
 const QJsonObject VariousConfigWidget::getMenuEntry() const {
   QJsonObject _o;
-  _o.insert("icon", "code-variable");
+  _o.insert("icon", "applications-other");
   _o.insert("title", tr("Various"));
   _o.insert("tooltip", tr("Additional Varioustab settings."));
   return _o;

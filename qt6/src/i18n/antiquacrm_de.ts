@@ -471,7 +471,7 @@
     <message>
         <location line="-14"/>
         <source>Author</source>
-        <translation>Autor*in</translation>
+        <translation>Autoren</translation>
     </message>
     <message>
         <location line="-14"/>
@@ -2528,6 +2528,19 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::TabsSearchBarFilter</name>
+    <message>
+        <location filename="../Antiqua/Tabs/tabssearchbarfilter.cpp" line="+18"/>
+        <source>Select here your optimal search filter.</source>
+        <translation>Wählen Sie hier Ihren optimalen Suchfilter.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Press CTRL+Shift+F, to quickly open this filter.</source>
+        <translation>Drücken Sie STRG+Umschalt+F, um diesen Filter schnell zu öffnen.</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::TabsStatusBar</name>
     <message>
         <location filename="../Antiqua/Tabs/tabsstatusbar.cpp" line="+32"/>
@@ -2721,7 +2734,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
     <message>
-        <location line="+83"/>
+        <location line="+75"/>
         <source>No Networkconnection found!</source>
         <translation>Keine Netzwerkverbindung gefunden!</translation>
     </message>
@@ -3089,8 +3102,8 @@ Beispiel: „Erstausgabe“ ist gleich 1.</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Author</source>
-        <translation>Autor*in</translation>
+        <source>Authors</source>
+        <translation>Autoren</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3419,17 +3432,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Standardsuche</translation>
     </message>
     <message>
-        <location line="+14"/>
-        <source>Signed</source>
-        <translation>Signiert</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Signed Version</source>
-        <translation>Signierte Version</translation>
-    </message>
-    <message>
-        <location line="+48"/>
+        <location line="+58"/>
         <source>Keyword</source>
         <translation>Schlüsselwort</translation>
     </message>
@@ -3480,20 +3483,16 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+7"/>
-        <source>Booktitle and Author</source>
-        <translation>Buchtitel und Autor</translation>
+        <source>Booktitle and Authors</source>
+        <translation>Buchtitel und Autoren.</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Search Book in title</source>
-        <translation>Suche nach Buch im Titel</translation>
+        <source>Searches Book in title</source>
+        <translation>Sucht Buch im Titel</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>and Author.</source>
-        <translation>und Autor.</translation>
-    </message>
-    <message>
         <location line="+3"/>
         <source>and Authors.</source>
         <translation>und Autoren.</translation>
@@ -3527,63 +3526,69 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksSelectFilter</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+9"/>
-        <source>With this button you can optimize your search with some filters.</source>
-        <translation>Mit dieser Schaltfläche können Sie die Suche mit einigen Filtern optimieren.</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
-        <translation>Drücke STRG+Umschalt+F, um das Filtermenü schnell zu öffnen.</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Search Book with</source>
-        <translation>Suche Buch mit</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+1"/>
-        <source>Title and Author</source>
-        <translation>Titel und Autor</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <location line="+1"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+19"/>
         <source>Title and Keyword</source>
         <translation>Titel und Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+4"/>
         <source>Article Id</source>
         <translation>Artikel-Id</translation>
     </message>
     <message>
+        <location line="-9"/>
+        <source>Searches books</source>
+        <translation>Durchsucht Bücher</translation>
+    </message>
+    <message>
         <location line="+1"/>
-        <source>Multiple searches separated by commas!</source>
-        <translation>Mehrere Suchanfragen durch Kommas getrennt!</translation>
+        <source>Title and Authors</source>
+        <translation>Titel und Autoren</translation>
     </message>
     <message>
         <location line="+2"/>
+        <source>by title and authors.</source>
+        <translation>nach Titel und Autoren.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>by title and keywords.</source>
+        <translation>nach Titel und Schlüsselwörtern.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Multiple Article numbers separated by commas!</source>
+        <translation>Mehrere Artikelnummern durch Kommas getrennt!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>ISBN</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Only Numbers are allowed for input!</source>
-        <translation>Es dürfen nur Zahlen verwendet werden!</translation>
+        <location line="+2"/>
+        <source>Only Numbers are allowed here!</source>
+        <translation>Hier sind nur Zahlen erlaubt!</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1"/>
-        <source>Author</source>
-        <translation>Autor*in</translation>
+        <source>Authors</source>
+        <translation>Autoren</translation>
     </message>
     <message>
         <location line="+2"/>
-        <location line="+1"/>
+        <source>for authors.</source>
+        <translation>nach Autoren.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
         <source>Publisher</source>
-        <translation>Herausgeber*in</translation>
+        <translation>Herausgeber</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>for publishers.</source>
+        <translation>nach Verlagen.</translation>
     </message>
     <message>
         <location line="+2"/>
@@ -3591,9 +3596,9 @@ Bild – Artikel-ID: %2</translation>
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>In Storage location by Keyword</source>
-        <translation>Im Lager nach Schlüsselwort</translation>
+        <location line="+2"/>
+        <source>by keywords or storage location.</source>
+        <translation>nach Schlüsselwörtern oder Speicherort.</translation>
     </message>
 </context>
 <context>
@@ -3686,13 +3691,13 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Author</source>
-        <translation>Autor*in</translation>
+        <source>Authors</source>
+        <translation>Autoren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Publisher</source>
-        <translation>Herausgeber*in</translation>
+        <translation>Herausgeber</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4068,7 +4073,7 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="+5"/>
         <source>Publisher</source>
-        <translation>Herausgeber*in</translation>
+        <translation>Herausgeber</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -4294,13 +4299,13 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Author or Artist</source>
-        <translation>Autor*in oder Künstler*in</translation>
+        <source>Authors or Artist</source>
+        <translation>Autoren oder Künstler</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Search for Author or Artist.</source>
-        <translation>Suchen Sie nach Autor*in oder Künstler*in.</translation>
+        <source>Search for Authors or Artist.</source>
+        <translation>Suche nach Autoren oder Künstler.</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -4366,7 +4371,7 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="+1"/>
         <source>Artist</source>
-        <translation>Künstler*in</translation>
+        <translation>Künstler</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -4468,8 +4473,8 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="-67"/>
         <location line="+68"/>
-        <source>Title and Author search</source>
-        <translation>Titel- und Autorensuche</translation>
+        <source>Title and Authors search</source>
+        <translation>Titel und Autorensuche</translation>
     </message>
     <message>
         <location line="-67"/>
@@ -5572,7 +5577,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     <message>
         <location line="+4"/>
         <source>Publisher</source>
-        <translation>Verleger</translation>
+        <translation>Verlag</translation>
     </message>
     <message>
         <location line="+21"/>
@@ -6585,8 +6590,8 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+4"/>
-        <source>Customer or Company</source>
-        <translation>Kunde oder Unternehmen</translation>
+        <source>Recipient</source>
+        <translation>Empfänger</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -6604,7 +6609,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Dienstleister</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Search Company or Customer</source>
         <translation>Suche nach Firma oder Kunde</translation>
     </message>
@@ -7003,12 +7008,11 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+1"/>
-        <location line="+14"/>
-        <source>Customer</source>
-        <translation>Kunde*in</translation>
+        <source>Payment recipients</source>
+        <translation>Zahlungsempfänger</translation>
     </message>
     <message>
-        <location line="-13"/>
+        <location line="+1"/>
         <source>Delivery Service</source>
         <translation>Lieferservice</translation>
     </message>
@@ -7043,7 +7047,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
+        <source>Recipients</source>
+        <translation>Empfänger</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Service</source>
         <translation></translation>
     </message>
@@ -7994,7 +8003,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     <message>
         <location line="+1"/>
         <source>For order processing, please see the Orders tab.</source>
-        <translation>Die Bestellabwicklung wird in der Registerkarte Aufträge berabeitet.</translation>
+        <translation>Die Bestellabwicklung wird in der Registerkarte Aufträge bearbeitet.</translation>
     </message>
 </context>
 <context>
@@ -8437,10 +8446,6 @@ Hinweise: Dies ist im Nachhinein nicht möglich, es gibt hierfür keine Remote-L
     </message>
     <message>
         <location line="+5"/>
-        <source>Author</source>
-        <translation>Autor*in</translation>
-    </message>
-    <message>
         <location line="+4"/>
         <source>Authors</source>
         <translation>Autoren</translation>
@@ -8752,79 +8757,69 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StitchesSelectFilter</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitchesselectfilter.cpp" line="+9"/>
-        <source>Select search filter.</source>
-        <translation>Suchfilter auswählen.</translation>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitchesselectfilter.cpp" line="+14"/>
+        <source>Searches prints, stitches and engravings</source>
+        <translation>Sucht nach Drucken, Stichen und Gravuren</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Search Prints with</source>
-        <translation>Suche Drucke mit</translation>
-    </message>
-    <message>
-        <location line="+4"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Search with Title or extended Title!</source>
-        <translation>Suche im Titel oder erweitertem Titel!</translation>
+        <source>in title or extended title!</source>
+        <translation>im Titel oder im erweiterten Titel!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>in keywords or storage compartment!</source>
+        <translation>in Schlüsselwörtern oder im Aufbewahrungsfach!</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Keywords</source>
-        <translation>Schlüsselwörter</translation>
+        <source>Article No.</source>
+        <translation>Artikelnummer.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Multiple article numbers separated by comma!</source>
+        <translation>Mehrere Artikelnummern durch Komma getrennt!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Authors or Artists</source>
+        <translation>Autoren oder Künstler</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>in authors or artists field.</source>
+        <translation>im Autoren- oder Künstlerfeld.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Keyword- or Storage location</source>
+        <translation>Stichwort- oder Speicherort</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Search for Keyword or compartment!</source>
-        <translation>Suchen nach Schlüsselwort oder Lagerfach!</translation>
+        <source>Searches in storage location or in storage keywords.</source>
+        <translation>Sucht nach Speicherort oder nach Speicherschlüsselwörtern.</translation>
     </message>
     <message>
         <location line="+3"/>
-        <source>Article Id</source>
-        <translation>Artikel-Id</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Multiple article ids separated by comma!</source>
-        <translation>Mehrere Artikel-IDs durch Komma getrennt!</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Author or Artist</source>
-        <translation>Autor*in oder Künstler*in</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Search for Author or Artist.</source>
-        <translation>Suchen Sie nach Autor*in oder Künstler*in.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Storage and Keyword</source>
-        <translation>Lagerort und Schlüsselwort</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>In Storage location with Keyword or name.</source>
-        <translation>Im Lagerort mit Stichwort oder Name.</translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Created/Modified in Year</source>
+        <source>Created/modified in year</source>
         <translation>Erstellt/geändert im Jahr</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Search created or modified in Year!</source>
-        <translation>Suche im Jahr erstellt oder geändert!</translation>
+        <source>Searches by created or modified in Year!</source>
+        <translation>Suchen nach erstellt oder geändert im Jahr!</translation>
+    </message>
+    <message>
+        <location line="-20"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
     </message>
 </context>
 <context>
@@ -8879,8 +8874,8 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Author</source>
-        <translation>Autor*in</translation>
+        <source>Authors</source>
+        <translation>Autoren</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -9241,19 +9236,13 @@ Bild – Artikel-ID: %2</translation>
     <name>TabVarious</name>
     <message>
         <location filename="../plugins/antiquacrm/tabs/various/tabvarious.cpp" line="+13"/>
-        <location line="+26"/>
         <source>Various</source>
-        <translation>Diverse</translation>
+        <translation>Verschiedenes</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+27"/>
         <source>Inventory Various</source>
         <translation>Inventar Verschiedenes</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>applications-other</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9301,8 +9290,8 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Underlimit price.</source>
-        <translation type="unfinished"></translation>
+        <source>Minimum price.</source>
+        <translation>Minimaler Preis.</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -9345,181 +9334,181 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="+2"/>
         <source>Unique article number for this listing.</source>
-        <translation type="unfinished"></translation>
+        <translation>Eindeutige Artikelnummer für dieses Angebot.</translation>
     </message>
     <message>
         <location line="+6"/>
         <source>Count</source>
-        <translation type="unfinished">Anzahl</translation>
+        <translation>Anzahl</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Current number of articles in stock. If the number is 0, the item will be deleted from the sales portals!</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktuelle Anzahl der Artikel auf Lager. Bei einer Zahl von 0 wird der Artikel aus den Verkaufsportalen gelöscht!</translation>
     </message>
     <message>
         <location line="+9"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Enter your selling price for the article here. This is the net price, VAT and delivery costs will be added later.</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie hier Ihren Verkaufspreis für den Artikel ein. Hierbei handelt es sich um den Nettopreis, zuzügliche Mehrwertsteuer und Versandkosten kommen später noch hinzu.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Year</source>
-        <translation type="unfinished">Jahr</translation>
+        <translation>Jahr</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Optional year, a date is required for articles, but the year may differ from the actual year of manufacture. You then write this information in the description section.</source>
-        <translation type="unfinished"></translation>
+        <translation>Optionales Jahr, für Artikel ist ein Datum erforderlich, das Jahr kann jedoch vom tatsächlichen Herstellungsjahr abweichen. Diese Informationen schreiben Sie dann in den Beschreibungsabschnitt.</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>Local Usage only</source>
-        <translation type="unfinished">Nur lokale Nutzung</translation>
+        <translation>Nur lokale Nutzung</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>If checked, the article will not be exported to your sellers.&lt;br&gt;&lt;b&gt;Warning:&lt;/b&gt; If you activate this option later this will have no impact to your providers.&lt;br&gt;The entries must then be removed manually!</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn diese Option aktiviert ist, wird der Artikel nicht an Ihre Verkäufer exportiert.&lt;br&gt;&lt;b&gt;Warnung:&lt;/b&gt; Wenn Sie diese Option später aktivieren, hat dies keine Auswirkungen auf Ihre Anbieter.&lt;br&gt;Die Einträge müssen dann manuell entfernt werden !</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Title</source>
-        <translation type="unfinished">Titel</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Current title of the article. This is displayed first in the sales portal and is limited to 80 characters.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktueller Titel des Artikels. Diese wird zuerst im Verkaufsportal angezeigt und ist auf 80 Zeichen begrenzt.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Extended</source>
-        <translation type="unfinished">Erweitert</translation>
+        <translation>Erweitert</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Additional sales title of the article. A supplement to the primary title.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zusätzlicher Verkaufstitel des Artikels. Eine Ergänzung zum Haupttitel.</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Designation</source>
-        <translation type="unfinished">Bezeichnung</translation>
+        <translation>Bezeichnung</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Article designation for sales.</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikelbezeichnung für den Verkauf.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Condition</source>
-        <translation type="unfinished">Zustand</translation>
+        <translation>Zustand</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Predefined item condition.</source>
-        <translation type="unfinished"></translation>
+        <translation>Vordefinierter Artikelzustand.</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Storage</source>
-        <translation type="unfinished">Lager</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>The Storage location where this %1 has been stored. You need to Configure Storage locations first in your Database Configuration Menu before you can use it.</source>
-        <translation type="unfinished">Der Speicherort, an dem dieser %1 gespeichert wurde. Sie müssen zuerst die Speicherorte in Ihrem Datenbankkonfigurationsmenü konfigurieren, bevor Sie es verwenden können.</translation>
+        <translation>Der Speicherort, an dem dieser %1 gespeichert wurde. Sie müssen zuerst die Speicherorte in Ihrem Datenbankkonfigurationsmenü konfigurieren, bevor Sie es verwenden können.</translation>
     </message>
     <message>
         <location line="+3"/>
         <source>Article</source>
-        <translation type="unfinished">Artikel</translation>
+        <translation>Artikel</translation>
     </message>
     <message>
         <location line="+24"/>
         <source>Description</source>
-        <translation type="unfinished">Beschreibung</translation>
+        <translation>Beschreibung</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Internal Description</source>
-        <translation type="unfinished">Interne Beschreibung</translation>
+        <translation>Interne Beschreibung</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Created at</source>
-        <translation type="unfinished">Erstellt</translation>
+        <translation>Erstellt</translation>
     </message>
     <message>
         <location line="+5"/>
         <source>Last changed</source>
-        <translation type="unfinished">Geändert</translation>
+        <translation>Geändert</translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Information</source>
-        <translation type="unfinished">Informationen</translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <location line="+147"/>
         <source>Data saved successfully!</source>
-        <translation type="unfinished">Daten erfolgreich gespeichert!</translation>
+        <translation>Daten erfolgreich gespeichert!</translation>
     </message>
     <message>
         <location line="+36"/>
         <source>Missing Article ID for Update.</source>
-        <translation type="unfinished">Fehlende Artikel-ID für Update.</translation>
+        <translation>Fehlende Artikelnummer für Update.</translation>
     </message>
     <message>
         <location line="+32"/>
         <source>No Modifications found, Update aborted!</source>
-        <translation type="unfinished">Keine Änderungen gefunden, Update abgebrochen!</translation>
+        <translation>Keine Änderungen gefunden, Update abgebrochen!</translation>
     </message>
     <message>
         <location line="+35"/>
         <source>Update success!</source>
-        <translation type="unfinished">Update erfolgreich!</translation>
+        <translation>Update erfolgreich!</translation>
     </message>
     <message>
         <location line="+56"/>
         <source>Entry created!</source>
-        <translation type="unfinished"></translation>
+        <translation>Eintrag erstellt!</translation>
     </message>
     <message>
         <location line="+50"/>
         <source>Remove Image from Database</source>
-        <translation type="unfinished">Bild aus der Datenbank entfernen</translation>
+        <translation>Bild aus der Datenbank entfernen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>%1
 
 Image - Article Id: %2</source>
-        <translation type="unfinished">%1
+        <translation>%1
 
 Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Do you really want to delete the Image?</source>
-        <translation type="unfinished">Möchten Sie das Bild wirklich löschen?</translation>
+        <translation>Möchten Sie das Bild wirklich löschen?</translation>
     </message>
     <message>
         <location line="+7"/>
         <source>Image delete successfully!</source>
-        <translation type="unfinished">Bild erfolgreich gelöscht!</translation>
+        <translation>Bild erfolgreich gelöscht!</translation>
     </message>
     <message>
         <location line="+8"/>
         <source>No Article number for Image import!</source>
-        <translation type="unfinished">Keine Artikelnummer für Bildimport!</translation>
+        <translation>Keine Artikelnummer für Bildimport!</translation>
     </message>
 </context>
 <context>
@@ -9527,7 +9516,7 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+165"/>
         <source>Various</source>
-        <translation type="unfinished">Diverse</translation>
+        <translation>Verschiedenes</translation>
     </message>
 </context>
 <context>
@@ -9535,7 +9524,7 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location filename="../plugins/antiquacrm/tabs/various/varioussearchbar.cpp" line="+20"/>
         <source>Default search</source>
-        <translation type="unfinished">Standardsuche</translation>
+        <translation>Standardsuche</translation>
     </message>
 </context>
 <context>
@@ -9543,12 +9532,12 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location filename="../plugins/antiquacrm/tabs/various/variousstatusbar.cpp" line="+12"/>
         <source>New entry</source>
-        <translation type="unfinished">Neuer Eintrag</translation>
+        <translation>Neuer Eintrag</translation>
     </message>
     <message>
         <location line="+0"/>
         <source>Create a new entry.</source>
-        <translation type="unfinished"></translation>
+        <translation>Erstelle einen neuen Eintrag.</translation>
     </message>
 </context>
 <context>
@@ -9561,43 +9550,43 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="+1"/>
         <source>Duration</source>
-        <translation type="unfinished">Bestand</translation>
+        <translation>Bestand</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Image</source>
-        <translation type="unfinished">Bild</translation>
+        <translation>Bild</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Title</source>
-        <translation type="unfinished">Titel</translation>
+        <translation>Titel</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Price</source>
-        <translation type="unfinished">Preis</translation>
+        <translation>Preis</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Storage</source>
-        <translation type="unfinished">Lager</translation>
+        <translation>Lager</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Changed</source>
-        <translation type="unfinished">Geändert</translation>
+        <translation>Geändert</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Since</source>
-        <translation type="unfinished">Erstellt</translation>
+        <translation>Erstellt</translation>
     </message>
     <message>
         <location line="+1"/>
         <location line="+20"/>
         <source>Unknown</source>
-        <translation type="unfinished">Unbekannt</translation>
+        <translation>Unbekannt</translation>
     </message>
 </context>
 <context>
@@ -9605,27 +9594,27 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location filename="../plugins/antiquacrm/tabs/various/varioustableview.cpp" line="+47"/>
         <source>Open entry</source>
-        <translation type="unfinished">Eintrag öffnen</translation>
+        <translation>Eintrag öffnen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Create entry</source>
-        <translation type="unfinished">Eintrag erstellen</translation>
+        <translation>Eintrag erstellen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Copy Article Id</source>
-        <translation type="unfinished"></translation>
+        <translation>Artikelnummer kopieren</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Add Article to opened Order</source>
-        <translation type="unfinished">Artikel zur geöffneten Bestellung hinzufügen</translation>
+        <translation>Artikel zur geöffneten Bestellung hinzufügen</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Update</source>
-        <translation type="unfinished">Aktualisieren</translation>
+        <translation>Aktualisieren</translation>
     </message>
 </context>
 <context>
@@ -9633,12 +9622,12 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location filename="../plugins/antiquacrm/tabs/views/viewsconfigwidget.cpp" line="+32"/>
         <source>Views</source>
-        <translation type="unfinished">Ansichten</translation>
+        <translation>Ansichten</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Additional Views settings.</source>
-        <translation type="unfinished"></translation>
+        <translation>Einstellungen für zusätzliche Ansichten.</translation>
     </message>
 </context>
 <context>

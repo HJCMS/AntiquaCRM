@@ -30,9 +30,9 @@ CDsVinylSelectFilter::CDsVinylSelectFilter(QWidget *parent)
   setItemData(_i++, tr("Multiple article ids separated by comma!"), // tip
               Qt::ToolTipRole);
 
-  insertItem(_i, _icon, tr("Author or Artist"), // title
+  insertItem(_i, _icon, tr("Authors or Artist"), // title
              QString("cv_author"));
-  setItemData(_i++, _prefix + tr("Search for Author or Artist."), // tip
+  setItemData(_i++, _prefix + tr("Search for Authors or Artist."), // tip
               Qt::ToolTipRole);
 
   insertItem(_i, _icon, tr("Genre"), QString("cv_keyword"));

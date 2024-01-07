@@ -2,56 +2,42 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchesselectfilter.h"
-#include "antiquaicon.h"
 
 StitchesSelectFilter::StitchesSelectFilter(QWidget *parent)
-    : QComboBox{parent} {
-  setWhatsThis(tr("Select search filter."));
-  setSizeAdjustPolicy(QComboBox::AdjustToContents);
-  setToolTip(tr("Press CTRL+Shift+F, to quickly open this Menu."));
-  setMinimumWidth(204);
+    : AntiquaCRM::TabsSearchBarFilter{parent} {
+  setObjectName("stitches_filter_selecter");
+  createItemData();
+}
 
-  QString _prefix = tr("Search Prints with") + " ";
-  QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
-
+void StitchesSelectFilter::createItemData() {
   int _i = 0;
-  insertItem(_i, _icon, tr("Title"), // title search
+  const QString _prefix(tr("Searches prints, stitches and engravings") + " ");
+
+  insertItem(_i, defaultIcon(), tr("Title"),
              QString("ip_title,ip_title_extended"));
-  setItemData(_i++, _prefix + tr("Search with Title or extended Title!"), // tip
+  setItemData(_i++, _prefix + tr("in title or extended title!"),
               Qt::ToolTipRole);
 
-  insertItem(_i, _icon, tr("Keywords"), // keyword search
+  insertItem(_i, defaultIcon(), tr("Keywords"),
              QString("ip_keyword,ip_storage_compartment"));
-  setItemData(_i++, _prefix + tr("Search for Keyword or compartment!"), // tip
+  setItemData(_i++, _prefix + tr("in keywords or storage compartment!"),
               Qt::ToolTipRole);
 
-  insertItem(_i, _icon, tr("Article Id"), // article search
-             QString("ip_id"));
-  setItemData(_i++, tr("Multiple article ids separated by comma!"), // tip
+  insertItem(_i, defaultIcon(), tr("Article No."), QString("ip_id"));
+  setItemData(_i++, tr("Multiple article numbers separated by comma!"),
               Qt::ToolTipRole);
 
-  insertItem(_i, _icon, tr("Author or Artist"), // title
-             QString("ip_author"));
-  setItemData(_i++, _prefix + tr("Search for Author or Artist."), // tip
+  insertItem(_i, defaultIcon(), tr("Authors or Artists"), QString("ip_author"));
+  setItemData(_i++, _prefix + tr("in authors or artists field."), // tip
               Qt::ToolTipRole);
 
-  insertItem(_i, _icon, tr("Storage and Keyword"),          // storage
+  insertItem(_i, defaultIcon(), tr("Keyword- or Storage location"),
              QString("ip_storage,ip_storage_compartment")); // tip
-  setItemData(_i++, tr("In Storage location with Keyword or name."),
+  setItemData(_i++, tr("Searches in storage location or in storage keywords."),
               Qt::ToolTipRole);
 
-  insertItem(_i, _icon, tr("Created/Modified in Year"), // date year
+  insertItem(_i, defaultIcon(), tr("Created/modified in year"),
              QString("ip_year"));
-  setItemData(_i++, tr("Search created or modified in Year!"), // tip
+  setItemData(_i++, tr("Searches by created or modified in Year!"),
               Qt::ToolTipRole);
-}
-
-const QString StitchesSelectFilter::currentFilter(int index) {
-  int _index = (index < 0) ? currentIndex() : index;
-  return itemData(_index, Qt::UserRole).toString();
-}
-
-const QString StitchesSelectFilter::currentToolTip(int index) {
-  int _index = (index < 0) ? currentIndex() : index;
-  return itemData(_index, Qt::ToolTipRole).toString();
 }

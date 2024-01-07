@@ -130,7 +130,7 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_title_extended, row2c++, 1, 1, 1);
 
-  infoText = new AntiquaCRM::ALabel(tr("Author"), _lbAlign, this);
+  infoText = new AntiquaCRM::ALabel(tr("Authors"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_author = new AntiquaCRM::TextLine(this);
   ip_author->setObjectName("ip_author");

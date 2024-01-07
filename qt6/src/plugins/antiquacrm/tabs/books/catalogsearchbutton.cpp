@@ -19,7 +19,7 @@ CatalogSearchButton::CatalogSearchButton(QWidget *parent)
   _map.insert("all", tr("Search in everything"));
   _map.insert("tit", tr("Title search"));
   _map.insert("nam", tr("Authors search"));
-  _map.insert("tit+nam", tr("Title and Author search"));
+  _map.insert("tit+nam", tr("Title and Authors search"));
   _map.insert("num", tr("ISBN search"));
 
   m_menu = new QMenu(this);
@@ -87,7 +87,7 @@ CatalogSearchButton::options() const {
   _m.insert(Option::ANY, tr("Search in everything"));
   _m.insert(Option::TITLE, tr("Title search"));
   _m.insert(Option::AUTHOR, tr("Authors search"));
-  _m.insert(Option::TITAUT, tr("Title and Author search"));
+  _m.insert(Option::TITAUT, tr("Title and Authors search"));
   _m.insert(Option::NUMERIC, tr("ISBN search"));
   return _m;
 }

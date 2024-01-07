@@ -164,8 +164,8 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_title_extended->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_title_extended, row2c++, 1, 1, 1);
 
-  // Book Author
-  infoText = new AntiquaCRM::ALabel(tr("Author"), _lbAlign, row2Widget);
+  // Book Authors
+  infoText = new AntiquaCRM::ALabel(tr("Authors"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_author = new AntiquaCRM::TextLine(row2Widget);
   ib_author->setObjectName("ib_author");

@@ -57,7 +57,7 @@ private:
   /**
    * @brief Search Qt based translation files „*.qm“ and load it.
    */
-  bool initTranslations();
+  void initTranslations();
 
   /**
    * @brief Load and initial components.

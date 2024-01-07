@@ -14,6 +14,6 @@ ${_lupdate} \
   -locations relative \
   -recursive . \
   -extensions rc,cpp,cxx,h \
-  -ts ./i18n/antiquacrm_untranslated.ts  ./i18n/antiquacrm_de.ts
+  -ts `ls ./i18n/antiquacrm_*.ts`
 
 exit $?
