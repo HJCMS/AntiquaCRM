@@ -110,7 +110,6 @@ void OrdersWidget::createSearchQuery(const QString &history) {
     qWarning("OrdersWidget::createSearchQuery „length()“, to small!");
     return;
   }
-  // qDebug() << "Orders:Search" << _sql;
   m_statusBar->startProgress();
   m_table->setQuery(_sql);
   m_statusBar->finalizeProgress();

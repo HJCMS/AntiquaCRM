@@ -45,7 +45,7 @@ private:
   /**
    * @brief Get year from OrdersSearchBar and build sql statement.
    */
-  const QString yearStatement() const;
+  const QString inPastRange() const;
 
   void setHistoryActionMenu(QPushButton *parent) override;
 

@@ -164,7 +164,8 @@ bool Application::initGUI() {
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {
-    // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage testing
+    // qdbus-qt5 de.hjcms.antiquacrm /
+    //      de.hjcms.antiquacrm.pushMessage testing
     ABusAdaptor *m_adaptor = new ABusAdaptor(this);
     m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
     connect(m_adaptor, SIGNAL(sendMessage(const QString &)), m_systray,
@@ -270,7 +271,12 @@ int Application::exec() {
   if (!checkRemotePort()) {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
     mutex.unlock();
-    sleep(3); // wait 3 seconds before exit
+    // wait 3 seconds before exit
+#ifdef Q_OS_WIN
+    Sleep(3000);
+#else
+    sleep(3);
+#endif
     return 0;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));

@@ -3,11 +3,12 @@
 
 #include "orderssearchbar.h"
 
+#include <QDate>
 #include <QFrame>
 #include <QToolButton>
 
 OrdersSearchBar::OrdersSearchBar(QWidget *parent)
-    : AntiquaCRM::TabsSearchBar{parent} {
+    : AntiquaCRM::TabsSearchBar{parent}, cDate{QDate::currentDate()} {
 
   const QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
   const QString _tip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
@@ -49,18 +50,16 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_datePart->setSizeAdjustPolicy(QComboBox::AdjustToContents);
   m_datePart->setToolTip(_toolTip);
   m_datePart->addItem(_icon, m_datePart->withoutDisclosures(), QString());
-  m_datePart->addItem(_icon, tr("Since in Year"), "year");
-  m_datePart->addItem(_icon, tr("Month in Year"), "month");
-  m_datePart->addItem(_icon, tr("Week of Year"), "week");
-  m_datePart->addItem(_icon, tr("Day in Month"), "day");
+  m_datePart->addItem(_icon, tr("With year"), "year");
+  m_datePart->addItem(_icon, tr("Current month"), "month");
+  m_datePart->addItem(_icon, tr("Current Week"), "week");
   m_datePart->setCurrentIndex(0);
   addWidget(m_datePart);
 
-  int _y = QDate::currentDate().year();
   m_year = new AntiquaCRM::NumEdit(this);
   m_year->setToolTip(tr("Year"));
-  m_year->setRange((_y - 20), _y);
-  m_year->setValue(_y);
+  m_year->setRange((cDate.year() - 20), cDate.year());
+  m_year->setValue(cDate.year());
   addWidget(m_year);
 
   connect(m_filter, SIGNAL(currentIndexChanged(int)), SLOT(setFilter(int)));
@@ -68,33 +67,18 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   connect(m_searchBtn, SIGNAL(clicked()), SLOT(setSearch()));
 
   m_filter->setCurrentIndex(0);
-}
-
-const QString OrdersSearchBar::getDatePart() {
-  const QString _year = QString::number(getYear());
-  QString _dp = m_datePart->itemData(m_datePart->currentIndex()).toString();
-  if (_dp.isEmpty() || _dp == "year") {
-    return QString("DATE_PART('year',o_since)=" + _year);
-  }
-
-  QString _sql("(");
-  _sql.append("DATE_PART('" + _dp + "',o_since)=");
-  _sql.append("DATE_PART('" + _dp + "',CURRENT_DATE)");
-  // append month to day query
-  if (_dp == "day") {
-    _sql.append(" AND ");
-    _sql.append("DATE_PART('month',o_since)=");
-    _sql.append("DATE_PART('month',CURRENT_DATE)");
-  }
-  // append always year
-  _sql.append(" AND DATE_PART('year',o_since)=");
-  _sql.append(_year);
-  _sql.append(")");
-  return _sql;
+  min_length = getMinLength();
 }
 
 void OrdersSearchBar::setSearch() {
   QString _search = m_searchInput->text().trimmed();
+  if (_search.length() < min_length) {
+    QString _m = tr("Query length is smaller than %1.").arg(min_length);
+    emit sendNotify(_m);
+    setSearchFocus();
+    return;
+  }
+
   _search.replace("'", "’");
   _search = _search.replace(jokerPattern, " ");
   _search = _search.replace(quotePattern, "");
@@ -109,29 +93,34 @@ void OrdersSearchBar::setFilter(int index) {
     m_searchInput->setPlaceholderText(tr("Search Customer or Company"));
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    min_length = getMinLength();
   } break;
 
   case 1: {
     m_searchInput->setPlaceholderText(tr("Search Order id"));
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
+    min_length = 1;
   } break;
 
   case 2: {
     m_searchInput->setPlaceholderText(tr("Search Delivery Service"));
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    min_length = 3;
   } break;
 
   case 3: {
     m_searchInput->setPlaceholderText(tr("Search Provider"));
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    min_length = getMinLength();
   } break;
 
   default:
     m_searchInput->setPlaceholderText(tr("Search ..."));
     m_searchInput->setValidation(m_searchInput->InputValidator::DEFAULT);
+    min_length = getMinLength();
     break;
   }
   setClearAndFocus();
@@ -150,7 +139,41 @@ void OrdersSearchBar::setClearAndFocus() {
 
 void OrdersSearchBar::setSearchFocus() { m_searchInput->setFocus(); }
 
-int OrdersSearchBar::getYear() { return m_year->getValue().toInt(); }
+const QString OrdersSearchBar::past12Months() const {
+  QString _sql("(o_since BETWEEN ");
+  _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
+  _sql.append(" AND CURRENT_TIMESTAMP)");
+  return _sql;
+}
+
+int OrdersSearchBar::getYear() {
+  if (m_datePart->currentIndex() == 0)
+    return cDate.year();
+
+  return m_year->getValue().toInt();
+}
+
+const QString OrdersSearchBar::getDatePart() {
+  int _index = m_datePart->currentIndex();
+  // Kein index, dann die letzen 12 Monate!
+  if (_index == 0)
+    return QString();
+
+  // Starte optionale abfragen
+  const QString _part = m_datePart->itemData(_index).toString();
+  if (_part.startsWith("year"))
+    return QString(" AND DATE_PART('year',o_since)=" +
+                   QString::number(getYear()));
+
+  const QDate _date(getYear(), cDate.month(), cDate.day());
+  const QString _date_str = _date.toString("yyyy-MM-dd");
+  QString _sql("DATE_PART('" + _part + "',o_since)=");
+  _sql.append("DATE_PART('" + _part + "',DATE('" + _date_str + "'))");
+  if (_index != 0)
+    _sql.append(" AND DATE_PART('year',o_since)=" + QString::number(getYear()));
+
+  return _sql;
+}
 
 int OrdersSearchBar::searchLength() {
   const QString _search = m_searchInput->text().trimmed();
@@ -160,6 +183,9 @@ int OrdersSearchBar::searchLength() {
 const QString OrdersSearchBar::getSearchStatement() {
   int _index = m_filter->currentIndex();
   QString _sql;
+  if (p_search.length() < 1)
+    return QString("o_delivered IS NULL AND o_order_status<4");
+
   switch (_index) {
   case 0: {
     QStringList sList({"c_company_name", "c_firstname", "c_lastname"});
@@ -168,7 +194,7 @@ const QString OrdersSearchBar::getSearchStatement() {
       buffer << f + " ILIKE '%" + p_search + "%'";
     }
     _sql = "(" + buffer.join(" OR ") + ")";
-    _sql.append(" AND " + getDatePart());
+    _sql.append(getDatePart());
   } break;
 
   case 1:
@@ -177,17 +203,19 @@ const QString OrdersSearchBar::getSearchStatement() {
 
   case 2:
     _sql = QString("d_name ILIKE '%1%'").arg(p_search);
-    _sql.append(" AND " + getDatePart());
+    _sql.append(getDatePart());
     break;
 
   case 3:
     _sql = QString("o_provider_name ILIKE '%1%'").arg(p_search);
-    _sql.append(" AND " + getDatePart());
+    _sql.append(getDatePart());
     break;
 
   default:
     _sql.clear();
     break;
   }
+
+  _sql.replace("%%", "%");
   return _sql;
 }

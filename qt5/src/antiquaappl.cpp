@@ -217,7 +217,11 @@ int AntiquaAppl::exec() {
   if (!checkRemotePort()) {
     p_splashScreen.setMessage(tr("Server unreachable!"));
     mutex.unlock();
-    sleep(3);
+#ifdef Q_OS_WIN
+    Sleep(3000); // wait 3 seconds before exit
+#else
+    sleep(3); // wait 3 seconds before exit
+#endif
     return 0;
   }
   p_splashScreen.setMessage(tr("Server connection successfully!"));

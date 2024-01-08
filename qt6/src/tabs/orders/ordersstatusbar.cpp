@@ -13,13 +13,21 @@ OrdersStatusBar::OrdersStatusBar(QWidget *parent) : TabsStatusBar{parent} {
   setHistoryActionMenu(btn_history);
 }
 
-const QString OrdersStatusBar::yearStatement() const {
+const QString OrdersStatusBar::inPastRange() const {
   OrdersSearchBar *m_sbar = parentWidget()->findChild<OrdersSearchBar *>();
-  QString _year("DATE_PART('year',CURRENT_DATE)");
-  if (m_sbar != nullptr)
-    _year = QString::number(m_sbar->getYear());
+  QString _sql;
+  if (m_sbar != nullptr) {
+    QString _range = m_sbar->getDatePart();
+    if (_range.length() < 1)
+      return QString();
 
-  QString _sql("DATE_PART('year',o_since)=" + _year);
+    _sql.append(_range);
+    return _sql;
+  }
+
+  _sql.append(" AND o_delivery IS NOT NULL AND (o_since BETWEEN ");
+  _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
+  _sql.append(" AND CURRENT_TIMESTAMP)");
   return _sql;
 }
 
@@ -126,6 +134,6 @@ void OrdersStatusBar::setHistoryAction(int index) {
   if (_sql.isEmpty())
     return;
 
-  _sql.append(" AND " + yearStatement());
+  _sql.append(inPastRange());
   emit sendHistoryQuery(_sql);
 }

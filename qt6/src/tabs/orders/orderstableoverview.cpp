@@ -179,6 +179,7 @@ bool OrdersTableOverView::setQuery(const QString &clause) {
   AntiquaCRM::ASqlFiles query("query_tab_orders_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
+    // qDebug() << Q_FUNC_INFO << where_clause;
     query.setWhereClause(where_clause);
     query.setOrderBy("(" + sortOrder().join(",") + ")");
     query.setSorting(Qt::DescendingOrder);
