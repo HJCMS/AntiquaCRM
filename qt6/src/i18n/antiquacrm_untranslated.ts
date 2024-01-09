@@ -6169,12 +6169,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+5"/>
-        <location line="+31"/>
+        <location line="+35"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-26"/>
+        <location line="-30"/>
         <source>Dialogs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6201,6 +6201,11 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+4"/>
         <source>Storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Book publisher</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7454,6 +7459,68 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <message>
         <location line="+3"/>
         <source>Query</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublisherDialog</name>
+    <message>
+        <location filename="../utils/publishers/publisherdialog.cpp" line="+11"/>
+        <source>Publishers edit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+30"/>
+        <source>Missing data ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Successfully saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Not saved</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublisherEdit</name>
+    <message>
+        <location filename="../utils/publishers/publisheredit.cpp" line="+14"/>
+        <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublisherTableModel</name>
+    <message>
+        <location filename="../utils/publishers/publishertablemodel.cpp" line="+11"/>
+        <source>Publisher</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PublisherTableView</name>
+    <message>
+        <location filename="../utils/publishers/publishertableview.cpp" line="+76"/>
+        <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

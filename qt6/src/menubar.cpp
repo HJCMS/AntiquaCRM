@@ -53,6 +53,10 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   QAction *ac_dse = m_dialogMenu->addAction(tr("Storage"));
   ac_dse->setIcon(_conf_icon);
   connect(ac_dse, SIGNAL(triggered()), SLOT(openStoragesDialog()));
+  // PublisherDialog
+  QAction *ac_dpl = m_dialogMenu->addAction(tr("Book publisher"));
+  ac_dpl->setIcon(_conf_icon);
+  connect(ac_dpl, SIGNAL(triggered()), SLOT(openPublisherDialog()));
   // END::Dialogs
 
   // BEGIN::SystemConfig
@@ -103,6 +107,12 @@ void MenuBar::openKeywordsDialog() {
 
 void MenuBar::openStoragesDialog() {
   StoragesDialog *d = new StoragesDialog(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void MenuBar::openPublisherDialog() {
+  PublisherDialog *d = new PublisherDialog(this);
   d->exec();
   d->deleteLater();
 }

@@ -9,5 +9,6 @@ ADD_SUBDIRECTORY(designation)
 ADD_SUBDIRECTORY(keywords)
 ADD_SUBDIRECTORY(storages)
 ADD_SUBDIRECTORY(datacache)
+ADD_SUBDIRECTORY(publishers)
 
 ##EOF

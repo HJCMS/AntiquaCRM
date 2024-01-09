@@ -44,4 +44,9 @@
 #include "utils/storages/storagesdialog.h"
 #endif
 
+// PublisherDialog
+#ifndef ANTIQUACRM_UTILS_PUBLISHERDIALOG_H
+#include "utils/publishers/publisherdialog.h"
+#endif
+
 #endif // ANTIQUACRM_UTILS_DIALOGS_H
