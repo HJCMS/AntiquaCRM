@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mime-info xmlns="http://www.freedesktop.org/standards/shared-mime-info">
+    <mime-type type="text/qcss">
+        <comment>Qt CSS stylesheet</comment>
+        <comment xml:lang="de">Qt CSS-Stilvorlage</comment>
+        <acronym>QCSS</acronym>
+        <icon name="text-css"/>
+        <sub-class-of type="text/css"/>
+        <glob pattern="*.qcss"/>
+        <glob pattern="*.QCSS"/>
+    </mime-type>
+</mime-info>

@@ -21,6 +21,18 @@ ViewsIndex::ViewsIndex(QWidget *parent)
   QVBoxLayout *m_layout = new QVBoxLayout(centralWidget);
   m_layout->setContentsMargins(4, 4, 4, 4);
 
+  QFrame *m_frame = new QFrame(this);
+  QHBoxLayout *f_layout = new QHBoxLayout(m_frame);
+  f_layout->setContentsMargins(contentsMargins());
+  f_layout->addStretch(1);
+  QLabel *m_title = new QLabel(m_frame);
+  m_title->setText(tr("Select/Show predefined view") + ":");
+  f_layout->addWidget(m_title);
+  m_comboBox = new AntiquaCRM::AComboBox(m_frame);
+  f_layout->addWidget(m_comboBox);
+  m_frame->setLayout(f_layout);
+  m_layout->addWidget(m_frame);
+
   m_tableView = new QTableView(centralWidget);
   m_tableView->setEditTriggers(QAbstractItemView::NoEditTriggers);
   m_tableView->setCornerButtonEnabled(false);
@@ -45,15 +57,8 @@ ViewsIndex::ViewsIndex(QWidget *parent)
 
   m_layout->addWidget(m_tableView);
 
-  QFrame *m_frame = new QFrame(this);
-  QHBoxLayout *f_layout = new QHBoxLayout(m_frame);
-  f_layout->setContentsMargins(contentsMargins());
-  m_info = new QLabel(m_frame);
-  f_layout->addWidget(m_info, 1);
-  m_comboBox = new AntiquaCRM::AComboBox(m_frame);
-  f_layout->addWidget(m_comboBox);
-  m_frame->setLayout(f_layout);
-  m_layout->addWidget(m_frame);
+  m_statusBar = new QStatusBar(centralWidget);
+  m_layout->addWidget(m_statusBar);
 
   centralWidget->setLayout(m_layout);
   insertWidget(0, centralWidget);
@@ -94,7 +99,7 @@ void ViewsIndex::createSearchQuery(const QString &title) {
   m_tableModel->select();
 
   const QString _info = tr("View with %1 rows.").arg(m_tableModel->rowCount());
-  m_info->setText(_info);
+  m_statusBar->showMessage(_info);
 }
 
 void ViewsIndex::openStartPage() { setCurrentIndex(ViewPage::MainView); }

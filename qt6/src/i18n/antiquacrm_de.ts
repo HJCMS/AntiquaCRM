@@ -2729,7 +2729,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+185"/>
+        <location filename="../application.cpp" line="+186"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -2754,7 +2754,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Netzwerkserver-Port ist nicht erreichbar!</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+10"/>
         <source>Network connection to remote port exists.</source>
         <translation>Netzwerkverbindung zum Remote-Port besteht.</translation>
     </message>
@@ -6584,7 +6584,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersSearchBar</name>
     <message>
-        <location filename="../tabs/orders/orderssearchbar.cpp" line="+13"/>
+        <location filename="../tabs/orders/orderssearchbar.cpp" line="+14"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+Umschalt+F, um das Filtermenü schnell zu öffnen.</translation>
     </message>
@@ -6625,51 +6625,51 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+8"/>
-        <source>Since in Year</source>
-        <translation>Erstellt im Jahr</translation>
+        <source>With year</source>
+        <translation>Mit Jahr</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Month in Year</source>
-        <translation>Monat im Jahr</translation>
+        <source>Current month</source>
+        <translation>Aktueller Monat</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Week of Year</source>
-        <translation>Woche des Jahres</translation>
+        <source>Current Week</source>
+        <translation>Aktuelle Woche</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Day in Month</source>
-        <translation>Tag des Monats</translation>
-    </message>
-    <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Year</source>
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+16"/>
+        <source>Query length is smaller than %1.</source>
+        <translation>Die Abfragelänge ist kleiner als %1.</translation>
+    </message>
+    <message>
+        <location line="+17"/>
         <source>Search Customer or Company</source>
         <translation>Suchen nach Kunde oder Unternehmen</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Search Order id</source>
         <translation>Suche Auftrags-Id</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Search Delivery Service</source>
         <translation>Suche Lieferservice</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Search Provider</source>
         <translation>Suche Dienstleister</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Search ...</source>
         <translation>Suche ...</translation>
     </message>
@@ -6677,7 +6677,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersStatusBar</name>
     <message>
-        <location filename="../tabs/orders/ordersstatusbar.cpp" line="+29"/>
+        <location filename="../tabs/orders/ordersstatusbar.cpp" line="+37"/>
         <source>Orders History</source>
         <translation>Auftragsverlauf</translation>
     </message>
@@ -7098,7 +7098,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+158"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+157"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -9633,7 +9633,12 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>ViewsIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/views/viewsindex.cpp" line="+96"/>
+        <location filename="../plugins/antiquacrm/tabs/views/viewsindex.cpp" line="+29"/>
+        <source>Select/Show predefined view</source>
+        <translation>Vordefinierte Ansicht auswählen/anzeigen</translation>
+    </message>
+    <message>
+        <location line="+72"/>
         <source>View with %1 rows.</source>
         <translation>Ansicht mit %1 Zeilen.</translation>
     </message>
