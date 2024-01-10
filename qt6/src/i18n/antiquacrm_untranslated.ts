@@ -2477,21 +2477,16 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+6"/>
-        <source>Limit search to</source>
+        <source>Limit output</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Select a search confiness</source>
+        <source>Search boundaries</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>default filter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>search anywhere</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3407,7 +3402,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksSearchBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+18"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+19"/>
         <source>Default search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3499,6 +3494,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+8"/>
+        <source>Keywords search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3527,12 +3527,12 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>by title and authors.</source>
+        <source>by title with authors.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>by title and keywords.</source>
+        <source>by title with keywords.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3577,7 +3577,17 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+2"/>
-        <source>by keywords or storage location.</source>
+        <source>by storage location.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Keywords</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>by keywords.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3698,7 +3708,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+51"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+53"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>

@@ -14,11 +14,11 @@ void BooksSelectFilter::createItemData() {
   const QString _prefix(tr("Searches books") + " ");
   insertItem(_i, defaultIcon(), tr("Title and Authors"),
              AntiquaCRM::SearchBarFilter::SBF_TITLES_AUTHORS);
-  setItemData(_i++, _prefix + tr("by title and authors."), Qt::ToolTipRole);
+  setItemData(_i++, _prefix + tr("by title with authors."), Qt::ToolTipRole);
 
   insertItem(_i, defaultIcon(), tr("Title and Keyword"),
              AntiquaCRM::SearchBarFilter::SBF_TITLES_KEYWORDS);
-  setItemData(_i++, _prefix + tr("by title and keywords."), Qt::ToolTipRole);
+  setItemData(_i++, _prefix + tr("by title with keywords."), Qt::ToolTipRole);
 
   insertItem(_i, defaultIcon(), tr("Article Id"),
              AntiquaCRM::SearchBarFilter::SBF_ARTICLE_IDS);
@@ -39,7 +39,11 @@ void BooksSelectFilter::createItemData() {
 
   insertItem(_i, defaultIcon(), tr("Storage"),
              AntiquaCRM::SearchBarFilter::SBF_STORAGES);
-  setItemData(_i++, tr("by keywords or storage location."), Qt::ToolTipRole);
+  setItemData(_i++, tr("by storage location."), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Keywords"),
+             AntiquaCRM::SearchBarFilter::SBF_KEYWORDS);
+  setItemData(_i++, tr("by keywords."), Qt::ToolTipRole);
 }
 
 const QJsonObject BooksSelectFilter::getFilter(int index) {
@@ -52,7 +56,7 @@ const QJsonObject BooksSelectFilter::getFilter(int index) {
   }
 
   case (AntiquaCRM::SearchBarFilter::SBF_TITLES_KEYWORDS): {
-    obj.insert("search", QJsonValue("title"));
+    obj.insert("search", QJsonValue("title_and_keywords"));
     obj.insert("fields", QJsonValue("ib_title,ib_title_extended,ib_keyword"));
     break;
   }
@@ -83,7 +87,13 @@ const QJsonObject BooksSelectFilter::getFilter(int index) {
 
   case (AntiquaCRM::SearchBarFilter::SBF_STORAGES): {
     obj.insert("search", QJsonValue("storage"));
-    obj.insert("fields", QJsonValue("ib_storage"));
+    obj.insert("fields", QJsonValue("__PATTERN__"));
+    break;
+  }
+
+  case (AntiquaCRM::SearchBarFilter::SBF_KEYWORDS): {
+    obj.insert("search", QJsonValue("keywords"));
+    obj.insert("fields", QJsonValue("ib_keyword"));
     break;
   }
 

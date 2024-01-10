@@ -40,7 +40,7 @@ void TabsSearchBar::imageFilterChanged(int index) {
 
 QPushButton *TabsSearchBar::startSearchButton(const QString &text) {
   QPushButton *btn = new QPushButton(this);
-  btn->setIcon(getIcon("system-search"));
+  btn->setIcon(AntiquaCRM::antiquaIcon("system-search"));
   btn->setToolTip(tr("Push to start search."));
 
   if (text.isEmpty())
@@ -62,7 +62,7 @@ QCheckBox *TabsSearchBar::stockCheckBox(const QString &title) {
 }
 
 AntiquaCRM::AComboBox *TabsSearchBar::searchImageOptions() {
-  const QIcon _icon = antiquaIcon("view-image");
+  const QIcon _icon = AntiquaCRM::antiquaIcon("view-image");
   AntiquaCRM::AComboBox *m_box = new AntiquaCRM::AComboBox(this);
   m_box->setObjectName("search_image_filter");
   m_box->addItem(_icon, tr("Image Filter"), 0);
@@ -76,7 +76,7 @@ AntiquaCRM::AComboBox *TabsSearchBar::searchImageOptions() {
 
 QPushButton *TabsSearchBar::customSearchButton(const QString &title) {
   QPushButton *btn = new QPushButton(title, this);
-  btn->setIcon(getIcon("system-search"));
+  btn->setIcon(AntiquaCRM::antiquaIcon("system-search"));
   btn->setToolTip(tr("Custom queries"));
   btn->setStatusTip(tr("Click to open Dialog for custom queries."));
   connect(btn, SIGNAL(clicked()), SIGNAL(sendOpenCustomSearch()));
@@ -84,14 +84,14 @@ QPushButton *TabsSearchBar::customSearchButton(const QString &title) {
 }
 
 QComboBox *TabsSearchBar::searchConfines() {
-  QString info = tr("Limit search to");
-  QIcon icon = getIcon("view-search");
+  QString info = tr("Limit output");
+  QIcon icon = AntiquaCRM::antiquaIcon("view-search");
   QComboBox *box = new QComboBox(this);
   box->setObjectName("select_search_confiness");
-  box->setToolTip(tr("Select a search confiness"));
+  box->setToolTip(tr("Search boundaries"));
   box->setStatusTip(info + "...");
   // Irgendwo im Satz "%suche%wort%" (Standard)
-  box->insertItem(TabsSearchBar::SearchPattern::ANYWHERE, tr("default filter"));
+  box->insertItem(TabsSearchBar::SearchPattern::ANYWHERE, box->toolTip());
   box->setItemData(TabsSearchBar::SearchPattern::ANYWHERE,
                    info + " " + tr("search anywhere") + ".", Qt::ToolTipRole);
   box->setItemData(TabsSearchBar::SearchPattern::ANYWHERE, icon,
@@ -123,74 +123,75 @@ QComboBox *TabsSearchBar::searchConfines() {
 
 const QString TabsSearchBar::prepareFieldSearch(const QString &field,
                                                 const QString &search) {
-  QString sf(search.trimmed());
-  if (sf.length() < getMinLength()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+  const QString _search(search.trimmed());
+  if (_search.length() < getMinLength()) {
     qWarning("INVALID_QUERY_STATEMENT:(%s='%s')", qPrintable(field),
              qPrintable(search));
-#endif
-    if (sf.isEmpty())
+    if (_search.isEmpty())
       return QString(field + "='INVALID_QUERY_STATEMENT'");
-    else
-      return QString(field + " ILIKE '" + sf + "'");
+
+    // strict fallback
+    return QString(field + " ILIKE '" + _search + "'");
   }
 
-  QString _prefix, _suffix;
-  QStringList forward, backward, query;
+  // search boundaries
+  QString _sb_left, _sb_right;
+  // buffer lists
+  QStringList _b_first, _b_last, _query;
 
   switch (searchPattern()) {
   case (TabsSearchBar::SearchPattern::ANYWHERE):
-    _prefix = (field + " ILIKE '%");
-    _suffix = "%'";
+    _sb_left = (field + " ILIKE '%");
+    _sb_right = "%'";
     break;
 
   case (TabsSearchBar::SearchPattern::BOUNDARIES):
-    _prefix = (field + " ILIKE '");
-    _suffix = "'";
+    _sb_left = (field + " ILIKE '");
+    _sb_right = "'";
     break;
 
   case (TabsSearchBar::SearchPattern::BEGINNING):
-    _prefix = (field + " ILIKE '");
-    _suffix = "%'";
+    _sb_left = (field + " ILIKE '");
+    _sb_right = "%'";
     break;
 
   case (TabsSearchBar::SearchPattern::ENDING):
-    _prefix = (field + " ILIKE '%");
-    _suffix = "'";
+    _sb_left = (field + " ILIKE '%");
+    _sb_right = "'";
     break;
 
   default:
     break;
   };
 
-  QString sql;
-  query = search.trimmed().split(" ");
+  QString _sql;
+  _query = search.trimmed().split(" ");
 
-  if (query.count() >= 2) {
-    foreach (QString w, query) {
-      forward.append(w.trimmed());
-      backward.prepend(w.trimmed());
+  if (_query.count() >= 2) {
+    foreach (QString w, _query) {
+      _b_first.append(w.trimmed());
+      _b_last.prepend(w.trimmed());
     }
     // prepare
-    sql.append(_prefix);
-    sql.append(forward.join("%"));
-    sql.append(_suffix);
-    sql.append(" OR ");
-    sql.append(_prefix);
-    sql.append(backward.join("%"));
-    sql.append(_suffix);
+    _sql.append(_sb_left);
+    _sql.append(_b_first.join("%"));
+    _sql.append(_sb_right);
+    _sql.append(" OR ");
+    _sql.append(_sb_left);
+    _sql.append(_b_last.join("%"));
+    _sql.append(_sb_right);
   } else {
-    sql.append(_prefix);
-    sql.append(sf);
-    sql.append(_suffix);
+    _sql.append(_sb_left);
+    _sql.append(_search);
+    _sql.append(_sb_right);
   }
 
-  // clear buffer
-  query.clear();
-  forward.clear();
-  backward.clear();
+  // clear buffers
+  _query.clear();
+  _b_first.clear();
+  _b_last.clear();
 
-  return sql.replace(jokerPattern, "%");
+  return _sql.replace(jokerPattern, "%");
 }
 
 void TabsSearchBar::setMinLength(int l) {
@@ -200,19 +201,12 @@ void TabsSearchBar::setMinLength(int l) {
   p_minLength = l;
 }
 
-const QIcon TabsSearchBar::getIcon(const QString &name) {
-  return AntiquaCRM::antiquaIcon(name);
-}
-
 TabsSearchBar::SearchPattern TabsSearchBar::searchPattern() const {
   QComboBox *box = findChild<QComboBox *>("select_search_confiness");
-  if (box == nullptr)
+  if ((box == nullptr) || (box->currentIndex() < 1))
     return TabsSearchBar::SearchPattern::ANYWHERE;
 
-  if (box->count() == 4 && box->currentIndex() > 0)
-    return static_cast<TabsSearchBar::SearchPattern>(box->currentIndex());
-
-  return TabsSearchBar::SearchPattern::ANYWHERE;
+  return static_cast<TabsSearchBar::SearchPattern>(box->currentIndex());
 }
 
 const QString TabsSearchBar::imageFilter() {

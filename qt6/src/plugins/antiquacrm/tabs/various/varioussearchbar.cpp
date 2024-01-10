@@ -13,7 +13,7 @@ VariousSearchBar::VariousSearchBar(QWidget *parent)
 
   QToolButton *m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
-  m_icontb->setIcon(getIcon("action-search"));
+  m_icontb->setIcon(AntiquaCRM::antiquaIcon("action-search"));
   addWidget(m_icontb);
 
   m_searchLine = new AntiquaCRM::ALineEdit(this);

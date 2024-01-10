@@ -2478,21 +2478,16 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+6"/>
-        <source>Limit search to</source>
-        <translation>Suche einschränken auf</translation>
+        <source>Limit output</source>
+        <translation>Ausgabe eingrenzen</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>Select a search confiness</source>
-        <translation>Wählen Sie eine Suchgrenze aus</translation>
+        <source>Search boundaries</source>
+        <translation>Suchgrenzen</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>default filter</source>
-        <translation>Standardfilter</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+5"/>
         <source>search anywhere</source>
         <translation>Überall suchen</translation>
     </message>
@@ -3427,7 +3422,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksSearchBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+18"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+19"/>
         <source>Default search</source>
         <translation>Standardsuche</translation>
     </message>
@@ -3519,6 +3514,11 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+8"/>
+        <source>Keywords search</source>
+        <translation>suche mit Schlüsselwörtern</translation>
+    </message>
+    <message>
+        <location line="+8"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -3547,13 +3547,13 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>by title and authors.</source>
-        <translation>nach Titel und Autoren.</translation>
+        <source>by title with authors.</source>
+        <translation>nach Titel mit Autoren.</translation>
     </message>
     <message>
         <location line="+4"/>
-        <source>by title and keywords.</source>
-        <translation>nach Titel und Schlüsselwörtern.</translation>
+        <source>by title with keywords.</source>
+        <translation>nach Titel mit Schlüsselwörtern.</translation>
     </message>
     <message>
         <location line="+4"/>
@@ -3597,8 +3597,18 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>by keywords or storage location.</source>
-        <translation>nach Schlüsselwörtern oder Speicherort.</translation>
+        <source>by storage location.</source>
+        <translation>nach Lagerort.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Keywords</source>
+        <translation>Schlüsselwörter</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>by keywords.</source>
+        <translation>nach Schlüsselwörtern.</translation>
     </message>
 </context>
 <context>
@@ -3718,7 +3728,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+51"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+53"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>

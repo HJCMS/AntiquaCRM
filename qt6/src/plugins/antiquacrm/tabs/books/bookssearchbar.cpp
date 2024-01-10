@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "bookssearchbar.h"
+#include "booksconfig.h"
 #include "booksselectfilter.h"
 
 #include <QIcon>
@@ -20,7 +21,7 @@ BooksSearchBar::BooksSearchBar(QWidget *parent)
 
   QToolButton *m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
-  m_icontb->setIcon(getIcon("user-group"));
+  m_icontb->setIcon(AntiquaCRM::antiquaIcon("user-group"));
   addWidget(m_icontb);
 
   m_customSearch = new AntiquaCRM::ALineEdit(this);
@@ -205,6 +206,14 @@ void BooksSearchBar::setFilter(int index) {
     break;
   }
 
+  case (AntiquaCRM::SearchBarFilter::SBF_KEYWORDS): {
+    m_searchInput->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setPlaceholderText(tr("Keywords search"));
+    setCustomSearch();
+    break;
+  }
+
   default: {
     m_searchInput->setValidation(
         AntiquaCRM::ALineEdit::InputValidator::STRINGS);
@@ -255,14 +264,8 @@ const QString BooksSearchBar::getSearchStatement() {
   if (_operation.isEmpty())
     return QString();
 
-  // Title und Autorensuche
-  if (_operation == "title_and_author") {
-    _sql.append("(" + getTitleSearch(_columns) + ")");
-    return _sql;
-  }
-
-  // Buch Titlesuche
-  if (_operation == "title") {
+  //  Titelsuche
+  if (_operation.startsWith("title")) {
     _sql.append("(" + getTitleSearch(_columns) + ")");
     return _sql;
   }
@@ -294,7 +297,14 @@ const QString BooksSearchBar::getSearchStatement() {
   // Publisher
   if (_operation == "publisher") {
     _input = m_searchInput->text();
-    _sql.append("(" + prepareFieldSearch("ib_publisher", _input) + ")");
+    _sql.append("(" + prepareFieldSearch(_columns.first(), _input) + ")");
+    return _sql;
+  }
+
+  // Keywords only
+  if (_operation == "keywords") {
+    _input = m_searchInput->text();
+    _sql.append(prepareFieldSearch(_columns.first(), _input));
     return _sql;
   }
 
@@ -305,6 +315,7 @@ const QString BooksSearchBar::getSearchStatement() {
     QStringList _buf;
     _buf << prepareFieldSearch("sl_storage", _input);
     _buf << prepareFieldSearch("sl_identifier", _input);
+    _buf << prepareFieldSearch("ib_storage_compartment", _input);
     _sql.append("(" + _buf.join(" OR ") + ")");
     _buf.clear();
     return _sql;

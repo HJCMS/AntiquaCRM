@@ -211,11 +211,6 @@ public:
   explicit TabsSearchBar(QWidget *parent = nullptr);
 
   /**
-   * @brief get Icon from Theme
-   */
-  const QIcon getIcon(const QString &);
-
-  /**
    * @brief present the selected Search syntax
    */
   TabsSearchBar::SearchPattern searchPattern() const;

@@ -208,7 +208,8 @@ Q_NAMESPACE
       SBF_ISBN_GTIN = 8,       /**< @brief ISBN/GTIN search */
       SBF_ARTICLE_IDS = 16,    /**< @brief article number search */
       SBF_STORAGES = 32,       /**< @brief storage location search */
-      SBF_PUBLISHERS = 64      /**< @brief publishers search */
+      SBF_PUBLISHERS = 64,     /**< @brief publishers search */
+      SBF_KEYWORDS = 128       /**< @brief keywords search */
     };
     Q_ENUM_NS(SearchBarFilter)
 
