@@ -110,23 +110,28 @@ void OrdersTableOverView::setSortByColumn(int column, Qt::SortOrder order) {
     return;
 
   /**
-   * @warning Bei Alias basierenden SELECT abfragen!
-   * ORDER BY "Multisort" Abfragen können nicht mit Aliases gemischt werden!
+   * @warning Not mixing aliases with column names in order clauses!
    */
   QString _order_by;
-  if (!p_tableRecord.isEmpty()) {
-    QStringList _fields;
-    const QString _column_sort = m_model->fieldName(column);
-    for (int i = 0; i < p_tableRecord.count(); i++) {
-      _fields << p_tableRecord.field(i).name();
-    }
-    QStringList _sort = sortOrder();
-    if (_fields.contains(_column_sort)) {
-      if (!_sort.contains(_column_sort))
-        _sort.prepend(_column_sort);
-    }
-    _order_by.append("(" + _sort.join(",") + ")");
+  if (p_tableRecord.isEmpty())
+    return;
+
+  const QString _cn = m_model->fieldName(column);
+  QStringList _ol = sortOrder(); // default order by list
+  QStringList _cl;               // columns list
+  for (int i = 0; i < p_tableRecord.count(); i++) {
+    _cl << p_tableRecord.field(i).name();
   }
+  if (!_cl.contains(_cn))
+    _ol = QStringList(_cn);
+  else
+    _ol.prepend(_cn);
+
+  _ol.removeDuplicates(); // remove duplicates behind first shown
+  _order_by.append("(" + _ol.join(",") + ")");
+  // cleanup
+  _ol.clear();
+  _cl.clear();
 
   AntiquaCRM::ASqlFiles query("query_tab_orders_main");
   if (query.openTemplate()) {
