@@ -51,15 +51,16 @@ public:
   /**
    * @brief Compares whether it has already been renewed on this day!
    * @param basename - File baseName
+   * @param days     - days to past before updating cache
    * @param ext      - File extensions
    *
    * If this is the case then the method returns false!
    */
-  bool needsUpdate(const QString &basename,
+  bool needsUpdate(const QString &basename, int days = 7,
                    const QStringList &ext = defaultFilter());
 
   /**
-   * @brief Search with the base name and optional extension for availability!
+   * @brief Search with basename and optional extension for availability!
    * @param basename - File baseName
    * @param ext      - File extensions
    *

@@ -57,9 +57,15 @@ void Splitter::showEvent(QShowEvent *event) {
 
 void Splitter::setSaveState() { m_cfg->setValue(configPath(), saveState()); }
 
-void Splitter::addLeft(QWidget *widget) { insertWidget(0, widget); }
+void Splitter::addLeft(QWidget *widget) {
+  insertWidget(0, widget);
+  setStretchFactor(0, 2);
+}
 
-void Splitter::addRight(QWidget *widget) { insertWidget(1, widget); }
+void Splitter::addRight(QWidget *widget) {
+  insertWidget(1, widget);
+  setStretchFactor(1, 1);
+}
 
 Splitter::~Splitter() {
   if (m_cfg != nullptr)

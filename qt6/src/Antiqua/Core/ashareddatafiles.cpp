@@ -32,25 +32,28 @@ const QStringList ASharedDataFiles::defaultFilter() {
   return QStringList({"*.xml", "*.sql", "*.json"});
 }
 
-bool ASharedDataFiles::needsUpdate(const QString &basename,
+bool ASharedDataFiles::needsUpdate(const QString &basename, int days,
                                    const QStringList &ext) {
   if (ext.count() > 0)
     setNameFilters(ext);
 
-  bool status = false;
-  QDateTime dt;
+  bool _status = false;
+  // to past date
+  const QDate _tpd = QDate::currentDate().addDays(-days);
+  // File Modification Date
+  QDate _fmd;
   QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
   foreach (QFileInfo i, li) {
     if (i.baseName() == basename) {
-      status = true;
-      dt = i.fileTime(QFileDevice::FileMetadataChangeTime);
+      _status = true;
+      _fmd = i.fileTime(QFileDevice::FileMetadataChangeTime).date();
       break;
     }
   }
   setNameFilters(defaultFilter());
 
-  if (status)
-    return (dt.date() == QDate::currentDate()) ? false : true;
+  if (_status)
+    return (_tpd >= _fmd);
 
   return true;
 }

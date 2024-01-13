@@ -3708,7 +3708,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+53"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+51"/>
         <source>Open entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4137,7 +4137,7 @@ Note: In the case of a CD, the plastic sleeve is not included in the description
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+24"/>
         <source>Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4714,13 +4714,13 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>ConfigDialog</name>
     <message>
-        <location filename="../utils/config/configdialog.cpp" line="+23"/>
-        <location line="+159"/>
+        <location filename="../utils/config/configdialog.cpp" line="+24"/>
+        <location line="+164"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-99"/>
+        <location line="-100"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4740,12 +4740,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+94"/>
+        <location line="+95"/>
         <source>unsaved changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-93"/>
+        <location line="-94"/>
         <source>Do your really want to close?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4848,6 +4848,49 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+1"/>
         <source>Configure Providers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ConfigStorageCache</name>
+    <message>
+        <location filename="../utils/config/configstoragecache.cpp" line="+10"/>
+        <source>Cache config</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Table name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>File basename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Days until to update</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>In order to reduce the network load in remote office AntiquaCRM works with a hard drive storage. You can set the cycle with which the memory is updated at Application start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+86"/>
+        <source>Disk storage</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Storage cache configuration.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5541,32 +5584,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>DataCache</name>
     <message>
-        <location filename="../utils/datacache/datacache.cpp" line="+22"/>
-        <source>Storage locations</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book bindings</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Book designation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+3"/>
-        <source>Keywordslist</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+4"/>
-        <source>Publisher</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+21"/>
+        <location filename="../utils/datacache/datacache.cpp" line="+57"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7066,7 +7084,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+23"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+24"/>
         <source>Article purchases</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7083,6 +7101,11 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+20"/>
         <source>Delete selected Article</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Open article ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8573,7 +8596,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+34"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>

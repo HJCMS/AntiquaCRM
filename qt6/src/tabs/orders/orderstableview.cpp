@@ -5,6 +5,7 @@
 #include "orderstabledelegate.h"
 #include "orderstablemodel.h"
 
+#include <AntiquaCRM>
 #include <QAbstractItemView>
 #include <QAction>
 #include <QFont>
@@ -88,6 +89,10 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   ac_del->setEnabled((m_model->rowCount() > 1));
   connect(ac_del, SIGNAL(triggered()), SLOT(addDeleteQuery()));
 
+  QAction *ac_open = m->addAction(AntiquaCRM::antiquaIcon("view-info"),
+                                  tr("Open article ..."));
+  ac_open->setEnabled((m_model->rowCount() > 0));
+  connect(ac_open, SIGNAL(triggered()), SLOT(addArticleQuery()));
   m->exec(event->globalPos());
   delete m;
 }
@@ -125,6 +130,56 @@ void OrdersTableView::addDeleteQuery() {
       sql_cache << _sql;
     }
   }
+}
+
+void OrdersTableView::addArticleQuery() {
+  QModelIndex _a_index = p_modelIndex.sibling(p_modelIndex.row(), 2);
+  if (!_a_index.isValid())
+    return;
+
+  qint64 _aid = m_model->data(_a_index, Qt::EditRole).toInt();
+  if (_aid < 1)
+    return;
+
+  const QString _strid = QString::number(_aid);
+  AntiquaCRM::ArticleType _type;
+  AntiquaCRM::ASqlCore psql(this);
+  QSqlQuery _q = psql.query("SELECT func_get_article_type(" + _strid + ");");
+  if (_q.size() > 0) {
+    _q.next();
+    _type = static_cast<AntiquaCRM::ArticleType>(_q.value(0).toInt());
+  } else {
+    _type = AntiquaCRM::ArticleType::BOOK;
+  }
+
+  QJsonObject _action;
+  _action.insert("ACTION", "open_article");
+  // mediaType
+  switch (_type) {
+  case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
+    _action.insert("TARGET", "cdvinyl_tab");
+    break;
+
+  case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
+    _action.insert("TARGET", "printsstitches_tab");
+    break;
+
+  case AntiquaCRM::ArticleType::OTHER: /**< Various */
+    _action.insert("TARGET", "various_tab");
+    break;
+
+  default: /**< Default: Books */
+    _action.insert("TARGET", "books_tab");
+    break;
+  };
+  _action.insert("VALUE", _aid);
+
+  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
+  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
+  if (m_sock->pushOperation(_action))
+    m_sock->close();
+
+  // qDebug() << Q_FUNC_INFO << _action;
 }
 
 void OrdersTableView::setProtected(bool readOnly) {

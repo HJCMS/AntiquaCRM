@@ -13,18 +13,19 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QEvent>
-#include <QStatusBar>
 #include <QStackedWidget>
+#include <QStatusBar>
 #include <QVBoxLayout>
 #include <QWidget>
 
 class ConfigPagesWidget;
+class ConfigLookAndFeel;
 class ConfigTreeWidget;
 class ConfigGeneral;
 class ConfigDatabase;
 class ConfigPaths;
 class ConfigPrinting;
-class ConfigLookAndFeel;
+class ConfigStorageCache;
 class ConfigTabsView;
 class ConfigProvidersView;
 
@@ -41,6 +42,7 @@ private:
   ConfigGeneral *m_cfgGeneral;
   ConfigDatabase *m_cfgDatabase;
   ConfigPaths *m_cfgPaths;
+  ConfigStorageCache *m_cfgStorage;
   ConfigPrinting *m_cfgPrinter;
   ConfigLookAndFeel *m_cfgLookAndFeel;
 

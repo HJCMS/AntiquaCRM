@@ -22,6 +22,7 @@ class DataCache final : public QObject {
   Q_OBJECT
 
 private:
+  AntiquaCRM::ASettings *m_cfg;
   AntiquaCRM::ASqlCore *m_sql;
   const QList<DataCacheConfig> configs();
 
@@ -29,7 +30,8 @@ Q_SIGNALS:
   void statusMessage(const QString &);
 
 public:
-  explicit DataCache(QObject *parent = nullptr);
+  explicit DataCache(AntiquaCRM::ASettings *cfg, AntiquaCRM::ASqlCore *pgsql,
+                     QObject *parent = nullptr);
   bool createCacheTarget();
   bool createCaches();
 };

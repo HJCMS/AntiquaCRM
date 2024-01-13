@@ -2,6 +2,7 @@
 # vim: set fileencoding=utf-8
 
 SET (query_tables_FILES
+  query_antiquacrm_cacheconf.sql
   query_antiquacrm_config.sql
   query_article_order_with_id.sql
   query_articles_exists.sql

@@ -81,6 +81,11 @@ private Q_SLOTS:
    */
   void addDeleteQuery();
 
+  /**
+   * @brief open article by context menue
+   */
+  void addArticleQuery();
+
 public Q_SLOTS:
   /**
    * @brief Set Table in readonly mode!

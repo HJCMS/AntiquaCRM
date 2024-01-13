@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "datacache.h"
-#include "datacachequery.h"
 #include "datacacheconfig.h"
+#include "datacachequery.h"
 
 #include <QDebug>
 #include <QDir>
@@ -11,36 +11,35 @@
 #include <QStandardPaths>
 #include <QStringList>
 
-DataCache::DataCache(QObject *parent) : QObject{parent} {
+DataCache::DataCache(AntiquaCRM::ASettings *cfg, AntiquaCRM::ASqlCore *pgsql,
+                     QObject *parent)
+    : QObject{parent}, m_cfg{cfg}, m_sql{pgsql} {
   setObjectName("cache_preloader");
-  m_sql = new AntiquaCRM::ASqlCore(this);
 }
 
 const QList<DataCacheConfig> DataCache::configs() {
-  QList<DataCacheConfig> list;
-  DataCacheConfig storage("query_storage_location", "storagelocations",
-                      tr("Storage locations"));
-  list.append(storage);
+  QList<DataCacheConfig> _l;
+  QString _sql =
+      AntiquaCRM::ASqlFiles::queryStatement("query_antiquacrm_cacheconf");
+  if (_sql.isEmpty())
+    return _l;
 
-  DataCacheConfig binding("query_book_binding", "bookbindings",
-                      tr("Book bindings"));
-  list.append(binding);
-
-  DataCacheConfig designation("query_designation", "designations",
-                          tr("Book designation"));
-  list.append(designation);
-
-  DataCacheConfig keywords("query_keywords", "keywords", tr("Keywordslist"));
-  list.append(keywords);
-
-  DataCacheConfig publisher("query_book_publisher_de", "publishers",
-                        tr("Publisher"));
-  list.append(publisher);
-  return list;
+  QSqlQuery _q = m_sql->query(_sql);
+  if (_q.size() > 0) {
+    while (_q.next()) {
+      DataCacheConfig _dcc(_q.value("cache_table").toString(),
+                           _q.value("cache_basename").toString(),
+                           _q.value("cache_display").toString(),
+                           _q.value("cache_runtime").toInt());
+      _l.append(_dcc);
+    }
+    _q.clear();
+  }
+  return _l;
 }
 
 bool DataCache::createCacheTarget() {
-  QFileInfo cti(AntiquaCRM::ASettings::getUserTempDir().path());
+  QFileInfo cti(m_cfg->getUserTempDir().path());
   return cti.isWritable();
 }
 
@@ -63,5 +62,3 @@ bool DataCache::createCaches() {
   emit statusMessage(tr("Create Postalcode cache"));
   return (m_cq->postalCodes());
 }
-
-

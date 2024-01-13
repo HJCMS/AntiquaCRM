@@ -304,7 +304,7 @@ int Application::exec() {
   if (m_sql->db().isOpen()) {
     mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
-    DataCache *m_cache = new DataCache(this);
+    DataCache *m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splash,
             SLOT(setMessage(const QString &)));
 

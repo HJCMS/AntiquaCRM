@@ -312,10 +312,10 @@ BooksEditor::BooksEditor(QWidget *parent)
   row2Widget->setLayout(row2);
 
   // Image Viewer
-  QSize _max_size = m_cfg->value("image/max_size", QSize(320, 320)).toSize();
   m_thumbnail = new AntiquaCRM::ImageThumbnail(this);
   m_thumbnail->setMinimumWidth(100);
-  m_thumbnail->setMaximumWidth(_max_size.width());
+
+  // set splitter widgets
   m_splitter->addLeft(row2Widget);
   m_splitter->addRight(m_thumbnail);
   mainLayout->addWidget(m_splitter);

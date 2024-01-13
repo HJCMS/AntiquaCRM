@@ -9,6 +9,7 @@
 #include "configpaths.h"
 #include "configprinting.h"
 #include "configprovidersview.h"
+#include "configstoragecache.h"
 #include "configtabsview.h"
 #include "configtreewidget.h"
 
@@ -58,6 +59,10 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_cfgPaths = new ConfigPaths(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgPaths->getMenuEntry());
   m_pageView->insert(_pindex++, m_cfgPaths);
+
+  m_cfgStorage = new ConfigStorageCache(m_pageView);
+  m_treeWidget->addGeneral(_pindex, m_cfgStorage->getMenuEntry());
+  m_pageView->insert(_pindex++, m_cfgStorage);
 
   m_cfgPrinter = new ConfigPrinting(m_pageView);
   m_treeWidget->addGeneral(_pindex, m_cfgPrinter->getMenuEntry());
@@ -148,7 +153,8 @@ bool ConfigDialog::loadConfigWidget() {
   m_pageView->insert(_count++, new ConfigProvidersView(m_pageView));
 
   AntiquaCRM::ProvidersLoader _pl_providers(this);
-  const QList<AntiquaCRM::ProviderInterface *> _pi = _pl_providers.interfaces(this);
+  const QList<AntiquaCRM::ProviderInterface *> _pi =
+      _pl_providers.interfaces(this);
   if (_pi.size() < 1)
     return false;
 

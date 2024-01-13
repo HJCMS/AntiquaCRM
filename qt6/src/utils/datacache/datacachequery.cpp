@@ -9,7 +9,7 @@ DataCacheQuery::DataCacheQuery(AntiquaCRM::ASqlCore *pgsql)
 
 bool DataCacheQuery::isCacheUpdateRequired(const QString &name) {
   AntiquaCRM::ASharedDataFiles p_store;
-  return p_store.needsUpdate(name);
+  return p_store.needsUpdate(name, p_days);
 }
 
 bool DataCacheQuery::saveDocument(const QString &key,
@@ -36,6 +36,8 @@ const QJsonArray DataCacheQuery::createTable(const QString &query) {
 bool DataCacheQuery::createCache(const DataCacheConfig &config) {
   if (!isCacheUpdateRequired(config.indicator))
     return false;
+
+  p_days = config.pastDays;
 
   QString _sql = AntiquaCRM::ASqlFiles::queryStatement(config.file);
   if (_sql.isEmpty())

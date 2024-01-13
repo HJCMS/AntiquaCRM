@@ -8,71 +8,38 @@ SET (ANTIQUACRM_INCLUDE_DIRS
  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (_library_HEADERS
- configdialog.cpp
- configdatabase.cpp
- configtreewidget.cpp
- configgeneral.cpp
- configpaths.cpp
- configprinting.cpp
- configlookandfeel.cpp
- configprovidersview.cpp
- configtabsview.cpp
- configpageswidget.cpp
- databaseprofile.cpp
- iconthemes.cpp
- paymentsettingsgroup.cpp
- paymentrefundsettings.cpp
- pathsettingsgroup.cpp
- pluginlistwidget.cpp
- pluginlistwidgetitem.cpp
- printerfonts.cpp
- printerattachments.cpp
- printersetborder.cpp
- printerpaperlayout.cpp
- printerqrcode.cpp
- printerdevices.cpp
- sslcaselecter.cpp
- sslmode.cpp
-)
-
-SET (_library_SOURCES
- configdialog.h
- configdatabase.h
- configtreewidget.h
- configgeneral.h
- configpaths.h
- configprinting.h
- configlookandfeel.h
- configprovidersview.h
- configtabsview.h
- configpageswidget.h
- databaseprofile.h
- iconthemes.h
- paymentsettingsgroup.h
- paymentrefundsettings.h
- pathsettingsgroup.h
- pluginlistwidget.h
- pluginlistwidgetitem.h
- printerfonts.h
- printerattachments.h
- printersetborder.h
- printerpaperlayout.h
- printerqrcode.h
- printerdevices.h
- sslcaselecter.h
- sslmode.h
-)
-
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 ADD_LIBRARY (${_library} STATIC
-  ${_library_HEADERS}
-  ${_library_SOURCES}
-  ${_library_FILES}
+  configdatabase.h configdatabase.cpp
+  configdialog.h configdialog.cpp
+  configgeneral.h configgeneral.cpp
+  configlookandfeel.h configlookandfeel.cpp
+  configpageswidget.h configpageswidget.cpp
+  configpaths.h configpaths.cpp
+  configprinting.h configprinting.cpp
+  configprovidersview.h configprovidersview.cpp
+  configstoragecache.h configstoragecache.cpp
+  configtabsview.h configtabsview.cpp
+  configtreewidget.h configtreewidget.cpp
+  databaseprofile.h databaseprofile.cpp
+  iconthemes.h iconthemes.cpp
+  pathsettingsgroup.h pathsettingsgroup.cpp
+  paymentrefundsettings.h paymentrefundsettings.cpp
+  paymentsettingsgroup.h paymentsettingsgroup.cpp
+  pluginlistwidget.h pluginlistwidget.cpp
+  pluginlistwidgetitem.h pluginlistwidgetitem.cpp
+  printerattachments.h printerattachments.cpp
+  printerdevices.h printerdevices.cpp
+  printerfonts.h printerfonts.cpp
+  printerpaperlayout.h printerpaperlayout.cpp
+  printerqrcode.h printerqrcode.cpp
+  printersetborder.h printersetborder.cpp
+  sslcaselecter.h sslcaselecter.cpp
+  sslmode.h sslmode.cpp
 )
 
 SET_TARGET_PROPERTIES (${_library} PROPERTIES

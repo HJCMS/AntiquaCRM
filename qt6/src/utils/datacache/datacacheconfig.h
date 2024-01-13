@@ -17,8 +17,9 @@ public:
   QString file;
   QString indicator;
   QString message;
+  int pastDays;
   explicit DataCacheConfig(const QString &name, const QString &pointer,
-                           const QString &info);
+                           const QString &info, int days = 7);
 };
 Q_DECLARE_TYPEINFO(DataCacheConfig, Q_PRIMITIVE_TYPE);
 

@@ -24,6 +24,7 @@ class DataCacheQuery final : public QObject {
   Q_OBJECT
 
 private:
+  int p_days = 7;
   AntiquaCRM::ASqlCore *m_sql;
   bool isCacheUpdateRequired(const QString &name);
   bool saveDocument(const QString &key, const QJsonDocument &json) const;

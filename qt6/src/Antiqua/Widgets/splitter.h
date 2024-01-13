@@ -69,9 +69,23 @@ private Q_SLOTS:
   void setSaveState();
 
 public:
+  /**
+   * @param parent - parent object
+   */
   explicit Splitter(QWidget *parent = nullptr);
+
+  /**
+   * @brief Insert Index 0 with stretch factor 2
+   * @param widget - left Widget
+   */
   void addLeft(QWidget *widget);
+
+  /**
+   * @brief Insert Index 1 with stretch factor 1
+   * @param widget - right Widget
+   */
   void addRight(QWidget *widget);
+
   virtual ~Splitter();
 };
 
