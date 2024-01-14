@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 # vim: SETfileencoding=utf-8
 #
-# SPDX-License-Identifier: LGPL-3.0-or-later
+# SPDX-License-Identifier: MIT
 #
 
 SET (_pluginTarget "CmdAbeBooks")

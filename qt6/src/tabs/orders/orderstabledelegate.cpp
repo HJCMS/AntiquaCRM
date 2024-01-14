@@ -4,8 +4,9 @@
 #include "orderstabledelegate.h"
 #include "orderstablemodel.h"
 
-OrdersTableDelegate::OrdersTableDelegate(QObject *parent)
-    : QItemDelegate{parent} {
+OrdersTableDelegate::OrdersTableDelegate(QObject* parent)
+    : QItemDelegate{parent}
+{
   AntiquaCRM::ASettings cfg(this);
   cfg.beginGroup("payment");
   config.minPrice = cfg.value("min_price", -999999.00).toDouble();
@@ -17,8 +18,8 @@ OrdersTableDelegate::OrdersTableDelegate(QObject *parent)
   cfg.endGroup();
 }
 
-void OrdersTableDelegate::setProperties(
-    const OrdersTableDelegate::EditorProperties &properties) {
+void OrdersTableDelegate::setProperties(const OrdersTableDelegate::EditorProperties& properties)
+{
   config.minPrice = properties.minPrice;
   config.maxPrice = properties.maxPrice;
   config.minCount = properties.minCount;
@@ -27,19 +28,18 @@ void OrdersTableDelegate::setProperties(
   config.maxInteger = properties.maxInteger;
 }
 
-QWidget *OrdersTableDelegate::createEditor(QWidget *parent,
-                                           const QStyleOptionViewItem &option,
-                                           const QModelIndex &index) const {
+QWidget* OrdersTableDelegate::createEditor(QWidget* parent, const QStyleOptionViewItem& option,
+                                           const QModelIndex& index) const
+{
   Q_UNUSED(option);
   if (!index.isValid())
     return parent;
 
-  AntiquaCRM::ATableHeaderColumn header =
-      OrdersTableModel::headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn header = OrdersTableModel::headerColumn(index.column());
 
   QVariant value = index.model()->data(index, Qt::EditRole);
   if (header.field() == "a_count") { // Count
-    QSpinBox *m_spinBox = new QSpinBox(parent);
+    QSpinBox* m_spinBox = new QSpinBox(parent);
     m_spinBox->setMinimum(config.minCount);
     m_spinBox->setMaximum(config.maxCount);
     m_spinBox->setValue(value.toInt());
@@ -47,7 +47,7 @@ QWidget *OrdersTableDelegate::createEditor(QWidget *parent,
   }
 
   if (header.field() == "a_price") { // Price
-    QDoubleSpinBox *m_price = new QDoubleSpinBox(parent);
+    QDoubleSpinBox* m_price = new QDoubleSpinBox(parent);
     m_price->setButtonSymbols(QAbstractSpinBox::NoButtons);
     m_price->setReadOnly(true);
     m_price->setSuffix(config.currency);
@@ -57,7 +57,7 @@ QWidget *OrdersTableDelegate::createEditor(QWidget *parent,
   }
 
   if (header.field() == "a_sell_price") { // Sell Price
-    QDoubleSpinBox *m_sell_price = new QDoubleSpinBox(parent);
+    QDoubleSpinBox* m_sell_price = new QDoubleSpinBox(parent);
     m_sell_price->setSuffix(config.currency);
     m_sell_price->setRange(config.minPrice, config.maxPrice);
     m_sell_price->setValue(value.toDouble());
@@ -65,7 +65,7 @@ QWidget *OrdersTableDelegate::createEditor(QWidget *parent,
   }
 
   if (header.field() == "a_type") { // Media Type
-    QComboBox *m_box = new QComboBox(parent);
+    QComboBox* m_box = new QComboBox(parent);
     m_box->setSizeAdjustPolicy(QComboBox::AdjustToContents);
     m_box->insertItem(0, tr("Unknown"), AntiquaCRM::ArticleType::UNKNOWN);
     m_box->insertItem(1, tr("Book"), AntiquaCRM::ArticleType::BOOK);
@@ -77,15 +77,15 @@ QWidget *OrdersTableDelegate::createEditor(QWidget *parent,
     return m_box;
   }
 
-  QLineEdit *m_lineEdit = new QLineEdit(parent);
+  QLineEdit* m_lineEdit = new QLineEdit(parent);
   m_lineEdit->setFrame(false);
   m_lineEdit->setReadOnly(true);
   m_lineEdit->setText(value.toString());
   return m_lineEdit;
 }
 
-void OrdersTableDelegate::setEditorData(QWidget *editor,
-                                        const QModelIndex &index) const {
+void OrdersTableDelegate::setEditorData(QWidget* editor, const QModelIndex& index) const
+{
   if (!index.isValid())
     return;
 
@@ -93,15 +93,14 @@ void OrdersTableDelegate::setEditorData(QWidget *editor,
   if (value.isNull())
     return;
 
-  AntiquaCRM::ATableHeaderColumn header =
-      OrdersTableModel::headerColumn(index.column());
+  AntiquaCRM::ATableHeaderColumn header = OrdersTableModel::headerColumn(index.column());
 
   if (header.field() == "a_count") { // Count
     int count = 1;
     if (value.toInt() > config.minCount && value.toInt() < config.maxCount) {
       count = value.toInt();
     }
-    QSpinBox *m_spinBox = qobject_cast<QSpinBox *>(editor);
+    QSpinBox* m_spinBox = qobject_cast<QSpinBox*>(editor);
     m_spinBox->setMinimum(config.minCount);
     m_spinBox->setMaximum(config.maxCount);
     m_spinBox->setValue(count);
@@ -109,7 +108,7 @@ void OrdersTableDelegate::setEditorData(QWidget *editor,
   }
 
   if (header.field() == "a_price") { // Price
-    QDoubleSpinBox *p = qobject_cast<QDoubleSpinBox *>(editor);
+    QDoubleSpinBox* p = qobject_cast<QDoubleSpinBox*>(editor);
     p->setButtonSymbols(QAbstractSpinBox::NoButtons);
     p->setReadOnly(true);
     p->setSuffix(config.currency);
@@ -119,7 +118,7 @@ void OrdersTableDelegate::setEditorData(QWidget *editor,
   }
 
   if (header.field() == "a_sell_price") { // Sell Price
-    QDoubleSpinBox *p = qobject_cast<QDoubleSpinBox *>(editor);
+    QDoubleSpinBox* p = qobject_cast<QDoubleSpinBox*>(editor);
     p->setSuffix(config.currency);
     p->setRange(config.minPrice, config.maxPrice);
     p->setValue(value.toDouble());
@@ -127,47 +126,47 @@ void OrdersTableDelegate::setEditorData(QWidget *editor,
   }
 
   if (header.field() == "a_type") { // Type
-    QComboBox *m_box = qobject_cast<QComboBox *>(editor);
+    QComboBox* m_box = qobject_cast<QComboBox*>(editor);
     int current = m_box->findData(value.toInt(), Qt::UserRole);
     m_box->setCurrentIndex(current);
     return;
   }
 
-  QLineEdit *m_lineEdit = qobject_cast<QLineEdit *>(editor);
+  QLineEdit* m_lineEdit = qobject_cast<QLineEdit*>(editor);
   m_lineEdit->setFrame(false);
   m_lineEdit->setReadOnly(true);
   m_lineEdit->setText(value.toString());
 }
 
-void OrdersTableDelegate::setModelData(QWidget *editor,
-                                       QAbstractItemModel *model,
-                                       const QModelIndex &index) const {
+void OrdersTableDelegate::setModelData(QWidget* editor, QAbstractItemModel* model,
+                                       const QModelIndex& index) const
+{
   if (!index.isValid())
     return;
 
-  OrdersTableModel *m_ptm = qobject_cast<OrdersTableModel *>(model);
+  OrdersTableModel* m_ptm = qobject_cast<OrdersTableModel*>(model);
   AntiquaCRM::ATableHeaderColumn header = m_ptm->headerColumn(index.column());
 
   if (header.field() == "a_count") { // Count
-    QSpinBox *sp = qobject_cast<QSpinBox *>(editor);
+    QSpinBox* sp = qobject_cast<QSpinBox*>(editor);
     m_ptm->setData(index, sp->value(), Qt::EditRole);
     return;
   }
 
   if (header.field() == "a_price") { // Price
-    QDoubleSpinBox *dsp = qobject_cast<QDoubleSpinBox *>(editor);
+    QDoubleSpinBox* dsp = qobject_cast<QDoubleSpinBox*>(editor);
     m_ptm->setData(index, dsp->value(), Qt::EditRole);
     return;
   }
 
   if (header.field() == "a_sell_price") { // Sell Price
-    QDoubleSpinBox *dsp = qobject_cast<QDoubleSpinBox *>(editor);
+    QDoubleSpinBox* dsp = qobject_cast<QDoubleSpinBox*>(editor);
     m_ptm->setData(index, dsp->value(), Qt::EditRole);
     return;
   }
 
   if (header.field() == "a_type") { // Type
-    QComboBox *m_box = qobject_cast<QComboBox *>(editor);
+    QComboBox* m_box = qobject_cast<QComboBox*>(editor);
     m_box->setFocusPolicy(Qt::NoFocus);
     QVariant value = m_box->itemData(m_box->currentIndex(), Qt::UserRole);
     m_ptm->setData(index, value.toInt(), Qt::EditRole);

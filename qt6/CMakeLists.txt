@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 # vim: set fileencoding=utf-8
 #
-# SPDX-License-Identifier: LGPL-3.0-or-later
+# SPDX-FileCopyrightText: 2024 Juergen Heinemann https://www.hjcms.de
+#
+# SPDX-License-Identifier: MIT
 #
 
 CMAKE_MINIMUM_REQUIRED(VERSION 3.20)

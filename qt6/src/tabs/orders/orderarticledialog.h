@@ -18,23 +18,22 @@
 #include <QStatusBar>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY OrderArticleDialog final : public QDialog {
+class ANTIQUACRM_LIBRARY OrderArticleDialog final : public QDialog
+{
   Q_OBJECT
 
-private:
+  private:
   qint64 articleId = -1;
   QString articleInfo = QString();
-  QSpinBox *m_searchEdit;
-  QPushButton *btn_search;
-  QPushButton *btn_apply;
-  QDialogButtonBox *btn_box;
-  QStatusBar *m_statusBar;
-  inline AntiquaCRM::ArticleOrderItem addItem(const QString &key,
-                                              const QVariant &value) const;
-
+  QSpinBox* m_searchEdit;
+  QPushButton* btn_search;
+  QPushButton* btn_apply;
+  QDialogButtonBox* btn_box;
+  QStatusBar* m_statusBar;
+  inline AntiquaCRM::ArticleOrderItem addItem(const QString& key, const QVariant& value) const;
   bool queryArticle(qint64 aid);
 
-private Q_SLOTS:
+  private Q_SLOTS:
 
   void setSearchArticle();
 
@@ -48,13 +47,13 @@ private Q_SLOTS:
    * @brief Erstellt einen Roten Text neben dem Article Einfügen!
    * Wenn der kein Text dann wird die Ausgabe geleert!
    */
-  void setInfoMessage(const QString &message);
+  void setInfoMessage(const QString& message);
 
-Q_SIGNALS:
+  Q_SIGNALS:
   void searchArticleById(qint64);
 
-public:
-  explicit OrderArticleDialog(QWidget *parent = nullptr);
+  public:
+  explicit OrderArticleDialog(QWidget* parent = nullptr);
   qint64 getArticle();
   int exec() override;
 };

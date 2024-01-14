@@ -7,21 +7,22 @@
 #include <QFrame>
 #include <QToolButton>
 
-OrdersSearchBar::OrdersSearchBar(QWidget *parent)
-    : AntiquaCRM::TabsSearchBar{parent}, cDate{QDate::currentDate()} {
-
+OrdersSearchBar::OrdersSearchBar(QWidget* parent)
+    : AntiquaCRM::TabsSearchBar{parent}
+    , cDate{QDate::currentDate()}
+{
   const QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
   const QString _tip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
 
   m_filter = new AntiquaCRM::AComboBox(this);
   m_filter->setToolTip(_tip);
-  m_filter->addItem(_icon, tr("Recipient"));        // customer
-  m_filter->addItem(_icon, tr("Order Id"));         // o_id
+  m_filter->addItem(_icon, tr("Recipient")); // customer
+  m_filter->addItem(_icon, tr("Order Id")); // o_id
   m_filter->addItem(_icon, tr("Delivery Service")); // d_name
-  m_filter->addItem(_icon, tr("Provider"));         // o_provider_name
+  m_filter->addItem(_icon, tr("Provider")); // o_provider_name
   addWidget(m_filter);
 
-  QToolButton *m_icontb = new QToolButton(this);
+  QToolButton* m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
   m_icontb->setIcon(AntiquaCRM::antiquaIcon("view-search"));
   addWidget(m_icontb);
@@ -34,14 +35,13 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
-  QFrame *m_spacer = new QFrame(this);
-  m_spacer->setSizePolicy(QSizePolicy::MinimumExpanding,
-                          QSizePolicy::Preferred);
+  QFrame* m_spacer = new QFrame(this);
+  m_spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
   addWidget(m_spacer);
 
   const QString _toolTip(tr("Restrict search to current selection."));
 
-  AntiquaCRM::ALabel *m_label = new AntiquaCRM::ALabel(this);
+  AntiquaCRM::ALabel* m_label = new AntiquaCRM::ALabel(this);
   m_label->setText(tr("Restriction"));
   m_label->setToolTip(_toolTip);
   addWidget(m_label);
@@ -70,7 +70,8 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   min_length = getMinLength();
 }
 
-void OrdersSearchBar::setSearch() {
+void OrdersSearchBar::setSearch()
+{
   QString _search = m_searchInput->text().trimmed();
   if (_search.length() < min_length) {
     QString _m = tr("Query length is smaller than %1.").arg(min_length);
@@ -87,33 +88,30 @@ void OrdersSearchBar::setSearch() {
   emit sendSearchClicked();
 }
 
-void OrdersSearchBar::setFilter(int index) {
+void OrdersSearchBar::setFilter(int index)
+{
   switch (index) {
   case 0: {
     m_searchInput->setPlaceholderText(tr("Search Customer or Company"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     min_length = getMinLength();
   } break;
 
   case 1: {
     m_searchInput->setPlaceholderText(tr("Search Order id"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
+    m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
     min_length = 1;
   } break;
 
   case 2: {
     m_searchInput->setPlaceholderText(tr("Search Delivery Service"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     min_length = 3;
   } break;
 
   case 3: {
     m_searchInput->setPlaceholderText(tr("Search Provider"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+    m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
     min_length = getMinLength();
   } break;
 
@@ -127,33 +125,41 @@ void OrdersSearchBar::setFilter(int index) {
   emit sendFilterChanged(index);
 }
 
-void OrdersSearchBar::setFilterFocus() {
+void OrdersSearchBar::setFilterFocus()
+{
   m_filter->setFocus();
   m_filter->showPopup();
 }
 
-void OrdersSearchBar::setClearAndFocus() {
+void OrdersSearchBar::setClearAndFocus()
+{
   m_searchInput->clear();
   setSearchFocus();
 }
 
-void OrdersSearchBar::setSearchFocus() { m_searchInput->setFocus(); }
+void OrdersSearchBar::setSearchFocus()
+{
+  m_searchInput->setFocus();
+}
 
-const QString OrdersSearchBar::past12Months() const {
+const QString OrdersSearchBar::past12Months() const
+{
   QString _sql("(o_since BETWEEN ");
   _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
   _sql.append(" AND CURRENT_TIMESTAMP)");
   return _sql;
 }
 
-int OrdersSearchBar::getYear() {
+int OrdersSearchBar::getYear()
+{
   if (m_datePart->currentIndex() == 0)
     return cDate.year();
 
   return m_year->getValue().toInt();
 }
 
-const QString OrdersSearchBar::getDatePart() {
+const QString OrdersSearchBar::getDatePart()
+{
   int _index = m_datePart->currentIndex();
   // Kein index, dann die letzen 12 Monate!
   if (_index == 0)
@@ -162,8 +168,7 @@ const QString OrdersSearchBar::getDatePart() {
   // Starte optionale abfragen
   const QString _part = m_datePart->itemData(_index).toString();
   if (_part.startsWith("year"))
-    return QString(" AND DATE_PART('year',o_since)=" +
-                   QString::number(getYear()));
+    return QString(" AND DATE_PART('year',o_since)=" + QString::number(getYear()));
 
   const QDate _date(getYear(), cDate.month(), cDate.day());
   const QString _date_str = _date.toString("yyyy-MM-dd");
@@ -175,12 +180,14 @@ const QString OrdersSearchBar::getDatePart() {
   return _sql;
 }
 
-int OrdersSearchBar::searchLength() {
+int OrdersSearchBar::searchLength()
+{
   const QString _search = m_searchInput->text().trimmed();
   return _search.length();
 }
 
-const QString OrdersSearchBar::getSearchStatement() {
+const QString OrdersSearchBar::getSearchStatement()
+{
   int _index = m_filter->currentIndex();
   QString _sql;
   if (p_search.length() < 1)

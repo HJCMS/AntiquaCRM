@@ -12,19 +12,16 @@
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 
-class ANTIQUACRM_LIBRARY OrdersConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class ANTIQUACRM_LIBRARY OrdersConfigWidget final : public AntiquaCRM::PluginConfigWidget
+{
   Q_OBJECT
 
-private:
-  //
-
-public Q_SLOTS:
+  public Q_SLOTS:
   void loadSectionConfig() override;
   void saveSectionConfig() override;
 
-public:
-  explicit OrdersConfigWidget(QWidget *parent = nullptr);
+  public:
+  explicit OrdersConfigWidget(QWidget* parent = nullptr);
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };
