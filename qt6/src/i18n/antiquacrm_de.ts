@@ -2378,7 +2378,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TabsIndex</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+26"/>
+        <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+25"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation>Suche</translation>
@@ -2396,7 +2396,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Neu</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+63"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -4440,7 +4440,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>CDsVinylWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+171"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+174"/>
         <source>CDs &amp;&amp; Vinyl</source>
         <translation></translation>
     </message>
@@ -4830,12 +4830,22 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Ab welcher Spaltenanzahl werden Plugin-Tabellen nicht mehr automatisch aktualisiert</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>This value limits the behavior of how long tab tables automatically updated when the user requests it. Simplify, this is a performance feature for remote office clients.</source>
         <translation>Dieser Wert begrenzt das Verhalten, wie lange Registerkartentabellen automatisch aktualisiert werden, wenn der Benutzer dies aufruft. Vereinfacht gesagt handelt es sich hierbei um eine Leistungsfunktion für Remote-Office Benutzer.</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+5"/>
+        <source>Reduces query output in inventory tables to</source>
+        <translation>Reduziert die Abfrageausgabe in Inventartabellen auf</translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>This is a performance feature to minimize the rendering of large table outputs after sql query.</source>
+        <translation>Dies ist eine Leistungsfunktion, um das Rendern großer Tabellenausgaben nach einer SQL-Abfrage zu minimieren.</translation>
+    </message>
+    <message>
+        <location line="+54"/>
         <source>Look &amp; Feel</source>
         <translation>Aussehen</translation>
     </message>
@@ -5602,7 +5612,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Auftrag erstellen, anfragen!</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+89"/>
         <source>Customers</source>
         <translation>Kunden</translation>
     </message>
@@ -7146,7 +7156,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+157"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+160"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -9034,7 +9044,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StitchesWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+171"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+174"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation>Drucke &amp;&amp; Stiche</translation>
     </message>
@@ -9624,7 +9634,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>VariousIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+165"/>
+        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+169"/>
         <source>Various</source>
         <translation>Verschiedenes</translation>
     </message>
