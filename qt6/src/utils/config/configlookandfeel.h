@@ -22,6 +22,8 @@ private:
   AntiquaCRM::BoolBox *m_toolTipIcons;
   AntiquaCRM::BoolBox *m_wheelSupport;
   IconThemes *m_iconThemes;
+  AntiquaCRM::NumEdit *m_queryLimit;
+  AntiquaCRM::NumEdit *m_queryAutoUpdate;
 
 public Q_SLOTS:
   void loadSectionConfig() override;

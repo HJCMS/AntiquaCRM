@@ -19,16 +19,15 @@
  * @class ABusAdaptor
  * @brief AntiquaCRM D-Bus Adaptor
  */
-class ABusAdaptor final : public QDBusAbstractAdaptor
-{
+class ABusAdaptor final : public QDBusAbstractAdaptor {
   Q_OBJECT
   Q_CLASSINFO("D-Bus Interface", ANTIQUACRM_CONNECTION_DOMAIN)
   Q_PROPERTY(QString message READ message WRITE pushMessage NOTIFY received)
 
-  private:
+private:
   QString p_message;
 
-  Q_SIGNALS:
+Q_SIGNALS:
   /**
    * @brief send signal, about to application quit
    */
@@ -42,14 +41,14 @@ class ABusAdaptor final : public QDBusAbstractAdaptor
   /**
    * @brief send signal, message to window
    */
-  void sendMessage(const QString&);
+  void sendMessage(const QString &);
 
   /**
    * @brief send signal, operation received
    */
   void received();
 
-  public Q_SLOTS:
+public Q_SLOTS:
   /**
    * @brief toggle window view request
    */
@@ -63,13 +62,13 @@ class ABusAdaptor final : public QDBusAbstractAdaptor
   /**
    * @brief push message to system tray icon class
    */
-  Q_NOREPLY void pushMessage(const QString& msg);
+  Q_NOREPLY void pushMessage(const QString &msg);
 
-  public:
+public:
   /**
    * @param parent - object handle
    */
-  explicit ABusAdaptor(QObject* parent = nullptr);
+  explicit ABusAdaptor(QObject *parent = nullptr);
 
   /**
    * @brief receive push message

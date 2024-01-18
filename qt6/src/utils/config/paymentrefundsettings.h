@@ -11,9 +11,9 @@
 
 #include <AntiquaWidgets>
 #include <QFrame>
-#include <QLabel>
 #include <QGroupBox>
 #include <QJsonObject>
+#include <QLabel>
 
 class PaymentRefundSettings : public QFrame {
   Q_OBJECT

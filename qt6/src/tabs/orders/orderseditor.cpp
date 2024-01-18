@@ -14,17 +14,16 @@
 #include <AntiquaPrinting>
 #include <QLayout>
 
-OrdersEditor::OrdersEditor(QWidget* parent)
-    : AntiquaCRM::TabsEditor{ORDERS_SQL_EDITOR_PATTERN, parent}
-{
+OrdersEditor::OrdersEditor(QWidget *parent)
+    : AntiquaCRM::TabsEditor{ORDERS_SQL_EDITOR_PATTERN, parent} {
   setObjectName("orders_editor");
   setWindowTitle(tr("Edit Order") + " [*]");
 
-  QVBoxLayout* mainLayout = new QVBoxLayout(this);
+  QVBoxLayout *mainLayout = new QVBoxLayout(this);
   mainLayout->setContentsMargins(0, 0, 0, 0);
 
   // BEGIN:Row0
-  QHBoxLayout* row0 = new QHBoxLayout();
+  QHBoxLayout *row0 = new QHBoxLayout();
   row0->setContentsMargins(5, 2, 5, 2);
   // Auftrags Nummer
   o_id = new AntiquaCRM::SerialId(this);
@@ -48,7 +47,7 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   // END:Row0
 
   // BEGIN:Row1
-  QHBoxLayout* row1 = new QHBoxLayout();
+  QHBoxLayout *row1 = new QHBoxLayout();
   row1->setContentsMargins(5, 2, 5, 2);
   m_customerInfo = new OrdersCustomerInfo(this);
   row1->addWidget(m_customerInfo);
@@ -87,8 +86,8 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   m_actionBar->setRestoreable(false); // ResetButton off
   m_actionBar->setViewRestoreButton(false);
   m_actionBar->setViewActionAddButton(true);
-  m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_DELIVERY // Delivery
-                              | AntiquaCRM::PRINT_INVOICE // Invoice
+  m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_DELIVERY   // Delivery
+                              | AntiquaCRM::PRINT_INVOICE  // Invoice
                               | AntiquaCRM::PRINT_REMINDER // Reminder
                               | AntiquaCRM::PRINT_REFUND); // Refunding
   mainLayout->addWidget(m_actionBar);
@@ -100,36 +99,41 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   registerInputChanged();
 
   // Signals::OrderStatusActionFrame
-  connect(m_orderStatus, SIGNAL(sendNoticeMessage(const QString&)),
-          SLOT(openNoticeMessage(const QString&)));
-  connect(m_orderStatus, SIGNAL(sendNotifyStatus(const QString&)),
-          SLOT(pushStatusMessage(const QString&)));
+  connect(m_orderStatus, SIGNAL(sendNoticeMessage(const QString &)),
+          SLOT(openNoticeMessage(const QString &)));
+  connect(m_orderStatus, SIGNAL(sendNotifyStatus(const QString &)),
+          SLOT(pushStatusMessage(const QString &)));
   connect(m_orderStatus, SIGNAL(sendOrderPayment(AntiquaCRM::OrderPayment)),
           SLOT(hintsAboutRefund(AntiquaCRM::OrderPayment)));
 
   // Signals:ActionsBar
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
-  connect(m_actionBar, SIGNAL(sendPrintDeliveryNote()), SLOT(createPrintDeliveryNote()));
-  connect(m_actionBar, SIGNAL(sendPrintInvoiceNote()), SLOT(createPrintInvoice()));
-  connect(m_actionBar, SIGNAL(sendPrintPaymentReminder()), SLOT(createPrintPaymentReminder()));
-  connect(m_actionBar, SIGNAL(sendPrintRefunding()), SLOT(createPrintRefundInvoice()));
-  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString&)),
-          SLOT(createMailMessage(const QString&)));
-  connect(m_actionBar, SIGNAL(sendAddCustomAction()), SLOT(openSearchInsertArticle()));
-  connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendPrintDeliveryNote()),
+          SLOT(createPrintDeliveryNote()));
+  connect(m_actionBar, SIGNAL(sendPrintInvoiceNote()),
+          SLOT(createPrintInvoice()));
+  connect(m_actionBar, SIGNAL(sendPrintPaymentReminder()),
+          SLOT(createPrintPaymentReminder()));
+  connect(m_actionBar, SIGNAL(sendPrintRefunding()),
+          SLOT(createPrintRefundInvoice()));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
+          SLOT(createMailMessage(const QString &)));
+  connect(m_actionBar, SIGNAL(sendAddCustomAction()),
+          SLOT(openSearchInsertArticle()));
+  connect(m_actionBar, SIGNAL(sendCancelClicked()),
+          SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
-  connect(m_actionBar, SIGNAL(sendFinishClicked()), SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()),
+          SLOT(setCheckLeaveEditor()));
 }
 
-OrdersEditor::~OrdersEditor()
-{
+OrdersEditor::~OrdersEditor() {
   ignoreFields.clear();
   inputFields.clear();
   customInput.clear();
 }
 
-void OrdersEditor::setInputFields()
-{
+void OrdersEditor::setInputFields() {
   // Bei UPDATE/INSERT Ignorieren
   ignoreFields << "o_since";
   ignoreFields << "o_modified";
@@ -152,9 +156,8 @@ void OrdersEditor::setInputFields()
   if (inputFields.isEmpty()) {
     QStringList warn(tr("An error has occurred!"));
     warn << tr("Can't load input datafields!");
-    warn << tr(
-        "When getting this Message, please check your Network and "
-        "Database connection!");
+    warn << tr("When getting this Message, please check your Network and "
+               "Database connection!");
     openNoticeMessage(warn.join("\n"));
   }
 
@@ -165,14 +168,13 @@ void OrdersEditor::setInputFields()
   m_actionBar->setMailMenu(AntiquaCRM::MAIL_ORDER_GROUP);
 }
 
-bool OrdersEditor::setDataField(const QSqlField& field, const QVariant& value)
-{
+bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
   if (!field.isValid())
     return false;
 
   const QString _key = field.name();
   bool _required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AInputWidget* inp = getInputEdit(_key);
+  AntiquaCRM::AInputWidget *inp = getInputEdit(_key);
   if (inp != nullptr) {
     inp->setRestrictions(field);
     // qDebug() << key << value << required;
@@ -193,8 +195,7 @@ bool OrdersEditor::setDataField(const QSqlField& field, const QVariant& value)
   return false;
 }
 
-void OrdersEditor::importSqlResult()
-{
+void OrdersEditor::importSqlResult() {
   if (m_tableData == nullptr)
     return;
 
@@ -209,8 +210,7 @@ void OrdersEditor::importSqlResult()
   setResetModified(inputFields);
 }
 
-bool OrdersEditor::sendSqlQuery(const QString& query)
-{
+bool OrdersEditor::sendSqlQuery(const QString &query) {
   if (query.isEmpty())
     return false;
 
@@ -237,12 +237,11 @@ bool OrdersEditor::sendSqlQuery(const QString& query)
   return true;
 }
 
-const QHash<QString, QVariant> OrdersEditor::createSqlDataset()
-{
+const QHash<QString, QVariant> OrdersEditor::createSqlDataset() {
   QHash<QString, QVariant> _hash;
-  QListIterator<AntiquaCRM::AInputWidget*> it(getInputEditList(fieldPattern));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputEditList(fieldPattern));
   while (it.hasNext()) {
-    AntiquaCRM::AInputWidget* inp = it.next();
+    AntiquaCRM::AInputWidget *inp = it.next();
     QString _name = inp->objectName();
     if (ignoreFields.contains(_name) || customInput.contains(_name))
       continue;
@@ -258,8 +257,7 @@ const QHash<QString, QVariant> OrdersEditor::createSqlDataset()
   return _hash;
 }
 
-void OrdersEditor::createSqlUpdate()
-{
+void OrdersEditor::createSqlUpdate() {
   qint64 _oid = getSerialID("o_id");
   if (_oid < 1)
     return;
@@ -267,7 +265,7 @@ void OrdersEditor::createSqlUpdate()
   // Ein UPDATE ohne Artikel wird feige verweigert!
   if (m_ordersTable->isEmpty()) {
     openNoticeMessage(tr("No Article has been added to this order!"));
-    QPushButton* btn = m_actionBar->findChild<QPushButton*>("article");
+    QPushButton *btn = m_actionBar->findChild<QPushButton *>("article");
     if (btn != nullptr && btn->isVisible()) {
       qDebug() << Q_FUNC_INFO << btn->objectName();
       btn->setFocus();
@@ -355,8 +353,7 @@ void OrdersEditor::createSqlUpdate()
   }
 }
 
-void OrdersEditor::createSqlInsert()
-{
+void OrdersEditor::createSqlInsert() {
   // Werden vom INSERT erstellt!
   QStringList insertIgnore({"o_id", "o_invoice_id", "o_delivery"});
   foreach (QString objName, insertIgnore) {
@@ -419,8 +416,7 @@ void OrdersEditor::createSqlInsert()
  * Lieferscheinnummer erstellt.
  * Das Format ist "{Year}{DayOfYear}{InvoiceNr}"
  */
-const QString OrdersEditor::createDeliveryNumber(const QDate d, qint64 id)
-{
+const QString OrdersEditor::createDeliveryNumber(const QDate d, qint64 id) {
   // DeliveryNumber
   QString _dn(QString::number(d.year()));
   _dn.append(AntiquaCRM::AUtil::zerofill(d.dayOfYear(), 3));
@@ -428,8 +424,7 @@ const QString OrdersEditor::createDeliveryNumber(const QDate d, qint64 id)
   return _dn;
 }
 
-void OrdersEditor::setOrderPaymentNumbers(qint64 oid)
-{
+void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
   if (oid < 1) {
     qWarning("Missing Id for Order Payment.");
     return;
@@ -457,8 +452,7 @@ void OrdersEditor::setOrderPaymentNumbers(qint64 oid)
   }
 }
 
-const OrdersEditor::Idset OrdersEditor::identities()
-{
+const OrdersEditor::Idset OrdersEditor::identities() {
   Idset t_ids;
   qint64 _oid = getSerialID("o_id");
   qint64 _cid = getSerialID("o_customer_id");
@@ -483,8 +477,7 @@ const OrdersEditor::Idset OrdersEditor::identities()
   return t_ids;
 }
 
-const QJsonObject OrdersEditor::createDialogData(qint64 oid) const
-{
+const QJsonObject OrdersEditor::createDialogData(qint64 oid) const {
   QJsonObject _jso;
   if (oid < 1)
     return _jso;
@@ -508,8 +501,7 @@ const QJsonObject OrdersEditor::createDialogData(qint64 oid) const
   return _jso;
 }
 
-AntiquaCRM::SalesTax OrdersEditor::initSalesTax()
-{
+AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
   QString _country = getDataValue("o_vat_country").toString();
   if (_country.isEmpty() || _country == "XX") {
     qInfo("No Eurpean country - set invoice tax to no!");
@@ -520,8 +512,7 @@ AntiquaCRM::SalesTax OrdersEditor::initSalesTax()
   return static_cast<AntiquaCRM::SalesTax>(_vat);
 }
 
-int OrdersEditor::getSalesTaxType(int type)
-{
+int OrdersEditor::getSalesTaxType(int type) {
   switch (static_cast<AntiquaCRM::ArticleType>(type)) {
   case (AntiquaCRM::ArticleType::BOOK):
     return 1; // VAT reduced
@@ -531,8 +522,8 @@ int OrdersEditor::getSalesTaxType(int type)
   };
 }
 
-const QList<AntiquaCRM::OrderArticleItems> OrdersEditor::queryArticles(qint64 oid)
-{
+const QList<AntiquaCRM::OrderArticleItems>
+OrdersEditor::queryArticles(qint64 oid) {
   QList<AntiquaCRM::OrderArticleItems> _list;
   QString sql("SELECT * FROM article_orders WHERE a_order_id=");
   sql.append(QString::number(oid) + ";");
@@ -551,19 +542,17 @@ const QList<AntiquaCRM::OrderArticleItems> OrdersEditor::queryArticles(qint64 oi
   return _list;
 }
 
-AntiquaCRM::ArticleOrderItem OrdersEditor::addArticleItem(const QString& key,
-                                                          const QVariant& value) const
-{
+AntiquaCRM::ArticleOrderItem
+OrdersEditor::addArticleItem(const QString &key, const QVariant &value) const {
   return AntiquaCRM::AProviderOrder::createItem(key, value);
 }
 
-AntiquaCRM::ArticleOrderItem OrdersEditor::addArticleItem(const QSqlField& field) const
-{
+AntiquaCRM::ArticleOrderItem
+OrdersEditor::addArticleItem(const QSqlField &field) const {
   return AntiquaCRM::AProviderOrder::createItem(field);
 }
 
-bool OrdersEditor::addOrderTableArticle(qint64 aid)
-{
+bool OrdersEditor::addOrderTableArticle(qint64 aid) {
   if (aid < 1)
     return false;
 
@@ -615,8 +604,7 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid)
   return false;
 }
 
-const QString OrdersEditor::getOrderSqlArticleQuery()
-{
+const QString OrdersEditor::getOrderSqlArticleQuery() {
   if (!identities().isValid)
     return QString();
 
@@ -631,18 +619,17 @@ const QString OrdersEditor::getOrderSqlArticleQuery()
  * Ermittelt mit "o_order_status" und "o_payment_status" den aktuellen Auftrags
  * Status. Wurde der Auftrag geliefert und Bezahlt, gilt er als abgeschlossen.
  */
-bool OrdersEditor::isOrderStatusFinished()
-{
+bool OrdersEditor::isOrderStatusFinished() {
   int i_os = m_tableData->getValue("o_order_status").toInt();
   AntiquaCRM::OrderStatus os_t = static_cast<AntiquaCRM::OrderStatus>(i_os);
   // AntiquaCRM::OrderPayment
   int i_ps = m_tableData->getValue("o_payment_status").toInt();
   AntiquaCRM::OrderPayment ps_t = static_cast<AntiquaCRM::OrderPayment>(i_ps);
-  return (os_t == AntiquaCRM::OrderStatus::DELIVERED && ps_t == AntiquaCRM::OrderPayment::PAYED);
+  return (os_t == AntiquaCRM::OrderStatus::DELIVERED &&
+          ps_t == AntiquaCRM::OrderPayment::PAYED);
 }
 
-qint64 OrdersEditor::findCustomer(const QJsonObject& obj, qint64 cid)
-{
+qint64 OrdersEditor::findCustomer(const QJsonObject &obj, qint64 cid) {
   QStringList _clause;
   QStringList _fields("c_firstname");
   _fields << "c_lastname";
@@ -683,27 +670,28 @@ qint64 OrdersEditor::findCustomer(const QJsonObject& obj, qint64 cid)
   return -1;
 }
 
-bool OrdersEditor::prepareCreateEntry()
-{
+bool OrdersEditor::prepareCreateEntry() {
   setInputFields();
   setResetModified(inputFields);
   setEnabled(true);
   return true;
 }
 
-void OrdersEditor::setDefaultValues()
-{
+void OrdersEditor::setDefaultValues() {
   // Order Status
   m_tableData->setValue("o_order_status", AntiquaCRM::OrderStatus::STARTED);
-  setDataField(m_tableData->getProperties("o_order_status"), AntiquaCRM::OrderStatus::STARTED);
+  setDataField(m_tableData->getProperties("o_order_status"),
+               AntiquaCRM::OrderStatus::STARTED);
 
   // Payment Status
   m_tableData->setValue("o_payment_status", AntiquaCRM::OrderPayment::NOTPAID);
-  setDataField(m_tableData->getProperties("o_payment_status"), AntiquaCRM::OrderPayment::NOTPAID);
+  setDataField(m_tableData->getProperties("o_payment_status"),
+               AntiquaCRM::OrderPayment::NOTPAID);
 
   // VAT Settings
   m_tableData->setValue("o_vat_levels", AntiquaCRM::SalesTax::TAX_INCL);
-  setDataField(m_tableData->getProperties("o_vat_levels"), AntiquaCRM::SalesTax::TAX_INCL);
+  setDataField(m_tableData->getProperties("o_vat_levels"),
+               AntiquaCRM::SalesTax::TAX_INCL);
 
   // Delivery Country
   const QString _co = QLocale::system().bcp47Name().toUpper();
@@ -719,8 +707,7 @@ void OrdersEditor::setDefaultValues()
                AntiquaCRM::INVOICE_PREPAYMENT_RESERVED);
 }
 
-void OrdersEditor::setSaveData()
-{
+void OrdersEditor::setSaveData() {
   if (getSerialID("o_id") < 1) {
     createSqlInsert();
     return;
@@ -728,8 +715,7 @@ void OrdersEditor::setSaveData()
   createSqlUpdate();
 }
 
-void OrdersEditor::setCheckLeaveEditor()
-{
+void OrdersEditor::setCheckLeaveEditor() {
   if (checkIsModified() || m_ordersTable->isWindowModified()) {
     unsavedChangesPopup();
     return;
@@ -737,20 +723,18 @@ void OrdersEditor::setCheckLeaveEditor()
   setFinalLeaveEditor(false);
 }
 
-void OrdersEditor::setFinalLeaveEditor(bool force)
-{
+void OrdersEditor::setFinalLeaveEditor(bool force) {
   // qDebug() << Q_FUNC_INFO << "FORCE" << force;
   if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 
   m_ordersTable->clearContents(); // Artikel Tabelle leeren!
-  m_orderStatus->stepOut(); // Signale wieder sperren
+  m_orderStatus->stepOut();       // Signale wieder sperren
   setResetInputFields();
   emit sendLeaveEditor(); // Zurück zur Hauptsansicht
 }
 
-void OrdersEditor::createMailMessage(const QString& caller)
-{
+void OrdersEditor::createMailMessage(const QString &caller) {
   OrdersEditor::Idset _ids = identities();
   if (!_ids.isValid)
     return;
@@ -762,28 +746,26 @@ void OrdersEditor::createMailMessage(const QString& caller)
   _obj.insert("CRM_INVOICE_ID", _ids.in_id);
   _obj.insert("CRM_ORDER_ID", _ids.or_id);
 
-  AntiquaCRM::MailDialog* d = new AntiquaCRM::MailDialog(this);
+  AntiquaCRM::MailDialog *d = new AntiquaCRM::MailDialog(this);
   if (d->exec(_obj) == QDialog::Accepted) {
     pushStatusMessage(tr("Mail Message done!"));
   }
   d->deleteLater();
 }
 
-void OrdersEditor::createPrintDeliveryNote()
-{
+void OrdersEditor::createPrintDeliveryNote() {
   OrdersEditor::Idset _ids = identities();
   if (!_ids.isValid)
     return;
 
-  AntiquaCRM::PrintDeliveryNote* d = new AntiquaCRM::PrintDeliveryNote(this);
+  AntiquaCRM::PrintDeliveryNote *d = new AntiquaCRM::PrintDeliveryNote(this);
   if (d->exec(createDialogData(_ids.or_id)) == QDialog::Accepted) {
     pushStatusMessage(tr("Delivery note printed."));
   }
   d->deleteLater();
 }
 
-void OrdersEditor::createPrintInvoice()
-{
+void OrdersEditor::createPrintInvoice() {
   OrdersEditor::Idset _ids = identities();
   if (!_ids.isValid)
     return;
@@ -793,20 +775,20 @@ void OrdersEditor::createPrintInvoice()
     return;
 
   if (_obj.value("o_delivery_add_price").toBool()) {
-    _obj.insert("package_price", m_costSettings->o_delivery_package->getPackagePrice());
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
   } else {
     _obj.insert("package_price", 0.00);
   }
 
-  AntiquaCRM::PrintInvoice* d = new AntiquaCRM::PrintInvoice(this);
+  AntiquaCRM::PrintInvoice *d = new AntiquaCRM::PrintInvoice(this);
   if (d->exec(_obj) == QDialog::Accepted) {
     pushStatusMessage(tr("Invoice printed."));
   }
   d->deleteLater();
 }
 
-void OrdersEditor::createPrintPaymentReminder()
-{
+void OrdersEditor::createPrintPaymentReminder() {
   OrdersEditor::Idset _ids = identities();
   if (!_ids.isValid)
     return;
@@ -816,20 +798,20 @@ void OrdersEditor::createPrintPaymentReminder()
     return;
 
   if (_obj.value("o_delivery_add_price").toBool()) {
-    _obj.insert("package_price", m_costSettings->o_delivery_package->getPackagePrice());
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
   } else {
     _obj.insert("package_price", 0.00);
   }
 
-  AntiquaCRM::PrintReminder* d = new AntiquaCRM::PrintReminder(this);
+  AntiquaCRM::PrintReminder *d = new AntiquaCRM::PrintReminder(this);
   if (d->exec(_obj) == QDialog::Accepted) {
     pushStatusMessage(tr("Reminder printed."));
   }
   d->deleteLater();
 }
 
-void OrdersEditor::createPrintRefundInvoice()
-{
+void OrdersEditor::createPrintRefundInvoice() {
   if (m_orderStatus->getOrderPayment() != AntiquaCRM::OrderPayment::RETURN) {
     pushStatusMessage(tr("This order is not a refund!"));
     return;
@@ -844,12 +826,13 @@ void OrdersEditor::createPrintRefundInvoice()
     return;
 
   if (_obj.value("o_delivery_add_price").toBool()) {
-    _obj.insert("package_price", m_costSettings->o_delivery_package->getPackagePrice());
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
   } else {
     _obj.insert("package_price", 0.00);
   }
 
-  AntiquaCRM::PrintRefund* d = new AntiquaCRM::PrintRefund(this);
+  AntiquaCRM::PrintRefund *d = new AntiquaCRM::PrintRefund(this);
   if (d->exec(_obj) == QDialog::Accepted) {
     pushStatusMessage(tr("Refund printed."));
   }
@@ -859,8 +842,7 @@ void OrdersEditor::createPrintRefundInvoice()
 /**
  * Es kann hier keine Rückerstattung erfolgen!
  */
-void OrdersEditor::hintsAboutRefund(AntiquaCRM::OrderPayment stat)
-{
+void OrdersEditor::hintsAboutRefund(AntiquaCRM::OrderPayment stat) {
   if (stat != AntiquaCRM::OrderPayment::RETURN)
     return; // Nur bei Rückerstattung ausführen!
 
@@ -881,20 +863,18 @@ void OrdersEditor::hintsAboutRefund(AntiquaCRM::OrderPayment stat)
     m_orderStatus->setWindowModified(false);
 }
 
-void OrdersEditor::openSearchInsertArticle()
-{
+void OrdersEditor::openSearchInsertArticle() {
   if (!identities().isValid)
     return;
 
   if (m_orderStatus->isProtectable()) {
-    QString _info(
-        tr("<b>You cannot add a new item to a refund!</b>"
-           "<p>A better choice is to create a new order.</p>"));
+    QString _info(tr("<b>You cannot add a new item to a refund!</b>"
+                     "<p>A better choice is to create a new order.</p>"));
     openNoticeMessage(_info);
     return;
   }
 
-  OrderArticleDialog* d = new OrderArticleDialog(this);
+  OrderArticleDialog *d = new OrderArticleDialog(this);
   if (d->exec() == QDialog::Rejected)
     return;
 
@@ -908,14 +888,12 @@ void OrdersEditor::openSearchInsertArticle()
   d->deleteLater();
 }
 
-void OrdersEditor::setRestore()
-{
+void OrdersEditor::setRestore() {
   importSqlResult();
   setEnabled(true);
 }
 
-bool OrdersEditor::addArticle(qint64 aid)
-{
+bool OrdersEditor::addArticle(qint64 aid) {
   if (aid < 1)
     return false;
 
@@ -928,8 +906,7 @@ bool OrdersEditor::addArticle(qint64 aid)
   return false;
 }
 
-bool OrdersEditor::openEditEntry(qint64 oid)
-{
+bool OrdersEditor::openEditEntry(qint64 oid) {
   bool _retval = false;
   if (oid < 1)
     return _retval;
@@ -987,18 +964,16 @@ bool OrdersEditor::openEditEntry(qint64 oid)
  * stelle nicht aufgerufen werden weil, das setzen von OrderStatus und
  * PaymentStatus beim laden des Auftrages asyncron erfolgen!
  */
-bool OrdersEditor::createOrderRefund(qint64 oid)
-{
+bool OrdersEditor::createOrderRefund(qint64 oid) {
   if (!openEditEntry(oid))
     return false;
 
   if (!m_orderStatus->currentOrderStatus()) {
-    openNoticeMessage(
-        tr("<b>You cannot issue a refund for this Order!</b>"
-           "<ul><li>The Order status must have Delivered.</li>"
-           "<li>The Payment status must have Paid.</li></ul>"
-           "<p>If this Order hasn't paid, open it and change "
-           "status to Canceled.</p>"));
+    openNoticeMessage(tr("<b>You cannot issue a refund for this Order!</b>"
+                         "<ul><li>The Order status must have Delivered.</li>"
+                         "<li>The Payment status must have Paid.</li></ul>"
+                         "<p>If this Order hasn't paid, open it and change "
+                         "status to Canceled.</p>"));
 
     return false;
   }
@@ -1009,9 +984,10 @@ bool OrdersEditor::createOrderRefund(qint64 oid)
     setDataField(m_tableData->getProperties(_n), 0);
   }
   m_tableData->setValue("o_payment_status", AntiquaCRM::OrderPayment::RETURN);
-  setDataField(m_tableData->getProperties("o_payment_status"), AntiquaCRM::OrderPayment::RETURN);
+  setDataField(m_tableData->getProperties("o_payment_status"),
+               AntiquaCRM::OrderPayment::RETURN);
 
-  RefundingDialog* d = new RefundingDialog(oid, this);
+  RefundingDialog *d = new RefundingDialog(oid, this);
   if (d->exec() == QDialog::Rejected) {
     pushStatusMessage(tr("Refunding dialog aborted."));
     return false;
@@ -1031,14 +1007,12 @@ bool OrdersEditor::createOrderRefund(qint64 oid)
   return true;
 }
 
-bool OrdersEditor::createNewEntry()
-{
+bool OrdersEditor::createNewEntry() {
   qInfo("Create new Order without Customer Id will rejected.");
   return false;
 }
 
-bool OrdersEditor::createNewOrder(qint64 cid)
-{
+bool OrdersEditor::createNewOrder(qint64 cid) {
   if (cid < 1)
     return false;
 
@@ -1068,8 +1042,7 @@ bool OrdersEditor::createNewOrder(qint64 cid)
   return false;
 }
 
-bool OrdersEditor::createCustomEntry(const QJsonObject& object)
-{
+bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
   // qDebug() << Q_FUNC_INFO << "Experimental:" << object;
   const QString _action = object.value("ACTION").toString();
   if (_action.isEmpty())
@@ -1181,7 +1154,8 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object)
       // NOTE: Das Feld 'a_tax' ist noch nicht in „antiquacmd“ eingebunden!
       // o_media_type | a_type
       if (!article.contains("a_tax") && article.contains("a_type")) {
-        article.insert("a_tax", getSalesTaxType(article.value("a_type").toInt()));
+        article.insert("a_tax",
+                       getSalesTaxType(article.value("a_type").toInt()));
       }
       if (!article.contains("a_refunds_cost")) {
         article.insert("a_refunds_cost", 0.00);
@@ -1228,8 +1202,10 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object)
   // End:Umsatzsteuer
 
   // Begin:Lieferdienst
-  _prorder.setValue("o_delivery_service", getDataValue("o_delivery_service").toInt());
-  _prorder.setValue("o_delivery_package", getDataValue("o_delivery_package").toInt());
+  _prorder.setValue("o_delivery_service",
+                    getDataValue("o_delivery_service").toInt());
+  _prorder.setValue("o_delivery_package",
+                    getDataValue("o_delivery_package").toInt());
   _prorder.setValue("o_delivery_send_id", "");
   _prorder.setValue("o_delivery_add_price", false);
   // Lieferschein Nr. ist hier noch leer!

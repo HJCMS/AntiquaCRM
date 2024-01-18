@@ -158,8 +158,12 @@ void VariousIndex::openEntry(qint64 articleId) {
 }
 
 void VariousIndex::onEnterChanged() {
-  if (!initialed)
+  if (!initialed) {
     initialed = m_table->setQuery();
+    return;
+  }
+  if (m_table->isAutoRefreshEnabled())
+    m_table->setReloadView();
 }
 
 const QString VariousIndex::getTitle() const { return tr("Various"); }

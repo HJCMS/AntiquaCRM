@@ -7,7 +7,6 @@
 
 PaymentRefundSettings::PaymentRefundSettings(QWidget *parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
-
   QVBoxLayout *layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 

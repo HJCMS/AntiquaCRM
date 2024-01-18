@@ -34,17 +34,17 @@ class ANTIQUACRM_LIBRARY TableView : public QTableView {
 private:
   /**
    * @brief Limiting sql query in Main view
-   * @note default:1000
+   * @note default:500
    * @see Configurations Dialog "Feel and View"
    */
-  int QueryLimit;
+  int QueryLimit = 500;
 
   /**
    * @brief Only Autoupdate the MainView if smaller then this.
    * @note default:50
    * @see Configurations Dialog "Feel and View"
    */
-  int QueryAutoUpdate;
+  int QueryAutoUpdate = 50;
 
   /**
    * @brief Paint a visual information text for SQL queries!

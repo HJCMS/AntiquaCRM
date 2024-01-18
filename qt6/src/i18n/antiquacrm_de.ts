@@ -2378,7 +2378,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TabsIndex</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+25"/>
+        <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+26"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation>Suche</translation>
@@ -2396,7 +2396,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Neu</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+69"/>
         <source>Warning</source>
         <translation>Warnung</translation>
     </message>
@@ -3414,7 +3414,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+174"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+177"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -4825,7 +4825,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Legen Sie das Thema des Anwendungssymbols fest</translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+8"/>
+        <source>From which number of columns, plugin tables no longer be updated automatically</source>
+        <translation>Ab welcher Spaltenanzahl werden Plugin-Tabellen nicht mehr automatisch aktualisiert</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>This value limits the behavior of how long tab tables automatically updated when the user requests it. Simplify, this is a performance feature for remote office clients.</source>
+        <translation>Dieser Wert begrenzt das Verhalten, wie lange Registerkartentabellen automatisch aktualisiert werden, wenn der Benutzer dies aufruft. Vereinfacht gesagt handelt es sich hierbei um eine Leistungsfunktion für Remote-Office Benutzer.</translation>
+    </message>
+    <message>
+        <location line="+46"/>
         <source>Look &amp; Feel</source>
         <translation>Aussehen</translation>
     </message>
@@ -6617,7 +6627,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersSearchBar</name>
     <message>
-        <location filename="../tabs/orders/orderssearchbar.cpp" line="+14"/>
+        <location filename="../tabs/orders/orderssearchbar.cpp" line="+13"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation>Drücken Sie STRG+Umschalt+F, um das Filtermenü schnell zu öffnen.</translation>
     </message>
@@ -6910,7 +6920,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersTableOverView</name>
     <message>
-        <location filename="../tabs/orders/orderstableoverview.cpp" line="+53"/>
+        <location filename="../tabs/orders/orderstableoverview.cpp" line="+57"/>
         <source>Open order</source>
         <translation>Öffne Auftrag</translation>
     </message>
@@ -7237,7 +7247,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>PaymentRefundSettings</name>
     <message>
-        <location filename="../utils/config/paymentrefundsettings.cpp" line="+15"/>
+        <location filename="../utils/config/paymentrefundsettings.cpp" line="+14"/>
         <source>Refunding settings</source>
         <translation>Rückerstattungseinstellungen</translation>
     </message>

@@ -5,16 +5,14 @@
 
 #include <QLayout>
 
-OrdersCostSettings::OrdersCostSettings(QWidget* parent)
-    : QTabWidget{parent}
-{
+OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   int _row = 0;
   m_deliveryTab = new QWidget(this);
-  QGridLayout* gridLayout = new QGridLayout(m_deliveryTab);
+  QGridLayout *gridLayout = new QGridLayout(m_deliveryTab);
   gridLayout->setColumnStretch(2, 1);
 
   // BEGIN:DeliveryLayout
-  QHBoxLayout* _deliverLayout = new QHBoxLayout;
+  QHBoxLayout *_deliverLayout = new QHBoxLayout;
   o_delivery_service = new AntiquaCRM::SelectDeliverService(m_deliveryTab);
   o_delivery_service->setObjectName("o_delivery_service");
   o_delivery_service->setInputToolTip(tr("Delivery service"));
@@ -40,7 +38,8 @@ OrdersCostSettings::OrdersCostSettings(QWidget* parent)
   o_delivery_add_price = new AntiquaCRM::BoolBox(m_deliveryTab);
   o_delivery_add_price->setObjectName("o_delivery_add_price");
   o_delivery_add_price->setBuddyLabel(tr("add delivery package price"));
-  o_delivery_add_price->setToolTip(tr("add delivery package price to current shipping."));
+  o_delivery_add_price->setToolTip(
+      tr("add delivery package price to current shipping."));
   o_delivery_add_price->setValue(false);
   o_delivery_add_price->setRequired(false);
   gridLayout->addWidget(o_delivery_add_price, _row++, 1, 1, 2);
@@ -76,10 +75,11 @@ OrdersCostSettings::OrdersCostSettings(QWidget* parent)
   gridLayout->setRowStretch(_row, 1);
 
   m_deliveryTab->setLayout(gridLayout);
-  addTab(m_deliveryTab, parentWidget()->windowIcon(), tr("Delivery-/Invoice Settings"));
+  addTab(m_deliveryTab, parentWidget()->windowIcon(),
+         tr("Delivery-/Invoice Settings"));
 
   m_historyTab = new QWidget(this);
-  QVBoxLayout* vboxLayout = new QVBoxLayout(m_historyTab);
+  QVBoxLayout *vboxLayout = new QVBoxLayout(m_historyTab);
   o_since = new AntiquaCRM::DateTimeInfo(m_historyTab);
   o_since->setObjectName("o_since");
   o_since->setBuddyLabel(tr("Created at"));
@@ -96,6 +96,6 @@ OrdersCostSettings::OrdersCostSettings(QWidget* parent)
   m_historyTab->setLayout(vboxLayout);
   addTab(m_historyTab, parentWidget()->windowIcon(), tr("History info"));
 
-  connect(o_delivery_service, SIGNAL(sendSelectedService(int)), o_delivery_package,
-          SLOT(loadPackages(int)));
+  connect(o_delivery_service, SIGNAL(sendSelectedService(int)),
+          o_delivery_package, SLOT(loadPackages(int)));
 }

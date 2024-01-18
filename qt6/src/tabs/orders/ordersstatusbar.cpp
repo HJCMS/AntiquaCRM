@@ -6,18 +6,15 @@
 
 using namespace AntiquaCRM;
 
-OrdersStatusBar::OrdersStatusBar(QWidget* parent)
-    : TabsStatusBar{parent}
-{
+OrdersStatusBar::OrdersStatusBar(QWidget *parent) : TabsStatusBar{parent} {
   setCreateButtonEnabled(false);
   defaultViewButton();
   btn_history = historyButton();
   setHistoryActionMenu(btn_history);
 }
 
-const QString OrdersStatusBar::inPastRange() const
-{
-  OrdersSearchBar* m_sbar = parentWidget()->findChild<OrdersSearchBar*>();
+const QString OrdersStatusBar::inPastRange() const {
+  OrdersSearchBar *m_sbar = parentWidget()->findChild<OrdersSearchBar *>();
   QString _sql;
   if (m_sbar != nullptr) {
     QString _range = m_sbar->getDatePart();
@@ -34,10 +31,9 @@ const QString OrdersStatusBar::inPastRange() const
   return _sql;
 }
 
-void OrdersStatusBar::setHistoryActionMenu(QPushButton* parent)
-{
+void OrdersStatusBar::setHistoryActionMenu(QPushButton *parent) {
   m_mapper = new QSignalMapper(parent);
-  QMenu* m = new QMenu(parent);
+  QMenu *m = new QMenu(parent);
   m->setTitle(tr("Orders History"));
 
   m_ac = m->addAction(historyIcon(), tr("Default view"));
@@ -75,8 +71,7 @@ void OrdersStatusBar::setHistoryActionMenu(QPushButton* parent)
   connect(m_mapper, SIGNAL(mappedInt(int)), SLOT(setHistoryAction(int)));
 }
 
-void OrdersStatusBar::setHistoryAction(int index)
-{
+void OrdersStatusBar::setHistoryAction(int index) {
   FilterQuery _filter = static_cast<FilterQuery>(index);
   const QString _delivered = QString::number(OrderStatus::DELIVERED);
   QString _status, _sql;

@@ -44,7 +44,7 @@ void ConfigGeneral::setPaymentDefaults() {
 
 void ConfigGeneral::loadSectionConfig() {
   setPaymentDefaults();
-  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(m_paymentGroup));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp->objectName().isEmpty())
@@ -62,7 +62,7 @@ void ConfigGeneral::loadSectionConfig() {
 }
 
 void ConfigGeneral::saveSectionConfig() {
-  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(widget()));
+  QListIterator<AntiquaCRM::AInputWidget *> it(getInputList(m_paymentGroup));
   while (it.hasNext()) {
     AntiquaCRM::AInputWidget *m_inp = it.next();
     if (m_inp->objectName().isEmpty())

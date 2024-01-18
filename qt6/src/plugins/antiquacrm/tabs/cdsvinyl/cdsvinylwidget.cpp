@@ -165,7 +165,10 @@ void CDsVinylWidget::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
+    return;
   }
+  if (m_table->isAutoRefreshEnabled())
+    m_table->setReloadView();
 }
 
 const QString CDsVinylWidget::getTitle() const { return tr("CDs && Vinyl"); }

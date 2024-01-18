@@ -241,7 +241,10 @@ void CustomersWidget::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     m_searchBar->setFilter(0);
+    return;
   }
+  if (m_table->isAutoRefreshEnabled())
+    m_table->setReloadView();
 }
 
 const QString CustomersWidget::getTitle() const { return tr("Customers"); }

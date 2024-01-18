@@ -151,7 +151,10 @@ void OrdersWidget::onEnterChanged() {
   if (!initialed) {
     initialed = m_table->setQuery();
     setCurrentIndex(ViewPage::MainView);
+    return;
   }
+  if (m_table->isAutoRefreshEnabled())
+    m_table->setReloadView();
 }
 
 const QString OrdersWidget::getTitle() const { return tr("Orders"); }

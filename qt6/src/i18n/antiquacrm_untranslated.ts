@@ -2377,7 +2377,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TabsIndex</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+25"/>
+        <location filename="../Antiqua/Tabs/tabsindex.cpp" line="+26"/>
         <source>Ctrl+Shift+S</source>
         <comment>Search</comment>
         <translation type="unfinished"></translation>
@@ -2395,7 +2395,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+69"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3394,7 +3394,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+174"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+177"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4801,7 +4801,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+39"/>
+        <location line="+8"/>
+        <source>From which number of columns, plugin tables no longer be updated automatically</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>This value limits the behavior of how long tab tables automatically updated when the user requests it. Simplify, this is a performance feature for remote office clients.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
         <source>Look &amp; Feel</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6593,7 +6603,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersSearchBar</name>
     <message>
-        <location filename="../tabs/orders/orderssearchbar.cpp" line="+14"/>
+        <location filename="../tabs/orders/orderssearchbar.cpp" line="+13"/>
         <source>Press CTRL+Shift+F, to quickly open this Menu.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6886,7 +6896,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableOverView</name>
     <message>
-        <location filename="../tabs/orders/orderstableoverview.cpp" line="+53"/>
+        <location filename="../tabs/orders/orderstableoverview.cpp" line="+57"/>
         <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7213,7 +7223,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>PaymentRefundSettings</name>
     <message>
-        <location filename="../utils/config/paymentrefundsettings.cpp" line="+15"/>
+        <location filename="../utils/config/paymentrefundsettings.cpp" line="+14"/>
         <source>Refunding settings</source>
         <translation type="unfinished"></translation>
     </message>
