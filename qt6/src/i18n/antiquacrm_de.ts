@@ -3531,12 +3531,12 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksSelectFilter</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+19"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+15"/>
         <source>Title and Keyword</source>
         <translation>Titel und Schlüsselwort</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+8"/>
         <source>Article Id</source>
         <translation>Artikel-Id</translation>
     </message>
@@ -3546,7 +3546,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Durchsucht Bücher</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Title and Authors</source>
         <translation>Titel und Autoren</translation>
     </message>
@@ -3556,12 +3556,12 @@ Bild – Artikel-ID: %2</translation>
         <translation>nach Titel mit Autoren.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-4"/>
         <source>by title with keywords.</source>
         <translation>nach Titel mit Schlüsselwörtern.</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+8"/>
         <source>Multiple Article numbers separated by commas!</source>
         <translation>Mehrere Artikelnummern durch Kommas getrennt!</translation>
     </message>
@@ -8064,6 +8064,11 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     </message>
     <message>
         <location line="+25"/>
+        <source>Update orders tree</source>
+        <translation>Bestellungen aktualisieren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Copy Ordering Id</source>
         <translation>Bestellnummer kopieren</translation>
     </message>
@@ -8071,6 +8076,11 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <location line="+4"/>
         <source>Repair Customer data</source>
         <translation>Kundendaten reparieren</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Remove order from list</source>
+        <translation>Auftrag entfernen</translation>
     </message>
     <message>
         <location line="+8"/>
@@ -8106,6 +8116,16 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <location line="+10"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <source>&lt;p&gt;This action is not reversible.&lt;/p&gt;&lt;b&gt;Do you really want that?&lt;/b&gt;</source>
+        <translation>&lt;p&gt;Diese Aktion ist nicht rückgängig zu machen.&lt;/p&gt;&lt;b&gt;Wollen Sie das wirklich?&lt;/b&gt;</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hide order</source>
+        <translation>Bestellung ausblenden</translation>
     </message>
 </context>
 <context>

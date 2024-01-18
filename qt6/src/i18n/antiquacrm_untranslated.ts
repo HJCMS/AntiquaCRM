@@ -3511,12 +3511,12 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksSelectFilter</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+19"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksselectfilter.cpp" line="+15"/>
         <source>Title and Keyword</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+8"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3526,7 +3526,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+5"/>
         <source>Title and Authors</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3536,12 +3536,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="-4"/>
         <source>by title with keywords.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+8"/>
         <source>Multiple Article numbers separated by commas!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8039,12 +8039,22 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     </message>
     <message>
         <location line="+25"/>
+        <source>Update orders tree</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Copy Ordering Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+4"/>
         <source>Repair Customer data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Remove order from list</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8080,6 +8090,16 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <message>
         <location line="+10"/>
         <source>Canceled</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+80"/>
+        <source>&lt;p&gt;This action is not reversible.&lt;/p&gt;&lt;b&gt;Do you really want that?&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Hide order</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

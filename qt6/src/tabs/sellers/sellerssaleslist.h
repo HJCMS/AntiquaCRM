@@ -96,6 +96,11 @@ private Q_SLOTS:
   void editProviderData();
 
   /**
+   * @brief Aktuelle eintrag ausblenden!
+   */
+  void hideSelctedOrder();
+
+  /**
    * @brief Bestellnumber in das Clipboard kopieren
    */
   void copyProviderId();

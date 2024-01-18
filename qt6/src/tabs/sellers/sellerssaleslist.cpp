@@ -48,6 +48,10 @@ void SellersSalesList::contextMenuEvent(QContextMenuEvent *event) {
   p_pair.second = _id;
 
   QMenu *m = new QMenu("Actions", this);
+  QAction *ac_update = m->addAction(AntiquaCRM::antiquaIcon("view-refresh"),
+                                    tr("Update orders tree"));
+  connect(ac_update, SIGNAL(triggered()), SLOT(loadUpdate()));
+
   QAction *ac_copy = m->addAction(AntiquaCRM::antiquaIcon("edit-paste"),
                                   tr("Copy Ordering Id"));
   connect(ac_copy, SIGNAL(triggered()), SLOT(copyProviderId()));
@@ -55,6 +59,10 @@ void SellersSalesList::contextMenuEvent(QContextMenuEvent *event) {
   QAction *ac_edit = m->addAction(AntiquaCRM::antiquaIcon("document-edit"),
                                   tr("Repair Customer data"));
   connect(ac_edit, SIGNAL(triggered()), SLOT(editProviderData()));
+
+  QAction *ac_hide = m->addAction(AntiquaCRM::antiquaIcon("dialog-cancel"),
+                                  tr("Remove order from list"));
+  connect(ac_hide, SIGNAL(triggered()), SLOT(hideSelctedOrder()));
 
   m->exec(event->globalPos());
   m->deleteLater();
@@ -171,7 +179,7 @@ void SellersSalesList::updateOrderStatus(QTreeWidgetItem *item,
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::antiquaIcon("action-add"));
+    item->setIcon(1, AntiquaCRM::antiquaIcon("package-delivered"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }
@@ -181,7 +189,7 @@ void SellersSalesList::updateOrderStatus(QTreeWidgetItem *item,
     if (modified != true || !tip.contains(mTip))
       item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::antiquaIcon("action-cancel"));
+    item->setIcon(1, AntiquaCRM::antiquaIcon("dialog-cancel"));
     item->setData(1, Qt::UserRole, true); // setModified
     return;
   }
@@ -253,6 +261,28 @@ void SellersSalesList::editProviderData() {
   d->deleteLater();
 }
 
+void SellersSalesList::hideSelctedOrder() {
+  if (p_pair.second.length() < 3 || p_pair.first.length() < 3)
+    return;
+
+  const QString _ask = tr("<p>This action is not reversible.</p>"
+                          "<b>Do you really want that?</b>");
+  if (QMessageBox::question(this, tr("Hide order"), _ask) == QMessageBox::No)
+    return;
+
+  QString _sql("UPDATE provider_orders SET pr_hide=true WHERE ");
+  _sql.append("pr_name ILIKE '" + p_pair.first);
+  _sql.append("' AND pr_order='" + p_pair.second);
+  _sql.append("';");
+
+  AntiquaCRM::ASqlCore pgsql(this);
+  pgsql.query(_sql);
+  if (pgsql.lastError().isEmpty()) {
+    updateItemStatus(p_pair.first, p_pair.second,
+                     AntiquaCRM::OrderStatus::CANCELED);
+  }
+}
+
 void SellersSalesList::copyProviderId() {
   if (p_pair.second.length() < 3)
     return;
@@ -269,15 +299,18 @@ void SellersSalesList::loadUpdate() {
   }
 
   QString table("query_provider_orders");
-  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+  AntiquaCRM::ASqlCore pgsql(this);
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(table);
-  QSqlQuery q = m_sql->query(sql);
+  QSqlQuery q = pgsql.query(sql);
   int count = 0;
   if (q.size() > 0) {
     while (q.next()) {
+      QString id = q.value("order_number").toString();
+      if (q.value("pr_hide").toBool())
+        continue;
+
       QString provider = q.value("order_provider").toString();
       addProvider(provider);
-      QString id = q.value("order_number").toString();
       AntiquaCRM::OrderStatus status =
           static_cast<AntiquaCRM::OrderStatus>(q.value("order_status").toInt());
       count++;
@@ -295,7 +328,7 @@ void SellersSalesList::loadUpdate() {
       data.status = status;
       addOrder(provider, data);
     }
-  } else if (!m_sql->lastError().isEmpty()) {
+  } else if (!pgsql.lastError().isEmpty()) {
     return;
   }
 
