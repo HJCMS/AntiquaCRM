@@ -402,7 +402,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
+        <source>%1 - Result restricted to max &apos;%2&apos; Rows.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
         <translation type="unfinished"></translation>
     </message>

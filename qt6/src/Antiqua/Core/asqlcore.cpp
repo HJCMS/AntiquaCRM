@@ -120,6 +120,10 @@ bool ASqlCore::status() {
   return (query(_select).size() > 0);
 }
 
+qint64 ASqlCore::getQueryLimit() {
+  return config->value("database/SqlQueryLimit", 900).toInt();
+}
+
 const QString ASqlCore::identifier() {
   QString _name("AntiquaCRM_v");
   _name.append(ANTIQUACRM_VERSION);

@@ -53,6 +53,11 @@ public:
   explicit ASqlCore(QObject *parent = nullptr);
 
   /**
+   * @brief Responses the max database query limit for tables.
+   */
+  qint64 getQueryLimit();
+
+  /**
    * @brief Connection ApplicationName
    *
    * This Idientifier must uniq!

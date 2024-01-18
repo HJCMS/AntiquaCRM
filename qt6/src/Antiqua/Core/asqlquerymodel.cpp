@@ -110,16 +110,20 @@ QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
 }
 
 const QString ASqlQueryModel::queryResultInfo() {
-  QString time = QTime::currentTime().toString("HH:mm:ss");
+  QString _time = QTime::currentTime().toString("HH:mm:ss");
+  qint64 _limit = m_sql->getQueryLimit();
   qint64 _rows = query().size();
-  QString info;
-  if (_rows > 0) {
-    info.append(tr("%1 - Query finished with '%2' Rows.")
-                    .arg(time, QString::number(_rows)));
+  QString _info;
+  if (_rows >= _limit) {
+    _info.append(tr("%1 - Result restricted to max '%2' Rows.")
+                     .arg(_time, QString::number(_rows)));
+  } else if (_rows > 0) {
+    _info.append(tr("%1 - Query finished with '%2' Rows.")
+                     .arg(_time, QString::number(_rows)));
   } else {
-    info.append(tr("%1 - Query without result!").arg(time));
+    _info.append(tr("%1 - Query without result!").arg(_time));
   }
-  return info;
+  return _info;
 }
 
 }; // namespace AntiquaCRM

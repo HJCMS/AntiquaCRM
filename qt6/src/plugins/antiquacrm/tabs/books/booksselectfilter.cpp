@@ -12,13 +12,13 @@ BooksSelectFilter::BooksSelectFilter(QWidget *parent)
 void BooksSelectFilter::createItemData() {
   int _i = 0;
   const QString _prefix(tr("Searches books") + " ");
-  insertItem(_i, defaultIcon(), tr("Title and Authors"),
-             AntiquaCRM::SearchBarFilter::SBF_TITLES_AUTHORS);
-  setItemData(_i++, _prefix + tr("by title with authors."), Qt::ToolTipRole);
-
   insertItem(_i, defaultIcon(), tr("Title and Keyword"),
              AntiquaCRM::SearchBarFilter::SBF_TITLES_KEYWORDS);
   setItemData(_i++, _prefix + tr("by title with keywords."), Qt::ToolTipRole);
+
+  insertItem(_i, defaultIcon(), tr("Title and Authors"),
+             AntiquaCRM::SearchBarFilter::SBF_TITLES_AUTHORS);
+  setItemData(_i++, _prefix + tr("by title with authors."), Qt::ToolTipRole);
 
   insertItem(_i, defaultIcon(), tr("Article Id"),
              AntiquaCRM::SearchBarFilter::SBF_ARTICLE_IDS);

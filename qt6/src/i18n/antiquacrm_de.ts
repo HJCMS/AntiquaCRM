@@ -402,7 +402,12 @@
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+15"/>
+        <source>%1 - Result restricted to max &apos;%2&apos; Rows.</source>
+        <translation>%1 – Ergebnis auf maximal &apos;%2&apos; Zeilen beschränkt.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
         <translation>%1 - Abfrage mit &apos;%2&apos; Zeilen beendet.</translation>
     </message>
