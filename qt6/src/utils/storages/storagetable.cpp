@@ -23,7 +23,7 @@ StorageTable::StorageTable(QWidget *parent) : QTableView{parent} {
   m_model = new StorageTableModel("ref_storage_location", this);
   setModel(m_model);
 
-  connect(this, SIGNAL(clicked(const QModelIndex &)), this,
+  connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
           SLOT(itemClicked(const QModelIndex &)));
 }
 
@@ -44,33 +44,45 @@ void StorageTable::itemClicked(const QModelIndex &index) {
   }
 }
 
-void StorageTable::postQuery(const QString &query) {
-  QString _sql = query.trimmed();
-  if (_sql.isEmpty())
-    return;
+void StorageTable::findColumn(const QString &str) {
+  const QStringList _cols({"sl_storage", "sl_identifier"});
+  const QString _search = str.trimmed();
+  int _len = _search.length();
+  if (_len > 1) {
+    QStringList _query;
+    foreach (QString _c, _cols) {
+      QString _sql(_c + " ILIKE '");
+      if (_len > 2)
+        _sql.append("%");
 
-  if (!m_model->update(_sql)) {
-    emit queryMessages(tr("an error occurred"));
+      _sql.append(_search);
+      _sql.append("%'");
+      _query.append(_sql);
+    }
+
+    m_model->querySelect(m_model->statement(_query.join(" OR ")));
     return;
   }
-  emit queryMessages(tr("successful saved"));
   m_model->select();
 }
 
-void StorageTable::findColumn(const QString &str) {
-  if (str.length() > 3) {
-    QString _sql("sl_identifier ILIKE '%");
-    _sql.append(str.trimmed());
-    _sql.append("%'");
-    m_model->querySelect(m_model->statement(_sql));
-  } else {
-    m_model->select();
+bool StorageTable::startQuery(const QString &query) {
+  QString _sql = query.trimmed();
+  if (_sql.isEmpty())
+    return false;
+
+  if (!m_model->update(_sql)) {
+    emit queryMessages(tr("an error occurred"));
+    return false;
   }
+  emit queryMessages(tr("successful saved"));
+  return m_model->select();
 }
 
 bool StorageTable::initTable() {
   if (m_model->select()) {
     m_header->setStretchLastSection(true);
+    emit tableRecordChanged(m_model->record());
     return true;
   }
   return false;

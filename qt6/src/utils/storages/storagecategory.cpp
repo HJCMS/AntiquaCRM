@@ -5,25 +5,20 @@
 
 #include <QLayout>
 
-StorageCategory::StorageCategory(QWidget *parent) : QFrame{parent} {
-  QHBoxLayout *layout = new QHBoxLayout(this);
-  layout->setContentsMargins(0, 0, 0, 0);
+StorageCategory::StorageCategory(QWidget *parent)
+    : AntiquaCRM::AInputWidget{parent} {
 
-  m_box = new QComboBox(this);
+  m_box = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_box);
 
-  m_find = new QLineEdit(this);
+  m_find = new AntiquaCRM::ALineEdit(this);
   m_find->setMinimumWidth(50);
   m_find->setPlaceholderText(tr("Search Category"));
   m_find->setClearButtonEnabled(true);
   layout->addWidget(m_find);
 
-  setLayout(layout);
-
-  restore();
-
   connect(m_find, SIGNAL(textChanged(const QString &)), this,
-          SLOT(searchCategory(const QString &)));
+          SLOT(search(const QString &)));
 
   connect(m_find, SIGNAL(returnPressed()), this, SLOT(onKeyEnterPressed()));
 }
@@ -32,29 +27,81 @@ void StorageCategory::onKeyEnterPressed() {
   // Ignore Key Press Enter
 }
 
-void StorageCategory::searchCategory(const QString &search) {
-  if (search.length() < 3)
-    return;
+void StorageCategory::initData() {
+  m_box->clear();
+  m_box->setWithoutDisclosures();
+  m_find->clear();
+}
 
+void StorageCategory::setValue(const QVariant &value) {
+  int _cid = value.toInt();
+  if (_cid == 0) {
+    m_box->setCurrentIndex(0);
+    return;
+  }
+
+  const QString _scid = QString::number(_cid);
   for (int i = 0; i < m_box->count(); i++) {
-    QString name = m_box->itemData(i, Qt::DisplayRole).toString();
-    if (name.contains(search, Qt::CaseInsensitive)) {
+    if (m_box->itemData(i, Qt::UserRole).toString() == _scid) {
       m_box->setCurrentIndex(i);
       return;
     }
   }
 }
 
-void StorageCategory::restore() {
-  m_box->clear();
-  m_find->clear();
-  m_box->addItem(tr("Without disclosures"), "0");
+void StorageCategory::setFocus() { m_box->setFocus(); }
+
+void StorageCategory::reset() {
+  m_box->setCurrentIndex(0);
+  setWindowModified(false);
 }
 
-void StorageCategory::clear() {
-  m_find->clear();
-  m_box->setCurrentIndex(0);
+void StorageCategory::search(const QString &str, Qt::ItemDataRole role) {
+  if (str.length() < 3)
+    return;
+
+  for (int i = 0; i < m_box->count(); i++) {
+    QString name = m_box->itemData(i, role).toString();
+    if (name.contains(str, Qt::CaseInsensitive)) {
+      m_box->setCurrentIndex(i);
+      return;
+    }
+  }
 }
+
+void StorageCategory::setRestrictions(const QSqlField &field) {
+  setRequired((field.requiredStatus() == QSqlField::Required));
+}
+
+void StorageCategory::setInputToolTip(const QString &tip) {
+  m_box->setToolTip(tip);
+}
+
+void StorageCategory::setBuddyLabel(const QString &text) {
+  if (text.isEmpty())
+    return;
+
+  AntiquaCRM::ALabel *m_lb = addTitleLabel(text + ":");
+  m_lb->setBuddy(m_box);
+}
+
+bool StorageCategory::isValid() {
+  return (isRequired() && m_box->currentIndex() > 0);
+}
+
+const QMetaType StorageCategory::getType() const {
+  return QMetaType(QMetaType::QString);
+}
+
+const QVariant StorageCategory::getValue() {
+  return m_box->itemData(m_box->currentIndex(), Qt::UserRole).toString();
+}
+
+const QString StorageCategory::popUpHints() {
+  return tr("Missing storage category selection");
+}
+
+const QString StorageCategory::statusHints() { return popUpHints(); }
 
 void StorageCategory::addItems(const QMap<QString, QString> &map) {
   QStringList list;
@@ -73,36 +120,12 @@ void StorageCategory::addItems(const QMap<QString, QString> &map) {
   m_find->setCompleter(m_completer);
 }
 
-void StorageCategory::setIndex(int index) { m_box->setCurrentIndex(index); }
-
-int StorageCategory::getIndex() { return m_box->currentIndex(); }
-
-const QString StorageCategory::getTitle() {
-  if (m_box->currentIndex() > 0)
-    return m_box->currentText().trimmed();
-
-  return QString();
+const QPair<QString, QString> StorageCategory::getItem(qint64 cid) {
+  QPair<QString, QString> _p;
+  int _cid = (cid > 0) ? cid : m_box->currentIndex();
+  _p.first = m_box->itemData(_cid, Qt::DisplayRole).toString();
+  _p.second = m_box->itemData(_cid, Qt::UserRole).toString();
+  return _p;
 }
 
-void StorageCategory::setValue(qint64 cid) {
-  if (cid == 0) {
-    m_box->setCurrentIndex(0);
-    return;
-  }
-
-  QString searchId = QString::number(cid);
-  for (int i = 0; i < m_box->count(); i++) {
-    QString id = m_box->itemData(i, Qt::UserRole).toString();
-    if (id == searchId) {
-      m_box->setCurrentIndex(i);
-      return;
-    }
-  }
-}
-
-const QString StorageCategory::getValue(qint64 cid) {
-  int index = (cid > 0) ? cid : m_box->currentIndex();
-  return m_box->itemData(index, Qt::UserRole).toString();
-}
-
-int StorageCategory::count() { return m_box->count(); }
+int StorageCategory::itemCount() { return m_box->count(); }

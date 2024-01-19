@@ -9,40 +9,42 @@
 #ifndef ANTIQUACRM_UTILS_STORAGECATEGORY_H
 #define ANTIQUACRM_UTILS_STORAGECATEGORY_H
 
-#include <QComboBox>
+#include <AntiquaWidgets>
 #include <QCompleter>
-#include <QFrame>
-#include <QLineEdit>
 #include <QMap>
-#include <QObject>
-#include <QVariant>
 #include <QWidget>
 
-class StorageCategory final : public QFrame {
+class StorageCategory final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
-  QComboBox *m_box;
-  QLineEdit *m_find;
+  AntiquaCRM::AComboBox *m_box;
+  AntiquaCRM::ALineEdit *m_find;
   QCompleter *m_completer;
 
 private Q_SLOTS:
   void onKeyEnterPressed();
 
 public Q_SLOTS:
-  void searchCategory(const QString &);
-  void restore();
-  void clear();
+  void initData() override;
+  void setValue(const QVariant &) override;
+  void setFocus() override;
+  void reset() override;
+  void search(const QString &str, Qt::ItemDataRole role = Qt::DisplayRole);
 
 public:
   explicit StorageCategory(QWidget *parent = nullptr);
+  void setRestrictions(const QSqlField &) override;
+  void setInputToolTip(const QString &) override;
+  void setBuddyLabel(const QString &) override;
+  bool isValid() override;
+  const QMetaType getType() const override;
+  const QVariant getValue() override;
+  const QString popUpHints() override;
+  const QString statusHints() override;
   void addItems(const QMap<QString, QString> &map);
-  void setIndex(int index = 0);
-  int getIndex();
-  const QString getTitle();
-  void setValue(qint64 cid);
-  const QString getValue(qint64 cid = 0);
-  int count();
+  const QPair<QString, QString> getItem(qint64 cid = 0);
+  int itemCount();
 };
 
 #endif // ANTIQUACRM_UTILS_STORAGECATEGORY_H

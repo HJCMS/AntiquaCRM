@@ -11,6 +11,7 @@
 
 #include <AntiquaWidgets>
 #include <QModelIndex>
+#include <QSqlRecord>
 #include <QTableView>
 #include <QWidget>
 
@@ -31,13 +32,14 @@ private Q_SLOTS:
 Q_SIGNALS:
   void queryMessages(const QString &);
   void itemChanged(const StorageItemData &);
+  void tableRecordChanged(const QSqlRecord &);
 
 public Q_SLOTS:
-  void postQuery(const QString &query);
   void findColumn(const QString &);
 
 public:
   explicit StorageTable(QWidget *parent = nullptr);
+  bool startQuery(const QString &query);
   bool initTable();
 };
 

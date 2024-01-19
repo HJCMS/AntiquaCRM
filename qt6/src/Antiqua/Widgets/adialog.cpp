@@ -38,6 +38,17 @@ ADialog::ADialog(QWidget *parent) : QDialog{parent} {
   setLayout(mLayout);
 }
 
+bool ADialog::eventFilter(QObject *obj, QEvent *event) {
+  if (event->type() == QEvent::ModifiedChange) {
+    QWidget *m_sw = qobject_cast<QWidget *>(obj);
+    if (m_sw != nullptr) {
+      setWindowModified(m_sw->isWindowModified());
+      return true;
+    }
+  }
+  return QDialog::eventFilter(obj, event);
+}
+
 void ADialog::keyPressEvent(QKeyEvent *event) {
   if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
     return;

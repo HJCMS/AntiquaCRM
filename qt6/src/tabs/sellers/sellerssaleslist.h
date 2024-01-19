@@ -32,7 +32,7 @@ private:
   /**
    * @brief OrderId für Kontextmenüs
    */
-  QPair<QString, QString> p_pair;
+  mutable QPair<QString, QString> p_pair;
 
   /**
    * @brief Dienstleister Kontexteinträge

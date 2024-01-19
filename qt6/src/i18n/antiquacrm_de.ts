@@ -244,7 +244,7 @@
         <translation>Aktuelle Änderungen übernehmen</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+47"/>
         <source>You have unsaved changes!</source>
         <translation>Nicht gespeicherte Änderungen!</translation>
     </message>
@@ -9077,35 +9077,35 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StorageCategory</name>
     <message>
-        <location filename="../utils/storages/storagecategory.cpp" line="+17"/>
+        <location filename="../utils/storages/storagecategory.cpp" line="+16"/>
         <source>Search Category</source>
         <translation>Suche Kategorie</translation>
     </message>
     <message>
-        <location line="+34"/>
-        <source>Without disclosures</source>
-        <translation>Ohne Angaben</translation>
+        <location line="+85"/>
+        <source>Missing storage category selection</source>
+        <translation>Lagerkategorie nicht ausgewählt</translation>
     </message>
 </context>
 <context>
     <name>StorageEditorWidget</name>
     <message>
-        <location filename="../utils/storages/storageeditorwidget.cpp" line="+24"/>
+        <location filename="../utils/storages/storageeditorwidget.cpp" line="+27"/>
         <source>Empty data fields not accepted and reject this operation.</source>
         <translation>Leere Datenfelder werden nicht akzeptiert und lehne diesen Vorgang ab.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>Storage ID</source>
         <translation>Lager-Id</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+5"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Identifier</source>
         <translation>Kennung</translation>
     </message>
@@ -9121,9 +9121,22 @@ Bild – Artikel-ID: %2</translation>
     </message>
 </context>
 <context>
+    <name>StorageSearchBar</name>
+    <message>
+        <location filename="../utils/storages/storagesearchbar.cpp" line="+21"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Search storage by keyword or name.</source>
+        <translation>Durchsuche Lagerort nach Schlüsselwort oder Name.</translation>
+    </message>
+</context>
+<context>
     <name>StorageTable</name>
     <message>
-        <location filename="../utils/storages/storagetable.cpp" line="+53"/>
+        <location filename="../utils/storages/storagetable.cpp" line="+75"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
@@ -9184,27 +9197,22 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StoragesDialog</name>
     <message>
-        <location filename="../utils/storages/storagesdialog.cpp" line="+19"/>
-        <source>New Entry</source>
-        <translation>Neuer Eintrag</translation>
+        <location filename="../utils/storages/storagesdialog.cpp" line="+11"/>
+        <source>Storage editor</source>
+        <translation>Lagereditor</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>insert a new storage location</source>
-        <translation>Einen neuen Lagerort einfügen</translation>
+        <location line="+13"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
     </message>
     <message>
-        <location line="+6"/>
-        <source>Search</source>
-        <translation>Suche</translation>
+        <location line="+2"/>
+        <source>Create a new storage entry</source>
+        <translation>Erstelle neuen Lagerort</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>search in table</source>
-        <translation>Suche in Tabelle</translation>
-    </message>
-    <message>
-        <location line="+68"/>
+        <location line="+25"/>
         <source>invalid input</source>
         <translation>Ungültige Eingabe</translation>
     </message>

@@ -33,6 +33,19 @@ class ANTIQUACRM_LIBRARY ADialog : public QDialog {
 
 protected:
   /**
+   * @brief Register signals, editor reports unsaved records!
+   *
+   * This event filter search for isWindowModified in AntiquaCRM::ADialog
+   * classes and have installed manual in subclass from this.
+   *
+   * @code
+   * m_widget = new QWidget(this);
+   * m_widget->installEventFilter(this);
+   * @endcode
+   */
+  virtual bool eventFilter(QObject *, QEvent *) override final;
+
+  /**
    * @brief Layout for sub classing
    *
    * Default vertical layout for sub classes.

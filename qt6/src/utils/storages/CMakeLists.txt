@@ -12,32 +12,19 @@ ADD_SUBDIRECTORY(xml)
 
 QT6_ADD_RESOURCES (_library_RC_FILES categories.qrc)
 
-SET (_library_SOURCES
-  storagesdialog.cpp
-  storagetable.cpp
-  storagetablemodel.cpp
-  storageeditorwidget.cpp
-  storagecategory.cpp
-)
-
-SET (_library_HEADERS
-  storagesdialog.h
-  storagetable.h
-  storagetablemodel.h
-  storageeditorwidget.h
-  storagecategory.h
-  storageutil.h
-)
-
 INCLUDE_DIRECTORIES (
   ${ANTIQUACRM_INCLUDE_DIRS}
   ${CMAKE_CURRENT_BINARY_DIR}
 )
 
 ADD_LIBRARY (${_library} STATIC
-  ${_library_HEADERS}
-  ${_library_SOURCES}
-  ${_library_RC_FILES}
+  ${_library_RC_FILES} storageutil.h
+  storagesdialog.h storagesdialog.cpp
+  storagetable.h storagetable.cpp
+  storagetablemodel.h storagetablemodel.cpp
+  storageeditorwidget.h storageeditorwidget.cpp
+  storagecategory.h storagecategory.cpp
+  storagesearchbar.h storagesearchbar.cpp
 )
 
 SET_TARGET_PROPERTIES (${_library} PROPERTIES

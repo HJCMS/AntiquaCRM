@@ -3,99 +3,57 @@
 
 #include "storagesdialog.h"
 #include "storageeditorwidget.h"
+#include "storagesearchbar.h"
 #include "storagetable.h"
 
-StoragesDialog::StoragesDialog(QWidget *parent) : QDialog{parent} {
+StoragesDialog::StoragesDialog(QWidget *parent) : AntiquaCRM::ADialog{parent} {
   setObjectName("storage_location");
+  setWindowTitle(tr("Storage editor") + "[*]");
   setMinimumSize(700, 400);
-  setContentsMargins(0, 0, 0, 0);
-  setSizeGripEnabled(true);
-
-  QVBoxLayout *layout = new QVBoxLayout(this);
-
-  m_toolBar = new QToolBar(this);
-  m_toolBar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
-  ac_add = m_toolBar->addAction(AntiquaCRM::qrcIcon("database-add"),
-                                tr("New Entry"));
-  ac_add->setStatusTip(tr("insert a new storage location"));
-  m_toolBar->addSeparator();
-  m_search = new QLineEdit(this);
-  m_search->setObjectName("system-earch");
-  m_toolBar->addWidget(m_search);
-  ac_search = m_toolBar->addAction(AntiquaCRM::antiquaIcon("system-search"),
-                                   tr("Search"));
-  ac_search->setStatusTip(tr("search in table"));
-  m_toolBar->addSeparator();
-  layout->addWidget(m_toolBar);
 
   m_table = new StorageTable(this);
   layout->addWidget(m_table);
 
   m_editorWidget = new StorageEditorWidget(this);
+  m_editorWidget->installEventFilter(this);
   layout->addWidget(m_editorWidget);
 
-  m_btnBox = new QDialogButtonBox(this);
-  m_btnBox->setStandardButtons(QDialogButtonBox::Save |
-                               QDialogButtonBox::Close);
+  m_searchBar = new StorageSearchBar(this);
+  layout->addWidget(m_searchBar);
 
-  QPushButton *btn_save = m_btnBox->button(QDialogButtonBox::Save);
-  btn_save->setIcon(AntiquaCRM::qrcIcon("action-save"));
-
-  QPushButton *btn_close = m_btnBox->button(QDialogButtonBox::Close);
-  btn_close->setIcon(AntiquaCRM::qrcIcon("action-quit"));
-
-  layout->addWidget(m_btnBox);
-
-  m_statusBar = new QStatusBar(this);
-  m_statusBar->setSizeGripEnabled(false);
-  layout->addWidget(m_statusBar);
-
-  setLayout(layout);
+  btn_create = new QPushButton(tr("Create"), m_buttonsBar);
+  btn_create->setIcon(AntiquaCRM::antiquaIcon("action-add"));
+  btn_create->setToolTip(tr("Create a new storage entry"));
+  btn_create->setStatusTip(btn_create->toolTip());
+  m_buttonsBar->addButton(btn_create, QDialogButtonBox::ActionRole);
+  btn_apply->setEnabled(true);
 
   connect(m_table, SIGNAL(itemChanged(const StorageItemData &)), m_editorWidget,
           SLOT(setValue(const StorageItemData &)));
+
   connect(m_table, SIGNAL(queryMessages(const QString &)), m_statusBar,
           SLOT(showMessage(const QString &)));
-  connect(ac_add, SIGNAL(triggered()), m_editorWidget, SLOT(clear()));
-  connect(ac_search, SIGNAL(triggered()), this, SLOT(searchClicked()));
-  connect(m_search, SIGNAL(textChanged(const QString &)), m_table,
+
+  connect(m_table, SIGNAL(tableRecordChanged(const QSqlRecord &)),
+          m_editorWidget, SLOT(setRestrictions(const QSqlRecord &)));
+
+  connect(m_searchBar, SIGNAL(sendFindStorage(const QString &)), m_table,
           SLOT(findColumn(const QString &)));
-  connect(m_btnBox, SIGNAL(accepted()), this, SLOT(saveClicked()));
-  connect(m_btnBox, SIGNAL(rejected()), this, SLOT(accept()));
+
+  connect(btn_create, SIGNAL(clicked()), m_editorWidget, SLOT(clear()));
+  connect(btn_apply, SIGNAL(clicked()), SLOT(save()));
+  connect(m_buttonsBar, SIGNAL(rejected()), SLOT(accept()));
 }
 
-void StoragesDialog::keyPressEvent(QKeyEvent *e) {
-  if (e->key() == Qt::Key_Return || e->key() == Qt::Key_Enter) {
-    return;
-  }
-  QDialog::keyPressEvent(e);
-}
-
-bool StoragesDialog::event(QEvent *e) {
-  if (e->type() == QEvent::StatusTip) {
-    QStatusTipEvent *t = reinterpret_cast<QStatusTipEvent *>(e);
-    if (t->tip().isEmpty())
-      return false;
-
-    m_statusBar->showMessage(t->tip(), 1000);
-    return true;
-  }
-  return QDialog::event(e);
-}
-
-void StoragesDialog::searchClicked() {
-  QString str = m_search->text().trimmed();
-  if (!str.isEmpty())
-    m_table->findColumn(str);
-}
-
-void StoragesDialog::saveClicked() {
-  QString sql = m_editorWidget->sqlQuery();
-  if (sql.isEmpty()) {
+void StoragesDialog::save() {
+  QString _sql = m_editorWidget->sqlQuery();
+  if (_sql.isEmpty()) {
     m_statusBar->showMessage(tr("invalid input"), 1000);
     return;
   }
-  m_table->postQuery(sql);
+
+  if (m_table->startQuery(_sql))
+    setWindowModified(false);
 }
 
 int StoragesDialog::exec() {

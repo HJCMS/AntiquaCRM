@@ -9,44 +9,47 @@
 #ifndef ANTIQUACRM_UTILS_STORAGEEDITORWIDGET_H
 #define ANTIQUACRM_UTILS_STORAGEEDITORWIDGET_H
 
+#include <AntiquaWidgets>
 #include <QComboBox>
 #include <QGroupBox>
 #include <QLabel>
 #include <QLineEdit>
 #include <QObject>
 #include <QRegularExpression>
-#include <QSpinBox>
+#include <QSqlRecord>
 #include <QWidget>
 
 #include "storageutil.h"
 
 class StorageCategory;
 
-class StorageEditorWidget : public QWidget {
+class StorageEditorWidget final : public QWidget {
   Q_OBJECT
 
 private:
   const QRegularExpression pattern;
-  QSpinBox *sl_id;
-  QLineEdit *sl_storage;
-  QLineEdit *sl_identifier;
-  QLineEdit *sl_location;
+  AntiquaCRM::NumEdit *sl_id;
+  AntiquaCRM::TextLine *sl_storage;
+  AntiquaCRM::TextLine *sl_identifier;
+  AntiquaCRM::TextLine *sl_location;
 
   QGroupBox *m_providers;
   StorageCategory *m_abebooks;
   StorageCategory *m_booklooker;
 
   QLabel *subTitle(const QString &) const;
-  bool check(QLineEdit *);
+  bool check(AntiquaCRM::TextLine *);
 
   bool setAbeBooks();
   bool setBooklooker();
-
-  const QString getCategoryId(const QString &name);
   void setCategory(const QString &name, qint64 cid);
+
+private Q_SLOTS:
+  void dataModified();
 
 public Q_SLOTS:
   void setValue(const StorageItemData &items);
+  void setRestrictions(const QSqlRecord &record);
   void clear();
 
 public:
