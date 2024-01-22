@@ -5,6 +5,7 @@
 #include "monthbarset.h"
 #include "statsbarseries.h"
 
+#include <QChar>
 #include <QFontMetricsF>
 #include <QSqlQuery>
 
@@ -47,6 +48,12 @@ MonthBarSet *SalesInMonth::createBarset(int year, int type) {
   return bs;
 }
 
+void SalesInMonth::setMiniViewWidth(qreal i) {
+  qreal _b = 0.5; // border line
+  qreal _w = QFontMetricsF(font()).boundingRect("X000X").width();
+  m_chart->setMinimumWidth((_w + _b) * (i * 12));
+}
+
 bool SalesInMonth::initMaps() {
   const QString _sql = AntiquaCRM::ASqlFiles::queryStatement(
       "statistics_from_until_delivery_year");
@@ -70,6 +77,7 @@ bool SalesInMonth::initMaps() {
     p_soldMap.insert(_y, _sel);
   }
   _q.clear();
+  setMiniViewWidth(p_voluMap.size());
   return true;
 }
 

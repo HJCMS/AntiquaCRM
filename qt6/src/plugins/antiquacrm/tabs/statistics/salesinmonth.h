@@ -30,6 +30,7 @@ private:
   QBarCategoryAxis *m_label;
   VerticalBarSeries *m_numsBar;
   VerticalBarSeries *m_paidBar;
+  void setMiniViewWidth(qreal);
   bool initMaps();
   MonthBarSet *createBarset(int year, int type = 0);
   bool initialChartView(int year = -1) override;

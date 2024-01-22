@@ -195,7 +195,6 @@ void StorageEditorWidget::setRestrictions(const QSqlRecord &record) {
 }
 
 void StorageEditorWidget::clear() {
-  qDebug() << Q_FUNC_INFO << __LINE__;
   sl_id->setValue(0);
   sl_storage->reset();
   sl_identifier->reset();

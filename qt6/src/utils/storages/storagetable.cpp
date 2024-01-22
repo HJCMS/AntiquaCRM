@@ -91,7 +91,9 @@ bool StorageTable::askBeforeDelete() {
   QString _title = tr("Storage location deletion");
   QString _body = tr("<b>You really want to delete this Entry?</b>"
                      "<p>This operation can not be reverted.</p>"
-                     "Click no for cancel this action.");
+                     "<b>Please notice:</b> <i>A delete will fail when this "
+                     "entry is used in one of the inventory tables.</i>"
+                     "<p>If not sure, click no for cancel this action.</p>");
   QMessageBox::StandardButton _ret = QMessageBox::question(this, _title, _body);
   return (_ret == QMessageBox::Yes);
 }

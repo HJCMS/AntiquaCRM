@@ -9174,11 +9174,11 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>&lt;b&gt;You really want to delete this Entry?&lt;/b&gt;&lt;p&gt;This operation can not be reverted.&lt;/p&gt;Click no for cancel this action.</source>
-        <translation>&lt;b&gt;Möchten Sie diesen Eintrag wirklich löschen?&lt;/b&gt;&lt;p&gt;Dieser Vorgang kann nicht rückgängig gemacht werden.&lt;/p&gt;Klicken Sie auf „Nein“, um diese Aktion abzubrechen.</translation>
+        <source>&lt;b&gt;You really want to delete this Entry?&lt;/b&gt;&lt;p&gt;This operation can not be reverted.&lt;/p&gt;&lt;b&gt;Please notice:&lt;/b&gt; &lt;i&gt;A delete will fail when this entry is used in one of the inventory tables.&lt;/i&gt;&lt;p&gt;If not sure, click no for cancel this action.&lt;/p&gt;</source>
+        <translation>&lt;b&gt;Sie möchten diesen Eintrag wirklich löschen?&lt;/b&gt;&lt;p&gt;Dieser Vorgang kann nicht rückgängig gemacht werden.&lt;/p&gt;&lt;b&gt;Beachten Sie:&lt;/b&gt;&lt;i&gt; Ein Löschvorgang schlägt fehl, wenn dieser Eintrag in einer der Inventartabellen verwendet wird.&lt;/i&gt;&lt;p&gt;Wenn Sie nicht sicher sind, klicken Sie auf „Nein“, um diese Aktion abzubrechen.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>an error occurred</source>
         <translation>ein Fehler ist aufgetreten</translation>
     </message>

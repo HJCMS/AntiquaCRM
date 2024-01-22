@@ -9135,11 +9135,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+1"/>
-        <source>&lt;b&gt;You really want to delete this Entry?&lt;/b&gt;&lt;p&gt;This operation can not be reverted.&lt;/p&gt;Click no for cancel this action.</source>
+        <source>&lt;b&gt;You really want to delete this Entry?&lt;/b&gt;&lt;p&gt;This operation can not be reverted.&lt;/p&gt;&lt;b&gt;Please notice:&lt;/b&gt; &lt;i&gt;A delete will fail when this entry is used in one of the inventory tables.&lt;/i&gt;&lt;p&gt;If not sure, click no for cancel this action.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
