@@ -40,7 +40,9 @@ StoragesDialog::StoragesDialog(QWidget *parent) : AntiquaCRM::ADialog{parent} {
   connect(m_searchBar, SIGNAL(sendFindStorage(const QString &)), m_table,
           SLOT(findColumn(const QString &)));
 
+  connect(m_table, SIGNAL(sendCreateEntry()), m_editorWidget, SLOT(clear()));
   connect(btn_create, SIGNAL(clicked()), m_editorWidget, SLOT(clear()));
+
   connect(btn_apply, SIGNAL(clicked()), SLOT(save()));
   connect(m_buttonsBar, SIGNAL(rejected()), SLOT(accept()));
 }
@@ -52,7 +54,7 @@ void StoragesDialog::save() {
     return;
   }
 
-  if (m_table->startQuery(_sql))
+  if (m_table->setQuery(_sql))
     setWindowModified(false);
 }
 

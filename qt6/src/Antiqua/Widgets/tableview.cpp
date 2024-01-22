@@ -3,6 +3,7 @@
 
 #include "tableview.h"
 #include "antiquaicon.h"
+#include "apopupmessage.h"
 #include "tableheader.h"
 
 #include <QDateTime>
@@ -71,6 +72,16 @@ void TableView::sqlModelError(const QString &table, const QString &message) {
   qWarning("SQL-Model-Error in Table:%s\n%s\n", // verbose
            qPrintable(table),                   // table
            qPrintable(message));
+}
+
+void TableView::sqlErrorPopUp(const QSqlError &error) {
+  AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+  d->setWindowTitle(tr("SQL Table query error"));
+  d->setText(error.driverText());
+  const QString _code = tr("Error code: %1\n").arg(error.nativeErrorCode());
+  d->setErrorMessage(_code, error.text());
+  d->exec();
+  d->deleteLater();
 }
 
 void TableView::setQueryLimit(int limit) {

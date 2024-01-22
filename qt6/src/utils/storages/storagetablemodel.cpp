@@ -4,8 +4,7 @@
 #include "storagetablemodel.h"
 
 StorageTableModel::StorageTableModel(const QString &table, QObject *parent)
-    : AntiquaCRM::ASqlQueryModel{table, parent} {
-}
+    : AntiquaCRM::ASqlQueryModel{table, parent} {}
 
 const QMap<int, QString> StorageTableModel::headerList() const {
   int _c = 0;

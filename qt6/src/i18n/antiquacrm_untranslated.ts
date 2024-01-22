@@ -303,12 +303,17 @@
 <context>
     <name>AntiquaCRM::APopUpMessage</name>
     <message>
-        <location filename="../Antiqua/Widgets/apopupmessage.cpp" line="+20"/>
-        <source>Error</source>
+        <location filename="../Antiqua/Widgets/apopupmessage.cpp" line="+21"/>
+        <source>SQL-Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+3"/>
+        <source>Detailed message</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+16"/>
         <source>Warning</source>
         <translation type="unfinished"></translation>
     </message>
@@ -392,7 +397,7 @@
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+103"/>
+        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+106"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2293,13 +2298,24 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TableView</name>
     <message>
-        <location filename="../Antiqua/Widgets/tableview.cpp" line="+47"/>
+        <location filename="../Antiqua/Widgets/tableview.cpp" line="+48"/>
         <source>The query at %1 returned no result.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Change the search query or choose a different history query.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+29"/>
+        <source>SQL Table query error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Error code: %1
+</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9098,12 +9114,37 @@ Image - Article Id: %2</source>
 <context>
     <name>StorageTable</name>
     <message>
-        <location filename="../utils/storages/storagetable.cpp" line="+75"/>
+        <location filename="../utils/storages/storagetable.cpp" line="+47"/>
+        <source>Open entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Create entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Remove entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
+        <source>Storage location deletion</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>&lt;b&gt;You really want to delete this Entry?&lt;/b&gt;&lt;p&gt;This operation can not be reverted.&lt;/p&gt;Click no for cancel this action.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+64"/>
         <source>an error occurred</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>successful saved</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9111,7 +9152,7 @@ Image - Article Id: %2</source>
 <context>
     <name>StorageTableModel</name>
     <message>
-        <location filename="../utils/storages/storagetablemodel.cpp" line="+13"/>
+        <location filename="../utils/storages/storagetablemodel.cpp" line="+12"/>
         <source>ID</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9174,7 +9215,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+27"/>
         <source>invalid input</source>
         <translation type="unfinished"></translation>
     </message>

@@ -17,9 +17,15 @@ void APopUpMessage::setErrorMessage(const QString &error,
                                     const QString &details) {
   setIcon(QMessageBox::Critical);
   setTextFormat(Qt::PlainText);
-  setWindowTitle(tr("Error"));
+  if (windowTitle().isEmpty())
+    setWindowTitle(tr("SQL-Error"));
+
+  if (text().isEmpty())
+    setText(tr("Detailed message"));
+
   setDetailedText(details);
   setInformativeText(error);
+  setSizeGripEnabled(false);
 }
 
 void APopUpMessage::setWarnMessage(const QString &title, const QString &body) {
@@ -59,7 +65,7 @@ void APopUpMessage::setUnsavedMessage(const QString &body, bool ask) {
 
 int APopUpMessage::exec() {
   if (text().isEmpty() || windowTitle().isEmpty()) {
-    qWarning("use configuration functions before execute!");
+    qWarning("APopUpMessage use configuration functions before execute!");
     return QDialog::Rejected;
   }
 

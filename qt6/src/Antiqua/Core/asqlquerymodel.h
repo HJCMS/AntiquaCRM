@@ -69,6 +69,11 @@ Q_SIGNALS:
    */
   void sqlErrorMessage(const QString &table, const QString &message);
 
+  /**
+   * @brief This signal is emitted by ASqlCore::sendStatementError
+   */
+  void sendSqlError(const QSqlError &error);
+
 public:
   /**
    * @param table  - table name

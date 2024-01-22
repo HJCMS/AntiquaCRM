@@ -17,6 +17,9 @@ namespace AntiquaCRM {
 ASqlQueryModel::ASqlQueryModel(const QString &table, QObject *parent)
     : QSqlQueryModel{parent}, p_table(table) {
   m_sql = new AntiquaCRM::ASqlCore(this);
+
+  connect(m_sql, SIGNAL(sendStatementError(const QSqlError &)),
+          SIGNAL(sendSqlError(const QSqlError &)));
 }
 
 const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {

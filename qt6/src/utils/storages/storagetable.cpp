@@ -6,7 +6,7 @@
 
 #include <QMessageBox>
 
-StorageTable::StorageTable(QWidget *parent) : QTableView{parent} {
+StorageTable::StorageTable(QWidget *parent) : AntiquaCRM::TableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setDragEnabled(false);
@@ -23,11 +23,85 @@ StorageTable::StorageTable(QWidget *parent) : QTableView{parent} {
   m_model = new StorageTableModel("ref_storage_location", this);
   setModel(m_model);
 
+  // handle errors
+  connect(m_model, SIGNAL(sendSqlError(const QSqlError &)),
+          SLOT(sqlErrorPopUp(const QSqlError &)));
+
   connect(this, SIGNAL(doubleClicked(const QModelIndex &)), this,
-          SLOT(itemClicked(const QModelIndex &)));
+          SLOT(getSelectedItem(const QModelIndex &)));
 }
 
-void StorageTable::itemClicked(const QModelIndex &index) {
+qint64 StorageTable::getTableID(const QModelIndex &index, int column) {
+  QModelIndex id(index);
+  if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
+    return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
+  }
+  return -1;
+}
+
+void StorageTable::contextMenuEvent(QContextMenuEvent *event) {
+  QModelIndex index = indexAt(event->pos());
+  qint64 rows = m_model->rowCount();
+  AntiquaCRM::TableContextMenu *m_m =
+      new AntiquaCRM::TableContextMenu(index, rows, this);
+  m_m->addOpenAction(tr("Open entry"));
+  m_m->addCreateAction(tr("Create entry"));
+  m_m->addDeleteAction(tr("Remove entry"));
+  connect(m_m,
+          SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
+                            const QModelIndex &)),
+          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
+                                 const QModelIndex &)));
+
+  connect(m_m, SIGNAL(sendCreate()), SIGNAL(sendCreateEntry()));
+
+  m_m->exec(event->globalPos());
+  m_m->deleteLater();
+}
+
+void StorageTable::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
+                                     const QModelIndex &index) {
+  qint64 _sl_id = getTableID(index);
+  if (_sl_id < 0)
+    return;
+
+  switch (ac) {
+  case (AntiquaCRM::TableContextMenu::Actions::Open): {
+    getSelectedItem(index);
+  } break;
+
+  case (AntiquaCRM::TableContextMenu::Actions::Delete): {
+    QString _sql("DELETE FROM " + m_model->tableName() + " WHERE ");
+    _sql.append("sl_id=" + QString::number(_sl_id) + ";");
+    setQuery(_sql);
+  } break;
+
+  default:
+    return;
+  };
+}
+
+void StorageTable::createSocketOperation(const QModelIndex &) {}
+
+bool StorageTable::sqlModelQuery(const QString &query) {
+  return m_model->querySelect(query);
+}
+
+bool StorageTable::askBeforeDelete() {
+  QString _title = tr("Storage location deletion");
+  QString _body = tr("<b>You really want to delete this Entry?</b>"
+                     "<p>This operation can not be reverted.</p>"
+                     "Click no for cancel this action.");
+  QMessageBox::StandardButton _ret = QMessageBox::question(this, _title, _body);
+  return (_ret == QMessageBox::Yes);
+}
+
+void StorageTable::setSortByColumn(int column, Qt::SortOrder order) {
+  Q_UNUSED(column);
+  Q_UNUSED(order);
+}
+
+void StorageTable::getSelectedItem(const QModelIndex &index) {
   QModelIndex p = index.sibling(index.row(), 0);
   int sl_id = m_model->data(p).toInt();
   if (sl_id > 0) {
@@ -66,17 +140,29 @@ void StorageTable::findColumn(const QString &str) {
   m_model->select();
 }
 
-bool StorageTable::startQuery(const QString &query) {
+void StorageTable::setReloadView() { m_model->select(); }
+
+int StorageTable::rowCount() { return m_model->rowCount(); }
+
+bool StorageTable::setQuery(const QString &query) {
   QString _sql = query.trimmed();
   if (_sql.isEmpty())
     return false;
 
+  if (_sql.startsWith("DELETE") && !askBeforeDelete())
+    return false;
+
   if (!m_model->update(_sql)) {
     emit queryMessages(tr("an error occurred"));
+
     return false;
   }
   emit queryMessages(tr("successful saved"));
   return m_model->select();
+}
+
+const QString StorageTable::defaultWhereClause() {
+  return m_model->statement();
 }
 
 bool StorageTable::initTable() {

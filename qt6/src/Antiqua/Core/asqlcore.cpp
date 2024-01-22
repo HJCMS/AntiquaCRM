@@ -85,12 +85,12 @@ void ASqlCore::prepareSqlError(const QSqlError &error) {
     return;
 
   case QSqlError::StatementError:
-    qWarning("SqlError::Statement");
+    qWarning("ASqlCore::SqlError::Statement");
     emit sendStatementError(error);
     break;
 
   case QSqlError::ConnectionError:
-    qWarning("SqlError::Connection");
+    qWarning("ASqlCore::SqlError::Connection");
     emit sendConnectionError(error);
     break;
 
@@ -102,11 +102,11 @@ void ASqlCore::prepareSqlError(const QSqlError &error) {
 
 // Developement verbose
 #ifdef ANTIQUA_DEVELOPEMENT
-  qDebug() << Q_FUNC_INFO << "Type:" << error.type() << Qt::endl
+  qDebug() << Q_FUNC_INFO << Qt::endl
+           << "Type:" << error.type() << Qt::endl
            << "Database: " << error.databaseText() << Qt::endl
            << "Driver: " << error.driverText() << Qt::endl
-           << "Code: " << error.nativeErrorCode() << Qt::endl
-           << "Text: " << error.text();
+           << "Code: " << error.nativeErrorCode();
 #endif
 }
 

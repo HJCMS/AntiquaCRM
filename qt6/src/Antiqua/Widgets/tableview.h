@@ -93,6 +93,20 @@ protected Q_SLOTS:
   void sqlModelError(const QString &table, const QString &message);
 
   /**
+   * @brief Open a SQL Error PopUp Window
+   * @param error - sql error info object
+   *
+   * This slot is not handled by default, but you can register it with
+   * AntiquaCRM::ASqlQueryModel class. See example code below.
+   *
+   * @code
+   *   connect(m_model, SIGNAL(sendSqlError(const QSqlError &)),
+   *           SLOT(sqlErrorPopUp(const QSqlError &)));
+   * @endcode
+   */
+  void sqlErrorPopUp(const QSqlError &error);
+
+  /**
    * @brief create Table context menu actions
    */
   virtual void contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
