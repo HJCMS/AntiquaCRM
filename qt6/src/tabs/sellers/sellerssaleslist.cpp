@@ -60,9 +60,9 @@ void SellersSalesList::contextMenuEvent(QContextMenuEvent *event) {
                                   tr("Repair Customer data"));
   connect(ac_edit, SIGNAL(triggered()), SLOT(editProviderData()));
 
-  QAction *ac_hide = m->addAction(AntiquaCRM::antiquaIcon("dialog-cancel"),
-                                  tr("Remove order from list"));
-  connect(ac_hide, SIGNAL(triggered()), SLOT(hideSelctedOrder()));
+  QAction *ac_ignore = m->addAction(AntiquaCRM::antiquaIcon("dialog-cancel"),
+                                  tr("Order canceled by Client"));
+  connect(ac_ignore, SIGNAL(triggered()), SLOT(ignoreOrder()));
 
   m->exec(event->globalPos());
   m->deleteLater();
@@ -261,7 +261,7 @@ void SellersSalesList::editProviderData() {
   d->deleteLater();
 }
 
-void SellersSalesList::hideSelctedOrder() {
+void SellersSalesList::ignoreOrder() {
   if (p_pair.second.length() < 3 || p_pair.first.length() < 3)
     return;
 
@@ -270,7 +270,7 @@ void SellersSalesList::hideSelctedOrder() {
   if (QMessageBox::question(this, tr("Hide order"), _ask) == QMessageBox::No)
     return;
 
-  QString _sql("UPDATE provider_orders SET pr_hide=true WHERE ");
+  QString _sql("UPDATE provider_orders SET pr_ignore=true WHERE ");
   _sql.append("pr_name ILIKE '" + p_pair.first);
   _sql.append("' AND pr_order='" + p_pair.second);
   _sql.append("';");
@@ -306,13 +306,14 @@ void SellersSalesList::loadUpdate() {
   if (q.size() > 0) {
     while (q.next()) {
       QString id = q.value("order_number").toString();
-      if (q.value("pr_hide").toBool())
-        continue;
-
       QString provider = q.value("order_provider").toString();
       addProvider(provider);
-      AntiquaCRM::OrderStatus status =
-          static_cast<AntiquaCRM::OrderStatus>(q.value("order_status").toInt());
+
+      AntiquaCRM::OrderStatus status = AntiquaCRM::OrderStatus::CANCELED;
+      if (!q.value("pr_ignore").toBool())
+        status = static_cast<AntiquaCRM::OrderStatus>(
+            q.value("order_status").toInt());
+
       count++;
 
       if (exists(provider, id)) {

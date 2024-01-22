@@ -7961,7 +7961,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+15"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+16"/>
         <source>Compare sales from past years with current.</source>
         <translation>Vergleichen Sie die Umsätze vergangener Jahre mit den aktuellen.</translation>
     </message>
@@ -8096,8 +8096,8 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     </message>
     <message>
         <location line="+4"/>
-        <source>Remove order from list</source>
-        <translation>Auftrag entfernen</translation>
+        <source>Order canceled by Client</source>
+        <translation>Bestellung vom Kunden storniert</translation>
     </message>
     <message>
         <location line="+8"/>

@@ -7935,7 +7935,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+15"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+16"/>
         <source>Compare sales from past years with current.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8070,7 +8070,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     </message>
     <message>
         <location line="+4"/>
-        <source>Remove order from list</source>
+        <source>Order canceled by Client</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

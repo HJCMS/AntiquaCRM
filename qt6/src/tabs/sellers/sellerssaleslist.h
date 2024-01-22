@@ -98,7 +98,7 @@ private Q_SLOTS:
   /**
    * @brief Aktuelle eintrag ausblenden!
    */
-  void hideSelctedOrder();
+  void ignoreOrder();
 
   /**
    * @brief Bestellnumber in das Clipboard kopieren
