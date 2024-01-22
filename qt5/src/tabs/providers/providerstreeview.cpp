@@ -102,12 +102,12 @@ void ProvidersTreeView::contextMenuEvent(QContextMenuEvent *event) {
   p_pair.second = _id;
 
   QMenu *m = new QMenu("Actions", this);
-  QAction *ac_copy = m->addAction(QIcon("://icons/edit-paste.png"),
-                                  tr("Copy Ordering Id"));
+  QAction *ac_copy =
+      m->addAction(QIcon("://icons/edit-paste.png"), tr("Copy Ordering Id"));
   connect(ac_copy, SIGNAL(triggered()), SLOT(copyProviderId()));
 
-  QAction *ac_edit = m->addAction(QIcon("://icons/edit.png"),
-                                  tr("Repair Customer data"));
+  QAction *ac_edit =
+      m->addAction(QIcon("://icons/edit.png"), tr("Repair Customer data"));
   connect(ac_edit, SIGNAL(triggered()), SLOT(editProviderData()));
 
   m->exec(event->globalPos());
@@ -281,6 +281,9 @@ void ProvidersTreeView::loadUpdate() {
       QString id = q.value("order_number").toString();
       AntiquaCRM::OrderStatus status =
           static_cast<AntiquaCRM::OrderStatus>(q.value("order_status").toInt());
+      if (q.value("pr_ignore").toBool())
+        status = AntiquaCRM::OrderStatus::CANCELED;
+
       count++;
 
       if (exists(provider, id)) {
