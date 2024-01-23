@@ -57,6 +57,10 @@ MenuBar::MenuBar(QWidget *parent) : QMenuBar{parent} {
   QAction *ac_dpl = m_dialogMenu->addAction(tr("Book publisher"));
   ac_dpl->setIcon(_conf_icon);
   connect(ac_dpl, SIGNAL(triggered()), SLOT(openPublisherDialog()));
+  // MailTemplatesDialog
+  QAction *ac_mtpl = m_dialogMenu->addAction(tr("eMail Templates"));
+  ac_mtpl->setIcon(_conf_icon);
+  connect(ac_mtpl, SIGNAL(triggered()), SLOT(openMailTemplatesDialog()));
   // END::Dialogs
 
   // BEGIN::SystemConfig
@@ -113,6 +117,12 @@ void MenuBar::openStoragesDialog() {
 
 void MenuBar::openPublisherDialog() {
   PublisherDialog *d = new PublisherDialog(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void MenuBar::openMailTemplatesDialog() {
+  MailTemplatesDialog *d = new MailTemplatesDialog(this);
   d->exec();
   d->deleteLater();
 }

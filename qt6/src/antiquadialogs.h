@@ -49,4 +49,9 @@
 #include "utils/publishers/publisherdialog.h"
 #endif
 
+// MailTemplatesDialog
+#ifndef ANTIQUACRM_UTILS_MAILTPLDIALOG_H
+#include "utils/mailtpl/mailtemplatesdialog.h"
+#endif
+
 #endif // ANTIQUACRM_UTILS_DIALOGS_H

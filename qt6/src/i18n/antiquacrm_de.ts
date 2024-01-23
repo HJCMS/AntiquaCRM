@@ -6232,6 +6232,117 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
 </context>
 <context>
+    <name>MacrosTreeList</name>
+    <message>
+        <location filename="../utils/mailtpl/macrostreelist.cpp" line="+12"/>
+        <source>Category</source>
+        <translation>Kategorie</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Template</source>
+        <translation>Vorlage</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Select a macro, Drag &amp; Drop into editor.</source>
+        <translation>Wählen Sie ein Makro und ziehen Sie es per Drag &amp; Drop in den Editor.</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Database queries</source>
+        <translation>Datenbankabfragen</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Company settings</source>
+        <translation>Unternehmerstellungen</translation>
+    </message>
+</context>
+<context>
+    <name>MailTemplatesDialog</name>
+    <message>
+        <location filename="../utils/mailtpl/mailtemplatesdialog.cpp" line="+14"/>
+        <source>Template Editor</source>
+        <translation>Vorlageneditor</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <location line="+19"/>
+        <source>Max allowed %1 characters.</source>
+        <translation>Max. zulässige %1 Zeichen.</translation>
+    </message>
+    <message>
+        <location line="-25"/>
+        <location line="+7"/>
+        <source>Menu title</source>
+        <translation>Menütitel</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>Mail Subject</source>
+        <translation>E-Mail Betreff</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>eMail subject</source>
+        <translation>E-Mail Betreff</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Attachment required</source>
+        <translation>Anhang erforderlich</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Attachment is required for this template!</source>
+        <translation>Für diese Vorlage ist ein Anhang erforderlich!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Activ</source>
+        <translation>Aktiv</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Enable/Disable this Template.</source>
+        <translation>Aktiviere/deaktiviere diese Vorlage.</translation>
+    </message>
+    <message>
+        <location line="+17"/>
+        <source>Save</source>
+        <translation>Speichern</translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Nothing to save</source>
+        <translation>Nichts zu speichern</translation>
+    </message>
+    <message>
+        <location line="+27"/>
+        <source>Save successfully</source>
+        <translation>Erfolgreich gespeichert</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Update failed!</source>
+        <translation>Update fehlgeschlagen!</translation>
+    </message>
+</context>
+<context>
+    <name>MailTemplatesTree</name>
+    <message>
+        <location filename="../utils/mailtpl/mailtemplatestree.cpp" line="+13"/>
+        <source>Templates</source>
+        <translation>Vorlagen</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Macros</source>
+        <translation>Makros</translation>
+    </message>
+</context>
+<context>
     <name>MainWindow</name>
     <message>
         <location filename="../mainwindow.cpp" line="+201"/>
@@ -6263,12 +6374,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+5"/>
-        <location line="+35"/>
+        <location line="+39"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="-30"/>
+        <location line="-34"/>
         <source>Dialogs</source>
         <translation>Dialoge</translation>
     </message>
@@ -6301,6 +6412,11 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <location line="+4"/>
         <source>Book publisher</source>
         <translation>Buchverleger</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>eMail Templates</source>
+        <translation>E-Mail Vorlagen</translation>
     </message>
 </context>
 <context>
@@ -9451,6 +9567,29 @@ Bild – Artikel-ID: %2</translation>
         <location line="+19"/>
         <source>Database Views</source>
         <translation>Datenbankansichten</translation>
+    </message>
+</context>
+<context>
+    <name>TemplatesTreeList</name>
+    <message>
+        <location filename="../utils/mailtpl/templatestreelist.cpp" line="+11"/>
+        <source>Title</source>
+        <translation>Titel</translation>
+    </message>
+    <message>
+        <location line="+0"/>
+        <source>Template</source>
+        <translation>Vorlage</translation>
+    </message>
+    <message>
+        <location line="+28"/>
+        <source>eMail</source>
+        <translation>E-Mail</translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Printing</source>
+        <translation>Drucken</translation>
     </message>
 </context>
 <context>

@@ -79,6 +79,7 @@ SET(APPLICATION_LIBRARIES
   DesignationDialog
   KeywordsDialog
   StoragesDialog
+  MailTemplatesDialog
   PublisherDialog
   TabSellers
   TabOrders

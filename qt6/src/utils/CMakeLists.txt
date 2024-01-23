@@ -10,5 +10,6 @@ ADD_SUBDIRECTORY(keywords)
 ADD_SUBDIRECTORY(storages)
 ADD_SUBDIRECTORY(datacache)
 ADD_SUBDIRECTORY(publishers)
+ADD_SUBDIRECTORY(mailtpl)
 
 ##EOF
