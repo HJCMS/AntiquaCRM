@@ -101,6 +101,13 @@ private:
   const QString createDeliveryNumber(const QDate d, qint64 id);
 
   /**
+   * @brief Set Delivery Package price
+   * @note Workaround to fix the filling order.
+   * @warning @b m_tableData must be filled beforehand!
+   */
+  void setDeliveryPackage();
+
+  /**
    * @brief Generiere Rechnungs- Lieferscheinnummer.
    * @param oid - Order Id
    *

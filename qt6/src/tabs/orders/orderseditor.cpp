@@ -424,6 +424,21 @@ const QString OrdersEditor::createDeliveryNumber(const QDate d, qint64 id) {
   return _dn;
 }
 
+/**
+ * Weil die entgegenname von o_delivery_service und o_delivery_package asynchron
+ * verläuft, muss o_delivery_package explizit noch mal aufgerufen werden!
+ * Ansonsten würde wegen Signal "sendSelectedService" das Lieferpaket auf null
+ * springen.
+ */
+void OrdersEditor::setDeliveryPackage() {
+  QSqlField _field = m_tableData->getProperties("o_delivery_package");
+  if (_field.name().isEmpty()) {
+    qWarning("Can't fetch o_delivery_package properties!");
+    return;
+  }
+  setDataField(_field, m_tableData->getValue("o_delivery_package"));
+}
+
 void OrdersEditor::setOrderPaymentNumbers(qint64 oid) {
   if (oid < 1) {
     qWarning("Missing Id for Order Payment.");
@@ -933,6 +948,9 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
       const QSqlField _field = _record.field(k);
       setDataField(_field, _query.value(_field.name()));
     }
+    // Reihenfolge einhalten "o_delivery_service" dann "o_delivery_package"!
+    setDeliveryPackage();
+
     // Bestehende Artikel Einkäufe mit orderId einlesen!
     m_ordersTable->addArticles(queryArticles(oid));
 
@@ -983,6 +1001,9 @@ bool OrdersEditor::createOrderRefund(qint64 oid) {
     m_tableData->setValue(_n, 0);
     setDataField(m_tableData->getProperties(_n), 0);
   }
+  // Reihenfolge einhalten "o_delivery_service" dann "o_delivery_package"!
+  setDeliveryPackage();
+
   m_tableData->setValue("o_payment_status", AntiquaCRM::OrderPayment::RETURN);
   setDataField(m_tableData->getProperties("o_payment_status"),
                AntiquaCRM::OrderPayment::RETURN);
