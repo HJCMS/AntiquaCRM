@@ -15,12 +15,21 @@ SET(ANTIQUACMD_INCLUDE_DIRS
 )
 
 ADD_SUBDIRECTORY(acmdproviders)
+SET(CRON_SCRIPTS
+  crond/antiqua-backup
+  crond/antiqua-images-upload
+  crond/antiqua-strato-upload
+  crond/antiqua-update-abebooks
+  crond/antiqua-update-abebooks-am
+  crond/antiqua-zip-image-upload
+)
 
 INCLUDE_DIRECTORIES (${ANTIQUACMD_INCLUDE_DIRS})
 
 ADD_EXECUTABLE(${_sub_application}
   main.cpp
   antiquacmd.h antiquacmd.cpp
+  ${CRON_SCRIPTS}
 )
 
 TARGET_COMPILE_FEATURES(${_sub_application} PUBLIC cxx_std_17)
@@ -40,6 +49,11 @@ SET_TARGET_PROPERTIES(${_sub_application} PROPERTIES
 )
 
 INSTALL (TARGETS ${_sub_application}
-  RUNTIME DESTINATION lib${LIB_SUFFIX}/antiquacmd/
+  RUNTIME DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/antiquacmd/
+  COMPONENT Core
+)
+
+INSTALL (FILES ${CRON_SCRIPTS}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/antiquacmd/cron
   COMPONENT Core
 )

@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2022
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+set +x
+
+test -e $HOME/.config/HJCMS/strato-remote.cfg || {
+  echo "FATAL: Can not read Configuration"
+  exit 1
+}
+
+. $HOME/.config/HJCMS/strato-remote.cfg
+
+test -d ${_image_target} || {
+  echo "FATAL: Images Target not exists!"
+  exit 1
+}
+
+function __error() {
+  echo "Configuration '$1' missmatch!"
+  exit 1
+}
+
+test -n "${_host}" || __error "Hostname";
+test -n "${_port}" || __error "Port";
+test -n "${_user}" || __error "Username";
+test -n "${_auth}" || __error "Authentication";
+test -x "`which lftp 2>/dev/null`" || __error
+
+function __upload_target() {
+ test -d ${1} || return;
+ pushd $1
+  test -n "`ls *.jpg 2>/dev/null`" || {
+    echo "Nothing todo for $1!"
+    return;
+  } 
+
+  lftp -u ${_user},${_auth} -p ${_port} -e 'mput -O /old/covers/ *.jpg; bye' sftp://${_host}
+
+ popd
+}
+
+if test -d ~/.cache/antiqua-images-upload ; then
+ __upload_target ~/.cache/antiqua-images-upload
+fi
+
+__upload_target ${_books_target}
+
+__upload_target ${_media_target}
+

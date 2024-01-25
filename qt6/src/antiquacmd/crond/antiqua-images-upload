@@ -1,0 +1,230 @@
+#!/usr/bin/env perl
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2022
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+use strict;
+use warnings;
+use POSIX qw(strftime);
+use File::Basename;
+use File::Copy;
+use File::Glob qw(:globally :nocase);
+# use lib "$ENV{HOME}/.local/perl5/lib";
+use Directory::Iterator;
+
+=encoding utf8
+=begin text
+
+  antiqua-images-upload
+
+  Script für einen Cron Job zum erstellen und Hochladen der Bildedaten im Zipformat.
+
+  Ablauf:
+    1) Erstelle ein Temporäres Verzeichnis mit den Bilddateien die gepackt werden sollen.
+    2) Kopiere die Bilder in das Temporäre Verzeichnis.
+    3) Verschiebe die Originale in das Quellenverzeichnis.
+    4) Packe die Bilder in eine Zipdatei und verschiebe Sie in das Zip Verzeichnis
+    5) Starte curl upload für das paket zum Dienstleister
+
+=cut
+
+########################################################################
+## BEGIN Configuration
+
+my $_HOMEDIR = $ENV{"HOME"};
+
+## Standard Bilder Verzeichnis
+my $_IMAGE_TARGET = "/home/HJCMS/AntiquaCRM/Archiv/Bilder";
+
+## Temoräres Speicher Verzeichnis
+my $_CACHE_DIR = "${_HOMEDIR}/.cache";
+
+## Temporäres Zip-Verzeichnis
+my $_ZIP_DIR = "${_CACHE_DIR}/antiqua_zip_images";
+
+## Die erstellte Zipdatei wird hierhin abgelegt ...
+my $_ZIP_TARGET = "/home/HJCMS/AntiquaCRM/Archiv/ZipDateien";
+
+## Ist der Suffix mit der Datumsangabe für die Ausgabe Datei.
+my $_DATE_STRING = strftime "%Y%m%d", localtime;
+
+## API KEY für den Upload
+my $_REMOTE_AKEY = "3fbe2f84-1ae2-419e-b5c4-fecabd6bac6c";
+
+## Upload URL zum Dienstleister
+my $_REMOTE_URL = "https://www.buchfreund.de/verkaeufer/api/${_REMOTE_AKEY}/upload-bilder";
+
+## END configuration
+########################################################################
+
+if (!$_REMOTE_AKEY) {
+  print "Configure first!\n";
+  exit(1);
+}
+
+## Prefix für Logdateien
+my $_APPL_PREFIX = "antiqua-images-upload";
+
+## Zip Dateiname
+my $_PACKAGE_NAME = "bilder-${_DATE_STRING}.zip";
+
+## Methode zum erstellen des Ablageverzeichnisses für die Quellbilder.
+sub create_image_archive {
+  my $_target = "";
+  if (-e ${_IMAGE_TARGET}) {
+    my $_subdir = strftime "%Y/%m", localtime();
+    $_target = sprintf("%s/Sources/%s", ${_IMAGE_TARGET}, $_subdir);
+    my @args = ("mkdir", "-p", "$_target");
+    if(system (@args) != 0) {
+      print "Warning: can not create (${_target}) target!\n";
+      return "";
+    }
+  } else {
+    print "Warning: (${_IMAGE_TARGET}) Directory not exists!\n";
+  }
+  return $_target;
+}
+
+## Archiv Verzeichnis für Bilder die gepackt wurden!
+my $_IMAGES_ARCHIVE = create_image_archive();
+
+## Bilddaten für das packen Vorbereiten.
+## 1) Erstelle Temporären Zip Ordner
+## 2) Scanne Bilder Hauptverzeichnis
+## 3) Kopiere Bilder in das Temporäre Zipverzeichnis
+## 4) Verschiebe Bilder in das Quellenverzeichnis
+sub create_zip_folder {
+  if(!-e "${_ZIP_DIR}") {
+    mkdir (${_ZIP_DIR});
+  }
+  ## Starte Scan
+  my $it = Directory::Iterator->new("${_IMAGE_TARGET}/Books", show_dotfiles=>0, recursive=>0, show_directories=>0);
+  while (my $file = <$it>) {
+    my $_f = basename($file);
+    if ($_f =~ qr/^\d{1,8}\.jp[e]*g$/i) {
+      $_f =~ s/\.jp[e]*g$//g;
+      my $_t = sprintf ("%d.jpg", int($_f));
+      copy ("${file}", "${_ZIP_DIR}/${_t}");
+      move ("${file}", "${_IMAGES_ARCHIVE}/");
+    }
+  }
+}
+
+## Starte curl upload
+sub upload_package {
+  chdir(${_ZIP_TARGET});
+  ## Kein Zipfile? - Dann abbrechen
+  if(!-e "${_PACKAGE_NAME}") {
+    print "FATAL: no ${_PACKAGE_NAME}\n";
+    return 1;
+  }
+
+  ## Erstelle Upload Befehl
+  my @curlcmd = ("curl", "--silent", "--show-error", "--ipv4", "--ssl-reqd", "--tlsv1.2",
+    "--request", "POST", "${_REMOTE_URL}",
+    "--header", "Accept: */*",
+    "--header", "Content-Type: multipart/form-data",
+    "--header", "Cache-Control: no-cache",
+    "--trace", "${_CACHE_DIR}/${_APPL_PREFIX}_trace.log",
+    "--dump-header", "${_CACHE_DIR}/${_APPL_PREFIX}_header.log",
+    "--output", "${_CACHE_DIR}/${_APPL_PREFIX}.json",
+    "--form", "boundary=upload",
+    "--form", "file=\@${_PACKAGE_NAME}"
+  );
+
+  ## Starte Prozess
+  if (system(@curlcmd) != 0) {
+    print "Curl finished with errors! ($?)\n";
+    return 1;
+  }
+
+  return 0;
+};
+
+## Erstelle das Zip Paket
+sub create_zip_package {
+  my $status = 1;
+  ## In das Temporäre Bilder Verzeichnis wechseln
+  chdir (${_ZIP_DIR}) or return 0;
+
+  ## Nehme alle JPEG Bilder
+  my @images = glob("*.JPG");
+
+  ## Ist etwas zu tun?
+  if(@images == 0)
+  {
+    print "No Images, nothing todo!\n";
+    return 0;
+  }
+
+  ## Berichtigungen prüfen/korrigieren
+  chmod (0644, @images);
+
+  ## Ist ein altes Zippaket vorhanden?
+  if (-e "${_PACKAGE_NAME}") {
+    move ("${_PACKAGE_NAME}", "${_CACHE_DIR}/");
+  }
+
+  ## Erstelle neues Paket
+  my @args = ("zip", "-9", "-q", "-o", "${_PACKAGE_NAME}", @images);
+  $status = system(@args);
+  if ($status == 0) {
+    move ("${_PACKAGE_NAME}", "${_ZIP_TARGET}/");
+  }
+
+  ## Bilder aus Temp entfernen
+  unlink (@images);
+
+  return $status;
+};
+
+## Wenn das Bilder Archiv vorhanden ist starte den Ablaufprozess.
+if(-e ${_IMAGES_ARCHIVE}) {
+  my $step_status = 1;
+
+  ## Scanne und erstelle Bilderquellen
+  $step_status = create_zip_folder();
+  if ($step_status != 0) {
+    print "Create Image targets failed!\n";
+    exit(1);
+  }
+
+  ## Erstelle Zip Paket
+  $step_status = create_zip_package();
+  if ($step_status != 0) {
+    print "Create Zip package failed!\n";
+    exit(1);
+  }
+
+  ## Starte upload
+  $step_status = upload_package();
+  if ($step_status != 0) {
+    print "Upload failed!\n";
+    exit(1);
+  }
+
+} else {
+  print "Missing '${_IMAGES_ARCHIVE}'!\n";
+  exit(1);
+}
+
+##EOF
