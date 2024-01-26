@@ -16,38 +16,20 @@ INCLUDE_DIRECTORIES (
 
 ADD_SUBDIRECTORY(repair)
 
-SET (plugin_SOURCES
-  buyerinfo.cpp
-  purchaseactionbar.cpp
-  purchaseheader.cpp
-  purchasetable.cpp
-  salesinfo.cpp
-  sellersconfigwidget.cpp
-  sellerssaleslist.cpp
-  sellerssalestab.cpp
-  sellerssalewidget.cpp
-  sellerswidget.cpp
-  tabsellers.cpp
-)
-
-SET (plugin_HEADERS
-  buyerinfo.h
-  purchaseactionbar.h
-  purchaseheader.h
-  purchasetable.h
-  salesinfo.h
-  sellersconfig.h
-  sellersconfigwidget.h
-  sellerssaleslist.h
-  sellerssalestab.h
-  sellerssalewidget.h
-  sellerswidget.h
-  tabsellers.h
-)
-
 ADD_LIBRARY (${_pluginTarget} STATIC
- ${plugin_SOURCES}
- ${plugin_HEADERS}
+  sellersconfig.h
+  buyerinfo.h buyerinfo.cpp
+  popupopenexists.h popupopenexists.cpp
+  purchaseactionbar.h purchaseactionbar.cpp
+  purchaseheader.h purchaseheader.cpp
+  purchasetable.h purchasetable.cpp
+  salesinfo.h salesinfo.cpp
+  sellersconfigwidget.h sellersconfigwidget.cpp
+  sellerssaleslist.h sellerssaleslist.cpp
+  sellerssalestab.h sellerssalestab.cpp
+  sellerssalewidget.h sellerssalewidget.cpp
+  sellerswidget.h sellerswidget.cpp
+  tabsellers.h tabsellers.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES

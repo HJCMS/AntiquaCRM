@@ -114,7 +114,7 @@ QTableWidgetItem *CustomersOrders::paymentItem(const QVariant &data) {
   // Retour
   case AntiquaCRM::OrderPayment::RETURN:
     title = tr("Returning");
-    icon = AntiquaCRM::antiquaIcon("action_redo");
+    icon = AntiquaCRM::antiquaIcon("flag-red");
     break;
 
   // Collection procedures/Inkassoverfahren

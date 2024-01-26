@@ -44,6 +44,12 @@ public:
    */
   explicit OrdersTableDelegate(QObject *parent = nullptr);
 
+  /**
+   * @brief Change minimum sale price
+   * @param price
+   */
+  void setMinPrice(double price);
+
   void setProperties(const OrdersTableDelegate::EditorProperties &);
 
   QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,

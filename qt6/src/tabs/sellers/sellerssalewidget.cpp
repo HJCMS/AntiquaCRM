@@ -3,6 +3,7 @@
 
 #include "sellerssalewidget.h"
 #include "buyerinfo.h"
+#include "popupopenexists.h"
 #include "purchaseactionbar.h"
 #include "purchaseheader.h"
 #include "purchasetable.h"
@@ -294,15 +295,26 @@ void SellersSalesWidget::prepareCreateOrder() {
     const QString _prinfo = _query.value("prinfo").toString();
     const QString _buyer = _query.value("buyer").toString();
 
-    QString _txt("<p>");
-    _txt.append(tr("An order for %1 already exists!").arg(_prinfo));
-    _txt.append("</p><p>" + tr("Buyer: %1").arg(_buyer) + "</p><p>");
-    _txt.append(tr("Would you like to open this order?") + "</p>");
+    QStringList _list; // create PopUp Message
+    _list.append(tr("An order for %1 already exists!").arg(_prinfo));
+    _list.append(tr("Current Order number: %1").arg(_oid));
+    _list.append(tr("Buyer: %1").arg(_buyer));
 
-    int _ret = QMessageBox::question(this, tr("Order already exists!"), _txt);
-    if (_ret == QMessageBox::Yes)
+    PopUpOpenExists popUp(this);
+    popUp.setWindowTitle(tr("Order already exists!"));
+    popUp.setMessage(_list);
+    switch (popUp.exec()) {
+    case (QMessageBox::Open):
       openOrder(_oid);
+      break;
 
+    case (QMessageBox::Yes):
+      createOrder(_orderid);
+      break;
+
+    default:
+      break;
+    }
     return;
   }
   createOrder(_orderid);

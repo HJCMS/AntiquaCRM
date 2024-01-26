@@ -5410,7 +5410,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../tabs/customers/customerstablemodel.cpp" line="+39"/>
+        <location filename="../tabs/customers/customerstablemodel.cpp" line="+43"/>
         <source>Customer Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5541,27 +5541,27 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Pays reliably</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Pay late</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Only with prepayment</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>No delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+71"/>
         <source>A Trustlevel is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6242,7 +6242,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
         <location line="+19"/>
         <source>Max allowed %1 characters.</source>
         <translation type="unfinished"></translation>
@@ -6657,7 +6657,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+53"/>
         <source>Missing invoice id, aborted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6722,12 +6722,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+107"/>
         <source>&lt;b&gt;You cannot issue a refund for this Order!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;The Order status must have Delivered.&lt;/li&gt;&lt;li&gt;The Payment status must have Paid.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If this Order hasn&apos;t paid, open it and change status to Canceled.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>Refunding dialog aborted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6911,7 +6911,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableDelegate</name>
     <message>
-        <location filename="../tabs/orders/orderstabledelegate.cpp" line="+70"/>
+        <location filename="../tabs/orders/orderstabledelegate.cpp" line="+72"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7463,6 +7463,29 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location filename="../utils/config/pluginlistwidget.cpp" line="+26"/>
         <source>set item checked, if you want to view this tab on application start.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PopUpOpenExists</name>
+    <message>
+        <location filename="../tabs/sellers/popupopenexists.cpp" line="+10"/>
+        <source>Order already exists!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Preventing duplicate orders.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Would you like to open this order?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8261,7 +8284,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SellersSalesWidget</name>
     <message>
-        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+33"/>
+        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+34"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8313,21 +8336,21 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     </message>
     <message>
         <location line="+1"/>
-        <source>Buyer: %1</source>
+        <source>Current Order number: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Would you like to open this order?</source>
+        <source>Buyer: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order already exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+29"/>
         <source>No Customer found!</source>
         <translation type="unfinished"></translation>
     </message>

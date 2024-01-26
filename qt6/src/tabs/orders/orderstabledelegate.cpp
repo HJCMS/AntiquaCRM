@@ -17,6 +17,8 @@ OrdersTableDelegate::OrdersTableDelegate(QObject *parent)
   cfg.endGroup();
 }
 
+void OrdersTableDelegate::setMinPrice(double price) { config.minPrice = price; }
+
 void OrdersTableDelegate::setProperties(
     const OrdersTableDelegate::EditorProperties &properties) {
   config.minPrice = properties.minPrice;

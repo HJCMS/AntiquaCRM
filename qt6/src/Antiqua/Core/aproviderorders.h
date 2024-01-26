@@ -120,11 +120,19 @@ public:
 
   /**
    * @brief Create an new Article Order Item
+   * @param key    - Field name
+   * @param value  - Value
    */
   static AntiquaCRM::ArticleOrderItem createItem(const QString &key,
                                                  const QVariant &value);
 
-  static AntiquaCRM::ArticleOrderItem createItem(const QSqlField &field);
+  /**
+   * @brief Create an new Article Order Item
+   * @param field     - Field description
+   * @param maxLength - preventing oversized strings
+   */
+  static AntiquaCRM::ArticleOrderItem createItem(const QSqlField &field,
+                                                 int maxLength = 80);
 
   /**
    * @brief Current Article Ordered Items

@@ -5435,7 +5435,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>CustomersTableModel</name>
     <message>
-        <location filename="../tabs/customers/customerstablemodel.cpp" line="+39"/>
+        <location filename="../tabs/customers/customerstablemodel.cpp" line="+43"/>
         <source>Customer Id</source>
         <translation>Kundennummer</translation>
     </message>
@@ -5566,27 +5566,27 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Zahlt pünktlich</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Pays reliably</source>
         <translation>Zahlt zuverlässig</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Pay late</source>
         <translation>Zahlt spät</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Only with prepayment</source>
         <translation>Nur mit Vorauskasse</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>No delivery</source>
         <translation>Keine Lieferung</translation>
     </message>
     <message>
-        <location line="+69"/>
+        <location line="+71"/>
         <source>A Trustlevel is required.</source>
         <translation>Eine Vertrauensstufe ist erforderlich.</translation>
     </message>
@@ -6267,7 +6267,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Vorlageneditor</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+15"/>
         <location line="+19"/>
         <source>Max allowed %1 characters.</source>
         <translation>Max. zulässige %1 Zeichen.</translation>
@@ -6682,7 +6682,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Artikel erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+53"/>
         <source>Missing invoice id, aborted.</source>
         <translation>Fehlende Rechnungs-ID, abgebrochen.</translation>
     </message>
@@ -6747,12 +6747,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>&lt;b&gt;Sie können einer Rückerstattung keinen neuen Artikel hinzufügen!&lt;/b&gt;&lt;p&gt;Eine bessere Wahl ist, eine neue Bestellung zu erstellen.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+101"/>
+        <location line="+107"/>
         <source>&lt;b&gt;You cannot issue a refund for this Order!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;The Order status must have Delivered.&lt;/li&gt;&lt;li&gt;The Payment status must have Paid.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If this Order hasn&apos;t paid, open it and change status to Canceled.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Sie können für diese Bestellung keine Rückerstattung veranlassen!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Der Bestellstatus muss „Geliefert“ lauten.&lt;/li&gt;&lt;li&gt;Der Zahlungsstatus muss „Bezahlt“ lauten.&lt;/li&gt;&lt;/ul &gt;&lt;p&gt;Wenn diese Bestellung nicht bezahlt wurde, öffnen Sie sie und ändern Sie den Status in „Storniert“.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+20"/>
+        <location line="+22"/>
         <source>Refunding dialog aborted.</source>
         <translation>Rückerstattungsdialog abgebrochen.</translation>
     </message>
@@ -6936,7 +6936,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersTableDelegate</name>
     <message>
-        <location filename="../tabs/orders/orderstabledelegate.cpp" line="+70"/>
+        <location filename="../tabs/orders/orderstabledelegate.cpp" line="+72"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -7489,6 +7489,29 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <location filename="../utils/config/pluginlistwidget.cpp" line="+26"/>
         <source>set item checked, if you want to view this tab on application start.</source>
         <translation>Setzen Sie ein Häkchen, wenn Sie diese Registerkarte beim Start der Anwendung anzeigen möchten.</translation>
+    </message>
+</context>
+<context>
+    <name>PopUpOpenExists</name>
+    <message>
+        <location filename="../tabs/sellers/popupopenexists.cpp" line="+10"/>
+        <source>Order already exists!</source>
+        <translation>Bestellung existiert bereits!</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Create</source>
+        <translation>Erstellen</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Preventing duplicate orders.</source>
+        <translation>Vermeidung von Doppelbestellungen.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Would you like to open this order?</source>
+        <translation>Möchten Sie diese Bestellung öffnen?</translation>
     </message>
 </context>
 <context>
@@ -8287,7 +8310,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SellersSalesWidget</name>
     <message>
-        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+33"/>
+        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+34"/>
         <source>Buyer</source>
         <translation>Käufer</translation>
     </message>
@@ -8339,21 +8362,21 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     </message>
     <message>
         <location line="+1"/>
+        <source>Current Order number: %1</source>
+        <translation>Aktuelle Bestellnummer: %1</translation>
+    </message>
+    <message>
+        <location line="+1"/>
         <source>Buyer: %1</source>
         <translation>Käufer: %1</translation>
     </message>
     <message>
-        <location line="+1"/>
-        <source>Would you like to open this order?</source>
-        <translation>Möchten Sie diese Bestellung öffnen?</translation>
-    </message>
-    <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Order already exists!</source>
         <translation>Bestellung existiert bereits!</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+29"/>
         <source>No Customer found!</source>
         <translation>Kein Kunde gefunden!</translation>
     </message>

@@ -421,8 +421,8 @@ AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString &key,
   return item;
 }
 
-AntiquaCRM::ArticleOrderItem
-AProviderOrder::createItem(const QSqlField &field) {
+AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QSqlField &field,
+                                                        int maxLength) {
   const QString _name = field.name();
   QVariant _value = field.value();
   if (field.metaType().id() == QMetaType::QString) {
@@ -431,9 +431,15 @@ AProviderOrder::createItem(const QSqlField &field) {
     // Deshalb müssen wir an dieser Stelle noch mal die Feldgrenzen prüfen,
     // bei Bedarf diese entsprechend kürzen!
     QString _str = field.value().toString();
-    if (_str.length() > field.length()) {
-      qWarning("Shrink oversized field '%s' value.", qPrintable(_name));
-      _value = _str.first(field.length());
+    int _len = (field.length() > 0 ? field.length() : maxLength);
+    if (_str.length() > _len) {
+#ifdef ANTIQUA_DEVELOPEMENT
+      qDebug() << Q_FUNC_INFO << _len << _str.length() << field;
+#else
+      qWarning("Shrink oversized field '%s' length to '%d'.", // info
+               qPrintable(_name), _len);
+#endif
+      _value = _str.first(_len);
     }
   } else if (field.metaType().id() == QMetaType::UnknownType) {
     qWarning("Unknown Metatype for '%s'!", qPrintable(_name));

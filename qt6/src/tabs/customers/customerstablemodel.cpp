@@ -17,13 +17,17 @@ const QIcon CustomersTableModel::headerIcon(int column) const {
 }
 
 const QIcon CustomersTableModel::trustIcon(int status) const {
-  if (status < 3)
-    return AntiquaCRM::antiquaIcon("flag-green");
-
-  if (status == 3)
+  switch (static_cast<AntiquaCRM::CustomerTrustLevel>(status)) {
+  case (AntiquaCRM::CustomerTrustLevel::WITH_DELAY):
+  case (AntiquaCRM::CustomerTrustLevel::PREPAYMENT):
     return AntiquaCRM::antiquaIcon("flag-yellow");
 
-  return AntiquaCRM::antiquaIcon("flag-red");
+  case (AntiquaCRM::CustomerTrustLevel::NO_DELIVERY):
+    return AntiquaCRM::antiquaIcon("flag-red");
+
+  default:
+    return AntiquaCRM::antiquaIcon("flag-green");
+  }
 }
 
 const QIcon CustomersTableModel::lockIcon(bool locked) const {

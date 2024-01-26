@@ -1,0 +1,53 @@
+#!/usr/bin/env perl
+# -*- coding: utf-8 -*-
+# vim: set fileencoding=utf-8
+##################################################################################
+# This file is part of the HJCMS Project
+#
+# Copyright (C) Juergen Heinemann http://www.hjcms.de, (C) 2007-2024
+#
+# This library is free software; you can redistribute it and/or
+# modify it under the terms of the GNU Library General Public
+# License as published by the Free Software Foundation; either
+# version 2 of the License, or (at your option) any later version.
+#
+# This library is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+# Library General Public License for more details.
+#
+# You should have received a copy of the GNU Library General Public License
+# along with this library; see the file COPYING.LIB.  If not, write to
+# the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+# Boston, MA 02110-1301, USA.
+##################################################################################
+
+use strict;
+use warnings;
+use XML::LibXML;
+use File::Basename;
+use File::Glob qw(:globally :nocase);
+use Directory::Iterator;
+
+## perldoc XML::LibXML
+my $doc = new XML::LibXML->createDocument("1.0", "UTF-8");
+my $rcc = $doc->createElement("RCC");
+$doc->setDocumentElement($rcc);
+
+my $qresource = $doc->createElement("qresource");
+$qresource->setAttribute("prefix","/");
+$rcc->appendChild($qresource);
+
+my $it = Directory::Iterator->new("./icons/", show_dotfiles=>0, recursive=>0, show_directories=>0);
+while (my $file = <$it>) {
+  my $_f = basename($file);
+  if ($_f =~ qr/\.png$/i) {
+    my $child = $doc->createElement("file");
+    $child->appendChild($doc->createTextNode("icons/$_f"));
+    $qresource->appendChild($child);
+  }
+}
+
+$doc->toFile("./application.qrc", 1);
+
+## EOF

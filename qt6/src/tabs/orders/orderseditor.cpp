@@ -431,7 +431,11 @@ const QString OrdersEditor::createDeliveryNumber(const QDate d, qint64 id) {
  * springen.
  */
 void OrdersEditor::setDeliveryPackage() {
-  QSqlField _field = m_tableData->getProperties("o_delivery_package");
+  // force o_delivery_service
+  QSqlField _field = m_tableData->getProperties("o_delivery_service");
+  setDataField(_field, m_tableData->getValue("o_delivery_service"));
+  // force o_delivery_package
+  _field = m_tableData->getProperties("o_delivery_package");
   if (_field.name().isEmpty()) {
     qWarning("Can't fetch o_delivery_package properties!");
     return;
@@ -946,6 +950,9 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
     // Kunden Daten
     foreach (QString k, customInput) {
       const QSqlField _field = _record.field(k);
+      if (_field.name().contains("o_delivery_package"))
+        continue;
+
       setDataField(_field, _query.value(_field.name()));
     }
     // Reihenfolge einhalten "o_delivery_service" dann "o_delivery_package"!
@@ -998,7 +1005,6 @@ bool OrdersEditor::createOrderRefund(qint64 oid) {
 
   // Restore for a new Entry!
   foreach (QString _n, QStringList({"o_id", "o_invoice_id"})) {
-    m_tableData->setValue(_n, 0);
     setDataField(m_tableData->getProperties(_n), 0);
   }
   // Reihenfolge einhalten "o_delivery_service" dann "o_delivery_package"!

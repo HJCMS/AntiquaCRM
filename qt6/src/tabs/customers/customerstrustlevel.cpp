@@ -25,17 +25,22 @@ void CustomersTrustLevel::initData() {
   QIcon yellow = AntiquaCRM::antiquaIcon("flag-yellow");
   QIcon red = AntiquaCRM::antiquaIcon("flag-red");
   // Keine Vertrauensebene festgelegt
-  m_edit->setWithoutDisclosures(AntiquaCRM::NO_TRUST_LEVEL);
+  m_edit->setWithoutDisclosures(AntiquaCRM::CustomerTrustLevel::NO_TRUST_LEVEL);
   // Zahlt Pünktlich
-  m_edit->addItem(green, tr("Pays on time"), AntiquaCRM::ON_TIME);
+  m_edit->addItem(green, tr("Pays on time"),
+                  AntiquaCRM::CustomerTrustLevel::ON_TIME);
   // Zahlt Zuverlässig
-  m_edit->addItem(green, tr("Pays reliably"), AntiquaCRM::RELIABLE);
+  m_edit->addItem(green, tr("Pays reliably"),
+                  AntiquaCRM::CustomerTrustLevel::RELIABLE);
   // Zahlt mit Verspätung
-  m_edit->addItem(yellow, tr("Pay late"), AntiquaCRM::WITH_DELAY);
+  m_edit->addItem(yellow, tr("Pay late"),
+                  AntiquaCRM::CustomerTrustLevel::WITH_DELAY);
   // Nur mit Vorauszahlung
-  m_edit->addItem(yellow, tr("Only with prepayment"), AntiquaCRM::PREPAYMENT);
+  m_edit->addItem(yellow, tr("Only with prepayment"),
+                  AntiquaCRM::CustomerTrustLevel::PREPAYMENT);
   // Keine Lieferung
-  m_edit->addItem(red, tr("No delivery"), AntiquaCRM::NO_DELIVERY);
+  m_edit->addItem(red, tr("No delivery"),
+                  AntiquaCRM::CustomerTrustLevel::NO_DELIVERY);
 
   setRestrictions(_f);
   setWindowModified(false);
@@ -100,7 +105,8 @@ const QMetaType CustomersTrustLevel::getType() const {
 
 const QVariant CustomersTrustLevel::getValue() {
   int _index = m_edit->currentIndex();
-  return m_edit->itemData(_index, Qt::UserRole);
+  return static_cast<AntiquaCRM::CustomerTrustLevel>(
+      m_edit->itemData(_index, Qt::UserRole).toInt());
 }
 
 const QString CustomersTrustLevel::popUpHints() {

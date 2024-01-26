@@ -214,6 +214,10 @@ bool OrdersTableView::updateRefundCoast(double price) {
   if (rowCount() < 1)
     return false;
 
+  // If a refund, then adjust the limit.
+  if (m_delegate != nullptr)
+    m_delegate->setMinPrice(price - 1.0);
+
   int _count = 0;
   int _column = m_model->columnIndex("a_refunds_cost");
   for (int r = 0; r < rowCount(); r++) {
@@ -223,9 +227,15 @@ bool OrdersTableView::updateRefundCoast(double price) {
   return (_count > 0);
 }
 
-int OrdersTableView::rowCount() { return m_model->rowCount(); }
+int OrdersTableView::rowCount() {
+  // current row count
+  return m_model->rowCount();
+}
 
-bool OrdersTableView::isEmpty() { return (m_model->rowCount() < 1); }
+bool OrdersTableView::isEmpty() {
+  // check row count
+  return (m_model->rowCount() < 1);
+}
 
 void OrdersTableView::hideColumns(const QStringList &list) {
   foreach (QString fieldName, list) {
@@ -254,13 +264,13 @@ bool OrdersTableView::setOrderId(qint64 orderId) {
 }
 
 const QStringList OrdersTableView::getSqlQuery() {
-  // Ausgabe
+  // output
   QStringList queries;
-  // Werden bei INSERT|UPDATE Ignoriert!
+  // Will be ignored during INSERT or UPDATE!
   QStringList ignoreList({"a_payment_id", "a_modified"});
-  // Starte Tabellen abfrage ...
+  // Start table query...
   for (int r = 0; r < m_model->rowCount(); r++) {
-    // Suche "a_payment_id" für INSERT|UPDATE Prüfung!
+    // Search "a_payment_id" for INSERT or UPDATE Test!
     qint64 pid = m_model->data(m_model->index(r, 0), Qt::EditRole).toInt();
     QStringList update;  /**< SQL UPDATE SET */
     QStringList fields;  /**< SQL INSERT FIELDS */
@@ -271,8 +281,8 @@ const QStringList OrdersTableView::getSqlQuery() {
       if (ignoreList.contains(_fieldName))
         continue;
 
-      QVariant _value = m_model->data(_index, Qt::EditRole);
-      QMetaType _type = _value.metaType();
+      const QVariant _value = m_model->data(_index, Qt::EditRole);
+      const QMetaType _type = _value.metaType();
       // qDebug() << Q_FUNC_INFO << _fieldName << _value << _type.id();
       if (pid > 0) {
         if (_type.id() == QMetaType::QString)

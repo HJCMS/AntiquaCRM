@@ -37,7 +37,7 @@ private:
   QModelIndex p_modelIndex;
   OrdersTableModel *m_model;
   OrdersTableDelegate *m_delegate;
-  QStringList sql_cache;
+  mutable QStringList sql_cache;
 
   /**
    * @brief Monitors table view changes
