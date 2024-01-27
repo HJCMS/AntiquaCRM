@@ -7,4 +7,5 @@ SELECT o_id,
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN customers ON c_id=o_customer_id
+LEFT JOIN provider_orders ON pr_order_id=o_id
 WHERE @SQL_WHERE_CLAUSE@ ORDER BY o_since;

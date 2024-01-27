@@ -80,7 +80,7 @@ void PurchaseTable::createPrintingCard() {
   }
   _q.clear();
 
-  if(_data.size() < 2)
+  if (_data.size() < 2)
     return;
 
   QJsonObject _options;
@@ -141,18 +141,18 @@ qint64 PurchaseTable::getSelectedArticleId() {
 }
 
 QTableWidgetItem *PurchaseTable::createItem(const QJsonValue &data) const {
-  QString title;
+  QString _title;
   if (data.type() == QJsonValue::Double) {
     qint64 i = data.toInt();
-    title = QString::number(i);
+    _title = QString::number(i);
   } else if (data.type() == QJsonValue::Bool) {
-    title = (data.toBool()) ? tr("Yes") : tr("No");
+    _title = (data.toBool()) ? tr("Yes") : tr("No");
   } else {
-    title = data.toString().trimmed();
+    _title = data.toString().trimmed();
   }
 
-  QTableWidgetItem *item = new QTableWidgetItem(title);
-  item->setData(Qt::UserRole, data);
+  QTableWidgetItem *item = new QTableWidgetItem(_title);
+  item->setData(Qt::UserRole, data.toVariant());
   item->setFlags(Qt::ItemIsEnabled);
   return item;
 }

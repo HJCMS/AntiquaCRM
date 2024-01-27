@@ -3501,7 +3501,7 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="+7"/>
         <source>Booktitle and Authors</source>
-        <translation>Buchtitel und Autoren.</translation>
+        <translation>Buchtitel und Autoren</translation>
     </message>
     <message>
         <location line="+1"/>
@@ -3525,7 +3525,12 @@ Bild – Artikel-ID: %2</translation>
         <translation>Mit Schlüsselwort, Bücher im Lager suchen.</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+1"/>
+        <source>narrow down to year of changed</source>
+        <translation>Einschränken auf das Jahr der Änderung</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Authors search</source>
         <translation>Autorensuche</translation>
     </message>
@@ -8356,7 +8361,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Ohne diese kann keine Bestellung erstellt werden!</translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+116"/>
         <source>An order for %1 already exists!</source>
         <translation>Eine Bestellung für %1 existiert bereits!</translation>
     </message>
@@ -8376,7 +8381,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Bestellung existiert bereits!</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+26"/>
         <source>No Customer found!</source>
         <translation>Kein Kunde gefunden!</translation>
     </message>

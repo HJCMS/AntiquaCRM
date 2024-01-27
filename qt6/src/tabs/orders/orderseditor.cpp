@@ -1177,6 +1177,7 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
     for (int i = 0; i < _array.size(); i++) {
       QList<AntiquaCRM::ArticleOrderItem> items;
       QJsonObject article = _array[i].toObject();
+
       // Add Missing Fields
       // NOTE: Das Feld 'a_tax' ist noch nicht in „antiquacmd“ eingebunden!
       // o_media_type | a_type
@@ -1197,24 +1198,15 @@ bool OrdersEditor::createCustomEntry(const QJsonObject &object) {
         continue;
 
       // Ist erst mal 0
-      AntiquaCRM::ArticleOrderItem item;
-      item.key = QString("a_order_id");
-      item.value = 0;
-      items.append(item);
+      items.append(_prorder.createItem("a_order_id", 0));
       // Muss hier eingefügt werden!
-      if (_customer_id > 0) {
-        AntiquaCRM::ArticleOrderItem item;
-        item.key = QString("a_customer_id");
-        item.value = _customer_id;
-        items.append(item);
-      }
-      // Auslesen
+      if (_customer_id > 0)
+        items.append(_prorder.createItem("a_customer_id", _customer_id));
+
       foreach (QString key, article.keys()) {
-        AntiquaCRM::ArticleOrderItem item;
-        item.key = key;
-        item.value = article.value(key).toVariant();
-        items.append(item);
+        items.append(_prorder.createItem(key, article.value(key).toVariant()));
       }
+
       if (items.size() > 0)
         _prorder.insertOrderItems(items);
     }

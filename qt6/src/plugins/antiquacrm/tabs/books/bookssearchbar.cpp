@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "bookssearchbar.h"
-#include "booksconfig.h"
 #include "booksselectfilter.h"
 
 #include <QIcon>
@@ -186,7 +185,11 @@ void BooksSearchBar::setFilter(int index) {
     m_searchInput->setPlaceholderText(tr("In Storages search"));
     m_searchInput->setToolTip(
         tr("Search with Keyword for Books in Storage locations."));
-    setCustomSearch();
+    QString _tip = tr("narrow down to year of changed");
+    setCustomSearch(_tip);
+    m_customSearch->setToolTip(" " + _tip);
+    m_customSearch->setValidation(
+        AntiquaCRM::ALineEdit::InputValidator::NUMERIC);
     break;
   }
 
@@ -256,6 +259,9 @@ const QString BooksSearchBar::getSearchStatement() {
   QString _operation = _js.value("search").toString();
   QString _input;
 
+  if (_columns.contains("__CUSTOM__"))
+    _columns.clear(); // no field set required
+
   // im_id Image filter
   if (!imageFilter().isEmpty()) {
     _sql.append(imageFilter() + " AND ");
@@ -301,14 +307,14 @@ const QString BooksSearchBar::getSearchStatement() {
     return _sql;
   }
 
-  // Keywords only
+  // Keywords
   if (_operation == "keywords") {
     _input = m_searchInput->text();
-    _sql.append(prepareFieldSearch(_columns.first(), _input));
+    _sql.append(prepareFieldSearch("ib_keyword", _input));
     return _sql;
   }
 
-  // Lagerort
+  // Storage and optional change year
   if (_operation == "storage") {
     _input = m_searchInput->text();
     _input.replace(jokerPattern, "%");
@@ -317,6 +323,10 @@ const QString BooksSearchBar::getSearchStatement() {
     _buf << prepareFieldSearch("sl_identifier", _input);
     _buf << prepareFieldSearch("ib_storage_compartment", _input);
     _sql.append("(" + _buf.join(" OR ") + ")");
+    QString _year = m_customSearch->text();
+    if (_year.length() == 4) {
+      _sql.append(" AND DATE_PART('year',ib_changed)='" + _year + "'");
+    }
     _buf.clear();
     return _sql;
   }

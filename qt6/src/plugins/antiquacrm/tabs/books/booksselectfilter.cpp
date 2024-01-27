@@ -87,13 +87,13 @@ const QJsonObject BooksSelectFilter::getFilter(int index) {
 
   case (AntiquaCRM::SearchBarFilter::SBF_STORAGES): {
     obj.insert("search", QJsonValue("storage"));
-    obj.insert("fields", QJsonValue("__PATTERN__"));
+    obj.insert("fields", QJsonValue("__CUSTOM__"));
     break;
   }
 
   case (AntiquaCRM::SearchBarFilter::SBF_KEYWORDS): {
     obj.insert("search", QJsonValue("keywords"));
-    obj.insert("fields", QJsonValue("ib_keyword"));
+    obj.insert("fields", QJsonValue("__CUSTOM__"));
     break;
   }
 

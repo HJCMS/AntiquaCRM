@@ -414,37 +414,38 @@ const QVariant AProviderOrder::getValue(const QString &key) {
 }
 
 AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString &key,
-                                                        const QVariant &value) {
+                                                        const QVariant &value,
+                                                        int maxLength) {
+  QVariant _buffer(value);
+  // FIXME Zeichenkettenüberlängen vermeiden.
+  // Bestelltitel der Dienstleister weicht von Ui und Datenbankvorgabe ab.
+  // Deshalb müssen wir an dieser Stelle noch mal die Feldgrenzen prüfen,
+  // bei Bedarf diese entsprechend kürzen!
+  if (value.metaType().id() == QMetaType::QString) {
+    QString _str = value.toString();
+    if (_str.length() > maxLength) {
+      qWarning("Shrink oversized field '%s' length to '%d'.", // info
+               qPrintable(key), maxLength);
+      _str = _str.first(maxLength);
+      qsizetype _s = _str.lastIndexOf(" ");
+      if (_s > (maxLength / 2))
+        _str = _str.first(_s);
+
+      _buffer = _str.trimmed();
+    }
+  } else if (value.metaType().id() == QMetaType::UnknownType) {
+    qWarning("Unknown Metatype for '%s'!", qPrintable(key));
+  }
+
   AntiquaCRM::ArticleOrderItem item;
   item.key = key;
-  item.value = value;
+  item.value = _buffer;
   return item;
 }
 
 AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QSqlField &field,
                                                         int maxLength) {
-  const QString _name = field.name();
-  QVariant _value = field.value();
-  if (field.metaType().id() == QMetaType::QString) {
-    // FIXME Zeichenkettenüberlängen vermeiden.
-    // Bestelltitel der Dienstleister weicht von Ui und Datenbankvorgabe ab.
-    // Deshalb müssen wir an dieser Stelle noch mal die Feldgrenzen prüfen,
-    // bei Bedarf diese entsprechend kürzen!
-    QString _str = field.value().toString();
-    int _len = (field.length() > 0 ? field.length() : maxLength);
-    if (_str.length() > _len) {
-#ifdef ANTIQUA_DEVELOPEMENT
-      qDebug() << Q_FUNC_INFO << _len << _str.length() << field;
-#else
-      qWarning("Shrink oversized field '%s' length to '%d'.", // info
-               qPrintable(_name), _len);
-#endif
-      _value = _str.first(_len);
-    }
-  } else if (field.metaType().id() == QMetaType::UnknownType) {
-    qWarning("Unknown Metatype for '%s'!", qPrintable(_name));
-  }
-  return createItem(_name, _value);
+  return createItem(field.name(), field.value(), maxLength);
 }
 
 const QList<OrderArticleItems> AProviderOrder::orders() { return p_orderItems; }

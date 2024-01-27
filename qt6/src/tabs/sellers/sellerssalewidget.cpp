@@ -273,8 +273,8 @@ void SellersSalesWidget::findArticleIds() {
 
 void SellersSalesWidget::prepareCreateOrder() {
   const QString _provider = p_order.value("provider").toString();
-  const QString _orderid = p_order.value("orderid").toString();
-  if (_provider.isEmpty() || _orderid.isEmpty()) {
+  const QString _proid = p_order.value("orderid").toString();
+  if (_provider.isEmpty() || _proid.isEmpty()) {
     qWarning("CreateOrder rejected: missing arguments!");
     return;
   }
@@ -282,42 +282,42 @@ void SellersSalesWidget::prepareCreateOrder() {
   AntiquaCRM::ASqlFiles _tpl("query_order_exists");
   if (_tpl.openTemplate()) {
     QString clause("o_provider_name ILIKE '" + _provider);
-    clause.append("' AND o_provider_order_id='" + _orderid + "'");
+    clause.append("' AND o_provider_order_id='" + _proid + "'");
+    clause.append(" AND pr_order_id IS NOT NULL");
     _tpl.setWhereClause(clause);
   }
 
   AntiquaCRM::ASqlCore psql(this);
   QSqlQuery _query = psql.query(_tpl.getQueryContent());
-  if (_query.size() > 0) {
-    _query.next();
-
-    qint64 _oid = _query.value("o_id").toInt();
-    const QString _prinfo = _query.value("prinfo").toString();
-    const QString _buyer = _query.value("buyer").toString();
-
-    QStringList _list; // create PopUp Message
-    _list.append(tr("An order for %1 already exists!").arg(_prinfo));
-    _list.append(tr("Current Order number: %1").arg(_oid));
-    _list.append(tr("Buyer: %1").arg(_buyer));
-
-    PopUpOpenExists popUp(this);
-    popUp.setWindowTitle(tr("Order already exists!"));
-    popUp.setMessage(_list);
-    switch (popUp.exec()) {
-    case (QMessageBox::Open):
-      openOrder(_oid);
-      break;
-
-    case (QMessageBox::Yes):
-      createOrder(_orderid);
-      break;
-
-    default:
-      break;
-    }
+  if (_query.size() < 1) {
+    createOrder(_proid);
     return;
   }
-  createOrder(_orderid);
+
+  _query.next();
+  qint64 _oid = _query.value("o_id").toInt();
+  const QString _prinfo = _query.value("prinfo").toString();
+  const QString _buyer = _query.value("buyer").toString();
+  QStringList _list; // create PopUp Message
+  _list.append(tr("An order for %1 already exists!").arg(_prinfo));
+  _list.append(tr("Current Order number: %1").arg(_oid));
+  _list.append(tr("Buyer: %1").arg(_buyer));
+
+  PopUpOpenExists popUp(this);
+  popUp.setWindowTitle(tr("Order already exists!"));
+  popUp.setMessage(_list);
+  switch (popUp.exec()) {
+  case (QMessageBox::Open):
+    openOrder(_oid);
+    break;
+
+  case (QMessageBox::Yes):
+    createOrder(_proid);
+    break;
+
+  default:
+    break;
+  }
 }
 
 bool SellersSalesWidget::init() {

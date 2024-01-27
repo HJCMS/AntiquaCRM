@@ -3504,7 +3504,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+1"/>
+        <source>narrow down to year of changed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Authors search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8330,7 +8335,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+116"/>
         <source>An order for %1 already exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8350,7 +8355,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+26"/>
         <source>No Customer found!</source>
         <translation type="unfinished"></translation>
     </message>

@@ -123,8 +123,9 @@ public:
    * @param key    - Field name
    * @param value  - Value
    */
-  static AntiquaCRM::ArticleOrderItem createItem(const QString &key,
-                                                 const QVariant &value);
+  static AntiquaCRM::ArticleOrderItem createItem(const QString &key, // field
+                                                 const QVariant &value,
+                                                 int maxLength = 80);
 
   /**
    * @brief Create an new Article Order Item
