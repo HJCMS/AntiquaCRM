@@ -27,6 +27,7 @@ SET (query_tables_FILES
   query_order_by_oid.sql
   query_order_exists.sql
   query_order_import_customer.sql
+  query_order_notifiaction.sql
   query_postal_codes.sql
   query_printing_billing_info.sql
   query_printing_cards.sql

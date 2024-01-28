@@ -9,6 +9,7 @@
 #include "orderstableoverview.h"
 
 #include <AntiquaCRM>
+#include <QDate>
 #include <QtWidgets>
 
 OrdersWidget::OrdersWidget(QWidget *parent)
@@ -83,6 +84,26 @@ OrdersWidget::OrdersWidget(QWidget *parent)
           SLOT(setReloadView()));
 }
 
+bool OrdersWidget::firstStartOnWorkday() {
+  // current day
+  const QDate _cd = QDate::currentDate();
+  // past day
+  const QString _pd = _cd.addDays(-1).toString("yyyy-MM-dd");
+
+  AntiquaCRM::ASettings cfg(this);
+  if (cfg.value("lastWorkDay", _pd).toDate() == _cd)
+      return false; // nothing todo
+
+  QString _sql("(");
+  _sql.append(m_table->defaultWhereClause());
+  // remind,admonish and collection procedures
+  _sql.append(") OR (o_payment_status IN (2,3,5))");
+
+  m_table->setQuery(_sql);
+  cfg.setValue("lastWorkDay", _cd.toString("yyyy-MM-dd"));
+  return true;
+}
+
 void OrdersWidget::setDefaultTableView() {
   m_searchBar->setClearAndFocus();
   setCurrentIndex(ViewPage::MainView);
@@ -149,7 +170,10 @@ void OrdersWidget::refundEntry(qint64 oid) {
 
 void OrdersWidget::onEnterChanged() {
   if (!initialed) {
-    initialed = m_table->setQuery();
+    initialed = firstStartOnWorkday();
+    if (!initialed)
+      initialed = m_table->setQuery();
+
     setCurrentIndex(ViewPage::MainView);
     return;
   }

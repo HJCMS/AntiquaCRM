@@ -11,15 +11,16 @@
 
 #include <QObject>
 #include <QTextEdit>
-// #include <QKeyEvent>
+#include <QDragEnterEvent>
+#include <QDragMoveEvent>
 #include <QWidget>
 
 class TemplateEditor final : public QTextEdit {
   Q_OBJECT
 
 private:
-  // void keyPressEvent(QKeyEvent *) override;
-  // void keyReleaseEvent(QKeyEvent *) override;
+  void dragEnterEvent(QDragEnterEvent *) override;
+  void dragMoveEvent(QDragMoveEvent *) override;
 
 public Q_SLOTS:
   void setBody(const QString &data);

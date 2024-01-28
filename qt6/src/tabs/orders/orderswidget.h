@@ -28,6 +28,7 @@ private:
   OrdersStatusBar *m_statusBar;
   QScrollArea *m_editorPage;
   OrdersEditor *m_editorWidget;
+  bool firstStartOnWorkday();
   void setDefaultTableView() override;
 
 public Q_SLOTS:
