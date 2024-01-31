@@ -13,11 +13,11 @@ MonthBarSet::MonthBarSet(int year, QChart *parent, MonthBarSet::Type type)
   } else {
     setLabel(tr("Count (%1)").arg(year));
   }
-  connect(this, SIGNAL(hovered(bool, int)), SLOT(showToolTip(bool, int)));
+  connect(this, SIGNAL(hovered(bool,int)), SLOT(showToolTip(bool,int)));
 }
 
 void MonthBarSet::showToolTip(bool b, int i) {
-  if (b && p_sales.size() == 12) {
+  if (b && p_sales.size() > i) {
     double _cost = p_sales[(i + 1)];
     if (_cost > 0.00) {
       const QString _money = AntiquaCRM::ATaxCalculator::money(_cost);

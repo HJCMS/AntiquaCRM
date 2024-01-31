@@ -58,11 +58,13 @@ bool ASqlCore::initDatabase() {
     database = new QSqlDatabase(db);
 
   if (database->isOpenError()) {
+    qWarning("Database open errors ...");
     prepareSqlError(database->lastError());
     return false;
   }
+
   qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
-  return database->isOpen();
+  return isConnected();
 }
 
 bool ASqlCore::isConnected() {
@@ -81,21 +83,17 @@ bool ASqlCore::isConnected() {
 
 void ASqlCore::prepareSqlError(const QSqlError &error) {
   switch (error.type()) {
-  case QSqlError::NoError:
-    return;
-
   case QSqlError::StatementError:
-    qWarning("ASqlCore::SqlError::Statement");
+    qWarning("ASqlCore::StatementError");
     emit sendStatementError(error);
     break;
 
+  case QSqlError::TransactionError:
+  case QSqlError::UnknownError:
   case QSqlError::ConnectionError:
-    qWarning("ASqlCore::SqlError::Connection");
-    emit sendConnectionError(error);
+    qWarning("ASqlCore::PgSqlErrors");
     break;
 
-  // case QSqlError::TransactionError:
-  // case QSqlError::UnknownError:
   default:
     break;
   };
@@ -137,13 +135,24 @@ const QString ASqlCore::getDateTime() const {
 }
 
 const QString ASqlCore::getTimeStamp() {
+  const QString _format("dd.MM.yyyy hh:mm.dd.ssss t");
+  QDateTime _dt = QDateTime::currentDateTime();
   QSqlQuery _q = ASqlCore::query("SELECT CURRENT_TIMESTAMP;");
   if (_q.size() == 1) {
     _q.next();
-    return _q.value(0).toString();
+    _dt = _q.value(0).toDateTime();
   }
-  qWarning("ASqlCore::getTimeStamp - fallback to QDateTime");
-  return QDateTime::currentDateTime().toString("dd.MM.yyyy hh:mm.dd.ssss t");
+  return _dt.toString(_format);
+}
+
+const QDateTime ASqlCore::getDateTimeStamp() {
+  QDateTime _dt = QDateTime::currentDateTime();
+  QSqlQuery _q = ASqlCore::query("SELECT CURRENT_TIMESTAMP;");
+  if (_q.size() == 1) {
+    _q.next();
+    _dt = _q.value(0).toDateTime();
+  }
+  return _dt;
 }
 
 bool ASqlCore::open() {

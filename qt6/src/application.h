@@ -24,6 +24,7 @@ class Application final : public QApplication {
   Q_OBJECT
 
 private:
+  bool errors = false;
   AntiquaCRM::ASettings *m_cfg;          /**< @brief Configurations */
   AntiquaCRM::ASqlCore *m_sql = nullptr; /**< @brief PostgreSQL Database */
   MainWindow *m_window = nullptr;        /**< @brief UI Window */

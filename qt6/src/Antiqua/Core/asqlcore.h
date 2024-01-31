@@ -43,7 +43,6 @@ private Q_SLOTS:
   void prepareSqlError(const QSqlError &);
 
 Q_SIGNALS:
-  void sendConnectionError(const QSqlError &);
   void sendStatementError(const QSqlError &);
 
 public:
@@ -77,10 +76,16 @@ public:
   const QString getDateTime() const;
 
   /**
-   * @brief Query CURRENT_TIMESTAMP from PostgreSQL-Server.
-   * @note it depends on server system locale
+   * @brief Query CURRENT_TIMESTAMP from SQL-Server.
+   * @note timezone depends on server locale
    */
   const QString getTimeStamp();
+
+  /**
+   * @brief Query DateTime from SQL-Server.
+   * @note timezone depends on server locale
+   */
+  const QDateTime getDateTimeStamp();
 
   /**
    * @brief Open database

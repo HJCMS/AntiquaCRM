@@ -14,6 +14,7 @@
 #include <QDialog>
 #include <QDialogButtonBox>
 #include <QObject>
+#include <QTextEdit>
 #include <QWidget>
 
 class SwitchDatabaseProfile final : public QDialog {
@@ -21,6 +22,7 @@ class SwitchDatabaseProfile final : public QDialog {
 
 private:
   AntiquaCRM::ASettings *config;
+  QTextEdit *m_sqlError;
   QDialogButtonBox *btn_box;
   QComboBox *sql_profiles;
 
@@ -30,6 +32,7 @@ private Q_SLOTS:
 public:
   explicit SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
                                  QWidget *parent = nullptr);
+  void setRemoteInfo(const QString &msg);
   int exec() override;
 };
 

@@ -67,6 +67,8 @@ bool Application::checkRemotePort() {
   AntiquaCRM::ASqlSettings _csql(this);
   AntiquaCRM::ASqlProfile _pr = _csql.connectionProfile();
   AntiquaCRM::ANetworkIface iface;
+  qInfo("Testing connection to %s:%d ...", qPrintable(_pr.getHostname()),
+        _pr.getPort());
   if (iface.checkRemotePort(_pr.getHostname(), _pr.getPort()))
     return true;
 
@@ -76,14 +78,16 @@ bool Application::checkRemotePort() {
 
 bool Application::openDatabase() {
   m_sql = new AntiquaCRM::ASqlCore(this);
-  if (m_sql->open()) {
+  if (m_sql->status())
     return true;
-  }
+
 #ifdef ANTIQUA_DEVELOPEMENT
   qDebug() << Q_FUNC_INFO << m_sql->lastError();
-#else
-  qFatal("No Database connection!");
 #endif
+
+  if (m_window != nullptr)
+    m_window->hide();
+
   return false;
 }
 
@@ -288,6 +292,9 @@ int Application::exec() {
   if (!openDatabase()) {
     p_splash.errorMessage(tr("SQL Server connection unsuccessful!"));
     SwitchDatabaseProfile _dbd(m_cfg, &p_splash);
+    if (m_sql != nullptr)
+      _dbd.setRemoteInfo(m_sql->lastError());
+
     if (_dbd.exec() == QDialog::Rejected) {
       qInfo("No database profile changes.");
     } else {
@@ -301,13 +308,14 @@ int Application::exec() {
 
   // Step 6 - create cache files
   p_splash.setMessage(tr("Update application cache."));
-  if (m_sql->db().isOpen()) {
+  if (m_sql->open()) {
     mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
     DataCache *m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splash,
             SLOT(setMessage(const QString &)));
 
+    // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {
       p_splash.setMessage(tr("Cachefiles completed ..."));
     } else {

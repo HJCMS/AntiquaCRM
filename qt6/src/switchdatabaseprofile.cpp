@@ -37,6 +37,9 @@ SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
   m_info->setWordWrap(true);
   layout->addWidget(m_info);
 
+  m_sqlError = new QTextEdit(this);
+  layout->addWidget(m_sqlError);
+
   layout->addStretch();
 
   sql_profiles = new QComboBox(this);
@@ -69,6 +72,10 @@ void SwitchDatabaseProfile::saveAndQuit() {
   qInfo("Changed profile '%s' and close dialog.", qPrintable(_profile));
   config->setValue("database_profile", _profile);
   accept();
+}
+
+void SwitchDatabaseProfile::setRemoteInfo(const QString &msg) {
+  m_sqlError->setPlainText(msg);
 }
 
 int SwitchDatabaseProfile::exec() {
