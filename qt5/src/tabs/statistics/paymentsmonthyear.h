@@ -46,6 +46,7 @@ private:
   QtCharts::QChart *m_chart;
   QtCharts::QBarCategoryAxis *m_label;
   AHorizontalBarSeries *m_barSeries;
+  void setMiniViewHeight(qreal);
   bool initMaps();
   inline const QDateTime fsepoch(qint64) const;
   MonthBarSet *createBarset(int);

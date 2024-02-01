@@ -11,7 +11,7 @@ ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject *parent)
     : QObject{parent} {
   setObjectName("acmdproviders");
   cfg = new AntiquaCRM::ASettings("antiquacmd", this);
-  pgsql = new AntiquaCRM::ASqlCore(this);
+  pgsql = new AntiquaCRM::ASqlCore(this, QString("Default"));
   netw = new AntiquaCRM::ANetworker(type, this);
 
   // Verlaufsabfrage

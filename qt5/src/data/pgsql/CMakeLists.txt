@@ -10,6 +10,7 @@ SET (query_tables_FILES
   query_book_binding.sql
   query_book_publisher_de.sql
   query_build_refunding.sql
+  query_charts_year_range.sql
   query_company_data.sql
   query_connection_info.sql
   query_customer_data.sql

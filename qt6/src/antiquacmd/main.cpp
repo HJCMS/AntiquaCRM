@@ -8,7 +8,6 @@
 #include <QByteArray>
 #include <QString>
 #include <QtGlobal>
-#include <cstdio>
 #include <syslog.h>
 
 #include "antiquacmd.h"

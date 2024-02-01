@@ -34,7 +34,7 @@ private:
   /**
    * @brief profile
    */
-  QString profile;
+  QString connection_profile;
 
   /**
    * @brief profilpath
@@ -62,8 +62,10 @@ Q_SIGNALS:
 public:
   /**
    * @param parent - parent object
+   * @param profile - force to use a custom profile
    */
-  explicit ASqlSettings(QObject *parent = nullptr);
+  explicit ASqlSettings(QObject *parent = nullptr,
+                    const QString &profile = QString());
 
   /**
    * @brief Global Connectionname.

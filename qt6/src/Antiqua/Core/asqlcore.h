@@ -16,11 +16,13 @@ namespace AntiquaCRM {
 class ASqlSettings;
 
 /**
- * @brief Primärklasse für die Datenbank
+ * @brief Primary class for the database connection
  * @ingroup CoreLibrary
- * Die ASqlCore prüft Standardmäßig die Treiber und greift auf die
- * Datenbankverbindung zu!
- * @note AntiquaCRM macht beim Start eine Session-Verbindung auf!
+ *
+ * By default, AntiquaCRM::ASqlCore checks the drivers and accesses the database
+ * connection!
+ *
+ * @note AntiquaCRM opens a session connection when it starts!
  */
 class ANTIQUACRM_LIBRARY ASqlCore final : public QObject {
   Q_OBJECT
@@ -30,12 +32,12 @@ private:
   QSqlDatabase *database;
 
   /**
-   * @brief Erstelle Datenbankverbindung
+   * @brief create database connection
    */
   bool initDatabase();
 
   /**
-   * @brief Prüfe Verbindung
+   * @brief check connection
    */
   bool isConnected();
 
@@ -48,8 +50,15 @@ Q_SIGNALS:
 public:
   /**
    * @param parent - parent object
+   * @param profile - force to use a custom profile
+   *
+   * Optional: Assign a profile for the database configuration.
+   * By default, this will read in AntiquaCRM::ASqlSettings class and read from
+   * user configuration in the UI.
+   * e.g.: When using the server, this can be overwritten here.
    */
-  explicit ASqlCore(QObject *parent = nullptr);
+  explicit ASqlCore(QObject *parent = nullptr,
+                    const QString &profile = QString());
 
   /**
    * @brief Responses the max database query limit for tables.

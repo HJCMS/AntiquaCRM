@@ -7,7 +7,6 @@
 #include <QCursor>
 #include <QLayout>
 #include <QToolTip>
-#include <cmath>
 
 MonthBarSet::MonthBarSet(int year, QtCharts::QChart *parent)
     : QtCharts::QBarSet{QString::number(year), parent}, p_year{year} {
@@ -17,7 +16,7 @@ MonthBarSet::MonthBarSet(int year, QtCharts::QChart *parent)
 
 void MonthBarSet::showToolTip(bool b, int i) {
   int _m = (i + 1); // month
-  if (b) {
+  if (b && p_sales.size() > i) {
     double _money = p_sales[_m];
     if (_money > 0.00) {
       const QString _info =
@@ -69,11 +68,15 @@ PaymentsMonthYear::PaymentsMonthYear(const QDate &date, QWidget *parent)
   }
 }
 
+void PaymentsMonthYear::setMiniViewHeight(qreal i) {
+  qreal _b = 0.5; // border line
+  qreal _h = QFontMetricsF(font()).boundingRect("X").height();
+  m_chart->setMinimumHeight((_h + _b) * (i * 12));
+}
+
 bool PaymentsMonthYear::initMaps() {
-  QString _sql("SELECT DISTINCT");
-  _sql.append(" date_part('year', o_delivered)::NUMERIC AS year");
-  _sql.append(" FROM inventory_orders WHERE (o_delivered IS NOT NULL)");
-  _sql.append(" GROUP BY year ORDER BY year");
+  const QString _sql =
+      AntiquaCRM::ASqlFiles::queryStatement("query_charts_year_range");
   QSqlQuery _q = m_sql->query(_sql);
   if (_q.size() < 1) {
     qWarning("Sales in Month chart, without ranges!");
@@ -92,6 +95,7 @@ bool PaymentsMonthYear::initMaps() {
     p_voluMap.insert(_year, _vol);
     p_soldMap.insert(_year, _sel);
   }
+  setMiniViewHeight(_q.size());
   _q.clear();
   return true;
 }

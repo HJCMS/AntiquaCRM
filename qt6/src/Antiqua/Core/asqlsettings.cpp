@@ -10,15 +10,17 @@
 
 namespace AntiquaCRM {
 
-ASqlSettings::ASqlSettings(QObject *parent) : ASettings(parent) {
+ASqlSettings::ASqlSettings(QObject *parent, const QString &profile)
+    : ASettings(parent), connection_profile{profile} {
   setObjectName("antiquacrm_sqlsettings");
-  profile = getProfile();
+  if (profile.isEmpty())
+    connection_profile = getProfile();
 }
 
 const QString ASqlSettings::groupPath() {
   QString group("database");
   group.append("/");
-  group.append(profile);
+  group.append(connection_profile);
   return group;
 }
 
@@ -41,25 +43,25 @@ const QString ASqlSettings::connectionName() {
 }
 
 const AntiquaCRM::ASqlProfile ASqlSettings::connectionProfile() {
-  ASqlProfile cp(profile);
-  cp.setDatabaseName(getParam("pg_database").toString());
-  cp.setHostname(getParam("pg_hostname").toString());
-  cp.setUsername(getParam("pg_username").toString());
-  cp.setPassword(getParam("pg_password").toString());
-  cp.setTimeout(getParam("pg_timeout").toInt());
-  cp.setPort(getParam("pg_port").toInt());
-  cp.setEnableSSL(getParam("pg_ssl").toBool());
-  cp.setSslIssuer(getParam("ssl_CA").toString());
-  cp.setSslCommonName(getParam("ssl_CN").toString());
-  cp.setSslBundle(getParam("ssl_bundle").toString());
-  cp.setSslMode(getParam("ssl_mode").toString());
-  cp.setSslRootCert(getParam("ssl_root_cert").toString());
-  return cp;
+  ASqlProfile _cp(connection_profile);
+  _cp.setDatabaseName(getParam("pg_database").toString());
+  _cp.setHostname(getParam("pg_hostname").toString());
+  _cp.setUsername(getParam("pg_username").toString());
+  _cp.setPassword(getParam("pg_password").toString());
+  _cp.setTimeout(getParam("pg_timeout").toInt());
+  _cp.setPort(getParam("pg_port").toInt());
+  _cp.setEnableSSL(getParam("pg_ssl").toBool());
+  _cp.setSslIssuer(getParam("ssl_CA").toString());
+  _cp.setSslCommonName(getParam("ssl_CN").toString());
+  _cp.setSslBundle(getParam("ssl_bundle").toString());
+  _cp.setSslMode(getParam("ssl_mode").toString());
+  _cp.setSslRootCert(getParam("ssl_root_cert").toString());
+  return _cp;
 }
 
 void ASqlSettings::setProfile(const QString &name) {
-  profile = name.trimmed();
-  setValue("database_profile", profile);
+  connection_profile = name.trimmed();
+  setValue("database_profile", connection_profile);
 }
 
 const QString ASqlSettings::getProfile() {
