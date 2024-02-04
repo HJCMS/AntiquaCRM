@@ -250,7 +250,17 @@ AbeBooksDocument::getPerson(const QDomNode &addressNode) {
 }
 
 const QVariant AbeBooksDocument::getPostalCode(const QDomNode &addressNode) {
-  return addressNode.namedItem("code").firstChild().nodeValue();
+  QString _plz = addressNode.namedItem("code").firstChild().nodeValue();
+  _plz = _plz.trimmed();
+  if (_plz.length() > 10 || _plz.indexOf(" ") > 6) {
+    _plz = _plz.left(10).trimmed();
+    QStringList _l = _plz.split(" ");
+    if (_l.size() > 1) {
+      _plz = _l.first().trimmed();
+    }
+    _l.clear();
+  }
+  return _plz;
 }
 
 const QString AbeBooksDocument::getLocation(const QDomNode &addressNode) {

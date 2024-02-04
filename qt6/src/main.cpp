@@ -13,7 +13,6 @@
 #include "application.h"
 
 #ifdef Q_OS_LINUX
-#include <cstdio>
 #include <syslog.h>
 
 void SyslogMessageHandler(QtMsgType type, // Message Type
