@@ -5,9 +5,8 @@
 
 CompanyWidget::CompanyWidget(QWidget *parent) : QWidget{parent} {
   layout = new QGridLayout(this);
-  QString _txt =
-      tr("On this page, configure your company presentation settings.");
-  layout->addWidget(infoCell( _txt), p_row++, 0, 1, 2);
+  QString _txt = tr("On this page, configure your company presentation.");
+  layout->addWidget(infoCell(_txt), p_row++, 0, 1, 2);
   setLayout(layout);
 }
 
@@ -43,7 +42,7 @@ void CompanyWidget::saveConfig() {
 bool CompanyWidget::loadConfig() {
   bool _status = false;
   AntiquaCRM::ASqlFiles _tpl("query_company_data");
-  if(!_tpl.openTemplate())
+  if (!_tpl.openTemplate())
     return false;
 
   AntiquaCRM::ASqlCore c_sql(this);

@@ -8,7 +8,7 @@
 #include <QLayout>
 
 SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
-                                             QWidget *parent)
+                                 QWidget *parent)
     : QDialog{parent}, config{settings} {
   setObjectName("switch_db_connection");
   setWindowTitle(tr("Database connection"));
@@ -49,7 +49,7 @@ SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
   layout->addWidget(sql_profiles, 0, Qt::AlignLeft);
 
   btn_box = new QDialogButtonBox(
-      (QDialogButtonBox::Save | QDialogButtonBox::Cancel), this);
+      (QDialogButtonBox::Save | QDialogButtonBox::Close), this);
   layout->addWidget(btn_box);
 
   setLayout(layout);
@@ -59,19 +59,20 @@ SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
 }
 
 void SwitchDatabaseProfile::saveAndQuit() {
+  qInfo("Save and quit..");
   const QString _profile = sql_profiles->currentData().toString();
   if (_profile.isEmpty())
     return; // no selection
 
-  const QString _old = config->value("database_profile", "Default").toString();
-  if (_profile == _old) {
-    accept();
-    return; // nothing todo
-  }
-
   qInfo("Changed profile '%s' and close dialog.", qPrintable(_profile));
   config->setValue("database_profile", _profile);
-  accept();
+
+#ifdef ANTIQUA_DEVELOPEMENT
+  qDebug() << Q_FUNC_INFO
+           << config->organizationName()
+           << config->applicationName()
+           << config->value("database_profile");
+#endif
 }
 
 void SwitchDatabaseProfile::setRemoteInfo(const QString &msg) {

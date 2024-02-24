@@ -46,8 +46,11 @@ bool ASqlCore::initDatabase() {
   if (profile.getEnableSSL()) {
     options << QString("sslsni=1");
     options << QString("sslmode=%1").arg(profile.getSslMode());
-    options << QString("sslrootcert=%1").arg(profile.getSslRootCert());
-    options << QString("ssl_min_protocol_version=%1").arg("TLSv1.2");
+    QString _crt = profile.getSslRootCert();
+    if (_crt.isEmpty())
+      options << QString("sslrootcert=%1").arg("system");
+    else
+      options << QString("sslrootcert=%1").arg(_crt);
   }
   db.setConnectOptions(options.join(";"));
 

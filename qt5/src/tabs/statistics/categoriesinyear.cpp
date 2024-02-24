@@ -70,14 +70,14 @@ CategoriesInYear::CategoriesInYear(const QDate &date, QWidget *parent)
     if (size > 0) {
       int index = 0;
       while (q.next()) {
-        int count = q.value("counts").toInt();
-        if (count < 1)
-          continue;
+        int _c = q.value("counts").toInt();
+        double _v = q.value("volume").toDouble();
+        if (_c < 1 || _v <= 0)
+          continue; // no refunds
 
-        m_quantity->append(count);
-        double volume = q.value("volume").toDouble();
-        m_average->append(currencyRound(volume / count));
-        m_volume->append(volume);
+        m_quantity->append(_c);
+        m_average->append(currencyRound(_v / _c));
+        m_volume->append(_v);
         m_axisY->insert(index++, q.value("sl_identifier").toString());
       }
       m_doubleSeries->insert(0, m_average);

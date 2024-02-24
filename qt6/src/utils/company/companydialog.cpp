@@ -55,5 +55,5 @@ int CompanyDialog::exec() {
   if (!m_editWidget->loadConfig())
     return QDialog::Rejected;
 
-return QDialog::exec();
+  return QDialog::exec();
 }

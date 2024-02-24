@@ -301,7 +301,7 @@ int Application::exec() {
       qInfo("Database profile changed, application restart required.");
     }
     mutex.unlock();
-    return 0;
+    return 1;
   }
   p_splash.setMessage(tr("Database connection successfully."));
   mutex.unlock();

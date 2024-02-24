@@ -7,9 +7,9 @@
 #define QUOTE(x) _QUOTE(x)
 #define CONCAT(x,y) x ## y
 
-#define VER_PRODUCTVERSION          1,1,0,0
-#define VER_FILEVERSION             1,1,0,0
-#define VER_ORIGINALFILENAME_STR    QUOTE(antiquacrm)
+#define VER_PRODUCTVERSION          @ANTIQUACRM_VERSION_FILEOS@
+#define VER_FILEVERSION             @ANTIQUACRM_VERSION_FILEOS@
+#define VER_ORIGINALFILENAME_STR    QUOTE(@PROJECTNAME@)
 
 /**
 * Defines a version-information resource.
@@ -40,14 +40,14 @@ FILESUBTYPE     VFT2_UNKNOWN
     /* 0x0409 U.S. English AND 04B0 Unicode */
     BLOCK "040904B0"
     {
-      VALUE "CompanyName",      "HJCMS https://www.hjcms.de"
-      VALUE "FileDescription",  "Application for Managing antiquarian Books"
-      VALUE "FileVersion",      "1.1.0\0"
-      VALUE "InternalName",     "antiquacrm"
+      VALUE "CompanyName",      "HJCMS @HOMEPAGEURL@"
+      VALUE "FileDescription",  "@DESCRIPTION@"
+      VALUE "FileVersion",      "@ANTIQUACRM_VERSION_STRING@\0"
+      VALUE "InternalName",     "@PROJECTNAME@"
       VALUE "OriginalFilename",  VER_ORIGINALFILENAME_STR
-      VALUE "AppId",            "33A9376C-F6F7-597C-8212-7D603A38354C"
-      VALUE "ProductName",      "AntiquaCRM"
-      VALUE "ProductVersion",   "1.1.0\0"
+      VALUE "AppId",            "@ANTIQUACRM_APPID@"
+      VALUE "ProductName",      "@DISPLAYNAME@"
+      VALUE "ProductVersion",   "@ANTIQUACRM_VERSION_STRING@\0"
       VALUE "LegalCopyright",   "Copyright(C) 2013-2024 HJCMS https://www.hjcms.de"
     }
   }
@@ -64,9 +64,9 @@ FILESUBTYPE     VFT2_UNKNOWN
  * Defines a bitmap that defines the shape of the icon to be used for
  * a given application or an animated icon.
  */
-IDI_ICON1   ICON    DISCARDABLE   QUOTE(/home/heinemann/Developement/antiquacrm/devel/qt6/src/antiquacrm.ico)
+IDI_ICON1   ICON    DISCARDABLE   QUOTE(@CMAKE_CURRENT_SOURCE_DIR@/antiquacrm.ico)
 
 /**
  * TODO
- * CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST QUOTE(/home/heinemann/Developement/antiquacrm/devel/qt6/src/antiqua.manifest)
+ * CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST QUOTE(@CMAKE_CURRENT_SOURCE_DIR@/antiqua.manifest)
  */

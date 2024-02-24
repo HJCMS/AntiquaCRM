@@ -77,11 +77,11 @@ bool SalesCategories::initialChartView(int year) {
       int _i = 0;
       while (_q.next()) {
         int _c = _q.value("counts").toInt();
-        if (_c < 1)
-          continue;
+        double _v = _q.value("volume").toDouble();
+        if (_c < 1 || _v <= 0)
+          continue; // no refunds
 
         m_quantity->append(_c);
-        double _v = _q.value("volume").toDouble();
         m_average->append(roundPrice(_v / _c));
         m_volume->append(_v);
         m_axisY->insert(_i++, _q.value("sl_identifier").toString());
