@@ -2744,7 +2744,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+186"/>
+        <location filename="../application.cpp" line="+190"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2784,7 +2784,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+13"/>
         <source>Database connection successfully.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2799,7 +2799,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Cachefiles completed ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3423,7 +3423,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksSearchBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+19"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+18"/>
         <source>Default search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4522,8 +4522,8 @@ Image - Article Id: %2</source>
 <context>
     <name>CompanyWidget</name>
     <message>
-        <location filename="../utils/company/companywidget.cpp" line="+9"/>
-        <source>On this page, configure your company presentation settings.</source>
+        <location filename="../utils/company/companywidget.cpp" line="+8"/>
+        <source>On this page, configure your company presentation.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4998,6 +4998,14 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+2"/>
         <source>Configure accessibility of providers.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Creditworthiness</name>
+    <message>
+        <location filename="../tabs/sellers/creditworthiness.cpp" line="+7"/>
+        <source>&lt;b&gt;Warning&lt;/b&gt;: Check Customer creditworthiness!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7274,7 +7282,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+160"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+184"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8289,7 +8297,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SellersSalesWidget</name>
     <message>
-        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+34"/>
+        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+35"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8299,7 +8307,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+28"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8324,7 +8332,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+77"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation type="unfinished"></translation>
@@ -8355,7 +8363,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+40"/>
         <source>No Customer found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9392,7 +9400,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Database profiles</source>
         <translation type="unfinished"></translation>
     </message>

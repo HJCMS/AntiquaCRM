@@ -2746,7 +2746,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+186"/>
+        <location filename="../application.cpp" line="+190"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -2786,7 +2786,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>SQL Server-Verbindung fehlgeschlagen!</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+13"/>
         <source>Database connection successfully.</source>
         <translation>Datenbankverbindung erfolgreich.</translation>
     </message>
@@ -2801,7 +2801,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Cache-Dateien erstellen.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Cachefiles completed ...</source>
         <translation>Cacheerstellung abgeschlossen ...</translation>
     </message>
@@ -3444,7 +3444,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksSearchBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+19"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookssearchbar.cpp" line="+18"/>
         <source>Default search</source>
         <translation>Standardsuche</translation>
     </message>
@@ -4546,9 +4546,9 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>CompanyWidget</name>
     <message>
-        <location filename="../utils/company/companywidget.cpp" line="+9"/>
-        <source>On this page, configure your company presentation settings.</source>
-        <translation>Konfigurieren Sie auf dieser Seite die Einstellungen für Ihre Unternehmenspräsentation.</translation>
+        <location filename="../utils/company/companywidget.cpp" line="+8"/>
+        <source>On this page, configure your company presentation.</source>
+        <translation>Konfigurieren Sie auf dieser Seite Ihre Unternehmenspräsentation.</translation>
     </message>
 </context>
 <context>
@@ -5024,6 +5024,14 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <location line="+2"/>
         <source>Configure accessibility of providers.</source>
         <translation>Konfiguriere sichtbarkeit von Dienstanbietern.</translation>
+    </message>
+</context>
+<context>
+    <name>Creditworthiness</name>
+    <message>
+        <location filename="../tabs/sellers/creditworthiness.cpp" line="+7"/>
+        <source>&lt;b&gt;Warning&lt;/b&gt;: Check Customer creditworthiness!</source>
+        <translation>&lt;b&gt;Hinweis&lt;/b&gt;: Überprüfen Sie die Bonität des Kunden!</translation>
     </message>
 </context>
 <context>
@@ -7299,7 +7307,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+160"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+184"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -8315,7 +8323,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SellersSalesWidget</name>
     <message>
-        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+34"/>
+        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+35"/>
         <source>Buyer</source>
         <translation>Käufer</translation>
     </message>
@@ -8325,7 +8333,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+28"/>
         <source>Book</source>
         <translation>Buch</translation>
     </message>
@@ -8350,7 +8358,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Telefon</translation>
     </message>
     <message>
-        <location line="+73"/>
+        <location line="+77"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation>Keine verfügbaren Artikel!</translation>
@@ -8381,7 +8389,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Bestellung existiert bereits!</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+40"/>
         <source>No Customer found!</source>
         <translation>Kein Kunde gefunden!</translation>
     </message>
@@ -9431,7 +9439,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>SQL Server ist vorübergehend nicht verfügbar.</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+15"/>
         <source>Database profiles</source>
         <translation>Datenbankprofile</translation>
     </message>

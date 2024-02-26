@@ -3,6 +3,7 @@
 
 #include "sellerssalewidget.h"
 #include "buyerinfo.h"
+#include "creditworthiness.h"
 #include "popupopenexists.h"
 #include "purchaseactionbar.h"
 #include "purchaseheader.h"
@@ -37,6 +38,9 @@ SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
   m_tab->addTab(m_salesInfo, _icon, tr("Paymentinfo"));
 
   layout->addWidget(m_tab);
+
+  m_worthiness = new Creditworthiness(this);
+  layout->addWidget(m_worthiness);
 
   m_table = new PurchaseTable(this);
   layout->addWidget(m_table);
@@ -144,13 +148,17 @@ bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
     _tpl.setWhereClause(_clause);
 
     AntiquaCRM::ASqlCore psql(this);
-    QSqlQuery q = psql.query(_tpl.getQueryContent());
-    if (q.size() > 0) {
-      q.next();
-      qint64 _cid = q.value("c_id").toInt();
-      QString _name = q.value("display_name").toString();
+    QSqlQuery _q = psql.query(_tpl.getQueryContent());
+    if (_q.size() > 0) {
+      _q.next();
+      qint64 _cid = _q.value("c_id").toInt();
+      AntiquaCRM::CustomerTrustLevel _trust =
+          static_cast<AntiquaCRM::CustomerTrustLevel>(
+              _q.value("c_trusted").toInt());
+      QString _name = _q.value("display_name").toString();
       if (_cid > 0 && !_name.isEmpty()) {
         m_header->setHeader(_name, _cid);
+        setTrustStatus(_trust);
         return true;
       }
     }
@@ -316,6 +324,20 @@ void SellersSalesWidget::prepareCreateOrder() {
     break;
 
   default:
+    break;
+  }
+}
+
+void SellersSalesWidget::setTrustStatus(AntiquaCRM::CustomerTrustLevel tl) {
+  switch (tl) {
+  case (AntiquaCRM::CustomerTrustLevel::WITH_DELAY):
+  case (AntiquaCRM::CustomerTrustLevel::PREPAYMENT):
+  case (AntiquaCRM::CustomerTrustLevel::NO_DELIVERY):
+    m_worthiness->setVisible(true);
+    break;
+
+  default:
+    m_worthiness->setVisible(false);
     break;
   }
 }

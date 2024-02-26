@@ -31,12 +31,13 @@ const QRegularExpression ASqlFiles::macrosPattern() {
 bool ASqlFiles::openTemplate() {
   if (!isReadable()) {
 #ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Permission Denied!";
+    qDebug() << Q_FUNC_INFO << "Missing or permission Denied!";
 #else
-    qWarning("Permission Denied!");
+    qWarning("Missing or permission Denied!");
 #endif
     return false;
   }
+
   QFile fp(filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     p_content = QString();

@@ -18,6 +18,7 @@ class PurchaseTable;
 class PurchaseActionBar;
 class SellersTabWidget;
 class BuyerInfo;
+class Creditworthiness;
 class SalesInfo;
 
 class ANTIQUACRM_LIBRARY SellersSalesWidget final : public QWidget {
@@ -30,6 +31,7 @@ private:
   PurchaseHeader *m_header;
   BuyerInfo *m_buyerInfo;
   SalesInfo *m_salesInfo;
+  Creditworthiness *m_worthiness;
   PurchaseTable *m_table;
   PurchaseActionBar *m_actionBar;
   const QString mediaType(const QJsonValue &);
@@ -47,6 +49,7 @@ private Q_SLOTS:
   void createProviderActions();
   void findArticleIds();
   void prepareCreateOrder();
+  void setTrustStatus(AntiquaCRM::CustomerTrustLevel tl);
 
 Q_SIGNALS:
   void sendOpenRemoteAction(const QJsonObject &);

@@ -19,6 +19,7 @@ ADD_SUBDIRECTORY(repair)
 ADD_LIBRARY (${_pluginTarget} STATIC
   sellersconfig.h
   buyerinfo.h buyerinfo.cpp
+  creditworthiness.h creditworthiness.cpp
   popupopenexists.h popupopenexists.cpp
   purchaseactionbar.h purchaseactionbar.cpp
   purchaseheader.h purchaseheader.cpp
