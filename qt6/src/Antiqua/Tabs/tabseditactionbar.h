@@ -71,6 +71,7 @@ Q_SIGNALS:
   void sendPrintPaymentReminder();
   void sendPrintBookCard();
   void sendPrintRefunding();
+  void sendPrintAdmonition();
   void sendCancelClicked();
   void sendAddCustomAction();
   void sendSaveClicked();

@@ -35,6 +35,7 @@ SET (query_tables_FILES
   query_printing_delivery_note.sql
   query_printing_invoice.sql
   query_printing_refunding.sql
+  query_printing_admonition.sql
   query_provider_order_exists.sql
   query_provider_orders.sql
   query_returning_articles.sql

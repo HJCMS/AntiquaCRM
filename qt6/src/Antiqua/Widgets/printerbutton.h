@@ -30,6 +30,7 @@ private:
   QAction *ac_reminder;
   QAction *ac_bookcard;
   QAction *ac_refunds;
+  QAction *ac_admonition;
 
 Q_SIGNALS:
   /**
@@ -61,6 +62,11 @@ Q_SIGNALS:
    * @brief Print signal refund invoice
    */
   void sendPrintRefunding();
+
+  /**
+   * @brief Print signal invoice warning
+   */
+  void sendPrintAdmonition();
 
 public:
   /**

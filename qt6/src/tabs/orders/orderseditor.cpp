@@ -89,7 +89,8 @@ OrdersEditor::OrdersEditor(QWidget *parent)
   m_actionBar->setPrinterMenu(AntiquaCRM::PRINT_DELIVERY   // Delivery
                               | AntiquaCRM::PRINT_INVOICE  // Invoice
                               | AntiquaCRM::PRINT_REMINDER // Reminder
-                              | AntiquaCRM::PRINT_REFUND); // Refunding
+                              | AntiquaCRM::PRINT_REFUND   // Refunding
+                              | AntiquaCRM::PRINT_ADMONITION);
   mainLayout->addWidget(m_actionBar);
   // END:Row3
 
@@ -116,6 +117,8 @@ OrdersEditor::OrdersEditor(QWidget *parent)
           SLOT(createPrintPaymentReminder()));
   connect(m_actionBar, SIGNAL(sendPrintRefunding()),
           SLOT(createPrintRefundInvoice()));
+  connect(m_actionBar, SIGNAL(sendPrintAdmonition()),
+          SLOT(createPrintAdmonition()));
   connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
           SLOT(createMailMessage(const QString &)));
   connect(m_actionBar, SIGNAL(sendAddCustomAction()),
@@ -854,6 +857,34 @@ void OrdersEditor::createPrintRefundInvoice() {
   AntiquaCRM::PrintRefund *d = new AntiquaCRM::PrintRefund(this);
   if (d->exec(_obj) == QDialog::Accepted) {
     pushStatusMessage(tr("Refund printed."));
+  }
+  d->deleteLater();
+}
+
+void OrdersEditor::createPrintAdmonition() {
+  if (m_orderStatus->getOrderPayment() == AntiquaCRM::OrderPayment::RETURN) {
+    pushStatusMessage(tr("This order is a refunding!"));
+    return;
+  }
+
+  OrdersEditor::Idset _ids = identities();
+  if (!_ids.isValid)
+    return;
+
+  QJsonObject _obj = createDialogData(_ids.or_id);
+  if (_obj.isEmpty())
+    return;
+
+  if (_obj.value("o_delivery_add_price").toBool()) {
+    _obj.insert("package_price",
+                m_costSettings->o_delivery_package->getPackagePrice());
+  } else {
+    _obj.insert("package_price", 0.00);
+  }
+
+  AntiquaCRM::PrintAdmonition *d = new AntiquaCRM::PrintAdmonition(this);
+  if (d->exec(_obj) == QDialog::Accepted) {
+    pushStatusMessage(tr("Admonition printed."));
   }
   d->deleteLater();
 }

@@ -319,6 +319,11 @@ private Q_SLOTS:
   void createPrintRefundInvoice();
 
   /**
+   * @brief Dialog zum erstellen und Drucken einer Rückerstattung.
+   */
+  void createPrintAdmonition();
+
+  /**
    * @brief A Refund hase been selected
    */
   void hintsAboutRefund(AntiquaCRM::OrderPayment);

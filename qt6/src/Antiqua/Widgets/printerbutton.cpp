@@ -50,6 +50,12 @@ PrinterButton::PrinterButton(QWidget *parent, AntiquaCRM::PrinterGroups flags)
   ac_refunds->setVisible(false);
   connect(ac_refunds, SIGNAL(triggered()), SIGNAL(sendPrintRefunding()));
 
+  ac_admonition = m_menu->addAction(_icon, tr("Admonition"));
+  ac_admonition->setToolTip(tr("Printing a invoice admonition"));
+  ac_admonition->setEnabled(false);
+  ac_admonition->setVisible(false);
+  connect(ac_admonition, SIGNAL(triggered()), SIGNAL(sendPrintAdmonition()));
+
   setMenu(m_menu);
   setButtons(flags);
 }
@@ -88,6 +94,13 @@ void PrinterButton::setButtons(AntiquaCRM::PrinterGroups flags) {
     ac_refunds->setVisible(true);
     setEnabled(true);
   }
+
+  if (flags.testFlag(PRINT_ADMONITION)) {
+    ac_admonition->setEnabled(true);
+    ac_admonition->setVisible(true);
+    setEnabled(true);
+  }
+
   emit sendButtonsChanged();
 }
 

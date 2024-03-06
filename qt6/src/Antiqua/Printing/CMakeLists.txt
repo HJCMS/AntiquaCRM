@@ -56,6 +56,7 @@ SET (_library_SOURCES
   printinvoice.cpp
   printrefund.cpp
   printreminder.cpp
+  printadmonition.cpp
   printreport.cpp
 )
 
@@ -71,6 +72,7 @@ SET (_library_HEADERS
   printinvoice.h
   printrefund.h
   printreminder.h
+  printadmonition.h
   printreport.h
 )
 
