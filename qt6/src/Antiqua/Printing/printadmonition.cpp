@@ -264,7 +264,7 @@ void PrintAdmonition::renderPage(QPrinter *printer) {
 }
 
 void PrintAdmonition::createPDF() {
-  QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_DELIVERY);
+  QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_INVOICES);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
     QPrinter *printer = new QPrinter(QPrinter::HighResolution);
@@ -286,14 +286,14 @@ void PrintAdmonition::openPrintDialog() {
   QPrinter *printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
-  printer->setDocName("Invoice");
+  printer->setDocName("admonition");
   printer->setPrinterName(printerInfo.printerName());
   QPrintDialog *dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
-    sendStatusMessage(tr("Delivery note printed!"));
+    sendStatusMessage(tr("Admonition printed!"));
   }
 }
 
@@ -318,7 +318,7 @@ int PrintAdmonition::exec(const QJsonObject &options, bool pdfbtn) {
   }
 
   pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
-  pdfFileName.append(".pdf");
+  pdfFileName.append("_" + tr("admonition.pdf"));
 
   page = new AdmonitionNote(this);
 

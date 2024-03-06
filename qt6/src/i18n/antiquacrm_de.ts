@@ -431,6 +431,75 @@
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::AdmonitionNote</name>
+    <message>
+        <location filename="../Antiqua/Printing/printadmonition.cpp" line="+36"/>
+        <source>Admonition</source>
+        <translation>Mahnung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>on</source>
+        <translation>den</translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>incl.</source>
+        <translation>inkl.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>with</source>
+        <translation>mit</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>without</source>
+        <translation>ohne</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <location line="+13"/>
+        <source>VAT</source>
+        <translation>USt.</translation>
+    </message>
+    <message>
+        <location line="+48"/>
+        <source>Article</source>
+        <translation>Artikel</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Description</source>
+        <translation>Beschreibung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Quantity</source>
+        <translation>Menge</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Price</source>
+        <translation>Preis</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>subtotal</source>
+        <translation>Zwischensumme</translation>
+    </message>
+    <message>
+        <location line="+12"/>
+        <source>delivery cost</source>
+        <translation>Versandkosten</translation>
+    </message>
+    <message>
+        <location line="+11"/>
+        <source>total</source>
+        <translation>Gesamt</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::AttachmentInfo</name>
     <message>
         <location filename="../Antiqua/Widgets/private/mailattachments.cpp" line="+16"/>
@@ -1295,6 +1364,49 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::PrintAdmonition</name>
+    <message>
+        <location filename="../Antiqua/Printing/printadmonition.cpp" line="+42"/>
+        <source>Admonition - PDF created!</source>
+        <translation>Mahnung - PDF erstellt!</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Admonition printed!</source>
+        <translation>Mahnung gedruckt!</translation>
+    </message>
+    <message>
+        <location line="+25"/>
+        <source>admonition.pdf</source>
+        <translation>mahnungs.pdf</translation>
+    </message>
+    <message>
+        <location line="+23"/>
+        <source>Invoice</source>
+        <translation>Rechnung</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Invoice No.</source>
+        <translation>Rechnungsnr.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Order No.</source>
+        <translation>Auftragsnr.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Customer No.</source>
+        <translation>Kunden-Nr.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivery No.</source>
+        <translation>Lieferscheinnr.</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::PrintBookCard</name>
     <message>
         <location filename="../Antiqua/Printing/printbookcard.cpp" line="+61"/>
@@ -1527,6 +1639,16 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <location line="+1"/>
         <source>Printing a refund invoice</source>
         <translation>Drucke Rückerstattungsrechnung</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Admonition</source>
+        <translation>Mahnung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Printing a invoice admonition</source>
+        <translation>Drucke Mahnungsrechnung</translation>
     </message>
 </context>
 <context>
@@ -6649,7 +6771,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rechnungs-ID</translation>
     </message>
     <message>
-        <location line="+120"/>
+        <location line="+123"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -6748,6 +6870,16 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <location line="+21"/>
         <source>Refund printed.</source>
         <translation>Rückerstattung gedruckt.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>This order is a refunding!</source>
+        <translation>Der Auftrag ist eine Rückertattung!</translation>
+    </message>
+    <message>
+        <location line="+21"/>
+        <source>Admonition printed.</source>
+        <translation>Mahnung gedruckt.</translation>
     </message>
     <message>
         <location line="+16"/>
