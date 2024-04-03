@@ -9,7 +9,7 @@
 #include <QTableWidgetItem>
 
 // #ifdef ANTIQUA_DEVELOPEMENT
-// // Display helper borders
+// Display helper borders
 // #define PRINTPAGE_DEBUG
 // #endif
 
@@ -46,7 +46,7 @@ APrintingPage::~APrintingPage() {
 }
 
 void APrintingPage::initConfiguration() {
-  // NOTE: do not close the group in this function!
+  // NOTE: do not close the group in this function! @see destructor
   cfg->beginGroup("printer");
 
   QMarginsF _m(getPoints(cfg->value("page_margin_left", 20.0).toReal()),
