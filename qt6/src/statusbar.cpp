@@ -10,15 +10,12 @@
 #include <QSqlDatabase>
 
 // BEGIN:StatusTimer
-StatusTimer::StatusTimer(QObject* parent)
-    : QObject{parent}
-{
+StatusTimer::StatusTimer(QObject* parent) : QObject{parent} {
   setObjectName("antiquacrm_timer");
   countDown = countBase;
 }
 
-void StatusTimer::timerEvent(QTimerEvent* event)
-{
+void StatusTimer::timerEvent(QTimerEvent* event) {
   // @note prevent multible global TimerIds
   if (event->timerId() != timerId)
     return;
@@ -31,8 +28,7 @@ void StatusTimer::timerEvent(QTimerEvent* event)
   emit sendTrigger();
 }
 
-void StatusTimer::restart()
-{
+void StatusTimer::restart() {
   if (timerId != -1)
     killTimer(timerId);
 
@@ -40,17 +36,14 @@ void StatusTimer::restart()
   timerId = startTimer(interval, Qt::PreciseTimer);
 }
 
-StatusTimer::~StatusTimer()
-{
+StatusTimer::~StatusTimer() {
   if (timerId != -1)
     killTimer(timerId);
 }
 // END:StatusTimer
 
 // BEGIN:StatusToolBar
-StatusToolBar::StatusToolBar(QWidget* parent)
-    : QToolBar{parent}
-{
+StatusToolBar::StatusToolBar(QWidget* parent) : QToolBar{parent} {
   setFloatable(false);
   setMovable(false);
   setOrientation(Qt::Horizontal);
@@ -60,43 +53,39 @@ StatusToolBar::StatusToolBar(QWidget* parent)
   connect(ac_status, SIGNAL(triggered()), SLOT(databaseInfoDialog()));
 }
 
-void StatusToolBar::databaseInfoDialog()
-{
+void StatusToolBar::databaseInfoDialog() {
   AntiquaCRM::SqlInfoPopUp infoPopUp(this);
   infoPopUp.exec();
 }
 
-void StatusToolBar::setStatus(StatusToolBar::Status st)
-{
+void StatusToolBar::setStatus(StatusToolBar::Status st) {
   switch (st) {
-  case (Status::CONNECTED):
-    {
-      ac_status->setIcon(AntiquaCRM::antiquaIcon("database-comit"));
-      ac_status->setToolTip(tr("Database connected."));
-    }
-    break;
+    case (Status::CONNECTED):
+      {
+        ac_status->setIcon(AntiquaCRM::antiquaIcon("database-comit"));
+        ac_status->setToolTip(tr("Database connected."));
+      }
+      break;
 
-  case (Status::NETWORK_ERROR):
-    {
-      ac_status->setIcon(AntiquaCRM::antiquaIcon("database-status"));
-      ac_status->setToolTip(tr("Remote connection is not reachable!"));
-    }
-    break;
+    case (Status::NETWORK_ERROR):
+      {
+        ac_status->setIcon(AntiquaCRM::antiquaIcon("database-status"));
+        ac_status->setToolTip(tr("Remote connection is not reachable!"));
+      }
+      break;
 
-  default:
-    {
-      ac_status->setIcon(AntiquaCRM::antiquaIcon("database-status"));
-      ac_status->setToolTip(tr("Database not connected!"));
-    }
-    break;
+    default:
+      {
+        ac_status->setIcon(AntiquaCRM::antiquaIcon("database-status"));
+        ac_status->setToolTip(tr("Database not connected!"));
+      }
+      break;
   };
 }
 // END:StatusToolBar
 
 // BEGIN:StatusBar
-StatusBar::StatusBar(QWidget* parent)
-    : QStatusBar{parent}
-{
+StatusBar::StatusBar(QWidget* parent) : QStatusBar{parent} {
   setObjectName("antiqua_ui_statusbar");
   setContentsMargins(0, 0, 0, 0);
   setStyleSheet("* {margin:0;}");
@@ -108,8 +97,7 @@ StatusBar::StatusBar(QWidget* parent)
   m_timer->restart();
 }
 
-void StatusBar::startTest()
-{
+void StatusBar::startTest() {
   AntiquaCRM::ANetworkIface iface;
   if (!iface.connectedIfaceExists()) {
     m_toolBar->setStatus(StatusToolBar::Status::NETWORK_ERROR);
@@ -133,18 +121,15 @@ void StatusBar::startTest()
   }
 }
 
-void StatusBar::statusInfoMessage(const QString& text)
-{
+void StatusBar::statusInfoMessage(const QString& text) {
   showMessage(text, (timeout_seconds * 1000));
 }
 
-void StatusBar::statusWarnMessage(const QString& text)
-{
+void StatusBar::statusWarnMessage(const QString& text) {
   showMessage(text, (timeout_seconds * 1000));
 }
 
-StatusBar::~StatusBar()
-{
+StatusBar::~StatusBar() {
   if (m_timer != nullptr) {
     qInfo("Shutdown Database Listener ...");
     m_timer->deleteLater();

@@ -8,14 +8,14 @@
 #include "systemtrayicon.h"
 #include "utils/datacache/datacache.h"
 #ifdef ANTIQUACRM_DBUS_ENABLED
-#include "abusadaptor.h"
-#include <QDBusMessage>
+#  include "abusadaptor.h"
+#  include <QDBusMessage>
 #endif
 
 #ifdef Q_OS_WIN
-#include <Windows.h>
+#  include <Windows.h>
 #else
-#include <unistd.h>
+#  include <unistd.h>
 #endif
 
 #include <AntiquaWidgets>
@@ -25,7 +25,7 @@
 #include <QTimer>
 #include <QtCore>
 
-Application::Application(int &argc, char **argv) : QApplication{argc, argv} {
+Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   setApplicationName(ANTIQUACRM_NAME);
   setDesktopFileName(ANTIQUACRM_NAME);
   setApplicationVersion(ANTIQUACRM_VERSION);
@@ -43,11 +43,11 @@ bool Application::registerSessionBus() {
       m_dbus->registerObject(QString("/Window"), m_window);
       m_dbus->registerObject(QString("/Systray"), m_systray);
     }
-#ifdef ANTIQUA_DEVELOPEMENT
+#  ifdef ANTIQUA_DEVELOPEMENT
     else {
       qDebug() << Q_FUNC_INFO << m_dbus->lastError().message();
     }
-#endif
+#  endif
     return true;
   }
   return false;
@@ -67,8 +67,7 @@ bool Application::checkRemotePort() {
   AntiquaCRM::ASqlSettings _csql(this);
   AntiquaCRM::ASqlProfile _pr = _csql.connectionProfile();
   AntiquaCRM::ANetworkIface iface;
-  qInfo("Testing connection to %s:%d ...", qPrintable(_pr.getHostname()),
-        _pr.getPort());
+  qInfo("Testing connection to %s:%d ...", qPrintable(_pr.getHostname()), _pr.getPort());
   if (iface.checkRemotePort(_pr.getHostname(), _pr.getPort()))
     return true;
 
@@ -146,7 +145,7 @@ void Application::initTranslations() {
     qWarning("No access to %s", qPrintable(_dir.path()));
     return;
   }
-  QTranslator *m_qtr = new QTranslator(this);
+  QTranslator* m_qtr = new QTranslator(this);
   if (m_qtr->load(QLocale::system(), "antiquacrm", "_", _dir.path(), ".qm"))
     installTranslator(m_qtr);
 }
@@ -162,20 +161,18 @@ bool Application::initGUI() {
   m_systray = new SystemTrayIcon(applIcon(), this);
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
-  connect(m_systray, SIGNAL(sendToggleView()), m_window,
-          SLOT(setToggleWindow()));
+  connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {
     // qdbus-qt5 de.hjcms.antiquacrm /
     //      de.hjcms.antiquacrm.pushMessage testing
-    ABusAdaptor *m_adaptor = new ABusAdaptor(this);
+    ABusAdaptor* m_adaptor = new ABusAdaptor(this);
     m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-    connect(m_adaptor, SIGNAL(sendMessage(const QString &)), m_systray,
-            SLOT(setMessage(const QString &)));
-    connect(m_adaptor, SIGNAL(sendToggleView()), m_window,
-            SLOT(setToggleWindow()));
+    connect(m_adaptor, SIGNAL(sendMessage(const QString&)), m_systray,
+            SLOT(setMessage(const QString&)));
+    connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
     connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
   }
 #endif
@@ -221,12 +218,11 @@ bool Application::isRunning() {
   socket.setServerName(AntiquaCRM::AUtil::socketName());
   if (socket.open(QLocalSocket::ReadWrite)) {
 #ifdef ANTIQUACRM_DBUS_ENABLED
-    QDBusConnection bus = QDBusConnection::connectToBus(
-        QDBusConnection::SessionBus, ANTIQUACRM_CONNECTION_DOMAIN);
+    QDBusConnection bus =
+        QDBusConnection::connectToBus(QDBusConnection::SessionBus, ANTIQUACRM_CONNECTION_DOMAIN);
     if (bus.isConnected()) {
-      bus.call(QDBusMessage::createMethodCall(
-                   ANTIQUACRM_CONNECTION_DOMAIN, // Service
-                   "/", bus.name(), "toggle"),
+      bus.call(QDBusMessage::createMethodCall(ANTIQUACRM_CONNECTION_DOMAIN, // Service
+                                              "/", bus.name(), "toggle"),
                QDBus::NoBlock);
     }
 #endif
@@ -311,9 +307,9 @@ int Application::exec() {
   if (m_sql->open()) {
     mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
-    DataCache *m_cache = new DataCache(m_cfg, m_sql, this);
-    connect(m_cache, SIGNAL(statusMessage(const QString &)), &p_splash,
-            SLOT(setMessage(const QString &)));
+    DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
+    connect(m_cache, SIGNAL(statusMessage(const QString&)), &p_splash,
+            SLOT(setMessage(const QString&)));
 
     // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {

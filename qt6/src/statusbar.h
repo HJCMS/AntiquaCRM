@@ -19,11 +19,10 @@
 /**
  * @brief The StatusTimer class
  */
-class StatusTimer final : public QObject
-{
+class StatusTimer final : public QObject {
   Q_OBJECT
 
-  private:
+private:
   /**
    * @brief Timer Event Id
    */
@@ -46,13 +45,13 @@ class StatusTimer final : public QObject
 
   void timerEvent(QTimerEvent* event) override;
 
-  Q_SIGNALS:
+Q_SIGNALS:
   void sendTrigger();
 
-  public Q_SLOTS:
+public Q_SLOTS:
   void restart();
 
-  public:
+public:
   explicit StatusTimer(QObject* parent = nullptr);
   virtual ~StatusTimer();
 };
@@ -60,11 +59,10 @@ class StatusTimer final : public QObject
 /**
  * @brief The StatusToolBar class
  */
-class StatusToolBar final : public QToolBar
-{
+class StatusToolBar final : public QToolBar {
   Q_OBJECT
 
-  public:
+public:
   enum Status {
     CONNECTED = 0,
     NETWORK_ERROR = 1,
@@ -73,39 +71,38 @@ class StatusToolBar final : public QToolBar
     UNKNOWN = 4,
   };
 
-  private:
+private:
   QAction* ac_status;
 
-  private Q_SLOTS:
+private Q_SLOTS:
   void databaseInfoDialog();
 
-  public Q_SLOTS:
+public Q_SLOTS:
   void setStatus(StatusToolBar::Status st);
 
-  public:
+public:
   explicit StatusToolBar(QWidget* parent = nullptr);
 };
 
 /**
  * @brief The StatusBar class
  */
-class StatusBar final : public QStatusBar
-{
+class StatusBar final : public QStatusBar {
   Q_OBJECT
 
-  private:
+private:
   int timeout_seconds = 10;
   StatusToolBar* m_toolBar;
   StatusTimer* m_timer;
 
-  private Q_SLOTS:
+private Q_SLOTS:
   void startTest();
 
-  public Q_SLOTS:
+public Q_SLOTS:
   void statusInfoMessage(const QString&);
   void statusWarnMessage(const QString&);
 
-  public:
+public:
   explicit StatusBar(QWidget* parent = nullptr);
   virtual ~StatusBar();
 };
