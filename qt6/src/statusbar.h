@@ -19,10 +19,11 @@
 /**
  * @brief The StatusTimer class
  */
-class StatusTimer final : public QObject {
+class StatusTimer final : public QObject
+{
   Q_OBJECT
 
-private:
+  private:
   /**
    * @brief Timer Event Id
    */
@@ -43,58 +44,69 @@ private:
    */
   int countDown;
 
-  void timerEvent(QTimerEvent *event) override;
+  void timerEvent(QTimerEvent* event) override;
 
-Q_SIGNALS:
+  Q_SIGNALS:
   void sendTrigger();
 
-public Q_SLOTS:
+  public Q_SLOTS:
   void restart();
 
-public:
-  explicit StatusTimer(QObject *parent = nullptr);
+  public:
+  explicit StatusTimer(QObject* parent = nullptr);
   virtual ~StatusTimer();
 };
 
 /**
  * @brief The StatusToolBar class
  */
-class StatusToolBar final : public QToolBar {
+class StatusToolBar final : public QToolBar
+{
   Q_OBJECT
 
-private:
-  QAction *ac_status;
+  public:
+  enum Status {
+    CONNECTED = 0,
+    NETWORK_ERROR = 1,
+    CONNECTION_ERROR = 2,
+    DATABASE_ERROR = 3,
+    UNKNOWN = 4,
+  };
 
-private Q_SLOTS:
+  private:
+  QAction* ac_status;
+
+  private Q_SLOTS:
   void databaseInfoDialog();
 
-public Q_SLOTS:
-  void setStatus(bool);
+  public Q_SLOTS:
+  void setStatus(StatusToolBar::Status st);
 
-public:
-  explicit StatusToolBar(QWidget *parent = nullptr);
+  public:
+  explicit StatusToolBar(QWidget* parent = nullptr);
 };
 
 /**
  * @brief The StatusBar class
  */
-class StatusBar final : public QStatusBar {
+class StatusBar final : public QStatusBar
+{
   Q_OBJECT
 
-private:
+  private:
   int timeout_seconds = 10;
-  StatusToolBar *m_toolBar;
-  StatusTimer *m_timer;
+  StatusToolBar* m_toolBar;
+  StatusTimer* m_timer;
 
-private Q_SLOTS:
-  void timerTriggered();
+  private Q_SLOTS:
+  void startTest();
 
-public Q_SLOTS:
-  void statusInfoMessage(const QString &);
-  void statusWarnMessage(const QString &);
+  public Q_SLOTS:
+  void statusInfoMessage(const QString&);
+  void statusWarnMessage(const QString&);
 
-public:
-  explicit StatusBar(QWidget *parent = nullptr);
+  public:
+  explicit StatusBar(QWidget* parent = nullptr);
   virtual ~StatusBar();
 };
 

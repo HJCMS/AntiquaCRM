@@ -335,7 +335,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   m_tabWidget->insertTab(1, ib_internal_description, tabIcons,
                          tr("Internal Description"));
   // Info Tab
-  QWidget *m_infos = new QWidget(this);
+  QWidget *m_infos = new QWidget(m_tabWidget);
   QGridLayout *infoLayout = new QGridLayout(m_infos);
   infoLayout->setColumnStretch(1, 1);
 
