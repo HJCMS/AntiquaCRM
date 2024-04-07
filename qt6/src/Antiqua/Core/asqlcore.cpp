@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "asqlcore.h"
+#include "anetworkiface.h"
 #include "asqlprofile.h"
 #include "asqlsettings.h"
 
@@ -9,9 +10,10 @@
 #include <QDebug>
 #include <QSysInfo>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ASqlCore::ASqlCore(QObject *parent, const QString &profile) : QObject{parent} {
+ASqlCore::ASqlCore(QObject* parent, const QString& profile) : QObject{parent} {
   setObjectName("antiquacrm_sqlcore");
   config = new ASqlSettings(this, profile);
   database = nullptr;
@@ -24,13 +26,27 @@ ASqlCore::ASqlCore(QObject *parent, const QString &profile) : QObject{parent} {
   }
 }
 
+const QSqlError ASqlCore::sqlNetworkError() const {
+  QSqlError _err(tr("Service is unreachable!"), // driver
+                 tr("The database cannot be reached via the network.\n"
+                    "Please check your network connection."),
+                 QSqlError::ConnectionError, "503");
+  return _err;
+}
+
 bool ASqlCore::initDatabase() {
+  if (!networkStatus()) {
+#ifdef ANTIQUA_DEVELOPEMENT
+    qDebug() << Q_FUNC_INFO << "Network interface is down!";
+#endif
+    return false;
+  }
+
   if (database != nullptr)
     return database->isValid();
 
   // https://www.postgresql.org/docs/current/libpq-connect.html
-  QSqlDatabase db =
-      QSqlDatabase::addDatabase("QPSQL", config->connectionName());
+  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL", config->connectionName());
   ASqlProfile profile = config->connectionProfile();
   db.setHostName(profile.getHostname());
   db.setPort(profile.getPort());
@@ -71,6 +87,11 @@ bool ASqlCore::initDatabase() {
 }
 
 bool ASqlCore::isConnected() {
+  if (!networkStatus()) {
+    emit sendStatementError(sqlNetworkError());
+    return false;
+  }
+
   if (database->isOpen())
     return true;
 
@@ -84,21 +105,19 @@ bool ASqlCore::isConnected() {
   return false;
 }
 
-void ASqlCore::prepareSqlError(const QSqlError &error) {
+void ASqlCore::prepareSqlError(const QSqlError& error) {
   switch (error.type()) {
-  case QSqlError::StatementError:
-    qWarning("ASqlCore::StatementError");
-    emit sendStatementError(error);
-    break;
+    case QSqlError::StatementError:
+      qWarning("ASqlCore::StatementError");
+      break;
 
-  case QSqlError::TransactionError:
-  case QSqlError::UnknownError:
-  case QSqlError::ConnectionError:
-    qWarning("ASqlCore::PgSqlErrors");
-    break;
+    case QSqlError::ConnectionError:
+      qWarning("ASqlCore::ConnectionError");
+      break;
 
-  default:
-    break;
+    default:
+      qWarning("ASqlCore::PostgreSQL::SqlError");
+      break;
   };
 
 // Developement verbose
@@ -109,9 +128,15 @@ void ASqlCore::prepareSqlError(const QSqlError &error) {
            << "Driver: " << error.driverText() << Qt::endl
            << "Code: " << error.nativeErrorCode();
 #endif
+  emit sendStatementError(error);
 }
 
 bool ASqlCore::status() {
+  if (!networkStatus()) {
+    emit sendStatementError(sqlNetworkError());
+    return false;
+  }
+
   if (!database->isOpen())
     return false;
 
@@ -119,6 +144,14 @@ bool ASqlCore::status() {
   _select.append(" application_name='" + identifier() + "'");
   _select.append(" AND state IS NOT NULL;");
   return (query(_select).size() > 0);
+}
+
+bool ASqlCore::networkStatus() {
+  AntiquaCRM::ANetworkIface iface;
+  if (iface.connectedIfaceExists())
+    return true;
+
+  return false;
 }
 
 qint64 ASqlCore::getQueryLimit() {
@@ -159,17 +192,22 @@ const QDateTime ASqlCore::getDateTimeStamp() {
 }
 
 bool ASqlCore::open() {
-  if (database->isOpen())
-    return true;
+  if (networkStatus()) {
+    if (database->isOpen())
+      return true;
 
-  return initDatabase();
+    return initDatabase();
+  }
+
+  emit sendStatementError(sqlNetworkError());
+  return false;
 }
 
 const QSqlDatabase ASqlCore::db() {
   return QSqlDatabase::database(config->connectionName(), isConnected());
 }
 
-const QSqlRecord ASqlCore::record(const QString &table) {
+const QSqlRecord ASqlCore::record(const QString& table) {
   if (!isConnected())
     return QSqlRecord();
 
@@ -178,7 +216,7 @@ const QSqlRecord ASqlCore::record(const QString &table) {
   return re;
 }
 
-const QStringList ASqlCore::fieldNames(const QString &table) {
+const QStringList ASqlCore::fieldNames(const QString& table) {
   if (!isConnected())
     return QStringList();
 
@@ -193,7 +231,7 @@ const QStringList ASqlCore::fieldNames(const QString &table) {
   return l;
 }
 
-const QSqlQuery ASqlCore::query(const QString &statement) {
+const QSqlQuery ASqlCore::query(const QString& statement) {
   if (!isConnected() || statement.isEmpty())
     return QSqlQuery();
 

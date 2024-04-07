@@ -395,6 +395,21 @@
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::ASqlCore</name>
+    <message>
+        <location filename="../Antiqua/Core/asqlcore.cpp" line="+30"/>
+        <source>Service is unreachable!</source>
+        <translation>Der Dienst ist nicht erreichbar!</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The database cannot be reached via the network.
+Please check your network connection.</source>
+        <translation>Die Datenbank ist über das Netzwerk nicht erreichbar.
+Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
         <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+106"/>
@@ -2868,12 +2883,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+190"/>
+        <location filename="../application.cpp" line="+187"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+74"/>
         <source>No Networkconnection found!</source>
         <translation>Keine Netzwerkverbindung gefunden!</translation>
     </message>
@@ -8719,25 +8734,35 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+91"/>
-        <source>Missing database connection!</source>
-        <translation>Fehlende Datenbankverbindung!</translation>
+        <location filename="../statusbar.cpp" line="+163"/>
+        <source>Conenction Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>No Remote Connection!</source>
+        <translation>Keine Remote-Verbindung!</translation>
     </message>
 </context>
 <context>
     <name>StatusToolBar</name>
     <message>
-        <location line="-40"/>
+        <location line="-70"/>
         <source>Database Status</source>
         <translation>Datenbankstatus</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Database connected.</source>
         <translation>Datenbank verbunden.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
+        <source>Remote connection is not reachable!</source>
+        <translation>Remote-Verbindung ist nicht erreichbar!</translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Database not connected!</source>
         <translation>Datenbank nicht verbunden!</translation>
     </message>

@@ -19,10 +19,11 @@ namespace AntiquaCRM {
  */
 class ANTIQUACRM_LIBRARY ANetworkIface : public QNetworkInterface {
 private:
-  QStringList p_adresses;
+  int countInterfaces = 0;
 
 public:
   explicit ANetworkIface();
+  ~ANetworkIface();
 
   /**
    * @brief Simple check if connected interfaces exists

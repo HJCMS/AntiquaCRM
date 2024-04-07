@@ -9,14 +9,43 @@
 #ifndef ANTIQUA_UI_STATUSBAR_H
 #define ANTIQUA_UI_STATUSBAR_H
 
+#include <AntiquaCRM>
 #include <QObject>
 #include <QStatusBar>
+#include <QThread>
 #include <QTimer>
 #include <QTimerEvent>
 #include <QToolBar>
 #include <QWidget>
 
 /**
+ * @class StatusCheck
+ * @brief Start Connection tests
+ *
+ */
+class StatusCheck final : public QThread {
+  Q_OBJECT
+
+public:
+  enum ExitCode {
+    CONNECTED = 0,
+    NETWORK_ERROR = 1,
+    CONNECTION_ERROR = 2,
+    DATABASE_ERROR = 3,
+    CONFIG_ERROR = 4,
+  };
+  explicit StatusCheck(QObject* parent = nullptr);
+
+Q_SIGNALS:
+  void signalFinished(StatusCheck::ExitCode);
+
+private:
+  void prepareSignal(StatusCheck::ExitCode);
+  void run() override;
+};
+
+/**
+ * @class StatusTimer
  * @brief The StatusTimer class
  */
 class StatusTimer final : public QObject {
@@ -57,19 +86,11 @@ public:
 };
 
 /**
+ * @class StatusToolBar
  * @brief The StatusToolBar class
  */
 class StatusToolBar final : public QToolBar {
   Q_OBJECT
-
-public:
-  enum Status {
-    CONNECTED = 0,
-    NETWORK_ERROR = 1,
-    CONNECTION_ERROR = 2,
-    DATABASE_ERROR = 3,
-    UNKNOWN = 4,
-  };
 
 private:
   QAction* ac_status;
@@ -77,30 +98,36 @@ private:
 private Q_SLOTS:
   void databaseInfoDialog();
 
+Q_SIGNALS:
+  void signalErrorMessage(const QString&);
+
 public Q_SLOTS:
-  void setStatus(StatusToolBar::Status st);
+  void setStatus(StatusCheck::ExitCode ec);
 
 public:
   explicit StatusToolBar(QWidget* parent = nullptr);
 };
 
 /**
+ * @class StatusBar
  * @brief The StatusBar class
  */
 class StatusBar final : public QStatusBar {
   Q_OBJECT
 
 private:
-  int timeout_seconds = 10;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
   StatusToolBar* m_toolBar;
   StatusTimer* m_timer;
 
 private Q_SLOTS:
+  void openErrorPopUp(const QSqlError&);
   void startTest();
 
 public Q_SLOTS:
   void statusInfoMessage(const QString&);
   void statusWarnMessage(const QString&);
+  void statusFatalMessage(const QString&);
 
 public:
   explicit StatusBar(QWidget* parent = nullptr);

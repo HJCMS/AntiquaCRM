@@ -12,24 +12,25 @@
 #include <QSqlQuery>
 #include <QTime>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ASqlQueryModel::ASqlQueryModel(const QString &table, QObject *parent)
+ASqlQueryModel::ASqlQueryModel(const QString& table, QObject* parent)
     : QSqlQueryModel{parent}, p_table(table) {
   m_sql = new AntiquaCRM::ASqlCore(this);
 
-  connect(m_sql, SIGNAL(sendStatementError(const QSqlError &)),
-          SIGNAL(sendSqlError(const QSqlError &)));
+  connect(m_sql, SIGNAL(sendStatementError(const QSqlError&)),
+          SIGNAL(sendSqlError(const QSqlError&)));
 }
 
-const QString ASqlQueryModel::setHeaderTitle(const QString &text) const {
+const QString ASqlQueryModel::setHeaderTitle(const QString& text) const {
   QString b(text);
   b.prepend(" ");
   b.append(" ");
   return b;
 }
 
-const QString ASqlQueryModel::displayDate(const QVariant &value) const {
+const QString ASqlQueryModel::displayDate(const QVariant& value) const {
   QDateTime dt(value.toDateTime());
   return QLocale::system().toString(dt, ANTIQUACRM_SHORT_DATE_DISPLAY);
 }
@@ -41,7 +42,10 @@ const QString ASqlQueryModel::verticalHeader(int row, int role) const {
   return (_s.length() > 1) ? _r.rightJustified(_s.length(), ' ') : _r;
 }
 
-bool ASqlQueryModel::querySelect(const QString &sql) {
+bool ASqlQueryModel::querySelect(const QString& sql) {
+  if (!m_sql->status())
+    return false;
+
   setQuery(sql, m_sql->db());
   if (lastError().isValid()) {
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -53,7 +57,9 @@ bool ASqlQueryModel::querySelect(const QString &sql) {
   return true;
 }
 
-const QString ASqlQueryModel::tableName() const { return p_table; }
+const QString ASqlQueryModel::tableName() const {
+  return p_table;
+}
 
 const QSqlRecord ASqlQueryModel::tableRecord() const {
   return m_sql->record(p_table);
@@ -73,7 +79,7 @@ const QString ASqlQueryModel::fieldName(int column) const {
   return query().record().fieldName(column);
 }
 
-int ASqlQueryModel::column(const QString &fieldName) const {
+int ASqlQueryModel::column(const QString& fieldName) const {
   QSqlRecord _record = query().record();
   if (_record.isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
@@ -89,7 +95,7 @@ int ASqlQueryModel::column(const QString &fieldName) const {
   return -1;
 }
 
-QVariant ASqlQueryModel::data(const QModelIndex &item, int role) const {
+QVariant ASqlQueryModel::data(const QModelIndex& item, int role) const {
   if (!item.isValid())
     return QVariant();
 
@@ -118,11 +124,9 @@ const QString ASqlQueryModel::queryResultInfo() {
   qint64 _rows = query().size();
   QString _info;
   if (_rows >= _limit) {
-    _info.append(tr("%1 - Result restricted to max '%2' Rows.")
-                     .arg(_time, QString::number(_rows)));
+    _info.append(tr("%1 - Result restricted to max '%2' Rows.").arg(_time, QString::number(_rows)));
   } else if (_rows > 0) {
-    _info.append(tr("%1 - Query finished with '%2' Rows.")
-                     .arg(_time, QString::number(_rows)));
+    _info.append(tr("%1 - Query finished with '%2' Rows.").arg(_time, QString::number(_rows)));
   } else {
     _info.append(tr("%1 - Query without result!").arg(_time));
   }

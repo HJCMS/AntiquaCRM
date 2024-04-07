@@ -11,7 +11,8 @@
 #include <QString>
 #include <QtSql>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class ASqlSettings;
 
@@ -28,8 +29,13 @@ class ANTIQUACRM_LIBRARY ASqlCore final : public QObject {
   Q_OBJECT
 
 private:
-  ASqlSettings *config;
-  QSqlDatabase *database;
+  ASqlSettings* config;
+  QSqlDatabase* database;
+
+  /**
+   * @brief manual defined Network Connection error!
+   */
+  const QSqlError sqlNetworkError() const;
 
   /**
    * @brief create database connection
@@ -42,10 +48,10 @@ private:
   bool isConnected();
 
 private Q_SLOTS:
-  void prepareSqlError(const QSqlError &);
+  void prepareSqlError(const QSqlError&);
 
 Q_SIGNALS:
-  void sendStatementError(const QSqlError &);
+  void sendStatementError(const QSqlError&);
 
 public:
   /**
@@ -57,8 +63,14 @@ public:
    * user configuration in the UI.
    * e.g.: When using the server, this can be overwritten here.
    */
-  explicit ASqlCore(QObject *parent = nullptr,
-                    const QString &profile = QString());
+  explicit ASqlCore(QObject* parent = nullptr, const QString& profile = QString());
+
+  /**
+   * @brief network connection test
+   *
+   * This function searches for available network interfaces.
+   */
+  static bool networkStatus();
 
   /**
    * @brief Responses the max database query limit for tables.
@@ -119,17 +131,17 @@ public:
    * @brief Refer to detailed tables information.
    * @note It is better to use QSqlQuery::record() for nested queries!
    */
-  const QSqlRecord record(const QString &table);
+  const QSqlRecord record(const QString& table);
 
   /**
    * @brief Take field names from table
    */
-  const QStringList fieldNames(const QString &table);
+  const QStringList fieldNames(const QString& table);
 
   /**
    * @brief Standard processing of SQL queries.
    */
-  const QSqlQuery query(const QString &statement);
+  const QSqlQuery query(const QString& statement);
 
   /**
    * @brief Returns the last error message.

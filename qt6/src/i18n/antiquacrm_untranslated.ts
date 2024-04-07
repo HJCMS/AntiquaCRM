@@ -395,6 +395,20 @@
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::ASqlCore</name>
+    <message>
+        <location filename="../Antiqua/Core/asqlcore.cpp" line="+30"/>
+        <source>Service is unreachable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>The database cannot be reached via the network.
+Please check your network connection.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
         <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+106"/>
@@ -2866,12 +2880,12 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+190"/>
+        <location filename="../application.cpp" line="+187"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+75"/>
+        <location line="+74"/>
         <source>No Networkconnection found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8693,25 +8707,35 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+91"/>
-        <source>Missing database connection!</source>
+        <location filename="../statusbar.cpp" line="+163"/>
+        <source>Conenction Errors</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>No Remote Connection!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>StatusToolBar</name>
     <message>
-        <location line="-40"/>
+        <location line="-70"/>
         <source>Database Status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>Database connected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+6"/>
+        <source>Remote connection is not reachable!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
         <source>Database not connected!</source>
         <translation type="unfinished"></translation>
     </message>

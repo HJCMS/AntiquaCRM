@@ -8,10 +8,10 @@
 #include <QNetworkAddressEntry>
 #include <QTcpSocket>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 ANetworkIface::ANetworkIface() : QNetworkInterface{} {
-  p_adresses.clear();
   foreach (QNetworkInterface net, QNetworkInterface::allInterfaces()) {
     if (net.flags() & !(QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
       continue;
@@ -20,26 +20,41 @@ ANetworkIface::ANetworkIface() : QNetworkInterface{} {
       continue;
 
     if (net.type() & (QNetworkInterface::Ethernet | QNetworkInterface::Wifi)) {
+      QStringList p_list;
       foreach (QNetworkAddressEntry a, net.addressEntries()) {
         if (a.ip().isGlobal() && !a.ip().isLinkLocal()) {
-          p_adresses.append(a.ip().toString());
+          p_list.append(a.ip().toString());
         }
       }
+
+      if (p_list.size() > 0)
+        countInterfaces++;
+
+      p_list.clear();
     }
   }
 }
 
-bool ANetworkIface::connectedIfaceExists() { return (p_adresses.count() > 0); }
+ANetworkIface::~ANetworkIface() {
+}
 
-bool ANetworkIface::checkRemotePort(const QString &host, int port, int wait) {
-  bool b = false;
-  QTcpSocket sock;
-  sock.connectToHost(host, port, QIODevice::ReadOnly);
-  if (sock.waitForConnected((wait * 1000))) {
-    b = true;
+bool ANetworkIface::connectedIfaceExists() {
+  return (countInterfaces > 0);
+}
+
+bool ANetworkIface::checkRemotePort(const QString& host, int port, int wait) {
+  bool _b = false;
+  if (!connectedIfaceExists())
+    return _b;
+
+  QTcpSocket _s;
+  _s.connectToHost(host, port, QIODevice::ReadOnly);
+  if (_s.waitForConnected((wait * 1000))) {
+    _b = true;
   }
-  sock.close();
-  return b;
+  _s.close();
+
+  return _b;
 }
 
 }; // namespace AntiquaCRM
