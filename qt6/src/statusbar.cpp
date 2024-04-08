@@ -16,15 +16,15 @@ inline const double PROCESS_TIMEOUT = 6;
 StatusCheck::StatusCheck(QObject* parent) : QThread{parent} {
 }
 
-void StatusCheck::prepareSignal(StatusCheck::ExitCode code) {
-  emit signalFinished(code);
-  exit(code);
+void StatusCheck::prepareSignal(StatusCheck::Status s) {
+  emit signalFinished(s);
+  exit(s);
 }
 
 void StatusCheck::run() {
   AntiquaCRM::ANetworkIface iface;
   if (!iface.connectedIfaceExists()) {
-    prepareSignal(StatusCheck::ExitCode::NETWORK_ERROR);
+    prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
     return;
   }
 
@@ -34,20 +34,20 @@ void StatusCheck::run() {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << "Missing connectionName:" << _cfg.connectionName();
 #endif
-    prepareSignal(StatusCheck::ExitCode::CONFIG_ERROR);
+    prepareSignal(StatusCheck::Status::NETWORK_CONFIG_ERROR);
     return;
   } else if (_cfg.getProfile().isEmpty()) {
 #ifdef ANTIQUA_DEVELOPEMENT
     qDebug() << Q_FUNC_INFO << "Missing connectionProfile:" << _cfg.getProfile();
 #endif
-    prepareSignal(StatusCheck::ExitCode::CONFIG_ERROR);
+    prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
   }
 
   AntiquaCRM::ASqlProfile _profile = _cfg.connectionProfile();
   if (iface.checkRemotePort(_profile.getHostname(), _profile.getPort(), PROCESS_TIMEOUT)) {
-    prepareSignal(StatusCheck::ExitCode::CONNECTED);
+    prepareSignal(StatusCheck::Status::NETWORK_CONNECTED);
   } else {
-    prepareSignal(StatusCheck::ExitCode::NETWORK_ERROR);
+    prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
   }
 }
 // END:StatusCheck
@@ -95,38 +95,45 @@ StatusToolBar::StatusToolBar(QWidget* parent) : QToolBar{parent} {
   setMovable(false);
   setOrientation(Qt::Horizontal);
   setToolButtonStyle(Qt::ToolButtonIconOnly);
-  ac_status = addAction(tr("Database Status"));
-  ac_status->setIcon(AntiquaCRM::antiquaIcon("database-status"));
+  ac_status = addAction(tr("Network status"));
+  ac_status->setIcon(AntiquaCRM::antiquaIcon("network-connect"));
   connect(ac_status, SIGNAL(triggered()), SLOT(databaseInfoDialog()));
 }
 
 void StatusToolBar::databaseInfoDialog() {
+  if (!ac_enabled) {
+    emit signalErrorMessage(tr("Connection is not available!"));
+    return;
+  }
   AntiquaCRM::SqlInfoPopUp infoPopUp(this);
   infoPopUp.exec();
 }
 
-void StatusToolBar::setStatus(StatusCheck::ExitCode ec) {
-  switch (ec) {
-    case (StatusCheck::ExitCode::CONNECTED):
+void StatusToolBar::setStatus(StatusCheck::Status s) {
+  switch (s) {
+    case (StatusCheck::Status::NETWORK_CONNECTED):
       {
-        ac_status->setIcon(AntiquaCRM::antiquaIcon("database-comit"));
-        ac_status->setToolTip(tr("Database connected."));
+        ac_status->setIcon(AntiquaCRM::antiquaIcon("network-connect"));
+        ac_status->setToolTip(tr("Network connected."));
+        ac_enabled = true;
       }
       break;
 
-    case (StatusCheck::ExitCode::NETWORK_ERROR):
+    case (StatusCheck::Status::NETWORK_DISCONNECTED):
       {
         const QString info(tr("Remote connection is not reachable!"));
-        ac_status->setIcon(AntiquaCRM::antiquaIcon("database-remove"));
+        ac_status->setIcon(AntiquaCRM::antiquaIcon("network-disconnect"));
         ac_status->setToolTip(info);
+        ac_enabled = false;
         emit signalErrorMessage(info);
       }
       break;
 
     default:
       {
-        ac_status->setIcon(AntiquaCRM::antiquaIcon("database-status"));
-        ac_status->setToolTip(tr("Database not connected!"));
+        ac_status->setIcon(AntiquaCRM::antiquaIcon("network-disconnect"));
+        ac_status->setToolTip(tr("No network connection!"));
+        ac_enabled = false;
       }
       break;
   };
@@ -156,26 +163,26 @@ StatusBar::StatusBar(QWidget* parent) : QStatusBar{parent} {
   connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTest()));
 
   if (m_sql->status())
-    m_toolBar->setStatus(StatusCheck::ExitCode::CONNECTED);
+    m_toolBar->setStatus(StatusCheck::Status::NETWORK_CONNECTED);
 
   m_timer->restart();
 }
 
 void StatusBar::openErrorPopUp(const QSqlError& error) {
-  m_toolBar->setStatus(StatusCheck::ExitCode::DATABASE_ERROR);
+  m_toolBar->setStatus(StatusCheck::Status::NETWORK_DISCONNECTED);
   QMessageBox::warning(this, tr("Conenction Errors"), error.text());
 }
 
 void StatusBar::startTest() {
   if (!m_sql->status()) {
     statusFatalMessage(tr("No Remote Connection!"));
-    m_toolBar->setStatus(StatusCheck::ExitCode::DATABASE_ERROR);
+    m_toolBar->setStatus(StatusCheck::Status::NETWORK_DISCONNECTED);
     return;
   }
 
   StatusCheck* m_check = new StatusCheck(this);
-  connect(m_check, SIGNAL(signalFinished(StatusCheck::ExitCode)), m_toolBar,
-          SLOT(setStatus(StatusCheck::ExitCode)));
+  connect(m_check, SIGNAL(signalFinished(StatusCheck::Status)), m_toolBar,
+          SLOT(setStatus(StatusCheck::Status)));
   connect(m_check, SIGNAL(finished()), m_check, SLOT(deleteLater()));
 
   m_check->wait(qRound(PROCESS_TIMEOUT / 2) * 1000);

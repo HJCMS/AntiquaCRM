@@ -27,20 +27,18 @@ class StatusCheck final : public QThread {
   Q_OBJECT
 
 public:
-  enum ExitCode {
-    CONNECTED = 0,
-    NETWORK_ERROR = 1,
-    CONNECTION_ERROR = 2,
-    DATABASE_ERROR = 3,
-    CONFIG_ERROR = 4,
+  enum Status {
+    NETWORK_CONNECTED = 0,
+    NETWORK_DISCONNECTED = 1,
+    NETWORK_CONFIG_ERROR = 2
   };
   explicit StatusCheck(QObject* parent = nullptr);
 
 Q_SIGNALS:
-  void signalFinished(StatusCheck::ExitCode);
+  void signalFinished(StatusCheck::Status);
 
 private:
-  void prepareSignal(StatusCheck::ExitCode);
+  void prepareSignal(StatusCheck::Status);
   void run() override;
 };
 
@@ -93,6 +91,7 @@ class StatusToolBar final : public QToolBar {
   Q_OBJECT
 
 private:
+  bool ac_enabled = false;
   QAction* ac_status;
 
 private Q_SLOTS:
@@ -102,7 +101,7 @@ Q_SIGNALS:
   void signalErrorMessage(const QString&);
 
 public Q_SLOTS:
-  void setStatus(StatusCheck::ExitCode ec);
+  void setStatus(StatusCheck::Status s);
 
 public:
   explicit StatusToolBar(QWidget* parent = nullptr);

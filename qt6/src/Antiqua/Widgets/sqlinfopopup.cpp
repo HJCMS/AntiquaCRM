@@ -11,7 +11,7 @@
 namespace AntiquaCRM {
 
 SqlInfoPopUp::SqlInfoPopUp(QWidget *parent) : QDialog{parent, Qt::Tool} {
-  setWindowTitle(tr("Databaseinfo"));
+  setWindowTitle(tr("Connectioninfo"));
   setMinimumSize(380, 160);
   setSizeGripEnabled(true);
   layout = new QGridLayout(this);
