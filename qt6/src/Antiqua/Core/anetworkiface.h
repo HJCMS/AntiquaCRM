@@ -31,6 +31,15 @@ public:
   bool connectedIfaceExists();
 
   /**
+   * @brief check for Loopback interface
+   * @param iface - e.g. {"localhost", "127.0.0.1", "::1"}
+   * @note Function connectedIfaceExists dosn't check loopback interfaces!
+   *
+   *
+   */
+  bool isLoopbackInterface(const QString &iface = QString("localhost"));
+
+  /**
    * @brief Checks a specified remote port.
    * @param host - hostname (FQDH)
    * @param port - port

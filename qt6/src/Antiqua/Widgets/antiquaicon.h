@@ -14,7 +14,8 @@
 #include <QResource>
 #include <QString>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @brief Icon from Theme or Application Resource file ...
@@ -25,7 +26,7 @@ namespace AntiquaCRM {
  *
  * @ingroup IconTheme
  */
-ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString &name) {
+ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString& name) {
   return QIcon(":/icons/" + name + ".png");
 }
 
@@ -37,12 +38,10 @@ ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString &name) {
  *
  * @ingroup IconTheme
  */
-ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString &name) {
-  /*
-    if (!name.contains("antiqua") && !QIcon::hasThemeIcon(name)) {
-      qWarning("No Theme Icon:'%s'", qPrintable(name));
-    }
-  */
+ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString& name) {
+  if (!name.contains("antiqua") && !QIcon::hasThemeIcon(name)) {
+    return QIcon(":/icons/oxygen/" + name + ".png");
+  }
   // Load from Unix Icon theme
   return QIcon::fromTheme(name, qrcIcon(name));
 }

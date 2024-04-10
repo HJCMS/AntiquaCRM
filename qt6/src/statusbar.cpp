@@ -5,15 +5,12 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
-#include <QDebug>
 #include <QIcon>
 #include <QMessageBox>
-#include <QSqlDatabase>
-
-inline const double PROCESS_TIMEOUT = 6;
 
 // BEGIN:StatusCheck
 StatusCheck::StatusCheck(QObject* parent) : QThread{parent} {
+  setObjectName("NetworkStatusCheck");
 }
 
 void StatusCheck::prepareSignal(StatusCheck::Status s) {
@@ -22,33 +19,33 @@ void StatusCheck::prepareSignal(StatusCheck::Status s) {
 }
 
 void StatusCheck::run() {
-  AntiquaCRM::ANetworkIface iface;
-  if (!iface.connectedIfaceExists()) {
-    prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
-    return;
-  }
-
-  AntiquaCRM::ASqlSettings _cfg;
-  // NOTE - do not open database connections in this function!
-  if (!QSqlDatabase::contains(_cfg.connectionName())) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Missing connectionName:" << _cfg.connectionName();
-#endif
+  AntiquaCRM::ASqlSettings _config;
+  // Check current database connection
+  if (!QSqlDatabase::contains(_config.connectionName())) {
     prepareSignal(StatusCheck::Status::NETWORK_CONFIG_ERROR);
     return;
-  } else if (_cfg.getProfile().isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
-    qDebug() << Q_FUNC_INFO << "Missing connectionProfile:" << _cfg.getProfile();
-#endif
+  }
+  // Check current database profile
+  if (_config.getProfile().isEmpty()) {
     prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
+    return;
   }
 
-  AntiquaCRM::ASqlProfile _profile = _cfg.connectionProfile();
-  if (iface.checkRemotePort(_profile.getHostname(), _profile.getPort(), PROCESS_TIMEOUT)) {
-    prepareSignal(StatusCheck::Status::NETWORK_CONNECTED);
-  } else {
+  AntiquaCRM::ANetworkIface _netrc;
+  AntiquaCRM::ASqlProfile _profile = _config.connectionProfile();
+  if (!_netrc.isLoopbackInterface(_profile.getHostname()) && !_netrc.connectedIfaceExists()) {
     prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
+    return;
   }
+
+  if (_netrc.checkRemotePort(_profile.getHostname(), // remote host
+                             _profile.getPort(),     // remote port
+                             timeout)) {
+    prepareSignal(StatusCheck::Status::NETWORK_CONNECTED);
+    return;
+  }
+
+  prepareSignal(StatusCheck::Status::NETWORK_DISCONNECTED);
 }
 // END:StatusCheck
 
@@ -56,8 +53,7 @@ void StatusCheck::run() {
 StatusTimer::StatusTimer(QObject* parent) : QObject{parent} {
   setObjectName("antiquacrm_timer");
 #ifdef ANTIQUA_DEVELOPEMENT
-  // Standard ist 60 Sekunden
-  countBase = 30;
+  countBase = 30; // Default is 60 secs
 #endif
   countDown = countBase;
 }
@@ -96,7 +92,7 @@ StatusToolBar::StatusToolBar(QWidget* parent) : QToolBar{parent} {
   setOrientation(Qt::Horizontal);
   setToolButtonStyle(Qt::ToolButtonIconOnly);
   ac_status = addAction(tr("Network status"));
-  ac_status->setIcon(AntiquaCRM::antiquaIcon("network-connect"));
+  ac_status->setIcon(AntiquaCRM::antiquaIcon("network-disconnect"));
   connect(ac_status, SIGNAL(triggered()), SLOT(databaseInfoDialog()));
 }
 
@@ -170,7 +166,7 @@ StatusBar::StatusBar(QWidget* parent) : QStatusBar{parent} {
 
 void StatusBar::openErrorPopUp(const QSqlError& error) {
   m_toolBar->setStatus(StatusCheck::Status::NETWORK_DISCONNECTED);
-  QMessageBox::warning(this, tr("Conenction Errors"), error.text());
+  QMessageBox::warning(this, tr("Connection Errors"), error.text());
 }
 
 void StatusBar::startTest() {
@@ -185,16 +181,16 @@ void StatusBar::startTest() {
           SLOT(setStatus(StatusCheck::Status)));
   connect(m_check, SIGNAL(finished()), m_check, SLOT(deleteLater()));
 
-  m_check->wait(qRound(PROCESS_TIMEOUT / 2) * 1000);
+  m_check->wait(qRound(m_check->timeout / 2) * 1000);
   m_check->start();
 }
 
-void StatusBar::statusInfoMessage(const QString& text) {
-  showMessage(text, (PROCESS_TIMEOUT * 1000));
+void StatusBar::statusInfoMessage(const QString& text, int timeout) {
+  showMessage(text, (timeout * 1000));
 }
 
-void StatusBar::statusWarnMessage(const QString& text) {
-  showMessage(text, (PROCESS_TIMEOUT * 1000));
+void StatusBar::statusWarnMessage(const QString& text, int timeout) {
+  showMessage(text, (timeout * 1000));
 }
 
 void StatusBar::statusFatalMessage(const QString& text) {
@@ -203,7 +199,7 @@ void StatusBar::statusFatalMessage(const QString& text) {
 
 StatusBar::~StatusBar() {
   if (m_timer != nullptr) {
-    qInfo("Shutdown Database Listener ...");
+    qInfo("Shutdown Connections listener ...");
     m_timer->deleteLater();
   }
 }

@@ -42,6 +42,21 @@ bool ANetworkIface::connectedIfaceExists() {
   return (countInterfaces > 0);
 }
 
+bool ANetworkIface::isLoopbackInterface(const QString& iface) {
+  QStringList p_list({"localhost"});
+  foreach (QNetworkInterface net, QNetworkInterface::allInterfaces()) {
+    if (net.flags() & !(QNetworkInterface::IsUp | QNetworkInterface::IsRunning))
+      continue;
+
+    if (net.flags() & QNetworkInterface::IsLoopBack) {
+      foreach (QNetworkAddressEntry a, net.addressEntries()) {
+        p_list.append(a.ip().toString());
+      }
+    }
+  }
+  return (p_list.contains(iface));
+}
+
 bool ANetworkIface::checkRemotePort(const QString& host, int port, int wait) {
   bool _b = false;
   if (!connectedIfaceExists())

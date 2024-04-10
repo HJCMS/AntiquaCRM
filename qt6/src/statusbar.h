@@ -27,11 +27,8 @@ class StatusCheck final : public QThread {
   Q_OBJECT
 
 public:
-  enum Status {
-    NETWORK_CONNECTED = 0,
-    NETWORK_DISCONNECTED = 1,
-    NETWORK_CONFIG_ERROR = 2
-  };
+  double timeout = 6.00;
+  enum Status { NETWORK_CONNECTED = 0, NETWORK_DISCONNECTED = 1, NETWORK_CONFIG_ERROR = 2 };
   explicit StatusCheck(QObject* parent = nullptr);
 
 Q_SIGNALS:
@@ -124,8 +121,8 @@ private Q_SLOTS:
   void startTest();
 
 public Q_SLOTS:
-  void statusInfoMessage(const QString&);
-  void statusWarnMessage(const QString&);
+  void statusInfoMessage(const QString&, int timeout = 15);
+  void statusWarnMessage(const QString&, int timeout = 30);
   void statusFatalMessage(const QString&);
 
 public:

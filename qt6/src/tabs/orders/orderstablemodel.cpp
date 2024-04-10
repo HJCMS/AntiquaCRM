@@ -126,6 +126,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
       return _item.data().toBool();
 
     case QMetaType::Int:
+    case QMetaType::UInt:
     case QMetaType::Long:
     case QMetaType::ULong:
       return _item.data().toInt();
