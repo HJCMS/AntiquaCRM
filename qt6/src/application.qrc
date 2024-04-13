@@ -67,5 +67,6 @@
     <file>icons/action-undo.png</file>
     <file>icons/antiquacrm.png</file>
     <file>icons/bookmark.png</file>
+    <file>icons/unknown.png</file>
   </qresource>
 </RCC>

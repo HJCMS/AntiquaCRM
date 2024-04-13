@@ -27,7 +27,14 @@ namespace AntiquaCRM
  * @ingroup IconTheme
  */
 ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString& name) {
-  return QIcon(":/icons/" + name + ".png");
+  QIcon _icon = QIcon(":/icons/" + name + ".png");
+  if (_icon.isNull())
+    _icon = QIcon(":/icons/oxygen/" + name + ".png");
+
+  if (_icon.isNull())
+    _icon = QIcon(":/icons/unknown.png");
+
+  return _icon;
 }
 
 /**
@@ -39,10 +46,9 @@ ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString& name) {
  * @ingroup IconTheme
  */
 ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString& name) {
-  if (!name.contains("antiqua") && !QIcon::hasThemeIcon(name)) {
-    return QIcon(":/icons/oxygen/" + name + ".png");
-  }
-  // Load from Unix Icon theme
+  if (name.length() < 2)
+    return qrcIcon("unknown");
+
   return QIcon::fromTheme(name, qrcIcon(name));
 }
 
