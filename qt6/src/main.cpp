@@ -13,41 +13,41 @@
 #include "application.h"
 
 #ifdef Q_OS_LINUX
-#include <syslog.h>
+#  include <syslog.h>
 
 void SyslogMessageHandler(QtMsgType type, // Message Type
-                          const QMessageLogContext &context,
-                          const QString &msg) {
+                          const QMessageLogContext& context, const QString& msg) {
   QByteArray localMsg = msg.toLocal8Bit();
   switch (type) {
-  case QtInfoMsg:
-    syslog(LOG_INFO, "%s", localMsg.constData());
-    break;
+    case QtInfoMsg:
+      syslog(LOG_INFO, "%s", localMsg.constData());
+      break;
 
-  case QtWarningMsg:
-    syslog(LOG_WARNING, "%s", localMsg.constData());
-    break;
+    case QtWarningMsg:
+      syslog(LOG_WARNING, "%s", localMsg.constData());
+      break;
 
-  case QtCriticalMsg:
-  case QtFatalMsg: {
-    QString _context = QString::asprintf("’%s’", context.function);
-    syslog(LOG_ERR, "%s %s", localMsg.constData(),
-           _context.toLocal8Bit().constData());
+    case QtCriticalMsg:
+    case QtFatalMsg:
+      {
+        QString _context = QString::asprintf("’%s’", context.function);
+        syslog(LOG_ERR, "%s %s", localMsg.constData(), _context.toLocal8Bit().constData());
 
-    abort();
-  } break;
+        abort();
+      }
+      break;
 
-  default:
-    break;
+    default:
+      break;
   }
 }
 #endif
 
-int main(int argc, char *argv[]) {
+int main(int argc, char* argv[]) {
 #ifdef Q_OS_LINUX
-#ifndef ANTIQUA_DEVELOPEMENT
+#  ifndef ANTIQUA_DEVELOPEMENT
   qInstallMessageHandler(SyslogMessageHandler);
-#endif
+#  endif
 #endif
 
 #ifdef Q_OS_WIN64
@@ -71,10 +71,9 @@ int main(int argc, char *argv[]) {
   QApplication::setAttribute(Qt::AA_DisableSessionManager, true);
 
   // Ensure that color palettes and font propagation are not inherited.
-  QApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles,
-                             false);
+  QApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, false);
 
-  Application *m_app = new Application(argc, argv);
+  Application* m_app = new Application(argc, argv);
   if (m_app->isRunning()) {
     qWarning("AntiquaCRM is already up!");
     return 0;
