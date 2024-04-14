@@ -47,8 +47,24 @@
     <file>icons/gender-male.png</file>
     <file>icons/gender-female.png</file>
     <file>icons/gender-various.png</file>
+    <file>icons/kjournal.png</file>
+    <file>icons/media-optical-dvd-video.png</file>
     <file>icons/print-qrcode.png</file>
     <file>icons/antiquacrm-splash.png</file>
+    <file>icons/network-disconnect.png</file>
+    <file>icons/archive-insert-directory.png</file>
+    <file>icons/arrow-right.png</file>
+    <file>icons/debug-run.png</file>
+    <file>icons/dialog-close.png</file>
+    <file>icons/dialog-ok.png</file>
+    <file>icons/document-edit.png</file>
+    <file>icons/edit-paste.png</file>
+    <file>icons/folder-downloads.png</file>
+    <file>icons/folder-pictures.png</file>
+    <file>icons/folder-public.png</file>
+    <file>icons/inode-directory.png</file>
+    <file>icons/internet-web-browser.png</file>
+    <file>icons/network-connect.png</file>
     <file>icons/action-add.png</file>
     <file>icons/edit-delete.png</file>
     <file>icons/action-clear.png</file>
@@ -68,5 +84,36 @@
     <file>icons/antiquacrm.png</file>
     <file>icons/bookmark.png</file>
     <file>icons/unknown.png</file>
+    <file>icons/applications-other.png</file>
+    <file>icons/arrow-left.png</file>
+    <file>icons/chronometer.png</file>
+    <file>icons/dialog-cancel.png</file>
+    <file>icons/document-decrypt.png</file>
+    <file>icons/folder-documents.png</file>
+    <file>icons/folder-image.png</file>
+    <file>icons/folder-remote.png</file>
+    <file>icons/mail-message.png</file>
+    <file>icons/network-server-database.png</file>
+    <file>icons/office-chart-area.png</file>
+    <file>icons/office-chart-bar.png</file>
+    <file>icons/preferences-desktop.png</file>
+    <file>icons/preferences-devices-printer.png</file>
+    <file>icons/preferences-other.png</file>
+    <file>icons/preferences-system.png</file>
+    <file>icons/system-search.png</file>
+    <file>icons/system-users.png</file>
+    <file>icons/tab-new.png</file>
+    <file>icons/view-financial-payment-mode.png</file>
+    <file>icons/view-financial-transfer.png</file>
+    <file>icons/view-fullscreen.png</file>
+    <file>icons/view-group.png</file>
+    <file>icons/view-history.png</file>
+    <file>icons/view-investment.png</file>
+    <file>icons/view-list-details.png</file>
+    <file>icons/view-loan-asset.png</file>
+    <file>icons/view-refresh.png</file>
+    <file>icons/view-statistics.png</file>
+    <file>icons/view-task-child.png</file>
+    <file>icons/x-office-spreadsheet.png</file>
   </qresource>
 </RCC>

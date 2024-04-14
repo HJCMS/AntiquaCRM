@@ -29,9 +29,6 @@ namespace AntiquaCRM
 ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString& name) {
   QIcon _icon = QIcon(":/icons/" + name + ".png");
   if (_icon.isNull())
-    _icon = QIcon(":/icons/oxygen/" + name + ".png");
-
-  if (_icon.isNull())
     _icon = QIcon(":/icons/unknown.png");
 
   return _icon;
