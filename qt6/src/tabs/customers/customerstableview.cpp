@@ -26,7 +26,7 @@ qint64 CustomersTableView::getTableID(const QModelIndex &index, int column) {
 
 int CustomersTableView::getArticleCount(const QModelIndex &index) {
   Q_UNUSED(index);
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "unused - always returns -1!";
 #endif
   return -1;

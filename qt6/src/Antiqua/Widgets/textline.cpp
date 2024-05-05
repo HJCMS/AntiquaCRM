@@ -48,7 +48,7 @@ void TextLine::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in TextLine.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "TextLine Requires type int but get:" << value;
 #endif
     break;

@@ -106,14 +106,14 @@ QDomDocument AbeBooksActionsDialog::orderUpdateRequest(const QString &attr) {
 void AbeBooksActionsDialog::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
     statusMessage(tr("Network request, response with error!"));
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << Qt::endl << reply->readAll() << Qt::endl;
 #endif
   }
 }
 
 void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   QDir dir = AntiquaCRM::ASettings::getUserTempDir();
   QFileInfo info(dir, order_id + ".xml");
   QFile fp(info.filePath());
@@ -142,7 +142,7 @@ void AbeBooksActionsDialog::prepareResponse(const QDomDocument &xml) {
 
     m_orderInfo->setOrderPurchaseId(_bpoNode.attribute("id", "0"));
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else {
     qDebug() << Q_FUNC_INFO << Qt::endl << xml.toString(-1) << Qt::endl;
   }

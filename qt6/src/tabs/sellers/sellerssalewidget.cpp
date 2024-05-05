@@ -173,7 +173,7 @@ void SellersSalesWidget::pushCmd(const QJsonObject &action) {
   if (m_sock->pushOperation(action))
     m_sock->close();
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << action;
 #endif
 }

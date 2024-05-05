@@ -100,7 +100,7 @@ void ANetworker::slotReadResponse() {
   //    return;
   //  }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qInfo("Host: %s", qPrintable(m_reply->url().host()));
   foreach (QByteArray a, m_reply->rawHeaderList()) {
     qInfo("-- %s: %s", a.constData(), m_reply->rawHeader(a).constData());
@@ -124,7 +124,7 @@ void ANetworker::slotReadResponse() {
   }
   buf.clear();
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   QByteArray byte_info;
   QTextStream(&byte_info) << "bytes=" << data.size();
   qInfo("-- Bytes responses (%s).", byte_info.data());

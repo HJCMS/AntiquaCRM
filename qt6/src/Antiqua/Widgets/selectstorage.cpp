@@ -76,7 +76,7 @@ void SelectStorage::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in SelectStorage.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "SelectStorage Requires type int but get:" << value;
 #endif
     break;
@@ -133,7 +133,7 @@ void SelectStorage::initData() {
       }
       _q.clear();
     }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     else if (!aSql.lastError().isEmpty()) {
       qDebug() << Q_FUNC_INFO << _sql << aSql.lastError();
     }
@@ -160,7 +160,7 @@ const QStringList SelectStorage::getCompartments() {
     _list = _q.value("sc_storage_compartment").toStringList();
     _q.clear();
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else if (!aSql.lastError().isEmpty()) {
     qDebug() << Q_FUNC_INFO << _sql << aSql.lastError();
   }

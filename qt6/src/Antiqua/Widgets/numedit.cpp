@@ -50,7 +50,7 @@ void NumEdit::setValue(const QVariant &value) {
     }
   } break;
   };
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << "NumEdit Invalid:" << value;
 #endif
 }

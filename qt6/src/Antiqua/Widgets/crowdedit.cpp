@@ -42,7 +42,7 @@ void CrowdEdit::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in CrowdEdit.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "CrowdEdit Requires type int but get:" << value;
 #endif
     break;

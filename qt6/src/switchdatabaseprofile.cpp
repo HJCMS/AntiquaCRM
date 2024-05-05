@@ -67,7 +67,7 @@ void SwitchDatabaseProfile::saveAndQuit() {
   qInfo("Changed profile '%s' and close dialog.", qPrintable(_profile));
   config->setValue("database_profile", _profile);
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO
            << config->organizationName()
            << config->applicationName()

@@ -91,7 +91,7 @@ void ImageThumbnail::setPixmap(const QPixmap &pixmap) {
   }
   _source.detach();
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Scaled to" << _scaled.size();
 #endif
 

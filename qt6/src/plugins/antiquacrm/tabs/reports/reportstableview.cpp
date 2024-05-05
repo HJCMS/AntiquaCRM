@@ -58,7 +58,7 @@ void ReportsTableView::setQuery(const QString &query) {
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
     refunds_section = m_model->record().indexOf("refundscost");
-#ifndef ANTIQUA_DEVELOPEMENT
+#ifndef ANTIQUA_DEVELOPMENT
     m_tableHeader->hideSection(calc_section);
     m_tableHeader->hideSection(refunds_section);
 #endif

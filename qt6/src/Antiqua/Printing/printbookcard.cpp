@@ -101,7 +101,7 @@ int PrintBookCard::exec(const QJsonObject &opts, bool pdfbtn) {
   pdfFileName = opts.value("basename").toString();
   pdfFileName.append(".pdf");
 
-  // #ifdef ANTIQUA_DEVELOPEMENT
+  // #ifdef ANTIQUA_DEVELOPMENT
   //   qDebug() << Q_FUNC_INFO << opts;
   // #endif
 

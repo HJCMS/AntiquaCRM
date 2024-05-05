@@ -73,7 +73,7 @@ void SelectOrderPayment::initData() {
 
 void SelectOrderPayment::setValue(const QVariant &value) {
   if (value.metaType().id() != QMetaType::Int) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Reject:" << value;
 #endif
     return;

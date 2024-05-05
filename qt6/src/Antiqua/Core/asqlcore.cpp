@@ -36,7 +36,7 @@ const QSqlError ASqlCore::sqlNetworkError() const {
 
 bool ASqlCore::initDatabase() {
   if (!networkStatus()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Network interface is down!";
 #endif
     return false;
@@ -121,7 +121,7 @@ void ASqlCore::prepareSqlError(const QSqlError& error) {
   };
 
 // Developement verbose
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << Qt::endl
            << "Type:" << error.type() << Qt::endl
            << "Database: " << error.databaseText() << Qt::endl

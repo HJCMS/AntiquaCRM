@@ -93,7 +93,7 @@ bool MailDialog::selectTemplate(const QString &caller) {
     return true;
   } else if (!m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("an error occurred"));
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
 #endif
     return false;
@@ -108,7 +108,7 @@ const QJsonObject MailDialog::articleObject(const QVariant &value) {
 
 void MailDialog::setRecipientData() {
   if (p_customerId < 0 || p_tb_caller.isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << p_customerId << p_tb_caller;
 #endif
     return;
@@ -181,7 +181,7 @@ void MailDialog::setRecipientData() {
         _map.insert("a_article_id", list.join(","));
         _map.insert("a_article_list", articles);
       } else {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
         qDebug() << Q_FUNC_INFO << m_sql->lastError();
 #else
         qWarning("SQL error occurred in mail article templates");

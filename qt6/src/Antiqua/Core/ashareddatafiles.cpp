@@ -81,7 +81,7 @@ bool ASharedDataFiles::storeJson(const QString &basename,
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     data << doc.toJson(QJsonDocument::Indented);
 #else
     data << doc.toJson(QJsonDocument::Compact);
@@ -89,7 +89,7 @@ bool ASharedDataFiles::storeJson(const QString &basename,
     fp.close();
     return true;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
   qWarning("Can't save '%s' Json!", qPrintable(info.fileName()));
@@ -131,7 +131,7 @@ bool ASharedDataFiles::storeXml(const QString &basename,
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     // Indented: 1
     data << xml.toString(1);
 #else
@@ -141,7 +141,7 @@ bool ASharedDataFiles::storeXml(const QString &basename,
     fp.close();
     return true;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
   qWarning("Can't save '%s' XML!", qPrintable(info.fileName()));
@@ -202,7 +202,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     fp.close();
     return true;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
   qWarning("Can't save '%s' Tempfile", qPrintable(info.fileName()));
@@ -220,7 +220,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
     fp.close();
     return true;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
   qWarning("Can't save '%s' Tempfile", qPrintable(info.fileName()));
@@ -231,7 +231,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
 const QString ASharedCacheFiles::getTempFile(const QString &filename) {
   QFileInfo info(path(), filename);
   if (!info.isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
     qWarning("Temp file: %s not exists", qPrintable(info.fileName()));
@@ -251,7 +251,7 @@ const QString ASharedCacheFiles::getTempFile(const QString &filename) {
 const QJsonObject ASharedCacheFiles::getTempJson(const QString &md5sum) {
   QFileInfo info(path(), md5sum + ".json");
   if (!info.isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Permissions:" << info;
 #else
     qWarning("Temp file: %s not exists", qPrintable(info.fileName()));

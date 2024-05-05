@@ -107,7 +107,7 @@ void DeliverServiceList::getDeliverServiceId(QTreeWidgetItem *item, int) {
   }
   obj.insert("d_description", QJsonValue(d_description));
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << obj;
 #endif
   emit deliverPackageClicked(id, obj);

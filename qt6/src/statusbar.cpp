@@ -52,7 +52,7 @@ void StatusCheck::run() {
 // BEGIN:StatusTimer
 StatusTimer::StatusTimer(QObject* parent) : QObject{parent} {
   setObjectName("antiquacrm_timer");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   countBase = 30; // Default is 60 secs
 #endif
   countDown = countBase;

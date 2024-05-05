@@ -354,7 +354,7 @@ void CmdBuchfreund::responsed(const QByteArray &bread) {
   QJsonParseError _parser;
   QJsonDocument _doc = QJsonDocument::fromJson(bread, &_parser);
   if (_parser.error != QJsonParseError::NoError) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qWarning("Buchfreund::ParseError:(%s)!", qPrintable(_parser.errorString()));
 #endif
     emit sendDisjointed();

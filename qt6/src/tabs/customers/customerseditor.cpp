@@ -145,7 +145,7 @@ bool CustomersEditor::setDataField(const QSqlField &field,
     return true;
 
   if (field.requiredStatus() == QSqlField::Required) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Unknown:" << _key << "|" << value;
 #else
     qWarning("Unknown Key (%s) found.", qPrintable(key));
@@ -171,7 +171,7 @@ void CustomersEditor::importSqlResult() {
 bool CustomersEditor::sendSqlQuery(const QString &query) {
   QSqlQuery _q = m_sql->query(query);
   if (_q.lastError().type() != QSqlError::NoError) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << query << m_sql->lastError();
 #endif
     return false;
@@ -335,7 +335,7 @@ void CustomersEditor::findPurchases() {
 
   AntiquaCRM::ASqlFiles _tpl("query_customer_orders_status");
   if (!_tpl.openTemplate()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qWarning("No query_customer_orders_status file found");
 #endif
     return;
@@ -435,7 +435,7 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
 
   AntiquaCRM::ASqlFiles _tpl("query_customer_data");
   if (!_tpl.openTemplate()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qWarning("No query_customer_data file found");
 #endif
     return false;

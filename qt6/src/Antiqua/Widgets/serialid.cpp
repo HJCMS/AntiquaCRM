@@ -38,7 +38,7 @@ void SerialId::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in SerialId.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "SerialId Requires type int but get:" << value;
 #endif
     m_edit->setValue(value.toLongLong());

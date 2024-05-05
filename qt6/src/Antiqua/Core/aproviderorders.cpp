@@ -468,7 +468,7 @@ bool AProviderOrder::removeOrderItem(const QString &orderItemId) {
     while (sub.hasNext()) {
       ArticleOrderItem item = sub.next();
       if (item.key == orderItemId) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
         qDebug() << Q_FUNC_INFO << i << item.key;
 #endif
         p_orderItems.removeAt(i);

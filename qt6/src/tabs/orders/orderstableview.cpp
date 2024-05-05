@@ -205,7 +205,7 @@ void OrdersTableView::addArticle(const AntiquaCRM::OrderArticleItems &order) {
     setWindowModified(true);
     return;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qWarning("-- OrdersTableView::addArticle -- Rejected --");
 #endif
 }

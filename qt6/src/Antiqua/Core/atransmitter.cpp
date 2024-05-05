@@ -91,7 +91,7 @@ void ATransmitter::getState(QLocalSocket::LocalSocketState state) {
     return;
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qInfo("Transmitter::%s", qPrintable(verbose));
 #endif
 }

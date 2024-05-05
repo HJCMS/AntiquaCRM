@@ -12,7 +12,7 @@
 
 namespace AntiquaCRM {
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
 void __postalcode_debug(const AntiquaCRM::PostalCode &code) {
   qDebug() << "PostalCode:" << code.plz << Qt::endl
            << "Location:" << code.location << Qt::endl
@@ -104,7 +104,7 @@ void PostalCodeEdit::setPostalCodeLeave() {
 
   AntiquaCRM::PostalCode _pcode = getPostalCode(t_plz);
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   __postalcode_debug(_pcode);
 #endif
 
@@ -174,7 +174,7 @@ void PostalCodeEdit::initData() {
     return;
   }
   // SQL
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qInfo("Using SQL Database for PostalCode!");
 #endif
   AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
@@ -263,7 +263,7 @@ QCompleter *PostalCodeEdit::getCompleter(QLineEdit *editor) {
     }
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   if (_buffer.size() < 1)
     qDebug() << "PostalCodeEdit::Completer::Size" << _buffer.size();
 #endif

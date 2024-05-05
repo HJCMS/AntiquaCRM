@@ -372,7 +372,7 @@ void CmdBooklooker::responsed(const QByteArray &bread) {
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(bread, &parser);
   if (parser.error != QJsonParseError::NoError) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qWarning("CmdBooklooker::ParseError:(%s)!", qPrintable(parser.errorString()));
 #endif
     emit sendDisjointed();

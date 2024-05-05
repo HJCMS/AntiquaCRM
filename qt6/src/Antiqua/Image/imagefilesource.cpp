@@ -191,7 +191,7 @@ bool ImageFileSource::findInDatabase(AntiquaCRM::ASqlCore *db,
   if (_status) {
     setFileId(articleId);
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else if (!db->lastError().isEmpty()) {
     qDebug() << Q_FUNC_INFO << _sql << Qt::endl << db->lastError();
   }
@@ -250,7 +250,7 @@ bool ImageFileSource::storeInDatabase(AntiquaCRM::ASqlCore *db,
   db->query(_sql);
   bool _status = db->lastError().isEmpty();
   if (!_status) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << _sql << Qt::endl << db->lastError();
 #else
     qWarning("Store Image to Database failed.");
@@ -283,7 +283,7 @@ bool ImageFileSource::removeFromDatabase(AntiquaCRM::ASqlCore *db,
   db->query(_sql);
   bool _status = db->lastError().isEmpty();
   if (!_status) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << _sql << Qt::endl << db->lastError();
 #else
     qWarning("Delete Image from Database failed.");

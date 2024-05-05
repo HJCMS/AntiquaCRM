@@ -167,7 +167,7 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
     return;
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "REJECT" << _index << name << data;
 #endif
 }
@@ -223,7 +223,7 @@ bool MainWindow::closeWindow() {
 
   _geometry.clear();
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   return close();
 #else
   return (m_tabWidget->unloadTabs() && close());

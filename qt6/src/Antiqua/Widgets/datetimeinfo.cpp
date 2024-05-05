@@ -45,7 +45,7 @@ void DateTimeInfo::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in DateTimeInfo.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "DateTimeInfo::setValue " << value;
 #endif
     break;

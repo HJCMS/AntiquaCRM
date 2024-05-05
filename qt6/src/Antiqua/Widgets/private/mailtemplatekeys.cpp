@@ -168,7 +168,7 @@ const QString MailTemplateKeys::convert(const QString &key) {
     return stringValue(search);
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << "MailTemplateKeys:"
            << "Key „" << search << "“ not exists in „p_data“ Map!";
 #endif

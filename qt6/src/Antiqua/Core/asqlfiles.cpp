@@ -5,7 +5,7 @@
 #include "aglobal.h"
 #include "asettings.h"
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
 #include <QDebug>
 #endif
 
@@ -30,7 +30,7 @@ const QRegularExpression ASqlFiles::macrosPattern() {
 
 bool ASqlFiles::openTemplate() {
   if (!isReadable()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Missing or permission Denied!";
 #else
     qWarning("Missing or permission Denied!");

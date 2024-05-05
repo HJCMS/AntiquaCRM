@@ -29,7 +29,7 @@ const QStringList TabsLoader::getInterfaceList() {
       p_dir.cdUp();
     }
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   if (plugins.isEmpty()) {
     qDebug() << Q_FUNC_INFO << "Missing Plugins:" << p_dir.path();
   }

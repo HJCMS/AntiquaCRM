@@ -5,7 +5,7 @@
 
 #include <QSqlDatabase>
 #include <QVariant>
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
 #include <QDebug>
 #endif
 
@@ -14,13 +14,13 @@ namespace AntiquaCRM {
 static const QSqlRecord asql_table_record(const QString &name) {
   if (name.isEmpty()) {
     qWarning("AntiquaCRM::ASqlDataQuery 'Missing SQL table name'!");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "QString::isEmpty" << name.isEmpty();
 #endif
     return QSqlRecord();
   }
   QSqlDatabase db = QSqlDatabase::database(ANTIQUACRM_CONNECTION_DOMAIN);
-  // #ifdef ANTIQUA_DEVELOPEMENT
+  // #ifdef ANTIQUA_DEVELOPMENT
   //   QSqlRecord _r = db.record(name);
   //   for(int i = 0; i < _r.count(); i++) {
   //     QSqlField _f = _r.field(i);

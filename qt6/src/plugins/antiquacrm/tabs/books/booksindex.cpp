@@ -110,7 +110,7 @@ void BooksIndex::openStartPage() {
     m_table->setReloadView();
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   if (isWindowModified())
     qDebug() << Q_FUNC_INFO << isWindowModified();
 #endif
@@ -143,7 +143,7 @@ void BooksIndex::createNewEntry() {
   if (currentPage() == ViewPage::MainView && m_editorWidget->createNewEntry()) {
     setCurrentIndex(ViewPage::EditorView);
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else {
     qWarning("Reject BooksIndex::createNewEntry - no main page view!");
   }

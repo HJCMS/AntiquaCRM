@@ -36,7 +36,7 @@ const QFont SplashScreen::titleFont() const {
 #endif
     if (ret == -1) {
       _fontName = QString("Luxi Mono");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
       qWarning("Splash: font file not found fallback to „%s“.",
                qPrintable(_fontName));
 #endif

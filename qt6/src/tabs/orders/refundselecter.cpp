@@ -66,7 +66,7 @@ RefundSelecter::RefundSelecter(QWidget *parent)
   _hide_columns << "a_customer_id";
   _hide_columns << "a_modified";
   _hide_columns << "a_provider_id";
-#ifndef ANTIQUA_DEVELOPEMENT
+#ifndef ANTIQUA_DEVELOPMENT
   m_table->hideColumns(_hide_columns);
 #endif
   m_table->setMinimumHeight(100);

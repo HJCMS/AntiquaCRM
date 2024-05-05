@@ -45,7 +45,7 @@ void SyslogMessageHandler(QtMsgType type, // Message Type
 
 int main(int argc, char* argv[]) {
 #ifdef Q_OS_LINUX
-#  ifndef ANTIQUA_DEVELOPEMENT
+#  ifndef ANTIQUA_DEVELOPMENT
   qInstallMessageHandler(SyslogMessageHandler);
 #  endif
 #endif

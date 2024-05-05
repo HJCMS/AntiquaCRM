@@ -115,7 +115,7 @@ void ReportsIndex::saveReport() {
       out << header + QChar::LineFeed;
       out << rows.join(QChar::LineFeed) + QChar::LineFeed;
       fp.close();
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
       qDebug() << "Save:" << dest.filePath();
 #endif
       emit sendStatusMessage(tr("Report saved: %1").arg(dest.fileName()));

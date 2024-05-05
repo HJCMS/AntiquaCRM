@@ -51,7 +51,7 @@ void ConditionEdit::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in ConditionEdit.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "ConditionEdit Requires type int but get:" << value;
 #endif
     break;

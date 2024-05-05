@@ -39,7 +39,7 @@ const QString CDsVinylSearchBar::getSearchString(const QStringList &fields) {
   QString _sql;
   QString _input = m_searchInput->text().trimmed();
   if (_input.isEmpty() || fields.count() < 1) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "INVALID_CDVINYL_SEARCH_INPUT";
 #endif
     return QString("cv_title='INVALID_CDVINYL_SEARCH_INPUT'");

@@ -362,7 +362,7 @@ bool StitchesEditor::setDataField(const QSqlField &field,
     return true;
 
   if (required) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
 #else
     qWarning("Unknown Key (%s) found.", qPrintable(key));

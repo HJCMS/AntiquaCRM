@@ -478,7 +478,7 @@ bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
     return true;
 
   if (required) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Unknown:" << key << "|" << value;
 #else
     qWarning("Unknown Key (%s) found.", qPrintable(key));
@@ -765,7 +765,7 @@ void BooksEditor::createDNBSearch() {
   _query.addQueryItem("v", "plist");
   _query.addQueryItem("t", _search);
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << "DNB Search:" << Qt::endl << _query.toString();
 #endif
 

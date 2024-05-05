@@ -7,7 +7,7 @@
 #include <QMetaType>
 #include <QModelRoleData>
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
 void __debug_article_items(AntiquaCRM::OrderArticleItems items) {
   qDebug() << "ArticleOrderItem" << items.size();
   QListIterator<AntiquaCRM::ArticleOrderItem> it(items);
@@ -113,7 +113,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
   const QString _fname = _info.field();
   const QMetaType _type = _item.data().metaType();
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   if (_type.id() == QMetaType::UnknownType) {
     qDebug() << Q_FUNC_INFO << "Invalid MetaType:" << _fname << _item.data();
   }
@@ -368,7 +368,7 @@ bool OrdersTableModel::addArticles(
   while (it.hasNext()) {
     AntiquaCRM::OrderArticleItems items = it.next();
     if (p_columns < items.size()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
       qDebug() << Q_FUNC_INFO << "INVALID Column Count!" << Qt::endl
                << "Current" << p_columns << "Size" << items.size();
 

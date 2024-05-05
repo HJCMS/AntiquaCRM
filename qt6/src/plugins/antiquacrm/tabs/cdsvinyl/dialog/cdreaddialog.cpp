@@ -124,7 +124,7 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
   if (js.size() < 2)
     return;
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   QFile fp(QDir::homePath() + "/.cache/discid_info.json");
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream data(&fp);
@@ -158,7 +158,7 @@ void CDReadDialog::queryResponses(const QJsonDocument &doc) {
 
 void CDReadDialog::createMetaQuery(const QUrl &url) {
   if (!url.isValid()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << url.host() << url;
 #endif
     return;

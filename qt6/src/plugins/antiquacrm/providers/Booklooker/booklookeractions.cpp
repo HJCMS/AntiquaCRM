@@ -159,7 +159,7 @@ void BookLookerActions::prepareResponse(const QJsonDocument &document) {
     statusMessage(returnValue.toString());
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << _obj;
 #endif
 
@@ -238,7 +238,7 @@ void BookLookerActions::prepareOperation() {
 void BookLookerActions::queryFinished(QNetworkReply *reply) {
   if (reply->error() != QNetworkReply::NoError) {
     statusMessage(tr("Network request, response with error!"));
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << reply->readAll();
 #endif
   }

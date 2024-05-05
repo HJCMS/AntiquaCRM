@@ -48,7 +48,7 @@ bool ASqlQueryModel::querySelect(const QString& sql) {
 
   setQuery(sql, m_sql->db());
   if (lastError().isValid()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << sql;
 #endif
     emit sqlErrorMessage(p_table, lastError().text());
@@ -82,7 +82,7 @@ const QString ASqlQueryModel::fieldName(int column) const {
 int ASqlQueryModel::column(const QString& fieldName) const {
   QSqlRecord _record = query().record();
   if (_record.isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Empty Record";
 #endif
     return -1;

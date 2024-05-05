@@ -234,7 +234,7 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
       return true;
     }
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Rejected" << obj;
 #endif
   return false;

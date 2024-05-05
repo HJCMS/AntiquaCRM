@@ -42,7 +42,7 @@ void SyslogMessageHandler(QtMsgType type, // Message Type
 }
 
 int main(int argc, char *argv[]) {
-#ifndef ANTIQUA_DEVELOPEMENT
+#ifndef ANTIQUA_DEVELOPMENT
   qInstallMessageHandler(SyslogMessageHandler);
 #endif
   // qputenv("QT_DEBUG_PLUGINS", QByteArray("1"));

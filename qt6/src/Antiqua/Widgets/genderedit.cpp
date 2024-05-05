@@ -54,7 +54,7 @@ void GenderEdit::setValue(const QVariant &value) {
   } break;
 
   default:
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qWarning("GenderEdit::setValue() Invalid Metatype.");
 #endif
     return;

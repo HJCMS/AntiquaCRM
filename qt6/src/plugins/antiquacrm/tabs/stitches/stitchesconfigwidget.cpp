@@ -93,7 +93,7 @@ void StitchesConfigWidget::saveSectionConfig() {
   if (dbsql.lastError().isEmpty())
     return;
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << dbsql.lastError();
 #endif
 }

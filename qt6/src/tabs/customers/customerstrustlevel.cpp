@@ -58,7 +58,7 @@ void CustomersTrustLevel::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in CustomersTrustLevel.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "CustomersTrustLevel Requires type int but get:" << value;
 #endif
     break;

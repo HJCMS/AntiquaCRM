@@ -23,7 +23,7 @@ AReceiver::~AReceiver() {
     qWarning("found pending connections");
   }
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qInfo("Shutdown and Close socket ...");
 #endif
 }
@@ -102,7 +102,7 @@ void AReceiver::getTransmitter() {
       }
 
       if (!createAction(_obj)) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
         qDebug() << Q_FUNC_INFO << _obj;
 #else
         qWarning("Operation rejected!");

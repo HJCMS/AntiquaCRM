@@ -100,7 +100,7 @@ void OrdersTableOverView::contextMenuAction(AntiquaCRM::TableContextMenu::Action
     break; // Unused in this section
 
   default:
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "Unknown OrderView::ContextMenu request:" << _oid;
 #endif
     break;

@@ -279,7 +279,7 @@ QPair<qint64, QString>
 ACmdProviders::findInsertCustomer(const QJsonObject &json) {
   ACmdCustomers *mc = new ACmdCustomers(pgsql, json);
   qint64 c_id = mc->getId();
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   if (c_id < 1)
     qDebug() << Q_FUNC_INFO << c_id;
 #endif

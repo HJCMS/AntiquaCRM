@@ -64,7 +64,7 @@ void BookBindingEdit::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in BookBindingEdit.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "BookBindingEdit Requires type int but get:" << value;
 #endif
     break;

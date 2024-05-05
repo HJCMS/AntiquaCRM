@@ -43,7 +43,7 @@ bool Application::registerSessionBus() {
       m_dbus->registerObject(QString("/Window"), m_window);
       m_dbus->registerObject(QString("/Systray"), m_systray);
     }
-#  ifdef ANTIQUA_DEVELOPEMENT
+#  ifdef ANTIQUA_DEVELOPMENT
     else {
       qDebug() << Q_FUNC_INFO << m_dbus->lastError().message();
     }
@@ -80,7 +80,7 @@ bool Application::openDatabase() {
   if (m_sql->status())
     return true;
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << m_sql->lastError();
 #endif
 

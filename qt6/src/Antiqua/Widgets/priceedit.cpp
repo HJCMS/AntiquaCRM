@@ -76,7 +76,7 @@ void PriceEdit::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in PriceEdit.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "PriceEdit Requires type double but get:" << value;
 #endif
     break;

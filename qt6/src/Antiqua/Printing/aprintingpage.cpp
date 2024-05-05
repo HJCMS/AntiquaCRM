@@ -8,7 +8,7 @@
 #include <QSizePolicy>
 #include <QTableWidgetItem>
 
-// #ifdef ANTIQUA_DEVELOPEMENT
+// #ifdef ANTIQUA_DEVELOPMENT
 // Display helper borders
 // #define PRINTPAGE_DEBUG
 // #endif
@@ -352,7 +352,7 @@ const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {
     }
     _query.clear();
   } else {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << _sql;
 #else
     qWarning("Printer Recipient Data is empty!");
@@ -387,7 +387,7 @@ const QImage APrintingPage::watermark() const {
     fp.close();
     return QImage::fromData(buffer, type.toLocal8Bit());
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else {
     qDebug() << Q_FUNC_INFO << cfg->group()
              << cfg->value("print_attachments_path").toString()

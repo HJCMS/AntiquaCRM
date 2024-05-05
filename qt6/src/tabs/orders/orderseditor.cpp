@@ -63,7 +63,7 @@ OrdersEditor::OrdersEditor(QWidget *parent)
  * Für den Kunden ausblenden. Werden hier nicht benötigt!
  * @note Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
  */
-#ifndef ANTIQUA_DEVELOPEMENT
+#ifndef ANTIQUA_DEVELOPMENT
   QStringList hideColumn("a_payment_id");
   hideColumn << "a_order_id";
   hideColumn << "a_customer_id";
@@ -189,7 +189,7 @@ bool OrdersEditor::setDataField(const QSqlField &field, const QVariant &value) {
     return true;
 
   if (_required) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Unknown:" << _key << "|" << value;
 #else
     qWarning("Unknown Key (%s) found.", qPrintable(_key));
@@ -349,7 +349,7 @@ void OrdersEditor::createSqlUpdate() {
     setResetModified(inputFields);
     openSuccessMessage(tr("Order saved successfully!"));
   } else {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << _sql << Qt::endl;
 #endif
     openSuccessMessage(tr("Save operation exited with errors!"));

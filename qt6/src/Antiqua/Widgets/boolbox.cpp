@@ -40,7 +40,7 @@ void BoolBox::setValue(const QVariant &value) {
 
   default:
     qWarning("Invalid given Data Type in BoolBox.");
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "BoolBox Requires type int but get:" << value;
 #endif
     break;

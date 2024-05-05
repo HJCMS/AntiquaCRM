@@ -3,7 +3,7 @@
 
 #include "aorderimport.h"
 
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
 #include <QDebug>
 #endif
 

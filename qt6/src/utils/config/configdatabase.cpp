@@ -241,7 +241,7 @@ bool ConfigDatabase::loadProfile(const QString &id) {
       const QString _key = m_inp->objectName();
       QVariant _value = config->getValue(_key, m_inp->getType());
       if (!_value.isValid()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
         qDebug() << Q_FUNC_INFO << id << _key << _value;
 #endif
         continue;
@@ -307,7 +307,7 @@ void ConfigDatabase::testConnection() {
   } else {
     _ret << "<b>" + tr("Connection failed!") + "</b>";
     _ret << "<blockquote>" + _db.lastError().text() + "</blockquote>";
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << _user << _pass << _db.connectOptions();
 #endif
   }
@@ -349,7 +349,7 @@ void ConfigDatabase::saveSectionConfig() {
     if (m_inp != nullptr) {
       const QString _key = m_inp->objectName();
       QVariant _value = m_inp->getValue();
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
       if (_key.isEmpty()) {
         qDebug() << Q_FUNC_INFO << "Missing objectName!" << _value;
         continue;

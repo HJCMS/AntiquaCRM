@@ -84,7 +84,7 @@ void TabsWidget::setCurrentTab(const QString &name) {
   }
 
   if (_id.isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Missing tab parameter - aborted!";
 #endif
     return;

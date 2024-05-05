@@ -48,7 +48,7 @@ qint64 ACmdCustomers::sqlInsert() {
     q.next();
     cutomer_id = q.value("c_id").toInt();
   } else {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << sql << Qt::endl << m_sql->lastError();
 #else
     qWarning("SQL Customer insert answers with errors!");
@@ -85,7 +85,7 @@ qint64 ACmdCustomers::sqlQuery() {
       ids.append(q.value("c_id").toInt());
     }
   } else if (!m_sql->lastError().isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << m_sql->lastError();
 #else
     qWarning("SQL Customer query answers with errors!");

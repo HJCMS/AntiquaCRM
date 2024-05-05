@@ -74,7 +74,7 @@ const QJsonObject TabsEditor::loadSqlConfig(const QString &group) {
     if (!_d.object().isEmpty())
       return _d.object();
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else {
     qDebug() << Q_FUNC_INFO << group << m_sql->lastError();
   }
@@ -232,7 +232,7 @@ bool TabsEditor::isModifiedCompare(const QString &name,
   if (_input == nullptr)
     return false;
 
-  // #ifdef ANTIQUA_DEVELOPEMENT
+  // #ifdef ANTIQUA_DEVELOPMENT
   //   qDebug() << Q_FUNC_INFO << name << origin;
   // #endif
 
@@ -280,7 +280,7 @@ bool TabsEditor::isModifiedCompare(const QString &name,
     break;
 
   default:
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
     qDebug() << "TabsEditor::Type::Missmatch" << name << _value << origin;
 #endif
     _status = false;

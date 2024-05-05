@@ -88,7 +88,7 @@ void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
     QByteArray _data = _query.value("pr_order_data").toString().toLocal8Bit();
     const QJsonDocument _jdoc = QJsonDocument::fromJson(_data);
     if (_jdoc.isEmpty() || _jdoc.object().isEmpty()) {
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
       qDebug() << Q_FUNC_INFO << provider << oid << _sql;
 #else
       qWarning("Can't set Provider Order data for %s:%s", // info

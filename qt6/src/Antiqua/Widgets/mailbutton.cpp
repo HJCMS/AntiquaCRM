@@ -43,7 +43,7 @@ bool MailButton::createMailButtonActions() {
     }
     return true;
   }
-#ifdef ANTIQUA_DEVELOPEMENT
+#ifdef ANTIQUA_DEVELOPMENT
   else if (!pgsql.lastError().isEmpty()) {
     qDebug() << Q_FUNC_INFO << sql << pgsql.lastError();
   }
