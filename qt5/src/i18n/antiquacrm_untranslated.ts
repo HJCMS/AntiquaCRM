@@ -76,7 +76,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Server connection successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -497,7 +497,7 @@
     <name>BookCard</name>
     <message>
         <location filename="../utils/printing/bookcard.cpp" line="+258"/>
-        <source>Printing book card</source>
+        <source>Printing article card</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -593,7 +593,7 @@
     <name>BookCardPaintWidget</name>
     <message>
         <location line="-83"/>
-        <source>Book Nr.</source>
+        <source>Article Nr.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4386,7 +4386,7 @@ Image - Article Id: %2</source>
 <context>
     <name>MonthBarSet</name>
     <message>
-        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+24"/>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+23"/>
         <source>Article sale %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6258,7 +6258,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+40"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6308,7 +6308,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+65"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>

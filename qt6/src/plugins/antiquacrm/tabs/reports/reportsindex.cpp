@@ -15,16 +15,15 @@
 #include <QLocale>
 #include <QVBoxLayout>
 
-ReportsIndex::ReportsIndex(QWidget *parent)
-    : AntiquaCRM::TabsIndex{"reports_tab", parent} {
+ReportsIndex::ReportsIndex(QWidget* parent) : AntiquaCRM::TabsIndex{"reports_tab", parent} {
   setObjectName("reports_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("x-office-spreadsheet"));
   setWindowTitle(getTitle());
   setClosable(true);
 
   // Begin::MainView
-  QWidget *m_mainWidget = new QWidget(this);
-  QVBoxLayout *mainLayout = new QVBoxLayout(m_mainWidget);
+  QWidget* m_mainWidget = new QWidget(this);
+  QVBoxLayout* mainLayout = new QVBoxLayout(m_mainWidget);
   m_table = new ReportsTableView(this);
   mainLayout->insertWidget(0, m_table);
   m_toolBar = new ReportsToolBar(m_mainWidget);
@@ -36,13 +35,13 @@ ReportsIndex::ReportsIndex(QWidget *parent)
 
   setCurrentIndex(ViewPage::MainView);
 
-  connect(m_toolBar, SIGNAL(signalSelected(const QDate &)),
-          SLOT(createReport(const QDate &)));
+  connect(m_toolBar, SIGNAL(signalSelected(QDate)), SLOT(createReport(QDate)));
   connect(m_toolBar, SIGNAL(sendPrintReport()), SLOT(printReport()));
   connect(m_toolBar, SIGNAL(sendSaveReport()), SLOT(saveReport()));
 }
 
-void ReportsIndex::setDefaultTableView() {}
+void ReportsIndex::setDefaultTableView() {
+}
 
 const QString ReportsIndex::getBasename() {
   QString _name(p_date.toString("yyyy-MM"));
@@ -68,7 +67,7 @@ const QFileInfo ReportsIndex::getSaveFile() {
   return QFileInfo(p_dir, getBasename());
 }
 
-void ReportsIndex::createReport(const QDate &date) {
+void ReportsIndex::createReport(const QDate& date) {
   AntiquaCRM::ASqlFiles _tpl("query_monthly_report");
   if (!_tpl.openTemplate())
     return;
@@ -90,7 +89,7 @@ void ReportsIndex::printReport() {
   obj.insert("info", printHeader());
   obj.insert("file", getBasename());
 
-  AntiquaCRM::PrintReport *m_p = new AntiquaCRM::PrintReport(this);
+  AntiquaCRM::PrintReport* m_p = new AntiquaCRM::PrintReport(this);
   if (m_p->exec(obj, true) == QDialog::Accepted) {
     qInfo("Report printed");
   }
@@ -118,7 +117,7 @@ void ReportsIndex::saveReport() {
 #ifdef ANTIQUA_DEVELOPMENT
       qDebug() << "Save:" << dest.filePath();
 #endif
-      emit sendStatusMessage(tr("Report saved: %1").arg(dest.fileName()));
+      sendStatusMessage(tr("Report saved: %1").arg(dest.fileName()));
     }
   }
 }
@@ -135,9 +134,13 @@ void ReportsIndex::onEnterChanged() {
     createReport(m_toolBar->lastDayInMonth(QDate::currentDate()));
 }
 
-const QString ReportsIndex::getTitle() const { return tr("Reports"); }
+const QString ReportsIndex::getTitle() const {
+  return tr("Reports");
+}
 
-bool ReportsIndex::customAction(const QJsonObject &) { return false; }
+bool ReportsIndex::customAction(const QJsonObject&) {
+  return false;
+}
 
 const QStringList ReportsIndex::acceptsCustomActions() const {
   return QStringList();

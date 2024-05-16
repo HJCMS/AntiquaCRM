@@ -411,7 +411,7 @@ Please check your network connection.</source>
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+106"/>
+        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+112"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -426,12 +426,12 @@ Please check your network connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>%1 - Query without result!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2426,8 +2426,48 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SqlInfoPopUp</name>
     <message>
-        <location filename="../Antiqua/Widgets/sqlinfopopup.cpp" line="+14"/>
-        <source>Databaseinfo</source>
+        <location filename="../Antiqua/Widgets/sqlinfopopup.cpp" line="+16"/>
+        <source>Secure connection with SSL/TLS.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Secure connection with Kerberos.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Warning, unsecured connection!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Users</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Status</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Connection</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Connectioninfo</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6469,7 +6509,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+201"/>
+        <location filename="../mainwindow.cpp" line="+198"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7098,7 +7138,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+166"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+167"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8202,13 +8242,13 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Report for „%1“, total %2.</source>
+        <location line="+18"/>
+        <source>Report for „%1 %2“, total %3.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Report for „%1“</source>
+        <location line="+2"/>
+        <source>Report for „%1 %2“</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8707,8 +8747,8 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+163"/>
-        <source>Conenction Errors</source>
+        <location filename="../statusbar.cpp" line="+169"/>
+        <source>Connection Errors</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8720,23 +8760,28 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>StatusToolBar</name>
     <message>
-        <location line="-70"/>
-        <source>Database Status</source>
+        <location line="-80"/>
+        <source>Network status</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Database connected.</source>
+        <location line="+7"/>
+        <source>Connection is not available!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
+        <source>Network connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Remote connection is not reachable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Database not connected!</source>
+        <location line="+11"/>
+        <source>No network connection!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

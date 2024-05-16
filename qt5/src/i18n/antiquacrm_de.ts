@@ -76,7 +76,7 @@
         <translation>Server nicht erreichbar!</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+9"/>
         <source>Server connection successfully!</source>
         <translation>Serververbindung erfolgreich!</translation>
     </message>
@@ -497,8 +497,8 @@
     <name>BookCard</name>
     <message>
         <location filename="../utils/printing/bookcard.cpp" line="+258"/>
-        <source>Printing book card</source>
-        <translation>Buchkarte drucken</translation>
+        <source>Printing article card</source>
+        <translation>Drucke Artikelkarte</translation>
     </message>
 </context>
 <context>
@@ -593,8 +593,8 @@
     <name>BookCardPaintWidget</name>
     <message>
         <location line="-83"/>
-        <source>Book Nr.</source>
-        <translation>Buch Nr.</translation>
+        <source>Article Nr.</source>
+        <translation>Artikel Nr.</translation>
     </message>
     <message>
         <location line="+40"/>
@@ -4390,7 +4390,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>MonthBarSet</name>
     <message>
-        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+24"/>
+        <location filename="../tabs/statistics/paymentsmonthyear.cpp" line="+23"/>
         <source>Article sale %1</source>
         <translation>Artikelverkauf %1</translation>
     </message>
@@ -6262,7 +6262,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+40"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -6312,7 +6312,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Deaktivierung</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+65"/>
         <source>Remove Image from Database</source>
         <translation>Bild aus Datenbank entfernen</translation>
     </message>

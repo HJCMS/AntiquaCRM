@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 //
-// SPDX-FileCopyrightText: 2023 Juergen Heinemann <nospam@hjcms.de>
+// SPDX-FileCopyrightText: 2024 Juergen Heinemann <nospam@hjcms.de>
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
@@ -15,7 +15,8 @@
 #include <QObject>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class SqlInfoPopUp
@@ -27,11 +28,15 @@ class ANTIQUACRM_LIBRARY SqlInfoPopUp final : public QDialog {
 
 private:
   qint8 row_count = 0;
-  QGridLayout *layout;
-  void addRow(const QString &title, QString &value);
+  QGridLayout* layout;
+
+  QMap<QString, QString> p_trMap;
+  const QString translate(const QString& str) const;
+
+  void addRow(const QString& title, const QString& value);
 
 public:
-  explicit SqlInfoPopUp(QWidget *parent = nullptr);
+  explicit SqlInfoPopUp(QWidget* parent = nullptr);
   int exec() override;
 };
 

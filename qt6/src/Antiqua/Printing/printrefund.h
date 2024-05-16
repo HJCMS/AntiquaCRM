@@ -1,6 +1,6 @@
 // vim: set fileencoding=utf-8
 //
-// SPDX-FileCopyrightText: 2023 Juergen Heinemann <nospam@hjcms.de>
+// SPDX-FileCopyrightText: 2024 Juergen Heinemann <nospam@hjcms.de>
 //
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //

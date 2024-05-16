@@ -106,7 +106,7 @@ void Application::initStyleTheme() {
   QPalette _palette = palette();
   // @fixme KDE theme
   if (_platform.startsWith("xcb")) {
-    QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
+    const QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
     if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
       _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
     }
@@ -170,8 +170,7 @@ bool Application::initGUI() {
     //      de.hjcms.antiquacrm.pushMessage testing
     ABusAdaptor* m_adaptor = new ABusAdaptor(this);
     m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-    connect(m_adaptor, SIGNAL(sendMessage(const QString&)), m_systray,
-            SLOT(setMessage(const QString&)));
+    connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
     connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
     connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
   }
@@ -308,8 +307,7 @@ int Application::exec() {
     mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
     DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
-    connect(m_cache, SIGNAL(statusMessage(const QString&)), &p_splash,
-            SLOT(setMessage(const QString&)));
+    connect(m_cache, SIGNAL(statusMessage(QString)), &p_splash, SLOT(setMessage(QString)));
 
     // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {

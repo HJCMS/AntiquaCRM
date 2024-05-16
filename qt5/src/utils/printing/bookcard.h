@@ -66,7 +66,7 @@ public:
   void setQrUrl(const QUrl &);
   void setArticleId(const QString &);
   void setStorage(int id);
-  void setBookDescription(const QHash<QString, QVariant> &);
+  void setDescription(const QHash<QString, QVariant> &);
 };
 
 /**

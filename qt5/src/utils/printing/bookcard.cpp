@@ -122,7 +122,7 @@ void BookCardPaintWidget::paintEvent(QPaintEvent *) {
 void BookCardPaintWidget::setQrUrl(const QUrl &url) { p_queryUrl = url; }
 
 void BookCardPaintWidget::setArticleId(const QString &txt) {
-  p_id = tr("Book Nr.");
+  p_id = tr("Article Nr.");
   p_id.append(": ");
   p_id.append(txt);
 }
@@ -160,7 +160,7 @@ void BookCardPaintWidget::setStorage(int id) {
   }
 }
 
-void BookCardPaintWidget::setBookDescription(
+void BookCardPaintWidget::setDescription(
     const QHash<QString, QVariant> &list) {
   p_title = tr("Title") + ": " + list.value("title").toString();
   p_author = tr("Author") + ": " + list.value("author").toString();
@@ -254,8 +254,8 @@ void BookCardConfig::printerChanged(QPrinter *printer) {
 }
 
 BookCard::BookCard(QWidget *parent) : QDialog{parent} {
-  setObjectName("printing_book_card");
-  setWindowTitle(tr("Printing book card"));
+  setObjectName("printing_article_card");
+  setWindowTitle(tr("Printing article card"));
   setSizeGripEnabled(false);
 
   p_paperSource = QPrinter::OnlyOne;
@@ -416,7 +416,7 @@ int BookCard::exec(const QHash<QString, QVariant> &data) {
   m_card->setQrUrl(generateQRCodeUrl());
 
   p_filename = id;
-  m_card->setBookDescription(data);
+  m_card->setDescription(data);
   m_card->setStorage(data.value("storage").toInt());
 
   return QDialog::exec();

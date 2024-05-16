@@ -412,7 +412,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+106"/>
+        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+112"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -427,12 +427,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>%1 – Ergebnis auf maximal &apos;%2&apos; Zeilen beschränkt.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>%1 - Query finished with &apos;%2&apos; Rows.</source>
         <translation>%1 - Abfrage mit &apos;%2&apos; Zeilen beendet.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>%1 - Query without result!</source>
         <translation>%1 - Abfrage ergab kein Ergebnis!</translation>
     </message>
@@ -2428,9 +2428,49 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SqlInfoPopUp</name>
     <message>
-        <location filename="../Antiqua/Widgets/sqlinfopopup.cpp" line="+14"/>
-        <source>Databaseinfo</source>
-        <translation>Datenbankinfo</translation>
+        <location filename="../Antiqua/Widgets/sqlinfopopup.cpp" line="+16"/>
+        <source>Secure connection with SSL/TLS.</source>
+        <translation>Sichere Verbindung mit SSL/TLS.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Secure connection with Kerberos.</source>
+        <translation>Sichere Verbindung mit Kerberos.</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Warning, unsecured connection!</source>
+        <translation>Achtung, ungesicherte Verbindung!</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Users</source>
+        <translation>Benutzer*in</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Application</source>
+        <translation>Anwendung</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Address</source>
+        <translation>Adresse</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Status</source>
+        <translation>Status</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Connection</source>
+        <translation>Verbindung</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Connectioninfo</source>
+        <translation>Verbindungsinfo</translation>
     </message>
 </context>
 <context>
@@ -6495,7 +6535,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+201"/>
+        <location filename="../mainwindow.cpp" line="+198"/>
         <source>No tabs available</source>
         <translation>Keine Registerkarten verfügbar</translation>
     </message>
@@ -7124,7 +7164,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+166"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+167"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -8229,14 +8269,14 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Speichern</translation>
     </message>
     <message>
-        <location line="+17"/>
-        <source>Report for „%1“, total %2.</source>
-        <translation>Bericht für „%1“, insgesamt %2.</translation>
+        <location line="+18"/>
+        <source>Report for „%1 %2“, total %3.</source>
+        <translation>Bericht für „%1 %2“, insgesamt %3.</translation>
     </message>
     <message>
-        <location line="+3"/>
-        <source>Report for „%1“</source>
-        <translation>Bericht für „%1“</translation>
+        <location line="+2"/>
+        <source>Report for „%1 %2“</source>
+        <translation>Bericht für „%1 %2“</translation>
     </message>
 </context>
 <context>
@@ -8734,9 +8774,9 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+163"/>
-        <source>Conenction Errors</source>
-        <translation type="unfinished"></translation>
+        <location filename="../statusbar.cpp" line="+169"/>
+        <source>Connection Errors</source>
+        <translation>Verbindungsfehler</translation>
     </message>
     <message>
         <location line="+5"/>
@@ -8747,24 +8787,29 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>StatusToolBar</name>
     <message>
-        <location line="-70"/>
-        <source>Database Status</source>
-        <translation>Datenbankstatus</translation>
+        <location line="-80"/>
+        <source>Network status</source>
+        <translation>Netzwerkstatus</translation>
     </message>
     <message>
-        <location line="+15"/>
-        <source>Database connected.</source>
-        <translation>Datenbank verbunden.</translation>
+        <location line="+7"/>
+        <source>Connection is not available!</source>
+        <translation>Verbindung ist nicht verfügbar!</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+12"/>
+        <source>Network connected.</source>
+        <translation>Netzwerk verbunden.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Remote connection is not reachable!</source>
         <translation>Remote-Verbindung ist nicht erreichbar!</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <source>Database not connected!</source>
-        <translation>Datenbank nicht verbunden!</translation>
+        <location line="+11"/>
+        <source>No network connection!</source>
+        <translation>Keine Netzwerk Verbindung!</translation>
     </message>
 </context>
 <context>

@@ -199,6 +199,7 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
 
   // Begin : Row3
   m_actionBar = new EditorActionBar(this);
+  m_actionBar->setPrinterMenu(PrinterButton::Bookcard);
   mainLayout->addWidget(m_actionBar);
   // END : Row3
 
@@ -220,6 +221,7 @@ PrintsStitchesEditor::PrintsStitchesEditor(QWidget *parent)
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
   connect(m_actionBar, SIGNAL(sendFinishClicked()),
           SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintCard()));
 }
 
 void PrintsStitchesEditor::setInputFields() {
@@ -525,13 +527,31 @@ void PrintsStitchesEditor::setCheckLeaveEditor() {
 }
 
 void PrintsStitchesEditor::setFinalLeaveEditor(bool force) {
-  if(force) // Wenn auf Abbrechen geklickt wurde!
+  if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 
   setResetInputFields();
   m_actionBar->setRestoreable(false); /**< ResetButton off */
   m_imageView->clear();               /**< Bildvorschau leeren */
   emit sendLeaveEditor();             /**< Back to MainView */
+}
+
+void PrintsStitchesEditor::setPrintCard() {
+  BookCard *m_d = new BookCard(this);
+  m_d->setObjectName("stitches_card_printing");
+  QHash<QString, QVariant> data;
+  data.insert("id", getDataValue("ip_id"));
+  data.insert("title", getDataValue("ip_title"));
+  data.insert("author", getDataValue("ip_author"));
+  data.insert("year", getDataValue("ip_year"));
+  data.insert("storage", getDataValue("ip_storage"));
+  data.insert("since", getDataValue("ip_since"));
+  QString _compartment = getDataValue("ip_storage_compartment").toString();
+  if (_compartment.isEmpty())
+    _compartment = getDataValue("ip_keyword").toString();
+
+  data.insert("keywords", _compartment);
+  m_d->exec(data);
 }
 
 void PrintsStitchesEditor::actionRemoveImage(qint64 articleId) {
@@ -558,6 +578,7 @@ void PrintsStitchesEditor::actionEditImages() {
     return;
 
   ImageDialog *d = new ImageDialog(id, this);
+  d->setSubCategory("Stitches");
   if (d->exec()) {
     m_imageView->readFromDatabase(id);
   }

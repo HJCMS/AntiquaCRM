@@ -76,6 +76,7 @@ private Q_SLOTS:
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor(bool force = true) override;
+  void setPrintCard();
   void actionRemoveImage(qint64 articleId);
   void actionEditImages();
 
