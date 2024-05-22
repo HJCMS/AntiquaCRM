@@ -10,10 +10,11 @@
 #include <QDebug>
 #include <QJsonObject>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 #ifdef ANTIQUA_DEVELOPMENT
-void __postalcode_debug(const AntiquaCRM::PostalCode &code) {
+void __postalcode_debug(const AntiquaCRM::PostalCode& code) {
   qDebug() << "PostalCode:" << code.plz << Qt::endl
            << "Location:" << code.location << Qt::endl
            << "State:" << code.state << Qt::endl
@@ -22,8 +23,7 @@ void __postalcode_debug(const AntiquaCRM::PostalCode &code) {
 #endif
 
 // BEGIN::PostalCodeEdit
-PostalCodeEdit::PostalCodeEdit(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+PostalCodeEdit::PostalCodeEdit(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_countries = new AComboBox(this);
   m_countries->setToolTip(tr("Supported countries"));
   layout->addWidget(m_countries);
@@ -41,7 +41,7 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
   m_completer->setCompletionRole(Qt::EditRole);
   m_completer->setFilterMode(Qt::MatchStartsWith);
 
-  QAbstractItemView *m_view = m_completer->popup();
+  QAbstractItemView* m_view = m_completer->popup();
   m_view->setAlternatingRowColors(true);
   m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
   m_view->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -49,8 +49,7 @@ PostalCodeEdit::PostalCodeEdit(QWidget *parent)
 
   setTabOrder(m_countries, m_postalcode);
 
-  connect(m_countries, SIGNAL(currentIndexChanged(int)),
-          SLOT(valueChanged(int)));
+  connect(m_countries, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
   connect(m_postalcode, SIGNAL(editingFinished()), SLOT(setPostalCodeLeave()));
 }
 
@@ -63,8 +62,7 @@ const AntiquaCRM::PostalCode PostalCodeEdit::dummyCode() {
   return _t;
 }
 
-bool PostalCodeEdit::comparePostalcode(const QString &source,
-                                       const QString &input) const {
+bool PostalCodeEdit::comparePostalcode(const QString& source, const QString& input) const {
   QString src(source);
   if ((input.length() > src.length()) && input.startsWith("0"))
     src.prepend("0");
@@ -83,7 +81,7 @@ void PostalCodeEdit::valueChanged(int index) {
   if (table.isEmpty())
     return;
 
-  PostalCodeModel *model = new PostalCodeModel(m_completer);
+  PostalCodeModel* model = new PostalCodeModel(m_completer);
   if (model != nullptr) {
     m_completer->setModel(model);
     model->initModel(table);
@@ -111,7 +109,7 @@ void PostalCodeEdit::setPostalCodeLeave() {
   emit sendOnLeavePostalEdit(_pcode);
 }
 
-void PostalCodeEdit::setCountry(const QString &country) {
+void PostalCodeEdit::setCountry(const QString& country) {
   QString search(country.trimmed());
   if (search.isEmpty())
     return;
@@ -127,26 +125,32 @@ void PostalCodeEdit::setCountry(const QString &country) {
   }
 }
 
-void PostalCodeEdit::setValue(const QVariant &value) {
+void PostalCodeEdit::setValue(const QVariant& value) {
   switch (value.metaType().id()) {
-  case (QMetaType::QString): {
-    m_postalcode->setText(value.toString());
-  } break;
+    case (QMetaType::QString):
+      {
+        m_postalcode->setText(value.toString());
+      }
+      break;
 
-  case (QMetaType::Int):
-  case (QMetaType::Long):
-  case (QMetaType::LongLong): {
-    QString str = QString::number(value.toInt());
-    m_postalcode->setText(str);
-  } break;
+    case (QMetaType::Int):
+    case (QMetaType::Long):
+    case (QMetaType::LongLong):
+      {
+        QString str = QString::number(value.toInt());
+        m_postalcode->setText(str);
+      }
+      break;
 
-  default:
-    qWarning("Invalid PostalCodeEdit::setValue usage!");
-    break;
+    default:
+      qWarning("Invalid PostalCodeEdit::setValue usage!");
+      break;
   };
 }
 
-void PostalCodeEdit::setFocus() { m_postalcode->setFocus(); }
+void PostalCodeEdit::setFocus() {
+  m_postalcode->setFocus();
+}
 
 void PostalCodeEdit::reset() {
   m_countries->setCurrentIndex(0);
@@ -177,13 +181,12 @@ void PostalCodeEdit::initData() {
 #ifdef ANTIQUA_DEVELOPMENT
   qInfo("Using SQL Database for PostalCode!");
 #endif
-  AntiquaCRM::ASqlCore *m_sql = new AntiquaCRM::ASqlCore(this);
+  AntiquaCRM::ASqlCore* m_sql = new AntiquaCRM::ASqlCore(this);
   QString field("p_country,p_table");
-  QSqlQuery q = m_sql->query("SELECT " + field + " FROM ui_postalcodes;");
+  QSqlQuery q = m_sql->query("SELECT DISTINCT " + field + " FROM ui_postalcodes;");
   if (q.size() > 0) {
     while (q.next()) {
-      m_countries->addItem(q.value("p_country").toString(),
-                           q.value("p_table").toString());
+      m_countries->addItem(q.value("p_country").toString(), q.value("p_table").toString());
     }
     qWarning("PostalCode from SQL Database - non cachefile found!");
   }
@@ -196,7 +199,7 @@ const QString PostalCodeEdit::getCountry() {
   return QString();
 }
 
-const AntiquaCRM::PostalCode PostalCodeEdit::getPostalCode(const QString &plz) {
+const AntiquaCRM::PostalCode PostalCodeEdit::getPostalCode(const QString& plz) {
   if (plz.isEmpty()) {
     qWarning("Invalid usage for PostalCodeEdit::getPostalCode!");
     return dummyCode();
@@ -208,7 +211,7 @@ const AntiquaCRM::PostalCode PostalCodeEdit::getPostalCode(const QString &plz) {
     return dummyCode();
   }
 
-  PostalCodeModel *m = qobject_cast<PostalCodeModel *>(m_completer->model());
+  PostalCodeModel* m = qobject_cast<PostalCodeModel*>(m_completer->model());
   if (m == nullptr)
     return dummyCode();
 
@@ -238,7 +241,7 @@ const AntiquaCRM::PostalCode PostalCodeEdit::getPostalCode(const QString &plz) {
   return dummyCode();
 }
 
-QCompleter *PostalCodeEdit::getCompleter(QLineEdit *editor) {
+QCompleter* PostalCodeEdit::getCompleter(QLineEdit* editor) {
   QStringList _buffer;
   if (getCountry().isEmpty())
     return nullptr; // nothing todo
@@ -247,7 +250,7 @@ QCompleter *PostalCodeEdit::getCompleter(QLineEdit *editor) {
   if (_plz.isEmpty() || _plz.length() < 4)
     return nullptr; // nothing todo
 
-  PostalCodeModel *_m = qobject_cast<PostalCodeModel *>(m_completer->model());
+  PostalCodeModel* _m = qobject_cast<PostalCodeModel*>(m_completer->model());
   if (_m == nullptr || _m->rowCount() < 1)
     return nullptr; // nothing todo
 
@@ -258,8 +261,9 @@ QCompleter *PostalCodeEdit::getCompleter(QLineEdit *editor) {
       continue;
 
     if (comparePostalcode(_var.toString(), _plz)) {
-      QVariant _value = _m->data(_m->sibling(r, 1, _index), Qt::EditRole);
-      _buffer << _value.toString();
+      QString _str = _m->data(_m->sibling(r, 1, _index), Qt::EditRole).toString();
+      if (!_buffer.contains(_str, Qt::CaseInsensitive))
+        _buffer << _str;
     }
   }
 
@@ -268,28 +272,28 @@ QCompleter *PostalCodeEdit::getCompleter(QLineEdit *editor) {
     qDebug() << "PostalCodeEdit::Completer::Size" << _buffer.size();
 #endif
 
-  QCompleter *m_cpl = new QCompleter(_buffer, editor);
+  QCompleter* m_cpl = new QCompleter(_buffer, editor);
   m_cpl->setCaseSensitivity(Qt::CaseInsensitive);
   m_cpl->setCompletionMode(QCompleter::UnfilteredPopupCompletion);
   return m_cpl;
 }
 
-void PostalCodeEdit::setRestrictions(const QSqlField &field) {
+void PostalCodeEdit::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
   m_postalcode->setMaxLength(field.length());
 }
 
-void PostalCodeEdit::setInputToolTip(const QString &tip) {
+void PostalCodeEdit::setInputToolTip(const QString& tip) {
   m_postalcode->setToolTip(tip);
 }
 
-void PostalCodeEdit::setBuddyLabel(const QString &text) {
+void PostalCodeEdit::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_postalcode);
 }
 

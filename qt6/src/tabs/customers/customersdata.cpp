@@ -9,16 +9,16 @@
 #include <QLayout>
 #include <QPushButton>
 
-CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
+CustomersData::CustomersData(QWidget* parent) : QWidget{parent} {
   setWindowTitle(tr("Contact data"));
   setWindowIcon(AntiquaCRM::antiquaIcon("system-users"));
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setObjectName("contact_edit_layout");
   layout->setContentsMargins(5, 5, 5, 5);
 
   // BEGIN #1
-  QHBoxLayout *row1 = new QHBoxLayout();
+  QHBoxLayout* row1 = new QHBoxLayout();
   row1->setObjectName("contact_edit_row1");
 
   c_gender = new AntiquaCRM::GenderEdit(this);
@@ -54,7 +54,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
 
   // BEGIN #2
   int gridRow = 0;
-  QGridLayout *row2 = new QGridLayout();
+  QGridLayout* row2 = new QGridLayout();
   row2->setObjectName("contact_edit_row2");
 
   /** Postleitzahl */
@@ -65,7 +65,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   row2->addWidget(c_postalcode, gridRow, 0, 1, 1);
 
   /** Land */
-  QHBoxLayout *countryLayout = new QHBoxLayout();
+  QHBoxLayout* countryLayout = new QHBoxLayout();
   c_country = new AntiquaCRM::PostalCodeState(this);
   c_country->setObjectName("c_country");
   c_country->setBuddyLabel(tr("Country"));
@@ -142,7 +142,7 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   c_company->setObjectName("c_company");
   c_company->setBuddyLabel(tr("Company, Institute or Organisation"));
   layout->addWidget(c_company);
-  QBoxLayout *m_boxLayout = c_company->boxLayout();
+  QBoxLayout* m_boxLayout = c_company->boxLayout();
   c_company_name = new AntiquaCRM::TextLine(c_company);
   c_company_name->setObjectName("c_company_name");
   m_boxLayout->addWidget(c_company_name);
@@ -153,10 +153,10 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   // END 3
 
   // BEGIN #4
-  QGridLayout *row4 = new QGridLayout();
+  QGridLayout* row4 = new QGridLayout();
   row4->setObjectName("contact_edit_row5");
 
-  QPushButton *addressGen = new QPushButton(this);
+  QPushButton* addressGen = new QPushButton(this);
   addressGen->setToolTip(tr("Generate Address with given Dataset."));
   addressGen->setText(tr("Generate Invoice address"));
   addressGen->setIcon(AntiquaCRM::antiquaIcon("view-group"));
@@ -179,9 +179,8 @@ CustomersData::CustomersData(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 
   // Signals
-  connect(c_postalcode,
-          SIGNAL(sendOnLeavePostalEdit(const AntiquaCRM::PostalCode &)),
-          SLOT(setPostalData(const AntiquaCRM::PostalCode &)));
+  connect(c_postalcode, SIGNAL(sendOnLeavePostalEdit(AntiquaCRM::PostalCode)),
+          SLOT(setPostalData(AntiquaCRM::PostalCode)));
 
   connect(addressGen, SIGNAL(clicked()), SLOT(generateAddressBody()));
 }
@@ -191,74 +190,72 @@ void CustomersData::registerChanges() {
   parentWidget()->setWindowModified(true);
 }
 
-void CustomersData::setPostalData(const AntiquaCRM::PostalCode &code) {
+void CustomersData::setPostalData(const AntiquaCRM::PostalCode& code) {
   c_country->setCountry(code);
   c_location->setCompletion(c_postalcode, code);
   c_country_bcp47->setValue(code.country);
 }
 
 void CustomersData::generateAddressBody() {
-  QString body;
-  QStringList buffer;
+  QString _body;
+  QStringList _buf;
   /* Company */
   if (c_company->getValue().toBool()) {
     if (!c_company_name->getValue().toString().isEmpty()) {
-      body.append(c_company_name->getValue().toString());
-      body.append("\n");
+      _body.append(c_company_name->getValue().toString());
+      _body.append("\n");
     }
   }
   /* Titelanrede */
   if (!c_title->getValue().toString().isEmpty()) {
-    buffer.append(c_title->getValue().toString());
+    _buf.append(c_title->getValue().toString());
   }
   /* Vorname */
   if (!c_firstname->getValue().toString().isEmpty()) {
-    buffer.append(c_firstname->getValue().toString());
+    _buf.append(c_firstname->getValue().toString());
   }
   /* Nachname */
   if (!c_lastname->getValue().toString().isEmpty()) {
-    buffer.append(c_lastname->getValue().toString());
+    _buf.append(c_lastname->getValue().toString());
   }
-  body.append(buffer.join(" "));
-  body.append("\n");
+  _body.append(_buf.join(" "));
+  _body.append("\n");
 
   /* Wohnhaft bei (care of)  */
   if (!c_careof->getValue().toString().isEmpty()) {
-    body.append("c/o " + c_careof->getValue().toString());
-    body.append("\n");
+    _body.append("c/o " + c_careof->getValue().toString());
+    _body.append("\n");
   }
 
   /* Straße */
   if (!c_street->getValue().toString().isEmpty()) {
-    body.append(c_street->getValue().toString());
-    body.append("\n");
+    _body.append(c_street->getValue().toString());
+    _body.append("\n");
   }
 
-  buffer.clear();
+  _buf.clear();
   /* Postleitzahl */
   if (!c_postalcode->getValue().toString().isEmpty()) {
-    buffer.append(c_postalcode->getValue().toString());
+    _buf.append(c_postalcode->getValue().toString());
   }
   /* Wohnort */
   if (!c_location->getValue().toString().isEmpty()) {
-    buffer.append(c_location->getValue().toString());
+    _buf.append(c_location->getValue().toString());
   }
-  body.append(buffer.join(" "));
-  body.append("\n");
+  _body.append(_buf.join(" "));
+  _body.append("\n");
 
-  if (!body.trimmed().isEmpty()) {
-    c_postal_address->setValue(body);
+  if (!_body.trimmed().isEmpty()) {
+    c_postal_address->setValue(_body);
     registerChanges();
   }
 }
 
-void CustomersData::setCountry(const QString &country) {
+void CustomersData::setCountry(const QString& country) {
   if (c_postalcode->isValid()) {
     c_postalcode->setCountry(country);
-    AntiquaCRM::PostalCode _code =
-        c_postalcode->getPostalCode(c_postalcode->getValue().toString());
-
-    c_location->setCompletion(c_postalcode, _code);
+    const QString _str = c_postalcode->getValue().toString();
+    c_location->setCompletion(c_postalcode, c_postalcode->getPostalCode(_str));
     registerChanges();
   }
 }

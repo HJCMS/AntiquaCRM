@@ -15,7 +15,8 @@
 #include <QSqlField>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class PostalCodeEdit;
 
@@ -24,20 +25,19 @@ class PostalCodeEdit;
  * @brief Display Postalcode locations
  * @ingroup EditWidgets
  */
-class ANTIQUACRM_LIBRARY PostalCodeLocation final
-    : public AntiquaCRM::AInputWidget {
+class ANTIQUACRM_LIBRARY PostalCodeLocation final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
   /**
    * @brief location
    */
-  ALineEdit *m_edit;
+  ALineEdit* m_edit;
 
   /**
    * @brief location Completer
    */
-  QCompleter *m_completer;
+  QCompleter* m_completer;
 
   /**
    * @brief History variable
@@ -62,7 +62,7 @@ public Q_SLOTS:
   /**
    * @brief set location string
    */
-  void setValue(const QVariant &value) override;
+  void setValue(const QVariant& value) override;
 
   /**
    * @brief Focused the cursor to the Line editor
@@ -78,23 +78,22 @@ public:
   /**
    * @param parent - parent Object
    */
-  explicit PostalCodeLocation(QWidget *parent = nullptr);
+  explicit PostalCodeLocation(QWidget* parent = nullptr);
 
   /**
    * @brief Create Completer for edit locations with PostalCode
    * This Slot is reserved to set Location and creates QCompleter from signal
    * „PostalCodeEdit::sendOnLeavePostalEdit“ data.
-   * @param txobj - required for PostalCodeEdit::getLocations()
+   * @param obj  - required for PostalCodeEdit::getLocations()
    * @param code - current PostalCode for query
    */
-  bool setCompletion(AntiquaCRM::PostalCodeEdit *txobj,
-                     const AntiquaCRM::PostalCode &code);
+  bool setCompletion(AntiquaCRM::PostalCodeEdit* obj, const AntiquaCRM::PostalCode& code);
 
-  void setRestrictions(const QSqlField &) override;
+  void setRestrictions(const QSqlField&) override;
 
-  void setInputToolTip(const QString &) override;
+  void setInputToolTip(const QString&) override;
 
-  void setBuddyLabel(const QString &) override;
+  void setBuddyLabel(const QString&) override;
 
   bool isValid() override;
 

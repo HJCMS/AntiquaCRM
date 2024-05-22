@@ -4,10 +4,10 @@
 #include "postalcodelocation.h"
 #include "postalcodeedit.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-PostalCodeLocation::PostalCodeLocation(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+PostalCodeLocation::PostalCodeLocation(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
   initData();
@@ -34,7 +34,7 @@ void PostalCodeLocation::updateChanged() {
   }
 }
 
-void PostalCodeLocation::setValue(const QVariant &value) {
+void PostalCodeLocation::setValue(const QVariant& value) {
   QString _location;
   if (value.metaType().id() == QMetaType::QString) {
     _location = value.toString().trimmed();
@@ -46,7 +46,9 @@ void PostalCodeLocation::setValue(const QVariant &value) {
   m_edit->setText(_location);
 }
 
-void PostalCodeLocation::setFocus() { m_edit->setFocus(); }
+void PostalCodeLocation::setFocus() {
+  m_edit->setFocus();
+}
 
 void PostalCodeLocation::reset() {
   p_history.clear();
@@ -56,12 +58,12 @@ void PostalCodeLocation::reset() {
   setWindowModified(false);
 }
 
-bool PostalCodeLocation::setCompletion(AntiquaCRM::PostalCodeEdit *txobj,
-                                       const AntiquaCRM::PostalCode &code) {
+bool PostalCodeLocation::setCompletion(AntiquaCRM::PostalCodeEdit* obj,
+                                       const AntiquaCRM::PostalCode& code) {
   if (code.location.isEmpty())
     return false;
 
-  if (txobj == nullptr)
+  if (obj == nullptr)
     return false;
 
   // WARNING - do not override it!
@@ -69,7 +71,7 @@ bool PostalCodeLocation::setCompletion(AntiquaCRM::PostalCodeEdit *txobj,
   if (_str.isEmpty())
     m_edit->setText(code.location);
 
-  QCompleter *m_cpl = txobj->getCompleter(m_edit);
+  QCompleter* m_cpl = obj->getCompleter(m_edit);
   if (m_cpl == nullptr)
     return false;
 
@@ -79,7 +81,7 @@ bool PostalCodeLocation::setCompletion(AntiquaCRM::PostalCodeEdit *txobj,
   return true;
 }
 
-void PostalCodeLocation::setRestrictions(const QSqlField &field) {
+void PostalCodeLocation::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
@@ -96,15 +98,15 @@ bool PostalCodeLocation::isValid() {
   return true;
 }
 
-void PostalCodeLocation::setInputToolTip(const QString &tip) {
+void PostalCodeLocation::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void PostalCodeLocation::setBuddyLabel(const QString &text) {
+void PostalCodeLocation::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 

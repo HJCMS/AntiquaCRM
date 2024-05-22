@@ -13,21 +13,21 @@
 #include <QFrame>
 #include <QLayout>
 
-CustomersEditor::CustomersEditor(QWidget *parent)
+CustomersEditor::CustomersEditor(QWidget* parent)
     : AntiquaCRM::TabsEditor{CUSTOMERS_SQL_EDITOR_PATTERN, parent} {
   setWindowTitle(tr("Edit Book"));
   setObjectName("tab_customers_editor");
 
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  QVBoxLayout* mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("customersedit_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
   setLayout(mainLayout);
 
   // Begin::row1 {
   // Header Frame
-  QFrame *firstFrame = new QFrame(this);
+  QFrame* firstFrame = new QFrame(this);
   firstFrame->setContentsMargins(2, 0, 2, 0);
-  QHBoxLayout *layout1 = new QHBoxLayout(firstFrame);
+  QHBoxLayout* layout1 = new QHBoxLayout(firstFrame);
   layout1->setContentsMargins(0, 0, 0, 0);
   layout1->addWidget(new QLabel(tr("Customer Id:"), firstFrame));
   c_id = new AntiquaCRM::SerialId(firstFrame);
@@ -51,8 +51,7 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   m_tabWidget->setObjectName("customers_data_tab");
   m_dataWidget = new CustomersData(m_tabWidget);
   // Adressdaten
-  m_tabWidget->insertTab(0, m_dataWidget, m_dataWidget->windowIcon(),
-                         m_dataWidget->windowTitle());
+  m_tabWidget->insertTab(0, m_dataWidget, m_dataWidget->windowIcon(), m_dataWidget->windowTitle());
   // Finanzdaten
   m_financialData = new CustomersFinancial(m_tabWidget);
   m_tabWidget->insertTab(1, m_financialData, m_financialData->windowIcon(),
@@ -82,20 +81,17 @@ CustomersEditor::CustomersEditor(QWidget *parent)
   // Register modified changes
   registerInputChanged();
 
-  connect(m_ordersTable, SIGNAL(pushMessage(const QString &)),
-          SLOT(pushStatusMessage(const QString &)));
+  connect(m_ordersTable, SIGNAL(pushMessage(const QString&)),
+          SLOT(pushStatusMessage(const QString&)));
 
   // Signals:ActionBar
-  connect(m_actionBar, SIGNAL(sendCancelClicked()),
-          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
-  connect(m_actionBar, SIGNAL(sendFinishClicked()),
-          SLOT(setCheckLeaveEditor()));
-  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString &)),
-          SLOT(setCreateMailMessage(const QString &)));
-  connect(m_actionBar, SIGNAL(sendAddCustomAction()),
-          SLOT(setCreateOrderSignal()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()), SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString&)),
+          SLOT(setCreateMailMessage(const QString&)));
+  connect(m_actionBar, SIGNAL(sendAddCustomAction()), SLOT(setCreateOrderSignal()));
 }
 
 CustomersEditor::~CustomersEditor() {
@@ -126,14 +122,13 @@ void CustomersEditor::setInputFields() {
   m_dataWidget->c_title->initData();
 }
 
-bool CustomersEditor::setDataField(const QSqlField &field,
-                                   const QVariant &value) {
+bool CustomersEditor::setDataField(const QSqlField& field, const QVariant& value) {
   if (!field.isValid())
     return false;
 
   QString _key = field.name();
   // qDebug() << "setDataField:" << field.name() << value;
-  AntiquaCRM::AInputWidget *m_w = findChild<AntiquaCRM::AInputWidget *>(_key);
+  AntiquaCRM::AInputWidget* m_w = findChild<AntiquaCRM::AInputWidget*>(_key);
   if (m_w != nullptr) {
     m_w->setRestrictions(field);
     // Muss nach setRestrictions kommen!
@@ -168,7 +163,7 @@ void CustomersEditor::importSqlResult() {
   setResetModified(inputFields);
 }
 
-bool CustomersEditor::sendSqlQuery(const QString &query) {
+bool CustomersEditor::sendSqlQuery(const QString& query) {
   QSqlQuery _q = m_sql->query(query);
   if (_q.lastError().type() != QSqlError::NoError) {
 #ifdef ANTIQUA_DEVELOPMENT
@@ -191,12 +186,11 @@ bool CustomersEditor::sendSqlQuery(const QString &query) {
 
 const QHash<QString, QVariant> CustomersEditor::createSqlDataset() {
   QHash<QString, QVariant> _data;
-  QList<AntiquaCRM::AInputWidget *> _list =
-      findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                               Qt::FindChildrenRecursively);
-  QList<AntiquaCRM::AInputWidget *>::Iterator it;
+  QList<AntiquaCRM::AInputWidget*> _list =
+      findChildren<AntiquaCRM::AInputWidget*>(fieldPattern, Qt::FindChildrenRecursively);
+  QList<AntiquaCRM::AInputWidget*>::Iterator it;
   for (it = _list.begin(); it != _list.end(); ++it) {
-    AntiquaCRM::AInputWidget *m_w = *it;
+    AntiquaCRM::AInputWidget* m_w = *it;
     QString _name = m_w->objectName();
     if (ignoreFields.contains(_name))
       continue;
@@ -349,24 +343,15 @@ void CustomersEditor::findPurchases() {
     int row = 0;
     while (q.next()) {
       int col = 0;
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->paymentItem(q.value("payed")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->numidItem(q.value("orderid")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->numidItem(q.value("invoice")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->createItem(q.value("article")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->createItem(q.value("title")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->createItem(q.value("provider")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->createItem(q.value("prorder")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->createDate(q.value("since")));
-      m_ordersTable->setItem(row, col++,
-                             m_ordersTable->createDate(q.value("deliver")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->paymentItem(q.value("payed")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->numidItem(q.value("orderid")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->numidItem(q.value("invoice")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->createItem(q.value("article")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->createItem(q.value("title")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->createItem(q.value("provider")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->createItem(q.value("prorder")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->createDate(q.value("since")));
+      m_ordersTable->setItem(row, col++, m_ordersTable->createDate(q.value("deliver")));
 
       row++;
     }
@@ -406,7 +391,7 @@ void CustomersEditor::setCreateOrderSignal() {
     emit sendEditorAction(_cid);
 }
 
-void CustomersEditor::setCreateMailMessage(const QString &action) {
+void CustomersEditor::setCreateMailMessage(const QString& action) {
   qint64 _cid = getSerialID("c_id");
   if (_cid < 1)
     return;
@@ -416,14 +401,16 @@ void CustomersEditor::setCreateMailMessage(const QString &action) {
   _obj.insert("tb_caller", action.toUpper());
   _obj.insert("CRM_CUSTOMER_ID", _cid);
 
-  AntiquaCRM::MailDialog *d = new AntiquaCRM::MailDialog(this);
+  AntiquaCRM::MailDialog* d = new AntiquaCRM::MailDialog(this);
   if (d->exec(_obj))
     pushStatusMessage(tr("Send eMail finished!"));
   else
     pushStatusMessage(tr("Send eMail canceled!"));
 }
 
-void CustomersEditor::setRestore() { importSqlResult(); }
+void CustomersEditor::setRestore() {
+  importSqlResult();
+}
 
 bool CustomersEditor::openEditEntry(qint64 articleId) {
   if (articleId < 1)
@@ -490,7 +477,7 @@ bool CustomersEditor::createNewEntry() {
   return isEnabled();
 }
 
-bool CustomersEditor::createCustomEntry(const QJsonObject &object) {
+bool CustomersEditor::createCustomEntry(const QJsonObject& object) {
   qDebug() << Q_FUNC_INFO << "TODO" << object;
   // "ACTION", "open_customer");
   // "TARGET", "customers_tab");

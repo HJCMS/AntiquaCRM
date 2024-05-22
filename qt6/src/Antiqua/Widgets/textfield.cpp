@@ -3,9 +3,10 @@
 
 #include "textfield.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TextField::TextField(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+TextField::TextField(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   layout->setDirection(QBoxLayout::TopToBottom);
 
   m_edit = new ATextEdit(this);
@@ -28,7 +29,7 @@ void TextField::initData() {
   setWindowModified(false);
 }
 
-void TextField::setValue(const QVariant &value) {
+void TextField::setValue(const QVariant& value) {
   QMetaType _type = value.metaType();
   if (_type.id() == QMetaType::QString) {
     m_edit->setText(value.toString());
@@ -40,7 +41,9 @@ void TextField::setValue(const QVariant &value) {
 #endif
 }
 
-void TextField::setFocus() { m_edit->setFocus(); }
+void TextField::setFocus() {
+  m_edit->setFocus();
+}
 
 void TextField::reset() {
   m_edit->setText(QString());
@@ -48,24 +51,27 @@ void TextField::reset() {
   setWindowModified(false);
 }
 
-void TextField::setRestrictions(const QSqlField &field) {
+void TextField::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void TextField::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
+void TextField::setInputToolTip(const QString& tip) {
+  m_edit->setToolTip(tip);
+}
 
-void TextField::setBuddyLabel(const QString &text) {
+void TextField::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
   m_lb->setAlignment(Qt::AlignLeft);
 }
 
 bool TextField::isValid() {
-  if (isRequired() && getValue().isNull())
+  const QString _s = getValue().toString();
+  if (isRequired() && (_s.length() < 1))
     return false;
 
   return true;
@@ -75,12 +81,16 @@ const QMetaType TextField::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant TextField::getValue() { return m_edit->text(); }
+const QVariant TextField::getValue() {
+  return m_edit->text().trimmed();
+}
 
 const QString TextField::popUpHints() {
   return tr("This Text field requires a valid input.");
 }
 
-const QString TextField::statusHints() { return popUpHints(); }
+const QString TextField::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM
