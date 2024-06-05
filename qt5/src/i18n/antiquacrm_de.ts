@@ -2148,8 +2148,8 @@ Bild - Artikel Nr: %2</translation>
     </message>
     <message>
         <location line="+6"/>
-        <source>Postal Address</source>
-        <translation>Anschrift</translation>
+        <source>Postal Invoice address body</source>
+        <translation>Postalische Rechnungsadresse</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -2221,7 +2221,7 @@ Bild - Artikel Nr: %2</translation>
         <translation>Firma ist aktiviert, aber kein Firmenname gesetzt!</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+50"/>
         <source>Send eMail finished!</source>
         <translation>Senden der E-Mail abgeschlossen!</translation>
     </message>
@@ -8462,7 +8462,7 @@ Bild - Artikel Nr: %2</translation>
 <context>
     <name>TextField</name>
     <message>
-        <location filename="../widgets/textfield.cpp" line="+66"/>
+        <location filename="../widgets/textfield.cpp" line="+67"/>
         <source>requires a valid input.</source>
         <translation>erfordert eine gültige Eingabe.</translation>
     </message>

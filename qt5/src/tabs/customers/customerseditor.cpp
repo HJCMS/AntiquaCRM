@@ -366,11 +366,18 @@ void CustomersEditor::setCheckLeaveEditor() {
     unsavedChangesPopup();
     return;
   }
+
+  // check for empty invoice address body
+  if (!m_dataWidget->c_postal_address->isValid()) {
+    openNoticeMessage(m_dataWidget->c_postal_address->notes());
+    return;
+  }
+
   setFinalLeaveEditor(false);
 }
 
 void CustomersEditor::setFinalLeaveEditor(bool force) {
-  if(force) // Wenn auf Abbrechen geklickt wurde!
+  if (force) // Wenn auf Abbrechen geklickt wurde!
     setWindowModified(false);
 
   setResetInputFields();

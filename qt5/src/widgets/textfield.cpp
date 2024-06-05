@@ -51,7 +51,8 @@ const QVariant TextField::value() {
 }
 
 bool TextField::isValid() {
-  if (isRequired() && value().isNull())
+  QString _buffer = value().toString();
+  if (isRequired() && _buffer.length() < 1)
     return false;
 
   return true;
