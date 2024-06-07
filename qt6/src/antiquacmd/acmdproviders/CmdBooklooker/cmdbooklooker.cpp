@@ -166,7 +166,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
       antiqua_orderinfo.insert("o_provider_order_id", order_str);
       antiqua_orderinfo.insert("o_provider_purchase_id", order_id);
       antiqua_orderinfo.insert("o_since", datetime.toString(Qt::ISODate));
-      antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
+      // antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
       antiqua_orderinfo.insert("o_vat_country", bcp47);
 
       /**

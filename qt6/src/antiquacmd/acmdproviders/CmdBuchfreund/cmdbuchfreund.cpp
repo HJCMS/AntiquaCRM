@@ -8,7 +8,7 @@
 #include <unistd.h>
 
 #ifndef BUCHFREUND_DATE_FORMAT
-#define BUCHFREUND_DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
+#  define BUCHFREUND_DATE_FORMAT "yyyy-MM-dd hh:mm:ss"
 #endif
 
 constexpr bool BUCHFREUND_DEBUG = false;
@@ -44,12 +44,11 @@ static const QHash<QString, QString> translateIds() {
   return hash;
 }
 
-CmdBuchfreund::CmdBuchfreund(QObject *parent)
-    : ACmdProviders{AntiquaCRM::JSON_QUERY, parent} {
+CmdBuchfreund::CmdBuchfreund(QObject* parent) : ACmdProviders{AntiquaCRM::JSON_QUERY, parent} {
   setObjectName("buchfreund_cmd");
 }
 
-void CmdBuchfreund::queryOrdersById(const QStringList &list) {
+void CmdBuchfreund::queryOrdersById(const QStringList& list) {
   QStringList imported = currProviderIds(provider());
   foreach (QString _id, list) {
     if (imported.contains(_id)) {
@@ -68,7 +67,9 @@ void CmdBuchfreund::queryOrdersById(const QStringList &list) {
   }
 }
 
-const QString CmdBuchfreund::provider() const { return QString("Buchfreund"); }
+const QString CmdBuchfreund::provider() const {
+  return QString("Buchfreund");
+}
 
 void CmdBuchfreund::initConfiguration() {
   QString _sql("SELECT cfg_jsconfig::json FROM antiquacrm_configs");
@@ -91,7 +92,7 @@ void CmdBuchfreund::initConfiguration() {
   apiPath = _o.value("m_api_path").toString();
 }
 
-const QUrl CmdBuchfreund::apiQuery(const QString &action) {
+const QUrl CmdBuchfreund::apiQuery(const QString& action) {
   QString p(apiPath);
   p.append(apiKey);
   p.append("/");
@@ -107,7 +108,7 @@ const QUrl CmdBuchfreund::apiQuery(const QString &action) {
   return url;
 }
 
-void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
+void CmdBuchfreund::prepareContent(const QJsonDocument& document) {
   QJsonObject obj = document.object();
   QJsonValue response = obj.value("response");
   if (obj.value("error").toBool()) {
@@ -180,7 +181,7 @@ void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
   antiqua_orderinfo.insert("o_provider_name", provider());
   antiqua_orderinfo.insert("o_provider_order_id", QJsonValue(bf_id));
   antiqua_orderinfo.insert("o_since", datetime.toString(Qt::ISODate));
-  antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
+  // antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
 
   // AntiquaCRM::PaymentMethod
   AntiquaCRM::PaymentMethod payment_method;
@@ -214,8 +215,7 @@ void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
 
   // Buyer payment comment
   if (bf_order.contains("kundenkommentar")) {
-    antiqua_order.insert("o_delivery_comment",
-                         bf_order.value("kundenkommentar").toString());
+    antiqua_order.insert("o_delivery_comment", bf_order.value("kundenkommentar").toString());
   }
 
   // Kundendaten
@@ -253,8 +253,8 @@ void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
         antiqua_customer.insert(field, ucFirst(_v.toString()));
       } else {
         int _msize = _fieldSet.value(field, 0);
-        if ((_msize > 0) && (_v.type() == QJsonValue::String) &&
-            (_msize < _v.toString().length())) {
+        if ((_msize > 0) && (_v.type() == QJsonValue::String)
+            && (_msize < _v.toString().length())) {
           QString _data(_v.toString().left(_msize));
           if (_data.contains(" ")) {
             QStringList _l = _data.split(" ");
@@ -301,14 +301,14 @@ void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
   for (int a = 0; a < articles.count(); a++) {
     if (articles[a].type() == QJsonValue::Object) {
       QJsonObject antiqua_articles_item;
-      QJsonObject jso = articles[a].toObject();
-      foreach (QString k, jso.keys()) {
+      QJsonObject _jso = articles[a].toObject();
+      foreach (QString k, _jso.keys()) {
         if (!keys.value(k).isEmpty()) {
           QString key = keys.value(k);
-          QJsonValue value = convert(key, jso.value(k));
+          QJsonValue value = convert(key, _jso.value(k));
           int _msize = _fieldSet.value(key, 0);
-          if ((_msize > 0) && (value.type() == QJsonValue::String) &&
-              (_msize < value.toString().length())) {
+          if ((_msize > 0) && (value.type() == QJsonValue::String)
+              && (_msize < value.toString().length())) {
             QString _data = value.toString();
             qInfo("Shrink data for key %s ", qPrintable(key));
             antiqua_articles_item.insert(key, _data.left(_msize));
@@ -319,13 +319,18 @@ void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
       }
       antiqua_articles_item.insert("payment_id", QJsonValue(0));
       antiqua_articles_item.insert("a_provider_id", QJsonValue(bf_id));
-      QJsonValue price =
-          convert("a_sell_price", jso.value("preis_pro_einheit"));
+      QJsonValue price = convert("a_sell_price", _jso.value("preis_pro_einheit"));
       antiqua_articles_item.insert("a_sell_price", price);
-      antiqua_articles_item.insert("a_type",
-                                   QJsonValue(AntiquaCRM::ArticleType::BOOK));
-      antiqua_articles_item.insert("a_tax",
-                                   QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
+      // Find valid Article Type ("bestellnr"=>"a_article_id");
+      AntiquaCRM::ArticleType _type = findArticlType(_jso.value("bestellnr").toString());
+      antiqua_articles_item.insert("a_type", QJsonValue(_type));
+      switch (_type) {
+        case (AntiquaCRM::ArticleType::OTHER):
+          antiqua_articles_item.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_WITH));
+
+        default:
+          antiqua_articles_item.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
+      }
       antiqua_articles.append(antiqua_articles_item);
     }
   }
@@ -350,7 +355,7 @@ void CmdBuchfreund::prepareContent(const QJsonDocument &document) {
   emit sendFinished();
 }
 
-void CmdBuchfreund::responsed(const QByteArray &bread) {
+void CmdBuchfreund::responsed(const QByteArray& bread) {
   QJsonParseError _parser;
   QJsonDocument _doc = QJsonDocument::fromJson(bread, &_parser);
   if (_parser.error != QJsonParseError::NoError) {

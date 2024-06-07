@@ -7,8 +7,7 @@
 #include <QByteArray>
 #include <QRegularExpression>
 
-ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject *parent)
-    : QObject{parent} {
+ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject* parent) : QObject{parent} {
   setObjectName("acmdproviders");
   cfg = new AntiquaCRM::ASettings("antiquacmd", this);
   pgsql = new AntiquaCRM::ASqlCore(this, QString("Default"));
@@ -20,11 +19,11 @@ ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject *parent)
 
   history_query = cfg->value("history_query", -3).toInt();
 
-  connect(netw, SIGNAL(sendJsonResponse(const QJsonDocument &)),
-          SLOT(getNetworkResponse(const QJsonDocument &)));
+  connect(netw, SIGNAL(sendJsonResponse(const QJsonDocument&)),
+          SLOT(getNetworkResponse(const QJsonDocument&)));
 
-  connect(netw, SIGNAL(sendXmlResponse(const QDomDocument &)),
-          SLOT(getNetworkResponse(const QDomDocument &)));
+  connect(netw, SIGNAL(sendXmlResponse(const QDomDocument&)),
+          SLOT(getNetworkResponse(const QDomDocument&)));
 }
 
 ACmdProviders::~ACmdProviders() {
@@ -33,7 +32,7 @@ ACmdProviders::~ACmdProviders() {
   netw->deleteLater();
 }
 
-void ACmdProviders::getNetworkResponse(const QJsonDocument &doc) {
+void ACmdProviders::getNetworkResponse(const QJsonDocument& doc) {
   if (doc.isEmpty())
     return;
 
@@ -42,7 +41,7 @@ void ACmdProviders::getNetworkResponse(const QJsonDocument &doc) {
     responsed(data);
 }
 
-void ACmdProviders::getNetworkResponse(const QDomDocument &doc) {
+void ACmdProviders::getNetworkResponse(const QDomDocument& doc) {
   if (doc.isNull())
     return;
 
@@ -74,7 +73,7 @@ QMap<QString, int> ACmdProviders::initDataInformation() {
   return _m;
 }
 
-const QString ACmdProviders::ucFirst(const QString &str) {
+const QString ACmdProviders::ucFirst(const QString& str) {
   QString convert = str.trimmed().toLower();
   convert = convert.replace("-", " ");
   QStringList array = convert.split(" ", Qt::SkipEmptyParts);
@@ -84,7 +83,7 @@ const QString ACmdProviders::ucFirst(const QString &str) {
   return array.join(" ");
 }
 
-int ACmdProviders::convertGender(const QString &gender) const {
+int ACmdProviders::convertGender(const QString& gender) const {
   QString search = gender.toLower().trimmed();
   QStringList female({"ms.", "mss", "mses", "madam", "frau", "freifrau"});
   QStringList male({"mr", "mister", "sir", "herr", "herrn", "freiherr"});
@@ -101,7 +100,7 @@ int ACmdProviders::convertGender(const QString &gender) const {
   return static_cast<int>(crm_gender);
 }
 
-const QString ACmdProviders::findBCP47(const QString &country) const {
+const QString ACmdProviders::findBCP47(const QString& country) const {
   QString sql("SELECT rc_iso2 FROM ref_countries WHERE ");
   sql.append("rc_country_en ILIKE '" + country + "'");
   sql.append("OR rc_country_de ILIKE '" + country + "';");
@@ -116,13 +115,12 @@ const QString ACmdProviders::findBCP47(const QString &country) const {
     return "DE";
 
   if (found.size() > 1)
-    qInfo("Providers (%d): Found more then one BCP47 Code use first!",
-          __LINE__);
+    qInfo("Providers (%d): Found more then one BCP47 Code use first!", __LINE__);
 
   return found.first();
 }
 
-const QString ACmdProviders::getCountry(const QString &bcp47) const {
+const QString ACmdProviders::getCountry(const QString& bcp47) const {
   QString sql("SELECT COALESCE(rc_country_de, rc_country_en)");
   sql.append("FROM ref_countries WHERE rc_iso2='" + bcp47 + "';");
   QStringList found;
@@ -141,8 +139,7 @@ const QString ACmdProviders::getCountry(const QString &bcp47) const {
   return found.first();
 }
 
-const QDateTime ACmdProviders::getDateTime(const QString &dateString,
-                                           const QString &timeString,
+const QDateTime ACmdProviders::getDateTime(const QString& dateString, const QString& timeString,
                                            Qt::TimeSpec spec) const {
   QDateTime dateTime;
   QDate d = QDate::fromString(dateString, "yyyy-MM-dd");
@@ -153,23 +150,21 @@ const QDateTime ACmdProviders::getDateTime(const QString &dateString,
   return dateTime;
 }
 
-const QDateTime ACmdProviders::getDateTime(const QString &dateTimeString,
-                                           Qt::TimeSpec spec) const {
+const QDateTime ACmdProviders::getDateTime(const QString& dateTimeString, Qt::TimeSpec spec) const {
   QDateTime dateTime;
   dateTime = QDateTime::fromString(dateTimeString, "yyyy-MM-dd HH:mm:ss");
   dateTime.setTimeSpec(spec);
   return dateTime;
 }
 
-const QDateTime ACmdProviders::timeSpecDate(const QDateTime &dateTime,
+const QDateTime ACmdProviders::timeSpecDate(const QDateTime& dateTime,
                                             Qt::TimeSpec fromSpec) const {
   QDateTime dt(dateTime);
   dt.setTimeSpec(fromSpec);
   return dt;
 }
 
-const QJsonValue ACmdProviders::convert(const QString &field,
-                                        const QJsonValue &value) const {
+const QJsonValue ACmdProviders::convert(const QString& field, const QJsonValue& value) const {
   if (field == "a_article_id") {
     if (value.type() == QJsonValue::String) {
       QString str = value.toString();
@@ -189,24 +184,24 @@ const QJsonValue ACmdProviders::convert(const QString &field,
   }
 
   switch (value.type()) {
-  case QJsonValue::Bool:
-    return value.toBool();
+    case QJsonValue::Bool:
+      return value.toBool();
 
-  case QJsonValue::Double:
-    return value.toInt();
+    case QJsonValue::Double:
+      return value.toInt();
 
-  case QJsonValue::String:
-    return value.toString();
+    case QJsonValue::String:
+      return value.toString();
 
-  default:
-    break;
+    default:
+      break;
   };
 
   qWarning("Providers (%d): Invalid type detected!", __LINE__);
   return QString();
 }
 
-const QStringList ACmdProviders::currProviderIds(const QString &provider) {
+const QStringList ACmdProviders::currProviderIds(const QString& provider) {
   QStringList ids;
   if (provider.isEmpty()) {
     qWarning("Providers (%d): Query field 'pr_name' is empty!", __LINE__);
@@ -224,7 +219,7 @@ const QStringList ACmdProviders::currProviderIds(const QString &provider) {
   return ids;
 }
 
-bool ACmdProviders::createOrders(const QList<QJsonObject> &orders) {
+bool ACmdProviders::createOrders(const QList<QJsonObject>& orders) {
   if (orders.size() < 1)
     return false;
 
@@ -275,9 +270,8 @@ bool ACmdProviders::createOrders(const QList<QJsonObject> &orders) {
   return true;
 }
 
-QPair<qint64, QString>
-ACmdProviders::findInsertCustomer(const QJsonObject &json) {
-  ACmdCustomers *mc = new ACmdCustomers(pgsql, json);
+QPair<qint64, QString> ACmdProviders::findInsertCustomer(const QJsonObject& json) {
+  ACmdCustomers* mc = new ACmdCustomers(pgsql, json);
   qint64 c_id = mc->getId();
 #ifdef ANTIQUA_DEVELOPMENT
   if (c_id < 1)
@@ -290,4 +284,15 @@ ACmdProviders::findInsertCustomer(const QJsonObject &json) {
   out.first = c_id;
   out.second = mc->buyerName();
   return out;
+}
+
+AntiquaCRM::ArticleType ACmdProviders::findArticlType(const QString& aid) {
+  if (aid.length() > 1) {
+    QSqlQuery _q = pgsql->query("SELECT func_get_article_type(" + aid + ");");
+    if (_q.size() > 0) {
+      _q.next();
+      return static_cast<AntiquaCRM::ArticleType>(_q.value(0).toInt());
+    }
+  }
+  return AntiquaCRM::ArticleType::BOOK;
 }

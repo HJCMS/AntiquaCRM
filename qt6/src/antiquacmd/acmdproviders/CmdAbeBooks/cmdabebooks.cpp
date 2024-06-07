@@ -6,8 +6,7 @@
 
 #include <QtCore>
 
-CmdAbeBooks::CmdAbeBooks(QObject *parent)
-    : ACmdProviders{AntiquaCRM::XML_QUERY, parent} {
+CmdAbeBooks::CmdAbeBooks(QObject* parent) : ACmdProviders{AntiquaCRM::XML_QUERY, parent} {
   setObjectName("abebooks_cmd");
 }
 
@@ -20,12 +19,13 @@ AbeBooksDocument CmdAbeBooks::initDocument() {
 }
 
 const QRegularExpression CmdAbeBooks::charsetPattern() const {
-  QRegularExpression _regexp("\\b(iso\\-8859)[\\-\\d]*",
-                             QRegularExpression::CaseInsensitiveOption);
+  QRegularExpression _regexp("\\b(iso\\-8859)[\\-\\d]*", QRegularExpression::CaseInsensitiveOption);
   return _regexp;
 }
 
-const QString CmdAbeBooks::provider() const { return QString("AbeBooks"); }
+const QString CmdAbeBooks::provider() const {
+  return QString("AbeBooks");
+}
 
 void CmdAbeBooks::initConfiguration() {
   QString _sql("SELECT cfg_jsconfig::json FROM antiquacrm_configs");
@@ -51,7 +51,7 @@ void CmdAbeBooks::initConfiguration() {
   // _o.value("seller_id");
 }
 
-const QUrl CmdAbeBooks::apiQuery(const QString &action) {
+const QUrl CmdAbeBooks::apiQuery(const QString& action) {
   QUrl url(baseUrl);
   url.setPort(apiPort);
   actionsCookie = QNetworkCookie("action", action.toLocal8Bit());
@@ -60,24 +60,22 @@ const QUrl CmdAbeBooks::apiQuery(const QString &action) {
   return url;
 }
 
-void CmdAbeBooks::prepareContent(const QJsonDocument &document) {
+void CmdAbeBooks::prepareContent(const QJsonDocument& document) {
   Q_UNUSED(document);
   qInfo("No Json support for this CmdAbeBooks plugin");
 }
 
-void CmdAbeBooks::prepareContent(const QDomDocument &document) {
+void CmdAbeBooks::prepareContent(const QDomDocument& document) {
   // Bei fehlern sofort aussteigen!
   if (document.documentElement().tagName() == "requestError") {
     AbeBooksDocument errXml(document);
     QPair<int, QString> err = errXml.errorResponseCode();
-    qWarning("AbeBooks Request Error %d (%s)", err.first,
-             qPrintable(err.second));
+    qWarning("AbeBooks Request Error %d (%s)", err.first, qPrintable(err.second));
     emit sendDisjointed();
     return;
   }
   // Konvertiere LATIN1 zu UTF-8 und ändere den XML Header!
-  const QFileInfo _tempfile(AntiquaCRM::ASettings::getUserTempDir(),
-                            "abebooks_orders_temp.xml");
+  const QFileInfo _tempfile(AntiquaCRM::ASettings::getUserTempDir(), "abebooks_orders_temp.xml");
 
   QString _buffer = document.toString(1);
   _buffer.replace(charsetPattern(), "utf8");
@@ -132,7 +130,7 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
       antiqua_orderinfo.insert("o_provider_order_id", order_str_id);
       antiqua_orderinfo.insert("o_provider_purchase_id", orderId);
       antiqua_orderinfo.insert("o_since", dateTime.toString(Qt::ISODate));
-      antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::BOOK);
+      // antiqua_orderinfo.insert("o_media_type", AntiquaCRM::ArticleType::OTHER);
 
       /*
         Konvertiere Provider PaymentStatus => OrderStatus!
@@ -143,16 +141,13 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
       QString orderStatus = xml.getNodeValue(statusNode).toString();
       if (orderStatus.contains("Ordered")) {
         // AntiquaCRM::SHIPMENT_CREATED => AntiquaCRM::STARTED
-        antiqua_orderinfo.insert("o_order_status",
-                                 AntiquaCRM::OrderStatus::STARTED);
+        antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::STARTED);
       } else if (orderStatus.contains("Cancelled")) {
         // AntiquaCRM::ORDER_CANCELED => AntiquaCRM::CANCELED
-        antiqua_orderinfo.insert("o_order_status",
-                                 AntiquaCRM::OrderStatus::CANCELED);
+        antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::CANCELED);
       } else {
         // AntiquaCRM::STATUS_NOT_SET => AntiquaCRM::OPEN
-        antiqua_orderinfo.insert("o_order_status",
-                                 AntiquaCRM::OrderStatus::OPEN);
+        antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::OPEN);
       }
 
       // AntiquaCRM::PaymentMethod
@@ -192,14 +187,12 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
         // Postaldata
         QDomNode addressNode = buyerNode.namedItem("mailingAddress");
         QPair<QString, QString> person = xml.getPerson(addressNode);
-        antiqua_customer.insert("c_provider_import",
-                                xml.getFullname(addressNode));
+        antiqua_customer.insert("c_provider_import", xml.getFullname(addressNode));
         antiqua_customer.insert("c_gender", AntiquaCRM::Gender::NO_GENDER);
         antiqua_customer.insert("c_firstname", ucFirst(person.first));
         antiqua_customer.insert("c_lastname", ucFirst(person.second));
         antiqua_customer.insert("c_street", xml.getStreet(addressNode));
-        antiqua_customer.insert("c_postalcode",
-                                xml.getPostalCode(addressNode).toString());
+        antiqua_customer.insert("c_postalcode", xml.getPostalCode(addressNode).toString());
         antiqua_customer.insert("c_location", xml.getLocation(addressNode));
         QString p_country = xml.getCountry(addressNode);
         bcp47 = (p_country.isEmpty()) ? "Germany" : findBCP47(p_country);
@@ -212,8 +205,7 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
         QStringList buffer;
         buffer << xml.getFullname(addressNode);
         buffer << xml.getStreet(addressNode);
-        buffer << xml.getPostalCode(addressNode).toString() + " " +
-                      xml.getLocation(addressNode);
+        buffer << xml.getPostalCode(addressNode).toString() + " " + xml.getLocation(addressNode);
         antiqua_customer.insert("c_postal_address", buffer.join("\n"));
         antiqua_customer.insert("c_shipping_address", "");
       }
@@ -231,22 +223,26 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
           if (!book.isNull()) {
             QJsonValue temp;
             QDomElement bookElement = book.toElement();
-            // Article Type
-            order_article.insert("a_type",
-                                 QJsonValue(AntiquaCRM::ArticleType::BOOK));
-            order_article.insert("a_tax",
-                                 QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
             // Article title
             temp = QJsonValue(xml.getTagText(bookElement, "title"));
             order_article.insert("a_title", temp);
             // Provider Order ID
             temp = QJsonValue(bookElement.attribute("id", order_str_id));
-            order_article.insert("a_provider_id",
-                                 convert("a_provider_id", temp));
+            order_article.insert("a_provider_id", convert("a_provider_id", temp));
             // Article ID
             QDomNode queryNode = xml.firstChildNode(bookElement, "vendorKey");
             temp = QJsonValue(xml.getNodeValue(queryNode).toInt());
             order_article.insert("a_article_id", temp);
+            // Find valid Article Type
+            AntiquaCRM::ArticleType _type = findArticlType(temp.toString());
+            order_article.insert("a_type", QJsonValue(_type));
+            switch (_type) {
+              case (AntiquaCRM::ArticleType::OTHER):
+                order_article.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_WITH));
+
+              default:
+                order_article.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
+            }
             // Article Count
             order_article.insert("a_count", QJsonValue(1));
             order_article.insert("a_payment_id", QJsonValue(0));
@@ -286,7 +282,7 @@ void CmdAbeBooks::prepareContent(const QDomDocument &document) {
   emit sendDisjointed();
 }
 
-void CmdAbeBooks::responsed(const QByteArray &bread) {
+void CmdAbeBooks::responsed(const QByteArray& bread) {
   QDomDocument xml("response");
   // WARNING: We need a Header with ABEBOOKS_CHARSET
   QDomProcessingInstruction pir = xml.createProcessingInstruction(

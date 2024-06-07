@@ -15,14 +15,14 @@
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QList>
+#include <QMetaObject>
 #include <QNetworkCookie>
 #include <QObject>
 #include <QSqlRecord>
 #include <QUrl>
-#include <QMetaObject>
 
 #ifndef ANTIQUACMD_INTERFACE
-#define ANTIQUACMD_INTERFACE "de.hjcms.antiquacmd"
+#  define ANTIQUACMD_INTERFACE "de.hjcms.antiquacmd"
 #endif
 
 class ACmdProviders : public QObject {
@@ -33,17 +33,17 @@ class ACmdProviders : public QObject {
   Q_CLASSINFO("Url", ANTIQUACRM_HOMEPAGE)
 
 private Q_SLOTS:
-  void getNetworkResponse(const QJsonDocument &);
-  void getNetworkResponse(const QDomDocument &);
+  void getNetworkResponse(const QJsonDocument&);
+  void getNetworkResponse(const QDomDocument&);
 
 protected:
   /**
    * @brief Basic class members, always initialed in constructor.
    * @{
    */
-  AntiquaCRM::ASqlCore *pgsql;
-  AntiquaCRM::ASettings *cfg;
-  AntiquaCRM::ANetworker *netw;
+  AntiquaCRM::ASqlCore* pgsql;
+  AntiquaCRM::ASettings* cfg;
+  AntiquaCRM::ANetworker* netw;
   /**
    * @}
    */
@@ -134,53 +134,52 @@ protected:
   /**
    * @brief Method to create query url
    */
-  virtual const QUrl apiQuery(const QString &action) = 0;
+  virtual const QUrl apiQuery(const QString& action) = 0;
 
   /**
    * @brief The JSon document for the AntiquaCRM import is created here!
    * @sa AntiquaCRM::JSON::Schema
    */
-  virtual void prepareContent(const QJsonDocument &document) = 0;
+  virtual void prepareContent(const QJsonDocument& document) = 0;
 
   /**
    * @brief Helper - Correcting incorrect name information.
    */
-  const QString ucFirst(const QString &str);
+  const QString ucFirst(const QString& str);
 
   /**
    * @brief gender detection
    *
    * The try, to get service provider information about customer gender.
    */
-  int convertGender(const QString &gender) const;
+  int convertGender(const QString& gender) const;
 
   /**
    * @brief IETF BCP 47 language attributes
    */
-  const QString findBCP47(const QString &country) const;
+  const QString findBCP47(const QString& country) const;
 
   /**
    * @brief Search country with IETF BCP 47 language attribute
    */
-  const QString getCountry(const QString &bcp47) const;
+  const QString getCountry(const QString& bcp47) const;
 
   /**
    * @brief Creates QDateTime from QDate and QTime
    */
-  const QDateTime getDateTime(const QString &dateString,
-                              const QString &timeString,
+  const QDateTime getDateTime(const QString& dateString, const QString& timeString,
                               Qt::TimeSpec spec = Qt::LocalTime) const;
 
   /**
    * @brief Converts QDateTime to AntiquaCRM::ISODate Time
    */
-  const QDateTime getDateTime(const QString &dateTimeString,
+  const QDateTime getDateTime(const QString& dateTimeString,
                               Qt::TimeSpec spec = Qt::LocalTime) const;
 
   /**
    * @brief Time zones are required for the “cookies”.
    */
-  const QDateTime timeSpecDate(const QDateTime &dateTime,
+  const QDateTime timeSpecDate(const QDateTime& dateTime,
                                Qt::TimeSpec fromSpec = Qt::LocalTime) const;
 
   /**
@@ -191,7 +190,7 @@ protected:
    *
    * For more information see Qt documentation QJsonValue::Type
    */
-  const QJsonValue convert(const QString &field, const QJsonValue &value) const;
+  const QJsonValue convert(const QString& field, const QJsonValue& value) const;
 
   /**
    * @brief List of service provider order numbers
@@ -201,14 +200,14 @@ protected:
    * method @b MUST always be called before @ref createOrders! Otherwise you
    * will get a SQL INSERT error!
    */
-  const QStringList currProviderIds(const QString &provider);
+  const QStringList currProviderIds(const QString& provider);
 
   /**
    * @brief Create SQL inserts with AntiquaCRM::JSON::Schema
    * @param orders - Article orders
    * @note Only SQL::INSERT's are executed!
    */
-  bool createOrders(const QList<QJsonObject> &orders);
+  bool createOrders(const QList<QJsonObject>& orders);
 
   /**
    * @brief Customer search
@@ -217,14 +216,24 @@ protected:
    * see documentation AntiquaCRM::JSON::Schema!
    * @return QPair<CustomerID, "Customer First- lastname">
    */
-  QPair<qint64, QString> findInsertCustomer(const QJsonObject &json);
+  QPair<qint64, QString> findInsertCustomer(const QJsonObject& json);
+
+  /**
+   * @brief Query Article type with Article Number
+   * @note Providers didn't set article mediaTypes
+   * @code
+   *  psql -c "SELECT func_get_article_type(articleid);"
+   * @endcode
+   * @default AntiquaCRM::ArticleType::Book
+   */
+  AntiquaCRM::ArticleType findArticlType(const QString &aid);
 
 protected Q_SLOTS:
   /**
    * @brief Process network response!
    * @param bread - bytes read
    */
-  virtual void responsed(const QByteArray &bread) = 0;
+  virtual void responsed(const QByteArray& bread) = 0;
 
 Q_SIGNALS:
   /**
@@ -245,8 +254,7 @@ public Q_SLOTS:
   virtual void start() = 0;
 
 public:
-  explicit ACmdProviders(AntiquaCRM::NetworkQueryType type,
-                         QObject *parent = nullptr);
+  explicit ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject* parent = nullptr);
   ~ACmdProviders();
 
   /**

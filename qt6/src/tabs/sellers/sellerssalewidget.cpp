@@ -60,6 +60,7 @@ SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
 }
 
 const QString SellersSalesWidget::mediaType(const QJsonValue &object) {
+  // qDebug() << Q_FUNC_INFO << object;
   QString _name;
   switch (static_cast<AntiquaCRM::ArticleType>(object.toInt())) {
   case AntiquaCRM::ArticleType::BOOK: /**< Bücher */
@@ -227,7 +228,7 @@ void SellersSalesWidget::openArticle(qint64 aid) {
     break;
 
   case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
-    obj.insert("TARGET", "printsstitches_tab");
+    obj.insert("TARGET", "stitches_tab");
     break;
 
   case AntiquaCRM::ArticleType::OTHER: /**< Various */
