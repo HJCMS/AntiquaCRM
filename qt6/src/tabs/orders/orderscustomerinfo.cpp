@@ -2,6 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderscustomerinfo.h"
+#include "orderscustomertoolbar.h"
 
 #include <QLayout>
 #include <QSizePolicy>
@@ -15,10 +16,14 @@ OrdersCustomerInfo::OrdersCustomerInfo(QWidget *parent) : QWidget{parent} {
   css.append("border:none; border-top:1px solid palette(text);}");
 
   QVBoxLayout *layout = new QVBoxLayout(this);
+  // OrdersCustomerToolBar
+  OrdersCustomerToolBar *m_oc_toolbar = new OrdersCustomerToolBar(this);
+  layout->addWidget(m_oc_toolbar);
+
   o_customer_id = new AntiquaCRM::SerialId(this);
   o_customer_id->setObjectName("o_customer_id");
   o_customer_id->setBuddyLabel(tr("Customer Number"));
-  layout->addWidget(o_customer_id);
+  m_oc_toolbar->addEditWidget(o_customer_id);
 
   m_stackedWidget = new QStackedWidget(this);
   c_postal_address = new AntiquaCRM::TextField(this);

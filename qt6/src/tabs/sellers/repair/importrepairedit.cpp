@@ -3,7 +3,7 @@
 
 #include "importrepairedit.h"
 
-ImportRepairEdit::ImportRepairEdit(QWidget *parent) : QScrollArea{parent} {
+ImportRepairEdit::ImportRepairEdit(QWidget* parent) : QScrollArea{parent} {
   setWidgetResizable(true);
 
   m_widget = new QWidget(this);
@@ -12,7 +12,7 @@ ImportRepairEdit::ImportRepairEdit(QWidget *parent) : QScrollArea{parent} {
   setWidget(m_widget);
 
   qint8 row = 0;
-  QGridLayout *layout = new QGridLayout(m_widget);
+  QGridLayout* layout = new QGridLayout(m_widget);
   layout->setContentsMargins(0, 0, 0, 0);
 
   m_mapper = new QSignalMapper(m_widget);
@@ -141,18 +141,17 @@ ImportRepairEdit::ImportRepairEdit(QWidget *parent) : QScrollArea{parent} {
   layout->setRowStretch(row, 1);
   m_widget->setLayout(layout);
 
-  connect(m_mapper, SIGNAL(mappedString(const QString &)),
-          SLOT(mergeData(const QString &)));
+  connect(m_mapper, SIGNAL(mappedString(QString)), SLOT(mergeData(QString)));
 }
 
-QLabel *ImportRepairEdit::info(const QString &title) {
-  QLabel *lb = new QLabel(title, this);
+QLabel* ImportRepairEdit::info(const QString& title) {
+  QLabel* lb = new QLabel(title, this);
   lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   return lb;
 }
 
-QToolButton *ImportRepairEdit::mergeButton(const QString &suffix) {
-  QToolButton *btn = new QToolButton(this);
+QToolButton* ImportRepairEdit::mergeButton(const QString& suffix) {
+  QToolButton* btn = new QToolButton(this);
   btn->setObjectName(suffix);
   btn->setArrowType(Qt::RightArrow);
   btn->setToolTip(tr("merge data"));
@@ -161,25 +160,22 @@ QToolButton *ImportRepairEdit::mergeButton(const QString &suffix) {
   return btn;
 }
 
-void ImportRepairEdit::mergeData(const QString &id) {
-  AntiquaCRM::AInputWidget *m_f =
-      m_widget->findChild<AntiquaCRM::AInputWidget *>("o_" + id);
+void ImportRepairEdit::mergeData(const QString& id) {
+  AntiquaCRM::AInputWidget* m_f = m_widget->findChild<AntiquaCRM::AInputWidget*>("o_" + id);
   if (m_f == nullptr) // from
     return;
 
-  AntiquaCRM::AInputWidget *m_t =
-      m_widget->findChild<AntiquaCRM::AInputWidget *>("c_" + id);
+  AntiquaCRM::AInputWidget* m_t = m_widget->findChild<AntiquaCRM::AInputWidget*>("c_" + id);
   if (m_t == nullptr) // to
     return;
 
   m_t->setValue(m_f->getValue());
 }
 
-void ImportRepairEdit::setOriginData(const QJsonObject &data) {
+void ImportRepairEdit::setOriginData(const QJsonObject& data) {
   foreach (const QString _key, data.keys()) {
     QString _inp = QString(_key).replace("c_", "o_");
-    AntiquaCRM::AInputWidget *e =
-        m_widget->findChild<AntiquaCRM::AInputWidget *>(_inp);
+    AntiquaCRM::AInputWidget* e = m_widget->findChild<AntiquaCRM::AInputWidget*>(_inp);
     if (e == nullptr)
       continue;
 
@@ -188,12 +184,11 @@ void ImportRepairEdit::setOriginData(const QJsonObject &data) {
   }
 }
 
-void ImportRepairEdit::setImportData(const QJsonObject &data) {
+void ImportRepairEdit::setImportData(const QJsonObject& data) {
   c_postalcode->initData();
 
   foreach (const QString _key, data.keys()) {
-    AntiquaCRM::AInputWidget *e =
-        m_widget->findChild<AntiquaCRM::AInputWidget *>(_key);
+    AntiquaCRM::AInputWidget* e = m_widget->findChild<AntiquaCRM::AInputWidget*>(_key);
     if (e == nullptr)
       continue;
 
@@ -214,10 +209,10 @@ void ImportRepairEdit::setImportData(const QJsonObject &data) {
 
 const QJsonObject ImportRepairEdit::getData() {
   QJsonObject _json;
-  QListIterator<AntiquaCRM::AInputWidget *> it(
-      m_widget->findChildren<AntiquaCRM::AInputWidget *>(QString()));
+  QListIterator<AntiquaCRM::AInputWidget*> it(
+      m_widget->findChildren<AntiquaCRM::AInputWidget*>(QString()));
   while (it.hasNext()) {
-    AntiquaCRM::AInputWidget *e = it.next();
+    AntiquaCRM::AInputWidget* e = it.next();
     if (e == nullptr)
       continue;
 

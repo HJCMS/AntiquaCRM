@@ -20,6 +20,7 @@ class YearEdit final : public InputEdit {
 private:
   QDateEdit *m_year;
   const QDate startDate;
+  const QDate minDate;
   void loadDataset() override;
 
 private Q_SLOTS:
@@ -38,6 +39,8 @@ public:
   void setInfo(const QString &) override;
   const QString info() override;
   const QString notes() override;
+  static const QDate currentDate();
+  static qint64 currentYear();
 };
 
 #endif // ANTIQUACRM_YEAREDIT_H

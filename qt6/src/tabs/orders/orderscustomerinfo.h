@@ -19,7 +19,6 @@ class ANTIQUACRM_LIBRARY OrdersCustomerInfo final : public QWidget {
 private:
   QStackedWidget *m_stackedWidget;
   QLabel *m_pageLabel;
-
   void setInfoText(int);
 
 private Q_SLOTS:

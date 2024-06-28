@@ -6,16 +6,16 @@
 #include <QDate>
 #include <QDebug>
 
-static const QDate currentDate() { return QDateTime::currentDateTime().date(); }
-
 YearEdit::YearEdit(QWidget *parent)
-    : InputEdit{parent}, startDate(currentDate()) {
+    : InputEdit{parent}, startDate(currentDate()), minDate(QDate(1400, 1, 1)) {
   setObjectName("YearEdit");
   m_year = new QDateEdit(this);
   m_year->setDisplayFormat("yyyy");
   m_year->setMaximumDate(startDate.addYears(+1));
+  m_year->setMinimumDate(minDate);
   m_year->setDate(startDate.addYears(+1));
-  m_year->setWhatsThis(tr("Changes the Year for this Article. It can't set to the future!"));
+  m_year->setWhatsThis(
+      tr("Changes the Year for this Article. It can't set to the future!"));
   m_layout->addWidget(m_year);
   setModified(false);
   setRequired(false);
@@ -47,9 +47,17 @@ void YearEdit::setFocus() { m_year->setFocus(); }
 void YearEdit::setProperties(const QSqlField &field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
+
+  // Set minimum start date
+  qint64 _y = field.defaultValue().toInt();
+  if (_y > 1000)
+      m_year->setMinimumDate(QDate(_y, 1, 1));
 }
 
-const QVariant YearEdit::value() { return m_year->date().year(); }
+const QVariant YearEdit::value() {
+    qint64 _y = m_year->date().year();
+    return (_y > 1000) ? _y : currentYear();
+}
 
 bool YearEdit::isValid() {
   if (isRequired() && m_year->date() == m_year->maximumDate())
@@ -73,3 +81,9 @@ const QString YearEdit::notes() {
       tr("Year must contain a valid entry, it can not lie in the future.");
   return in;
 }
+
+const QDate YearEdit::currentDate() {
+    return QDateTime::currentDateTime().date();
+}
+
+qint64 YearEdit::currentYear() { return currentDate().year(); }

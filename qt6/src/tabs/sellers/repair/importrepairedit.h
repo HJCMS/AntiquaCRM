@@ -23,6 +23,7 @@ class ImportRepairEdit final : public QScrollArea {
 
 private:
   QWidget *m_widget;
+  AntiquaCRM::TextLine *o_provider_import;      // display unique key
   AntiquaCRM::TextLine *c_provider_import;      // display unique key
   AntiquaCRM::TextLine *o_firstname;            // origin firstname
   AntiquaCRM::TextLine *c_firstname;            // edit firstname

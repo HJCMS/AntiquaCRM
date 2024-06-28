@@ -12,57 +12,35 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (plugin_SOURCES
-  refunddialog.cpp
-  refundingpage.cpp
-  refundintroduction.cpp
-  refundselecter.cpp
-  refundfinalize.cpp
-  orderarticledialog.cpp
-  ordersconfigwidget.cpp
-  orderscostsettings.cpp
-  orderscustomerinfo.cpp
-  orderseditor.cpp
-  orderssearchbar.cpp
-  ordersstatusbar.cpp
-  orderstatusactionframe.cpp
-  orderstabledelegate.cpp
-  orderstablemodel.cpp
-  orderstableoverview.cpp
-  orderstableoverviewmodel.cpp
-  orderstableview.cpp
-  orderswidget.cpp
-  taborders.cpp
-)
-
 SET (plugin_HEADERS
-  refunddialog.h
-  refundingpage.h
-  refundingpages.h
-  refundintroduction.h
-  refundselecter.h
-  refundfinalize.h
   ordersconfig.h
-  orderarticledialog.h
-  ordersconfigwidget.h
-  orderscostsettings.h
-  orderscustomerinfo.h
-  orderseditor.h
-  orderssearchbar.h
-  ordersstatusbar.h
-  orderstatusactionframe.h
-  orderstabledelegate.h
-  orderstablemodel.h
-  orderstableoverview.h
-  orderstableoverviewmodel.h
-  orderstableview.h
-  orderswidget.h
-  taborders.h
+  refundingpages.h
 )
 
 ADD_LIBRARY (${_pluginTarget} STATIC
- ${plugin_SOURCES}
- ${plugin_HEADERS}
+  ${plugin_HEADERS}
+  changeordercustomerdialog.h changeordercustomerdialog.cpp
+  orderarticledialog.h orderarticledialog.cpp
+  ordersconfigwidget.h ordersconfigwidget.cpp
+  orderscostsettings.h orderscostsettings.cpp
+  orderscustomerinfo.h orderscustomerinfo.cpp
+  orderscustomertoolbar.h orderscustomertoolbar.cpp
+  orderseditor.h orderseditor.cpp
+  orderssearchbar.h orderssearchbar.cpp
+  ordersstatusbar.h ordersstatusbar.cpp
+  orderstabledelegate.h orderstabledelegate.cpp
+  orderstablemodel.h orderstablemodel.cpp
+  orderstableoverview.h orderstableoverview.cpp
+  orderstableoverviewmodel.h orderstableoverviewmodel.cpp
+  orderstableview.h orderstableview.cpp
+  orderstatusactionframe.h orderstatusactionframe.cpp
+  orderswidget.h orderswidget.cpp
+  refunddialog.h refunddialog.cpp
+  refundfinalize.h refundfinalize.cpp
+  refundingpage.h refundingpage.cpp
+  refundintroduction.h refundintroduction.cpp
+  refundselecter.h refundselecter.cpp
+  taborders.h taborders.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
