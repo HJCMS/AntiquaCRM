@@ -10,8 +10,8 @@
 #define ANTIQUA_UI_SPLASHSCREEN_H
 
 #include <AGlobal>
+#include <QApplication>
 #include <QFont>
-#include <QMainWindow>
 #include <QObject>
 #include <QPainter>
 #include <QPixmap>
@@ -24,14 +24,14 @@ private:
   const QString title;
   const QFont titleFont() const;
   inline const QPixmap background() const;
-  void drawContents(QPainter *painter) override;
+  void drawContents(QPainter* painter) override;
 
 public Q_SLOTS:
-  void errorMessage(const QString &);
-  void setMessage(const QString &);
+  void errorMessage(const QString&);
+  void setMessage(const QString&);
 
 public:
-  explicit SplashScreen(QMainWindow *parent);
+  explicit SplashScreen(QApplication* parent);
 };
 
 #endif // ANTIQUA_UI_SPLASHSCREEN_H

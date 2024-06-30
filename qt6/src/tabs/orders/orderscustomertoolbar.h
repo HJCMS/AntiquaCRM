@@ -18,7 +18,7 @@ class OrdersCustomerToolBar : public QFrame {
 
 private:
   QHBoxLayout* m_layout;
-  AntiquaCRM::SerialId* m_edit = NULL;
+  AntiquaCRM::SerialId* m_edit = nullptr;
   QAction* ac_open;
   QAction* ac_edit;
   qint64 customerId();

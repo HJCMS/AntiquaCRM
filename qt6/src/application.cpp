@@ -150,33 +150,26 @@ void Application::initTranslations() {
     installTranslator(m_qtr);
 }
 
-bool Application::initGUI() {
-  // Übersetzung muss vor dem UI initialisiert werden!
-  initTranslations();
+bool Application::initMainWindow() {
   // MainWindow
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
+  return (m_window != nullptr);
+}
+
+bool Application::initSystemTray() {
   // SystemTray
   m_systray = new SystemTrayIcon(applIcon(), this);
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
   connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-
-#ifdef ANTIQUACRM_DBUS_ENABLED
-  if (registerSessionBus()) {
-    // qdbus-qt5 de.hjcms.antiquacrm /
-    //      de.hjcms.antiquacrm.pushMessage testing
-    ABusAdaptor* m_adaptor = new ABusAdaptor(this);
-    m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-    connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
-    connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-    connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
+  if (m_systray != nullptr) {
+    m_systray->show();
+    return true;
   }
-#endif
-
-  return (m_window != nullptr);
+  return false;
 }
 
 void Application::applicationQuit() {
@@ -233,27 +226,20 @@ bool Application::isRunning() {
 
 int Application::exec() {
   QMutex mutex;
-  // Init user interface for member bindings
-  if (!initGUI()) {
-    qFatal("failed to initital window");
-    return 2;
-  }
+  // Translation at first
+  initTranslations();
 
-  // start splash
-  SplashScreen p_splash(m_window);
+  // Step 0 - Open splash
+  SplashScreen p_splash(this);
   p_splash.show();
 
-  // Step 1 - init stylesheet
+  // Step 1 - Stylesheets
   p_splash.setMessage("Initial Themes & styles.");
   mutex.lock();
   initStyleTheme();
   mutex.unlock();
 
-  // Step 2 - show systemtray
-  p_splash.setMessage("Open Systemtray icon.");
-  m_systray->show();
-
-  // Step 3 - network
+  // Step 2 - Networking
   p_splash.setMessage("Search Networkconnection!");
   mutex.lock();
   if (!checkInterfaces()) {
@@ -264,7 +250,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-  // Step 4 - SQL Server
+  // Step 3 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
   mutex.lock();
   if (!checkRemotePort()) {
@@ -281,7 +267,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Network connection to remote port exists."));
   mutex.unlock();
 
-  // Step 5 - SQL Database
+  // Step 4 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
   mutex.lock();
   if (!openDatabase()) {
@@ -301,7 +287,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Database connection successfully."));
   mutex.unlock();
 
-  // Step 6 - create cache files
+  // Step 5 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->open()) {
     mutex.lock();
@@ -319,10 +305,33 @@ int Application::exec() {
     mutex.unlock();
   }
 
-  // Step 7 - finish splash and unlock
+  // Step 6 - UIX
+  if (!initMainWindow()) {
+    qFatal("failed to initital window");
+    return 2;
+  }
+
+  // Step 7 - Systemtray
+  p_splash.setMessage("Open Systemtray icon.");
+  if (!initSystemTray())
+    return 2;
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  if (registerSessionBus()) {
+    // qdbus-qt5 de.hjcms.antiquacrm /
+    //      de.hjcms.antiquacrm.pushMessage testing
+    ABusAdaptor* m_adaptor = new ABusAdaptor(this);
+    m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
+    connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
+    connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+    connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
+  }
+#endif
+
+  // Step 8 - finish splash and unlock
   p_splash.setMessage(tr("Open AntiquaCRM application ..."));
 
-  // Step 8 - open application window
+  // Step 9 - open application window
   if (m_window->openWindow())
     p_splash.finish(m_window);
 

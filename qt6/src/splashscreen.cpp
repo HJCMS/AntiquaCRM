@@ -6,11 +6,12 @@
 #include <QtCore>
 #include <QtGui>
 
-SplashScreen::SplashScreen(QMainWindow *parent)
-    : QSplashScreen{parent->screen(), background()}, // Splash
+SplashScreen::SplashScreen(QApplication* parent)
+    : QSplashScreen{parent->primaryScreen(), background()}, // Splash
       title{ANTIQUACRM_WINDOW_TITLE} {
-  QFont f(font().family(), 12);
+  QFont f(parent->font().family(), 12);
   setFont(f);
+  setMessage(tr("Application initialization ..."));
 }
 
 const QFont SplashScreen::titleFont() const {
@@ -37,8 +38,7 @@ const QFont SplashScreen::titleFont() const {
     if (ret == -1) {
       _fontName = QString("Luxi Mono");
 #ifdef ANTIQUA_DEVELOPMENT
-      qWarning("Splash: font file not found fallback to „%s“.",
-               qPrintable(_fontName));
+      qWarning("Splash: font file not found fallback to „%s“.", qPrintable(_fontName));
 #endif
     }
   }
@@ -56,7 +56,7 @@ const QPixmap SplashScreen::background() const {
   return pixmap;
 }
 
-void SplashScreen::drawContents(QPainter *painter) {
+void SplashScreen::drawContents(QPainter* painter) {
   // Nachrichten Hintergrund
   QPoint start(0, rect().height() - (font().pointSize() * 3));
   QPoint final(width(), height());
@@ -80,10 +80,10 @@ void SplashScreen::drawContents(QPainter *painter) {
   painter->end();
 }
 
-void SplashScreen::errorMessage(const QString &message) {
+void SplashScreen::errorMessage(const QString& message) {
   showMessage(message, Qt::AlignBottom, Qt::darkRed);
 }
 
-void SplashScreen::setMessage(const QString &message) {
+void SplashScreen::setMessage(const QString& message) {
   showMessage(message, Qt::AlignBottom, Qt::black);
 }

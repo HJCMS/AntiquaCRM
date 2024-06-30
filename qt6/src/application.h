@@ -61,9 +61,14 @@ private:
   void initTranslations();
 
   /**
-   * @brief Load and initial components.
+   * @brief Load and initial window and components.
    */
-  bool initGUI();
+  bool initMainWindow();
+
+  /**
+   * @brief Load and initial systemtray
+   */
+  bool initSystemTray();
 
 Q_SIGNALS:
   /**

@@ -27,7 +27,7 @@ SELECT DATE(o_delivered) AS date,
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN ref_delivery_cost ON d_cid=o_delivery_package
-LEFT JOIN ref_sales_tax ON st_tax_type=a_tax
+LEFT JOIN ref_sales_tax ON st_tax_type=(SELECT func_get_article_type(a_article_id))
 WHERE ((o_payment_status=1 AND o_order_status=4) OR (o_order_status=6 AND o_payment_status=4))
  AND @SQL_WHERE_CLAUSE@ AND date_part('month', a_modified)=date_part('month',o_delivered)
 ORDER BY o_delivered;

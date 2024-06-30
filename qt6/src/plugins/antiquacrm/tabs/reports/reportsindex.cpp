@@ -79,6 +79,10 @@ void ReportsIndex::createReport(const QDate& date) {
   _sql.append("'");
   _tpl.setWhereClause(_sql);
 
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << "SQL:" << _tpl.getQueryContent();
+#endif
+
   p_date = date;
   m_table->setQuery(_tpl.getQueryContent());
   m_toolBar->updateInfoLabel(date, m_table->salesVolume());
