@@ -4,7 +4,7 @@
 <context>
     <name>ACmdProviders</name>
     <message>
-        <location filename="../antiquacmd/acmdproviders/acmdproviders.cpp" line="+136"/>
+        <location filename="../antiquacmd/acmdproviders/acmdproviders.cpp" line="+134"/>
         <source>Germany</source>
         <translation type="unfinished"></translation>
     </message>
@@ -643,6 +643,139 @@ Please check your network connection.</source>
     <message>
         <location line="+4"/>
         <source>Article count is to low!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::CustomersDataWidget</name>
+    <message>
+        <location filename="../Antiqua/Widgets/customersdatawidget.cpp" line="+28"/>
+        <source>Contact data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+13"/>
+        <source>Gender</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Firstname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Lastname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>c/o</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>take care of package</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+15"/>
+        <source>Postalcode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Country</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Country/State or Canton</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+14"/>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Street</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Primary phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Secundary phone number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Primary mobile number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Secundary mobile number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>fax number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Website</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Primary eMail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Secundary eMail Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Company, Institute or Organisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Employer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+9"/>
+        <source>Generate Address with given Dataset.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Generate Invoice address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Invoice Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Delivery Address</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1308,7 +1441,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+280"/>
+        <location line="+284"/>
         <location line="+4"/>
         <source>a valid postal code is required!</source>
         <translation type="unfinished"></translation>
@@ -1317,7 +1450,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::PostalCodeLocation</name>
     <message>
-        <location filename="../Antiqua/Widgets/postalcodelocation.cpp" line="+120"/>
+        <location filename="../Antiqua/Widgets/postalcodelocation.cpp" line="+122"/>
         <source>Missing location in this dataset!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2858,7 +2991,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TextField</name>
     <message>
-        <location filename="../Antiqua/Widgets/textfield.cpp" line="+81"/>
+        <location filename="../Antiqua/Widgets/textfield.cpp" line="+89"/>
         <source>This Text field requires a valid input.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2912,7 +3045,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::YearEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/yearedit.cpp" line="+90"/>
+        <location filename="../Antiqua/Widgets/yearedit.cpp" line="+101"/>
         <source>A valid Year must set!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2920,12 +3053,12 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+187"/>
+        <location filename="../application.cpp" line="+179"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+74"/>
+        <location line="+67"/>
         <source>No Networkconnection found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2975,7 +3108,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Cachefiles completed ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2985,7 +3118,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+30"/>
         <source>Open AntiquaCRM application ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4673,6 +4806,24 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
+    <name>ChangeOrderCustomerDialog</name>
+    <message>
+        <location filename="../tabs/orders/changeordercustomerdialog.cpp" line="+8"/>
+        <source>Change Customer for Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Understood</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;Why is it a bad idea, to change customer data in existing orders?&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But exactly here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>CompanyDialog</name>
     <message>
         <location filename="../utils/company/companydialog.cpp" line="+14"/>
@@ -5186,142 +5337,9 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
 </context>
 <context>
-    <name>CustomersData</name>
-    <message>
-        <location filename="../tabs/customers/customersdata.cpp" line="+13"/>
-        <source>Contact data</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+13"/>
-        <source>Gender</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Title</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Firstname</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Lastname</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>c/o</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>take care of package</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+15"/>
-        <source>Postalcode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Country</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Country/State or Canton</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+14"/>
-        <source>Location</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Street</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Primary phone number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Secundary phone number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Primary mobile number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Secundary mobile number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>fax number</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Website</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Primary eMail Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Secundary eMail Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Company, Institute or Organisation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+8"/>
-        <source>Employer</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+9"/>
-        <source>Generate Address with given Dataset.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Generate Invoice address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+7"/>
-        <source>Invoice Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
-        <source>Delivery Address</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>CustomersEditor</name>
     <message>
-        <location filename="../tabs/customers/customerseditor.cpp" line="+18"/>
+        <location filename="../tabs/customers/customerseditor.cpp" line="+17"/>
         <source>Edit Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5331,17 +5349,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+41"/>
+        <location line="+40"/>
         <source>Create Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+110"/>
         <source>Customer saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>Missing Customer-Id for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5351,7 +5369,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+164"/>
+        <location line="+155"/>
         <source>Send eMail finished!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6255,7 +6273,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+28"/>
         <source>merge data</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6767,7 +6785,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersCustomerInfo</name>
     <message>
-        <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+20"/>
+        <location filename="../tabs/orders/orderscustomerinfo.cpp" line="+25"/>
         <source>Customer Number</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6779,6 +6797,19 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+6"/>
         <source>Delivery Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrdersCustomerToolBar</name>
+    <message>
+        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+28"/>
+        <source>View customer data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Change customer to order</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -8148,7 +8179,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>ReportsIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/reports/reportsindex.cpp" line="+49"/>
+        <location filename="../plugins/antiquacrm/tabs/reports/reportsindex.cpp" line="+48"/>
         <source>report</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8158,12 +8189,12 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+61"/>
+        <location line="+65"/>
         <source>Report saved: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Reports</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8242,7 +8273,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>Report for „%1 %2“, total %3.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8493,7 +8524,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+28"/>
+        <location line="+29"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8588,6 +8619,14 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <message>
         <location filename="../plugins/antiquacrm/tabs/statistics/soldcountchart.cpp" line="+52"/>
         <source>Sold in %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>SplashScreen</name>
+    <message>
+        <location filename="../splashscreen.cpp" line="+14"/>
+        <source>Application initialization ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

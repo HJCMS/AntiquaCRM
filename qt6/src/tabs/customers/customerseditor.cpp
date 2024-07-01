@@ -3,7 +3,6 @@
 
 #include "customerseditor.h"
 #include "customersconfig.h"
-#include "customersdata.h"
 #include "customersfinancial.h"
 #include "customersorders.h"
 
@@ -49,7 +48,7 @@ CustomersEditor::CustomersEditor(QWidget* parent)
   // Begin::row2 {
   m_tabWidget = new AntiquaCRM::TabsWidget(this);
   m_tabWidget->setObjectName("customers_data_tab");
-  m_dataWidget = new CustomersData(m_tabWidget);
+  m_dataWidget = new AntiquaCRM::CustomersDataWidget(m_tabWidget);
   // Adressdaten
   m_tabWidget->insertTab(0, m_dataWidget, m_dataWidget->windowIcon(), m_dataWidget->windowTitle());
   // Finanzdaten
@@ -412,11 +411,11 @@ void CustomersEditor::setRestore() {
   importSqlResult();
 }
 
-bool CustomersEditor::openEditEntry(qint64 articleId) {
-  if (articleId < 1)
+bool CustomersEditor::openEditEntry(qint64 id) {
+  if (id < 1)
     return false;
 
-  QString _cid = QString::number(articleId);
+  QString _cid = QString::number(id);
   if (_cid.isEmpty())
     return false;
 
@@ -450,6 +449,8 @@ bool CustomersEditor::openEditEntry(qint64 articleId) {
     // Die aktuelle Abfolge ist Identisch mit setRestore!
     setRestore();
 
+    m_dataWidget->setCustomerId(id);
+
     QString _co = m_tableData->getValue("c_country").toString();
     if (_co.length() > 3)
       m_dataWidget->setCountry(_co);
@@ -479,6 +480,7 @@ bool CustomersEditor::createNewEntry() {
 
 bool CustomersEditor::createCustomEntry(const QJsonObject& object) {
   qDebug() << Q_FUNC_INFO << "TODO" << object;
+  // m_dataWidget->setCustomerId(cid);
   // "ACTION", "open_customer");
   // "TARGET", "customers_tab");
   // "CUSTOMER", _cid);

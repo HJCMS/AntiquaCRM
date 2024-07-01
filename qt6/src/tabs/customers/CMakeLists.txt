@@ -15,7 +15,6 @@ INCLUDE_DIRECTORIES (
 SET (plugin_HEADERS
   customersconfig.h
   customerseditor.h
-  customersdata.h
   customersfinancial.h
   customerssearchbar.h
   customersselectfilter.h
@@ -31,7 +30,6 @@ SET (plugin_HEADERS
 
 SET (plugin_SOURCES
   customerseditor.cpp
-  customersdata.cpp
   customersfinancial.cpp
   customerssearchbar.cpp
   customersselectfilter.cpp

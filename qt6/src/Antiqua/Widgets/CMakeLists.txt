@@ -74,6 +74,7 @@ SET (_library_SOURCES
   conditionedit.cpp
   configgridlayout.cpp
   crowdedit.cpp
+  customersdatawidget.cpp
   datetimeinfo.cpp
   descripeeditor.cpp
   genderedit.cpp
@@ -142,6 +143,7 @@ SET (_library_HEADERS
   conditionedit.h
   configgridlayout.h
   crowdedit.h
+  customersdatawidget.h
   datetimeinfo.h
   descripeeditor.h
   genderedit.h

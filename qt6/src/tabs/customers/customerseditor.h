@@ -14,7 +14,6 @@
 #include <QLabel>
 #include <QObject>
 
-class CustomersData;
 class CustomersFinancial;
 class CustomersOrders;
 
@@ -37,7 +36,7 @@ private:
   AntiquaCRM::DateTimeInfo *c_changed;
 
   AntiquaCRM::TabsWidget *m_tabWidget;
-  CustomersData *m_dataWidget;
+  AntiquaCRM::CustomersDataWidget *m_dataWidget;
   CustomersFinancial *m_financialData;
   CustomersOrders *m_ordersTable;
 
@@ -174,10 +173,10 @@ public:
 
   /**
    * @brief Open Edit Book with Article Number
-   * @param articleId - Existing Article number
+   * @param id - Existing Article number
    * @return true on success otherwise false
    */
-  bool openEditEntry(qint64 articleId) override;
+  bool openEditEntry(qint64 id) override;
 
   /**
    * @brief Open Editor with default Completers

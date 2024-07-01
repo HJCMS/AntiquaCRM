@@ -10,22 +10,63 @@
 #define ANTIQUACRM_PLUGIN_CHANGEORDERCUSTOMERDIALOG_H
 
 #include <AntiquaWidgets>
-#include <QStackedWidget>
 #include <QLabel>
+#include <QStackedWidget>
 
+class ChangeCustomerFind;
+
+/**
+ * @brief Change orders customers data dialog
+ */
 class ChangeOrderCustomerDialog final : public AntiquaCRM::ADialog {
   Q_OBJECT
 
 private:
+  qint64 origin_customer_id = -1;
   QStackedWidget* m_mainWidget;
-  QLabel* warnPage() const;
+  ChangeCustomerFind* m_findCustomer;
+  AntiquaCRM::CustomersDataWidget* m_dataWidget;
+
+  /**
+   * @brief prevent invalid dialog calls
+   */
+  int exec() override;
+
+  /**
+   * @brief Label with some hints for start page
+   */
+  QLabel* getPage0() const;
 
 private Q_SLOTS:
-  void confirmd();
+  /**
+   * @brief __TODO__
+   */
+  void setPage1();
+
+  /**
+   * @brief __TODO__
+   */
+  void setPage2();
+
+  /**
+   * @brief __TODO__
+   */
+  void setPage3();
+
+  /**
+   * @brief Checking, save and quit this dialog.
+   */
+  void apply();
 
 public:
   explicit ChangeOrderCustomerDialog(QWidget* parent = nullptr);
-  QDialog::DialogCode start(qint64 id);
+
+  /**
+   * @brief open dialog
+   * @param customerId
+   * @note This is a overload function to exec()
+   */
+  QDialog::DialogCode start(qint64 customerId);
 };
 
 #endif // ANTIQUACRM_PLUGIN_CHANGEORDERCUSTOMERDIALOG_H

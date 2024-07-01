@@ -20,6 +20,7 @@ SET (plugin_HEADERS
 ADD_LIBRARY (${_pluginTarget} STATIC
   ${plugin_HEADERS}
   changeordercustomerdialog.h changeordercustomerdialog.cpp
+  changecustomerfind.h changecustomerfind.cpp
   orderarticledialog.h orderarticledialog.cpp
   ordersconfigwidget.h ordersconfigwidget.cpp
   orderscostsettings.h orderscostsettings.cpp

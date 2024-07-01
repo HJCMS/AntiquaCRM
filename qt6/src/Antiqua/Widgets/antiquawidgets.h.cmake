@@ -162,5 +162,8 @@
 // AntiquaCRM::YearEdit
 #include "yearedit.h"
 
+// AntiquaCRM::CustomersDataWidget
+#include "customersdatawidget.h"
+
 #endif
 // EOF
