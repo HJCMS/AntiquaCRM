@@ -6,14 +6,15 @@
 #include <QMessageBox>
 #include <QStatusTipEvent>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ADialog::ADialog(QWidget *parent) : QDialog{parent} {
+ADialog::ADialog(QWidget* parent) : QDialog{parent} {
   setSizeGripEnabled(true);
   setMinimumSize(450, 450);
   setContentsMargins(5, 2, 5, 0);
 
-  QVBoxLayout *mLayout = new QVBoxLayout(this);
+  QVBoxLayout* mLayout = new QVBoxLayout(this);
   mLayout->setContentsMargins(0, 0, 0, 0);
 
   layout = new QBoxLayout(QBoxLayout::TopToBottom);
@@ -38,9 +39,9 @@ ADialog::ADialog(QWidget *parent) : QDialog{parent} {
   setLayout(mLayout);
 }
 
-bool ADialog::eventFilter(QObject *obj, QEvent *event) {
+bool ADialog::eventFilter(QObject* obj, QEvent* event) {
   if (event->type() == QEvent::ModifiedChange) {
-    QWidget *m_sw = qobject_cast<QWidget *>(obj);
+    QWidget* m_sw = qobject_cast<QWidget*>(obj);
     if (m_sw != nullptr) {
       setWindowModified(m_sw->isWindowModified());
       return true;
@@ -49,26 +50,26 @@ bool ADialog::eventFilter(QObject *obj, QEvent *event) {
   return QDialog::eventFilter(obj, event);
 }
 
-void ADialog::keyPressEvent(QKeyEvent *event) {
+void ADialog::keyPressEvent(QKeyEvent* event) {
   if (event->key() == Qt::Key_Return || event->key() == Qt::Key_Enter)
     return;
 
   QDialog::keyPressEvent(event);
 }
 
-bool ADialog::event(QEvent *event) {
+bool ADialog::event(QEvent* event) {
   if (event->type() == QEvent::StatusTip) {
-    QStatusTipEvent *m_t = static_cast<QStatusTipEvent *>(event);
+    QStatusTipEvent* m_t = static_cast<QStatusTipEvent*>(event);
     if (m_t->tip().isEmpty())
       return false;
 
-    m_statusBar->showMessage(m_t->tip(), 1000);
+    statusBarMessage(m_t->tip());
     return true;
   }
   return QDialog::event(event);
 }
 
-void ADialog::closeEvent(QCloseEvent *event) {
+void ADialog::closeEvent(QCloseEvent* event) {
   if (event->type() == QEvent::Close) {
     if (isWindowModified()) {
       event->setAccepted(false);
@@ -80,6 +81,10 @@ void ADialog::closeEvent(QCloseEvent *event) {
     }
   }
   QDialog::closeEvent(event);
+}
+
+void ADialog::statusBarMessage(const QString& message, int timeout) {
+  m_statusBar->showMessage(message, (timeout * 1000));
 }
 
 } // namespace AntiquaCRM

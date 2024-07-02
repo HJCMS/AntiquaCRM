@@ -39,22 +39,17 @@ private:
 
 private Q_SLOTS:
   /**
-   * @brief __TODO__
+   * @brief Search customer for change order
    */
   void setPage1();
 
   /**
-   * @brief __TODO__
+   * @brief View customer data and confirm.
    */
-  void setPage2();
+  void setPage2(qint64);
 
   /**
-   * @brief __TODO__
-   */
-  void setPage3();
-
-  /**
-   * @brief Checking, save and quit this dialog.
+   * @brief Check current selection, then commit sql and quit on success.
    */
   void apply();
 

@@ -21,7 +21,8 @@
 #include <QStatusBar>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class ADialog
@@ -43,7 +44,7 @@ protected:
    * m_widget->installEventFilter(this);
    * @endcode
    */
-  virtual bool eventFilter(QObject *, QEvent *) override final;
+  virtual bool eventFilter(QObject*, QEvent*) override final;
 
   /**
    * @brief Layout for sub classing
@@ -52,12 +53,12 @@ protected:
    *
    * @note The Main Layout is a privat QBoxLayout
    */
-  QBoxLayout *layout;
+  QBoxLayout* layout;
 
   /**
    * @brief Default ButtonsBar
    */
-  QDialogButtonBox *m_buttonsBar;
+  QDialogButtonBox* m_buttonsBar;
 
   /**
    * @brief Close button without signal processing.
@@ -69,19 +70,19 @@ protected:
   /**
    * @brief Default StatusBar
    */
-  QStatusBar *m_statusBar;
+  QStatusBar* m_statusBar;
 
   /**
    * @brief Catching key press enter or key return events.
    *
    * Preventing accept/close request by keyboard modifiers.
    */
-  virtual void keyPressEvent(QKeyEvent *) override;
+  virtual void keyPressEvent(QKeyEvent*) override;
 
   /**
    * @brief Sending all Widget Status Tips to StatusBar.
    */
-  virtual bool event(QEvent *) override;
+  virtual bool event(QEvent*) override;
 
   /**
    * @brief Handle unsaved changes ...
@@ -90,13 +91,20 @@ protected:
    * Checking if isWindowModified() returning a positive response,
    * on true it will open a QMessageBox with asking for save operation.
    */
-  virtual void closeEvent(QCloseEvent *) override;
+  virtual void closeEvent(QCloseEvent*) override;
+
+public Q_SLOTS:
+  /**
+   * @brief Show status messages ind Statusbar
+   * @param timeout - Seconds is used, default: 10 seconds.
+   */
+  void statusBarMessage(const QString&, int timeout = 10);
 
 public:
   /**
    * @param parent - parent widget
    */
-  explicit ADialog(QWidget *parent = nullptr);
+  explicit ADialog(QWidget* parent = nullptr);
 };
 
 } // namespace AntiquaCRM

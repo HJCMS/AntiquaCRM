@@ -28,10 +28,14 @@ ChangeOrderCustomerDialog::ChangeOrderCustomerDialog(QWidget* parent)
 
   m_mainWidget->setCurrentIndex(0);
 
+  btn_apply->setToolTip(tr("Select customer first!"));
+
   // signals
   connect(btn_next, SIGNAL(clicked()), SLOT(setPage1()));
   connect(btn_apply, SIGNAL(clicked()), SLOT(apply()));
   connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
+  connect(m_findCustomer, SIGNAL(sendCustomerSelected(qint64)), SLOT(setPage2(qint64)));
+  connect(m_findCustomer, SIGNAL(sendNotification(QString)), SLOT(statusBarMessage(QString)));
 }
 
 QLabel* ChangeOrderCustomerDialog::getPage0() const {
@@ -64,20 +68,23 @@ int ChangeOrderCustomerDialog::exec() {
 
 void ChangeOrderCustomerDialog::setPage1() {
   m_mainWidget->setCurrentIndex(1);
-  // m_dataWidget->loadCostumerData(origin_customer_id);
 }
 
-void ChangeOrderCustomerDialog::setPage2() {
-  m_mainWidget->setCurrentIndex(2);
-  m_dataWidget->loadCostumerData();
-}
+void ChangeOrderCustomerDialog::setPage2(qint64 cid) {
+  if (cid < 1)
+    return;
 
-void ChangeOrderCustomerDialog::setPage3() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  if (m_dataWidget->loadCostumerData(cid)) {
+    m_mainWidget->setCurrentIndex(2);
+    btn_apply->setToolTip(tr("Apply to this customer!"));
+    btn_apply->setEnabled(true);
+  } else {
+    statusBarMessage(tr("Can not find customer data with this id!"));
+  }
 }
 
 void ChangeOrderCustomerDialog::apply() {
-  qDebug() << Q_FUNC_INFO << "TODO";
+  qDebug() << Q_FUNC_INFO << m_dataWidget->getCustomerId();
 }
 
 QDialog::DialogCode ChangeOrderCustomerDialog::start(qint64 customerId) {

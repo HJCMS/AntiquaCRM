@@ -203,9 +203,7 @@ CustomersDataWidget::CustomersDataWidget(QWidget* parent) : QWidget{parent} {
 void CustomersDataWidget::setDataField(const QString& name, const QVariant& data) {
   AntiquaCRM::AInputWidget* m_w = findChild<AntiquaCRM::AInputWidget*>(name);
   if (m_w != nullptr) {
-#ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << Q_FUNC_INFO << name << data;
-#endif
+    // qDebug() << Q_FUNC_INFO << name << data;
     m_w->setValue(data);
   }
 }
@@ -288,15 +286,20 @@ qint64 CustomersDataWidget::getCustomerId() {
   return customerId;
 }
 
-bool CustomersDataWidget::loadCostumerData() {
+bool CustomersDataWidget::loadCostumerData(qint64 cid) {
+  bool _status = false;
+  if (cid > 0) {
+    customerId = cid;
+  }
+
   if (customerId < 1) {
     qWarning("CustomerId is not set!");
-    return false;
+    return _status;
   }
 
   QString _scid = QString::number(customerId);
   if (_scid.isEmpty())
-    return false;
+    return _status;
 
   AntiquaCRM::ASqlCore* m_sql = new AntiquaCRM::ASqlCore(this);
   if (m_sql == nullptr)
@@ -311,13 +314,13 @@ bool CustomersDataWidget::loadCostumerData() {
   AntiquaCRM::ASqlFiles _tpl("query_customer_data");
   if (!_tpl.openTemplate()) {
     m_sql->deleteLater();
-    return false;
+    return _status;
   }
 
   _tpl.setWhereClause("c_id=" + _scid);
 
   QSqlQuery _q = m_sql->query(_tpl.getQueryContent());
-  if (_q.size() != 0) {
+  if (_q.size() > 0) {
     QSqlRecord _r = _q.record();
     _q.next();
 
@@ -326,10 +329,16 @@ bool CustomersDataWidget::loadCostumerData() {
       QVariant _value = _q.value(_name);
       setDataField(_name, _value);
     }
+
+    _status = true;
   }
 
+  QString _co = c_country->getValue().toString();
+  if (_co.length() > 3)
+    setCountry(_co);
+
   m_sql->deleteLater();
-  return true;
+  return _status;
 }
 
 void CustomersDataWidget::setCountry(const QString& country) {

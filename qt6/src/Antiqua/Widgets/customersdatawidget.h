@@ -111,13 +111,16 @@ public:
 
   /**
    * @brief load customer data with id
-   * @param cid - customer id can not empty!
-   * @warning Only call this function, if no customers data exists from parents!
-   * Normally this Class is a child from AntiquaCRM::TabsEditor classes.
+   * @param cid - customer id
    *
-   * @note This will create a sql connection from current environment.
+   * This will create a sql connection from current environment.
+   * If \i cid is null, the \b customerId property is used.
+   * When \b customerId is lower then 1 nothing will done.
+   *
+   * This function returning \b false, when \b customerId property is not set
+   * or no result exists!
    */
-  bool loadCostumerData();
+  bool loadCostumerData(qint64 cid = 0);
 
   /**
    * @brief Set country in PostalCode-Selecter and modify c_country if needed.

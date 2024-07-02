@@ -12,6 +12,7 @@
 #include <AntiquaWidgets>
 #include <QComboBox>
 #include <QLineEdit>
+#include <QModelIndex>
 #include <QTableWidget>
 
 class ANTIQUACRM_LIBRARY ChangeCustomerFind final : public QWidget {
@@ -26,10 +27,16 @@ private:
   QLabel* labelCell(const QString& txt);
 
 private Q_SLOTS:
+  void customerSelected(const QModelIndex&);
   void searchClicked();
+
+Q_SIGNALS:
+  void sendCustomerSelected(qint64);
+  void sendNotification(const QString&);
 
 public:
   explicit ChangeCustomerFind(QWidget* parent = nullptr);
+  ~ChangeCustomerFind();
 };
 
 #endif // ANTIQUACRM_PLUGIN_CHANGECUSTOMERFIND_H
