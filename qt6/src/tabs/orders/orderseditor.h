@@ -28,19 +28,19 @@ private:
   QStringList customInput;
 
   // Layout Row0
-  AntiquaCRM::SerialId *o_id;
-  AntiquaCRM::SerialId *o_invoice_id;
-  OrderStatusActionFrame *m_orderStatus;
+  AntiquaCRM::SerialId* o_id;
+  AntiquaCRM::SerialId* o_invoice_id;
+  OrderStatusActionFrame* m_orderStatus;
 
   // Layout Row1
-  OrdersCustomerInfo *m_customerInfo;
-  OrdersCostSettings *m_costSettings;
+  OrdersCustomerInfo* m_customerInfo;
+  OrdersCostSettings* m_costSettings;
 
   // Layout Row2
-  OrdersTableView *m_ordersTable;
+  OrdersTableView* m_ordersTable;
 
   // BEGIN:Row3
-  AntiquaCRM::TabsEditActionBar *m_actionBar;
+  AntiquaCRM::TabsEditActionBar* m_actionBar;
 
   /**
    * @brief Standardfelder setzen
@@ -50,7 +50,7 @@ private:
   /**
    * @brief Alle Editor Eingabefeld befüllen
    */
-  bool setDataField(const QSqlField &field, const QVariant &value) override;
+  bool setDataField(const QSqlField& field, const QVariant& value) override;
 
   /**
    * @brief Lese Daten von AntiquaCRM::ASqlDataQuery
@@ -71,7 +71,7 @@ private:
    *
    * @return bool - Wenn kein Fehler vorhanden gibt es true zurück.
    */
-  bool sendSqlQuery(const QString &query) override;
+  bool sendSqlQuery(const QString& query) override;
 
   /**
    * @brief Datensätze aus den Eingabefelder lesen.
@@ -122,7 +122,8 @@ private:
    * @brief Temporäre Klasse zum Prüfen der Identifikations Nummern.
    * Gleichzeitig ein Helfer die wichtigsten Id’s sofort abrufen zu können!
    */
-  struct Idset {
+  struct Idset
+  {
     bool isValid = false;      /**< Prüfergebnis */
     qint64 or_id = -1;         /**< Order Id */
     qint64 cu_id = -1;         /**< Customer Id */
@@ -179,16 +180,15 @@ private:
    * @param value - Sql column value
    * @see AntiquaCRM::AProviderOrder::createItem
    */
-  inline AntiquaCRM::ArticleOrderItem
-  addArticleItem(const QString &key, const QVariant &value) const;
+  inline AntiquaCRM::ArticleOrderItem addArticleItem(const QString& key,
+                                                     const QVariant& value) const;
 
   /**
    * @brief Artikel mit befüllten QSqlField einfügen
    * @param field - current value
    * @note contains oversize length protection
    */
-  inline AntiquaCRM::ArticleOrderItem
-  addArticleItem(const QSqlField &field) const;
+  inline AntiquaCRM::ArticleOrderItem addArticleItem(const QSqlField& field) const;
 
   /**
    * @brief Artikel in die Auftrags Tabelle einfügen!
@@ -232,7 +232,7 @@ private:
    * @endcode
    * @return c_id
    */
-  qint64 findCustomer(const QJsonObject &obj, qint64 cid = -1);
+  qint64 findCustomer(const QJsonObject& obj, qint64 cid = -1);
 
   /**
    * @brief Vorarbeiten für neuen Eintrag.
@@ -296,7 +296,7 @@ private Q_SLOTS:
    * @brief Dialog zum erstellen von E-Mail Nachrichten
    * @param caller - PgSQL::ui_template_body.tb_caller
    */
-  void createMailMessage(const QString &caller);
+  void createMailMessage(const QString& caller);
 
   /**
    * @brief Dialog zum erstellen und Drucken eines Lieferscheins
@@ -344,7 +344,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit OrdersEditor(QWidget *parent = nullptr);
+  explicit OrdersEditor(QWidget* parent = nullptr);
   virtual ~OrdersEditor() override;
 
   /**
@@ -379,6 +379,12 @@ public:
   bool createNewOrder(qint64 cid);
 
   /**
+   * @brief Changing this order to a new customer
+   * @ref OrdersCustomerToolBar::changeCustomer
+   */
+  bool changeOrderToCustomer(const QJsonObject& object);
+
+  /**
    * @brief Auftrag aus Json Objekt erstellen
    * @param object - Datenstruktur
    * @sa prepareCreateEntry
@@ -395,7 +401,7 @@ public:
    * die aktuelle Bestell-/Kunden- und Artikeldaten aus.
    * Fügt die ermittelten Daten in die Eingabefelder ein.
    */
-  bool createCustomEntry(const QJsonObject &object) override;
+  bool createCustomEntry(const QJsonObject& object) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_ORDERSEDIT_H

@@ -168,7 +168,7 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
   }
 
 #ifdef ANTIQUA_DEVELOPMENT
-  qDebug() << Q_FUNC_INFO << "REJECT" << _index << name << data;
+  qDebug() << Q_FUNC_INFO << "REJECTED" << _index << name << data;
 #endif
 }
 

@@ -57,22 +57,23 @@ void OrdersCustomerToolBar::openCustomer() {
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(_obj))
     m_sock->close();
-
-#ifdef ANTIQUA_DEVELOPMENT
-  qDebug() << Q_FUNC_INFO << _obj;
-#endif
 }
 
 void OrdersCustomerToolBar::changeCustomer() {
-  qint64 _cid = customerId();
+  ChangeOrderCustomerDialog* m_d = new ChangeOrderCustomerDialog(this);
+  qint64 _cid = m_d->start(customerId());
   if (_cid < 1)
     return;
 
-  ChangeOrderCustomerDialog* m_d = new ChangeOrderCustomerDialog(this);
-  if (m_d->start(_cid) != QDialog::Accepted)
-    return;
+  QJsonObject _obj;
+  _obj.insert("ACTION", "change_customer");
+  _obj.insert("TARGET", "orders_tab");
+  _obj.insert("VALUE", _cid);
 
-  qDebug() << Q_FUNC_INFO << "TODO";
+  AntiquaCRM::ATransmitter* m_sock = new AntiquaCRM::ATransmitter(this);
+  connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
+  if (m_sock->pushOperation(_obj))
+    m_sock->close();
 }
 
 void OrdersCustomerToolBar::addEditWidget(AntiquaCRM::SerialId* widget) {

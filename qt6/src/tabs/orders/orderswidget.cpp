@@ -12,14 +12,14 @@
 #include <QDate>
 #include <QtWidgets>
 
-OrdersWidget::OrdersWidget(QWidget *parent)
+OrdersWidget::OrdersWidget(QWidget* parent)
     : AntiquaCRM::TabsIndex{ORDERS_INTERFACE_TABID, parent} {
   setObjectName("orders_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("view-financial-transfer"));
   setClosable(false);
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
-  QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);
+  QVBoxLayout* m_p1Layout = new QVBoxLayout(m_mainPage);
   m_p1Layout->setContentsMargins(0, 0, 0, 0);
 
   m_searchBar = new OrdersSearchBar(m_mainPage);
@@ -49,27 +49,25 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   setCurrentIndex(ViewPage::MainView);
 
   // Signals::OrdersSearchBar
-  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
-          SLOT(setSearchFocus()));
-  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
-          SLOT(setFilterFocus()));
+  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
+  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
+  connect(m_searchBar, SIGNAL(sendNotify(const QString&)), m_statusBar,
+          SLOT(showMessage(const QString&)));
 
   // Signals::OrdersTableView
-  connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
+  connect(m_table, SIGNAL(sendQueryReport(const QString&)), m_statusBar,
+          SLOT(showMessage(const QString&)));
 
-  connect(m_table, SIGNAL(sendCopyToClibboard(const QString &)),
-          SLOT(copyToClipboard(const QString &)));
+  connect(m_table, SIGNAL(sendCopyToClibboard(const QString&)),
+          SLOT(copyToClipboard(const QString&)));
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
-  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
-          SLOT(sendSocketOperation(const QJsonObject &)));
+  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject&)),
+          SLOT(sendSocketOperation(const QJsonObject&)));
 
   connect(m_table, SIGNAL(sendStartRefund(qint64)), SLOT(refundEntry(qint64)));
 
@@ -77,11 +75,10 @@ OrdersWidget::OrdersWidget(QWidget *parent)
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
   // Signals::OrdersStatusBar
-  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
-          SLOT(createSearchQuery(const QString &)));
+  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString&)),
+          SLOT(createSearchQuery(const QString&)));
   connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
-  connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
-          SLOT(setReloadView()));
+  connect(m_statusBar, SIGNAL(sendReloadView()), m_table, SLOT(setReloadView()));
 }
 
 bool OrdersWidget::firstStartOnWorkday() {
@@ -92,7 +89,7 @@ bool OrdersWidget::firstStartOnWorkday() {
 
   AntiquaCRM::ASettings cfg(this);
   if (cfg.value("lastWorkDay", _pd).toDate() == _cd)
-      return false; // nothing todo
+    return false; // nothing todo
 
   QString _sql("(");
   _sql.append(m_table->defaultWhereClause());
@@ -117,7 +114,7 @@ void OrdersWidget::openStartPage() {
   setCurrentIndex(ViewPage::MainView);
 }
 
-void OrdersWidget::createSearchQuery(const QString &history) {
+void OrdersWidget::createSearchQuery(const QString& history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
     m_statusBar->startProgress();
@@ -181,9 +178,11 @@ void OrdersWidget::onEnterChanged() {
     m_table->setReloadView();
 }
 
-const QString OrdersWidget::getTitle() const { return tr("Orders"); }
+const QString OrdersWidget::getTitle() const {
+  return tr("Orders");
+}
 
-bool OrdersWidget::customAction(const QJsonObject &obj) {
+bool OrdersWidget::customAction(const QJsonObject& obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 
@@ -198,13 +197,15 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
     // Add Article to opened order
     if (_action == "add_article") {
       qint64 _aid = obj.value("VALUE").toInt();
-      if (m_editorWidget->addArticle(_aid))
-        return true;
+      return m_editorWidget->addArticle(_aid);
+    } else if (_action == "change_customer") {
+      return m_editorWidget->changeOrderToCustomer(obj);
     }
     // if editor is already opened!
     openWarningPopUpPageIndex(windowTitle());
     return false;
   }
+
   // operations that needs the main view
   if (_action == "open_order") {
     // Open Order
@@ -243,6 +244,7 @@ bool OrdersWidget::customAction(const QJsonObject &obj) {
 const QStringList OrdersWidget::acceptsCustomActions() const {
   return QStringList({"add_article",  /**< Add Article to opened tab */
                       "open_order",   /**< Open Order */
-                      "create_order", /**< Craete new empty order */
-                      "import_order"});
+                      "create_order", /**< Create new empty order */
+                      "import_order", /**< Import order from Provider */
+                      "change_customer"});
 }

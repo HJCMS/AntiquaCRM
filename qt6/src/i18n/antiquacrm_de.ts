@@ -234,7 +234,7 @@
 <context>
     <name>AntiquaCRM::ADialog</name>
     <message>
-        <location filename="../Antiqua/Widgets/adialog.cpp" line="+24"/>
+        <location filename="../Antiqua/Widgets/adialog.cpp" line="+25"/>
         <source>Close without saving</source>
         <translation>Schließen ohne speichern</translation>
     </message>
@@ -4831,21 +4831,171 @@ Bild – Artikel-ID: %2</translation>
     </message>
 </context>
 <context>
-    <name>ChangeOrderCustomerDialog</name>
+    <name>ChangeCustomerFind</name>
     <message>
-        <location filename="../tabs/orders/changeordercustomerdialog.cpp" line="+8"/>
-        <source>Change Customer for Order</source>
-        <translation>Kunde für Bestellung ändern</translation>
+        <location filename="../tabs/orders/changecustomerfind.cpp" line="+45"/>
+        <source>Full name</source>
+        <translation>Vollständiger Name</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+3"/>
+        <source>Search for first and second name.</source>
+        <translation>Suche nach Vor- und Nachnamen.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Name of company</source>
+        <translation>Firmenname</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Forename</source>
+        <translation>Vorname</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Surname</source>
+        <translation>Nachname</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Customer ID</source>
+        <translation>Kundennummer</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider imported name</source>
+        <translation>Vom Anbieter importierter Name</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+3"/>
+        <source>Search</source>
+        <translation>Suche</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Push to start search.</source>
+        <translation>Drücken, um die Suche zu starten.</translation>
+    </message>
+    <message>
+        <location line="+87"/>
+        <source>Nothing found.</source>
+        <translation>Nichts gefunden.</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeCustomerTable</name>
+    <message>
+        <location line="-147"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Organisation</source>
+        <translation>Organisation</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Fullname</source>
+        <translation>Vollständiger Name</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Imported name</source>
+        <translation>Importierter Name</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Address info</source>
+        <translation>Adressinfo</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>For preview, double click on listed items.</source>
+        <translation>Doppelklicken auf gelistete Elemente zeigt Vorschau an.</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeCustomerWidget</name>
+    <message>
+        <location filename="../tabs/orders/changecustomerwidget.cpp" line="+17"/>
+        <source>Change to Customer Id</source>
+        <translation>Änderung der Kunden-ID</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Full name</source>
+        <translation>Vollständiger Name</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Identified by Providerimport</source>
+        <translation>Indexsiert durch Dienstleister</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Imported unique user name from the service provider. This is compared by the AntiquaCRM server with other parameters such as postcode, city, first and last name in order to find existing customers in the database.</source>
+        <translation>Importierter eindeutiger Benutzername vom Dienstleister. Dieser wird vom AntiquaCRM-Server mit weiteren Parametern wie PLZ, Ort, Vor- und Nachname verglichen, um bestehende Kunden in der Datenbank zu finden.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Invoice Address</source>
+        <translation>Rechnungsanschrift</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivery Address</source>
+        <translation>Lieferadresse</translation>
+    </message>
+</context>
+<context>
+    <name>ChangeOrderCustomerDialog</name>
+    <message>
+        <location filename="../tabs/orders/changeordercustomerdialog.cpp" line="+27"/>
         <source>Understood</source>
         <translation>Verstanden</translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;Why is it a bad idea, to change customer data in existing orders?&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But exactly here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;</source>
-        <translation>&lt;h4&gt;Wichtiger Hinweis zu dieser Funktion.&lt;/h4&gt;Warum ist es keine gute Idee, Kundendaten in bestehenden Bestellungen zu ändern?&lt;p&gt;Kundendaten sind in den Bestellungen der Anbieter enthalten und werden mit den Kundendaten von Antiqua CRM synchronisiert.&lt;/p&gt;&lt;p&gt;Aber genau hier liegt ein Problem vor, wenn es mehrere Dienstleister gibt, deren Kundendaten mit denen von AntiquaCRM kollidieren.&lt;/p&gt;&lt;p&gt;Nur wenn dieses Problem besteht, hilft diese Funktion, es zu beheben.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Bitte beachten Sie, was passiert, wenn sich der Kunde ändert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Bestellungen kann zu asynchronen Daten des Dienstleisters führen.&lt;li&gt;&lt;li&gt;Alle Indizes für diese Bestellung werden geändert.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferungen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;</translation>
+        <location line="+22"/>
+        <source>Change Customer</source>
+        <translation>Kunde ändern</translation>
+    </message>
+    <message>
+        <location line="-37"/>
+        <source>Change Customer for this Order</source>
+        <translation>Kunde für diese Bestellung ändern</translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>&lt;div&gt;&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;&lt;p&gt;Why is it a bad idea, to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But sometimes here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;/li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
+        <translation>&lt;div&gt;&lt;h4&gt;Wichtiger Hinweis zu dieser Funktion.&lt;/h4&gt;&lt;p&gt;Warum ist es keine gute Idee, Kundendaten in bestehenden Bestellungen zu ändern?&lt;/p&gt;&lt;p&gt;Kundendaten sind in den Bestellungen der Anbieter enthalten und werden mit den Kundendaten von Antiqua CRM synchronisiert.&lt;/p&gt;&lt;p&gt;Manchmal gibt es jedoch ein Problem, wenn es mehrere Dienstanbieter gibt, deren Kundendaten mit denen von AntiquaCRM kollidieren.&lt;/p&gt;&lt;p&gt;Nur wenn dieses Problem besteht, hilft diese Funktion, es zu beheben.&lt;/p&gt;&lt;b&gt;Bitte beachten Sie, was bei einer Kundenänderung passiert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Bestellungen kann zu asynchronen Daten des Dienstanbieters führen.&lt;/li&gt;&lt;li&gt;Alle Indizes für diese Bestellung werden geändert.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferungen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Apply to this customer!</source>
+        <translation>Auf diesen Kunden annwenden!</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Can not find customer data with this id!</source>
+        <translation>Kundendaten mit dieser ID nicht gefunden!</translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Change Customer to order.</source>
+        <translation>Kunde für Auftrag ändern.</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last question before a new customer is assigned to this order.</source>
+        <translation>Letzte Frage, bevor dieser Bestellung ein Neukunde zugewiesen wird.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Press ”Ok” to change customer to this order.</source>
+        <translation>Drücken Sie ”Ok”, um den Kunden für diese Bestellung zu ändern.</translation>
     </message>
 </context>
 <context>

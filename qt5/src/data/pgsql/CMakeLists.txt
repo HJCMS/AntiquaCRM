@@ -18,6 +18,7 @@ SET (query_tables_FILES
   query_customer_from_order.sql
   query_customer_new_order.sql
   query_customer_orders_status.sql
+  query_customer_overview.sql
   query_customer_recipient_address.sql
   query_default_delivery_service.sql
   query_designation_edit.sql

@@ -3,53 +3,72 @@
 
 #include "changeordercustomerdialog.h"
 #include "changecustomerfind.h"
+#include "changecustomerwidget.h"
+
+#include <QMessageBox>
 
 ChangeOrderCustomerDialog::ChangeOrderCustomerDialog(QWidget* parent)
     : AntiquaCRM::ADialog{parent} {
-  setWindowTitle(tr("Change Customer for Order"));
-  setMinimumWidth(600);
+  setWindowTitle(tr("Change Customer for this Order"));
+  setMinimumSize(600, 450);
+
   m_mainWidget = new QStackedWidget(this);
+  m_mainWidget->setContentsMargins(0, 0, 0, 0);
   layout->addWidget(m_mainWidget);
 
+  const QMargins layoutMargins(0, 0, 0, 0);
+
+  // BEGIN:Page1
   QWidget* m_page1 = new QWidget(m_mainWidget);
+  m_page1->setContentsMargins(0, 0, 0, 0);
   QVBoxLayout* m_page1Layout = new QVBoxLayout(m_page1);
+  m_page1Layout->setContentsMargins(layoutMargins);
   m_page1Layout->addWidget(getPage0());
   QPushButton* btn_next = new QPushButton(tr("Understood"), m_page1);
   btn_next->setIcon(AntiquaCRM::antiquaIcon("dialog-ok"));
   m_page1Layout->addWidget(btn_next);
   m_page1->setLayout(m_page1Layout);
   m_mainWidget->insertWidget(0, m_page1);
+  // END:Page1
 
-  m_findCustomer = new ChangeCustomerFind(m_mainWidget);
-  m_mainWidget->insertWidget(1, m_findCustomer);
-
-  m_dataWidget = new AntiquaCRM::CustomersDataWidget(m_mainWidget);
-  m_mainWidget->insertWidget(2, m_dataWidget);
+  // BEGIN:Page2
+  QWidget* m_page2 = new QWidget(m_mainWidget);
+  m_page2->setContentsMargins(0, 0, 0, 0);
+  QVBoxLayout* m_page2Layout = new QVBoxLayout(m_page2);
+  m_page2Layout->setContentsMargins(layoutMargins);
+  m_findCustomer = new ChangeCustomerFind(m_page2);
+  m_page2Layout->addWidget(m_findCustomer);
+  m_dataWidget = new ChangeCustomerWidget(m_page2);
+  m_page2Layout->addWidget(m_dataWidget);
+  m_page2->setLayout(m_page2Layout);
+  m_mainWidget->insertWidget(1, m_page2);
+  // END:Page2
 
   m_mainWidget->setCurrentIndex(0);
 
-  btn_apply->setToolTip(tr("Select customer first!"));
+  btn_apply->setText(tr("Change Customer"));
+  btn_apply->setToolTip(windowTitle());
 
   // signals
   connect(btn_next, SIGNAL(clicked()), SLOT(setPage1()));
   connect(btn_apply, SIGNAL(clicked()), SLOT(apply()));
-  connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
+  connect(btn_reject, SIGNAL(clicked()), SLOT(close()));
   connect(m_findCustomer, SIGNAL(sendCustomerSelected(qint64)), SLOT(setPage2(qint64)));
   connect(m_findCustomer, SIGNAL(sendNotification(QString)), SLOT(statusBarMessage(QString)));
 }
 
 QLabel* ChangeOrderCustomerDialog::getPage0() const {
   QString _txt;
-  _txt += tr(
-      "<h4>Important Warning about this function.</h4>"
-      "Why is it a bad idea, to change customer data in existing orders?<p>Customer data included "
-      "in provider orders and wil synchronized by Antiqua CRM Customers data.</p><p>But "
-      "exactly here is a problem, when there are several service providers whose customer data "
-      "collides with that of AntiquaCRM.</p><p>Only when this problem exist, this function will "
-      "help to fix it.</p><p><b>Please aware what will done when Customer "
-      "changed:</b><ul><li>Change customer data in orders may result in service provider "
-      "asynchronous data.<li><li>All Indexes for this order will changed.</li><li>Existing Address "
-      "data in invoices and deliveries go broken and must regenerated.</li></ul>");
+  _txt +=
+      tr("<div><h4>Important Warning about this function.</h4><p>Why is it a bad idea, to change "
+         "customer data in existing orders.</p><p>Customer data included in provider orders and "
+         "wil synchronized by Antiqua CRM Customers data.</p><p>But sometimes here is a problem, "
+         "when there are several service providers whose customer data collides with that of "
+         "AntiquaCRM.</p><p>Only when this problem exist, this function will help to fix "
+         "it.</p><b>Please aware what will done when Customer changed:</b><ul><li>Change customer "
+         "data in orders may result in service provider asynchronous data.</li><li>All Indexes for "
+         "this order will changed.</li><li>Existing Address data in invoices and deliveries go "
+         "broken and must regenerated.</li></ul></div>");
 
   QString _css("QLabel {background: transparent; border:none;}");
   QLabel* m_lb = new QLabel(m_mainWidget);
@@ -84,14 +103,32 @@ void ChangeOrderCustomerDialog::setPage2(qint64 cid) {
 }
 
 void ChangeOrderCustomerDialog::apply() {
-  qDebug() << Q_FUNC_INFO << m_dataWidget->getCustomerId();
+  QMessageBox* m_ask = new QMessageBox(this);
+  m_ask->setWindowTitle(tr("Change Customer to order."));
+  m_ask->setStandardButtons(QMessageBox::Ok | QMessageBox::Cancel);
+  m_ask->setDefaultButton(QMessageBox::Cancel);
+  m_ask->setEscapeButton(QMessageBox::Cancel);
+
+  QString _txt = tr("Last question before a new customer is assigned to this order.");
+  _txt.append("<br>");
+  _txt.append(tr("Press ”Ok” to change customer to this order."));
+  m_ask->setText(_txt);
+
+  if (m_ask->exec() == QMessageBox::Ok)
+    done(QDialog::Accepted);
 }
 
-QDialog::DialogCode ChangeOrderCustomerDialog::start(qint64 customerId) {
-  if (customerId < 1)
+void ChangeOrderCustomerDialog::close() {
+  done(QDialog::Rejected);
+}
+
+qint64 ChangeOrderCustomerDialog::start(qint64 cid) {
+  if (cid < 1)
     return QDialog::Rejected;
 
-  origin_customer_id = customerId;
-  m_dataWidget->setCustomerId(customerId);
-  return static_cast<QDialog::DialogCode>(exec());
+  m_dataWidget->setCustomerId(cid);
+  if (exec() == QDialog::Accepted)
+    return m_dataWidget->getCustomerId();
+
+  return cid;
 }

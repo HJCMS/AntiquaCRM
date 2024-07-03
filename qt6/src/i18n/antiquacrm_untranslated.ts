@@ -234,7 +234,7 @@
 <context>
     <name>AntiquaCRM::ADialog</name>
     <message>
-        <location filename="../Antiqua/Widgets/adialog.cpp" line="+24"/>
+        <location filename="../Antiqua/Widgets/adialog.cpp" line="+25"/>
         <source>Close without saving</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4806,20 +4806,170 @@ Image - Article Id: %2</source>
     </message>
 </context>
 <context>
-    <name>ChangeOrderCustomerDialog</name>
+    <name>ChangeCustomerFind</name>
     <message>
-        <location filename="../tabs/orders/changeordercustomerdialog.cpp" line="+8"/>
-        <source>Change Customer for Order</source>
+        <location filename="../tabs/orders/changecustomerfind.cpp" line="+45"/>
+        <source>Full name</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+3"/>
+        <source>Search for first and second name.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Name of company</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Forename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Surname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Customer ID</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Provider imported name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <location line="+3"/>
+        <source>Search</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Push to start search.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+87"/>
+        <source>Nothing found.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChangeCustomerTable</name>
+    <message>
+        <location line="-147"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Organisation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Fullname</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Imported name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Address info</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>For preview, double click on listed items.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChangeCustomerWidget</name>
+    <message>
+        <location filename="../tabs/orders/changecustomerwidget.cpp" line="+17"/>
+        <source>Change to Customer Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Full name</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Identified by Providerimport</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Imported unique user name from the service provider. This is compared by the AntiquaCRM server with other parameters such as postcode, city, first and last name in order to find existing customers in the database.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Invoice Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Delivery Address</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ChangeOrderCustomerDialog</name>
+    <message>
+        <location filename="../tabs/orders/changeordercustomerdialog.cpp" line="+27"/>
         <source>Understood</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+19"/>
-        <source>&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;Why is it a bad idea, to change customer data in existing orders?&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But exactly here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;</source>
+        <location line="+22"/>
+        <source>Change Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-37"/>
+        <source>Change Customer for this Order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+52"/>
+        <source>&lt;div&gt;&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;&lt;p&gt;Why is it a bad idea, to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But sometimes here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;/li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+35"/>
+        <source>Apply to this customer!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Can not find customer data with this id!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+10"/>
+        <source>Change Customer to order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Last question before a new customer is assigned to this order.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Press ”Ok” to change customer to this order.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

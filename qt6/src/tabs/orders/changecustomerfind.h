@@ -13,17 +13,27 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QModelIndex>
+#include <QPaintEvent>
 #include <QTableWidget>
+
+class ANTIQUACRM_LIBRARY ChangeCustomerTable final : public QTableWidget {
+  Q_OBJECT
+
+private:
+  virtual void paintEvent(QPaintEvent*) override;
+
+public:
+  explicit ChangeCustomerTable(QWidget* parent = nullptr);
+};
 
 class ANTIQUACRM_LIBRARY ChangeCustomerFind final : public QWidget {
   Q_OBJECT
 
 private:
   AntiquaCRM::ASqlCore* m_sql = nullptr;
-  QComboBox* m_comboBox;
-  QLineEdit* m_searchLine;
-  QTableWidget* m_tableWidget;
-
+  AntiquaCRM::AComboBox* m_comboBox;
+  AntiquaCRM::TextLine* m_searchLine;
+  ChangeCustomerTable* m_tableWidget;
   QLabel* labelCell(const QString& txt);
 
 private Q_SLOTS:

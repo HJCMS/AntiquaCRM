@@ -14,6 +14,7 @@
 #include <QStackedWidget>
 
 class ChangeCustomerFind;
+class ChangeCustomerWidget;
 
 /**
  * @brief Change orders customers data dialog
@@ -22,10 +23,9 @@ class ChangeOrderCustomerDialog final : public AntiquaCRM::ADialog {
   Q_OBJECT
 
 private:
-  qint64 origin_customer_id = -1;
   QStackedWidget* m_mainWidget;
   ChangeCustomerFind* m_findCustomer;
-  AntiquaCRM::CustomersDataWidget* m_dataWidget;
+  ChangeCustomerWidget* m_dataWidget;
 
   /**
    * @brief prevent invalid dialog calls
@@ -52,16 +52,17 @@ private Q_SLOTS:
    * @brief Check current selection, then commit sql and quit on success.
    */
   void apply();
+  void close();
 
 public:
   explicit ChangeOrderCustomerDialog(QWidget* parent = nullptr);
 
   /**
    * @brief open dialog
-   * @param customerId
+   * @param cid - Customer Id
    * @note This is a overload function to exec()
    */
-  QDialog::DialogCode start(qint64 customerId);
+  qint64 start(qint64 cid);
 };
 
 #endif // ANTIQUACRM_PLUGIN_CHANGEORDERCUSTOMERDIALOG_H
