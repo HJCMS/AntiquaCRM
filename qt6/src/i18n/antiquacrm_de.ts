@@ -4968,7 +4968,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Kunde für diese Bestellung ändern</translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+51"/>
         <source>&lt;div&gt;&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;&lt;p&gt;Why is it a bad idea, to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But sometimes here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;/li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation>&lt;div&gt;&lt;h4&gt;Wichtiger Hinweis zu dieser Funktion.&lt;/h4&gt;&lt;p&gt;Warum ist es keine gute Idee, Kundendaten in bestehenden Bestellungen zu ändern?&lt;/p&gt;&lt;p&gt;Kundendaten sind in den Bestellungen der Anbieter enthalten und werden mit den Kundendaten von Antiqua CRM synchronisiert.&lt;/p&gt;&lt;p&gt;Manchmal gibt es jedoch ein Problem, wenn es mehrere Dienstanbieter gibt, deren Kundendaten mit denen von AntiquaCRM kollidieren.&lt;/p&gt;&lt;p&gt;Nur wenn dieses Problem besteht, hilft diese Funktion, es zu beheben.&lt;/p&gt;&lt;b&gt;Bitte beachten Sie, was bei einer Kundenänderung passiert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Bestellungen kann zu asynchronen Daten des Dienstanbieters führen.&lt;/li&gt;&lt;li&gt;Alle Indizes für diese Bestellung werden geändert.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferungen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
     </message>
@@ -4983,7 +4983,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Kundendaten mit dieser ID nicht gefunden!</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+6"/>
         <source>Change Customer to order.</source>
         <translation>Kunde für Auftrag ändern.</translation>
     </message>
@@ -7007,7 +7007,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rechnungs-ID</translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+115"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -7022,7 +7022,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>No Article has been added to this order!</source>
         <translation>Dieser Bestellung wurde kein Artikel hinzugefügt!</translation>
     </message>
@@ -7063,22 +7063,23 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>&lt;b&gt;Vorgangsausführung abgelehnt!&lt;/b&gt;&lt;p&gt;Erforderliche Bestell-, Rechnungs- oder Kundennummer fehlt.&lt;/p&gt;&lt;p&gt;Bitte speichern Sie zunächst Ihre aktuelle Bestellung und stellen Sie sicher, dass alle erforderlichen Felder verfügbar sind.&lt;/p &gt;</translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+90"/>
         <source>Article: %1 already Exists!</source>
         <translation>Artikel: %1 existiert bereits!</translation>
     </message>
     <message>
         <location line="+10"/>
+        <location line="+532"/>
         <source>Missing required Identities!</source>
         <translation>Erforderliche Identitäten fehlen!</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="-502"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+144"/>
         <source>Mail Message done!</source>
         <translation>E-Mail-Nachricht abgeschlossen!</translation>
     </message>
@@ -7088,12 +7089,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Lieferschein gedruckt.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Invoice printed.</source>
         <translation>Rechnung gedruckt.</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Reminder printed.</source>
         <translation>Erinnerung gedruckt.</translation>
     </message>
@@ -7103,7 +7104,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Bei dieser Bestellung handelt es sich nicht um eine Rückerstattung!</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+20"/>
         <source>Refund printed.</source>
         <translation>Rückerstattung gedruckt.</translation>
     </message>
@@ -7113,7 +7114,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Der Auftrag ist eine Rückertattung!</translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+20"/>
         <source>Admonition printed.</source>
         <translation>Mahnung gedruckt.</translation>
     </message>
@@ -7123,17 +7124,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>&lt;b&gt;In dieser Schnittstelle können Sie keine Rückerstattung veranlassen!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Der Bestellstatus muss auf „Geliefert“ gesetzt sein.&lt;/li&gt;&lt;li&gt;Der Zahlungsstatus muss „bezahlt“ sein.&lt;/li&gt;&lt;/ ul&gt;&lt;p&gt;Wenn diese Bestellung nicht bezahlt wurde, verwenden Sie den Bestellstatus „Storniert“.&lt;/p&gt;&lt;p&gt;Um eine Rückerstattung zu erstellen, kehren Sie zur Hauptansicht zurück, klicken Sie mit der rechten Maustaste auf die abgeschlossene Bestellung, die Sie erstatten möchten, und wählen Sie aus Option „Rückerstattung erstellen“.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>&lt;b&gt;You cannot add a new item to a refund!&lt;/b&gt;&lt;p&gt;A better choice is to create a new order.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Sie können einer Rückerstattung keinen neuen Artikel hinzufügen!&lt;/b&gt;&lt;p&gt;Eine bessere Wahl ist, eine neue Bestellung zu erstellen.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+108"/>
         <source>&lt;b&gt;You cannot issue a refund for this Order!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;The Order status must have Delivered.&lt;/li&gt;&lt;li&gt;The Payment status must have Paid.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If this Order hasn&apos;t paid, open it and change status to Canceled.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Sie können für diese Bestellung keine Rückerstattung veranlassen!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Der Bestellstatus muss „Geliefert“ lauten.&lt;/li&gt;&lt;li&gt;Der Zahlungsstatus muss „Bezahlt“ lauten.&lt;/li&gt;&lt;/ul &gt;&lt;p&gt;Wenn diese Bestellung nicht bezahlt wurde, öffnen Sie sie und ändern Sie den Status in „Storniert“.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Refunding dialog aborted.</source>
         <translation>Rückerstattungsdialog abgebrochen.</translation>
     </message>
@@ -7143,7 +7144,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rückerstattung erstellt.</translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+131"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleisterbestelldaten gefunden!</translation>
     </message>
@@ -7675,7 +7676,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+184"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+182"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -8152,24 +8153,39 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Kunde*in anzeigen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Opens Customer in tab „Customer“.</source>
+        <translation>Öffnet Kunde im Reiter „Kunde“.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Provider Actions</source>
         <translation>Dienstleister aktionen</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Opens Provider actions dialog.</source>
+        <translation>Öffnet das Dialogfenster „Provider-Aktionen“.</translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Create Order</source>
         <translation>Bestellung anlegen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+2"/>
+        <source>Starts a new assignment in tab „Orders“.</source>
+        <translation>Startet einen neuen Auftrag im Reiter „Aufträge“.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Check Articles</source>
         <translation>Artikel prüfen</translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Create a search query to see if all items are available.</source>
-        <translation>Erstellen Sie eine Suchabfrage, um zu sehen, ob alle Artikel verfügbar sind.</translation>
+        <source>Availability search for all items.</source>
+        <translation>Verfügbarkeitssuche für diese Bestellung.</translation>
     </message>
 </context>
 <context>

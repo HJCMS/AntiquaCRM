@@ -4943,7 +4943,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+52"/>
+        <location line="+51"/>
         <source>&lt;div&gt;&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;&lt;p&gt;Why is it a bad idea, to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But sometimes here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;/li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4958,7 +4958,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+6"/>
         <source>Change Customer to order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6981,7 +6981,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+123"/>
+        <location line="+115"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6996,7 +6996,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+109"/>
         <source>No Article has been added to this order!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7037,22 +7037,23 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+92"/>
+        <location line="+90"/>
         <source>Article: %1 already Exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+10"/>
+        <location line="+532"/>
         <source>Missing required Identities!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="-502"/>
         <source>Article: %1 not found or no stock!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+144"/>
         <source>Mail Message done!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7062,12 +7063,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Invoice printed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Reminder printed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7077,7 +7078,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+20"/>
         <source>Refund printed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7087,7 +7088,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+20"/>
         <source>Admonition printed.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7097,17 +7098,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+19"/>
         <source>&lt;b&gt;You cannot add a new item to a refund!&lt;/b&gt;&lt;p&gt;A better choice is to create a new order.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+108"/>
         <source>&lt;b&gt;You cannot issue a refund for this Order!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;The Order status must have Delivered.&lt;/li&gt;&lt;li&gt;The Payment status must have Paid.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If this Order hasn&apos;t paid, open it and change status to Canceled.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+21"/>
         <source>Refunding dialog aborted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7117,7 +7118,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+63"/>
+        <location line="+131"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7649,7 +7650,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+184"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+182"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8125,23 +8126,38 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Opens Customer in tab „Customer“.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Provider Actions</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+2"/>
+        <source>Opens Provider actions dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
         <source>Create Order</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+2"/>
+        <source>Starts a new assignment in tab „Orders“.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
         <source>Check Articles</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
-        <source>Create a search query to see if all items are available.</source>
+        <source>Availability search for all items.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
