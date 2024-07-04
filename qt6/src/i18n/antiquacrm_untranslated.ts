@@ -6953,13 +6953,23 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersCustomerToolBar</name>
     <message>
-        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+28"/>
-        <source>View customer data</source>
+        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+27"/>
+        <source>View Customer</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens Customer in tab „Customer“.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Change customer to order</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens the dialog to change the customer for this order.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

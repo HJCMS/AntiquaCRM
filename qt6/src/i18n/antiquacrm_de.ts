@@ -6979,14 +6979,24 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersCustomerToolBar</name>
     <message>
-        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+28"/>
-        <source>View customer data</source>
-        <translation>Kundendaten anzeigen</translation>
+        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+27"/>
+        <source>View Customer</source>
+        <translation>Kunde*in anzeigen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens Customer in tab „Customer“.</source>
+        <translation>Öffnet Kunde im Reiter „Kunde“.</translation>
     </message>
     <message>
         <location line="+2"/>
         <source>Change customer to order</source>
         <translation>Kunden zur Bestellung ändern</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Opens the dialog to change the customer for this order.</source>
+        <translation>Öffnet den Dialog zum Ändern des Kunden für diese Bestellung.</translation>
     </message>
 </context>
 <context>

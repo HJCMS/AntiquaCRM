@@ -15,7 +15,6 @@ OrdersCustomerToolBar::OrdersCustomerToolBar(QWidget* parent) : QFrame{parent} {
   // Widget Layout
   m_layout = new QHBoxLayout;
   m_layout->setContentsMargins(contentsMargins());
-
   layout->addLayout(m_layout);
   layout->addStretch(1);
 
@@ -24,13 +23,15 @@ OrdersCustomerToolBar::OrdersCustomerToolBar(QWidget* parent) : QFrame{parent} {
   m_toolBar->setMovable(false);
   m_toolBar->setFloatable(false);
   m_toolBar->setOrientation(Qt::Horizontal);
-  ac_open = m_toolBar->addAction(AntiquaCRM::antiquaIcon("system-users"), // icon
-                                 tr("View customer data"));
+  ac_open = m_toolBar->addAction(AntiquaCRM::antiquaIcon("system-users"), tr("View Customer"));
+  ac_open->setToolTip(tr("Opens Customer in tab „Customer“."));
+  ac_open->setStatusTip(ac_open->text());
   ac_edit = m_toolBar->addAction(AntiquaCRM::antiquaIcon("system-switch-user"),
                                  tr("Change customer to order"));
+  ac_edit->setToolTip(tr("Opens the dialog to change the customer for this order."));
+  ac_edit->setStatusTip(ac_edit->text());
   layout->addWidget(m_toolBar);
   setLayout(layout);
-
   // SIGNALS
   connect(ac_open, SIGNAL(triggered()), SLOT(openCustomer()));
   connect(ac_edit, SIGNAL(triggered()), SLOT(changeCustomer()));
