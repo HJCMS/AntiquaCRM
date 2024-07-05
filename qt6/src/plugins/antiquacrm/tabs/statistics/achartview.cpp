@@ -10,7 +10,7 @@ namespace AntiquaCRM {
 
 AChartView::AChartView(QWidget *parent) : QChartView{parent} {
   setContentsMargins(0, 0, 0, 0);
-  setRenderHint(QPainter::Antialiasing);
+  setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
   m_sql = new AntiquaCRM::ASqlCore(this);
   AntiquaCRM::ASettings cfg(this);

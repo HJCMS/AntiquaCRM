@@ -58,7 +58,7 @@ ChangeOrderCustomerDialog::ChangeOrderCustomerDialog(QWidget* parent)
 }
 
 QLabel* ChangeOrderCustomerDialog::getPage0() const {
-  QString _txt;
+  QString _txt("<b>" + windowTitle() + "</b>");
   _txt +=
       tr("<div><p>Normally, it is not necessary to change customer data in existing "
          "orders.</p><p>Customer data is included in the provider's orders and synchronized with "

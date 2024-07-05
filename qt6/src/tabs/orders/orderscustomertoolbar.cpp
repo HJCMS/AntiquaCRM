@@ -62,6 +62,7 @@ void OrdersCustomerToolBar::openCustomer() {
 
 void OrdersCustomerToolBar::changeCustomer() {
   ChangeOrderCustomerDialog* m_d = new ChangeOrderCustomerDialog(this);
+  m_d->setWindowIcon(ac_edit->icon());
   qint64 _cid = m_d->start(customerId());
   if (_cid < 1)
     return;

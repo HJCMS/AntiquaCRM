@@ -386,7 +386,7 @@ public:
 
   /**
    * @brief Auftrag aus Json Objekt erstellen
-   * @param object - Datenstruktur
+   * @param object - Json Datenstruktur
    * @sa prepareCreateEntry
    * @sa setDefaultValues
    * @code

@@ -1153,15 +1153,17 @@ bool OrdersEditor::changeOrderToCustomer(const QJsonObject& object) {
 }
 
 bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
-  // qDebug() << Q_FUNC_INFO << "Experimental:" << object;
+  // Zuerst die Aktion prüfen
   const QString _action = object.value("ACTION").toString();
   if (_action.isEmpty())
     return false;
 
+  // Ohne Dienstleister Bestellnummer keine weitere Ausführung.
   const QString _provider_id = object.value("PRORDER").toString();
   if (_provider_id.isEmpty())
     return false;
 
+  // Lese Artikelliste ein ...
   const QString _articles = object.value("ARTICLES").toString();
   QStringList _article_list = _articles.split(",");
   if (_article_list.size() < 1) {
@@ -1169,6 +1171,7 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
     return false;
   }
 
+  // Existierenden Import von „autiquacmd“ suchen ...
   AntiquaCRM::ASqlFiles _tpl("query_provider_order_exists");
   if (!_tpl.openTemplate())
     return false;
@@ -1180,19 +1183,23 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
     return false;
   }
 
+  // Auftrag gefunden und einlesen
   _q.next();
   const QByteArray _data = _q.value("pr_order_data").toByteArray();
   QJsonObject _jobj = QJsonDocument::fromJson(_data).object();
   if (_jobj.isEmpty())
     return false;
 
+  // Dienstleister name und id in Variablen speichern.
   const QString o_provider_name = _q.value("pr_name").toString();
   const QString o_provider_order_id = _q.value("pr_order").toString();
+  // Ermittelte Kundennummer auslesen ...
   qint64 _customer_id = _q.value("pr_customer_id").toInt();
   if (_customer_id < 1) {
     qWarning("Empty Customer Id");
   }
 
+  // Eingabefelder setzen
   setInputFields();
 
   AntiquaCRM::AProviderOrder _prorder(o_provider_name, o_provider_order_id);
