@@ -4969,11 +4969,11 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+51"/>
-        <source>&lt;div&gt;&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;&lt;p&gt;Why is it a bad idea, to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But sometimes here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;/li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
-        <translation>&lt;div&gt;&lt;h4&gt;Wichtiger Hinweis zu dieser Funktion.&lt;/h4&gt;&lt;p&gt;Warum ist es keine gute Idee, Kundendaten in bestehenden Bestellungen zu ändern?&lt;/p&gt;&lt;p&gt;Kundendaten sind in den Bestellungen der Anbieter enthalten und werden mit den Kundendaten von Antiqua CRM synchronisiert.&lt;/p&gt;&lt;p&gt;Manchmal gibt es jedoch ein Problem, wenn es mehrere Dienstanbieter gibt, deren Kundendaten mit denen von AntiquaCRM kollidieren.&lt;/p&gt;&lt;p&gt;Nur wenn dieses Problem besteht, hilft diese Funktion, es zu beheben.&lt;/p&gt;&lt;b&gt;Bitte beachten Sie, was bei einer Kundenänderung passiert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Bestellungen kann zu asynchronen Daten des Dienstanbieters führen.&lt;/li&gt;&lt;li&gt;Alle Indizes für diese Bestellung werden geändert.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferungen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
+        <source>&lt;div&gt;&lt;p&gt;Normally, it is not necessary to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data is included in the provider&apos;s orders and synchronized with the customer data in AntiquaCRM.&lt;/p&gt;&lt;p&gt;However, sometimes there is a problem when service provider data differs from the customer data in AntiquaCRM.&lt;/p&gt;&lt;p&gt;If this problem exists, this function should help to resolve it.&lt;/p&gt;&lt;b&gt;Please note what happens when a customer changes:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Changing customer data in orders can lead to asynchronous data with the service providers.&lt;/li&gt;&lt;li&gt;Existing address data in invoices and delivery notes islost and must be regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
+        <translation>&lt;div&gt;&lt;p&gt;Im Normalfall ist es nicht notwendig, Kundendaten in bestehenden Aufträgen zu ändern.&lt;/p&gt;&lt;p&gt;Kundendaten werden in die Aufträge der Anbieter übernommen und mit den Kundendaten in AntiquaCRM synchronisiert.&lt;/p&gt;&lt;p&gt;Manchmal gibt es jedoch ein Problem, wenn Daten der Dienstleister von den Kundendaten in AntiquaCRM abweichen.&lt;/p&gt;&lt;p&gt;Falls dieses Problem besteht, sollte diese Funktion helfen, es zu beheben.&lt;/p&gt;&lt;b&gt;Bitte beachten Sie, was bei einem Kundenwechsel passiert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Aufträgen kann zu asynchronen Daten bei den Dienstleistern führen.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferscheinen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Apply to this customer!</source>
         <translation>Auf diesen Kunden annwenden!</translation>
     </message>
@@ -6979,7 +6979,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersCustomerToolBar</name>
     <message>
-        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+27"/>
+        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+26"/>
         <source>View Customer</source>
         <translation>Kunde*in anzeigen</translation>
     </message>
@@ -6989,7 +6989,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Öffnet Kunde im Reiter „Kunde“.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Change customer to order</source>
         <translation>Kunden zur Bestellung ändern</translation>
     </message>

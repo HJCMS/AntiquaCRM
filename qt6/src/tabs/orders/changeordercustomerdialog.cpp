@@ -60,15 +60,14 @@ ChangeOrderCustomerDialog::ChangeOrderCustomerDialog(QWidget* parent)
 QLabel* ChangeOrderCustomerDialog::getPage0() const {
   QString _txt;
   _txt +=
-      tr("<div><h4>Important Warning about this function.</h4><p>Why is it a bad idea, to change "
-         "customer data in existing orders.</p><p>Customer data included in provider orders and "
-         "wil synchronized by Antiqua CRM Customers data.</p><p>But sometimes here is a problem, "
-         "when there are several service providers whose customer data collides with that of "
-         "AntiquaCRM.</p><p>Only when this problem exist, this function will help to fix "
-         "it.</p><b>Please aware what will done when Customer changed:</b><ul><li>Change customer "
-         "data in orders may result in service provider asynchronous data.</li><li>All Indexes for "
-         "this order will changed.</li><li>Existing Address data in invoices and deliveries go "
-         "broken and must regenerated.</li></ul></div>");
+      tr("<div><p>Normally, it is not necessary to change customer data in existing "
+         "orders.</p><p>Customer data is included in the provider's orders and synchronized with "
+         "the customer data in AntiquaCRM.</p><p>However, sometimes there is a problem when "
+         "service provider data differs from the customer data in AntiquaCRM.</p><p>If this "
+         "problem exists, this function should help to resolve it.</p><b>Please note what happens "
+         "when a customer changes:</b><ul><li>Changing customer data in orders can lead to "
+         "asynchronous data with the service providers.</li><li>Existing address data in invoices "
+         "and delivery notes islost and must be regenerated.</li></ul></div>");
 
   QString _css("QLabel {background: transparent; border:none;}");
   QLabel* m_lb = new QLabel(m_mainWidget);

@@ -4944,11 +4944,11 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+51"/>
-        <source>&lt;div&gt;&lt;h4&gt;Important Warning about this function.&lt;/h4&gt;&lt;p&gt;Why is it a bad idea, to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data included in provider orders and wil synchronized by Antiqua CRM Customers data.&lt;/p&gt;&lt;p&gt;But sometimes here is a problem, when there are several service providers whose customer data collides with that of AntiquaCRM.&lt;/p&gt;&lt;p&gt;Only when this problem exist, this function will help to fix it.&lt;/p&gt;&lt;b&gt;Please aware what will done when Customer changed:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Change customer data in orders may result in service provider asynchronous data.&lt;/li&gt;&lt;li&gt;All Indexes for this order will changed.&lt;/li&gt;&lt;li&gt;Existing Address data in invoices and deliveries go broken and must regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
+        <source>&lt;div&gt;&lt;p&gt;Normally, it is not necessary to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data is included in the provider&apos;s orders and synchronized with the customer data in AntiquaCRM.&lt;/p&gt;&lt;p&gt;However, sometimes there is a problem when service provider data differs from the customer data in AntiquaCRM.&lt;/p&gt;&lt;p&gt;If this problem exists, this function should help to resolve it.&lt;/p&gt;&lt;b&gt;Please note what happens when a customer changes:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Changing customer data in orders can lead to asynchronous data with the service providers.&lt;/li&gt;&lt;li&gt;Existing address data in invoices and delivery notes islost and must be regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+34"/>
         <source>Apply to this customer!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6953,7 +6953,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersCustomerToolBar</name>
     <message>
-        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+27"/>
+        <location filename="../tabs/orders/orderscustomertoolbar.cpp" line="+26"/>
         <source>View Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6963,7 +6963,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+3"/>
         <source>Change customer to order</source>
         <translation type="unfinished"></translation>
     </message>
