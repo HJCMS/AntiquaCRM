@@ -50,7 +50,7 @@ endif()
 if(NOT QRENCODE_INCLUDE_DIR)
 find_path(QRENCODE_INCLUDE_DIR
   NAMES qrencode.h
-  HINTS ${PKG_RENCODE_INCLUDE_DIR}
+  PATHS ${PKG_RENCODE_INCLUDE_DIR} ${QRENCODE_INCLUDE_DIRS}
 )
 endif(NOT QRENCODE_INCLUDE_DIR)
 mark_as_advanced(QRENCODE_INCLUDE_DIR)
@@ -61,21 +61,21 @@ if(NOT QRENCODE_LIBRARY)
   find_library(QRENCODE_LIBRARY
     NAMES qrencode libqrencode
     NO_CACHE
-    HINTS ${PKG_QRENCODE_LIBRARY_DIRS}
+    PATHS ${USER_INSTALL_PREFIX}/lib ${USER_INSTALL_PREFIX}/bin
   )
   mark_as_advanced(QRENCODE_LIBRARY)
 
   find_library(QRENCODE_LIBRARY_REALEASE
     NAMES qrencode libqrencode
     NO_CACHE
-    HINTS ${PKG_QRENCODE_LIBRARY_DIRS}
+    PATHS ${USER_INSTALL_PREFIX}/lib ${USER_INSTALL_PREFIX}/bin
   )
   mark_as_advanced(QRENCODE_LIBRARY_REALEASE)
 
   find_library(QRENCODE_LIBRARY_DEBUG
     NAMES qrencode-d qrencode-debug libqrencode-d libqrencode-debug
     NO_CACHE
-    HINTS ${PKG_QRENCODE_LIBRARY_DIRS}
+    PATHS ${USER_INSTALL_PREFIX}/lib ${USER_INSTALL_PREFIX}/bin
   )
   mark_as_advanced(QRENCODE_LIBRARY_DEBUG)
 
