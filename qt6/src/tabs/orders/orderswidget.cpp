@@ -52,31 +52,20 @@ OrdersWidget::OrdersWidget(QWidget* parent)
   connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
   connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
-  connect(m_searchBar, SIGNAL(sendNotify(const QString&)), m_statusBar,
-          SLOT(showMessage(const QString&)));
+  connect(m_searchBar, SIGNAL(sendNotify(QString)), m_statusBar, SLOT(showMessage(QString)));
 
   // Signals::OrdersTableView
-  connect(m_table, SIGNAL(sendQueryReport(const QString&)), m_statusBar,
-          SLOT(showMessage(const QString&)));
-
-  connect(m_table, SIGNAL(sendCopyToClibboard(const QString&)),
-          SLOT(copyToClipboard(const QString&)));
-
+  connect(m_table, SIGNAL(sendQueryReport(QString)), m_statusBar, SLOT(showMessage(QString)));
+  connect(m_table, SIGNAL(sendCopyToClibboard(QString)), SLOT(copyToClipboard(QString)));
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
-
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
-
-  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject&)),
-          SLOT(sendSocketOperation(const QJsonObject&)));
-
+  connect(m_table, SIGNAL(sendSocketOperation(QJsonObject)),
+          SLOT(sendSocketOperation(QJsonObject)));
   connect(m_table, SIGNAL(sendStartRefund(qint64)), SLOT(refundEntry(qint64)));
-
   // Signals::OrdersEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
-
   // Signals::OrdersStatusBar
-  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString&)),
-          SLOT(createSearchQuery(const QString&)));
+  connect(m_statusBar, SIGNAL(sendHistoryQuery(QString)), SLOT(createSearchQuery(QString)));
   connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
   connect(m_statusBar, SIGNAL(sendReloadView()), m_table, SLOT(setReloadView()));
 }

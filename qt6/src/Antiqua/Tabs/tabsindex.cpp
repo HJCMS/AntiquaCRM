@@ -10,10 +10,10 @@
 #include <QIcon>
 #include <QMessageBox>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TabsIndex::TabsIndex(const char *index, QWidget *parent)
-    : QStackedWidget{parent}, tabIndex{index} {
+TabsIndex::TabsIndex(const char* index, QWidget* parent) : QStackedWidget{parent}, tabIndex{index} {
   setContentsMargins(0, 0, 0, 0);
   setWindowIcon(antiquaIcon("antiquacrm"));
   addShortCutsAndSignals();
@@ -24,13 +24,11 @@ void TabsIndex::addShortCutsAndSignals() {
 
   m_focusSearch = new QShortcut(tr("Ctrl+Shift+S", "Search"), this);
   m_focusSearch->setKey(_km | Qt::Key_S);
-  connect(m_focusSearch, SIGNAL(activated()),
-          SLOT(prepareShortCutSearchFocus()));
+  connect(m_focusSearch, SIGNAL(activated()), SLOT(prepareShortCutSearchFocus()));
 
   m_focusFilter = new QShortcut(tr("Ctrl+Shift+F", "Filter"), this);
   m_focusFilter->setKey(_km | Qt::Key_F);
-  connect(m_focusFilter, SIGNAL(activated()),
-          SLOT(prepareShortCutSearchFilter()));
+  connect(m_focusFilter, SIGNAL(activated()), SLOT(prepareShortCutSearchFilter()));
 
   m_createEntry = new QShortcut(tr("Ctrl+Shift+N", "New"), this);
   m_createEntry->setKey(_km | Qt::Key_N);
@@ -58,9 +56,9 @@ void TabsIndex::setClosable(bool b) {
     emit sendClosableChanged();
 }
 
-bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
+bool TabsIndex::eventFilter(QObject* obj, QEvent* event) {
   if (event->type() == QEvent::ModifiedChange) {
-    AntiquaCRM::TabsEditor *m_te = qobject_cast<AntiquaCRM::TabsEditor *>(obj);
+    AntiquaCRM::TabsEditor* m_te = qobject_cast<AntiquaCRM::TabsEditor*>(obj);
     if (m_te != nullptr) {
       bool _status = m_te->isWindowModified();
       setWindowModified(_status);
@@ -71,7 +69,7 @@ bool TabsIndex::eventFilter(QObject *obj, QEvent *event) {
   return QStackedWidget::eventFilter(obj, event);
 }
 
-void TabsIndex::copyToClipboard(const QString &data) {
+void TabsIndex::copyToClipboard(const QString& data) {
   QString _buf = data.trimmed();
   if (_buf.isEmpty())
     return;
@@ -79,60 +77,59 @@ void TabsIndex::copyToClipboard(const QString &data) {
   QApplication::clipboard()->setText(_buf, QClipboard::Clipboard);
 }
 
-void TabsIndex::sendStatusMessage(const QString &message) {
-  AntiquaCRM::ATransmitter *_sock = new AntiquaCRM::ATransmitter(this);
+void TabsIndex::sendStatusMessage(const QString& message) {
+  AntiquaCRM::ATransmitter* _sock = new AntiquaCRM::ATransmitter(this);
   connect(_sock, SIGNAL(disconnected()), _sock, SLOT(deleteLater()));
   if (_sock->pushStatusBarMessage(message))
     _sock->close();
 }
 
-void TabsIndex::sendSocketOperation(const QJsonObject &obj) {
-  AntiquaCRM::ATransmitter *_sock = new AntiquaCRM::ATransmitter(this);
+void TabsIndex::sendSocketOperation(const QJsonObject& obj) {
+  AntiquaCRM::ATransmitter* _sock = new AntiquaCRM::ATransmitter(this);
   connect(_sock, SIGNAL(disconnected()), _sock, SLOT(deleteLater()));
   if (_sock->pushOperation(obj))
     _sock->close();
 }
 
-void TabsIndex::openWarningPopUp(const QString &title, const QString &message) {
+void TabsIndex::openWarningPopUp(const QString& title, const QString& message) {
   QString _info("<p>" + title + "</p><p>" + message + "</p>");
   QMessageBox::warning(this, tr("Warning"), _info);
 }
 
-void TabsIndex::openWarningPopUpPageIndex(const QString &title) {
-  QString _wt(title);
-  _wt.replace("[*]", "");
-  QString _bt = _wt.trimmed();
-  _bt.prepend("„");
-  _bt.append("“");
-
-  QString _m(tr("Can't open %1 tab.").arg(_bt));
+void TabsIndex::openWarningPopUpPageIndex(const QString& title) {
+  QString _t = QString("„%1“").arg(title.trimmed().remove("[*]").trimmed());
+  QString _m(tr("Can't open %1 tab.").arg(_t));
   _m.append("<p>");
-  _m.append(tr("Because %1 tab is in edit mode.").arg(_bt));
-  _m.append("<br/>");
-  _m.append(tr("You have first to check, complete the %1 edit mode.").arg(_bt));
-  _m.append("<br/>");
-  _m.append("Otherwise you can lose changes.");
+  _m.append(tr("Because %1 tab is in edit mode.").arg(_t));
+  _m.append("</p><p>");
+  _m.append(tr("You have first to check, complete the %1 edit mode.").arg(_t));
+  _m.append("</p><p>");
+  _m.append(tr("Otherwise you can lose changes."));
   _m.append("</p>");
-  QMessageBox::information(this, _wt, _m);
+  QMessageBox::information(this, _t, _m);
 }
 
-const QString TabsIndex::tabIndexId() const { return tabIndex; }
+const QString TabsIndex::tabIndexId() const {
+  return tabIndex;
+}
 
-bool TabsIndex::isClosable() { return closable; }
+bool TabsIndex::isClosable() {
+  return closable;
+}
 
 AntiquaCRM::TabsIndex::ViewPage TabsIndex::currentPage() {
   switch (currentIndex()) {
-  case 0:
-    return AntiquaCRM::TabsIndex::MainView;
+    case 0:
+      return AntiquaCRM::TabsIndex::MainView;
 
-  case 1:
-    return AntiquaCRM::TabsIndex::EditorView;
+    case 1:
+      return AntiquaCRM::TabsIndex::EditorView;
 
-  case 2:
-    return AntiquaCRM::TabsIndex::CustomView;
+    case 2:
+      return AntiquaCRM::TabsIndex::CustomView;
 
-  default:
-    return AntiquaCRM::TabsIndex::MainView;
+    default:
+      return AntiquaCRM::TabsIndex::MainView;
   }
 }
 

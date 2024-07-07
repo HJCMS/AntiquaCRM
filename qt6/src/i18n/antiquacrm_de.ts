@@ -2716,13 +2716,13 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Ctrl+Shift+F</source>
         <comment>Filter</comment>
         <translation></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Ctrl+Shift+N</source>
         <comment>New</comment>
         <translation>Neu</translation>
@@ -2733,7 +2733,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Warnung</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Can&apos;t open %1 tab.</source>
         <translation>Registerkarte %1 kann nicht geöffnet werden.</translation>
     </message>
@@ -2746,6 +2746,11 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <location line="+2"/>
         <source>You have first to check, complete the %1 edit mode.</source>
         <translation>Bitte erst prüfen, ob der %1-Bearbeitungsmodus abgeschlossen ist.</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Otherwise you can lose changes.</source>
+        <translation>Andernfalls können Änderungen verloren gehen.</translation>
     </message>
 </context>
 <context>
@@ -7017,22 +7022,22 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rechnungs-ID</translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+110"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Can&apos;t load input datafields!</source>
-        <translation>Datenfelder konnten nicht geladen werden!</translation>
+        <source>Can not load and prepare datafields!</source>
+        <translation>Datenfelder können nicht geladen und vorbereitet werden!</translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>When getting this Message, please check your Network and Database connection!</source>
-        <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
+        <source>Please check your Network or Database connection!</source>
+        <translation>Bitte überprüfen Sie Ihre Netzwerk- oder Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+107"/>
         <source>No Article has been added to this order!</source>
         <translation>Dieser Bestellung wurde kein Artikel hinzugefügt!</translation>
     </message>
@@ -7073,23 +7078,23 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>&lt;b&gt;Vorgangsausführung abgelehnt!&lt;/b&gt;&lt;p&gt;Erforderliche Bestell-, Rechnungs- oder Kundennummer fehlt.&lt;/p&gt;&lt;p&gt;Bitte speichern Sie zunächst Ihre aktuelle Bestellung und stellen Sie sicher, dass alle erforderlichen Felder verfügbar sind.&lt;/p &gt;</translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+88"/>
         <source>Article: %1 already Exists!</source>
         <translation>Artikel: %1 existiert bereits!</translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+532"/>
+        <location line="+8"/>
+        <location line="+540"/>
         <source>Missing required Identities!</source>
         <translation>Erforderliche Identitäten fehlen!</translation>
     </message>
     <message>
-        <location line="-502"/>
+        <location line="-510"/>
         <source>Article: %1 not found or no stock!</source>
         <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+148"/>
         <source>Mail Message done!</source>
         <translation>E-Mail-Nachricht abgeschlossen!</translation>
     </message>
@@ -7139,7 +7144,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>&lt;b&gt;Sie können einer Rückerstattung keinen neuen Artikel hinzufügen!&lt;/b&gt;&lt;p&gt;Eine bessere Wahl ist, eine neue Bestellung zu erstellen.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+112"/>
         <source>&lt;b&gt;You cannot issue a refund for this Order!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;The Order status must have Delivered.&lt;/li&gt;&lt;li&gt;The Payment status must have Paid.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If this Order hasn&apos;t paid, open it and change status to Canceled.&lt;/p&gt;</source>
         <translation>&lt;b&gt;Sie können für diese Bestellung keine Rückerstattung veranlassen!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Der Bestellstatus muss „Geliefert“ lauten.&lt;/li&gt;&lt;li&gt;Der Zahlungsstatus muss „Bezahlt“ lauten.&lt;/li&gt;&lt;/ul &gt;&lt;p&gt;Wenn diese Bestellung nicht bezahlt wurde, öffnen Sie sie und ändern Sie den Status in „Storniert“.&lt;/p&gt;</translation>
     </message>
@@ -7154,12 +7159,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rückerstattung erstellt.</translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+134"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleisterbestelldaten gefunden!</translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Customer not found or set!</source>
         <translation>Kunde nicht gefunden oder eingestellt!</translation>
     </message>
@@ -7686,7 +7691,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+182"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+171"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>

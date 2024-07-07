@@ -2713,13 +2713,13 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Ctrl+Shift+F</source>
         <comment>Filter</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Ctrl+Shift+N</source>
         <comment>New</comment>
         <translation type="unfinished"></translation>
@@ -2730,7 +2730,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Can&apos;t open %1 tab.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2742,6 +2742,11 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <message>
         <location line="+2"/>
         <source>You have first to check, complete the %1 edit mode.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Otherwise you can lose changes.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6991,22 +6996,22 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+115"/>
+        <location line="+110"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>Can&apos;t load input datafields!</source>
+        <source>Can not load and prepare datafields!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+1"/>
-        <source>When getting this Message, please check your Network and Database connection!</source>
+        <source>Please check your Network or Database connection!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+109"/>
+        <location line="+107"/>
         <source>No Article has been added to this order!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7047,23 +7052,23 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+90"/>
+        <location line="+88"/>
         <source>Article: %1 already Exists!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
-        <location line="+532"/>
+        <location line="+8"/>
+        <location line="+540"/>
         <source>Missing required Identities!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-502"/>
+        <location line="-510"/>
         <source>Article: %1 not found or no stock!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+144"/>
+        <location line="+148"/>
         <source>Mail Message done!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7113,7 +7118,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+108"/>
+        <location line="+112"/>
         <source>&lt;b&gt;You cannot issue a refund for this Order!&lt;/b&gt;&lt;ul&gt;&lt;li&gt;The Order status must have Delivered.&lt;/li&gt;&lt;li&gt;The Payment status must have Paid.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;If this Order hasn&apos;t paid, open it and change status to Canceled.&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7128,12 +7133,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+131"/>
+        <location line="+134"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
+        <location line="+30"/>
         <source>Customer not found or set!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7660,7 +7665,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersWidget</name>
     <message>
-        <location filename="../tabs/orders/orderswidget.cpp" line="+182"/>
+        <location filename="../tabs/orders/orderswidget.cpp" line="+171"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>

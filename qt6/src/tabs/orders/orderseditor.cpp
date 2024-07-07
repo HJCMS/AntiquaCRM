@@ -59,11 +59,11 @@ OrdersEditor::OrdersEditor(QWidget* parent)
 
   // BEGIN:Row2
   m_ordersTable = new OrdersTableView(this, false);
-/**
- * Für den Kunden ausblenden. Werden hier nicht benötigt!
- * @note Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
- */
 #ifndef ANTIQUA_DEVELOPMENT
+  /*
+   * Für den Kunden ausblenden. Werden hier nicht benötigt!
+   * NOTE - Die Spaltenzahl ist zu diesem Zeitpunkt noch nicht bekannt!
+   */
   QStringList hideColumn("a_payment_id");
   hideColumn << "a_order_id";
   hideColumn << "a_customer_id";
@@ -76,11 +76,9 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   mainLayout->setStretch(2, 0);
   // END:Row2
 
-  /**
-   * BEGIN:Row3
-   * Wegen SQL-Abfrage setMailMenu hier nicht setzen!
-   * Siehe AntiquaCRM::MailButton::setSections ...
-   */
+  // BEGIN:Row3
+  // WARNING - Wegen SQL-Abfrage setMailMenu hier nicht setzen!
+  //           Siehe AntiquaCRM::MailButton::setSections ...
   m_actionBar = new AntiquaCRM::TabsEditActionBar(this);
   m_actionBar->setViewMailButton(true);
   m_actionBar->setRestoreable(false); // ResetButton off
@@ -100,10 +98,8 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   registerInputChanged();
 
   // Signals::OrderStatusActionFrame
-  connect(m_orderStatus, SIGNAL(sendNoticeMessage(const QString&)),
-          SLOT(openNoticeMessage(const QString&)));
-  connect(m_orderStatus, SIGNAL(sendNotifyStatus(const QString&)),
-          SLOT(pushStatusMessage(const QString&)));
+  connect(m_orderStatus, SIGNAL(sendNoticeMessage(QString)), SLOT(openNoticeMessage(QString)));
+  connect(m_orderStatus, SIGNAL(sendNotifyStatus(QString)), SLOT(pushStatusMessage(QString)));
   connect(m_orderStatus, SIGNAL(sendOrderPayment(AntiquaCRM::OrderPayment)),
           SLOT(hintsAboutRefund(AntiquaCRM::OrderPayment)));
 
@@ -114,8 +110,7 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   connect(m_actionBar, SIGNAL(sendPrintPaymentReminder()), SLOT(createPrintPaymentReminder()));
   connect(m_actionBar, SIGNAL(sendPrintRefunding()), SLOT(createPrintRefundInvoice()));
   connect(m_actionBar, SIGNAL(sendPrintAdmonition()), SLOT(createPrintAdmonition()));
-  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString&)),
-          SLOT(createMailMessage(const QString&)));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(QString)), SLOT(createMailMessage(QString)));
   connect(m_actionBar, SIGNAL(sendAddCustomAction()), SLOT(openSearchInsertArticle()));
   connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
@@ -150,10 +145,8 @@ void OrdersEditor::setInputFields() {
 
   if (inputFields.isEmpty()) {
     QStringList warn(tr("An error has occurred!"));
-    warn << tr("Can't load input datafields!");
-    warn << tr(
-        "When getting this Message, please check your Network and "
-        "Database connection!");
+    warn << tr("Can not load and prepare datafields!");
+    warn << tr("Please check your Network or Database connection!");
     openNoticeMessage(warn.join("\n"));
   }
 
@@ -527,7 +520,7 @@ AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
   return static_cast<AntiquaCRM::SalesTax>(_vat);
 }
 
-int OrdersEditor::getSalesTaxType(int type) {
+qint32 OrdersEditor::getSalesTaxType(int type) const {
   switch (static_cast<AntiquaCRM::ArticleType>(type)) {
     case (AntiquaCRM::ArticleType::BOOK):
       return 1; // VAT reduced
@@ -569,17 +562,13 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
   if (aid < 1)
     return false;
 
-  /**
-   * Doppelte Einträge verhindern.
-   */
+  // Doppelte Einträge verhindern.
   if (m_ordersTable->articleExists(aid)) {
     pushStatusMessage(tr("Article: %1 already Exists!").arg(aid));
     return false;
   }
 
-  /**
-   * Auftragsnummer und Kundennummer sind erforderlich!
-   */
+  // Auftragsnummer und Kundennummer sind erforderlich!
   qint64 _oid = getSerialID("o_id");
   qint64 _cid = getSerialID("o_customer_id");
   if (_oid < 1 || _cid < 1) {
@@ -587,7 +576,7 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
     return false;
   }
 
-  /**
+  /*
    * @note Beim Hinzufügen muss das Feld a_payment_id=0 sein!
    * @sa OrdersTableView::getSqlQuery
    */
@@ -629,8 +618,9 @@ const QString OrdersEditor::getOrderSqlArticleQuery() {
 }
 
 /**
- * Ermittelt mit "o_order_status" und "o_payment_status" den aktuellen Auftrags
- * Status. Wurde der Auftrag geliefert und Bezahlt, gilt er als abgeschlossen.
+ * Ermittelt mit „o_order_status“ und „o_payment_status“ den
+ * aktuellen Auftragsstatus. Wurde der Auftrag geliefert und Bezahlt,
+ * gilt er als abgeschlossen.
  */
 bool OrdersEditor::isOrderStatusFinished() {
   int i_os = m_tableData->getValue("o_order_status").toInt();
@@ -642,40 +632,43 @@ bool OrdersEditor::isOrderStatusFinished() {
 }
 
 qint64 OrdersEditor::findCustomer(const QJsonObject& obj, qint64 cid) {
-  QStringList _clause;
-  QStringList _fields("c_firstname");
-  _fields << "c_lastname";
-  _fields << "c_postalcode";
-  _fields << "c_email_0";
-  foreach (QString _f, _fields) {
+  // Zeiger auf Datenfelder der json Struktur
+  const QStringList _qfl({"c_firstname", "c_lastname", "c_postalcode", "c_email_0"});
+
+  // Abfrageklausel erstellen („AND“ Query Clause)
+  QStringList _qcl;
+  foreach (QString _f, _qfl) {
     const QString _v = obj.value(_f).toString();
     if (_v.isEmpty())
       continue;
 
-    _clause << _f + "='" + _v + "'";
+    _qcl << _f + "='" + _v + "'";
   }
-  _fields.clear();
 
-  // Search customer
+  // Erstelle SQL anfrage
   QString _sql("SELECT c_id FROM customers WHERE (");
   if (cid > 1) {
     _sql.append("c_id=" + QString::number(cid));
   } else {
-    _sql.append(_clause.join(" AND "));
+    _sql.append(_qcl.join(" AND "));
     _sql.append(") OR (c_provider_import='");
     _sql.append(obj.value("c_provider_import").toString());
     _sql.append("'");
   }
   _sql.append(") ORDER BY c_id;");
 
-  QSqlQuery _query = m_sql->query(_sql);
-  if (_query.size() > 0) {
+  // aufräumen
+  _qcl.clear();
+
+  // Starte abfrage
+  QSqlQuery _q = m_sql->query(_sql);
+  if (_q.size() > 0) {
     QList<qint64> _list;
-    while (_query.next()) {
-      _list << _query.value("c_id").toInt();
+    while (_q.next()) {
+      _list << _q.value("c_id").toInt();
     }
     if (_list.size() > 1)
-      qWarning("Warning: Found more then one Customer!");
+      qWarning("Warning: Found more then one Customer, using first entry!");
 
     return _list.first();
   }
@@ -931,13 +924,12 @@ bool OrdersEditor::addArticle(qint64 aid) {
   if (aid < 1)
     return false;
 
+  // Ist eine gespeicherte Bestellung geöffnet?
   if (!identities().isValid)
     return false;
 
-  if (addOrderTableArticle(aid))
-    return true;
-
-  return false;
+  // Artikel in Bestellungen hinzufügen
+  return addOrderTableArticle(aid);
 }
 
 bool OrdersEditor::openEditEntry(qint64 oid) {
@@ -945,9 +937,11 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
   if (oid < 1)
     return _retval;
 
+  // Eingabefelder zurücksetzen
   setInputFields();
   setResetModified(inputFields);
 
+  // BEGIN:DatensatzImport
   AntiquaCRM::ASqlFiles _tpl("query_order_by_oid");
   if (!_tpl.openTemplate())
     return false;
@@ -979,13 +973,16 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
     setResetModified(customInput);
     _retval = true;
   }
+  // END:DatensatzImport
 
+  // Eingabefelder befüllen
   if (_retval) {
     importSqlResult();
     m_ordersTable->setWindowModified(false);
     setResetModified(inputFields);
     setEnabled(true);
   }
+  //
   m_orderStatus->stepIn();
   if (m_orderStatus->isProtectable()) {
     qInfo("Protected order refunding.");
@@ -994,7 +991,7 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
   return _retval;
 }
 
-/**
+/*
  * Weil der SLOT mit einem Signal von OrderStatusActionFrame ausgelöst wird.
  * Müssen einige Abfragen durchgeführt werden damit dder RefundingDialog nicht
  * beim öffnen des Editors ausgelöst wird.

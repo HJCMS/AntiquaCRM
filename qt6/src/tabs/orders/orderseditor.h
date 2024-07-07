@@ -167,7 +167,7 @@ private:
    *
    * Ermittelt an Hand des ArtikelTyps welcher Umsatzsteuersatz verwendet wird!
    */
-  int getSalesTaxType(int type);
+  inline qint32 getSalesTaxType(int type) const;
 
   /**
    * @brief Artikel von Auftrag in PgSQL suchen und in Container schreiben!
@@ -219,17 +219,24 @@ private:
   bool isOrderStatusFinished();
 
   /**
-   * @brief Kundennummer Suchen/Prüfen
+   * @brief Kunde*in ermitteln.
    * @param obj = Daten
    * @param cid = Kundennummer
+   *
+   * Erstellt eine SQL Abfrage auf Tabelle „customers“.
+   * @li Sucht zuerst mit der \i cid nach dem Datensatz.
+   * @li Ist \i cid kleiner als 1 wird das Json-Object \i obj verwendet.
+   * @li Gibt die „c_id“ zurück, bei nicht gefunden -1 zurück!
+   *
    * @code
-   *  QJsonObject{
+   *  QJsonObject {
    *   c_firstname : QString
    *   c_lastname : QString
    *   c_postalcode : QString
    *   c_email_0 : QString
    *  }
    * @endcode
+   *
    * @return c_id
    */
   qint64 findCustomer(const QJsonObject& obj, qint64 cid = -1);
@@ -237,7 +244,7 @@ private:
   /**
    * @brief Vorarbeiten für neuen Eintrag.
    *
-   * Eingabe masken leeren und AntiquaCRM::ASqlDataQuery neu einlesen.
+   * Eingabemasken leeren und \i AntiquaCRM::ASqlDataQuery neu einlesen.
    */
   bool prepareCreateEntry();
 
@@ -253,8 +260,8 @@ private Q_SLOTS:
   /**
    * @brief Speichern einleiten
    *
-   * Prüfung auf "o_id" - wenn vorhanden wird \b createSqlUpdate ausgeführt
-   * andernfalls \b createSqlInsert.
+   * Prüfung auf „o_id“ - wenn vorhanden wird \i createSqlUpdate ausgeführt
+   * andernfalls \i createSqlInsert.
    */
   void setSaveData() override;
 
