@@ -613,12 +613,42 @@ Please check your network connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Heavily worn!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+62"/>
+        <source>&lt;div&gt;Article condition is in following rating available.&lt;/div&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Fine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Good</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Satisfying</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Sufficient</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+42"/>
         <source>Missing Condition for this Article!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -628,7 +658,7 @@ Please check your network connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>No Condition for this Article exists!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3004,12 +3034,12 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TextLine</name>
     <message>
-        <location filename="../Antiqua/Widgets/textline.cpp" line="+111"/>
+        <location filename="../Antiqua/Widgets/textline.cpp" line="+110"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+56"/>
         <source>This text line is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3123,7 +3153,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+29"/>
         <source>Open AntiquaCRM application ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7335,7 +7365,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+167"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+165"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7345,7 +7375,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+119"/>
         <source>Payment Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7411,7 +7441,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+4"/>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9056,7 +9086,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Probably the most important parameter for the article processing and is generated automatically when creating a entry. AntiquaCRM use a running numbering system.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9066,13 +9096,13 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>The Article count is the main value for activating and deactivating stitches in your inventory. If you set it to 0, it will be disabled on your vendor pages and no longer visible for sale.
 Notes: These updates are not done directly, however daily performed from AntiquaCRM Server after working time.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Price</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9098,7 +9128,7 @@ Notes: You can always set limits for Prices in the main Configuration dialog.</s
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>In painting, color means the selection, harmony, shading and composition of the different colors in a painting.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9157,7 +9187,7 @@ Notes: You cannot do this afterwards, there are no remote deletion processes wit
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>This field is reserved for Authors.
 You can add more separated by comma.
 Some provider Platforms supporting spezial Keywords.
@@ -9165,17 +9195,22 @@ AntiquaCRM suggests the most common author group names, when editing this field.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Format</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>The format information depends on the metric unit system of the local user. Images have standard formats which are defined elsewhere. Mainly dimensions are given here.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
+        <source>Condition</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9220,7 +9255,7 @@ AntiquaCRM suggests the most common author group names, when editing this field.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Keywords will help Buyers, to find your Article on Provider pages. This Articles keyword management can also be compared to „Search Engine Optimization“ (SEO).
 Restrictions:
 - A Keyword must have a minimum length from 3 characters.
@@ -9230,12 +9265,12 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9255,7 +9290,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+63"/>
         <source>Authors group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9270,7 +9305,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>Nice clean copy</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9300,12 +9335,12 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+71"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9330,7 +9365,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Entry deactivation</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9340,7 +9375,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+33"/>
         <source>Card print successfully.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9367,7 +9402,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Image delete successfully!</source>
         <translation type="unfinished"></translation>
     </message>

@@ -29,7 +29,7 @@ const QString AUtil::fqdnPattern() {
 }
 
 const QString AUtil::socketName() {
-  QString _name(ANTIQUACRM_CONNECTION_DOMAIN);
+  QString _name(ANTIQUACRM_NAME);
   _name.append("-");
   _name.append(QString::fromLocal8Bit(HJCMS_CONFIG_APPID));
 #ifdef Q_OS_LINUX

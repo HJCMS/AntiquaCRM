@@ -5,17 +5,16 @@
 
 #include <AntiquaCRM>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ConditionEdit::ConditionEdit(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+ConditionEdit::ConditionEdit(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setToolTip(tr("Condition"));
   m_edit->setWithoutDisclosures(AntiquaCRM::Condition::NO_CONDITION);
   m_edit->addItem(tr("Very good, almost new!"), AntiquaCRM::Condition::FINE);
   m_edit->addItem(tr("Slight signs of wear."), AntiquaCRM::Condition::GOOD);
-  m_edit->addItem(tr("Significant signs of use."),
-                  AntiquaCRM::Condition::SATISFYING);
+  m_edit->addItem(tr("Significant signs of use."), AntiquaCRM::Condition::SATISFYING);
   m_edit->addItem(tr("Heavily worn!"), AntiquaCRM::Condition::SUFFICIENT);
   layout->addWidget(m_edit);
   initData();
@@ -39,22 +38,22 @@ void ConditionEdit::initData() {
   setWindowModified(false);
 }
 
-void ConditionEdit::setValue(const QVariant &value) {
+void ConditionEdit::setValue(const QVariant& value) {
   AntiquaCRM::Condition _found = AntiquaCRM::Condition::NO_CONDITION;
   QMetaType _type = value.metaType();
   switch (_type.id()) {
-  case (QMetaType::Int):
-  case (QMetaType::Long):
-  case (QMetaType::LongLong):
-    _found = static_cast<AntiquaCRM::Condition>(value.toInt());
-    break;
+    case (QMetaType::Int):
+    case (QMetaType::Long):
+    case (QMetaType::LongLong):
+      _found = static_cast<AntiquaCRM::Condition>(value.toInt());
+      break;
 
-  default:
-    qWarning("Invalid given Data Type in ConditionEdit.");
+    default:
+      qWarning("Invalid given Data Type in ConditionEdit.");
 #ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << "ConditionEdit Requires type int but get:" << value;
+      qDebug() << "ConditionEdit Requires type int but get:" << value;
 #endif
-    break;
+      break;
   };
 
   for (int i = 0; i < m_edit->count(); i++) {
@@ -77,17 +76,51 @@ void ConditionEdit::reset() {
   setWindowModified(false);
 }
 
-void ConditionEdit::setRestrictions(const QSqlField &) { setRequired(true); }
+const QString ConditionEdit::defaultWhatsThis() const {
+  QString _info = tr("<div>Article condition is in following rating available.</div>");
+  _info.append("<ol>");
+  for (int i = 0; i < m_edit->count(); i++) {
+    QString _txt = m_edit->itemText(i);
+    _info.append("<li>");
+    switch (m_edit->itemData(i, Qt::UserRole).toInt()) {
+      case (AntiquaCRM::Condition::FINE):
+        _info.append(tr("Fine") + ": " + _txt);
+        break;
 
-void ConditionEdit::setInputToolTip(const QString &tip) {
+      case (AntiquaCRM::Condition::GOOD):
+        _info.append(tr("Good") + ": " + _txt);
+        break;
+
+      case (AntiquaCRM::Condition::SATISFYING):
+        _info.append(tr("Satisfying") + ": " + _txt);
+        break;
+
+      case (AntiquaCRM::Condition::SUFFICIENT):
+        _info.append(tr("Sufficient") + ": " + _txt);
+        break;
+
+      default:
+        _info.append(tr("Unknown") + ": " + _txt);
+    }
+    _info.append("</li>");
+  }
+  _info.append("</ol>");
+  return _info;
+}
+
+void ConditionEdit::setRestrictions(const QSqlField&) {
+  setRequired(true);
+}
+
+void ConditionEdit::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void ConditionEdit::setBuddyLabel(const QString &text) {
+void ConditionEdit::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -110,8 +143,7 @@ const QVariant ConditionEdit::getValue() {
 const QString ConditionEdit::popUpHints() {
   QStringList info;
   info << tr("Missing Condition for this Article!");
-  info << tr(
-      "The condition of an article should always be specified for the buyer.");
+  info << tr("The condition of an article should always be specified for the buyer.");
   return info.join("\n");
 }
 

@@ -26,42 +26,42 @@ private:
   /**
    * @brief Article number
    */
-  AntiquaCRM::SerialId *ip_id;
+  AntiquaCRM::SerialId* ip_id;
 
   /**
    * @brief Article quantity in stock
    */
-  AntiquaCRM::CrowdEdit *ip_count;
+  AntiquaCRM::CrowdEdit* ip_count;
 
   /**
    * @brief Bookarticle price
    */
-  AntiquaCRM::PriceEdit *ip_price;
+  AntiquaCRM::PriceEdit* ip_price;
 
   /**
    * @brief Signed Book or not...
    */
-  AntiquaCRM::BoolBox *ip_views;
+  AntiquaCRM::BoolBox* ip_views;
 
   /**
    * @brief Signed Book or not...
    */
-  AntiquaCRM::BoolBox *ip_kolorit;
+  AntiquaCRM::BoolBox* ip_kolorit;
 
   /**
    * @brief Signed Book or not...
    */
-  AntiquaCRM::BoolBox *ip_landscape;
+  AntiquaCRM::BoolBox* ip_landscape;
 
   /**
    * @brief Year of publication of the book edition
    */
-  AntiquaCRM::YearEdit *ip_year;
+  AntiquaCRM::YearEdit* ip_year;
 
   /**
    * @brief Restricted for local usage only?
    */
-  AntiquaCRM::BoolBox *ip_restricted;
+  AntiquaCRM::BoolBox* ip_restricted;
 
   // Layout::Row 1
   /**
@@ -69,86 +69,91 @@ private:
    * @li Left side, Input fields
    * @li Right side, Thumbnails viewer
    */
-  AntiquaCRM::Splitter *m_splitter;
+  AntiquaCRM::Splitter* m_splitter;
 
   /**
    * @brief Booktitle
    * @note Restricted to 80 chars
    */
-  AntiquaCRM::TextLine *ip_title;
+  AntiquaCRM::TextLine* ip_title;
 
   /**
    * @brief Expanded book title
    */
-  AntiquaCRM::TextLine *ip_title_extended;
+  AntiquaCRM::TextLine* ip_title_extended;
 
   /**
    * @brief Book Author
    */
-  AntiquaCRM::TextLine *ip_author;
+  AntiquaCRM::TextLine* ip_author;
+
+  /**
+   * @brief Article condition
+   */
+  AntiquaCRM::ConditionEdit* ip_condition;
 
   /**
    * @brief Book-Editor/Publisher
    */
-  AntiquaCRM::TextLine *ip_format;
+  AntiquaCRM::TextLine* ip_format;
 
   /**
    * @brief Main Language of this Book
    */
-  AntiquaCRM::SelectLanguage *ip_language;
+  AntiquaCRM::SelectLanguage* ip_language;
 
   /**
    * @brief Storage determination
    */
-  AntiquaCRM::SelectStorage *ip_storage;
+  AntiquaCRM::SelectStorage* ip_storage;
 
   /**
    * @brief Storage compartment
    */
-  AntiquaCRM::TextLine *ip_storage_compartment;
+  AntiquaCRM::TextLine* ip_storage_compartment;
 
   /**
    * @brief Keywords editor
    */
-  AntiquaCRM::KeywordsEdit *ip_keyword;
+  AntiquaCRM::KeywordsEdit* ip_keyword;
 
   // Layout::Row 3
-  AntiquaCRM::TabsWidget *m_tabWidget;
+  AntiquaCRM::TabsWidget* m_tabWidget;
 
   /**
    * @brief Book Description field
    */
-  AntiquaCRM::DescripeEditor *ip_description;
+  AntiquaCRM::DescripeEditor* ip_description;
 
   /**
    * @brief Internal Description, local usage only!
    */
-  AntiquaCRM::TextField *ip_internal_description;
+  AntiquaCRM::TextField* ip_internal_description;
 
   /**
    * @brief Date of first entry.
    */
-  AntiquaCRM::DateTimeInfo *ip_since;
+  AntiquaCRM::DateTimeInfo* ip_since;
 
   /**
    * @brief Last modified date.
    */
-  AntiquaCRM::DateTimeInfo *ip_changed;
+  AntiquaCRM::DateTimeInfo* ip_changed;
 
   /**
    * @brief Standard toolbar for all editor actions.
    */
-  AntiquaCRM::TabsEditActionBar *m_actionBar;
+  AntiquaCRM::TabsEditActionBar* m_actionBar;
 
   /**
    * @brief Image operations tool bar
    */
-  AntiquaCRM::ImageToolBar *m_imageToolBar;
+  AntiquaCRM::ImageToolBar* m_imageToolBar;
 
   /**
    * @brief Embedded thumbnail viewer
    */
-  AntiquaCRM::ImageThumbnail *m_thumbnail;
+  AntiquaCRM::ImageThumbnail* m_thumbnail;
 
   /**
    * @brief Prepare input fields and load the auto-completions.
@@ -161,7 +166,7 @@ private:
    * @param field - SqlQuery » Record » Field » Properties
    * @param value - Value from Database
    */
-  bool setDataField(const QSqlField &field, const QVariant &value) override;
+  bool setDataField(const QSqlField& field, const QVariant& value) override;
 
   /**
    * @brief Import database query with AntiquaCRM::ASqlDataQuery
@@ -187,7 +192,7 @@ private:
    *
    * @param query - PgSQL::Query::Statement
    */
-  bool sendSqlQuery(const QString &query) override;
+  bool sendSqlQuery(const QString& query) override;
 
   /**
    * @brief Create Sql dataset from all Inputfields
@@ -280,7 +285,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit StitchesEditor(QWidget *parent = nullptr);
+  explicit StitchesEditor(QWidget* parent = nullptr);
   ~StitchesEditor() override;
 
   /**
@@ -300,7 +305,7 @@ public:
    * @brief Create a csutomized entry
    * @param object
    */
-  bool createCustomEntry(const QJsonObject &object) override;
+  bool createCustomEntry(const QJsonObject& object) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_STITCHESEDITOR_H

@@ -318,8 +318,7 @@ int Application::exec() {
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {
-    // qdbus-qt5 de.hjcms.antiquacrm /
-    //      de.hjcms.antiquacrm.pushMessage testing
+    // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
     ABusAdaptor* m_adaptor = new ABusAdaptor(this);
     m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
     connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));

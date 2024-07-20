@@ -46,6 +46,8 @@ public:
    */
   explicit ConditionEdit(QWidget *parent = nullptr);
 
+  const QString defaultWhatsThis() const;
+
   void setRestrictions(const QSqlField &) override;
 
   void setInputToolTip(const QString &) override;

@@ -6,20 +6,20 @@
 #include <QCompleter>
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TextLine::TextLine(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+TextLine::TextLine(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setValidation(ALineEdit::InputValidator::DEFAULT);
   layout->addWidget(m_edit);
   initData();
 
-  connect(m_edit, SIGNAL(textChanged(const QString &)),
-          SLOT(valueChanged(const QString &)));
+  connect(m_edit, SIGNAL(textChanged(QString)), SLOT(valueChanged(QString)));
   connect(m_edit, SIGNAL(returnPressed()), SIGNAL(signalEnterPressed()));
 }
 
-void TextLine::valueChanged(const QString &) {
+void TextLine::valueChanged(const QString&) {
   // if(m_edit->validator() != nullptr) {}
   setWindowModified(true);
   emit sendInputChanged();
@@ -33,25 +33,24 @@ void TextLine::initData() {
   setWindowModified(false);
 }
 
-void TextLine::setValue(const QVariant &value) {
+void TextLine::setValue(const QVariant& value) {
   QMetaType _type = value.metaType();
   QString _data;
   switch (_type.id()) {
-  case (QMetaType::QString):
-    _data = value.toString().trimmed();
-    break;
+    case (QMetaType::QString):
+      _data = value.toString().trimmed();
+      break;
 
-  case (QMetaType::QByteArray): // Password
-    _data = QByteArray::fromBase64(value.toByteArray(),
-                                   QByteArray::Base64UrlEncoding);
-    break;
+    case (QMetaType::QByteArray): // Password
+      _data = QByteArray::fromBase64(value.toByteArray(), QByteArray::Base64UrlEncoding);
+      break;
 
-  default:
-    qWarning("Invalid given Data Type in TextLine.");
+    default:
+      qWarning("Invalid given Data Type in TextLine.");
 #ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << "TextLine Requires type int but get:" << value;
+      qDebug() << "TextLine Requires type int but get:" << value;
 #endif
-    break;
+      break;
   };
 
   m_edit->setText(_data);
@@ -81,8 +80,8 @@ void TextLine::setReadOnly(bool b) {
   }
 }
 
-void TextLine::setCompleterList(const QStringList &list) {
-  QCompleter *_completer = new QCompleter(list, this);
+void TextLine::setCompleterList(const QStringList& list) {
+  QCompleter* _completer = new QCompleter(list, this);
   _completer->setCompletionMode(QCompleter::PopupCompletion);
   _completer->setFilterMode(Qt::MatchStartsWith);
   _completer->setMaxVisibleItems(15);
@@ -97,7 +96,7 @@ void TextLine::setPasswordInput(bool b) {
   }
 }
 
-void TextLine::setRestrictions(const QSqlField &field) {
+void TextLine::setRestrictions(const QSqlField& field) {
   m_edit->setClearButtonEnabled(false);
   if (field.requiredStatus() == QSqlField::Required) {
     setRequired(true);
@@ -122,23 +121,23 @@ void TextLine::setRestrictions(const QSqlField &field) {
     m_edit->setText(_default);
 }
 
-void TextLine::setInputToolTip(const QString &tip) {
+void TextLine::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
   if (m_edit->placeholderText().isEmpty())
     m_edit->setPlaceholderText(tip);
 }
 
-void TextLine::setBuddyLabel(const QString &text) {
+void TextLine::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
   layout->setStretch(1, 1);
 }
 
 bool TextLine::isValid() {
-  if (isRequired() && (m_edit->text().length() < 3))
+  if (isRequired() && (m_edit->text().length() < 2))
     return false;
 
   return true;
@@ -161,9 +160,14 @@ const QVariant TextLine::getValue() {
 }
 
 const QString TextLine::popUpHints() {
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << Q_FUNC_INFO << objectName() << getValue();
+#endif
   return tr("This text line is required!");
 }
 
-const QString TextLine::statusHints() { return popUpHints(); }
+const QString TextLine::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

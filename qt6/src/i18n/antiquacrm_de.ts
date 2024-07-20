@@ -614,12 +614,42 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Deutliche Gebrauchsspuren.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Heavily worn!</source>
         <translation>Stark abgenutzt!</translation>
     </message>
     <message>
-        <location line="+93"/>
+        <location line="+62"/>
+        <source>&lt;div&gt;Article condition is in following rating available.&lt;/div&gt;</source>
+        <translation>&lt;div&gt;Der Artikelzustand ist in folgender Bewertung verfügbar.&lt;/div&gt;</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Fine</source>
+        <translation>Sehr gut</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Good</source>
+        <translation>Gut</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Satisfying</source>
+        <translation>Befriedigend</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Sufficient</source>
+        <translation>Ausreichend</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
+    </message>
+    <message>
+        <location line="+42"/>
         <source>Missing Condition for this Article!</source>
         <translation>Fehlende Artikelzustands beschreibung!</translation>
     </message>
@@ -629,7 +659,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Der Zustand eines Artikels sollte dem Käufer immer mitgeteilt werden.</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>No Condition for this Article exists!</source>
         <translation>Für diesen Artikel ist keine Zustandsbeschreibung vorhanden!</translation>
     </message>
@@ -3007,12 +3037,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TextLine</name>
     <message>
-        <location filename="../Antiqua/Widgets/textline.cpp" line="+111"/>
+        <location filename="../Antiqua/Widgets/textline.cpp" line="+110"/>
         <source>Max allowed length</source>
         <translation>Maximal zulässige Länge</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+56"/>
         <source>This text line is required!</source>
         <translation>Diese Eingabezeile ist erforderlich!</translation>
     </message>
@@ -3126,7 +3156,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Cache-Datei erstellen ist fehlgeschlagen ...</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+29"/>
         <source>Open AntiquaCRM application ...</source>
         <translation>Öffne AntiquaCRM-Anwendung ...</translation>
     </message>
@@ -4975,7 +5005,7 @@ Bild – Artikel-ID: %2</translation>
     <message>
         <location line="+51"/>
         <source>&lt;div&gt;&lt;p&gt;Normally, it is not necessary to change customer data in existing orders.&lt;/p&gt;&lt;p&gt;Customer data is included in the provider&apos;s orders and synchronized with the customer data in AntiquaCRM.&lt;/p&gt;&lt;p&gt;However, sometimes there is a problem when service provider data differs from the customer data in AntiquaCRM.&lt;/p&gt;&lt;p&gt;If this problem exists, this function should help to resolve it.&lt;/p&gt;&lt;b&gt;Please note what happens when a customer changes:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Changing customer data in orders can lead to asynchronous data with the service providers.&lt;/li&gt;&lt;li&gt;Existing address data in invoices and delivery notes islost and must be regenerated.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</source>
-        <translation>&lt;div&gt;&lt;p&gt;Im Normalfall ist es nicht notwendig, Kundendaten in bestehenden Aufträgen zu ändern.&lt;/p&gt;&lt;p&gt;Kundendaten werden in die Aufträge der Anbieter übernommen und mit den Kundendaten in AntiquaCRM synchronisiert.&lt;/p&gt;&lt;p&gt;Manchmal gibt es jedoch ein Problem, wenn Daten der Dienstleister von den Kundendaten in AntiquaCRM abweichen.&lt;/p&gt;&lt;p&gt;Falls dieses Problem besteht, sollte diese Funktion helfen, es zu beheben.&lt;/p&gt;&lt;b&gt;Bitte beachten Sie, was bei einem Kundenwechsel passiert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Aufträgen kann zu asynchronen Daten bei den Dienstleistern führen.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferscheinen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
+        <translation>&lt;div&gt;&lt;p&gt;Im Normalfall ist es nicht notwendig, Kundendaten in bestehenden Aufträgen zu ändern.&lt;/p&gt;&lt;p&gt;Kundendaten werden mit den Aufträgen der Anbieter übernommen und mit den Kundendaten in AntiquaCRM synchronisiert.&lt;/p&gt;&lt;p&gt;Manchmal gibt es jedoch ein Problem, wenn Daten der Dienstleister von den Kundendaten in AntiquaCRM abweichen.&lt;/p&gt;&lt;p&gt;Falls dieses Problem besteht, soll diese Funktion helfen, es zu beheben.&lt;/p&gt;&lt;b&gt;Bitte beachten Sie, was bei einem Kundenwechsel passiert:&lt;/b&gt;&lt;ul&gt;&lt;li&gt;Das Ändern von Kundendaten in Aufträgen kann zu asynchronen Daten bei den Dienstleistern führen.&lt;/li&gt;&lt;li&gt;Bestehende Adressdaten in Rechnungen und Lieferscheinen gehen verloren und müssen neu generiert werden.&lt;/li&gt;&lt;/ul&gt;&lt;/div&gt;</translation>
     </message>
     <message>
         <location line="+34"/>
@@ -7361,7 +7391,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+167"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+165"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -7371,7 +7401,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+121"/>
+        <location line="+119"/>
         <source>Payment Id</source>
         <translation>Zahlungs Id</translation>
     </message>
@@ -7437,7 +7467,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+4"/>
-        <location line="+78"/>
+        <location line="+77"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -9083,7 +9113,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Artikel-Id</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Probably the most important parameter for the article processing and is generated automatically when creating a entry. AntiquaCRM use a running numbering system.</source>
         <translation>Der wohl wichtigste Parameter für die Artikelbearbeitung und wird beim Anlegen eines Eintrags automatisch generiert. AntiquaCRM verwendet ein fortlaufendes Nummerierungssystem.</translation>
     </message>
@@ -9093,14 +9123,14 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Anzahl</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>The Article count is the main value for activating and deactivating stitches in your inventory. If you set it to 0, it will be disabled on your vendor pages and no longer visible for sale.
 Notes: These updates are not done directly, however daily performed from AntiquaCRM Server after working time.</source>
         <translation>Die Artikelanzahl ist der Hauptwert zum Aktivieren und Deaktivieren von Stichen in Ihrem Inventar. Wenn Sie den Wert auf 0 setzen, wird es auf Ihren Anbieterseiten deaktiviert und nicht mehr zum Verkauf angezeigt.
 Hinweise: Diese Aktualisierungen erfolgen nicht direkt, sondern täglich nach der Arbeitszeit vom AntiquaCRM-Server.</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>Price</source>
         <translation>Preis</translation>
     </message>
@@ -9127,7 +9157,7 @@ Hinweise: Sie können im Hauptkonfigurationsdialog jederzeit Grenzwerte für Pre
         <translation></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>In painting, color means the selection, harmony, shading and composition of the different colors in a painting.</source>
         <translation>Unter Farbe versteht man in der Malerei die Auswahl, Harmonie, Schattierung und Komposition der verschiedenen Farben in einem Gemälde.</translation>
     </message>
@@ -9187,7 +9217,7 @@ Hinweise: Dies ist im Nachhinein nicht möglich, es gibt hierfür keine Remote-L
         <translation>Autoren</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>This field is reserved for Authors.
 You can add more separated by comma.
 Some provider Platforms supporting spezial Keywords.
@@ -9198,17 +9228,22 @@ Einige Anbieterplattformen unterstützen spezielle Keywords.
 AntiquaCRM schlägt beim Bearbeiten dieses Feldes die gebräuchlichsten Autorengruppennamen vor.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Format</source>
         <translation></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>The format information depends on the metric unit system of the local user. Images have standard formats which are defined elsewhere. Mainly dimensions are given here.</source>
         <translation>Die Formatinformationen hängen vom metrischen Einheitensystem des lokalen Benutzers ab. Bilder haben Standardformate, die an anderer Stelle definiert sind. Hier werden hauptsächlich Maße angegeben.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
+        <source>Condition</source>
+        <translation>Zustand</translation>
+    </message>
+    <message>
+        <location line="+11"/>
         <source>Storage</source>
         <translation>Lager</translation>
     </message>
@@ -9253,7 +9288,7 @@ AntiquaCRM schlägt beim Bearbeiten dieses Feldes die gebräuchlichsten Autoreng
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Keywords will help Buyers, to find your Article on Provider pages. This Articles keyword management can also be compared to „Search Engine Optimization“ (SEO).
 Restrictions:
 - A Keyword must have a minimum length from 3 characters.
@@ -9268,12 +9303,12 @@ Einschränkungen:
 Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmenü bearbeiten.</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+33"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -9293,7 +9328,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+63"/>
         <source>Authors group</source>
         <translation>Autorengruppe</translation>
     </message>
@@ -9308,7 +9343,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Verschiedene Autoren</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>Nice clean copy</source>
         <translation>Schönes, sauberes Exemplar</translation>
     </message>
@@ -9338,12 +9373,12 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Mit Exlibris</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+71"/>
         <source>Data saved successfully!</source>
         <translation>Daten erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>Missing Article ID for Update.</source>
         <translation>Fehlende Artikel-ID für Update.</translation>
     </message>
@@ -9368,7 +9403,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Sind Sie sicher, dass dieser Vorgang abgeschlossen ist?</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Entry deactivation</source>
         <translation>Eintragsdeaktivierung</translation>
     </message>
@@ -9378,7 +9413,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Es fehlt eine gültige Artikel-ID!</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+33"/>
         <source>Card print successfully.</source>
         <translation>Kartendruck erfolgreich.</translation>
     </message>
@@ -9407,7 +9442,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Möchten Sie das Bild wirklich löschen?</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Image delete successfully!</source>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>

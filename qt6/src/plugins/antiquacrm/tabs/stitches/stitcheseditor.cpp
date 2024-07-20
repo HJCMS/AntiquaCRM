@@ -10,12 +10,12 @@
 #include <QDate>
 #include <QLayout>
 
-StitchesEditor::StitchesEditor(QWidget *parent)
+StitchesEditor::StitchesEditor(QWidget* parent)
     : AntiquaCRM::TabsEditor{STITCHES_SQL_EDITOR_PATTERN, parent} {
   setWindowTitle(tr("Edit entry"));
   setObjectName("tab_stitches_editor");
 
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  QVBoxLayout* mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("printseditor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
 
@@ -23,25 +23,26 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   AntiquaCRM::ALabel::Align _lbAlign = AntiquaCRM::ALabel::Align::MiddleRight;
 
   // Row 0
-  QHBoxLayout *row0 = new QHBoxLayout();
+  QHBoxLayout* row0 = new QHBoxLayout();
   ip_id = new AntiquaCRM::SerialId(this);
   ip_id->setObjectName("ip_id");
   ip_id->setBuddyLabel(tr("Article ID"));
-  tempWhatsThis = tr("Probably the most important parameter for the article "
-                     "processing and is generated automatically when creating "
-                     "a entry. AntiquaCRM use a running numbering system.");
+  tempWhatsThis =
+      tr("Probably the most important parameter for the article "
+         "processing and is generated automatically when creating "
+         "a entry. AntiquaCRM use a running numbering system.");
   ip_id->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_id);
 
   ip_count = new AntiquaCRM::CrowdEdit(this);
   ip_count->setObjectName("ip_count");
   ip_count->setBuddyLabel(tr("Count"));
-  tempWhatsThis = tr(
-      "The Article count is the main value for activating and deactivating "
-      "stitches in your inventory. If you set it to 0, it will be disabled on "
-      "your vendor pages and no longer visible for sale.\nNotes: These "
-      "updates are not done directly, however daily performed from "
-      "AntiquaCRM Server after working time.");
+  tempWhatsThis =
+      tr("The Article count is the main value for activating and deactivating "
+         "stitches in your inventory. If you set it to 0, it will be disabled on "
+         "your vendor pages and no longer visible for sale.\nNotes: These "
+         "updates are not done directly, however daily performed from "
+         "AntiquaCRM Server after working time.");
   ip_count->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_count);
 
@@ -64,8 +65,9 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_kolorit = new AntiquaCRM::BoolBox(this);
   ip_kolorit->setObjectName("ip_kolorit");
   ip_kolorit->setBuddyLabel(tr("Kolorit"));
-  tempWhatsThis = tr("In painting, color means the selection, harmony, shading "
-                     "and composition of the different colors in a painting.");
+  tempWhatsThis =
+      tr("In painting, color means the selection, harmony, shading "
+         "and composition of the different colors in a painting.");
   ip_kolorit->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_kolorit);
 
@@ -100,13 +102,13 @@ StitchesEditor::StitchesEditor(QWidget *parent)
 
   // Row 1
   m_splitter = new AntiquaCRM::Splitter(this);
-  QWidget *row2Widget = new QWidget(m_splitter);
+  QWidget* row2Widget = new QWidget(m_splitter);
   row2Widget->setContentsMargins(0, 0, 0, 0);
   int row2c = 0;
-  QGridLayout *row2 = new QGridLayout(row2Widget);
+  QGridLayout* row2 = new QGridLayout(row2Widget);
   row2->setContentsMargins(0, 0, 0, 0);
 
-  AntiquaCRM::ALabel *infoText;
+  AntiquaCRM::ALabel* infoText;
   infoText = new AntiquaCRM::ALabel(tr("Title"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_title = new AntiquaCRM::TextLine(this);
@@ -135,15 +137,18 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   ip_author = new AntiquaCRM::TextLine(this);
   ip_author->setObjectName("ip_author");
   ip_author->setInputToolTip(tr("Authors"));
-  tempWhatsThis = tr("This field is reserved for Authors.\nYou can add more "
-                     "separated by comma.\nSome provider Platforms supporting "
-                     "spezial Keywords.\nAntiquaCRM suggests the most common "
-                     "author group names, when editing this field.");
+  tempWhatsThis =
+      tr("This field is reserved for Authors.\nYou can add more "
+         "separated by comma.\nSome provider Platforms supporting "
+         "spezial Keywords.\nAntiquaCRM suggests the most common "
+         "author group names, when editing this field.");
   ip_author->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_author, row2c++, 1, 1, 1);
 
+  // Begin:Format+Condition
   infoText = new AntiquaCRM::ALabel(tr("Format"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
+  QHBoxLayout* formatLayout = new QHBoxLayout;
   ip_format = new AntiquaCRM::TextLine(this);
   ip_format->setObjectName("ip_format");
   ip_format->setInputToolTip(infoText->text());
@@ -152,13 +157,23 @@ StitchesEditor::StitchesEditor(QWidget *parent)
          "local user. Images have standard formats which are defined "
          "elsewhere. Mainly dimensions are given here.");
   ip_format->setWhatsThisText(tempWhatsThis);
-  row2->addWidget(ip_format, row2c++, 1, 1, 1);
+  ip_format->appendStretch();
+  formatLayout->addWidget(ip_format);
+  QString ip_condition_label(tr("Condition"));
+  ip_condition = new AntiquaCRM::ConditionEdit(this);
+  ip_condition->setObjectName("ip_condition");
+  ip_condition->setInputToolTip(ip_condition_label);
+  ip_condition->setWhatsThisText(ip_condition->defaultWhatsThis());
+  formatLayout->addWidget(new AntiquaCRM::ALabel(ip_condition_label, _lbAlign, this));
+  formatLayout->addWidget(ip_condition);
+  row2->addLayout(formatLayout, row2c++, 1, 1, 1);
+  // End:Format+Condition
 
   // Begin:Storage
   infoText = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, this);
   row2->addWidget(infoText, row2c, 0, 1, 1);
 
-  QHBoxLayout *storageLayout = new QHBoxLayout;
+  QHBoxLayout* storageLayout = new QHBoxLayout;
 
   ip_storage = new AntiquaCRM::SelectStorage(this);
   ip_storage->setObjectName("ip_storage");
@@ -190,15 +205,15 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ip_keyword = new AntiquaCRM::KeywordsEdit(this);
   ip_keyword->setObjectName("ip_keyword");
-  tempWhatsThis = tr(
-      "Keywords will help Buyers, to find your Article on Provider pages. This "
-      "Articles keyword management can also be compared to „Search Engine "
-      "Optimization“ (SEO).\n"
-      "Restrictions:\n"
-      "- A Keyword must have a minimum length from 3 characters.\n"
-      "- A Keywords list is restricted to a Maximum length of 60 Characters.\n"
-      "- A keyword cannot contain spaces or non unicode special characters.\n"
-      "You can edit predefined Keywords in your Database Configuration Menu.");
+  tempWhatsThis =
+      tr("Keywords will help Buyers, to find your Article on Provider pages. This "
+         "Articles keyword management can also be compared to „Search Engine "
+         "Optimization“ (SEO).\n"
+         "Restrictions:\n"
+         "- A Keyword must have a minimum length from 3 characters.\n"
+         "- A Keywords list is restricted to a Maximum length of 60 Characters.\n"
+         "- A keyword cannot contain spaces or non unicode special characters.\n"
+         "You can edit predefined Keywords in your Database Configuration Menu.");
   ip_keyword->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ip_keyword, row2c++, 1, 1, 1);
   row2->setRowStretch(row2c++, 1);
@@ -228,11 +243,10 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   // Internal Description
   ip_internal_description = new AntiquaCRM::TextField(m_tabWidget);
   ip_internal_description->setObjectName("ip_internal_description");
-  m_tabWidget->insertTab(1, ip_internal_description, tabIcons,
-                         tr("Internal Description"));
+  m_tabWidget->insertTab(1, ip_internal_description, tabIcons, tr("Internal Description"));
   // Info Tab
-  QWidget *m_infos = new QWidget(m_tabWidget);
-  QGridLayout *infoLayout = new QGridLayout(m_infos);
+  QWidget* m_infos = new QWidget(m_tabWidget);
+  QGridLayout* infoLayout = new QGridLayout(m_infos);
   infoLayout->setColumnStretch(1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Created"), _lbAlign, m_infos);
@@ -263,21 +277,17 @@ StitchesEditor::StitchesEditor(QWidget *parent)
   registerInputChanged();
 
   // Signals:ImageToolBar
-  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
-          SLOT(setRemoveThumbnail(qint64)));
+  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)), SLOT(setRemoveThumbnail(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setImportEditImage()));
 
   // Signals::Storage
-  connect(ip_storage, SIGNAL(sendValueChanged()),
-          SLOT(setStorageCompartments()));
+  connect(ip_storage, SIGNAL(sendValueChanged()), SLOT(setStorageCompartments()));
 
   // Signals:ActionBar
-  connect(m_actionBar, SIGNAL(sendCancelClicked()),
-          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
-  connect(m_actionBar, SIGNAL(sendFinishClicked()),
-          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()), SLOT(setCheckLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintBookCard()));
 }
 
@@ -328,6 +338,8 @@ void StitchesEditor::setInputFields() {
   _completer_data = _dataFiles.getCompleterList("keywords", "name");
   ip_keyword->setCompleterList(_completer_data);
 
+  // ip_condition
+
   _completer_data.clear();
 
   // description
@@ -341,16 +353,15 @@ void StitchesEditor::setInputFields() {
   ip_description->setWordsList(_list);
 }
 
-bool StitchesEditor::setDataField(const QSqlField &field,
-                                  const QVariant &value) {
+bool StitchesEditor::setDataField(const QSqlField& field, const QVariant& value) {
   if (!field.isValid())
     return false;
 
   QString key = field.name();
   // qDebug() << "setDataField:" << field.name() << value;
   bool required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AInputWidget *inp =
-      findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);
+  AntiquaCRM::AInputWidget* inp =
+      findChild<AntiquaCRM::AInputWidget*>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setRestrictions(field);
     // Muss nach setRestrictions kommen!
@@ -393,7 +404,7 @@ void StitchesEditor::importSqlResult() {
   setResetModified(inputFields);
 }
 
-bool StitchesEditor::sendSqlQuery(const QString &query) {
+bool StitchesEditor::sendSqlQuery(const QString& query) {
   //  qDebug() << Q_FUNC_INFO << query;
   //  return true;
   QSqlQuery q = m_sql->query(query);
@@ -416,12 +427,11 @@ bool StitchesEditor::sendSqlQuery(const QString &query) {
 
 const QHash<QString, QVariant> StitchesEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  QList<AntiquaCRM::AInputWidget *> list =
-      findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                               Qt::FindChildrenRecursively);
-  QList<AntiquaCRM::AInputWidget *>::Iterator it;
+  QList<AntiquaCRM::AInputWidget*> list =
+      findChildren<AntiquaCRM::AInputWidget*>(fieldPattern, Qt::FindChildrenRecursively);
+  QList<AntiquaCRM::AInputWidget*>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
-    AntiquaCRM::AInputWidget *cur = *it;
+    AntiquaCRM::AInputWidget* cur = *it;
     QString objName = cur->objectName();
     if (ignoreFields.contains(objName))
       continue;
@@ -586,8 +596,7 @@ bool StitchesEditor::realyDeactivateEntry() {
   body << tr("Are you sure to finish this operation?");
   body << QString("</p>");
 
-  int ret =
-      QMessageBox::question(this, tr("Entry deactivation"), body.join(""));
+  int ret = QMessageBox::question(this, tr("Entry deactivation"), body.join(""));
   if (ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);
@@ -666,13 +675,11 @@ void StitchesEditor::setPrintBookCard() {
   _config.insert("compartment", _buffer.trimmed());
   _buffer.clear();
 
-  _buffer = getDataValue("ip_changed")
-                .toDate()
-                .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+  _buffer = getDataValue("ip_changed").toDate().toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   _config.insert("changed", _buffer.trimmed());
   _buffer.clear();
 
-  AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
+  AntiquaCRM::PrintBookCard* m_d = new AntiquaCRM::PrintBookCard(this);
   if (m_d->exec(_config) == QDialog::Accepted) {
     pushStatusMessage(tr("Card print successfully."));
   } else {
@@ -701,8 +708,7 @@ void StitchesEditor::setRemoveThumbnail(qint64 articleId) {
   QMessageBox::StandardButton set = QMessageBox::question(
       this, tr("Remove Image from Database"),
       tr("%1\n\nImage - Article Id: %2")
-          .arg(tr("Do you really want to delete the Image?"),
-               QString::number(_id)));
+          .arg(tr("Do you really want to delete the Image?"), QString::number(_id)));
   if (set == QMessageBox::Yes) {
     AntiquaCRM::ImageFileSource thumbnail;
     thumbnail.setFileId(_id);
@@ -720,10 +726,8 @@ void StitchesEditor::setImportEditImage() {
     return;
   }
 
-  AntiquaCRM::ImageImportDialog *d =
-      new AntiquaCRM::ImageImportDialog(_id, "Stitches", this);
-  connect(d, SIGNAL(sendThumbnail(const QPixmap &)), m_thumbnail,
-          SLOT(setPixmap(const QPixmap &)));
+  AntiquaCRM::ImageImportDialog* d = new AntiquaCRM::ImageImportDialog(_id, "Stitches", this);
+  connect(d, SIGNAL(sendThumbnail(const QPixmap&)), m_thumbnail, SLOT(setPixmap(const QPixmap&)));
 
   d->exec();
   d->deleteLater();
@@ -783,7 +787,7 @@ bool StitchesEditor::createNewEntry() {
   return isEnabled();
 }
 
-bool StitchesEditor::createCustomEntry(const QJsonObject &object) {
+bool StitchesEditor::createCustomEntry(const QJsonObject& object) {
   Q_UNUSED(object);
   qInfo("Unused function for this plugin, skipped!");
   return true;

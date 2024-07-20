@@ -18,8 +18,7 @@ void __debug_article_items(AntiquaCRM::OrderArticleItems items) {
 }
 #endif
 
-OrdersTableModel::OrdersTableModel(QObject *parent)
-    : QAbstractTableModel{parent} {
+OrdersTableModel::OrdersTableModel(QObject* parent) : QAbstractTableModel{parent} {
   AntiquaCRM::ASettings cfg(this);
   cfg.beginGroup("payment");
   currency = cfg.value("currency", "€").toString();
@@ -34,8 +33,7 @@ const QString OrdersTableModel::displayPrice(double price) const {
   return str.trimmed();
 }
 
-bool OrdersTableModel::updateRow(int index,
-                                 const AntiquaCRM::OrderArticleItems &data) {
+bool OrdersTableModel::updateRow(int index, const AntiquaCRM::OrderArticleItems& data) {
   if (index < 0 || data.size() < 1 || articles.size() < 1)
     return false;
 
@@ -60,18 +58,17 @@ const QModelIndex OrdersTableModel::parentIndex() const {
   return index(0, 0, QModelIndex());
 }
 
-int OrdersTableModel::rowCount(const QModelIndex &parent) const {
+int OrdersTableModel::rowCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
   return articles.size();
 }
 
-int OrdersTableModel::columnCount(const QModelIndex &parent) const {
+int OrdersTableModel::columnCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
   return p_columns;
 }
 
-QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
-                                      int role) const {
+QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation, int role) const {
   if (orientation == Qt::Vertical) {
     if (role == Qt::DisplayRole)
       return section + 1;
@@ -96,7 +93,7 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation,
   return QVariant();
 }
 
-QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
+QVariant OrdersTableModel::data(const QModelIndex& index, int role) const {
   QModelRoleData _item(role);
   if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
     return _item.data();
@@ -105,6 +102,7 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   AntiquaCRM::OrderArticleItems _list = articles.value(index.row());
   for (int c = 0; c < _list.size(); c++) {
     if (_list.at(c).key == _info.field()) {
+      // qDebug() << c << _list.at(c).key << _list.at(c).value;
       _item.setData(_list.at(c).value);
       break;
     }
@@ -113,37 +111,37 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
 
   const QString _fname = _info.field();
   const QMetaType _type = _item.data().metaType();
-#ifdef ANTIQUA_DEVELOPMENT
   if (_type.id() == QMetaType::UnknownType) {
-    qDebug() << Q_FUNC_INFO << "Invalid MetaType:" << _fname << _item.data();
-  }
+#ifdef ANTIQUA_DEVELOPMENT
+    qWarning("OrdersTableModel - Missing Data or MetaType - „%s“.", qPrintable(_fname));
 #endif
+  }
 
   // BEGIN::EditRole
   if (_item.role() == Qt::EditRole) {
     switch (_type.id()) {
-    case QMetaType::Bool:
-      return _item.data().toBool();
+      case QMetaType::Bool:
+        return _item.data().toBool();
 
-    case QMetaType::Int:
-    case QMetaType::UInt:
-    case QMetaType::Long:
-    case QMetaType::ULong:
-      return _item.data().toInt();
+      case QMetaType::Int:
+      case QMetaType::UInt:
+      case QMetaType::Long:
+      case QMetaType::ULong:
+        return _item.data().toInt();
 
-    case QMetaType::LongLong:
-    case QMetaType::ULongLong:
-      return _item.data().toLongLong();
+      case QMetaType::LongLong:
+      case QMetaType::ULongLong:
+        return _item.data().toLongLong();
 
-    case QMetaType::Float:
-    case QMetaType::Double:
-      return _item.data().toDouble();
+      case QMetaType::Float:
+      case QMetaType::Double:
+        return _item.data().toDouble();
 
-    case QMetaType::QDateTime:
-      return _item.data().toDateTime();
+      case QMetaType::QDateTime:
+        return _item.data().toDateTime();
 
-    default:
-      return _item.data();
+      default:
+        return _item.data();
     };
   }
   // END::EditRole
@@ -163,51 +161,51 @@ QVariant OrdersTableModel::data(const QModelIndex &index, int role) const {
   }
 
   switch (_type.id()) {
-  case QMetaType::Bool:
-    return _item.data().toBool() ? tr("Yes") : tr("No");
+    case QMetaType::Bool:
+      return _item.data().toBool() ? tr("Yes") : tr("No");
 
-  case QMetaType::Int:
-  case QMetaType::Long:
-  case QMetaType::ULong: {
-    return _item.data().toInt();
-  }
+    case QMetaType::Int:
+    case QMetaType::Long:
+    case QMetaType::ULong:
+      return _item.data().toInt();
 
-  case QMetaType::LongLong:
-  case QMetaType::ULongLong:
-    return _item.data().toLongLong();
+    case QMetaType::LongLong:
+    case QMetaType::ULongLong:
+      return _item.data().toLongLong();
 
-  case QMetaType::Float:
-  case QMetaType::Double: {
-    return _item.data().toDouble();
-  }
+    case QMetaType::Float:
+    case QMetaType::Double:
+      return _item.data().toDouble();
 
-  case QMetaType::QDate: {
-    QDate dt = _item.data().toDate();
-    return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
-  }
+    case QMetaType::QDate:
+      {
+        QDate dt = _item.data().toDate();
+        return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+      }
 
-  case QMetaType::QDateTime: {
-    QDateTime dt = _item.data().toDateTime();
-    return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
-  }
+    case QMetaType::QDateTime:
+      {
+        QDateTime dt = _item.data().toDateTime();
+        return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+      }
 
-  default: {
-    // FIXME Max. Zeichenlänge beim Titel ist 80!
-    QString _str = _item.data().toString();
-    if (_str.length() > max_string_length) {
-      int l = (max_string_length - 4);
-      return _str.left(l) + "...";
-    }
-    return _str;
-  }
+    default:
+      {
+        // FIXME Max. Zeichenlänge beim Titel ist 80!
+        QString _str = _item.data().toString();
+        if (_str.length() > max_string_length) {
+          int l = (max_string_length - 4);
+          return _str.left(l) + "...";
+        }
+        return _str;
+      }
   };
   // END::DisplayRole
 
   return QVariant();
 }
 
-bool OrdersTableModel::setData(const QModelIndex &index, const QVariant &value,
-                               int role) {
+bool OrdersTableModel::setData(const QModelIndex& index, const QVariant& value, int role) {
   if (!index.isValid() || (role != Qt::DisplayRole && role != Qt::EditRole))
     return false;
 
@@ -230,7 +228,7 @@ bool OrdersTableModel::setData(const QModelIndex &index, const QVariant &value,
   return updateRow(index.row(), _row);
 }
 
-Qt::ItemFlags OrdersTableModel::flags(const QModelIndex &index) const {
+Qt::ItemFlags OrdersTableModel::flags(const QModelIndex& index) const {
   if (!index.isValid())
     return Qt::ItemIsEnabled;
 
@@ -243,8 +241,7 @@ Qt::ItemFlags OrdersTableModel::flags(const QModelIndex &index) const {
   return flags;
 }
 
-bool OrdersTableModel::removeRows(int row, int count,
-                                  const QModelIndex &parent) {
+bool OrdersTableModel::removeRows(int row, int count, const QModelIndex& parent) {
   if (parent.isValid() || row < 0 || count <= 0)
     return false;
   else if (row + count > rowCount())
@@ -263,7 +260,7 @@ bool OrdersTableModel::removeRows(int row, int count,
   return addArticles(_items);
 }
 
-const QString OrdersTableModel::field(const QModelIndex &index) const {
+const QString OrdersTableModel::field(const QModelIndex& index) const {
   if (!index.isValid())
     return QString();
 
@@ -271,7 +268,7 @@ const QString OrdersTableModel::field(const QModelIndex &index) const {
   return info.field();
 }
 
-int OrdersTableModel::columnIndex(const QString &fieldName) const {
+int OrdersTableModel::columnIndex(const QString& fieldName) const {
   for (int c = 0; c < columnCount(); c++) {
     AntiquaCRM::ATableHeaderColumn info = headerColumn(c);
     if (info.field() == fieldName)
@@ -280,70 +277,69 @@ int OrdersTableModel::columnIndex(const QString &fieldName) const {
   return -1;
 }
 
-const AntiquaCRM::ATableHeaderColumn
-OrdersTableModel::headerColumn(int column) {
+const AntiquaCRM::ATableHeaderColumn OrdersTableModel::headerColumn(int column) {
   AntiquaCRM::ATableHeaderColumn _col;
   switch (column) {
-  case 0:
-    _col = AntiquaCRM::ATableHeaderColumn("a_payment_id", tr("Payment Id"));
-    break;
+    case 0:
+      _col = AntiquaCRM::ATableHeaderColumn("a_payment_id", tr("Payment Id"));
+      break;
 
-  case 1:
-    _col = AntiquaCRM::ATableHeaderColumn("a_order_id", tr("Order Id"));
-    break;
+    case 1:
+      _col = AntiquaCRM::ATableHeaderColumn("a_order_id", tr("Order Id"));
+      break;
 
-  case 2:
-    _col = AntiquaCRM::ATableHeaderColumn("a_article_id", tr("Article Id"));
-    break;
+    case 2:
+      _col = AntiquaCRM::ATableHeaderColumn("a_article_id", tr("Article Id"));
+      break;
 
-  case 3:
-    _col = AntiquaCRM::ATableHeaderColumn("a_customer_id", tr("Customer Id"));
-    break;
+    case 3:
+      _col = AntiquaCRM::ATableHeaderColumn("a_customer_id", tr("Customer Id"));
+      break;
 
-  case 4:
-    _col = AntiquaCRM::ATableHeaderColumn("a_type", tr("Type"));
-    break;
+    case 4:
+      _col = AntiquaCRM::ATableHeaderColumn("a_type", tr("Type"));
+      break;
 
-  case 5:
-    _col = AntiquaCRM::ATableHeaderColumn("a_count", tr("Count"));
-    break;
+    case 5:
+      _col = AntiquaCRM::ATableHeaderColumn("a_count", tr("Count"));
+      break;
 
-  case 6:
-    _col = AntiquaCRM::ATableHeaderColumn("a_price", tr("Price"));
-    break;
+    case 6:
+      _col = AntiquaCRM::ATableHeaderColumn("a_price", tr("Price"));
+      break;
 
-  case 7:
-    _col = AntiquaCRM::ATableHeaderColumn("a_sell_price", tr("Sell Price"));
-    break;
+    case 7:
+      _col = AntiquaCRM::ATableHeaderColumn("a_sell_price", tr("Sell Price"));
+      break;
 
-  case 8:
-    _col = AntiquaCRM::ATableHeaderColumn("a_tax", tr("VAT"));
-    break;
+    case 8:
+      _col = AntiquaCRM::ATableHeaderColumn("a_tax", tr("VAT"));
+      break;
 
-  case 9:
-    _col = AntiquaCRM::ATableHeaderColumn("a_title", tr("Title"));
-    break;
+    case 9:
+      _col = AntiquaCRM::ATableHeaderColumn("a_title", tr("Title"));
+      break;
 
-  case 10:
-    _col = AntiquaCRM::ATableHeaderColumn("a_modified", tr("Modified"));
-    break;
+    case 10:
+      _col = AntiquaCRM::ATableHeaderColumn("a_modified", tr("Modified"));
+      break;
 
-  case 11:
-    _col = AntiquaCRM::ATableHeaderColumn("a_provider_id", tr("Provider Id"));
-    break;
+    case 11:
+      _col = AntiquaCRM::ATableHeaderColumn("a_provider_id", tr("Provider Id"));
+      break;
 
-  case 12:
-    _col = AntiquaCRM::ATableHeaderColumn("a_refunds_cost", tr("Refunding"));
-    break;
+    case 12:
+      _col = AntiquaCRM::ATableHeaderColumn("a_refunds_cost", tr("Refunding"));
+      break;
 
-  default:
-    _col = AntiquaCRM::ATableHeaderColumn("unknown", tr("Unknown"));
-    break;
+    default:
+      _col = AntiquaCRM::ATableHeaderColumn("unknown", tr("Unknown"));
+      break;
   };
   return _col;
 }
 
-bool OrdersTableModel::addArticle(const AntiquaCRM::OrderArticleItems &item) {
+bool OrdersTableModel::addArticle(const AntiquaCRM::OrderArticleItems& item) {
   beginResetModel();
   int pastCount = rowCount();
   articles.insert(rowCount(), item);
@@ -352,8 +348,7 @@ bool OrdersTableModel::addArticle(const AntiquaCRM::OrderArticleItems &item) {
   return (rowCount() > pastCount);
 }
 
-bool OrdersTableModel::addArticles(
-    const QList<AntiquaCRM::OrderArticleItems> &items) {
+bool OrdersTableModel::addArticles(const QList<AntiquaCRM::OrderArticleItems>& items) {
   if (items.size() < 1)
     return false;
 
@@ -402,19 +397,19 @@ const QList<int> OrdersTableModel::editableColumns() const {
 
 const QString OrdersTableModel::articleType(int type) {
   switch (static_cast<AntiquaCRM::ArticleType>(type)) {
-  case AntiquaCRM::ArticleType::BOOK:
-    return tr("Book");
+    case AntiquaCRM::ArticleType::BOOK:
+      return tr("Book");
 
-  case AntiquaCRM::ArticleType::MEDIA:
-    return tr("Media");
+    case AntiquaCRM::ArticleType::MEDIA:
+      return tr("Media");
 
-  case AntiquaCRM::ArticleType::PRINTS:
-    return tr("Print");
+    case AntiquaCRM::ArticleType::PRINTS:
+      return tr("Print");
 
-  case AntiquaCRM::ArticleType::OTHER:
-    return tr("Other");
+    case AntiquaCRM::ArticleType::OTHER:
+      return tr("Other");
 
-  default:
-    return tr("Unknown");
+    default:
+      return tr("Unknown");
   }
 }
