@@ -104,7 +104,7 @@ private:
   void createSqlInsert() override;
 
   /**
-   * @brief Einkäufe vom Kunden suchen und einfügen!
+   * @brief Search and insert customer purchases!
    */
   void findPurchases();
 
@@ -185,15 +185,16 @@ public:
   bool createNewEntry() override;
 
   /**
-   * @brief Kunde öffnen oder aus Json Struktur erstellen
-   * @param object - Datenstruktur
+   * @brief Open customer or create from Json structure
+   * @param object - Data structure
+   * @see CustomersWidget::acceptsCustomActions
    *
-   * Optional - Kundendaten aus Dienstleister Daten erstellen!
+   * Optional - create customer data from service provider data!
    * @code
-   *  "ACTION", @see CustomersWidget::acceptsCustomActions
+   *  "ACTION", "open_customer" || "create_customer"
    *  "TARGET", "customers_tab"
    *  "CUSTOMER", CUSTOMER_ID || JSON_OBJECT
-   *  // JSON_OBJECT ist identisch mit ...
+   *  // JSON_OBJECT is identical to ...
    *  SELECT json_extract_path(pr_order_data::JSON,'customer')
    *    FROM provider_orders LIMIT 1;
    * @endcode
