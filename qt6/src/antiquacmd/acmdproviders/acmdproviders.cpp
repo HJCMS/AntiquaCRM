@@ -53,11 +53,11 @@ void ACmdProviders::getNetworkResponse(const QDomDocument& doc) {
 QMap<QString, int> ACmdProviders::initDataInformation() {
   QString _query("SELECT column_name, character_maximum_length");
   _query.append(" FROM information_schema.columns WHERE table_name IN");
-  _query.append(" ('customers', 'provider_orders','article_orders')");
+  _query.append(" ('customers','provider_orders','article_orders')");
   _query.append(" AND data_type='character varying'");
   _query.append(" ORDER BY column_name;");
 
-  QMap<QString, int> _m;
+  QMap<QString, int> _map;
   QSqlQuery _q = pgsql->query(_query);
   if (_q.size() > 0) {
     while (_q.next()) {
@@ -65,22 +65,21 @@ QMap<QString, int> ACmdProviders::initDataInformation() {
       for (int i = 0; i < _r.count(); i++) {
         const QString _k = _q.value("column_name").toString();
         int _v = _q.value("character_maximum_length").toInt();
-        _m.insert(_k, _v);
+        _map.insert(_k, _v);
       }
     }
-    return _m;
+    return _map;
   }
-  return _m;
+  return _map;
 }
 
 const QString ACmdProviders::ucFirst(const QString& str) {
-  QString convert = str.trimmed().toLower();
-  convert = convert.replace("-", " ");
-  QStringList array = convert.split(" ", Qt::SkipEmptyParts);
-  for (int i = 0; i < array.size(); i++) {
-    array[i].replace(0, 1, array[i][0].toUpper());
-  }
-  return array.join(" ");
+  QString _str = str.trimmed();
+  _str = _str.replace("-", " ");
+  _str = _str.replace("_", " ");
+  _str = _str.replace("\"", "’");
+  _str = _str.replace("'", "’");
+  return AntiquaCRM::AUtil::ucFirst(_str);
 }
 
 int ACmdProviders::convertGender(const QString& gender) const {

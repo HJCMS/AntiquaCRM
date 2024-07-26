@@ -185,8 +185,18 @@ public:
   bool createNewEntry() override;
 
   /**
-   * @brief Kunde aus Json Object erstellen
+   * @brief Kunde öffnen oder aus Json Struktur erstellen
    * @param object - Datenstruktur
+   *
+   * Optional - Kundendaten aus Dienstleister Daten erstellen!
+   * @code
+   *  "ACTION", @see CustomersWidget::acceptsCustomActions
+   *  "TARGET", "customers_tab"
+   *  "CUSTOMER", CUSTOMER_ID || JSON_OBJECT
+   *  // JSON_OBJECT ist identisch mit ...
+   *  SELECT json_extract_path(pr_order_data::JSON,'customer')
+   *    FROM provider_orders LIMIT 1;
+   * @endcode
    */
   bool createCustomEntry(const QJsonObject &object) override;
 };

@@ -80,16 +80,14 @@ CustomersEditor::CustomersEditor(QWidget* parent)
   // Register modified changes
   registerInputChanged();
 
-  connect(m_ordersTable, SIGNAL(pushMessage(const QString&)),
-          SLOT(pushStatusMessage(const QString&)));
+  connect(m_ordersTable, SIGNAL(pushMessage(QString)), SLOT(pushStatusMessage(QString)));
 
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
   connect(m_actionBar, SIGNAL(sendFinishClicked()), SLOT(setCheckLeaveEditor()));
-  connect(m_actionBar, SIGNAL(sendCreateMailMessage(const QString&)),
-          SLOT(setCreateMailMessage(const QString&)));
+  connect(m_actionBar, SIGNAL(sendCreateMailMessage(QString)), SLOT(setCreateMailMessage(QString)));
   connect(m_actionBar, SIGNAL(sendAddCustomAction()), SLOT(setCreateOrderSignal()));
 }
 
@@ -379,9 +377,11 @@ void CustomersEditor::setFinalLeaveEditor(bool force) {
     setWindowModified(false);
 
   setResetInputFields();
-  m_ordersTable->clearContents(); /**< Einkäufe entfernen */
-  m_ordersTable->setRowCount(0);  /**< Einkäufe entfernen */
-  emit sendLeaveEditor();         /**< Back to MainView */
+  // Clear orders table
+  m_ordersTable->clearContents();
+  m_ordersTable->setRowCount(0);
+  // Back to MainView
+  emit sendLeaveEditor();
 }
 
 void CustomersEditor::setCreateOrderSignal() {
@@ -422,7 +422,7 @@ bool CustomersEditor::openEditEntry(qint64 id) {
   AntiquaCRM::ASqlFiles _tpl("query_customer_data");
   if (!_tpl.openTemplate()) {
 #ifdef ANTIQUA_DEVELOPMENT
-    qWarning("No query_customer_data file found");
+    qWarning("Missing query_customer_data file.");
 #endif
     return false;
   }
@@ -479,10 +479,39 @@ bool CustomersEditor::createNewEntry() {
 }
 
 bool CustomersEditor::createCustomEntry(const QJsonObject& object) {
-  qDebug() << Q_FUNC_INFO << "TODO" << object;
-  // m_dataWidget->setCustomerId(cid);
-  // "ACTION", "open_customer");
-  // "TARGET", "customers_tab");
-  // "CUSTOMER", _cid);
-  return true;
+  if (!object.contains("ACTION"))
+    return false;
+
+  if (!object.contains("CUSTOMER"))
+    return false;
+
+  // Read properties:
+  //  _avs (action value string) from "ACTION"
+  //  _cvd (customer value data) from "CUSTOMER"
+  //  _cvt (customer value type) from "CUSTOMER"
+  const QString _avs = object.value(QStringLiteral("ACTION")).toString();
+  const QJsonValue _cvd = object.value(QStringLiteral("CUSTOMER"));
+  const QJsonValue::Type _cvt = _cvd.type();
+
+  // If action property is equal to "open_customer",
+  // customer value from type double and greater then 0
+  // then call openEditEntry(qint64).
+  if (_avs.startsWith(QStringLiteral("open_customer")) && _cvt == QJsonValue::Double) {
+    qint64 _cid = _cvd.toInteger();
+    return (_cid > 0) ? openEditEntry(_cid) : false;
+  }
+
+  // If action property is equal to "create_customer",
+  // customer value from type json object then read data from object
+  if (_avs.startsWith(QStringLiteral("create_customer")) && _cvt == QJsonValue::Object) {
+    QJsonObject _customer = _cvd.toObject();
+    qDebug() << Q_FUNC_INFO << "TODO create_customer";
+    foreach (const QString _k, _customer.keys()) {
+      QString _key = _customer.value(_k).toString();
+      qDebug() << " " << _key << _customer.value(_key);
+    }
+    return true;
+  }
+
+  return false;
 }

@@ -10,7 +10,8 @@
 #include <QTextStream>
 #include <QUrl>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 const QString AUtil::recipientPattern() {
   return QString("([\\d\\w\\-\\.\\_]+)");
@@ -20,7 +21,9 @@ const QString AUtil::domainPattern() {
   return QString("([\\d\\w]+[\\-\\.]?[\\d\\w]+)+");
 }
 
-const QString AUtil::tldPattern() { return QString(("\\.[a-z]{2,10}")); }
+const QString AUtil::tldPattern() {
+  return QString(("\\.[a-z]{2,10}"));
+}
 
 const QString AUtil::fqdnPattern() {
   QString _fqdn(domainPattern());
@@ -46,13 +49,12 @@ const QRegularExpression AUtil::lineBreakRegExp() {
   return QRegularExpression("[\\n\\r]+", QRegularExpression::NoPatternOption);
 }
 
-const QString AUtil::trim(const QString &str) {
+const QString AUtil::trim(const QString& str) {
   QString _str = str.trimmed();
 
   _str.replace(lineBreakRegExp(), " ");
 
-  static const QRegularExpression pcr2("(\\b[\\s\\t]+\\b)",
-                                       QRegularExpression::NoPatternOption);
+  static const QRegularExpression pcr2("(\\b[\\s\\t]+\\b)", QRegularExpression::NoPatternOption);
   _str.replace(pcr2, " ");
 
   _str.squeeze();
@@ -60,7 +62,7 @@ const QString AUtil::trim(const QString &str) {
   return _str.trimmed();
 }
 
-const QString AUtil::trimBody(const QString &str) {
+const QString AUtil::trimBody(const QString& str) {
   QStringList _list;
   foreach (QString _line, str.split(lineBreakRegExp())) {
     _list << AUtil::trim(_line.trimmed());
@@ -68,8 +70,9 @@ const QString AUtil::trimBody(const QString &str) {
   return _list.join("\n");
 }
 
-const QString AUtil::ucFirst(const QString &str) {
-  QStringList _arr = str.trimmed().split(" ", Qt::SkipEmptyParts);
+const QString AUtil::ucFirst(const QString& str) {
+  QString _str = str.trimmed().toLower();
+  QStringList _arr = _str.split(" ", Qt::SkipEmptyParts);
   for (int i = 0; i < _arr.size(); i++) {
     _arr[i].replace(0, 1, _arr[i][0].toUpper());
   }
@@ -85,7 +88,7 @@ const QRegularExpression AUtil::emailRegExp() {
   return _reg;
 }
 
-bool AUtil::checkMail(const QString &mail) {
+bool AUtil::checkMail(const QString& mail) {
   QString _str = mail.trimmed().toLower();
   QRegularExpressionMatch _match = emailRegExp().match(_str);
   if (_match.hasMatch()) {
@@ -106,17 +109,16 @@ const QRegularExpression AUtil::phoneRegExp() {
   return _reg;
 }
 
-bool AUtil::checkPhone(const QString &phone) {
+bool AUtil::checkPhone(const QString& phone) {
   QString _str = phone.trimmed();
   QRegularExpressionMatch _match = phoneRegExp().match(_str);
   return _match.hasMatch();
 }
 
-bool AUtil::checkUrl(const QUrl &url) {
+bool AUtil::checkUrl(const QUrl& url) {
   QUrl _url(url.toString(), QUrl::StrictMode);
   if (!url.host().isEmpty()) {
-    const QRegularExpression _reg(fqdnPattern(),
-                                  QRegularExpression::CaseInsensitiveOption);
+    const QRegularExpression _reg(fqdnPattern(), QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch _match = _reg.match(url.host());
     if (!_match.hasMatch())
       return false;
@@ -151,14 +153,14 @@ const QString AUtil::zerofill(qint64 number, int length) {
   return QString::number(number).rightJustified(length, '0');
 }
 
-const QString AUtil::md5sum(const QString &data) {
+const QString AUtil::md5sum(const QString& data) {
   const QByteArray _buff = data.trimmed().toLocal8Bit();
   QCryptographicHash _hash(QCryptographicHash::Md5);
   _hash.addData(_buff);
   return QString::fromLocal8Bit(_hash.result().toHex());
 }
 
-const QString AUtil::strEncode(const QString &query) {
+const QString AUtil::strEncode(const QString& query) {
   static const QRegularExpression spaces("[\\s\\t]+");
   QString _o = query.trimmed();
   _o.replace(".", "");

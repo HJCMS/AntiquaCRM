@@ -144,6 +144,8 @@ protected:
 
   /**
    * @brief Helper - Correcting incorrect name information.
+   *
+   * This function prepare some replaces before calling AntiquaCRM::AUtil::ucFirst
    */
   const QString ucFirst(const QString& str);
 
@@ -226,7 +228,7 @@ protected:
    * @endcode
    * @default AntiquaCRM::ArticleType::Book
    */
-  AntiquaCRM::ArticleType findArticlType(const QString &aid);
+  AntiquaCRM::ArticleType findArticlType(const QString& aid);
 
 protected Q_SLOTS:
   /**

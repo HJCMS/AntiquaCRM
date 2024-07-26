@@ -278,5 +278,5 @@ bool CustomersWidget::customAction(const QJsonObject &obj) {
 }
 
 const QStringList CustomersWidget::acceptsCustomActions() const {
-  return QStringList({"open_customer"});
+  return QStringList({"open_customer","create_customer"});
 }

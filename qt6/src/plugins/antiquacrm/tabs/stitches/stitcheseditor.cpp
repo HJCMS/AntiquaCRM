@@ -426,159 +426,165 @@ bool StitchesEditor::sendSqlQuery(const QString& query) {
 }
 
 const QHash<QString, QVariant> StitchesEditor::createSqlDataset() {
-  QHash<QString, QVariant> data;
-  QList<AntiquaCRM::AInputWidget*> list =
+  QHash<QString, QVariant> _data;
+  QList<AntiquaCRM::AInputWidget*> _list =
       findChildren<AntiquaCRM::AInputWidget*>(fieldPattern, Qt::FindChildrenRecursively);
-  QList<AntiquaCRM::AInputWidget*>::Iterator it;
-  for (it = list.begin(); it != list.end(); ++it) {
-    AntiquaCRM::AInputWidget* cur = *it;
-    QString objName = cur->objectName();
-    if (ignoreFields.contains(objName))
+  QList<AntiquaCRM::AInputWidget*>::Iterator _it;
+  for (_it = _list.begin(); _it != _list.end(); ++_it) {
+    AntiquaCRM::AInputWidget* cur = *_it;
+    const QString _objectName = cur->objectName();
+    if (ignoreFields.contains(_objectName))
       continue;
 
-    // qDebug() << objName << cur->isRequired() << cur->isValid() <<
+    // qDebug() << _objectName << cur->isRequired() << cur->isValid() <<
     // cur->getValue();
 
     if (cur->isRequired() && !cur->isValid()) {
       openNoticeMessage(cur->popUpHints());
       cur->setFocus();
-      data.clear();
-      return data;
+      _data.clear();
+      return _data;
     }
-    data.insert(objName, cur->getValue());
+    _data.insert(_objectName, cur->getValue());
   }
-  list.clear();
+  _list.clear();
 
-  return data;
+  return _data;
 }
 
 void StitchesEditor::createSqlUpdate() {
-  int articleId = ip_id->getValue().toInt();
-  if (articleId < 0) {
+  int _aid = ip_id->getValue().toInt();
+  if (_aid < 0) {
     openNoticeMessage(tr("Missing Article ID for Update."));
     return;
   }
   // UPDATE Anforderungen
   ip_id->setRequired(true);
 
-  QHash<QString, QVariant> data = createSqlDataset();
-  if (data.size() < 1)
+  QHash<QString, QVariant> _data = createSqlDataset();
+  if (_data.size() < 1)
     return;
 
-  QStringList set;
-  QHash<QString, QVariant>::iterator it;
-  int changes = 0;
-  for (it = data.begin(); it != data.end(); ++it) {
-    if (it.key() == "ip_id")
-      continue;
+  QStringList _set; // SQL Field SET
+  QHash<QString, QVariant>::iterator _it;
+  int _changes = 0; // count changes
+  for (_it = _data.begin(); _it != _data.end(); ++_it) {
+    if (_it.key() == "ip_id")
+      continue; // ignore
 
-    const QString _key = it.key();
-    // Nur geänderte Felder in das Update aufnehmen!
+    const QString _key = _it.key();
+    // Compare with m_tableData and only include changed fields.
     if (!isModifiedCompare(_key, m_tableData->getValue(_key)))
       continue;
 
     if (m_tableData->getType(_key).id() == QMetaType::QString) {
-      set.append(_key + "='" + it.value().toString() + "'");
-      changes++;
+      _set.append(_key + "='" + _it.value().toString() + "'");
+      _changes++;
     } else {
-      set.append(_key + "=" + it.value().toString());
-      changes++;
+      _set.append(_key + "=" + _it.value().toString());
+      _changes++;
     }
   }
 
-  if (changes == 0) {
+  // check change count
+  if (_changes == 0) {
     pushStatusMessage(tr("No Modifications found, Update aborted!"));
     setWindowModified(false);
     return;
   }
 
-  // Artikel auf Deaktivierung prüfen!
-  // Wenn sich die Anzahl geändert hat, ein Update senden!
-  // NOTE Die Nutzerabfrage erfolgt vorher in setSaveData()!
+  // Checking article for no activation!
+  // If the number has changed, send an update!
+  // NOTE The user query is done beforehand in setSaveData()!
   int cur_count = ip_count->getValue().toInt();
   int old_count = m_tableData->getValue("ip_count").toInt();
   if (old_count != cur_count && cur_count == 0) {
-    // Den Buchdaten Zwischenspeicher anpassen damit das Signal
-    // an die Dienstleister nur einmal gesendet wird!
+    // Adjust the data cache so that the signal is only sent to the service provider once!
     m_tableData->setValue("ip_count", cur_count);
-    // Ab diesen Zeitpunkt ist das Zurücksetzen erst mal nicht mehr gültig!
+    // From this point on, the reset is no longer valid!
     m_actionBar->setRestoreable(false);
-    // Sende Bestands Mitteilung an den Socket
-    QJsonObject obj;
-    QJsonObject action;
-    action.insert("type", QJsonValue("article_update"));
-    action.insert("articleId", QJsonValue(articleId));
-    action.insert("count", QJsonValue(cur_count));
-    obj.insert("plugin_operation", QJsonValue(action));
-    pushPluginOperation(obj);
+    // Send inventory message to socket
+    QJsonObject _jso_parent, _jso_child;
+    _jso_child.insert("type", QJsonValue("article_update"));
+    _jso_child.insert("articleId", QJsonValue(_aid));
+    _jso_child.insert("count", QJsonValue(cur_count));
+    _jso_parent.insert("plugin_operation", QJsonValue(_jso_child));
+    pushPluginOperation(_jso_parent);
   }
 
-  QString sql("UPDATE inventory_prints SET ");
-  sql.append(set.join(","));
-  sql.append(",ip_changed=CURRENT_TIMESTAMP WHERE ip_id=");
-  sql.append(ip_id->getValue().toString());
-  sql.append(";");
-  if (sendSqlQuery(sql)) {
+  QString _sql("UPDATE inventory_prints SET ");
+  _sql.append(_set.join(","));
+  _sql.append(",ip_changed=CURRENT_TIMESTAMP WHERE ip_id=");
+  _sql.append(ip_id->getValue().toString());
+  _sql.append(";");
+  if (sendSqlQuery(_sql)) {
     qInfo("SQL UPDATE Inventory Stitches success!");
     setWindowModified(false);
   }
 }
 
 void StitchesEditor::createSqlInsert() {
-  int articleId = ip_id->getValue().toInt();
-  if (articleId >= 1) {
+  if (ip_id->getValue().toInt() >= 1) {
     qWarning("Skip INSERT, switch to UPDATE with (ArticleID > 0)!");
     createSqlUpdate();
     return;
   }
-  // Bei einem INSERT die Anforderungen anpassen.
+  // Adjust the requirements for an INSERT.
   ip_count->setRequired(true);
   ip_id->setRequired(false);
 
-  // Die Initialisierung erfolgt in setInputFields!
-  // Bei einem INSERT wird diese hier befüllt!
+  // The initialization of m_tableData takes place in function setInputFields!
+  // We need to checking for Base data here.
   if (m_tableData == nullptr || !m_tableData->isValid()) {
+    // If no Data in m_tableData, canceling on this point.
     qWarning("Invalid AntiquaCRM::ASqlDataQuery detected!");
     return;
   }
 
-  QHash<QString, QVariant> data = createSqlDataset();
-  if (data.size() < 1)
+  QHash<QString, QVariant> _data = createSqlDataset();
+  // preventing corrupted SQL data sets
+  if (_data.size() < 1) {
+    qWarning("Sql Dataset is empty, canceling SQL INSERT!");
     return;
+  }
 
-  QStringList column; // SQL Columns
-  QStringList values; // SQL Values
-  QHash<QString, QVariant>::iterator it;
-  for (it = data.begin(); it != data.end(); ++it) {
-    if (it.value().isNull())
-      continue;
+  QStringList _columns; // SQL Columns
+  QStringList _values;  // SQL Values
+  QHash<QString, QVariant>::iterator _it;
+  for (_it = _data.begin(); _it != _data.end(); ++_it) {
+    if (_it.value().isNull())
+      continue; // nothing todo
 
-    QString field = it.key();
-    // druck einfügen
-    m_tableData->setValue(field, it.value());
+    QString _field = _it.key();
+    m_tableData->setValue(_field, _it.value());
 
-    column.append(field);
-    if (m_tableData->getType(field).id() == QMetaType::QString) {
-      values.append("'" + it.value().toString() + "'");
+    _columns.append(_field);
+
+    // Checking MetaType for SQL string declarations.
+    if (m_tableData->getType(_field).id() == QMetaType::QString) {
+      _values.append("'" + _it.value().toString() + "'");
     } else {
-      values.append(it.value().toString());
+      _values.append(_it.value().toString());
     }
   }
 
-  QString sql("INSERT INTO inventory_prints (");
-  sql.append(column.join(","));
-  sql.append(",ip_changed) VALUES (");
-  sql.append(values.join(","));
-  sql.append(",CURRENT_TIMESTAMP) RETURNING ip_id;");
-  if (sendSqlQuery(sql) && ip_id->getValue().toInt() >= 1) {
+  QString _sql("INSERT INTO inventory_prints (");
+  _sql.append(_columns.join(","));
+  _sql.append(",ip_changed) VALUES (");
+  _sql.append(_values.join(","));
+  _sql.append(",CURRENT_TIMESTAMP) RETURNING ip_id;");
+  if (sendSqlQuery(_sql) && ip_id->getValue().toInt() >= 1) {
     qInfo("SQL INSERT Inventory Prints & Stitches success!");
-    // Zurücksetzen Knopf Aktivieren?
+    // Reset button Activation?
     m_actionBar->setRestoreable(m_tableData->isValid());
-    // Bildaktionen erst bei vorhandener Artikel Nummer freischalten!
+    // Only activate image actions if the article number is available!
     m_imageToolBar->setArticleId(ip_id->getValue().toInt());
     ip_id->setRequired(true);
     setWindowModified(false);
   }
+  // cleanup
+  _columns.clear();
+  _values.clear();
 }
 
 bool StitchesEditor::realyDeactivateEntry() {
@@ -587,17 +593,17 @@ bool StitchesEditor::realyDeactivateEntry() {
   if (_curCount == _oldcount)
     return true; // alles ok
 
-  QStringList body;
-  body << QString("<b>");
-  body << tr("When setting the Article Count to 0.");
-  body << QString("</b><p>");
-  body << tr("This marked the Article in all Shopsystem for deletion!");
-  body << QString("</p><p>");
-  body << tr("Are you sure to finish this operation?");
-  body << QString("</p>");
+  QStringList _l;
+  _l << QString("<b>");
+  _l << tr("When setting the Article Count to 0.");
+  _l << QString("</b><p>");
+  _l << tr("This marked the Article in all Shopsystem for deletion!");
+  _l << QString("</p><p>");
+  _l << tr("Are you sure to finish this operation?");
+  _l << QString("</p>");
 
-  int ret = QMessageBox::question(this, tr("Entry deactivation"), body.join(""));
-  if (ret == QMessageBox::No) {
+  int _ret = QMessageBox::question(this, tr("Entry deactivation"), _l.join(""));
+  if (_ret == QMessageBox::No) {
     ip_count->setValue(m_tableData->getValue("ip_count"));
     ip_count->setRequired(true);
     return false;
@@ -632,9 +638,9 @@ void StitchesEditor::setFinalLeaveEditor(bool force) {
     setWindowModified(false);
 
   setResetInputFields();
-  m_actionBar->setRestoreable(false); /**< ResetButton off */
-  m_thumbnail->clear();               /**< Bildvorschau leeren */
-  emit sendLeaveEditor();             /**< Back to MainView */
+  m_actionBar->setRestoreable(false); // ResetButton off
+  m_thumbnail->clear();               // clear thumbnail
+  emit sendLeaveEditor();             // Back to MainView
 }
 
 void StitchesEditor::setStorageCompartments() {
@@ -679,12 +685,13 @@ void StitchesEditor::setPrintBookCard() {
   _config.insert("changed", _buffer.trimmed());
   _buffer.clear();
 
-  AntiquaCRM::PrintBookCard* m_d = new AntiquaCRM::PrintBookCard(this);
-  if (m_d->exec(_config) == QDialog::Accepted) {
+  AntiquaCRM::PrintBookCard* m_card = new AntiquaCRM::PrintBookCard(this);
+  if (m_card->exec(_config) == QDialog::Accepted) {
     pushStatusMessage(tr("Card print successfully."));
   } else {
     pushStatusMessage(tr("Card print canceled."));
   }
+  m_card->deleteLater();
 }
 
 void StitchesEditor::setLoadThumbnail(qint64 articleId) {
@@ -693,9 +700,9 @@ void StitchesEditor::setLoadThumbnail(qint64 articleId) {
 
   m_imageToolBar->setArticleId(articleId);
 
-  AntiquaCRM::ImageFileSource image_preview;
-  if (image_preview.findInDatabase(m_sql, articleId))
-    m_thumbnail->setPixmap(image_preview.getThumbnail());
+  AntiquaCRM::ImageFileSource m_imgPreview;
+  if (m_imgPreview.findInDatabase(m_sql, articleId))
+    m_thumbnail->setPixmap(m_imgPreview.getThumbnail());
 }
 
 void StitchesEditor::setRemoveThumbnail(qint64 articleId) {
@@ -705,11 +712,11 @@ void StitchesEditor::setRemoveThumbnail(qint64 articleId) {
     return;
   }
 
-  QMessageBox::StandardButton set = QMessageBox::question(
+  QMessageBox::StandardButton _retval = QMessageBox::question(
       this, tr("Remove Image from Database"),
       tr("%1\n\nImage - Article Id: %2")
           .arg(tr("Do you really want to delete the Image?"), QString::number(_id)));
-  if (set == QMessageBox::Yes) {
+  if (_retval == QMessageBox::Yes) {
     AntiquaCRM::ImageFileSource thumbnail;
     thumbnail.setFileId(_id);
     if (thumbnail.removeFromDatabase(m_sql, _id)) {
@@ -726,11 +733,11 @@ void StitchesEditor::setImportEditImage() {
     return;
   }
 
-  AntiquaCRM::ImageImportDialog* d = new AntiquaCRM::ImageImportDialog(_id, "Stitches", this);
-  connect(d, SIGNAL(sendThumbnail(const QPixmap&)), m_thumbnail, SLOT(setPixmap(const QPixmap&)));
-
-  d->exec();
-  d->deleteLater();
+  QString _folder = AntiquaCRM::AUtil::ucFirst(STITCHES_INTERFACE_NAME);
+  AntiquaCRM::ImageImportDialog* m_d = new AntiquaCRM::ImageImportDialog(_id, _folder, this);
+  connect(m_d, SIGNAL(sendThumbnail(QPixmap)), m_thumbnail, SLOT(setPixmap(QPixmap)));
+  m_d->exec();
+  m_d->deleteLater();
 }
 
 void StitchesEditor::setRestore() {
