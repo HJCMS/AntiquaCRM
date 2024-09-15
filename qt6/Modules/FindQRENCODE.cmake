@@ -29,11 +29,12 @@ This module defines the following variables:
 
 #]=======================================================================]
 
-include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
+if(QRENCODE_ROOT)
+  set(_QRENCODE_SEARCH_ROOT PATHS ${QRENCODE_ROOT} NO_DEFAULT_PATH)
+  list(APPEND _QRENCODE_PATHS _QRENCODE_SEARCH_ROOT)
+endif()
 
-SET(QRENCODE_VERSION)
-SET(QRENCODE_INCLUDE_DIR)
-SET(QRENCODE_LIBRARY)
+include(${CMAKE_CURRENT_LIST_DIR}/FindPackageHandleStandardArgs.cmake)
 
 find_package(PkgConfig QUIET)
 if(PKG_CONFIG_FOUND)
@@ -46,45 +47,49 @@ if(PKG_CONFIG_FOUND)
   endif()
 endif()
 
-## BEGIN QRENCODE_INCLUDE_DIR
-if(NOT QRENCODE_INCLUDE_DIR)
-find_path(QRENCODE_INCLUDE_DIR
-  NAMES qrencode.h
-  PATHS ${PKG_RENCODE_INCLUDE_DIR} ${QRENCODE_INCLUDE_DIRS}
-)
-endif(NOT QRENCODE_INCLUDE_DIR)
-mark_as_advanced(QRENCODE_INCLUDE_DIR)
-## END
-
 ## BEGIN QRENCODE_LIBRARY
 if(NOT QRENCODE_LIBRARY)
+  ## Set base Library
   find_library(QRENCODE_LIBRARY
     NAMES qrencode libqrencode
-    NO_CACHE
-    PATHS ${USER_INSTALL_PREFIX}/lib ${USER_INSTALL_PREFIX}/bin
+    PATHS ${_QRENCODE_PATHS}
+    PATH_SUFFIXES lib lib64
   )
   mark_as_advanced(QRENCODE_LIBRARY)
 
   find_library(QRENCODE_LIBRARY_REALEASE
     NAMES qrencode libqrencode
-    NO_CACHE
-    PATHS ${USER_INSTALL_PREFIX}/lib ${USER_INSTALL_PREFIX}/bin
+    PATHS ${_QRENCODE_PATHS}
+    PATH_SUFFIXES lib lib64
   )
   mark_as_advanced(QRENCODE_LIBRARY_REALEASE)
 
   find_library(QRENCODE_LIBRARY_DEBUG
     NAMES qrencode-d qrencode-debug libqrencode-d libqrencode-debug
-    NO_CACHE
-    PATHS ${USER_INSTALL_PREFIX}/lib ${USER_INSTALL_PREFIX}/bin
+    PATHS ${_QRENCODE_PATHS}
+    PATH_SUFFIXES lib lib64
   )
   mark_as_advanced(QRENCODE_LIBRARY_DEBUG)
 
   include(${CMAKE_CURRENT_LIST_DIR}/SelectLibraryConfigurations.cmake)
 
-  select_library_configurations(QRENCODE)
+  select_library_configurations(qrencode)
 
 endif(NOT QRENCODE_LIBRARY)
 ## END
+
+## BEGIN QRENCODE_INCLUDE_DIR
+if(NOT QRENCODE_INCLUDE_DIR)
+  find_path(QRENCODE_INCLUDE_DIR NAMES qrencode.h PATH_SUFFIXES include)
+endif(NOT QRENCODE_INCLUDE_DIR)
+mark_as_advanced(QRENCODE_INCLUDE_DIR)
+## END
+
+FIND_PACKAGE_HANDLE_STANDARD_ARGS(QRENCODE
+  REQUIRED_VARS QRENCODE_LIBRARY QRENCODE_INCLUDE_DIR
+  VERSION_VAR QRENCODE_VERSION
+  HANDLE_COMPONENTS
+)
 
 if(QRENCODE_FOUND)
   set(QRENCODE_LIBRARIES ${QRENCODE_LIBRARY})
