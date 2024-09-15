@@ -154,8 +154,26 @@ private Q_SLOTS:
    */
   void setImportEditImage() override{/* unused */};
 
+  /**
+   * @brief Create Order Signal
+   *
+   * Prepare Signal::sendEditorAction
+   */
   void setCreateOrderSignal();
 
+  /**
+   * @brief setCreateMailMessage
+   * @param action
+   *
+   * Open AntiquaCRM::MailDialog to send Mail Message.
+   * @code
+   * {
+   *  "tb_tab": "CUSTOMER",
+   *  "tb_caller": "action",
+   *  "CRM_CUSTOMER_ID": qint64
+   * }
+   * @endcode
+   */
   void setCreateMailMessage(const QString &action);
 
 public Q_SLOTS:

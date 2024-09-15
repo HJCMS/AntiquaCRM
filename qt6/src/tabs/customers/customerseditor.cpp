@@ -505,10 +505,10 @@ bool CustomersEditor::createCustomEntry(const QJsonObject& object) {
   // customer value from type json object then read data from object
   if (_avs.startsWith(QStringLiteral("create_customer")) && _cvt == QJsonValue::Object) {
     QJsonObject _customer = _cvd.toObject();
-    qDebug() << Q_FUNC_INFO << "TODO create_customer";
+    qDebug() << Q_FUNC_INFO << "TODO create_customer from:";
     foreach (const QString _k, _customer.keys()) {
       QString _key = _customer.value(_k).toString();
-      qDebug() << " " << _key << _customer.value(_key);
+      qDebug() << " - " << _key << _customer.value(_key);
     }
     return true;
   }
