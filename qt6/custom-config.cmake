@@ -12,16 +12,11 @@ IF (CMAKE_HOST_LINUX)
   ENDIF ()
 ENDIF ()
 
-IF (NOT USER_INSTALL_PREFIX)
-  SET (USER_INSTALL_PREFIX ${CMAKE_INSTALL_PREFIX}
-    CACHE PATH "Dependency Location for installed sources"
-  )
-ENDIF ()
-
 IF (CMAKE_HOST_WIN32)
-  ## NOT Supported in Windows enviroment
-  SET (ANTIQUA_DEVELOPMENT BOOL OFF)
-  SET (WITH_ANTIQUACMD BOOL OFF)
+  ## This must configured in Qt:Kit configuration!
+  IF (NOT USER_INSTALL_PREFIX)
+    MESSAGE (WARNING "The USER_INSTALL_PREFIX is not set to find GNU Utils!")
+  ENDIF ()
 
   IF (IS_DIRECTORY ${USER_INSTALL_PREFIX})
     SET (ZLIB_ROOT ${USER_INSTALL_PREFIX} CACHE PATH "ZLIB install directory")
@@ -39,7 +34,6 @@ IF (CMAKE_HOST_WIN32)
       SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -I${USER_CUSTOM_INCLUDE_PATH}")
     ENDIF ()
 
-    ## ${CMAKE_FIND_LIBRARY_PREFIXES}
     IF (IS_DIRECTORY ${USER_INSTALL_PREFIX}/lib)
       SET (USER_CUSTOM_LIBRARY_PATH
         ${USER_INSTALL_PREFIX}/lib
@@ -51,6 +45,5 @@ IF (CMAKE_HOST_WIN32)
         CACHE PATH "Custom library path"
       )
     ENDIF ()
-
   ENDIF ()
 ENDIF ()
