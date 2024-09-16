@@ -10,16 +10,26 @@
 #define ANTIQUACRM_PRIVATE_MAILCOMMAND_H
 
 #include <AntiquaCRM>
+#include <QMetaObject>
 #include <QObject>
 #include <QProcess>
 #include <QString>
 #include <QUrl>
 #include <QVariant>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class ANTIQUACRM_LIBRARY MailCommand final : public QProcess {
   Q_OBJECT
+
+public:
+  enum Type {
+    UNKNOWN = 0,    /**< No Attachments action */
+    OUTLOOK = 1,    /**< Outlook path is set */
+    THUNDERBIRD = 2 /**< Thunderbird path is set */
+  };
+  Q_ENUM(Type);
 
 private:
   QUrl p_email;
@@ -28,26 +38,21 @@ private:
   QString p_attachment;
   QString p_signature;
   bool initMailAppl();
+  const QStringList prepare(MailCommand::Type t);
 
 Q_SIGNALS:
-  void sendMessage(const QString &message);
+  void sendMessage(const QString& message);
 
 public Q_SLOTS:
   void sendMail();
 
 public:
-  enum Type { UNKNOWN = 0, OUTLOOK = 1, THUNDERBIRD = 2 };
-  Q_ENUM(Type);
-  explicit MailCommand(QObject *parent = nullptr);
-  const QString urlEncode(const QString &) const;
-  bool setMail(const QString &data);
+  explicit MailCommand(QObject* parent = nullptr);
+  bool setMail(const QString& data);
   const QString getMail();
-  void setSubject(const QString &data);
-  void setBody(const QString &data);
-  void setAttachment(const QString &data);
-
-private:
-  const QStringList prepare(MailCommand::Type t);
+  void setSubject(const QString& data);
+  void setBody(const QString& data);
+  void setAttachment(const QString& data);
 };
 
 } // namespace AntiquaCRM

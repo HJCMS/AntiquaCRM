@@ -15,23 +15,24 @@
 #include <QObject>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class ANTIQUACRM_LIBRARY KeywordLabel final : public QFrame {
   Q_OBJECT
 
 private:
-  QLabel *m_label;
+  QLabel* m_label;
 
 Q_SIGNALS:
   void aboutToRemove();
 
 public Q_SLOTS:
-  void setText(const QString &keyword);
+  void setText(const QString& keyword);
 
 public:
-  explicit KeywordLabel(QWidget *parent = nullptr);
-  explicit KeywordLabel(const QString &keyword, QWidget *parent = nullptr);
+  explicit KeywordLabel(QWidget* parent = nullptr);
+  explicit KeywordLabel(const QString& keyword, QWidget* parent = nullptr);
   const QString text();
 };
 

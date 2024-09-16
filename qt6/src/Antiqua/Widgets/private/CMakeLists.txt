@@ -12,30 +12,17 @@ INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-SET (_subWidgetLibrary_SOURCES
- lineinputvalidator.cpp
- keywordlistview.cpp
- keywordlabel.cpp
- mailtemplatekeys.cpp
- mailcommand.cpp
- mailattachments.cpp
-)
-
-SET (_subWidgetLibrary_HEADERS
- lineinputvalidator.h
- keywordlistview.h
- keywordlabel.h
- mailtemplatekeys.h
- mailcommand.h
- mailattachments.h
-)
+REMOVE_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 
 ADD_LIBRARY (${_subWidgetLibrary} STATIC
-  ${_subWidgetLibrary_HEADERS}
-  ${_subWidgetLibrary_SOURCES}
+ lineinputvalidator.h lineinputvalidator.cpp
+ keywordlistview.h keywordlistview.cpp
+ keywordlabel.h keywordlabel.cpp
+ mailtemplatekeys.h mailtemplatekeys.cpp
+ mailcommand.h mailcommand.cpp
+ mailattachments.h mailattachments.cpp
 )
 
-REMOVE_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
 ADD_DEFINITIONS (-DANTIQUACRM_SHARED_STATIC)
 
 SET_TARGET_PROPERTIES (${_subWidgetLibrary} PROPERTIES

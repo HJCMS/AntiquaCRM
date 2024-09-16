@@ -9,9 +9,10 @@
 #include <QProcess>
 #include <QUrlQuery>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-MailCommand::MailCommand(QObject *parent) : QProcess{parent} {
+MailCommand::MailCommand(QObject* parent) : QProcess{parent} {
   p_email = QUrl();
   p_subject = QString();
   p_body = QString();
@@ -32,79 +33,6 @@ bool MailCommand::initMailAppl() {
   qWarning("Missing Mail-Application!");
   emit sendMessage("Missing Mailler Application!");
   return false;
-}
-
-const QString MailCommand::urlEncode(const QString &str) const {
-  QByteArray data = QUrl::toPercentEncoding(str);
-  return QString::fromLocal8Bit(data);
-}
-
-void MailCommand::sendMail() {
-  initMailAppl();
-
-  QStringList cmd;
-  if (program().contains("thunderbird", Qt::CaseInsensitive)) {
-    cmd = prepare(THUNDERBIRD);
-  } else if (program().contains("outlook", Qt::CaseInsensitive)) {
-    cmd = prepare(OUTLOOK);
-  } else {
-    QUrl url(prepare(UNKNOWN).join(""), QUrl::StrictMode);
-    if (url.isValid())
-      QDesktopServices::openUrl(url);
-
-    cmd.clear(); // force empty
-  }
-
-  if (cmd.size() < 1) {
-    terminate();
-    return;
-  }
-
-  qint64 retval;
-  setArguments(cmd);
-  startDetached(&retval);
-}
-
-bool MailCommand::setMail(const QString &data) {
-  if (!data.contains("@"))
-    return false;
-
-  QStringList l = data.split("@");
-  QUrl url;
-  url.setScheme("mailto");
-  url.setUserInfo(l.first());
-  url.setHost(l.last());
-  if (url.isValid()) {
-    p_email = url;
-    return true;
-  }
-  emit sendMessage(tr("Invalid eMail Address"));
-  return false;
-}
-
-const QString MailCommand::getMail() {
-  return p_email.toString(QUrl::RemoveScheme).replace("/", "");
-}
-
-void MailCommand::setSubject(const QString &data) {
-  if (data.isEmpty())
-    return;
-
-  p_subject = data;
-}
-
-void MailCommand::setBody(const QString &data) {
-  if (data.isEmpty())
-    return;
-
-  p_body = data;
-}
-
-void MailCommand::setAttachment(const QString &data) {
-  if (data.isEmpty())
-    return;
-
-  p_attachment = data;
 }
 
 const QStringList MailCommand::prepare(MailCommand::Type t) {
@@ -135,8 +63,8 @@ const QStringList MailCommand::prepare(MailCommand::Type t) {
   // https://docs.microsoft.com/en-US/outlook/troubleshoot/security/information-about-email-security-settings
   if (t == MailCommand::OUTLOOK) {
     QStringList params;
-    params << "subject=" + urlEncode(p_subject);
-    params << "body=" + urlEncode(p_body);
+    params << "subject=" + AntiquaCRM::AUtil::urlEncode(p_subject);
+    params << "body=" + AntiquaCRM::AUtil::urlEncode(p_body);
     cmd.clear();
     cmd << "-c";
     cmd << "IPM.Note";
@@ -163,6 +91,74 @@ const QStringList MailCommand::prepare(MailCommand::Type t) {
   }
 
   return QStringList();
+}
+
+void MailCommand::sendMail() {
+  initMailAppl();
+
+  QStringList cmd;
+  if (program().contains("thunderbird", Qt::CaseInsensitive)) {
+    cmd = prepare(THUNDERBIRD);
+  } else if (program().contains("outlook", Qt::CaseInsensitive)) {
+    cmd = prepare(OUTLOOK);
+  } else {
+    QUrl url(prepare(UNKNOWN).join(""), QUrl::StrictMode);
+    if (url.isValid())
+      QDesktopServices::openUrl(url);
+
+    cmd.clear(); // force empty
+  }
+
+  if (cmd.size() < 1) {
+    terminate();
+    return;
+  }
+
+  qint64 retval;
+  setArguments(cmd);
+  startDetached(&retval);
+}
+
+bool MailCommand::setMail(const QString& data) {
+  if (!data.contains("@"))
+    return false;
+
+  QStringList l = data.split("@");
+  QUrl url;
+  url.setScheme("mailto");
+  url.setUserInfo(l.first());
+  url.setHost(l.last());
+  if (url.isValid()) {
+    p_email = url;
+    return true;
+  }
+  emit sendMessage(tr("Invalid eMail Address"));
+  return false;
+}
+
+const QString MailCommand::getMail() {
+  return p_email.toString(QUrl::RemoveScheme).replace("/", "");
+}
+
+void MailCommand::setSubject(const QString& data) {
+  if (data.isEmpty())
+    return;
+
+  p_subject = data;
+}
+
+void MailCommand::setBody(const QString& data) {
+  if (data.isEmpty())
+    return;
+
+  p_body = data;
+}
+
+void MailCommand::setAttachment(const QString& data) {
+  if (data.isEmpty())
+    return;
+
+  p_attachment = data;
 }
 
 } // namespace AntiquaCRM

@@ -12,7 +12,8 @@
 #include <QTime>
 #include <QUrl>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class AUtil
@@ -21,7 +22,6 @@ namespace AntiquaCRM {
  * @ingroup CoreLibrary
  */
 class ANTIQUACRM_LIBRARY AUtil final {
-
 public:
   /**
    * @brief eMail recipient pattern
@@ -58,19 +58,19 @@ public:
    * @param str - string
    * @warning Line Breaks will removed!
    */
-  static const QString trim(const QString &str);
+  static const QString trim(const QString& str);
 
   /**
    * @brief prepare and normalize multiline text body
    * @param str - string
    */
-  static const QString trimBody(const QString &str);
+  static const QString trimBody(const QString& str);
 
   /**
    * @brief uppercase first letter
    * @param str - string
    */
-  static const QString ucFirst(const QString &str);
+  static const QString ucFirst(const QString& str);
 
   /**
    * @brief Simple Regular Expression for eMail
@@ -81,7 +81,7 @@ public:
    * @brief Check eMail Address
    * @param mail - email
    */
-  static bool checkMail(const QString &mail);
+  static bool checkMail(const QString& mail);
 
   /**
    * @brief Simple Phone Regular expression
@@ -97,13 +97,13 @@ public:
    * @brief Check Mobile/Phone Addresses
    * @param phone - phone number
    */
-  static bool checkPhone(const QString &phone);
+  static bool checkPhone(const QString& phone);
 
   /**
    * @brief Simple Url check
    * @param url - Url
    */
-  static bool checkUrl(const QUrl &url);
+  static bool checkUrl(const QUrl& url);
 
   /**
    * @brief Regular expression to match keywords with UTF8 characters.
@@ -159,13 +159,19 @@ public:
    * @brief MD5 sum from String
    * @param data
    */
-  static const QString md5sum(const QString &data);
+  static const QString md5sum(const QString& data);
+
+  /**
+   * @brief e.g. QUrl::toPercentEncoding!
+   * @param query
+   */
+  static const QString urlEncode(const QString& query);
 
   /**
    * @brief Convert String to URL Query String with '+' delimiter for spaces!
    * @param query
    */
-  static const QString strEncode(const QString &query);
+  static const QString strEncode(const QString& query);
 };
 
 }; // namespace AntiquaCRM

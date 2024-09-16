@@ -160,6 +160,10 @@ const QString AUtil::md5sum(const QString& data) {
   return QString::fromLocal8Bit(_hash.result().toHex());
 }
 
+const QString AUtil::urlEncode(const QString& str) {
+  return QString::fromLocal8Bit(QUrl::toPercentEncoding(str));
+}
+
 const QString AUtil::strEncode(const QString& query) {
   static const QRegularExpression spaces("[\\s\\t]+");
   QString _o = query.trimmed();
