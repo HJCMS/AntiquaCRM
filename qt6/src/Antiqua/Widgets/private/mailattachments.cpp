@@ -1,8 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "mailattachments.h"
-#include "ainputwidget.h"
+#include "mailattachments_p.h"
 
 #include <QDebug>
 #include <QDir>

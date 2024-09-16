@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "mailtemplatekeys.h"
+#include "mailtemplatekeys_p.h"
 
 #ifdef ANTIQUA_DEVELOPMENT
 #  include <QDebug>

@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "keywordlistview.h"
-#include "keywordlabel.h"
+#include "keywordlistview_p.h"
+#include "keywordlabel_p.h"
 
 namespace AntiquaCRM {
 

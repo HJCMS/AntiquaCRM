@@ -12,7 +12,7 @@ INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-ADD_SUBDIRECTORY (private)
+## ADD_SUBDIRECTORY (private)
 
 SET (_library_FILES
   Widgets.dox
@@ -189,11 +189,21 @@ SET (_library_HEADERS
   yearedit.h
 )
 
+SET (_sub_widgets_source
+ private/lineinputvalidator_p.h private/lineinputvalidator.cpp
+ private/keywordlistview_p.h private/keywordlistview.cpp
+ private/keywordlabel_p.h private/keywordlabel.cpp
+ private/mailtemplatekeys_p.h private/mailtemplatekeys.cpp
+ private/mailcommand_p.h private/mailcommand.cpp
+ private/mailattachments_p.h private/mailattachments.cpp
+)
+
 ADD_LIBRARY (${_sharedLibrary} SHARED
  ${_library_config_HEADERS}
  ${_library_config_TEMPLATES}
  ${_library_SOURCES}
  ${_library_HEADERS}
+ ${_sub_widgets_source}
  ${_library_FILES}
 )
 
@@ -214,7 +224,6 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  Qt6::Sql
  Qt6::Xml
  AntiquaCRM
- AntiquaSubWidgets
 )
 
 INSTALL (TARGETS ${_sharedLibrary}

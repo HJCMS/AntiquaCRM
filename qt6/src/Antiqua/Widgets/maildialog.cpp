@@ -3,9 +3,9 @@
 
 #include "maildialog.h"
 #include "antiquaicon.h"
-#include "private/mailattachments.h"
-#include "private/mailcommand.h"
-#include "private/mailtemplatekeys.h"
+#include "private/mailattachments_p.h"
+#include "private/mailcommand_p.h"
+#include "private/mailtemplatekeys_p.h"
 
 #include <QDebug>
 #include <QLayout>

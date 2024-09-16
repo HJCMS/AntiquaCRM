@@ -1,7 +1,7 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "keywordlabel.h"
+#include "keywordlabel_p.h"
 #include "antiquaicon.h"
 
 #include <QHBoxLayout>
