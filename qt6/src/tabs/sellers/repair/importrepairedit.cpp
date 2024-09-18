@@ -172,6 +172,17 @@ void ImportRepairEdit::mergeData(const QString& id) {
   m_t->setValue(m_f->getValue());
 }
 
+void ImportRepairEdit::setCustomerId(qint64 cid) {
+  if (cid != CustomerId) {
+    CustomerId = cid;
+    emit signalCutomerIdChanged();
+  }
+}
+
+qint64 ImportRepairEdit::getCustomerId() {
+  return CustomerId;
+}
+
 void ImportRepairEdit::setOriginData(const QJsonObject& data) {
   foreach (const QString _key, data.keys()) {
     QString _inp = QString(_key).replace("c_", "o_");

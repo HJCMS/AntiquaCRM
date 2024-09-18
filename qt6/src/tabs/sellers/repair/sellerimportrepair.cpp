@@ -12,14 +12,15 @@
 #include <QPushButton>
 #include <QSqlRecord>
 
-SellerImportRepair::SellerImportRepair(const QString &provider,
-                                       const QString &order, QWidget *parent)
+SellerImportRepair::SellerImportRepair(const QString& provider, const QString& order,
+                                       QWidget* parent)
     : AntiquaCRM::ADialog{parent}, p_provider{provider}, p_orderid{order} {
   setObjectName("seller_import_repair_dialog");
 
-  QLabel *info = new QLabel(this);
-  info->setText(tr("You can use this input mask to repair customer data "
-                   "imports from your service provider."));
+  QLabel* info = new QLabel(this);
+  info->setText(
+      tr("You can use this input mask to repair customer data "
+         "imports from your service provider."));
   layout->addWidget(info);
 
   m_mainWidget = new QStackedWidget(this);
@@ -53,12 +54,9 @@ SellerImportRepair::SellerImportRepair(const QString &provider,
   connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
 
   // Search
-  connect(m_cedit, SIGNAL(sendFindClause(const QString &)),
-          SLOT(findSystemCustomer(const QString &)));
-  connect(m_finder, SIGNAL(sendFindClause(const QString &)),
-          SLOT(findSystemCustomer(const QString &)));
-  connect(m_finder, SIGNAL(sendUseClause(const QString &)),
-          SLOT(findSystemCustomer(const QString &)));
+  connect(m_cedit, SIGNAL(sendFindClause(QString)), SLOT(findSystemCustomer(QString)));
+  connect(m_finder, SIGNAL(sendFindClause(QString)), SLOT(findSystemCustomer(QString)));
+  connect(m_finder, SIGNAL(sendUseClause(qint64)), SLOT(openSystemCustomer(qint64)));
 }
 
 bool SellerImportRepair::init() {
@@ -111,11 +109,14 @@ void SellerImportRepair::updateData() {
   _json.insert("customer", m_cedit->getData());
 
   QJsonDocument _doc(_json);
-  QString _sql("UPDATE provider_orders SET pr_order_data='");
+  QString _sql("UPDATE provider_orders SET pr_customer_id=");
+  _sql.append(QString::number(m_cedit->getCustomerId()));
+  _sql.append(",pr_order_data='");
   _sql.append(_doc.toJson(QJsonDocument::Compact));
   _sql.append("' WHERE (pr_order='" + p_orderid + "'");
   _sql.append(" AND pr_name ILIKE '" + p_provider + "');");
   m_sql->query(_sql);
+
   if (m_sql->lastError().isEmpty()) {
     m_statusBar->showMessage(tr("Success"));
     m_finder->clear();
@@ -129,9 +130,10 @@ void SellerImportRepair::updateData() {
   }
 }
 
-void SellerImportRepair::findSystemCustomer(const QString &clause) {
+void SellerImportRepair::findSystemCustomer(const QString& clause) {
   bool _merge_call = (clause.contains("c_id", Qt::CaseSensitive));
   QString _sql("SELECT * FROM customers WHERE " + clause + ";");
+  // qDebug() << Q_FUNC_INFO << _sql;
   QSqlQuery _q = m_sql->query(_sql);
   if (m_sql->lastError().isEmpty()) {
     if (_q.size() > 0) {
@@ -157,6 +159,18 @@ void SellerImportRepair::findSystemCustomer(const QString &clause) {
     m_statusBar->showMessage(tr("Failed"));
     setWindowModified(true);
   }
+}
+
+void SellerImportRepair::openSystemCustomer(qint64 cid) {
+  if (cid < 1)
+    return;
+
+  // rgister CustomerId to ImportRepairEdit
+  m_cedit->setCustomerId(cid);
+
+  QString _str("c_id=");
+  _str.append(QString::number(cid));
+  findSystemCustomer(_str);
 }
 
 int SellerImportRepair::exec() {

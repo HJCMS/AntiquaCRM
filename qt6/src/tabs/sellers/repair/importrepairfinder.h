@@ -31,7 +31,7 @@ private Q_SLOTS:
   void prepareSearch();
 
 Q_SIGNALS:
-  void sendUseClause(const QString &);
+  void sendUseClause(qint64);
   void sendFindClause(const QString &);
 
 public Q_SLOTS:

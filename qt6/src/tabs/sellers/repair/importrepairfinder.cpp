@@ -3,13 +3,13 @@
 
 #include "importrepairfinder.h"
 
-ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
+ImportRepairFinder::ImportRepairFinder(QWidget* parent) : QWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
   // BEGIN::Search
-  QGroupBox *m_sgroup = new QGroupBox(tr("Search existing Customer"), this);
-  QHBoxLayout *m_slayout = new QHBoxLayout(m_sgroup);
+  QGroupBox* m_sgroup = new QGroupBox(tr("Search existing Customer"), this);
+  QHBoxLayout* m_slayout = new QHBoxLayout(m_sgroup);
   m_slayout->setContentsMargins(2, 2, 2, 2);
   m_firstname = new AntiquaCRM::TextLine(m_sgroup);
   m_firstname->setObjectName("c_firstname");
@@ -20,7 +20,7 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   m_lastname->setBuddyLabel(tr("Lastname"));
   m_slayout->addWidget(m_lastname);
 
-  QPushButton *btn_search = new QPushButton(tr("Search"), m_sgroup);
+  QPushButton* btn_search = new QPushButton(tr("Search"), m_sgroup);
   btn_search->setIcon(AntiquaCRM::antiquaIcon("action-search"));
   m_slayout->addWidget(btn_search);
 
@@ -28,10 +28,9 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   // End::Search
 
   // BEGIN::Found
-  const QString _info =
-      tr("Result of current customer search in the system database.");
-  QGroupBox *m_fgroup = new QGroupBox(_info, this);
-  QVBoxLayout *m_flayout = new QVBoxLayout(m_fgroup);
+  const QString _info = tr("Result of current customer search in the system database.");
+  QGroupBox* m_fgroup = new QGroupBox(_info, this);
+  QVBoxLayout* m_flayout = new QVBoxLayout(m_fgroup);
   m_flayout->setContentsMargins(2, 2, 2, 2);
   m_table = new QTableWidget(m_fgroup);
   QStringList _labels({tr("Id"), tr("Fullname"), tr("Address")});
@@ -48,7 +47,7 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   m_table->setSelectionBehavior(QAbstractItemView::SelectRows);
   m_table->setEditTriggers(QAbstractItemView::NoEditTriggers);
 
-  QHeaderView *_view = m_table->horizontalHeader();
+  QHeaderView* _view = m_table->horizontalHeader();
   _view->setSectionResizeMode(QHeaderView::ResizeToContents);
   _view->setStretchLastSection(true);
 
@@ -66,15 +65,17 @@ ImportRepairFinder::ImportRepairFinder(QWidget *parent) : QWidget{parent} {
   connect(m_table, SIGNAL(cellClicked(int, int)), SLOT(itemClicked(int, int)));
 }
 
-QLabel *ImportRepairFinder::info(const QString &title) {
-  QLabel *lb = new QLabel(title, this);
+QLabel* ImportRepairFinder::info(const QString& title) {
+  QLabel* lb = new QLabel(title, this);
   lb->setAlignment(Qt::AlignRight | Qt::AlignVCenter);
   return lb;
 }
 
 void ImportRepairFinder::itemClicked(int row, int column) {
   Q_UNUSED(column);
-  emit sendUseClause("c_id=" + m_table->item(row, 0)->text());
+  qint64 _cid = m_table->item(row, 0)->data(Qt::EditRole).toInt();
+  if (_cid > 0)
+    emit sendUseClause(_cid);
 }
 
 void ImportRepairFinder::prepareSearch() {
@@ -93,11 +94,11 @@ void ImportRepairFinder::clear() {
   m_table->setRowCount(0);
 }
 
-void ImportRepairFinder::addCustomer(const QJsonObject &customer) {
+void ImportRepairFinder::addCustomer(const QJsonObject& customer) {
   m_table->insertRow(m_table->rowCount());
 
   int _row = (m_table->rowCount() - 1);
-  QTableWidgetItem *_item = new QTableWidgetItem(QTableWidgetItem::UserType);
+  QTableWidgetItem* _item = new QTableWidgetItem(QTableWidgetItem::UserType);
   _item->setText(QString::number(customer.value("c_id").toInt()));
   m_table->setItem(_row, 0, _item);
 

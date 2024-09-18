@@ -44,6 +44,7 @@ private Q_SLOTS:
   void setEditPage();
   void updateData();
   void findSystemCustomer(const QString &);
+  void openSystemCustomer(qint64);
 
 public:
   explicit SellerImportRepair(const QString &provider, const QString &order,

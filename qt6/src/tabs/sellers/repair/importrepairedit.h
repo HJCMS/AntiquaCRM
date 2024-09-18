@@ -20,8 +20,11 @@
 
 class ImportRepairEdit final : public QScrollArea {
   Q_OBJECT
+  Q_PROPERTY(qint64 CustomerId READ getCustomerId WRITE setCustomerId
+             NOTIFY signalCutomerIdChanged)
 
 private:
+  qint64 CustomerId = -1;
   QWidget *m_widget;
   AntiquaCRM::TextLine *o_provider_import;      // display unique key
   AntiquaCRM::TextLine *c_provider_import;      // display unique key
@@ -52,10 +55,15 @@ private Q_SLOTS:
   void mergeData(const QString &id);
 
 Q_SIGNALS:
+  void signalCutomerIdChanged();
   void sendFindClause(const QString &clause);
+
+public Q_SLOTS:
+  void setCustomerId(qint64);
 
 public:
   explicit ImportRepairEdit(QWidget *parent = nullptr);
+  qint64 getCustomerId();
   void setOriginData(const QJsonObject &data);
   void setImportData(const QJsonObject &data);
   const QJsonObject getData();
