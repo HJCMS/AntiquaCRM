@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_KEYWORDEDITOR_LISTVIEW_H
 #define ANTIQUACRM_KEYWORDEDITOR_LISTVIEW_H
 
-#include <AGlobal>
+#include <AntiquaCRM>
 #include <QHBoxLayout>
 #include <QObject>
 #include <QStringList>

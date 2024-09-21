@@ -17,7 +17,7 @@
 namespace AntiquaCRM {
 
 /**
- * @class EUCountryItem
+ * @class EUCountry
  * @brief Country Model rowItem
  */
 class ANTIQUACRM_LIBRARY EUCountry final {

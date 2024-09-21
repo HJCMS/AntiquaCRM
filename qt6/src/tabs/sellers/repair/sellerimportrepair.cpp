@@ -104,14 +104,21 @@ void SellerImportRepair::setEditPage() {
 }
 
 void SellerImportRepair::updateData() {
+  qint64 _cid = m_cedit->getCustomerId();
   QJsonObject _json(p_json);
   _json.remove("customer");
   _json.insert("customer", m_cedit->getData());
 
   QJsonDocument _doc(_json);
-  QString _sql("UPDATE provider_orders SET pr_customer_id=");
-  _sql.append(QString::number(m_cedit->getCustomerId()));
-  _sql.append(",pr_order_data='");
+  QString _sql("UPDATE provider_orders SET ");
+  if (_cid > 0) {
+    _sql.append("pr_customer_id=");
+    _sql.append(QString::number(_cid));
+    _sql.append(",");
+  } else {
+    qWarning("Missing CustomerId to repair pr_customer_id!");
+  }
+  _sql.append("pr_order_data='");
   _sql.append(_doc.toJson(QJsonDocument::Compact));
   _sql.append("' WHERE (pr_order='" + p_orderid + "'");
   _sql.append(" AND pr_name ILIKE '" + p_provider + "');");

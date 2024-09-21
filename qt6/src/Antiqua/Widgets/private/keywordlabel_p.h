@@ -9,7 +9,7 @@
 #ifndef ANTIQUACRM_PRIVATE_KEYWORDLABEL_H
 #define ANTIQUACRM_PRIVATE_KEYWORDLABEL_H
 
-#include <AGlobal>
+#include <AntiquaCRM>
 #include <QFrame>
 #include <QLabel>
 #include <QObject>
