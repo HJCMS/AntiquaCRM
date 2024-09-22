@@ -5,6 +5,9 @@
 #ifndef ANTIQUACRM_AFLAGS_H
 #define ANTIQUACRM_AFLAGS_H
 
+#include <QObject>
+#include <QMetaType>
+#include <QByteArray>
 #include <QFlags>
 
 namespace AntiquaCRM {

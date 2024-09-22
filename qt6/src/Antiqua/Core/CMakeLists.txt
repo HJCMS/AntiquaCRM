@@ -110,15 +110,17 @@ ELSE()
   )
 ENDIF()
 
-INSTALL (TARGETS ${_sharedLibrary}
-  LIBRARY DESTINATION lib${LIB_SUFFIX}/
-  COMPONENT Libraries
-  NAMELINK_COMPONENT Development
-)
+IF (CMAKE_HOST_LINUX)
+  INSTALL (TARGETS ${_sharedLibrary}
+    LIBRARY DESTINATION lib${LIB_SUFFIX}/
+    COMPONENT Libraries
+    NAMELINK_COMPONENT Development
+  )
 
-INSTALL (FILES ${projectLibrary_HEADERS}
-  DESTINATION include/AntiquaCRM
-  COMPONENT Development
-)
+  INSTALL (FILES ${projectLibrary_HEADERS}
+    DESTINATION include/AntiquaCRM
+    COMPONENT Development
+  )
+ENDIF()
 
 #EOF

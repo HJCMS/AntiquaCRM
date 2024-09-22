@@ -6,6 +6,8 @@
 #define ANTIQUACRM_AENUMERATIONS_H
 
 #include <QObject>
+#include <QMetaType>
+#include <QByteArray>
 
 namespace AntiquaCRM {
 Q_NAMESPACE
@@ -15,7 +17,7 @@ Q_NAMESPACE
      * @ingroup Enumerations
      */
     enum NetworkQueryType { JSON_QUERY = 0, XML_QUERY = 1 };
-    Q_ENUM_NS(AntiquaCRM::NetworkQueryType)
+    Q_ENUM_NS(NetworkQueryType)
 
     /**
      * @brief Order processing status
@@ -30,7 +32,7 @@ Q_NAMESPACE
       COMPLETED = 5, /**< @deprecated delivery completed */
       CANCELED = 6   /**< canceled */
     };
-    Q_ENUM_NS(AntiquaCRM::OrderStatus)
+    Q_ENUM_NS(OrderStatus)
 
     /**
      * @brief Order payment status
@@ -44,7 +46,7 @@ Q_NAMESPACE
       RETURN = 4,   /**< returns */
       COLLPROC = 5  /**< collection procedures */
     };
-    Q_ENUM_NS(AntiquaCRM::OrderPayment)
+    Q_ENUM_NS(OrderPayment)
 
     /**
      * @brief Order status of the service provider
@@ -60,7 +62,7 @@ Q_NAMESPACE
       BUYER_NO_REACTION = 5,        /**< Keine Reaktion des Käufers */
       ORDER_CANCELED = 6            /**< Käufer hat die Bestellung storniert */
     };
-    Q_ENUM_NS(AntiquaCRM::ProviderPaymentStatus)
+    Q_ENUM_NS(ProviderPaymentStatus)
 
     /**
      * @brief Payment method of the order
@@ -87,7 +89,7 @@ Q_NAMESPACE
       INVOICE_PREPAYMENT_RESERVED = 13, /**< open - Advance payment reserved */
       CHECK_PREPAYMENT = 14,            /**< Check - payment in advance */
     };
-    Q_ENUM_NS(AntiquaCRM::PaymentMethod)
+    Q_ENUM_NS(PaymentMethod)
 
     /**
      * @brief Set customer trust level!
@@ -101,7 +103,7 @@ Q_NAMESPACE
       PREPAYMENT = 4,     /**< Only with prepayment */
       NO_DELIVERY = 5     /**< No delivery */
     };
-    Q_ENUM_NS(AntiquaCRM::CustomerTrustLevel)
+    Q_ENUM_NS(CustomerTrustLevel)
 
     /**
      * @brief gender definition
@@ -113,7 +115,7 @@ Q_NAMESPACE
       FEMALE = 2,    /**< female */
       VARIOUS = 3    /**< various */
     };
-    Q_ENUM_NS(AntiquaCRM::Gender)
+    Q_ENUM_NS(Gender)
 
     /**
      * @brief Article type finder...
@@ -134,7 +136,7 @@ Q_NAMESPACE
       PRINTS = 3,  /**< prints and stitches */
       OTHER = 4    /**< other or various */
     };
-    Q_ENUM_NS(AntiquaCRM::ArticleType)
+    Q_ENUM_NS(ArticleType)
 
     /**
      * @brief TAX type
@@ -148,7 +150,7 @@ Q_NAMESPACE
       TAX_INCL = 1, /**< including sales tax */
       TAX_WITH = 2  /**< with sales tax  */
     };
-    Q_ENUM_NS(AntiquaCRM::SalesTax)
+    Q_ENUM_NS(SalesTax)
 
     /**
      * @brief Media type
@@ -169,7 +171,7 @@ Q_NAMESPACE
       MEDIA_VINYL_VIDEO = 8,        /**< Vinyl video record */
       MEDIA_VINYL_DISC = 9          /**< Vinyl record and DISC */
     };
-    Q_ENUM_NS(AntiquaCRM::MediaType)
+    Q_ENUM_NS(MediaType)
 
     /**
      * @brief Item condition description
@@ -182,7 +184,7 @@ Q_NAMESPACE
       SATISFYING = 3,   /**< Significant signs of use */
       SUFFICIENT = 4    /**< Heavily worn */
     };
-    Q_ENUM_NS(AntiquaCRM::Condition)
+    Q_ENUM_NS(Condition)
 
     /**
      * @brief Enumeration to know, how to store configs.
@@ -192,7 +194,7 @@ Q_NAMESPACE
       CONFIG_SYSTEM = 0,  /**< store in user config */
       CONFIG_DATABASE = 1 /**< store in database */
     };
-    Q_ENUM_NS(AntiquaCRM::ConfigType);
+    Q_ENUM_NS(ConfigType);
 
     /**
      * @brief Used by Tabs filter selectors

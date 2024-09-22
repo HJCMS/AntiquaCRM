@@ -2,6 +2,7 @@
 # vim: set fileencoding=utf-8
 
 CMAKE_HOST_SYSTEM_INFORMATION(RESULT DEVELOPMENT_HOST QUERY FQDN)
+
 IF (CMAKE_HOST_LINUX)
   IF (${DEVELOPMENT_HOST} MATCHES "\.hjcms$")
     MESSAGE (STATUS "Antiqua Development enabled for ${DEVELOPMENT_HOST}.")
@@ -13,6 +14,9 @@ IF (CMAKE_HOST_LINUX)
 ENDIF ()
 
 IF (CMAKE_HOST_WIN32)
+  ## Not supported on Windows systems.
+  SET (WITH_ANTIQUACMD BOOL OFF)
+
   ## This must configured in Qt:Kit configuration!
   IF (NOT USER_INSTALL_PREFIX)
     MESSAGE (WARNING "The USER_INSTALL_PREFIX is not set to find GNU Utils!")

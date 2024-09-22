@@ -226,15 +226,17 @@ TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
  AntiquaCRM
 )
 
-INSTALL (TARGETS ${_sharedLibrary}
- LIBRARY DESTINATION lib${LIB_SUFFIX}/
- COMPONENT Libraries
- NAMELINK_COMPONENT Development
-)
+IF (CMAKE_HOST_LINUX)
+  INSTALL (TARGETS ${_sharedLibrary}
+   LIBRARY DESTINATION lib${LIB_SUFFIX}/
+   COMPONENT Libraries
+   NAMELINK_COMPONENT Development
+  )
 
-INSTALL (FILES ${library_HEADERS} ${_stl_HEADERS}
- DESTINATION include/AntiquaCRM
- COMPONENT Development
-)
+  INSTALL (FILES ${library_HEADERS} ${_stl_HEADERS}
+   DESTINATION include/AntiquaCRM
+   COMPONENT Development
+  )
+ENDIF()
 
 ##EOF
