@@ -12,8 +12,6 @@ INCLUDE_DIRECTORIES (
  ${CMAKE_CURRENT_BINARY_DIR}
 )
 
-## ADD_SUBDIRECTORY (private)
-
 SET (_library_FILES
   Widgets.dox
   antiquabuttons.h.cmake
@@ -38,86 +36,11 @@ CONFIGURE_FILE (antiquamail.h.cmake
   ${CMAKE_CURRENT_SOURCE_DIR}/antiquamail.h
 )
 
-SET (_library_config_HEADERS
-  antiquabuttons.h
-  antiquainput.h
-  antiquamail.h
-  antiquawidgets.h
-)
-
-SET (_library_config_TEMPLATES
+SET (_library_stl_HEADERS
   AntiquaInput
   AntiquaWidgets
   AntiquaButtons
   AntiquaMail
-)
-
-SET (_library_SOURCES
-  acolorluminance.cpp
-  acombobox.cpp
-  adatetimeedit.cpp
-  adialog.cpp
-  adoublebox.cpp
-  ainputwidget.cpp
-  alabel.cpp
-  alineedit.cpp
-  anavigationbar.cpp
-  amenu.cpp
-  apluginconfigwidget.cpp
-  apopupmessage.cpp
-  aslider.cpp
-  aspinbox.cpp
-  atextedit.cpp
-  awhatsthisbutton.cpp
-  bookbindingedit.cpp
-  boolbox.cpp
-  conditionedit.cpp
-  configgridlayout.cpp
-  crowdedit.cpp
-  customersdatawidget.cpp
-  datetimeinfo.cpp
-  descripeeditor.cpp
-  genderedit.cpp
-  groupboxedit.cpp
-  imagethumbnail.cpp
-  imagetoolbar.cpp
-  isbnedit.cpp
-  keywordsedit.cpp
-  mailbutton.cpp
-  maildialog.cpp
-  numedit.cpp
-  printerbutton.cpp
-  phoneedit.cpp
-  postalcodeedit.cpp
-  postalcodelocation.cpp
-  postalcodemodel.cpp
-  postalcodestate.cpp
-  priceedit.cpp
-  salutationedit.cpp
-  selectcurrency.cpp
-  selectdeliverpackage.cpp
-  selectdeliverservice.cpp
-  selecteucountry.cpp
-  selectfile.cpp
-  selectlanguage.cpp
-  selectmediatype.cpp
-  selectorderpayment.cpp
-  selectorderstatus.cpp
-  selectpaymentmethod.cpp
-  selectpaymentstatus.cpp
-  selectstorage.cpp
-  selecttargets.cpp
-  selectvat.cpp
-  serialid.cpp
-  splitter.cpp
-  sqlinfopopup.cpp
-  tablecontextmenu.cpp
-  tableheader.cpp
-  tableview.cpp
-  textfield.cpp
-  textline.cpp
-  urilineedit.cpp
-  yearedit.cpp
 )
 
 SET (_library_HEADERS
@@ -129,10 +52,14 @@ SET (_library_HEADERS
   ainputwidget.h
   alabel.h
   alineedit.h
-  anavigationbar.h
-  antiquaicon.h
-  apluginconfigwidget.h
   amenu.h
+  anavigationbar.h
+  antiquabuttons.h
+  antiquaicon.h
+  antiquainput.h
+  antiquamail.h
+  antiquawidgets.h
+  apluginconfigwidget.h
   apopupmessage.h
   aslider.h
   aspinbox.h
@@ -155,13 +82,13 @@ SET (_library_HEADERS
   mailbutton.h
   maildialog.h
   numedit.h
-  printerbutton.h
   phoneedit.h
   postalcodeedit.h
   postalcodelocation.h
   postalcodemodel.h
   postalcodestate.h
   priceedit.h
+  printerbutton.h
   salutationedit.h
   selectcurrency.h
   selectdeliverpackage.h
@@ -189,21 +116,94 @@ SET (_library_HEADERS
   yearedit.h
 )
 
-SET (_sub_widgets_source
- private/lineinputvalidator_p.h private/lineinputvalidator.cpp
- private/keywordlistview_p.h private/keywordlistview.cpp
- private/keywordlabel_p.h private/keywordlabel.cpp
- private/mailtemplatekeys_p.h private/mailtemplatekeys.cpp
- private/mailcommand_p.h private/mailcommand.cpp
- private/mailattachments_p.h private/mailattachments.cpp
+SET(_library_private_HEADERS
+  keywordlabel_p.h
+  keywordlistview_p.h
+  lineinputvalidator_p.h
+  mailattachments_p.h
+  mailcommand_p.h
+  mailtemplatekeys_p.h
+)
+
+SET (_library_SOURCES
+  acolorluminance.cpp
+  acombobox.cpp
+  adatetimeedit.cpp
+  adialog.cpp
+  adoublebox.cpp
+  ainputwidget.cpp
+  alabel.cpp
+  alineedit.cpp
+  amenu.cpp
+  anavigationbar.cpp
+  apluginconfigwidget.cpp
+  apopupmessage.cpp
+  aslider.cpp
+  aspinbox.cpp
+  atextedit.cpp
+  awhatsthisbutton.cpp
+  bookbindingedit.cpp
+  boolbox.cpp
+  conditionedit.cpp
+  configgridlayout.cpp
+  crowdedit.cpp
+  customersdatawidget.cpp
+  datetimeinfo.cpp
+  descripeeditor.cpp
+  genderedit.cpp
+  groupboxedit.cpp
+  imagethumbnail.cpp
+  imagetoolbar.cpp
+  isbnedit.cpp
+  keywordlabel.cpp
+  keywordlistview.cpp
+  keywordsedit.cpp
+  lineinputvalidator.cpp
+  mailattachments.cpp
+  mailbutton.cpp
+  mailcommand.cpp
+  maildialog.cpp
+  mailtemplatekeys.cpp
+  numedit.cpp
+  phoneedit.cpp
+  postalcodeedit.cpp
+  postalcodelocation.cpp
+  postalcodemodel.cpp
+  postalcodestate.cpp
+  priceedit.cpp
+  printerbutton.cpp
+  salutationedit.cpp
+  selectcurrency.cpp
+  selectdeliverpackage.cpp
+  selectdeliverservice.cpp
+  selecteucountry.cpp
+  selectfile.cpp
+  selectlanguage.cpp
+  selectmediatype.cpp
+  selectorderpayment.cpp
+  selectorderstatus.cpp
+  selectpaymentmethod.cpp
+  selectpaymentstatus.cpp
+  selectstorage.cpp
+  selecttargets.cpp
+  selectvat.cpp
+  serialid.cpp
+  splitter.cpp
+  sqlinfopopup.cpp
+  tablecontextmenu.cpp
+  tableheader.cpp
+  tableview.cpp
+  textfield.cpp
+  textline.cpp
+  urilineedit.cpp
+  yearedit.cpp
 )
 
 ADD_LIBRARY (${_sharedLibrary} SHARED
- ${_library_config_HEADERS}
- ${_library_config_TEMPLATES}
- ${_library_SOURCES}
+ ${_library_stl_HEADERS}
+ ${_library_private_HEADERS}
  ${_library_HEADERS}
- ${_sub_widgets_source}
+ ${_library_SOURCES}
  ${_library_FILES}
 )
 
@@ -217,13 +217,13 @@ SET_TARGET_PROPERTIES (${_sharedLibrary} PROPERTIES
 )
 
 TARGET_LINK_LIBRARIES (${_sharedLibrary} PRIVATE
+ AntiquaCRM
  Qt6::Core
  Qt6::Gui
  Qt6::Widgets
  Qt6::Network
  Qt6::Sql
  Qt6::Xml
- AntiquaCRM
 )
 
 IF (CMAKE_HOST_LINUX)
@@ -233,7 +233,7 @@ IF (CMAKE_HOST_LINUX)
    NAMELINK_COMPONENT Development
   )
 
-  INSTALL (FILES ${library_HEADERS} ${_stl_HEADERS}
+  INSTALL (FILES ${library_HEADERS} ${_library_stl_HEADERS}
    DESTINATION include/AntiquaCRM
    COMPONENT Development
   )

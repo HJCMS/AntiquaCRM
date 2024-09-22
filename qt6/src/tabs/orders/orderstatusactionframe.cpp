@@ -2,8 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "orderstatusactionframe.h"
-#include "aenumerations.h"
-
+#include <AGlobal>
 #include <QLayout>
 
 OrderStatusActionFrame::OrderStatusActionFrame(QWidget *parent)

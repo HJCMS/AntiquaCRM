@@ -3,7 +3,7 @@
 
 #include "keywordsedit.h"
 #include "antiquaicon.h"
-#include "private/keywordlistview_p.h"
+#include "keywordlistview_p.h"
 
 #include <AntiquaCRM>
 #include <QCompleter>

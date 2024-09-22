@@ -3,7 +3,7 @@
 
 #include "alineedit.h"
 #include "antiquaicon.h"
-#include "private/lineinputvalidator_p.h"
+#include "lineinputvalidator_p.h"
 
 #include <AntiquaCRM>
 #include <QAbstractItemView>

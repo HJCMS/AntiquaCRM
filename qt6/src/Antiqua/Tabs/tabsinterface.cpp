@@ -4,19 +4,20 @@
 #include "tabsinterface.h"
 
 #ifndef ANTIQUACRM_TABS_INDEX_H
-#include "tabsindex.h"
+#  include "tabsindex.h"
 #endif
 
 #ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
-#include "apluginconfigwidget.h"
+#  include "apluginconfigwidget.h"
 #endif
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TabsInterface::TabsInterface(QObject *parent)
-    : QObject{parent}, p_serial_id{"UNKNOWN_PLUGIN_SERIAL"} {}
+TabsInterface::TabsInterface(QObject* parent) : QObject{parent}, serialId{"UNKNOWN_PLUGIN_SERIAL"} {
+}
 
 const QJsonObject TabsInterface::menuObject() {
   QJsonObject _jo;
@@ -27,11 +28,16 @@ const QJsonObject TabsInterface::menuObject() {
   return _jo;
 }
 
-void TabsInterface::setSerialId(const QString &id) { p_serial_id = id; }
+void TabsInterface::setSerialId(const QString& id) {
+  serialId = id;
+  emit sendSerialIdChanged(serialId);
+}
 
-const QString TabsInterface::getSerialId() { return p_serial_id; }
+const QString TabsInterface::getSerialId() {
+  return serialId;
+}
 
-bool TabsInterface::createInterface(QObject *parent) {
+bool TabsInterface::createInterface(QObject* parent) {
   Q_UNUSED(parent);
   return false;
 }

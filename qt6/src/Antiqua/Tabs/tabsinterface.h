@@ -14,7 +14,8 @@
 #include <QObject>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class TabsIndex;
 class PluginConfigWidget;
@@ -32,19 +33,22 @@ class ANTIQUACRM_LIBRARY TabsInterface : public QObject {
   Q_CLASSINFO("Description", "AntiquaCRM TabWidgets Interface")
   Q_CLASSINFO("Version", ANTIQUACRM_VERSION)
   Q_CLASSINFO("Url", ANTIQUACRM_HOMEPAGE)
-  Q_PROPERTY(QString serialId READ getSerialId WRITE setSerialId CONSTANT)
+  Q_PROPERTY(QString serialId READ getSerialId WRITE setSerialId NOTIFY sendSerialIdChanged)
 
 private:
-  QString p_serial_id;
+  QString serialId;
+
+Q_SIGNALS:
+  void sendSerialIdChanged(QString);
 
 public Q_SLOTS:
-  void setSerialId(const QString &);
+  void setSerialId(const QString&);
 
 public:
   /**
    * @param parent - parent object
    */
-  explicit TabsInterface(QObject *parent = nullptr);
+  explicit TabsInterface(QObject* parent = nullptr);
 
   /**
    * @brief Required for Configuration
@@ -95,8 +99,7 @@ public:
    *
    * Widget for AntiquaCRM Configuration system.
    */
-  virtual AntiquaCRM::PluginConfigWidget *
-  configWidget(QWidget *parent) const = 0;
+  virtual AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const = 0;
 
   /**
    * @brief if true - load this interface on application start into main
@@ -137,7 +140,7 @@ public:
    *
    * Used in AntiquaCRM MainWindow @ref AntiquaCRM::TabsWidget::registerTab
    */
-  virtual AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const = 0;
+  virtual AntiquaCRM::TabsIndex* indexWidget(QWidget* parent) const = 0;
 
   /**
    * @brief Initial this interface
@@ -148,7 +151,7 @@ public:
    * The return value must "true" for "is loadable", otherwise the plugin will
    * rejected and destroyed.
    */
-  virtual bool createInterface(QObject *parent) = 0;
+  virtual bool createInterface(QObject* parent) = 0;
 };
 
 } // namespace AntiquaCRM

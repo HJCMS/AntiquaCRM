@@ -50,8 +50,6 @@ SET (projectLibrary_SOURCES
 
 SET (projectLibrary_HEADERS
  aglobal.h
- aenumerations.h
- aflags.h
  anetworkcache.h
  anetworker.h
  anetworkiface.h
