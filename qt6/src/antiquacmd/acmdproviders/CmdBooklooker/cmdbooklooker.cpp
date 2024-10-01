@@ -3,12 +3,14 @@
 
 #include "cmdbooklooker.h"
 
-CmdBooklooker::CmdBooklooker(QObject *parent)
-    : ACmdProviders{AntiquaCRM::JSON_QUERY, parent} {
+CmdBooklooker::CmdBooklooker(QObject* parent)
+    : ACmdProviders{AntiquaCRM::NetworkQueryType::JSON_QUERY, parent} {
   setObjectName("booklooker_cmd");
 }
 
-const QString CmdBooklooker::provider() const { return QString("Booklooker"); }
+const QString CmdBooklooker::provider() const {
+  return QString("Booklooker");
+}
 
 void CmdBooklooker::initConfiguration() {
   QString _sql("SELECT cfg_jsconfig::json FROM antiquacrm_configs");
@@ -30,7 +32,7 @@ void CmdBooklooker::initConfiguration() {
   apiPath = _o.value("m_api_path").toString();
 }
 
-const QUrl CmdBooklooker::apiQuery(const QString &action) {
+const QUrl CmdBooklooker::apiQuery(const QString& action) {
   QUrl url(baseUrl);
   url.setPath("/2.0/" + action);
   actionsCookie = QNetworkCookie("action", action.toLocal8Bit());
@@ -39,7 +41,7 @@ const QUrl CmdBooklooker::apiQuery(const QString &action) {
   return url;
 }
 
-void CmdBooklooker::prepareContent(const QJsonDocument &document) {
+void CmdBooklooker::prepareContent(const QJsonDocument& document) {
   const QJsonObject obj = document.object();
   if (obj.value("status").toString().toUpper() != "OK") {
     qWarning("Booklooker Document not OK!");
@@ -63,8 +65,8 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
         continue;
       }
 
-      QDateTime datetime = getDateTime(order.value("orderDate").toString(),
-                                       order.value("orderTime").toString());
+      QDateTime datetime =
+          getDateTime(order.value("orderDate").toString(), order.value("orderTime").toString());
       // BEGIN::CONVERT
       QJsonObject antiqua_order; // Bestellkopfdaten
       antiqua_order.insert("provider", QJsonValue(provider()));
@@ -96,8 +98,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
         postalAddress << street;
         postalAddress << postalcode + " " + location;
         antiqua_customer.insert("c_postal_address", postalAddress.join("\n"));
-        antiqua_customer.insert("c_provider_import",
-                                firstname + " " + lastname);
+        antiqua_customer.insert("c_provider_import", firstname + " " + lastname);
 
         if (order.contains("email")) {
           antiqua_customer.insert("c_email_0", order.value("email").toString());
@@ -112,28 +113,23 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
         }
 
         if (order.contains("company")) {
-          antiqua_customer.insert("c_company_name",
-                                  order.value("company").toString());
+          antiqua_customer.insert("c_company_name", order.value("company").toString());
         }
 
         if (order.contains("accountHolder")) {
-          antiqua_customer.insert("c_comments",
-                                  order.value("accountHolder").toString());
+          antiqua_customer.insert("c_comments", order.value("accountHolder").toString());
         }
 
         if (order.contains("accountIban")) {
-          antiqua_customer.insert("c_iban",
-                                  order.value("accountIban").toString());
+          antiqua_customer.insert("c_iban", order.value("accountIban").toString());
         }
 
         if (order.contains("accountBic")) {
-          antiqua_customer.insert("c_swift_bic",
-                                  order.value("accountBic").toString());
+          antiqua_customer.insert("c_swift_bic", order.value("accountBic").toString());
         }
 
         if (order.contains("ustIdNr")) {
-          antiqua_customer.insert("c_tax_id",
-                                  order.value("ustIdNr").toString());
+          antiqua_customer.insert("c_tax_id", order.value("ustIdNr").toString());
         }
 
         // Delivery Address Body
@@ -175,61 +171,58 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
        */
       QString orderStatus = order.value("status").toString();
       if (orderStatus == "READY_FOR_SHIPMENT") {
-        antiqua_orderinfo.insert("o_order_status",
-                                 AntiquaCRM::OrderStatus::STARTED);
+        antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::STARTED);
       } else if (orderStatus == "ORDER_CANCEL_ACTION") {
-        antiqua_orderinfo.insert("o_order_status",
-                                 AntiquaCRM::OrderStatus::CANCELED);
+        antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::CANCELED);
       } else {
-        antiqua_orderinfo.insert("o_order_status",
-                                 AntiquaCRM::OrderStatus::OPEN);
+        antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::OPEN);
       }
 
       // AntiquaCRM::PaymentMethod
-      AntiquaCRM::PaymentMethod payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+      AntiquaCRM::PaymentMethod payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
       switch (order.value("paymentId").toInt()) {
-      case 1: // Banküberweisung (Vorkasse)
-        payment_method = AntiquaCRM::BANK_PREPAYMENT;
-        break;
+        case 1: // Banküberweisung (Vorkasse)
+          payment_method = AntiquaCRM::PaymentMethod::BANK_PREPAYMENT;
+          break;
 
-      case 2: // Offene Rechnung
-        payment_method = AntiquaCRM::DELIVER_WITH_INVOICE;
-        break;
+        case 2: // Offene Rechnung
+          payment_method = AntiquaCRM::PaymentMethod::DELIVER_WITH_INVOICE;
+          break;
 
-      case 3: // Lastschrift (Vorkasse)
-        payment_method = AntiquaCRM::DIRECT_DEBIT_PREPAYMENT;
-        break;
+        case 3: // Lastschrift (Vorkasse)
+          payment_method = AntiquaCRM::PaymentMethod::DIRECT_DEBIT_PREPAYMENT;
+          break;
 
-      case 4: // Kreditkarte (Vorkasse)
-        payment_method = AntiquaCRM::CREDIT_CARD_PREPAYMENT;
-        break;
+        case 4: // Kreditkarte (Vorkasse)
+          payment_method = AntiquaCRM::PaymentMethod::CREDIT_CARD_PREPAYMENT;
+          break;
 
-      case 5: // Nachnahme
-        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
-        break;
+        case 5: // Nachnahme
+          payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
+          break;
 
-      case 6: // PayPal (Vorkasse)
-        payment_method = AntiquaCRM::PAYPAL_PREPAYMENT;
-        break;
+        case 6: // PayPal (Vorkasse)
+          payment_method = AntiquaCRM::PaymentMethod::PAYPAL_PREPAYMENT;
+          break;
 
-      case 8: // Skrill (Vorkasse)
-        payment_method = AntiquaCRM::SKRILL_PREPAYMENT;
-        break;
+        case 8: // Skrill (Vorkasse)
+          payment_method = AntiquaCRM::PaymentMethod::SKRILL_PREPAYMENT;
+          break;
 
-      case 9: // Selbstabholung und Barzahlung
-        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
-        break;
+        case 9: // Selbstabholung und Barzahlung
+          payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
+          break;
 
-      case 10: // Sofortüberweisung
-        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
-        break;
+        case 10: // Sofortüberweisung
+          payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
+          break;
 
-      case 11: // Offene Rechnung (Vorkasse vorbehalten)
-        payment_method = AntiquaCRM::INVOICE_PREPAYMENT_RESERVED;
-        break;
+        case 11: // Offene Rechnung (Vorkasse vorbehalten)
+          payment_method = AntiquaCRM::PaymentMethod::INVOICE_PREPAYMENT_RESERVED;
+          break;
 
-      default:
-        payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+        default:
+          payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
       }
       antiqua_orderinfo.insert("o_payment_method", payment_method);
 
@@ -246,16 +239,14 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
 
       // Buyer payment comment
       if (order.contains("comments")) {
-        antiqua_orderinfo.insert("o_delivery_comment",
-                                 order.value("comments").toString());
+        antiqua_orderinfo.insert("o_delivery_comment", order.value("comments").toString());
       }
 
       // Payment Confirmed
       if (order.contains("paymentConfirmed")) {
         QString date_time = order.value("paymentConfirmed").toString();
         QDateTime payment_time = getDateTime(date_time);
-        antiqua_orderinfo.insert("o_payment_confirmed",
-                                 payment_time.toString(Qt::ISODate));
+        antiqua_orderinfo.insert("o_payment_confirmed", payment_time.toString(Qt::ISODate));
       }
 
       // PayPal TransactionId
@@ -278,26 +269,22 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
           QJsonObject sub = articles[a].toObject();
           booking.insert("a_payment_id", 0);
           booking.insert("a_count", sub.value("amount"));
-          booking.insert("a_article_id",
-                         convert("a_article_id", sub.value("orderNo")));
+          booking.insert("a_article_id", convert("a_article_id", sub.value("orderNo")));
           qint64 prItemId = sub.value("orderItemId").toInt();
           booking.insert("a_provider_id", QString::number(prItemId));
-          booking.insert("a_price",
-                         convert("a_price", sub.value("singlePrice")));
-          booking.insert(
-              "a_sell_price",
-              convert("a_sell_price", sub.value("totalPriceRebated")));
+          booking.insert("a_price", convert("a_price", sub.value("singlePrice")));
+          booking.insert("a_sell_price", convert("a_sell_price", sub.value("totalPriceRebated")));
           booking.insert("a_title", sub.value("orderTitle"));
           switch (sub.value("mediaType").toInt()) {
-          case 1:
-          case 2:
-          case 3:
-            booking.insert("a_type", AntiquaCRM::ArticleType::MEDIA);
-            break;
+            case 1:
+            case 2:
+            case 3:
+              booking.insert("a_type", AntiquaCRM::ArticleType::MEDIA);
+              break;
 
-          default:
-            booking.insert("a_type", AntiquaCRM::ArticleType::BOOK);
-            break;
+            default:
+              booking.insert("a_type", AntiquaCRM::ArticleType::BOOK);
+              break;
           };
           booking.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
           antiqua_articles.append(booking);
@@ -321,11 +308,11 @@ void CmdBooklooker::prepareContent(const QJsonDocument &document) {
   emit sendFinished();
 }
 
-const QString CmdBooklooker::dateString(const QDate &date) const {
+const QString CmdBooklooker::dateString(const QDate& date) const {
   return date.toString("yyyy-MM-dd");
 }
 
-void CmdBooklooker::setTokenCookie(const QString &token) {
+void CmdBooklooker::setTokenCookie(const QString& token) {
   QDateTime dt = QDateTime::currentDateTime();
   dt.setTimeSpec(Qt::UTC);
   qint64 cookie_lifetime = (9 * 60);
@@ -368,7 +355,7 @@ void CmdBooklooker::query() {
   netw->getRequest(url);
 }
 
-void CmdBooklooker::responsed(const QByteArray &bread) {
+void CmdBooklooker::responsed(const QByteArray& bread) {
   QJsonParseError parser;
   QJsonDocument doc = QJsonDocument::fromJson(bread, &parser);
   if (parser.error != QJsonParseError::NoError) {

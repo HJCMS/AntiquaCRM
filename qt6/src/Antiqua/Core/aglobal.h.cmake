@@ -26,7 +26,7 @@
 /**
  * @ingroup AMacros
  * @brief default executable name
- * @short Required by qApp-&gt;setApplicationName() and QSettings class.
+ * @short Required by setApplicationName() and QSettings class.
  */
 #ifndef ANTIQUACRM_NAME
 #define ANTIQUACRM_NAME "@PROJECTNAME@"
@@ -288,13 +288,6 @@
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
 #include <QDBusAbstractAdaptor>
-#else
-/**
- * @ingroup AMacros
- * @brief Macro-fake for Windows
- * @short Redefined macro to prevent errors when compile on windows
- */
-#define Q_NOREPLY
 #endif
 
 #ifndef ANTIQUACRM_APREDEFINED_H

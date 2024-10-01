@@ -6,7 +6,8 @@
 
 #include <QtCore>
 
-CmdAbeBooks::CmdAbeBooks(QObject* parent) : ACmdProviders{AntiquaCRM::XML_QUERY, parent} {
+CmdAbeBooks::CmdAbeBooks(QObject* parent)
+    : ACmdProviders{AntiquaCRM::NetworkQueryType::XML_QUERY, parent} {
   setObjectName("abebooks_cmd");
 }
 
@@ -140,39 +141,39 @@ void CmdAbeBooks::prepareContent(const QDomDocument& document) {
       QDomNode statusNode = xml.firstChildNode(orderElement, "status");
       QString orderStatus = xml.getNodeValue(statusNode).toString();
       if (orderStatus.contains("Ordered")) {
-        // AntiquaCRM::SHIPMENT_CREATED => AntiquaCRM::STARTED
+        // AntiquaCRM::ProviderPaymentStatus::SHIPMENT_CREATED => AntiquaCRM::OrderStatus::STARTED
         antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::STARTED);
       } else if (orderStatus.contains("Cancelled")) {
-        // AntiquaCRM::ORDER_CANCELED => AntiquaCRM::CANCELED
+        // AntiquaCRM::ProviderPaymentStatus::ORDER_CANCELED => AntiquaCRM::OrderStatus::CANCELED
         antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::CANCELED);
       } else {
-        // AntiquaCRM::STATUS_NOT_SET => AntiquaCRM::OPEN
+        // AntiquaCRM::ProviderPaymentStatus::STATUS_NOT_SET => AntiquaCRM::OPEN
         antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::OPEN);
       }
 
       // AntiquaCRM::PaymentMethod
       AntiquaCRM::PaymentMethod payment_method;
-      payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+      payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
       QDomNode pmNode = xml.firstChildNode(orderElement, "purchaseMethod");
       QString purchaseMethod = xml.getNodeValue(pmNode).toString();
       if (purchaseMethod.toUpper() == "CC") {
         // AbeBooks Creditcard
-        payment_method = AntiquaCRM::CREDIT_CARD_PREPAYMENT;
+        payment_method = AntiquaCRM::PaymentMethod::CREDIT_CARD_PREPAYMENT;
       } else if (purchaseMethod.toUpper() == "SD") {
         // Seller Direct
         QString sdType = pmNode.toElement().attribute("type", "Invoice");
         if (sdType.contains("Check"))
-          payment_method = AntiquaCRM::CREDIT_CARD_PREPAYMENT;
+          payment_method = AntiquaCRM::PaymentMethod::CREDIT_CARD_PREPAYMENT;
         else if (sdType.contains("PayPal"))
-          payment_method = AntiquaCRM::PAYPAL_PREPAYMENT;
+          payment_method = AntiquaCRM::PaymentMethod::PAYPAL_PREPAYMENT;
         else if (sdType.contains("Debit"))
-          payment_method = AntiquaCRM::DIRECT_DEBIT_PREPAYMENT;
+          payment_method = AntiquaCRM::PaymentMethod::DIRECT_DEBIT_PREPAYMENT;
         else if (sdType.contains("Bank"))
-          payment_method = AntiquaCRM::BANK_PREPAYMENT;
+          payment_method = AntiquaCRM::PaymentMethod::BANK_PREPAYMENT;
         else if (sdType.contains("Invoice"))
-          payment_method = AntiquaCRM::DELIVER_WITH_INVOICE;
+          payment_method = AntiquaCRM::PaymentMethod::DELIVER_WITH_INVOICE;
         else if (sdType.contains("Money Order"))
-          payment_method = AntiquaCRM::UNKNOWN_PREPAYMENT;
+          payment_method = AntiquaCRM::PaymentMethod::UNKNOWN_PREPAYMENT;
       }
       antiqua_orderinfo.insert("o_payment_method", payment_method);
       antiqua_orderinfo.insert("o_payment_status", 0);

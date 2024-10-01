@@ -44,7 +44,8 @@ static const QHash<QString, QString> translateIds() {
   return hash;
 }
 
-CmdBuchfreund::CmdBuchfreund(QObject* parent) : ACmdProviders{AntiquaCRM::JSON_QUERY, parent} {
+CmdBuchfreund::CmdBuchfreund(QObject* parent)
+    : ACmdProviders{AntiquaCRM::NetworkQueryType::JSON_QUERY, parent} {
   setObjectName("buchfreund_cmd");
 }
 
@@ -187,17 +188,17 @@ void CmdBuchfreund::prepareContent(const QJsonDocument& document) {
   AntiquaCRM::PaymentMethod payment_method;
   QString bezahlart = bf_order.value("bezahlart").toString();
   if (bezahlart.contains("Banküberweisung", Qt::CaseInsensitive))
-    payment_method = AntiquaCRM::BANK_PREPAYMENT;
+    payment_method = AntiquaCRM::PaymentMethod::BANK_PREPAYMENT;
   else if (bezahlart == "Rechnung") // Offene Rechnung
-    payment_method = AntiquaCRM::DELIVER_WITH_INVOICE;
+    payment_method = AntiquaCRM::PaymentMethod::DELIVER_WITH_INVOICE;
   else if (bezahlart.contains("Kreditkarte", Qt::CaseInsensitive))
-    payment_method = AntiquaCRM::CREDIT_CARD_PREPAYMENT;
+    payment_method = AntiquaCRM::PaymentMethod::CREDIT_CARD_PREPAYMENT;
   else if (bezahlart.contains("PayPal", Qt::CaseInsensitive))
-    payment_method = AntiquaCRM::PAYPAL_PREPAYMENT;
+    payment_method = AntiquaCRM::PaymentMethod::PAYPAL_PREPAYMENT;
   else if (bezahlart.contains("Rechnung", Qt::CaseInsensitive))
-    payment_method = AntiquaCRM::INVOICE_PREPAYMENT_RESERVED;
+    payment_method = AntiquaCRM::PaymentMethod::INVOICE_PREPAYMENT_RESERVED;
   else
-    payment_method = AntiquaCRM::PAYMENT_NOT_SET;
+    payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
 
   antiqua_orderinfo.insert("o_payment_method", payment_method);
 

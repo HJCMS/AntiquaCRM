@@ -67,20 +67,20 @@ const QString OrdersTableOverViewModel::getPaymentStatus(int status) const {
 
 const QString OrdersTableOverViewModel::getOrderStatus(int status) const {
   switch (static_cast<AntiquaCRM::OrderStatus>(status)) {
-  case (AntiquaCRM::STARTED): /**< Auftrag erstellt */
+  case (AntiquaCRM::OrderStatus::STARTED): /**< Auftrag erstellt */
     return tr("Order created");
 
-  case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
+  case (AntiquaCRM::OrderStatus::FETCHET): /**< Bereit zur Abholung */
     return tr("Ready for pickup");
 
-  case (AntiquaCRM::DELIVERY): /**< Auslieferung */
+  case (AntiquaCRM::OrderStatus::DELIVERY): /**< Auslieferung */
     return tr("Delivery");
 
-  case (AntiquaCRM::DELIVERED): /**< Geliefert */
-  case (AntiquaCRM::COMPLETED): /**< @deprecated */
+  case (AntiquaCRM::OrderStatus::DELIVERED): /**< Geliefert */
+  case (AntiquaCRM::OrderStatus::COMPLETED): /**< @deprecated */
     return tr("Delivered");
 
-  case (AntiquaCRM::CANCELED): /**< Storniert */
+  case (AntiquaCRM::OrderStatus::CANCELED): /**< Storniert */
     return tr("Canceled");
 
   default:
@@ -90,19 +90,19 @@ const QString OrdersTableOverViewModel::getOrderStatus(int status) const {
 
 const QIcon OrdersTableOverViewModel::getOrderStatusIcon(int status) const {
   switch (static_cast<AntiquaCRM::OrderStatus>(status)) {
-  case (AntiquaCRM::STARTED): /**< Auftrag angenommen */
+  case (AntiquaCRM::OrderStatus::STARTED): /**< Auftrag angenommen */
     return AntiquaCRM::antiquaIcon("action-edit-document");
 
-  case (AntiquaCRM::FETCHET): /**< Bereit zur Abholung */
+  case (AntiquaCRM::OrderStatus::FETCHET): /**< Bereit zur Abholung */
     return AntiquaCRM::qrcIcon("package-created");
 
-  case (AntiquaCRM::DELIVERY): /**< Unterwegs */
+  case (AntiquaCRM::OrderStatus::DELIVERY): /**< Unterwegs */
     return AntiquaCRM::qrcIcon("package-deliver");
 
-  case (AntiquaCRM::DELIVERED): /**< Geliefert */
+  case (AntiquaCRM::OrderStatus::DELIVERED): /**< Geliefert */
     return AntiquaCRM::antiquaIcon("dialog-ok-apply");
 
-  case (AntiquaCRM::CANCELED): /**< Storniert */
+  case (AntiquaCRM::OrderStatus::CANCELED): /**< Storniert */
     return AntiquaCRM::antiquaIcon("edit-delete");
 
   default:

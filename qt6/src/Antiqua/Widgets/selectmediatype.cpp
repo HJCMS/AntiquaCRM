@@ -11,25 +11,25 @@ SelectMediaType::SelectMediaType(QWidget *parent)
   QIcon _icon = style()->standardIcon(QStyle::SP_DriveCDIcon);
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->addItem(_warn, m_edit->withoutDisclosures(), // no media
-                  AntiquaCRM::MEDIA_NO_TYPE);
+                  AntiquaCRM::MediaType::MEDIA_NO_TYPE);
   m_edit->addItem(_icon, tr("Compact Disc"), // disc
-                  AntiquaCRM::MEDIA_DISC_COMPACT);
+                  AntiquaCRM::MediaType::MEDIA_DISC_COMPACT);
   m_edit->addItem(_icon, tr("Mini Compact Disc"), // disc
-                  AntiquaCRM::MEDIA_DISC_MINI);
+                  AntiquaCRM::MediaType::MEDIA_DISC_MINI);
   m_edit->addItem(_icon, tr("Video Compact Disc"), // video disc
-                  AntiquaCRM::MEDIA_DISC_VIDEO);
+                  AntiquaCRM::MediaType::MEDIA_DISC_VIDEO);
   m_edit->addItem(_icon, tr("Vinyl single record"), // vinyl
-                  AntiquaCRM::MEDIA_VINYL_SINGLE);
+                  AntiquaCRM::MediaType::MEDIA_VINYL_SINGLE);
   m_edit->addItem(_icon, tr("Vinyl longplay record"),
-                  AntiquaCRM::MEDIA_VINYL_LONGPLAY);
+                  AntiquaCRM::MediaType::MEDIA_VINYL_LONGPLAY);
   m_edit->addItem(_icon, tr("Vinyl Multi Groove"),
-                  AntiquaCRM::MEDIA_VINYL_MULTI_GROOVE);
+                  AntiquaCRM::MediaType::MEDIA_VINYL_MULTI_GROOVE);
   m_edit->addItem(_icon, tr("Vinyl colored record"), // vinyl
-                  AntiquaCRM::MEDIA_VINYL_COLORED);
+                  AntiquaCRM::MediaType::MEDIA_VINYL_COLORED);
   m_edit->addItem(_icon, tr("Vinyl video record"), // vinyl
-                  AntiquaCRM::MEDIA_VINYL_VIDEO);
+                  AntiquaCRM::MediaType::MEDIA_VINYL_VIDEO);
   m_edit->addItem(_icon, tr("Vinyl record and DISC"), // vinyl
-                  AntiquaCRM::MEDIA_VINYL_DISC);
+                  AntiquaCRM::MediaType::MEDIA_VINYL_DISC);
   layout->addWidget(m_edit);
 
   initData();
@@ -43,7 +43,7 @@ void SelectMediaType::initData() {
   QSqlField _f;
   _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
-  _f.setDefaultValue(AntiquaCRM::MEDIA_NO_TYPE);
+  _f.setDefaultValue(AntiquaCRM::MediaType::MEDIA_NO_TYPE);
   setRestrictions(_f);
   setWindowModified(false);
 }

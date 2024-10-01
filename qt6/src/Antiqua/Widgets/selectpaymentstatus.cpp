@@ -7,10 +7,10 @@
 #include <QDebug>
 #include <QIcon>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectPaymentStatus::SelectPaymentStatus(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectPaymentStatus::SelectPaymentStatus(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setMinimumContentsLength(m_edit->withoutDisclosures().length());
   layout->addWidget(m_edit);
@@ -23,30 +23,29 @@ void SelectPaymentStatus::valueChanged(int index) {
     return;
 
   int _status = m_edit->itemData(index, Qt::UserRole).toInt();
-  emit sendPaymentStatusChanged(
-      static_cast<AntiquaCRM::ProviderPaymentStatus>(_status));
+  emit sendPaymentStatusChanged(static_cast<AntiquaCRM::ProviderPaymentStatus>(_status));
   emit sendInputChanged();
 }
 
 void SelectPaymentStatus::initData() {
   QSqlField _f;
   _f.setMetaType(getType());
-  _f.setDefaultValue(AntiquaCRM::STATUS_NOT_SET);
+  _f.setDefaultValue(AntiquaCRM::ProviderPaymentStatus::STATUS_NOT_SET);
   setRestrictions(_f);
 
   int _c = 1;
-  m_edit->setWithoutDisclosures(AntiquaCRM::STATUS_NOT_SET);
+  m_edit->setWithoutDisclosures(AntiquaCRM::ProviderPaymentStatus::STATUS_NOT_SET);
   m_edit->insertItem(_c++, tr("Waiting for payment"),
-                     AntiquaCRM::WAIT_FOR_PAYMENT);
+                     AntiquaCRM::ProviderPaymentStatus::WAIT_FOR_PAYMENT);
   m_edit->insertItem(_c++, tr("Ready for shipping"),
-                     AntiquaCRM::SHIPMENT_CREATED);
+                     AntiquaCRM::ProviderPaymentStatus::SHIPMENT_CREATED);
   m_edit->insertItem(_c++, tr("Delivered waiting for payment"),
-                     AntiquaCRM::SHIPPED_WAIT_FOR_PAYMENT);
+                     AntiquaCRM::ProviderPaymentStatus::SHIPPED_WAIT_FOR_PAYMENT);
   m_edit->insertItem(_c++, tr("Paid and shipped"),
-                     AntiquaCRM::SHIPPED_AND_PAID);
+                     AntiquaCRM::ProviderPaymentStatus::SHIPPED_AND_PAID);
   m_edit->insertItem(_c++, tr("No reaction from buyer"),
-                     AntiquaCRM::BUYER_NO_REACTION);
-  m_edit->insertItem(_c++, tr("order canceled"), AntiquaCRM::ORDER_CANCELED);
+                     AntiquaCRM::ProviderPaymentStatus::BUYER_NO_REACTION);
+  m_edit->insertItem(_c++, tr("order canceled"), AntiquaCRM::ProviderPaymentStatus::ORDER_CANCELED);
 
   const QIcon _icon = AntiquaCRM::antiquaIcon("view-loan-asset");
   for (int i = 1; i < m_edit->count(); i++) {
@@ -56,7 +55,7 @@ void SelectPaymentStatus::initData() {
   setWindowModified(false);
 }
 
-void SelectPaymentStatus::setValue(const QVariant &value) {
+void SelectPaymentStatus::setValue(const QVariant& value) {
   if (value.metaType().id() != QMetaType::Int) {
 #ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Reject:" << value;
@@ -71,26 +70,28 @@ void SelectPaymentStatus::setValue(const QVariant &value) {
     m_edit->setCurrentIndex(_index);
 }
 
-void SelectPaymentStatus::setFocus() { m_edit->setFocus(); }
+void SelectPaymentStatus::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectPaymentStatus::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void SelectPaymentStatus::setRestrictions(const QSqlField &field) {
+void SelectPaymentStatus::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectPaymentStatus::setInputToolTip(const QString &tip) {
+void SelectPaymentStatus::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectPaymentStatus::setBuddyLabel(const QString &text) {
+void SelectPaymentStatus::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -115,6 +116,8 @@ const QString SelectPaymentStatus::popUpHints() {
   return tr("a valid Payment status is required.");
 }
 
-const QString SelectPaymentStatus::statusHints() { return popUpHints(); }
+const QString SelectPaymentStatus::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

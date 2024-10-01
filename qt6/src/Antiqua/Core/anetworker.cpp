@@ -131,7 +131,7 @@ void ANetworker::slotReadResponse() {
 #endif
 
   // JSON Request
-  if (queryType == AntiquaCRM::JSON_QUERY) {
+  if (queryType == AntiquaCRM::NetworkQueryType::JSON_QUERY) {
     QJsonParseError parser;
     QJsonDocument doc = QJsonDocument::fromJson(data, &parser);
     if (parser.error != QJsonParseError::NoError) {
@@ -146,7 +146,7 @@ void ANetworker::slotReadResponse() {
   }
 
   // XML/SOAP Request
-  if (queryType == AntiquaCRM::XML_QUERY) {
+  if (queryType == AntiquaCRM::NetworkQueryType::XML_QUERY) {
     QDomDocument xml("response");
     QString errorMsg = QString();
     int errorLine = 0;

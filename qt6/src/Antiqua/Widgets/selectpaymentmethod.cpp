@@ -28,39 +28,39 @@ void SelectPaymentMethod::valueChanged(int index) {
 void SelectPaymentMethod::initData() {
   QSqlField _f;
   _f.setMetaType(getType());
-  _f.setDefaultValue(AntiquaCRM::PAYMENT_NOT_SET);
+  _f.setDefaultValue(AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET);
   setRestrictions(_f);
 
   int c = 1;
-  m_edit->setWithoutDisclosures(AntiquaCRM::PAYMENT_NOT_SET);
+  m_edit->setWithoutDisclosures(AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET);
   m_edit->insertItem(c++, tr("Bank transfer in advance"),
-                     AntiquaCRM::BANK_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::BANK_PREPAYMENT);
   m_edit->insertItem(c++, tr("Delivery with open invoice"),
-                     AntiquaCRM::DELIVER_WITH_INVOICE);
+                     AntiquaCRM::PaymentMethod::DELIVER_WITH_INVOICE);
   m_edit->insertItem(c++, tr("Direct debit payment in advance"),
-                     AntiquaCRM::DIRECT_DEBIT_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::DIRECT_DEBIT_PREPAYMENT);
   m_edit->insertItem(c++, tr("Credit card in advance"),
-                     AntiquaCRM::CREDIT_CARD_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::CREDIT_CARD_PREPAYMENT);
   m_edit->insertItem(c++, tr("Cash on delivery payment"),
-                     AntiquaCRM::CASH_ON_DELIVERY);
+                     AntiquaCRM::PaymentMethod::CASH_ON_DELIVERY);
   m_edit->insertItem(c++, tr("PayPal prepayment"),
-                     AntiquaCRM::PAYPAL_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::PAYPAL_PREPAYMENT);
   m_edit->insertItem(c++, tr("Skrill prepayment"),
-                     AntiquaCRM::SKRILL_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::SKRILL_PREPAYMENT);
   m_edit->insertItem(c++, tr("GiroPay prepayment"),
-                     AntiquaCRM::GIROPAY_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::GIROPAY_PREPAYMENT);
   m_edit->insertItem(c++, tr("GooglePay prepayment"),
-                     AntiquaCRM::GOOGLEPAY_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::GOOGLEPAY_PREPAYMENT);
   m_edit->insertItem(c++, tr("Payment in advance from an unknown provider"),
-                     AntiquaCRM::UNKNOWN_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::UNKNOWN_PREPAYMENT);
   m_edit->insertItem(c++, tr("Pickup - cash payment"),
-                     AntiquaCRM::LOCAL_PICKUP_CASH_PAYMENT);
+                     AntiquaCRM::PaymentMethod::LOCAL_PICKUP_CASH_PAYMENT);
   m_edit->insertItem(c++, tr("Instant bank transfer"),
-                     AntiquaCRM::INSTANT_BANK_TRANSFER);
+                     AntiquaCRM::PaymentMethod::INSTANT_BANK_TRANSFER);
   m_edit->insertItem(c++, tr("Open account - advance payment reserved"),
-                     AntiquaCRM::INVOICE_PREPAYMENT_RESERVED);
+                     AntiquaCRM::PaymentMethod::INVOICE_PREPAYMENT_RESERVED);
   m_edit->insertItem(c++, tr("Check - payment in advance"),
-                     AntiquaCRM::CHECK_PREPAYMENT);
+                     AntiquaCRM::PaymentMethod::CHECK_PREPAYMENT);
 
   const QIcon _icon = AntiquaCRM::antiquaIcon("view-loan-asset");
   for (int i = 1; i < m_edit->count(); i++) {
