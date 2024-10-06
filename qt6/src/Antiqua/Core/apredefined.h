@@ -25,7 +25,11 @@
  */
 namespace AntiquaCRM
 {
+#ifdef Q_CC_MINGW
+  ANTIQUACRM_LIBRARY Q_NAMESPACE
+#else
   Q_NAMESPACE
+#endif
 
   /**
    * @brief Type specification for the network request interface!

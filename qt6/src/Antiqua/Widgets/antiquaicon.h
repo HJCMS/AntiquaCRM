@@ -26,7 +26,7 @@ namespace AntiquaCRM
  *
  * @ingroup IconTheme
  */
-ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString& name) {
+inline const QIcon qrcIcon(const QString& name) {
   QIcon _icon = QIcon(":/icons/" + name + ".png");
   if (_icon.isNull())
     _icon = QIcon(":/icons/unknown.png");
@@ -42,7 +42,7 @@ ANTIQUACRM_LIBRARY inline const QIcon qrcIcon(const QString& name) {
  *
  * @ingroup IconTheme
  */
-ANTIQUACRM_LIBRARY inline const QIcon antiquaIcon(const QString& name) {
+inline const QIcon antiquaIcon(const QString& name) {
   if (name.length() < 2)
     return qrcIcon("unknown");
 

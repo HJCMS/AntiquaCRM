@@ -140,7 +140,7 @@ bool CustomersEditor::setDataField(const QSqlField& field, const QVariant& value
 #ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Unknown:" << _key << "|" << value;
 #else
-    qWarning("Unknown Key (%s) found.", qPrintable(key));
+    qWarning("Unknown Key (%s) found.", qPrintable(_key));
 #endif
   }
   return false;
