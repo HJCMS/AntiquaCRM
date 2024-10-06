@@ -1,4 +1,4 @@
-Copyright (C) 2019-2023 Juergen Heinemann
+Copyright (C) 2019-2025 Juergen Heinemann
 
 Antiqua CRM is a Desktop Application to Manage Antiquarian Books, CD's, Prints and Stitches.
 

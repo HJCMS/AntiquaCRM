@@ -182,14 +182,10 @@
  * @ingroup AMacros
  * @brief library export definition
  */
-#ifndef ANTIQUACRM_SHARED_STATIC
-# ifdef ANTIQUACRM_SHARED_LIBRARY
-#   define ANTIQUACRM_LIBRARY Q_DECL_EXPORT
-# else
-#   define ANTIQUACRM_LIBRARY Q_DECL_IMPORT
-# endif
+#if defined(ANTIQUACRM_SHARED_LIBRARY) || defined(AntiquaCRM_EXPORTS)
+# define ANTIQUACRM_LIBRARY Q_DECL_EXPORT
 #else
-# define ANTIQUACRM_LIBRARY
+# define ANTIQUACRM_LIBRARY Q_DECL_IMPORT
 #endif
 
 /**

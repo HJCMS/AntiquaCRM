@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_APREDEFINED_H
 #define ANTIQUACRM_APREDEFINED_H
 
+#include <AGlobal>
 #include <QByteArray>
 #include <QDate>
 #include <QFlags>
@@ -17,9 +18,6 @@
 #include <QObject>
 #include <QString>
 #include <QtGlobal>
-#ifndef ANTIQUACRM_LIBRARY
-# include <AGlobal>
-#endif
 
 /**
  * @namespace AntiquaCRM
@@ -28,8 +26,6 @@
 namespace AntiquaCRM
 {
   Q_NAMESPACE
-  Q_CLASSINFO("author", "Juergen Heinemann")
-  Q_CLASSINFO("revision", "1.0")
 
   /**
    * @brief Type specification for the network request interface!
@@ -243,6 +239,7 @@ namespace AntiquaCRM
     MAIL_ORDER_GROUP = 0x1,   /**< orders section */
     MAIL_CUSTOMER_GROUP = 0x2 /**< customers section */
   };
+  Q_ENUM_NS(MailGroup);
   Q_DECLARE_FLAGS(MailGroups, MailGroup);
 
   /**
@@ -258,6 +255,7 @@ namespace AntiquaCRM
     PRINT_REFUND = 0x16,    /**< enable refunding button */
     PRINT_ADMONITION = 0x32 /**< enable invoice warning */
   };
+  Q_ENUM_NS(PrinterGroup)
   Q_DECLARE_FLAGS(PrinterGroups, PrinterGroup);
 
   /**

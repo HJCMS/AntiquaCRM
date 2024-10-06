@@ -16,6 +16,11 @@ CONFIGURE_FILE (Doxyfile.cmake
  ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile
 )
 
+IF(CMAKE_HOST_WIN32)
+  ## https://cmake.org/cmake/help/latest/policy/CMP0077.html#policy:CMP0077
+  OPTION(BUILD_SHARED_LIBS "msvc force shared build" ON)
+ENDIF()
+
 # 1) Core Library
 ADD_SUBDIRECTORY (Core)
 
