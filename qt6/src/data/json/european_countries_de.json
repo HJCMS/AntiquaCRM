@@ -1,0 +1,32 @@
+{
+  "description" : "EU Countries initialed with ISO 3166-1 Alpha-2 Code.",
+  "european_countries" : [
+    {"code":"AT", "country":"Österreich"},
+    {"code":"BE", "country":"Belgien"},
+    {"code":"BG", "country":"Bulgarien"},
+    {"code":"CY", "country":"Zypern"},
+    {"code":"CZ", "country":"Tschechien"},
+    {"code":"DE", "country":"Deutschland"},
+    {"code":"DK", "country":"Dänemark"},
+    {"code":"EE", "country":"Estland"},
+    {"code":"ES", "country":"Spanien"},
+    {"code":"FI", "country":"Finnland"},
+    {"code":"FR", "country":"Frankreich"},
+    {"code":"GR", "country":"Griechenland"},
+    {"code":"HR", "country":"Kroatien"},
+    {"code":"HU", "country":"Ungarn"},
+    {"code":"IE", "country":"Irland"},
+    {"code":"IT", "country":"Italien"},
+    {"code":"LT", "country":"Litauen"},
+    {"code":"LU", "country":"Luxemburg"},
+    {"code":"LV", "country":"Lettland"},
+    {"code":"MT", "country":"Malta"},
+    {"code":"NL", "country":"Niederlande"},
+    {"code":"PL", "country":"Polen"},
+    {"code":"PT", "country":"Portugal"},
+    {"code":"RO", "country":"Rumänien"},
+    {"code":"SE", "country":"Schweden"},
+    {"code":"SI", "country":"Slowenien"},
+    {"code":"SK", "country":"Slowakei"}
+  ]
+}
