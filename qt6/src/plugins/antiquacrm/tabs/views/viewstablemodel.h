@@ -9,21 +9,21 @@
 #ifndef ANTIQUACRM_VIEWS_TABLEMODEL_H
 #define ANTIQUACRM_VIEWS_TABLEMODEL_H
 
+#include "viewsconfig.h"
 #include <AntiquaCRM>
 #include <QModelIndex>
 #include <QObject>
 #include <QSqlDatabase>
 #include <QSqlTableModel>
 
-class ANTIQUACRM_LIBRARY ViewsTableModel final : public QSqlTableModel {
+class ANTIQUACRM_VIEWS_PLUGIN ViewsTableModel final : public QSqlTableModel {
   Q_OBJECT
 
 protected:
-  const QVariant verticalDisplayHeader(int section,
-                                       int role = Qt::DisplayRole) const;
+  const QVariant verticalDisplayHeader(int section, int role = Qt::DisplayRole) const;
 
 public:
-  explicit ViewsTableModel(const QSqlDatabase &db, QObject *parent = nullptr);
+  explicit ViewsTableModel(const QSqlDatabase& db, QObject* parent = nullptr);
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;
 };

@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_STITCHESWIDGET_H
 #define ANTIQUACRM_PLUGIN_STITCHESWIDGET_H
 
+#include "stitchesconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QScrollArea>
@@ -19,24 +20,24 @@ class StitchesTableView;
 class StitchesStatusBar;
 class StitchesEditor;
 
-class ANTIQUACRM_LIBRARY StitchesWidget final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_STITCHES_PLUGIN StitchesWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  QWidget *m_mainPage;
-  StitchesSearchBar *m_searchBar;
-  StitchesTableView *m_table;
-  StitchesStatusBar *m_statusBar;
-  QScrollArea *m_editorPage;
-  StitchesEditor *m_editorWidget;
+  QWidget* m_mainPage;
+  StitchesSearchBar* m_searchBar;
+  StitchesTableView* m_table;
+  StitchesStatusBar* m_statusBar;
+  QScrollArea* m_editorPage;
+  StitchesEditor* m_editorWidget;
   void setDefaultTableView() override;
 
 public:
-  explicit StitchesWidget(QWidget *parent = nullptr);
+  explicit StitchesWidget(QWidget* parent = nullptr);
 
   void openStartPage() override;
 
-  void createSearchQuery(const QString &history = QString()) override;
+  void createSearchQuery(const QString& history = QString()) override;
 
   void createNewEntry() override;
 
@@ -46,7 +47,7 @@ public:
 
   const QString getTitle() const override;
 
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
 
   const QStringList acceptsCustomActions() const override;
 };

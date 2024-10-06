@@ -15,8 +15,7 @@
 #include <QPushButton>
 #include <QSignalMapper>
 
-class ANTIQUACRM_LIBRARY OrdersStatusBar final
-    : public AntiquaCRM::TabsStatusBar {
+class OrdersStatusBar final : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
 private:
@@ -35,34 +34,36 @@ private:
   /**
    * @brief History Button
    */
-  QPushButton *btn_history;
+  QPushButton* btn_history;
 
   /**
    * @brief History button actions
    */
-  QAction *m_ac;
+  QAction* m_ac;
 
   /**
    * @brief Get year from OrdersSearchBar and build sql statement.
    */
   const QString inPastRange() const;
 
-  void setHistoryActionMenu(QPushButton *parent) override;
+  void setHistoryActionMenu(QPushButton* parent) override;
 
 private Q_SLOTS:
   void setHistoryAction(int) override;
 
 public Q_SLOTS:
-  void setCreateButtonEnabled(bool) override{/* unused */};
+  void setCreateButtonEnabled(bool) override { /* unused */ };
 
 public:
-  explicit OrdersStatusBar(QWidget *parent = nullptr);
+  explicit OrdersStatusBar(QWidget* parent = nullptr);
 
   /**
    * @brief Create order button is disabled
    * @note A new Order creation needs a CustomerID!
    */
-  bool isCreateButtonEnabled() override { return false; };
+  bool isCreateButtonEnabled() override {
+    return false;
+  };
 };
 
 #endif // ANTIQUACRM_PLUGIN_ORDERSSTATUSBAR_H

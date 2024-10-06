@@ -9,22 +9,22 @@
 #ifndef ANTIQUACRM_PLUGIN_CDSVINYLSTATUSBAR_H
 #define ANTIQUACRM_PLUGIN_CDSVINYLSTATUSBAR_H
 
+#include "cdsvinylconfig.h"
 #include <AntiquaTabs>
 
-class ANTIQUACRM_LIBRARY CDsVinylStatusBar final
-    : public AntiquaCRM::TabsStatusBar {
+class ANTIQUACRM_CDSVINYL_PLUGIN CDsVinylStatusBar final : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
 private:
-  QPushButton *btn_create;
-  QPushButton *btn_history;
-  void setHistoryActionMenu(QPushButton *parent) override;
+  QPushButton* btn_create;
+  QPushButton* btn_history;
+  void setHistoryActionMenu(QPushButton* parent) override;
 
 public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit CDsVinylStatusBar(QWidget *parent = nullptr);
+  explicit CDsVinylStatusBar(QWidget* parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 

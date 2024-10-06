@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "cdsvinylwidget.h"
-#include "cdsvinylconfig.h"
 #include "cdsvinyleditor.h"
 #include "cdsvinylsearchbar.h"
 #include "cdsvinylstatusbar.h"

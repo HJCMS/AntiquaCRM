@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "tabbooks.h"
-#include "booksconfig.h"
 #include "bookstabconfigwidget.h"
 #include "booksindex.h"
 

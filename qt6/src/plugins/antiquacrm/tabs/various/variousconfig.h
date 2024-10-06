@@ -10,6 +10,17 @@
 #define ANTIQUACRM_PLUGIN_VARIOUS_CONFIG_H
 
 #include <QString>
+#include <QtGlobal>
+
+/**
+ * @ingroup ProviderPlugin
+ * @brief library export definition
+ */
+#ifdef Various_EXPORTS
+#  define ANTIQUACRM_VARIOUS_PLUGIN Q_DECL_EXPORT
+#else
+#  define ANTIQUACRM_VARIOUS_PLUGIN Q_DECL_IMPORT
+#endif
 
 #ifndef VARIOUS_INTERFACE_NAME
 #define VARIOUS_INTERFACE_NAME "various"

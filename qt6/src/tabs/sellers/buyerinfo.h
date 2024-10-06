@@ -13,19 +13,19 @@
 #include <QTextEdit>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BuyerInfo final : public QWidget {
+class BuyerInfo final : public QWidget {
   Q_OBJECT
 
 private:
-  QTextEdit *m_address;
-  QTextEdit *m_comment;
+  QTextEdit* m_address;
+  QTextEdit* m_comment;
 
 public Q_SLOTS:
-  void setAddress(const QString &str);
-  void setComment(const QString &str);
+  void setAddress(const QString& str);
+  void setComment(const QString& str);
 
 public:
-  explicit BuyerInfo(QWidget *parent = nullptr);
+  explicit BuyerInfo(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_PLUGIN_SELLERS_BUYERINFO_H

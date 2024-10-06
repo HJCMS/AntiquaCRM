@@ -9,21 +9,22 @@
 #ifndef ANTIQUACRM_STATISTICS_VIEWAREA_H
 #define ANTIQUACRM_STATISTICS_VIEWAREA_H
 
+#include "statisticsconfig.h"
 #include <AGlobal>
 #include <QObject>
 #include <QPaintEvent>
 #include <QScrollArea>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY StatisticsViewArea final : public QScrollArea {
+class ANTIQUACRM_STATISTICS_PLUGIN StatisticsViewArea final : public QScrollArea {
   Q_OBJECT
 
 private:
   inline const QString infoText() const;
-  virtual void paintEvent(QPaintEvent *) override;
+  virtual void paintEvent(QPaintEvent*) override;
 
 public:
-  explicit StatisticsViewArea(QWidget *parent = nullptr);
+  explicit StatisticsViewArea(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_STATISTICS_VIEWAREA_H

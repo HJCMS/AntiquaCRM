@@ -9,8 +9,9 @@
 #ifndef ANTIQUACRM_STATISTICS_SALESINMONTH_H
 #define ANTIQUACRM_STATISTICS_SALESINMONTH_H
 
-#include <AntiquaCRM>
+#include "statisticsconfig.h"
 #include <AChartView>
+#include <AntiquaCRM>
 #include <QBarCategoryAxis>
 #include <QBarSet>
 #include <QMap>
@@ -20,23 +21,23 @@
 class VerticalBarSeries;
 class MonthBarSet;
 
-class ANTIQUACRM_LIBRARY SalesInMonth final : public AntiquaCRM::AChartView {
+class ANTIQUACRM_STATISTICS_PLUGIN SalesInMonth final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
   mutable QMap<int, QMap<int, qint64>> p_voluMap;
   mutable QMap<int, QMap<int, double>> p_soldMap;
-  QChart *m_chart;
-  QBarCategoryAxis *m_label;
-  VerticalBarSeries *m_numsBar;
-  VerticalBarSeries *m_paidBar;
+  QChart* m_chart;
+  QBarCategoryAxis* m_label;
+  VerticalBarSeries* m_numsBar;
+  VerticalBarSeries* m_paidBar;
   void setMiniViewWidth(qreal);
   bool initMaps();
-  MonthBarSet *createBarset(int year, int type = 0);
+  MonthBarSet* createBarset(int year, int type = 0);
   bool initialChartView(int year = -1) override;
 
 public:
-  explicit SalesInMonth(QWidget *parent = nullptr);
+  explicit SalesInMonth(QWidget* parent = nullptr);
   virtual ~SalesInMonth();
 };
 

@@ -13,7 +13,7 @@ INCLUDE_DIRECTORIES (
 )
 
 ADD_LIBRARY (${_pluginTarget} MODULE
-  buchfreund.json
+  buchfreund.json buchfreundconfig.h
   buchfreund.h buchfreund.cpp
   buchfreundconfigwidget.h buchfreundconfigwidget.cpp
   buchfreundoperations.h buchfreundoperations.cpp

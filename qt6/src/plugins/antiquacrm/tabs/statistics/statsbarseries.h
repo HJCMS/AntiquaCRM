@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_STATISTICS_STATSBARSERIES_H
 #define ANTIQUACRM_STATISTICS_STATSBARSERIES_H
 
+#include "statisticsconfig.h"
 #include <AGlobal>
 #include <QAbstractSeries>
 #include <QBarSeries>
@@ -16,12 +17,11 @@
  * @brief The HorizontalBarSeries class
  * @ingroup _chartstat
  */
-class ANTIQUACRM_LIBRARY HorizontalBarSeries final
-    : public QHorizontalBarSeries {
+class ANTIQUACRM_STATISTICS_PLUGIN HorizontalBarSeries final : public QHorizontalBarSeries {
   Q_OBJECT
 
 public:
-  explicit HorizontalBarSeries(QObject *parent = nullptr);
+  explicit HorizontalBarSeries(QObject* parent = nullptr);
   QAbstractSeries::SeriesType type() const override;
 };
 
@@ -29,11 +29,11 @@ public:
  * @brief The VerticalBarSeries class
  * @ingroup _chartstat
  */
-class ANTIQUACRM_LIBRARY VerticalBarSeries final : public QBarSeries {
+class ANTIQUACRM_STATISTICS_PLUGIN VerticalBarSeries final : public QBarSeries {
   Q_OBJECT
 
 public:
-  explicit VerticalBarSeries(QObject *parent = nullptr);
+  explicit VerticalBarSeries(QObject* parent = nullptr);
   QAbstractSeries::SeriesType type() const override;
 };
 

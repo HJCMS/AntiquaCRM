@@ -9,23 +9,24 @@
 #ifndef ANTIQUACRM_STATISTICS_SOLDCOUNTCHART_H
 #define ANTIQUACRM_STATISTICS_SOLDCOUNTCHART_H
 
+#include "statisticsconfig.h"
+#include <AChartView>
 #include <AntiquaCRM>
 #include <QObject>
 #include <QWidget>
-#include <AChartView>
 
-class ANTIQUACRM_LIBRARY SoldCountChart final : public AntiquaCRM::AChartView {
+class ANTIQUACRM_STATISTICS_PLUGIN SoldCountChart final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
   const QDate p_date;
-  QChart *m_chart;
+  QChart* m_chart;
 
 private Q_SLOTS:
   void highlight(bool);
 
 public:
-  explicit SoldCountChart(QWidget *parent = nullptr);
+  explicit SoldCountChart(QWidget* parent = nullptr);
   bool initialChartView(int year = -1) override;
 };
 

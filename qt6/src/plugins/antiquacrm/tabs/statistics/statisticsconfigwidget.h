@@ -9,37 +9,39 @@
 #ifndef ANTIQUACRM_STATISTICS_CONFIGWIDGET_H
 #define ANTIQUACRM_STATISTICS_CONFIGWIDGET_H
 
+#include "statisticsconfig.h"
 #include <AntiquaWidgets>
 #include <QFont>
 #include <QLabel>
 #include <QRegularExpression>
 #include <QSignalMapper>
 
-namespace AntiquaCRM {
-class AWhatsThisButton;
+namespace AntiquaCRM
+{
+  class AWhatsThisButton;
 };
 
-class ANTIQUACRM_LIBRARY StatisticsConfigWidget final
+class ANTIQUACRM_STATISTICS_PLUGIN StatisticsConfigWidget final
     : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
   QFont chartbar_font;
-  QSignalMapper *m_signalMapper;
-  QLabel *section(const QString &suffix, const QString &title);
-  QPushButton *button(const QString &objName);
-  AntiquaCRM::AWhatsThisButton *fontTip(const QString &);
+  QSignalMapper* m_signalMapper;
+  QLabel* section(const QString& suffix, const QString& title);
+  QPushButton* button(const QString& objName);
+  AntiquaCRM::AWhatsThisButton* fontTip(const QString&);
 
 private Q_SLOTS:
-  void setSectionFont(const QString &);
-  void openFontDialog(QLabel *);
+  void setSectionFont(const QString&);
+  void openFontDialog(QLabel*);
 
 public Q_SLOTS:
   void loadSectionConfig() override;
   void saveSectionConfig() override;
 
 public:
-  explicit StatisticsConfigWidget(QWidget *parent = nullptr);
+  explicit StatisticsConfigWidget(QWidget* parent = nullptr);
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
   static const QString fontPrefix();

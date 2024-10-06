@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_CDSVINYLSEARCHBAR_H
 #define ANTIQUACRM_PLUGIN_CDSVINYLSEARCHBAR_H
 
+#include "cdsvinylconfig.h"
 #include <AntiquaInput>
 #include <AntiquaTabs>
 #include <QObject>
@@ -17,20 +18,19 @@
 
 class CDsVinylSelectFilter;
 
-class ANTIQUACRM_LIBRARY CDsVinylSearchBar final
-    : public AntiquaCRM::TabsSearchBar {
+class ANTIQUACRM_CDSVINYL_PLUGIN CDsVinylSearchBar final : public AntiquaCRM::TabsSearchBar {
   Q_OBJECT
 
 private:
-  CDsVinylSelectFilter *m_selectFilter;
-  AntiquaCRM::ALineEdit *m_searchInput;
-  QPushButton *m_searchBtn;
+  CDsVinylSelectFilter* m_selectFilter;
+  AntiquaCRM::ALineEdit* m_searchInput;
+  QPushButton* m_searchBtn;
 
   /**
    * @brief Prepare SQL-Titlesearch statement
    * @param fields - append Fields to WHERE clause
    */
-  const QString getSearchString(const QStringList &fields);
+  const QString getSearchString(const QStringList& fields);
 
   /**
    * @brief Check if one LineInput isEnabled
@@ -47,7 +47,7 @@ public Q_SLOTS:
   void setSearchFocus() override;
 
 public:
-  explicit CDsVinylSearchBar(QWidget *parent = nullptr);
+  explicit CDsVinylSearchBar(QWidget* parent = nullptr);
 
   int searchLength() override;
 

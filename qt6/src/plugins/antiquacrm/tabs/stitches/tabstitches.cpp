@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "tabstitches.h"
-#include "stitchesconfig.h"
 #include "stitchesconfigwidget.h"
 #include "stitcheswidget.h"
 

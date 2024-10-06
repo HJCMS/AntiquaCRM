@@ -11,14 +11,13 @@
 
 #include <AntiquaTabs>
 
-class ANTIQUACRM_LIBRARY CustomersStatusBar final
-    : public AntiquaCRM::TabsStatusBar {
+class CustomersStatusBar final : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
 private:
-  QPushButton *btn_create;
-  QPushButton *btn_history;
-  void setHistoryActionMenu(QPushButton *parent) override;
+  QPushButton* btn_create;
+  QPushButton* btn_history;
+  void setHistoryActionMenu(QPushButton* parent) override;
 
 private Q_SLOTS:
   void setHistoryAction(int) override;
@@ -27,7 +26,7 @@ public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit CustomersStatusBar(QWidget *parent = nullptr);
+  explicit CustomersStatusBar(QWidget* parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 

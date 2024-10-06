@@ -13,14 +13,14 @@
 #include <QPushButton>
 #include <QStatusBar>
 
-class ANTIQUACRM_LIBRARY PurchaseActionBar final : public QStatusBar {
+class PurchaseActionBar final : public QStatusBar {
   Q_OBJECT
 
 private:
-  QPushButton *btn_customer;
-  QPushButton *btn_provider;
-  QPushButton *btn_create;
-  QPushButton *btn_check;
+  QPushButton* btn_customer;
+  QPushButton* btn_provider;
+  QPushButton* btn_create;
+  QPushButton* btn_check;
 
 private Q_SLOTS:
   void createClicked();
@@ -35,7 +35,7 @@ public Q_SLOTS:
   void enableCreateButton(bool b = false);
 
 public:
-  explicit PurchaseActionBar(QWidget *parent = nullptr);
+  explicit PurchaseActionBar(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_PLUGIN_SELLERS_PURCHASEACTIONBAR_H

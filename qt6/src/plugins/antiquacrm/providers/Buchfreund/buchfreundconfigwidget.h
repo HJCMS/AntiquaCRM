@@ -9,22 +9,22 @@
 #ifndef ANTIQUACRM_PLUGIN_BUCHFREUND_CONFIGWIDGET_H
 #define ANTIQUACRM_PLUGIN_BUCHFREUND_CONFIGWIDGET_H
 
+#include "buchfreundconfig.h"
 #include <AntiquaProviders>
 #include <AntiquaWidgets>
 #include <QLabel>
 #include <QUrl>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BuchfreundConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class BUCHFREUND_PLUGIN BuchfreundConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::TextLine *m_api_host;
-  AntiquaCRM::TextLine *m_api_path;
-  AntiquaCRM::TextLine *m_api_key;
-  AntiquaCRM::NumEdit *m_api_port;
-  inline QLabel *label(const QString &text);
+  AntiquaCRM::TextLine* m_api_host;
+  AntiquaCRM::TextLine* m_api_path;
+  AntiquaCRM::TextLine* m_api_key;
+  AntiquaCRM::NumEdit* m_api_port;
+  inline QLabel* label(const QString& text);
 
 public Q_SLOTS:
   void loadSectionConfig() override;
@@ -34,7 +34,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit BuchfreundConfigWidget(QWidget *parent = nullptr);
+  explicit BuchfreundConfigWidget(QWidget* parent = nullptr);
 
   AntiquaCRM::ConfigType getType() const override;
 

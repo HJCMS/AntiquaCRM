@@ -12,11 +12,11 @@
 #include <AntiquaWidgets>
 #include <QLabel>
 
-class ANTIQUACRM_LIBRARY Creditworthiness final : public QLabel {
+class Creditworthiness final : public QLabel {
   Q_OBJECT
 
 public:
-  explicit Creditworthiness(QWidget *parent = nullptr);
+  explicit Creditworthiness(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_PLUGIN_SELLERS_CREDITWORTHINESS_H

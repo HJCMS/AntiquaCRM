@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSSEARCHBAR_H
 #define ANTIQUACRM_PLUGIN_BOOKSSEARCHBAR_H
 
+#include "booksconfig.h"
 #include <AntiquaInput>
 #include <AntiquaTabs>
 #include <QObject>
@@ -17,19 +18,18 @@
 
 class BooksSelectFilter;
 
-class ANTIQUACRM_LIBRARY BooksSearchBar final
-    : public AntiquaCRM::TabsSearchBar {
+class ANTIQUACRM_BOOKS_PLUGIN BooksSearchBar final : public AntiquaCRM::TabsSearchBar {
   Q_OBJECT
 
 private:
-  BooksSelectFilter *m_selectFilter;
-  AntiquaCRM::ALineEdit *m_searchInput;
-  AntiquaCRM::ALineEdit *m_customSearch;
-  QPushButton *m_searchBtn;
+  BooksSelectFilter* m_selectFilter;
+  AntiquaCRM::ALineEdit* m_searchInput;
+  AntiquaCRM::ALineEdit* m_customSearch;
+  QPushButton* m_searchBtn;
 
-  const QString getTitleSearch(const QStringList &fields);
+  const QString getTitleSearch(const QStringList& fields);
   bool lineInputsEnabled();
-  void setCustomSearch(const QString &info = QString());
+  void setCustomSearch(const QString& info = QString());
 
 private Q_SLOTS:
   void setSearch() override;
@@ -41,7 +41,7 @@ public Q_SLOTS:
   void setSearchFocus() override;
 
 public:
-  explicit BooksSearchBar(QWidget *parent = nullptr);
+  explicit BooksSearchBar(QWidget* parent = nullptr);
   int searchLength() override;
   bool requiredLengthExists();
   const QString getSearchStatement() override;

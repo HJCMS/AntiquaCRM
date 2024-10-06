@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSINDEX_H
 #define ANTIQUACRM_PLUGIN_BOOKSINDEX_H
 
+#include "booksconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QScrollArea>
@@ -19,27 +20,27 @@ class BooksTableView;
 class BooksStatusBar;
 class BooksEditor;
 
-class ANTIQUACRM_LIBRARY BooksIndex final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_BOOKS_PLUGIN BooksIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  QWidget *m_mainPage;
-  BooksSearchBar *m_searchBar;
-  BooksTableView *m_table;
-  BooksStatusBar *m_statusBar;
-  QScrollArea *m_editorPage;
-  BooksEditor *m_editorWidget;
+  QWidget* m_mainPage;
+  BooksSearchBar* m_searchBar;
+  BooksTableView* m_table;
+  BooksStatusBar* m_statusBar;
+  QScrollArea* m_editorPage;
+  BooksEditor* m_editorWidget;
   void setDefaultTableView() override;
 
 public:
-  explicit BooksIndex(QWidget *parent = nullptr);
+  explicit BooksIndex(QWidget* parent = nullptr);
   void openStartPage() override;
-  void createSearchQuery(const QString &history = QString()) override;
+  void createSearchQuery(const QString& history = QString()) override;
   void createNewEntry() override;
   void openEntry(qint64 articleId) override;
   void onEnterChanged() override;
   const QString getTitle() const override;
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
   const QStringList acceptsCustomActions() const override;
 };
 

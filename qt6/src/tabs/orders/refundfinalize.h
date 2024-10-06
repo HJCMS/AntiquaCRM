@@ -17,13 +17,13 @@
 
 class OrdersTableView;
 
-class ANTIQUACRM_LIBRARY RefundFinalize final : public RefundingPage {
+class RefundFinalize final : public RefundingPage {
   Q_OBJECT
 
 private:
-  OrdersTableView *m_refundTable;
-  AntiquaCRM::PriceEdit *m_refundCost;
-  QCheckBox *m_divideCost;
+  OrdersTableView* m_refundTable;
+  AntiquaCRM::PriceEdit* m_refundCost;
+  QCheckBox* m_divideCost;
 
 private Q_SLOTS:
   void refundsCostChanged();
@@ -32,11 +32,11 @@ Q_SIGNALS:
   void sendEnableButton(bool);
 
 public Q_SLOTS:
-  void addArticles(const QList<qint64> &);
+  void addArticles(const QList<qint64>&);
 
 public:
-  explicit RefundFinalize(QWidget *parent = nullptr);
-  bool initPageData(AntiquaCRM::ASqlCore *m_sql, qint64 id) override;
+  explicit RefundFinalize(QWidget* parent = nullptr);
+  bool initPageData(AntiquaCRM::ASqlCore* m_sql, qint64 id) override;
   const QList<AntiquaCRM::OrderArticleItems> getFinalRefunding();
 };
 

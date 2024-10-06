@@ -9,13 +9,14 @@
 #ifndef ANTIQUACRM_STATISTICS_MONTHBARSET_H
 #define ANTIQUACRM_STATISTICS_MONTHBARSET_H
 
+#include "statisticsconfig.h"
 #include <AGlobal>
 #include <QBarSet>
 #include <QChart>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY MonthBarSet final : public QBarSet {
+class ANTIQUACRM_STATISTICS_PLUGIN MonthBarSet final : public QBarSet {
   Q_OBJECT;
 
 private:
@@ -26,11 +27,11 @@ private Q_SLOTS:
   void showToolTip(bool, int);
 
 public Q_SLOTS:
-  void setSales(const QMap<int, double> &sales);
+  void setSales(const QMap<int, double>& sales);
 
 public:
   enum Type { Volume = 0, Sales = 1 };
-  explicit MonthBarSet(int year, QChart *parent = nullptr,
+  explicit MonthBarSet(int year, QChart* parent = nullptr,
                        MonthBarSet::Type type = MonthBarSet::Type::Volume);
   int year() const;
 };

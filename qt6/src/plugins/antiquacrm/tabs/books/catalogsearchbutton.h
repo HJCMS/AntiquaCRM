@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_CATALOG_SEARCHBUTTON_H
 #define ANTIQUACRM_PLUGIN_CATALOG_SEARCHBUTTON_H
 
+#include "booksconfig.h"
 #include <AntiquaWidgets>
 #include <QAction>
 #include <QIcon>
@@ -33,12 +34,12 @@
  * @li https://katalog.dnb.de/
  * @li https://blog.dnb.de/dnbkatalogbeta/
  */
-class ANTIQUACRM_LIBRARY CatalogSearchButton final : public QPushButton {
+class ANTIQUACRM_BOOKS_PLUGIN CatalogSearchButton final : public QPushButton {
   Q_OBJECT
 
 private:
   QString p_type;
-  QMenu *m_menu;
+  QMenu* m_menu;
 
   /**
    * @brief Default search icon
@@ -58,7 +59,7 @@ private:
   const QUrl list() const;
 
 private Q_SLOTS:
-  void prepareAction(QAction *);
+  void prepareAction(QAction*);
 
 Q_SIGNALS:
   /**
@@ -76,13 +77,13 @@ public Q_SLOTS:
    *
    * @param query - prepared query
    */
-  void openLink(const QUrlQuery &query);
+  void openLink(const QUrlQuery& query);
 
 public:
   /**
    * @param parent - parent object
    */
-  explicit CatalogSearchButton(QWidget *parent = nullptr);
+  explicit CatalogSearchButton(QWidget* parent = nullptr);
 
   /**
    * @brief Available button options.

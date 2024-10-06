@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_COUNTAXIS_H
 #define ANTIQUACRM_COUNTAXIS_H
 
+#include "statisticsconfig.h"
 #include <AGlobal>
 #include <QObject>
 #include <QValueAxis>
@@ -13,14 +14,14 @@
  * @brief The CountAxis class
  * @ingroup _chartstat
  */
-class ANTIQUACRM_LIBRARY CountAxis final : public QValueAxis {
+class ANTIQUACRM_STATISTICS_PLUGIN CountAxis final : public QValueAxis {
   Q_OBJECT
 
 private:
   int p_count = 5;
 
 public:
-  explicit CountAxis(int count, QObject *parent = nullptr);
+  explicit CountAxis(int count, QObject* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_COUNTAXIS_H

@@ -9,27 +9,27 @@
 #ifndef ANTIQUACRM_STATISTICS_TAB_H
 #define ANTIQUACRM_STATISTICS_TAB_H
 
+#include "statisticsconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY TabStatistics final
-    : public AntiquaCRM::TabsInterface {
+class ANTIQUACRM_STATISTICS_PLUGIN TabStatistics final : public AntiquaCRM::TabsInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_TABS_INTERFACE FILE "statistics.json")
   Q_INTERFACES(AntiquaCRM::TabsInterface)
 
 public:
-  explicit TabStatistics(QObject *parent = nullptr);
+  explicit TabStatistics(QObject* parent = nullptr);
   const QString displayName() const override;
   const QString interfaceName() const override;
   const QString sqlTableName() const override;
   const QString sqlFieldPrefix() const override;
-  AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const override;
+  AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const override;
   bool addIndexOnInit() const override;
   const QJsonObject menuEntry() const override;
-  AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
-  bool createInterface(QObject *parent) override;
+  AntiquaCRM::TabsIndex* indexWidget(QWidget* parent) const override;
+  bool createInterface(QObject* parent) override;
 };
 
 #endif // ANTIQUACRM_STATISTICS_TAB_H

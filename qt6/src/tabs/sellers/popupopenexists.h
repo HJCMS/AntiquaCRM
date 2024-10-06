@@ -17,8 +17,8 @@ class PopUpOpenExists final : public QMessageBox {
   Q_OBJECT
 
 public:
-  explicit PopUpOpenExists(QWidget *parent = nullptr);
-  void setMessage(const QStringList &data);
+  explicit PopUpOpenExists(QWidget* parent = nullptr);
+  void setMessage(const QStringList& data);
   int exec() override;
 };
 

@@ -9,15 +9,16 @@
 #ifndef ANTIQUACRM_PLUGIN_CDSVINYLSELECTFILTER_H
 #define ANTIQUACRM_PLUGIN_CDSVINYLSELECTFILTER_H
 
+#include "cdsvinylconfig.h"
 #include <AGlobal>
 #include <QComboBox>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY CDsVinylSelectFilter final : public QComboBox {
+class ANTIQUACRM_CDSVINYL_PLUGIN CDsVinylSelectFilter final : public QComboBox {
   Q_OBJECT
 
 public:
-  explicit CDsVinylSelectFilter(QWidget *parent = nullptr);
+  explicit CDsVinylSelectFilter(QWidget* parent = nullptr);
   const QString currentFilter(int index = -1);
   const QString currentToolTip(int index = -1);
 };

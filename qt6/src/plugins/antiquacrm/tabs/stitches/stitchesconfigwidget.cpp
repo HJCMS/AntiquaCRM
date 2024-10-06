@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchesconfigwidget.h"
-#include "stitchesconfig.h"
 
 #include <QDebug>
 #include <QJsonArray>

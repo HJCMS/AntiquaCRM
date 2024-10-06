@@ -9,20 +9,20 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSSELECTFILTER_H
 #define ANTIQUACRM_PLUGIN_BOOKSSELECTFILTER_H
 
+#include "booksconfig.h"
 #include <AntiquaTabs>
 #include <QJsonObject>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BooksSelectFilter final
-    : public AntiquaCRM::TabsSearchBarFilter {
+class ANTIQUACRM_BOOKS_PLUGIN BooksSelectFilter final : public AntiquaCRM::TabsSearchBarFilter {
   Q_OBJECT
 
 private:
   virtual void createItemData() override;
 
 public:
-  explicit BooksSelectFilter(QWidget *parent = nullptr);
+  explicit BooksSelectFilter(QWidget* parent = nullptr);
 
   /**
    * @brief Nehme aktuellen Suchfilter

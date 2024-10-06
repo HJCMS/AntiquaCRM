@@ -9,24 +9,24 @@
 #ifndef ANTIQUACRM_STATISTICS_SALESVOLUMECHART_H
 #define ANTIQUACRM_STATISTICS_SALESVOLUMECHART_H
 
-#include <AntiquaCRM>
+#include "statisticsconfig.h"
 #include <AChartView>
+#include <AntiquaCRM>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY SalesVolumeChart final
-    : public AntiquaCRM::AChartView {
+class ANTIQUACRM_STATISTICS_PLUGIN SalesVolumeChart final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
   const QDate p_date;
-  QChart *m_chart;
+  QChart* m_chart;
 
 private Q_SLOTS:
   void highlight(bool);
 
 public:
-  explicit SalesVolumeChart(QWidget *parent = nullptr);
+  explicit SalesVolumeChart(QWidget* parent = nullptr);
   bool initialChartView(int year = -1) override;
 };
 

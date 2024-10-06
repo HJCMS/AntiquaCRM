@@ -14,8 +14,7 @@
 #include <QModelIndex>
 #include <QObject>
 
-class ANTIQUACRM_LIBRARY CustomersTableModel final
-    : public AntiquaCRM::ASqlQueryModel {
+class CustomersTableModel final : public AntiquaCRM::ASqlQueryModel {
   Q_OBJECT
 
 private:
@@ -25,12 +24,11 @@ private:
   const QString toolTip(int column) const;
 
 public:
-  explicit CustomersTableModel(QObject *parent = nullptr);
+  explicit CustomersTableModel(QObject* parent = nullptr);
   const QMap<int, QString> headerList() const override;
   QVariant headerData(int section, Qt::Orientation orientation,
                       int role = Qt::DisplayRole) const override;
-  QVariant data(const QModelIndex &index,
-                int role = Qt::DisplayRole) const override;
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_CUSTOMERSTABLEMODEL_H

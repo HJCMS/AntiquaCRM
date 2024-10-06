@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "booklookerconfigwidget.h"
-#include "booklookerconfig.h"
 
 #include <QGroupBox>
 #include <QLayout>

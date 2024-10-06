@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "cdsvinylconfigwidget.h"
-#include "cdsvinylconfig.h"
 
 #include <QDebug>
 #include <QJsonArray>

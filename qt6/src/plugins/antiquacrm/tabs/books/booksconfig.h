@@ -9,7 +9,18 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSCONFIG_H
 #define ANTIQUACRM_PLUGIN_BOOKSCONFIG_H
 
+#include <QtGlobal>
 #include <QString>
+
+/**
+ * @ingroup ProviderPlugin
+ * @brief library export definition
+ */
+#ifdef Books_EXPORTS
+# define ANTIQUACRM_BOOKS_PLUGIN Q_DECL_EXPORT
+#else
+# define ANTIQUACRM_BOOKS_PLUGIN Q_DECL_IMPORT
+#endif
 
 #ifndef BOOKS_INTERFACE_NAME
 #define BOOKS_INTERFACE_NAME "books"

@@ -31,24 +31,24 @@ private:
   const QString p_provider;
   const QString p_orderid;
   QJsonObject p_json;
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
-  QStackedWidget *m_mainWidget;
-  ImportRepairFinder *m_finder;
-  ImportRepairEdit *m_cedit;
-  QPushButton *btn_clear;
-  AntiquaCRM::ANavigationBar *m_navbar;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
+  QStackedWidget* m_mainWidget;
+  ImportRepairFinder* m_finder;
+  ImportRepairEdit* m_cedit;
+  QPushButton* btn_clear;
+  AntiquaCRM::ANavigationBar* m_navbar;
   bool init();
 
 private Q_SLOTS:
   void setStartPage();
   void setEditPage();
   void updateData();
-  void findSystemCustomer(const QString &);
+  void findSystemCustomer(const QString&);
   void openSystemCustomer(qint64);
 
 public:
-  explicit SellerImportRepair(const QString &provider, const QString &order,
-                              QWidget *parent = nullptr);
+  explicit SellerImportRepair(const QString& provider, const QString& order,
+                              QWidget* parent = nullptr);
   int exec() override;
 };
 

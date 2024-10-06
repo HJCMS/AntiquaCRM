@@ -9,6 +9,7 @@
 #ifndef BOOKLOOKER_PLUGIN_OPERATIONS_H
 #define BOOKLOOKER_PLUGIN_OPERATIONS_H
 
+#include "booklookerconfig.h"
 #include <AGlobal>
 #include <QEvent>
 #include <QFrame>
@@ -21,7 +22,7 @@
  *
  * @ingroup BookLooker
  */
-class ANTIQUACRM_LIBRARY BookLookerOperations final : public QFrame {
+class BOOKLOOKER_PLUGIN BookLookerOperations final : public QFrame {
   Q_OBJECT
 
 Q_SIGNALS:
@@ -34,7 +35,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit BookLookerOperations(QWidget *parent = nullptr);
+  explicit BookLookerOperations(QWidget* parent = nullptr);
 };
 
 #endif // BOOKLOOKER_PLUGIN_OPERATIONS_H

@@ -9,6 +9,7 @@
 #ifndef BOOKLOOKER_PLUGIN_ACTIONS_H
 #define BOOKLOOKER_PLUGIN_ACTIONS_H
 
+#include "booklookerconfig.h"
 #include <AGlobal>
 #include <AntiquaProviders>
 #include <QLabel>
@@ -25,8 +26,7 @@ class BookLookerOperations;
  *
  * @ingroup BookLooker
  */
-class ANTIQUACRM_LIBRARY BookLookerActions final
-    : public AntiquaCRM::ProviderActionDialog {
+class BOOKLOOKER_PLUGIN BookLookerActions final : public AntiquaCRM::ProviderActionDialog {
   Q_OBJECT
 
 private:
@@ -43,17 +43,17 @@ private:
   /**
    * @brief infos about this dialog
    */
-  QLabel *m_buyerInfo;
+  QLabel* m_buyerInfo;
 
   /**
    * @brief radio buttons list
    */
-  BookLookerOperations *m_selecter;
+  BookLookerOperations* m_selecter;
 
   /**
    * @brief network queries
    */
-  AntiquaCRM::ANetworker *m_network;
+  AntiquaCRM::ANetworker* m_network;
 
   /**
    * @brief load configuration
@@ -81,13 +81,13 @@ private:
    *
    * e.g. https://api.booklooker.de/2.0/<target>
    */
-  const QUrl apiQuery(const QString &target) override;
+  const QUrl apiQuery(const QString& target) override;
 
   /**
    * @brief Set new/update token
    * @param token
    */
-  void setTokenCookie(const QString &token);
+  void setTokenCookie(const QString& token);
 
   /**
    * @brief Checks the cookie expiration
@@ -104,13 +104,13 @@ private Q_SLOTS:
    * @brief Creates treatment for the return data.
    * @param document
    */
-  void prepareResponse(const QJsonDocument &document);
+  void prepareResponse(const QJsonDocument& document);
 
   /**
    * @brief Create network query with API Url, JSON object.
    * @param data
    */
-  void orderUpdateAction(const QJsonObject &data);
+  void orderUpdateAction(const QJsonObject& data);
 
   /**
    * @brief Creates the selected API json action
@@ -121,19 +121,19 @@ private Q_SLOTS:
    * @brief creates status message from response
    * @param reply
    */
-  void queryFinished(QNetworkReply *reply);
+  void queryFinished(QNetworkReply* reply);
 
 public:
   /**
    * @param parent - parent object
    */
-  explicit BookLookerActions(QWidget *parent);
+  explicit BookLookerActions(QWidget* parent);
 
   /**
    * @brief start open dialog
    * @param data - current order data
    */
-  int exec(const QJsonObject &data) override;
+  int exec(const QJsonObject& data) override;
 };
 
 #endif // BOOKLOOKER_PLUGIN_ACTIONS_H

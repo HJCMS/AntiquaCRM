@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_REPORTS_TOOLBAR_H
 #define ANTIQUACRM_REPORTS_TOOLBAR_H
 
+#include "reportsconfig.h"
 #include <AntiquaCRM>
 #include <QDate>
 #include <QLabel>
@@ -18,7 +19,7 @@
 #include <QToolBar>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY ReportAction final : public QAction {
+class ANTIQUACRM_REPORTS_PLUGIN ReportAction final : public QAction {
   Q_OBJECT
 
 private:

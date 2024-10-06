@@ -9,21 +9,22 @@
 #ifndef ANTIQUACRM_STATISTICS_DAILYAVERAGE_H
 #define ANTIQUACRM_STATISTICS_DAILYAVERAGE_H
 
-#include <AntiquaCRM>
+#include "statisticsconfig.h"
 #include <AChartView>
+#include <AntiquaCRM>
 #include <QFont>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY DailyAverage final : public AntiquaCRM::AChartView {
+class ANTIQUACRM_STATISTICS_PLUGIN DailyAverage final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
   const QDate p_date;
-  QChart *m_chart;
+  QChart* m_chart;
 
 public:
-  explicit DailyAverage(QWidget *parent = nullptr);
+  explicit DailyAverage(QWidget* parent = nullptr);
   bool initialChartView(int year = -1) override;
 };
 

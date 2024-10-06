@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_STITCHESEDITOR_H
 #define ANTIQUACRM_PLUGIN_STITCHESEDITOR_H
 
+#include "stitchesconfig.h"
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 #include <QObject>
@@ -18,7 +19,7 @@
  * @brief Editor class for all Stitches ...
  * @ingroup TabsPlugin
  */
-class ANTIQUACRM_LIBRARY StitchesEditor final : public AntiquaCRM::TabsEditor {
+class ANTIQUACRM_STITCHES_PLUGIN StitchesEditor final : public AntiquaCRM::TabsEditor {
   Q_OBJECT
 
 private:

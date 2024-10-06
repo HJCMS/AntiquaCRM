@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_STATISTICS_INDEX_H
 #define ANTIQUACRM_STATISTICS_INDEX_H
 
+#include "statisticsconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QWidget>
@@ -16,14 +17,14 @@
 class StatisticsViewArea;
 class StatisticsSelecter;
 
-class ANTIQUACRM_LIBRARY StatisticsIndex final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_STATISTICS_PLUGIN StatisticsIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
   const QDate p_date;
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
-  StatisticsViewArea *m_view;
-  StatisticsSelecter *m_selecter;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
+  StatisticsViewArea* m_view;
+  StatisticsSelecter* m_selecter;
 
   /**
    * @brief Used for clear ChartView
@@ -32,17 +33,17 @@ private:
 
 public Q_SLOTS:
   void clearArea();
-  void setChart(qint64 year, const QString &chart);
+  void setChart(qint64 year, const QString& chart);
 
 public:
-  explicit StatisticsIndex(QWidget *parent = nullptr);
+  explicit StatisticsIndex(QWidget* parent = nullptr);
   void openStartPage() override {};
-  void createSearchQuery(const QString &) override {};
+  void createSearchQuery(const QString&) override {};
   void createNewEntry() override {};
-  void openEntry(qint64) override {};
+  void openEntry(qint64) override{};
   void onEnterChanged() override;
   const QString getTitle() const override;
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
   const QStringList acceptsCustomActions() const override;
 };
 

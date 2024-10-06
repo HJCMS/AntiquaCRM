@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooksactionsdialog.h"
-#include "abebooksconfig.h"
 #include "abebooksordermaininfo.h"
 
 #include <QFrame>

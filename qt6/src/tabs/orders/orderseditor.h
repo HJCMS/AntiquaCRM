@@ -18,7 +18,7 @@ class OrdersCustomerInfo;
 class OrdersCostSettings;
 class OrdersTableView;
 
-class ANTIQUACRM_LIBRARY OrdersEditor final : public AntiquaCRM::TabsEditor {
+class OrdersEditor final : public AntiquaCRM::TabsEditor {
   Q_OBJECT
 
 private:
@@ -291,10 +291,10 @@ private Q_SLOTS:
    * @{
    * @brief Werden in diesem Kontext nicht verwendet.
    */
-  void setStorageCompartments() override{/* unused */};
+  void setStorageCompartments() override { /* unused */ };
   void setLoadThumbnail(qint64) override{/* unused */};
   void setRemoveThumbnail(qint64) override{/* unused */};
-  void setImportEditImage() override{/* unused */};
+  void setImportEditImage() override { /* unused */ };
   /**
    * @}
    */

@@ -12,26 +12,26 @@
 #include <AntiquaWidgets>
 #include <QDateTime>
 
-class ANTIQUACRM_LIBRARY SalesInfo final : public QWidget {
+class SalesInfo final : public QWidget {
   Q_OBJECT
 
 private:
-  QLabel *m_orderPayed;
-  AntiquaCRM::SelectPaymentMethod *m_method;
-  AntiquaCRM::DateTimeInfo *m_since;
-  AntiquaCRM::DateTimeInfo *m_confirmed;
+  QLabel* m_orderPayed;
+  AntiquaCRM::SelectPaymentMethod* m_method;
+  AntiquaCRM::DateTimeInfo* m_since;
+  AntiquaCRM::DateTimeInfo* m_confirmed;
 
-  QLabel *infoCell(const QString &);
+  QLabel* infoCell(const QString&);
 
-  const QDateTime convertDateTime(const QString &);
+  const QDateTime convertDateTime(const QString&);
 
   void setPaymentMethod(int);
 
 public Q_SLOTS:
-  void setInfo(const QJsonObject &object);
+  void setInfo(const QJsonObject& object);
 
 public:
-  explicit SalesInfo(QWidget *parent = nullptr);
+  explicit SalesInfo(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_PLUGIN_SELLERS_SALESINFO_H

@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "booklookeractions.h"
-#include "booklookerconfig.h"
 #include "booklookeroperations.h"
 
 #include <QDateTime>

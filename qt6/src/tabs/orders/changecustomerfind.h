@@ -16,7 +16,7 @@
 #include <QPaintEvent>
 #include <QTableWidget>
 
-class ANTIQUACRM_LIBRARY ChangeCustomerTable final : public QTableWidget {
+class ChangeCustomerTable final : public QTableWidget {
   Q_OBJECT
 
 private:
@@ -26,7 +26,7 @@ public:
   explicit ChangeCustomerTable(QWidget* parent = nullptr);
 };
 
-class ANTIQUACRM_LIBRARY ChangeCustomerFind final : public QWidget {
+class ChangeCustomerFind final : public QWidget {
   Q_OBJECT
 
 private:

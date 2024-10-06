@@ -18,31 +18,31 @@
 class SellersSalesTab;
 class SellersSalesList;
 
-class ANTIQUACRM_LIBRARY SellersWidget final : public AntiquaCRM::TabsIndex {
+class SellersWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
-  SellersSalesTab *m_pages;
-  SellersSalesList *m_tree;
-  QList<AntiquaCRM::ProviderInterface *> p_list;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
+  SellersSalesTab* m_pages;
+  SellersSalesList* m_tree;
+  QList<AntiquaCRM::ProviderInterface*> p_list;
   bool loadProviderPlugins();
-  void setDefaultTableView() override{/* unused */};
-  bool findPage(const QString &provider, const QString &oid);
+  void setDefaultTableView() override { /* unused */ };
+  bool findPage(const QString& provider, const QString& oid);
 
 private Q_SLOTS:
-  void openProviderAction(const QJsonObject &);
-  void openOrderPage(const QString &provider, const QString &oid);
+  void openProviderAction(const QJsonObject&);
+  void openOrderPage(const QString& provider, const QString& oid);
 
 public:
-  explicit SellersWidget(QWidget *parent = nullptr);
+  explicit SellersWidget(QWidget* parent = nullptr);
   void openStartPage() override;
-  void createSearchQuery(const QString &) override{/* unused */};
-  void createNewEntry() override{/* unused */};
+  void createSearchQuery(const QString&) override { /* unused */ };
+  void createNewEntry() override { /* unused */ };
   void openEntry(qint64) override{/* unused */};
   void onEnterChanged() override;
   const QString getTitle() const override;
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
 
   const QStringList acceptsCustomActions() const override;
 };

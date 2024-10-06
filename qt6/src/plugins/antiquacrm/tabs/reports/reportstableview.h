@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_REPORTS_TABLEVIEW_H
 #define ANTIQUACRM_REPORTS_TABLEVIEW_H
 
+#include "reportsconfig.h"
 #include <AntiquaWidgets>
 #include <QJsonObject>
 #include <QObject>
@@ -18,28 +19,28 @@
 
 class ReportsTableModel;
 
-class ANTIQUACRM_LIBRARY ReportsTableView final : public QTableView {
+class ANTIQUACRM_REPORTS_PLUGIN ReportsTableView final : public QTableView {
   Q_OBJECT
 
 private:
   int calc_section = -1;
   int refunds_section = -1;
-  ReportsTableModel *m_model;
-  QHeaderView *m_tableHeader;
-  virtual void paintEvent(QPaintEvent *) override;
+  ReportsTableModel* m_model;
+  QHeaderView* m_tableHeader;
+  virtual void paintEvent(QPaintEvent*) override;
 
 Q_SIGNALS:
   void sendFinished();
 
 public Q_SLOTS:
-  void setQuery(const QString &query);
+  void setQuery(const QString& query);
 
 public:
-  explicit ReportsTableView(QWidget *parent = nullptr);
-  const QString headerName(const QString &key);
-  const QString dataHeader(const QChar &delimiter = QChar::Tabulation);
-  const QStringList dataRows(const QChar &delimiter = QChar::Tabulation);
-  const QStringList csvExport(const QChar &delimiter = QChar::Tabulation);
+  explicit ReportsTableView(QWidget* parent = nullptr);
+  const QString headerName(const QString& key);
+  const QString dataHeader(const QChar& delimiter = QChar::Tabulation);
+  const QStringList dataRows(const QChar& delimiter = QChar::Tabulation);
+  const QStringList csvExport(const QChar& delimiter = QChar::Tabulation);
   const QJsonObject printingData();
   double salesVolume();
   const QString moneyVolume();

@@ -9,6 +9,7 @@
 #ifndef ABEBOOKS_PLUGIN_ACTIONSDIALOG_H
 #define ABEBOOKS_PLUGIN_ACTIONSDIALOG_H
 
+#include "abebooksconfig.h"
 #include <AntiquaProviders>
 #include <QJsonObject>
 #include <QMap>
@@ -26,8 +27,7 @@ class AbeBooksOrderMainInfo;
  *
  * @ingroup AbeBooks
  */
-class ANTIQUACRM_LIBRARY AbeBooksActionsDialog final
-    : public AntiquaCRM::ProviderActionDialog {
+class ABEBOOKS_PLUGIN AbeBooksActionsDialog final : public AntiquaCRM::ProviderActionDialog {
   Q_OBJECT
 
 private:
@@ -51,30 +51,30 @@ private:
   /**
    * @brief order overview
    */
-  AbeBooksOrderMainInfo *m_orderInfo;
+  AbeBooksOrderMainInfo* m_orderInfo;
 
   /**
    * @brief networker
    */
-  AntiquaCRM::ANetworker *m_network;
+  AntiquaCRM::ANetworker* m_network;
 
   bool initConfiguration() override;
 
-  const QUrl apiQuery(const QString &target = QString()) override;
+  const QUrl apiQuery(const QString& target = QString()) override;
 
-  QDomDocument orderUpdateRequest(const QString &attr = QString("getOrder"));
+  QDomDocument orderUpdateRequest(const QString& attr = QString("getOrder"));
 
 private Q_SLOTS:
-  void queryFinished(QNetworkReply *reply);
+  void queryFinished(QNetworkReply* reply);
 
-  void prepareResponse(const QDomDocument &xml);
+  void prepareResponse(const QDomDocument& xml);
 
   void prepareOperation() override { /* unused */ };
 
 public:
-  explicit AbeBooksActionsDialog(QWidget *parent = nullptr);
+  explicit AbeBooksActionsDialog(QWidget* parent = nullptr);
 
-  int exec(const QJsonObject &data) override;
+  int exec(const QJsonObject& data) override;
 };
 
 #endif // ABEBOOKS_PLUGIN_ACTIONSDIALOG_H

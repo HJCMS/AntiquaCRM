@@ -30,13 +30,13 @@ class OrdersTableDelegate;
  *
  * @ingroup PluginOrders
  */
-class ANTIQUACRM_LIBRARY OrdersTableView final : public QTableView {
+class OrdersTableView final : public QTableView {
   Q_OBJECT
 
 private:
   QModelIndex p_modelIndex;
-  OrdersTableModel *m_model;
-  OrdersTableDelegate *m_delegate;
+  OrdersTableModel* m_model;
+  OrdersTableDelegate* m_delegate;
   mutable QStringList sql_cache;
 
   /**
@@ -48,17 +48,17 @@ private:
    *
    * @sa OrdersTableView::articleChanged
    */
-  void changeEvent(QEvent *) override;
+  void changeEvent(QEvent*) override;
 
   /**
    * @brief if table is empty, display a notice message.
    */
-  void paintEvent(QPaintEvent *) override;
+  void paintEvent(QPaintEvent*) override;
 
   /**
    * @brief Table row item context menu
    */
-  void contextMenuEvent(QContextMenuEvent *) override;
+  void contextMenuEvent(QContextMenuEvent*) override;
 
 Q_SIGNALS:
   void sendPaymentId(qint64);
@@ -71,10 +71,9 @@ private Q_SLOTS:
    * With positive values it calls QTableView::setWindowModified and
    * QHeaderView::setStretchLastSection.
    */
-  void articleChanged(const QModelIndex &topLeft,
-                      const QModelIndex &bottomRight);
+  void articleChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight);
 
-  void rowSelected(const QModelIndex &);
+  void rowSelected(const QModelIndex&);
 
   /**
    * @brief Creates SQL-Delete Statement from current selected row.
@@ -100,14 +99,14 @@ public Q_SLOTS:
   /**
    * @brief Insert a new Order article.
    */
-  void addArticle(const AntiquaCRM::OrderArticleItems &order);
+  void addArticle(const AntiquaCRM::OrderArticleItems& order);
 
 public:
   /**
    * @param parent - parent object
    * @param readOnly - enable/disable ItemDelegation
    */
-  explicit OrdersTableView(QWidget *parent = nullptr, bool readOnly = true);
+  explicit OrdersTableView(QWidget* parent = nullptr, bool readOnly = true);
 
   /**
    * @brief Update field "a_refunds_cost" in all rows
@@ -127,12 +126,12 @@ public:
   /**
    * @brief Fieldname list of defined Table cells to be hidden.
    */
-  void hideColumns(const QStringList &);
+  void hideColumns(const QStringList&);
 
   /**
    * @brief Insert more then one Order Article.
    */
-  bool addArticles(const QList<AntiquaCRM::OrderArticleItems> &);
+  bool addArticles(const QList<AntiquaCRM::OrderArticleItems>&);
 
   /**
    * @brief Search for Order Id Cell and update them.

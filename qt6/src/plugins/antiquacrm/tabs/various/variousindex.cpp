@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "variousindex.h"
-#include "variousconfig.h"
 #include "variouseditor.h"
 #include "varioussearchbar.h"
 #include "variousstatusbar.h"

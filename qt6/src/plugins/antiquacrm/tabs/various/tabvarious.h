@@ -9,17 +9,18 @@
 #ifndef ANTIQUACRM_PLUGIN_VARIOUS_H
 #define ANTIQUACRM_PLUGIN_VARIOUS_H
 
+#include "variousconfig.h"
 #include <AntiquaTabs>
-#include <QWidget>
 #include <QObject>
+#include <QWidget>
 
-class ANTIQUACRM_LIBRARY TabVarious final : public AntiquaCRM::TabsInterface {
+class ANTIQUACRM_VARIOUS_PLUGIN TabVarious final : public AntiquaCRM::TabsInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_TABS_INTERFACE FILE "various.json")
   Q_INTERFACES(AntiquaCRM::TabsInterface)
 
 public:
-  explicit TabVarious(QObject *parent = nullptr);
+  explicit TabVarious(QObject* parent = nullptr);
 
   const QString displayName() const override;
 
@@ -29,15 +30,15 @@ public:
 
   const QString sqlFieldPrefix() const override;
 
-  AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const override;
+  AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const override;
 
   bool addIndexOnInit() const override;
 
   const QJsonObject menuEntry() const override;
 
-  AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
+  AntiquaCRM::TabsIndex* indexWidget(QWidget* parent) const override;
 
-  bool createInterface(QObject *parent) override;
+  bool createInterface(QObject* parent) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_VARIOUS_H

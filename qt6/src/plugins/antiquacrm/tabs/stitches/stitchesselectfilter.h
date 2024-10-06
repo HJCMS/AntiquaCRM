@@ -9,11 +9,12 @@
 #ifndef ANTIQUACRM_PLUGIN_STITCHESSELECTFILTER_H
 #define ANTIQUACRM_PLUGIN_STITCHESSELECTFILTER_H
 
+#include "stitchesconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY StitchesSelectFilter final
+class ANTIQUACRM_STITCHES_PLUGIN StitchesSelectFilter final
     : public AntiquaCRM::TabsSearchBarFilter {
   Q_OBJECT
 
@@ -21,7 +22,7 @@ private:
   virtual void createItemData() override;
 
 public:
-  explicit StitchesSelectFilter(QWidget *parent = nullptr);
+  explicit StitchesSelectFilter(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_PLUGIN_STITCHESSELECTFILTER_H

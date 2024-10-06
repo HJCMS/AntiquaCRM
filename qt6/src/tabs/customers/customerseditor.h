@@ -22,7 +22,7 @@ class CustomersOrders;
  * @brief Editor class for all Customers ...
  * @ingroup TabsPlugin
  */
-class ANTIQUACRM_LIBRARY CustomersEditor final : public AntiquaCRM::TabsEditor {
+class  CustomersEditor final : public AntiquaCRM::TabsEditor {
   Q_OBJECT
 
 private:

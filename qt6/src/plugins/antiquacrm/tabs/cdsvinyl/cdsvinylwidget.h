@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_CDSVINYLWIDGET_H
 #define ANTIQUACRM_PLUGIN_CDSVINYLWIDGET_H
 
+#include "cdsvinylconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QScrollArea>
@@ -19,26 +20,26 @@ class CDsVinylTableView;
 class CDsVinylStatusBar;
 class CDsVinylEditor;
 
-class ANTIQUACRM_LIBRARY CDsVinylWidget final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_CDSVINYL_PLUGIN CDsVinylWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  QWidget *m_mainPage;
-  CDsVinylSearchBar *m_searchBar;
-  CDsVinylTableView *m_table;
-  CDsVinylStatusBar *m_statusBar;
+  QWidget* m_mainPage;
+  CDsVinylSearchBar* m_searchBar;
+  CDsVinylTableView* m_table;
+  CDsVinylStatusBar* m_statusBar;
 
-  QScrollArea *m_editorPage;
-  CDsVinylEditor *m_editorWidget;
+  QScrollArea* m_editorPage;
+  CDsVinylEditor* m_editorWidget;
 
   void setDefaultTableView() override;
 
 public:
-  explicit CDsVinylWidget(QWidget *parent = nullptr);
+  explicit CDsVinylWidget(QWidget* parent = nullptr);
 
   void openStartPage() override;
 
-  void createSearchQuery(const QString &history = QString()) override;
+  void createSearchQuery(const QString& history = QString()) override;
 
   void createNewEntry() override;
 
@@ -48,7 +49,7 @@ public:
 
   const QString getTitle() const override;
 
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
 
   const QStringList acceptsCustomActions() const override;
 };

@@ -11,23 +11,22 @@
 
 #include <AntiquaInput>
 #include <AntiquaTabs>
-#include <QObject>
 #include <QCheckBox>
+#include <QObject>
 #include <QPushButton>
 #include <QWidget>
 
 class CustomersSelectFilter;
 
-class ANTIQUACRM_LIBRARY CustomersSearchBar final
-    : public AntiquaCRM::TabsSearchBar {
+class CustomersSearchBar final : public AntiquaCRM::TabsSearchBar {
   Q_OBJECT
 
 private:
-  CustomersSelectFilter *m_filter;
-  AntiquaCRM::ALineEdit *m_input;
-  QPushButton *m_searchBtn;
+  CustomersSelectFilter* m_filter;
+  AntiquaCRM::ALineEdit* m_input;
+  QPushButton* m_searchBtn;
 
-  const QString getSearchString(const QStringList &fields);
+  const QString getSearchString(const QStringList& fields);
 
 private Q_SLOTS:
   void setSearch() override;
@@ -39,7 +38,7 @@ public Q_SLOTS:
   void setSearchFocus() override;
 
 public:
-  explicit CustomersSearchBar(QWidget *parent = nullptr);
+  explicit CustomersSearchBar(QWidget* parent = nullptr);
 
   int searchLength() override;
 

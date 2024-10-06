@@ -9,6 +9,7 @@
 #ifndef ABEBOOKS_PLUGIN_ORDER_MAIN_INFO_H
 #define ABEBOOKS_PLUGIN_ORDER_MAIN_INFO_H
 
+#include "abebooksconfig.h"
 #include <AGlobal>
 #include <QDomElement>
 #include <QDomNode>
@@ -17,7 +18,7 @@
 #include <QUrl>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY AbeBooksOrderMainInfo final : public QWidget {
+class ABEBOOKS_PLUGIN AbeBooksOrderMainInfo final : public QWidget {
   Q_OBJECT
 
 private:

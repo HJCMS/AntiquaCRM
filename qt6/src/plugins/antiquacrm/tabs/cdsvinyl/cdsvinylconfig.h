@@ -9,7 +9,18 @@
 #ifndef ANTIQUACRM_PLUGIN_CDSVINYL_CONFIG_H
 #define ANTIQUACRM_PLUGIN_CDSVINYL_CONFIG_H
 
+#include <QtGlobal>
 #include <QString>
+
+/**
+ * @ingroup ProviderPlugin
+ * @brief library export definition
+ */
+#ifdef CDsVinyl_EXPORTS
+# define ANTIQUACRM_CDSVINYL_PLUGIN Q_DECL_EXPORT
+#else
+# define ANTIQUACRM_CDSVINYL_PLUGIN Q_DECL_IMPORT
+#endif
 
 /**
  * @brief CDs and Vinyl tab plugin Macros

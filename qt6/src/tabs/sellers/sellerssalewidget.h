@@ -21,29 +21,29 @@ class BuyerInfo;
 class Creditworthiness;
 class SalesInfo;
 
-class ANTIQUACRM_LIBRARY SellersSalesWidget final : public QWidget {
+class SellersSalesWidget final : public QWidget {
   Q_OBJECT
 
 private:
   Q_DISABLE_COPY(SellersSalesWidget);
   const QJsonObject p_order;
-  QTabWidget *m_tab;
-  PurchaseHeader *m_header;
-  BuyerInfo *m_buyerInfo;
-  SalesInfo *m_salesInfo;
-  Creditworthiness *m_worthiness;
-  PurchaseTable *m_table;
-  PurchaseActionBar *m_actionBar;
-  const QString mediaType(const QJsonValue &);
+  QTabWidget* m_tab;
+  PurchaseHeader* m_header;
+  BuyerInfo* m_buyerInfo;
+  SalesInfo* m_salesInfo;
+  Creditworthiness* m_worthiness;
+  PurchaseTable* m_table;
+  PurchaseActionBar* m_actionBar;
+  const QString mediaType(const QJsonValue&);
   AntiquaCRM::ArticleType getArticleType(qint64 aid);
-  const QString getPrice(const QJsonValue &) const;
-  const QString getTitle(const QJsonValue &) const;
-  bool findCustomer(const QJsonObject &object);
-  void pushCmd(const QJsonObject &action);
+  const QString getPrice(const QJsonValue&) const;
+  const QString getTitle(const QJsonValue&) const;
+  bool findCustomer(const QJsonObject& object);
+  void pushCmd(const QJsonObject& action);
 
 private Q_SLOTS:
   void openOrder(qint64 oid);
-  void createOrder(const QString &prid);
+  void createOrder(const QString& prid);
   void openCustomer();
   void openArticle(qint64 aid);
   void createProviderActions();
@@ -52,11 +52,10 @@ private Q_SLOTS:
   void setTrustStatus(AntiquaCRM::CustomerTrustLevel tl);
 
 Q_SIGNALS:
-  void sendOpenRemoteAction(const QJsonObject &);
+  void sendOpenRemoteAction(const QJsonObject&);
 
 public:
-  explicit SellersSalesWidget(const QJsonObject &config,
-                              QWidget *parent = nullptr);
+  explicit SellersSalesWidget(const QJsonObject& config, QWidget* parent = nullptr);
   bool init();
 };
 

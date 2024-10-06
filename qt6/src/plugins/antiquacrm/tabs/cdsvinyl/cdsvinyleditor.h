@@ -9,11 +9,12 @@
 #ifndef ANTIQUACRM_PLUGIN_CDSVINYLEDITOR_H
 #define ANTIQUACRM_PLUGIN_CDSVINYLEDITOR_H
 
+#include "cdsvinylconfig.h"
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 #include <QObject>
 
-class ANTIQUACRM_LIBRARY CDsVinylEditor final : public AntiquaCRM::TabsEditor {
+class ANTIQUACRM_CDSVINYL_PLUGIN CDsVinylEditor final : public AntiquaCRM::TabsEditor {
   Q_OBJECT
 
 private:

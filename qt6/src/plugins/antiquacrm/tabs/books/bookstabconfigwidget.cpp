@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "bookstabconfigwidget.h"
-#include "booksconfig.h"
 
 #include <QDebug>
 #include <QJsonArray>

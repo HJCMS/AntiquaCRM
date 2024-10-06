@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "abebooksconfigwidget.h"
-#include "abebooksconfig.h"
 
 #include <QGroupBox>
 #include <QLayout>

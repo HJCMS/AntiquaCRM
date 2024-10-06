@@ -22,12 +22,12 @@
  * If an collidation exists.
  * A PopUp message will opened and the status resets to the last selection.
  */
-class ANTIQUACRM_LIBRARY OrderStatusActionFrame final : public QFrame {
+class OrderStatusActionFrame final : public QFrame {
   Q_OBJECT
-  Q_PROPERTY(AntiquaCRM::OrderStatus orderStatus READ getOrderStatus WRITE
-                 setOrderStatus NOTIFY sendOrderStatus)
-  Q_PROPERTY(AntiquaCRM::OrderPayment paymentStatus READ getOrderPayment WRITE
-                 setOrderPayment NOTIFY sendOrderPayment)
+  Q_PROPERTY(AntiquaCRM::OrderStatus orderStatus READ getOrderStatus
+                 WRITE setOrderStatus NOTIFY sendOrderStatus)
+  Q_PROPERTY(AntiquaCRM::OrderPayment paymentStatus READ getOrderPayment
+                 WRITE setOrderPayment NOTIFY sendOrderPayment)
 
 private Q_SLOTS:
   void orderStatusChanged(AntiquaCRM::OrderStatus);
@@ -47,12 +47,12 @@ Q_SIGNALS:
   /**
    * @brief Sends a Message for Window PopUp Notification.
    */
-  void sendNoticeMessage(const QString &);
+  void sendNoticeMessage(const QString&);
 
   /**
    * @brief Sends a Status bar message
    */
-  void sendNotifyStatus(const QString &);
+  void sendNotifyStatus(const QString&);
 
 public Q_SLOTS:
   /**
@@ -70,19 +70,19 @@ public:
    * @brief Order status selecter widget
    * @note Must public for QObject::findChildren
    */
-  AntiquaCRM::SelectOrderStatus *o_order_status;
+  AntiquaCRM::SelectOrderStatus* o_order_status;
 
   /**
    * @brief Payment status selecter widget
    * @note Must public for QObject::findChildren
    */
-  AntiquaCRM::SelectOrderPayment *o_payment_status;
+  AntiquaCRM::SelectOrderPayment* o_payment_status;
 
   /**
    * @param parent - parent object
    * @note do not forget to init signals after first fill
    */
-  explicit OrderStatusActionFrame(QWidget *parent = nullptr);
+  explicit OrderStatusActionFrame(QWidget* parent = nullptr);
 
   /**
    * @brief Input masks status of the order.

@@ -9,23 +9,23 @@
 #ifndef ABEBOOKS_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
 #define ABEBOOKS_PLUGIN_ABEBOOKS_CONFIGWIDGET_H
 
+#include "abebooksconfig.h"
 #include <AntiquaProviders>
 #include <AntiquaWidgets>
-#include <QUrl>
 #include <QLabel>
+#include <QUrl>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY AbeBooksConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class ABEBOOKS_PLUGIN AbeBooksConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::TextLine *m_api_user;
-  AntiquaCRM::TextLine *m_api_host;
-  AntiquaCRM::TextLine *m_api_key;
-  AntiquaCRM::TextLine *m_seller_id;
-  AntiquaCRM::NumEdit *m_api_port;
-  inline QLabel *label(const QString &text);
+  AntiquaCRM::TextLine* m_api_user;
+  AntiquaCRM::TextLine* m_api_host;
+  AntiquaCRM::TextLine* m_api_key;
+  AntiquaCRM::TextLine* m_seller_id;
+  AntiquaCRM::NumEdit* m_api_port;
+  inline QLabel* label(const QString& text);
   const QUrl apiUrl() const;
 
 public Q_SLOTS:
@@ -33,7 +33,7 @@ public Q_SLOTS:
   void saveSectionConfig() override;
 
 public:
-  explicit AbeBooksConfigWidget(QWidget *parent = nullptr);
+  explicit AbeBooksConfigWidget(QWidget* parent = nullptr);
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };

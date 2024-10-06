@@ -5,6 +5,7 @@
 #ifndef ANTIQUACRM_STATISTICS_UTILS_H
 #define ANTIQUACRM_STATISTICS_UTILS_H
 
+#include "statisticsconfig.h"
 #include <AGlobal>
 #include <QDate>
 #include <QDateTime>
@@ -16,7 +17,7 @@
  * @brief The StatsUtils class
  * @ingroup _chartstat
  */
-class ANTIQUACRM_LIBRARY StatsUtils final {
+class ANTIQUACRM_STATISTICS_PLUGIN StatsUtils final {
 public:
   /**
    * @brief Start end DayTime: QPair<00:00:00,23:59:59>
@@ -34,27 +35,27 @@ public:
    * @param from Date
    * @param to Date
    */
-  static const QMap<qint64, int> dayRangeFromDate(const QDate &, const QDate &);
+  static const QMap<qint64, int> dayRangeFromDate(const QDate&, const QDate&);
 
   /**
    * @brief DateTime from Date with Time 00:00:00
    */
-  static const QDateTime startDateTime(const QDate &);
+  static const QDateTime startDateTime(const QDate&);
 
   /**
    * @brief SQL TIMESTAMP from Date with Time 00:00:00
    */
-  static const QString startTimeStamp(const QDate &);
+  static const QString startTimeStamp(const QDate&);
 
   /**
    * @brief DateTime from Date with Time 23:59:59
    */
-  static const QDateTime endDateTime(const QDate &);
+  static const QDateTime endDateTime(const QDate&);
 
   /**
    * @brief SQL TIMESTAMP from Date with Time 23:59:59
    */
-  static const QString endTimeStamp(const QDate &);
+  static const QString endTimeStamp(const QDate&);
 };
 
 #endif // ANTIQUACRM_STATISTICS_UTILS_H

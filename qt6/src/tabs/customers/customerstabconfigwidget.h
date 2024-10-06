@@ -13,8 +13,7 @@
 #include <QJsonObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY CustomersTabConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class CustomersTabConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 public Q_SLOTS:
@@ -22,7 +21,7 @@ public Q_SLOTS:
   void saveSectionConfig() override;
 
 public:
-  explicit CustomersTabConfigWidget(QWidget *parent = nullptr);
+  explicit CustomersTabConfigWidget(QWidget* parent = nullptr);
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };

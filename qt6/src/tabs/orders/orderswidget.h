@@ -18,29 +18,29 @@ class OrdersTableOverView;
 class OrdersStatusBar;
 class OrdersEditor;
 
-class ANTIQUACRM_LIBRARY OrdersWidget final : public AntiquaCRM::TabsIndex {
+class OrdersWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  QWidget *m_mainPage;
-  OrdersSearchBar *m_searchBar;
-  OrdersTableOverView *m_table;
-  OrdersStatusBar *m_statusBar;
-  QScrollArea *m_editorPage;
-  OrdersEditor *m_editorWidget;
+  QWidget* m_mainPage;
+  OrdersSearchBar* m_searchBar;
+  OrdersTableOverView* m_table;
+  OrdersStatusBar* m_statusBar;
+  QScrollArea* m_editorPage;
+  OrdersEditor* m_editorWidget;
   bool firstStartOnWorkday();
   void setDefaultTableView() override;
 
 public Q_SLOTS:
   void openStartPage() override;
-  void createSearchQuery(const QString &history = QString()) override;
+  void createSearchQuery(const QString& history = QString()) override;
   void createNewEntry() override;
   void openEntry(qint64 oid) override;
   void refundEntry(qint64 oid);
   void onEnterChanged() override;
 
 public:
-  explicit OrdersWidget(QWidget *parent = nullptr);
+  explicit OrdersWidget(QWidget* parent = nullptr);
 
   const QString getTitle() const override;
 
@@ -68,7 +68,7 @@ public:
    *
    * @return acception
    */
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
 
   const QStringList acceptsCustomActions() const override;
 };

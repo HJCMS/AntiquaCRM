@@ -18,19 +18,19 @@
  *
  * @ingroup PluginOrders
  */
-class ANTIQUACRM_LIBRARY RefundIntroduction final : public RefundingPage {
+class RefundIntroduction final : public RefundingPage {
   Q_OBJECT
 
 private:
-  QLabel *m_label;
-  QPushButton *btn_ready;
+  QLabel* m_label;
+  QPushButton* btn_ready;
 
 public:
   /**
    * @param parent - pointer to parent object
    */
-  explicit RefundIntroduction(QWidget *parent = nullptr);
-  bool initPageData(AntiquaCRM::ASqlCore *con, qint64 id) override;
+  explicit RefundIntroduction(QWidget* parent = nullptr);
+  bool initPageData(AntiquaCRM::ASqlCore* con, qint64 id) override;
 };
 
 #endif // ANTIQUACRM_REFUNDING_INTRODUCTION_H

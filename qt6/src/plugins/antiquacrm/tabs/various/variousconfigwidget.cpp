@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "variousconfigwidget.h"
-#include "variousconfig.h"
 
 VariousConfigWidget::VariousConfigWidget(QWidget *parent)
     : AntiquaCRM::PluginConfigWidget{"Various", parent} {

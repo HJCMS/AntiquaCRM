@@ -9,7 +9,18 @@
 #ifndef ABEBOOKS_PLUGIN_ABEBOOKS_CONFIG_H
 #define ABEBOOKS_PLUGIN_ABEBOOKS_CONFIG_H
 
+#include <QtGlobal>
 #include <QString>
+
+/**
+ * @ingroup ProviderPlugin
+ * @brief library export definition
+ */
+#ifdef AbeBooks_EXPORTS
+# define ABEBOOKS_PLUGIN Q_DECL_EXPORT
+#else
+# define ABEBOOKS_PLUGIN Q_DECL_IMPORT
+#endif
 
 /**
  * @brief AbeBooks Provider plugin Macros

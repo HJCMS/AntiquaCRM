@@ -31,7 +31,7 @@
  *  --------------------------------------------------------
  * @endcode
  */
-class ANTIQUACRM_LIBRARY PurchaseTable final : public QTableWidget {
+class PurchaseTable final : public QTableWidget {
   Q_OBJECT
 
 private Q_SLOTS:
@@ -40,20 +40,20 @@ private Q_SLOTS:
   void createPrintingCard();
 
 protected:
-  void addHeaderItem(int, const QString &name);
-  void contextMenuEvent(QContextMenuEvent *);
+  void addHeaderItem(int, const QString& name);
+  void contextMenuEvent(QContextMenuEvent*);
 
 Q_SIGNALS:
   void sendCheckArticles();
   void sendOpenArticle(qint64);
 
 public Q_SLOTS:
-  void setArticleStatus(const QString &article, bool available = false);
+  void setArticleStatus(const QString& article, bool available = false);
 
 public:
-  explicit PurchaseTable(QWidget *parent = nullptr);
+  explicit PurchaseTable(QWidget* parent = nullptr);
   qint64 getSelectedArticleId();
-  QTableWidgetItem *createItem(const QJsonValue &data) const;
+  QTableWidgetItem* createItem(const QJsonValue& data) const;
   const QStringList getArticleIds();
 };
 

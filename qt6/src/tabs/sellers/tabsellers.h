@@ -13,12 +13,12 @@
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY TabSellers final : public AntiquaCRM::TabsInterface {
+class TabSellers final : public AntiquaCRM::TabsInterface {
   Q_OBJECT
   Q_INTERFACES(AntiquaCRM::TabsInterface)
 
 public:
-  explicit TabSellers(QObject *parent = nullptr);
+  explicit TabSellers(QObject* parent = nullptr);
 
   const QString displayName() const override;
 
@@ -28,15 +28,15 @@ public:
 
   const QString sqlFieldPrefix() const override;
 
-  AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const override;
+  AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const override;
 
   bool addIndexOnInit() const override;
 
   const QJsonObject menuEntry() const override;
 
-  AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
+  AntiquaCRM::TabsIndex* indexWidget(QWidget* parent) const override;
 
-  bool createInterface(QObject *parent) override;
+  bool createInterface(QObject* parent) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_SELLERS_TABSELLERS_H

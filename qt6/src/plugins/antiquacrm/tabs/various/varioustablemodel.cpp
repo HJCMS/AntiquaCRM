@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "varioustablemodel.h"
-#include "variousconfig.h"
 
 #include <AntiquaWidgets>
 

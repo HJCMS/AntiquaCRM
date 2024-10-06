@@ -9,24 +9,24 @@
 #ifndef ANTIQUACRM_PLUGIN_VARIOUSSTATUSBAR_H
 #define ANTIQUACRM_PLUGIN_VARIOUSSTATUSBAR_H
 
+#include "variousconfig.h"
 #include <AntiquaTabs>
 #include <QPushButton>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY VariousStatusBar final
-    : public AntiquaCRM::TabsStatusBar {
+class ANTIQUACRM_VARIOUS_PLUGIN VariousStatusBar final : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
 private:
-  QPushButton *btn_create;
-  QPushButton *btn_history;
-  void setHistoryActionMenu(QPushButton *parent) override;
+  QPushButton* btn_create;
+  QPushButton* btn_history;
+  void setHistoryActionMenu(QPushButton* parent) override;
 
 public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit VariousStatusBar(QWidget *parent = nullptr);
+  explicit VariousStatusBar(QWidget* parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 

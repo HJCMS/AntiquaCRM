@@ -5,24 +5,25 @@
 #ifndef ANTIQUACRM_YEARAXIS_H
 #define ANTIQUACRM_YEARAXIS_H
 
+#include "statisticsconfig.h"
 #include <AGlobal>
 #include <QDate>
 #include <QDateTime>
-#include <QObject>
 #include <QDateTimeAxis>
+#include <QObject>
 
 /**
  * @brief The YearAxis class
  * @ingroup _chartstat
  */
-class ANTIQUACRM_LIBRARY YearAxis final : public QDateTimeAxis {
+class ANTIQUACRM_STATISTICS_PLUGIN YearAxis final : public QDateTimeAxis {
   Q_OBJECT
 
 public:
-  explicit YearAxis(QObject *parent = nullptr);
-  explicit YearAxis(int year, QObject *parent = nullptr);
-  void setStartDate(const QDate &);
-  void setEndDate(const QDate &);
+  explicit YearAxis(QObject* parent = nullptr);
+  explicit YearAxis(int year, QObject* parent = nullptr);
+  void setStartDate(const QDate&);
+  void setEndDate(const QDate&);
   void setYear(int);
 };
 

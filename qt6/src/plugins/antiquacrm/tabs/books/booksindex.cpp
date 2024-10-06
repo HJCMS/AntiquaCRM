@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "booksindex.h"
-#include "booksconfig.h"
 #include "bookseditor.h"
 #include "bookssearchbar.h"
 #include "booksstatusbar.h"

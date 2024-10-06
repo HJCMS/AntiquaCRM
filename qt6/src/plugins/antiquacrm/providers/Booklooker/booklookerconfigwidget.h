@@ -9,10 +9,11 @@
 #ifndef BOOKLOOKER_PLUGIN_CONFIGWIDGET_H
 #define BOOKLOOKER_PLUGIN_CONFIGWIDGET_H
 
+#include "booklookerconfig.h"
 #include <AntiquaProviders>
 #include <AntiquaWidgets>
-#include <QUrl>
 #include <QLabel>
+#include <QUrl>
 #include <QWidget>
 
 /**
@@ -21,16 +22,15 @@
  *
  * @ingroup BookLooker
  */
-class ANTIQUACRM_LIBRARY BookLookerConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class BOOKLOOKER_PLUGIN BookLookerConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::TextLine *m_api_host;
-  AntiquaCRM::TextLine *m_api_path;
-  AntiquaCRM::TextLine *m_api_key;
-  AntiquaCRM::NumEdit *m_api_port;
-  inline QLabel *label(const QString &text);
+  AntiquaCRM::TextLine* m_api_host;
+  AntiquaCRM::TextLine* m_api_path;
+  AntiquaCRM::TextLine* m_api_key;
+  AntiquaCRM::NumEdit* m_api_port;
+  inline QLabel* label(const QString& text);
 
 public Q_SLOTS:
   void loadSectionConfig() override;
@@ -40,7 +40,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit BookLookerConfigWidget(QWidget *parent = nullptr);
+  explicit BookLookerConfigWidget(QWidget* parent = nullptr);
 
   AntiquaCRM::ConfigType getType() const override;
 

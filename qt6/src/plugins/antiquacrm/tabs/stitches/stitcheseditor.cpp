@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "stitcheseditor.h"
-#include "stitchesconfig.h"
 
 #include <AntiquaCRM>
 #include <AntiquaImageDialog>

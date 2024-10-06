@@ -25,6 +25,7 @@ SET (plugin_SOURCES
 
 SET (plugin_HEADERS
   tabviews.h
+  viewsconfig.h
   viewsindex.h
   viewsconfigwidget.h
   viewstablemodel.h

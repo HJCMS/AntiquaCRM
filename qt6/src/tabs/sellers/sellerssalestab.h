@@ -15,27 +15,27 @@
 
 class SellersSalesWidget;
 
-class ANTIQUACRM_LIBRARY SellersSalesTab final : public QTabWidget {
+class SellersSalesTab final : public QTabWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::TabsBar *m_tabsBar;
+  AntiquaCRM::TabsBar* m_tabsBar;
   inline const QString infoText() const;
-  virtual void paintEvent(QPaintEvent *) override;
+  virtual void paintEvent(QPaintEvent*) override;
 
 private Q_SLOTS:
   void setTabClosed(int);
 
 public:
-  explicit SellersSalesTab(QWidget *parent = nullptr);
+  explicit SellersSalesTab(QWidget* parent = nullptr);
 
   /**
    * @brief Aktuelles Tab Fenster ermitteln.
    * Ableitung von QTabWidget::currentWidget()
    */
-  SellersSalesWidget *currentPage();
+  SellersSalesWidget* currentPage();
 
-  int addPage(const QString &id, SellersSalesWidget *page);
+  int addPage(const QString& id, SellersSalesWidget* page);
 };
 
 #endif

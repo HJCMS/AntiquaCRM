@@ -9,17 +9,18 @@
 #ifndef ANTIQUACRM_PLUGIN_STITCHES_H
 #define ANTIQUACRM_PLUGIN_STITCHES_H
 
+#include "stitchesconfig.h"
 #include <AntiquaTabs>
-#include <QWidget>
 #include <QObject>
+#include <QWidget>
 
-class ANTIQUACRM_LIBRARY TabStitches final : public AntiquaCRM::TabsInterface {
+class ANTIQUACRM_STITCHES_PLUGIN TabStitches final : public AntiquaCRM::TabsInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_TABS_INTERFACE FILE "stitches.json")
   Q_INTERFACES(AntiquaCRM::TabsInterface)
 
 public:
-  explicit TabStitches(QObject *parent = nullptr);
+  explicit TabStitches(QObject* parent = nullptr);
 
   const QString displayName() const override;
 
@@ -29,15 +30,15 @@ public:
 
   const QString sqlFieldPrefix() const override;
 
-  AntiquaCRM::PluginConfigWidget *configWidget(QWidget *parent) const override;
+  AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const override;
 
   bool addIndexOnInit() const override;
 
   const QJsonObject menuEntry() const override;
 
-  AntiquaCRM::TabsIndex *indexWidget(QWidget *parent) const override;
+  AntiquaCRM::TabsIndex* indexWidget(QWidget* parent) const override;
 
-  bool createInterface(QObject *parent) override;
+  bool createInterface(QObject* parent) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_STITCHES_H

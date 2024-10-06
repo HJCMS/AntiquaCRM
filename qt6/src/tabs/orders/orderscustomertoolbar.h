@@ -28,7 +28,7 @@ private Q_SLOTS:
   void changeCustomer();
 
 public:
-  explicit OrdersCustomerToolBar(QWidget *parent = nullptr);
+  explicit OrdersCustomerToolBar(QWidget* parent = nullptr);
   void addEditWidget(AntiquaCRM::SerialId*);
 };
 

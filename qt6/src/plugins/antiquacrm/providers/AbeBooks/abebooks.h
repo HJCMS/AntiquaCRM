@@ -9,12 +9,13 @@
 #ifndef ABEBOOKS_PLUGIN_ABEBOOKS_H
 #define ABEBOOKS_PLUGIN_ABEBOOKS_H
 
+#include "abebooksconfig.h"
 #include <AntiquaProviders>
 #include <QJsonObject>
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY AbeBooks final : public AntiquaCRM::ProviderInterface {
+class ABEBOOKS_PLUGIN AbeBooks final : public AntiquaCRM::ProviderInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_PROVIDER_INTERFACE FILE "abebooks.json")
   Q_INTERFACES(AntiquaCRM::ProviderInterface)
@@ -23,7 +24,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit AbeBooks(QObject *parent = nullptr);
+  explicit AbeBooks(QObject* parent = nullptr);
 
   /**
    * @brief Interface Title and Display name
@@ -46,11 +47,9 @@ public:
    *
    * Widget for AntiquaCRM Configuration system.
    */
-  virtual AntiquaCRM::PluginConfigWidget *
-  configWidget(QWidget *parent) const override;
+  virtual AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const override;
 
-  virtual bool operationWidget(QWidget *parent,
-                               const QJsonObject &order) const override;
+  virtual bool operationWidget(QWidget* parent, const QJsonObject& order) const override;
 
   /**
    * @brief Required Menu entry parameters.
@@ -75,7 +74,7 @@ public:
    *
    * Reserved for interface initialization optimizations
    */
-  virtual bool createInterface(QObject *parent) override;
+  virtual bool createInterface(QObject* parent) override;
 };
 
 #endif // ABEBOOKS_PLUGIN_ABEBOOKS_H

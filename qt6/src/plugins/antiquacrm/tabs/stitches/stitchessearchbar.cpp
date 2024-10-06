@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "stitchessearchbar.h"
-#include "stitchesconfig.h"
 #include "stitchesselectfilter.h"
 
 #include <QIcon>

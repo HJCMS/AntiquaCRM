@@ -22,7 +22,7 @@
  *
  * @ingroup PluginOrders
  */
-class ANTIQUACRM_LIBRARY OrdersTableModel final : public QAbstractTableModel {
+class OrdersTableModel final : public QAbstractTableModel {
   Q_OBJECT
 
 private:
@@ -50,7 +50,7 @@ private:
    *
    * This will emitted dataChanged(QModelIndex,QModelIndex) on success!
    */
-  bool updateRow(int index, const AntiquaCRM::OrderArticleItems &data);
+  bool updateRow(int index, const AntiquaCRM::OrderArticleItems& data);
 
 public Q_SLOTS:
   /**
@@ -61,20 +61,20 @@ public Q_SLOTS:
 public:
   enum TaxType { NORMAL = 0x00, REDUCED = 0x01 };
 
-  explicit OrdersTableModel(QObject *parent = nullptr);
+  explicit OrdersTableModel(QObject* parent = nullptr);
 
   const QModelIndex parentIndex() const;
 
   /**
    * @brief Returns the size of payment articles.
    */
-  int rowCount(const QModelIndex &parent = QModelIndex()) const override;
+  int rowCount(const QModelIndex& parent = QModelIndex()) const override;
 
   /**
    * @brief The number of cells is always the same!
    * @see p_columns
    */
-  int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+  int columnCount(const QModelIndex& parent = QModelIndex()) const override;
 
   /**
    * @brief Return table headers.
@@ -87,14 +87,12 @@ public:
   /**
    * @brief Cell data of a table row
    */
-  QVariant data(const QModelIndex &index,
-                int role = Qt::DisplayRole) const override;
+  QVariant data(const QModelIndex& index, int role = Qt::DisplayRole) const override;
 
   /**
    * @brief Write data to cells...
    */
-  bool setData(const QModelIndex &index, const QVariant &value,
-               int role = Qt::EditRole) override;
+  bool setData(const QModelIndex& index, const QVariant& value, int role = Qt::EditRole) override;
 
   /**
    * @brief Processing indicator
@@ -104,7 +102,7 @@ public:
    *  @li Qt::ItemIsEnabled
    *  @li Qt::ItemIsEditable
    */
-  Qt::ItemFlags flags(const QModelIndex &index) const override;
+  Qt::ItemFlags flags(const QModelIndex& index) const override;
 
   /**
    * @brief Remove an entry from articles!
@@ -119,18 +117,17 @@ public:
    * exceeds 10, it is easier to empty the table and re-enter all the data,
    * which works.
    */
-  bool removeRows(int row, int count,
-                  const QModelIndex &parent = QModelIndex()) override;
+  bool removeRows(int row, int count, const QModelIndex& parent = QModelIndex()) override;
 
   /**
    * @brief Returns the SQL table field name by cell index.
    */
-  const QString field(const QModelIndex &index) const;
+  const QString field(const QModelIndex& index) const;
 
   /**
    * @brief Returns the cell index using the SQL table field name.
    */
-  int columnIndex(const QString &fieldName) const;
+  int columnIndex(const QString& fieldName) const;
 
   /**
    * @brief Includes the SQL table field names and header translations!
@@ -142,12 +139,12 @@ public:
   /**
    * @brief Add a new item order.
    */
-  bool addArticle(const AntiquaCRM::OrderArticleItems &item);
+  bool addArticle(const AntiquaCRM::OrderArticleItems& item);
 
   /**
    * @brief Add a new item orders list.
    */
-  bool addArticles(const QList<AntiquaCRM::OrderArticleItems> &items);
+  bool addArticles(const QList<AntiquaCRM::OrderArticleItems>& items);
 
   /**
    * @brief Returns the current VAT value for this Article.

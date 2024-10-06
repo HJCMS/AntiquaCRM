@@ -15,11 +15,11 @@
 #include <QObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY RefundingPage : public QWidget {
+class RefundingPage : public QWidget {
   Q_OBJECT
 
 protected:
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
 
   /**
    * @brief order id
@@ -58,20 +58,20 @@ public:
   /**
    * @param parent - pointer to parent object
    */
-  explicit RefundingPage(QWidget *parent = nullptr);
+  explicit RefundingPage(QWidget* parent = nullptr);
 
   /**
    * @brief setting refunding configuration
    * @param conf - database settings
    */
-  void setRefundingConfig(const QJsonObject &conf);
+  void setRefundingConfig(const QJsonObject& conf);
 
   /**
    * @brief SQL query with id, normaly order Id.
    * @param con - SQL connection
    * @param id  - order id
    */
-  virtual bool initPageData(AntiquaCRM::ASqlCore *con, qint64 id) = 0;
+  virtual bool initPageData(AntiquaCRM::ASqlCore* con, qint64 id) = 0;
 };
 
 #endif // ANTIQUACRM_REFUNDINGS_PAGE_H

@@ -14,19 +14,18 @@
 #include <QObject>
 #include <QPushButton>
 
-class ANTIQUACRM_LIBRARY OrdersSearchBar final
-    : public AntiquaCRM::TabsSearchBar {
+class OrdersSearchBar final : public AntiquaCRM::TabsSearchBar {
   Q_OBJECT
 
 private:
   int min_length = 1;
   const QDate cDate;
   mutable QString p_search;
-  AntiquaCRM::AComboBox *m_filter;
-  AntiquaCRM::ALineEdit *m_searchInput;
-  AntiquaCRM::AComboBox *m_datePart;
-  AntiquaCRM::NumEdit *m_year;
-  QPushButton *m_searchBtn;
+  AntiquaCRM::AComboBox* m_filter;
+  AntiquaCRM::ALineEdit* m_searchInput;
+  AntiquaCRM::AComboBox* m_datePart;
+  AntiquaCRM::NumEdit* m_year;
+  QPushButton* m_searchBtn;
 
 public Q_SLOTS:
   void setSearch() override;
@@ -36,7 +35,7 @@ public Q_SLOTS:
   void setSearchFocus() override;
 
 public:
-  explicit OrdersSearchBar(QWidget *patent = nullptr);
+  explicit OrdersSearchBar(QWidget* patent = nullptr);
   const QString past12Months() const;
   int getYear();
   const QString getDatePart();

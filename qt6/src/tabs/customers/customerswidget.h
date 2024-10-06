@@ -19,17 +19,17 @@ class CustomersTableView;
 class CustomersStatusBar;
 class CustomersEditor;
 
-class ANTIQUACRM_LIBRARY CustomersWidget final : public AntiquaCRM::TabsIndex {
+class CustomersWidget final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
-  QWidget *m_mainPage;
-  CustomersSearchBar *m_searchBar;
-  CustomersTableView *m_table;
-  CustomersStatusBar *m_statusBar;
+  QWidget* m_mainPage;
+  CustomersSearchBar* m_searchBar;
+  CustomersTableView* m_table;
+  CustomersStatusBar* m_statusBar;
 
-  QScrollArea *m_editorPage;
-  CustomersEditor *m_editorWidget;
+  QScrollArea* m_editorPage;
+  CustomersEditor* m_editorWidget;
 
 private Q_SLOTS:
   void setDefaultTableView() override;
@@ -37,11 +37,11 @@ private Q_SLOTS:
   void setCreateNewOrder(qint64 customerId = -1);
 
 public:
-  explicit CustomersWidget(QWidget *parent = nullptr);
+  explicit CustomersWidget(QWidget* parent = nullptr);
 
   void openStartPage() override;
 
-  void createSearchQuery(const QString &history = QString()) override;
+  void createSearchQuery(const QString& history = QString()) override;
 
   void createNewEntry() override;
 
@@ -51,7 +51,7 @@ public:
 
   const QString getTitle() const override;
 
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
 
   const QStringList acceptsCustomActions() const override;
 };

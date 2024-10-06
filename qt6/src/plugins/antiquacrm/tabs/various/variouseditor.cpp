@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "variouseditor.h"
-#include "variousconfig.h"
 
 #include <AntiquaCRM>
 #include <AntiquaImageDialog>

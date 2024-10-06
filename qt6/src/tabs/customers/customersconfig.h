@@ -17,31 +17,31 @@
  * @{
  */
 #ifndef CUSTOMERS_INTERFACE_NAME
-#define CUSTOMERS_INTERFACE_NAME "customers"
+#  define CUSTOMERS_INTERFACE_NAME "customers"
 #endif
 
 #ifndef CUSTOMERS_INTERFACE_TABID
-#define CUSTOMERS_INTERFACE_TABID "customers_tab"
+#  define CUSTOMERS_INTERFACE_TABID "customers_tab"
 #endif
 
 #ifndef CUSTOMERS_CONFIG_POINTER
-#define CUSTOMERS_CONFIG_POINTER QString("CONFIG_CUSTOMERS_TAB")
+#  define CUSTOMERS_CONFIG_POINTER QString("CONFIG_CUSTOMERS_TAB")
 #endif
 
 #ifndef CUSTOMERS_SQL_TABLE_NAME
-#define CUSTOMERS_SQL_TABLE_NAME "customers"
+#  define CUSTOMERS_SQL_TABLE_NAME "customers"
 #endif
 
 #ifndef CUSTOMERS_SQL_FIELD_PREFIX
-#define CUSTOMERS_SQL_FIELD_PREFIX "c"
+#  define CUSTOMERS_SQL_FIELD_PREFIX "c"
 #endif
 
 #ifndef CUSTOMERS_SQL_EDITOR_PATTERN
-#define CUSTOMERS_SQL_EDITOR_PATTERN "^c_[a-z_]+([0-9]+)?\\b$"
+#  define CUSTOMERS_SQL_EDITOR_PATTERN "^c_[a-z_]+([0-9]+)?\\b$"
 #endif
 
 #ifndef CUSTOMERS_ALWAYS_ADD_ONLOAD
-#define CUSTOMERS_ALWAYS_ADD_ONLOAD true
+#  define CUSTOMERS_ALWAYS_ADD_ONLOAD true
 #endif
 
 /**

@@ -9,7 +9,18 @@
 #ifndef BOOKLOOKER_PLUGIN_CONFIG_H
 #define BOOKLOOKER_PLUGIN_CONFIG_H
 
+#include <QtGlobal>
 #include <QString>
+
+/**
+ * @ingroup ProviderPlugin
+ * @brief library export definition
+ */
+#ifdef Booklooker_EXPORTS
+# define BOOKLOOKER_PLUGIN Q_DECL_EXPORT
+#else
+# define BOOKLOOKER_PLUGIN Q_DECL_IMPORT
+#endif
 
 /**
  * @brief BookLooker Provider plugin Macros

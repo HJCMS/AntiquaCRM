@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKLOOKER_H
 #define ANTIQUACRM_PLUGIN_BOOKLOOKER_H
 
+#include "booklookerconfig.h"
 #include <AntiquaProviders>
 #include <QJsonObject>
 #include <QObject>
@@ -20,8 +21,7 @@
  *
  * @ingroup BookLooker
  */
-class ANTIQUACRM_LIBRARY BookLooker final
-    : public AntiquaCRM::ProviderInterface {
+class BOOKLOOKER_PLUGIN BookLooker final : public AntiquaCRM::ProviderInterface {
   Q_OBJECT
   Q_PLUGIN_METADATA(IID ANTIQUACRM_PROVIDER_INTERFACE FILE "booklooker.json")
   Q_INTERFACES(AntiquaCRM::ProviderInterface)
@@ -30,7 +30,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit BookLooker(QObject *parent = nullptr);
+  explicit BookLooker(QObject* parent = nullptr);
 
   /**
    * @brief Interface Title and Display name
@@ -53,11 +53,9 @@ public:
    *
    * Widget for AntiquaCRM Configuration system.
    */
-  virtual AntiquaCRM::PluginConfigWidget *
-  configWidget(QWidget *parent) const override;
+  virtual AntiquaCRM::PluginConfigWidget* configWidget(QWidget* parent) const override;
 
-  virtual bool operationWidget(QWidget *parent,
-                               const QJsonObject &order) const override;
+  virtual bool operationWidget(QWidget* parent, const QJsonObject& order) const override;
 
   /**
    * @brief Required Menu entry parameters.
@@ -82,7 +80,7 @@ public:
    *
    * Reserved for interface initialization optimizations
    */
-  virtual bool createInterface(QObject *parent) override;
+  virtual bool createInterface(QObject* parent) override;
 };
 
 #endif // ANTIQUACRM_PLUGIN_BOOKLOOKER_H

@@ -9,10 +9,10 @@
 #ifndef ANTIQUACRM_REPORTS_CONFIGWIDGET_H
 #define ANTIQUACRM_REPORTS_CONFIGWIDGET_H
 
+#include "reportsconfig.h"
 #include <AntiquaWidgets>
 
-class ANTIQUACRM_LIBRARY ReportsConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class ANTIQUACRM_REPORTS_PLUGIN ReportsConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 public Q_SLOTS:
@@ -20,7 +20,7 @@ public Q_SLOTS:
   void saveSectionConfig() override;
 
 public:
-  explicit ReportsConfigWidget(QWidget *parent = nullptr);
+  explicit ReportsConfigWidget(QWidget* parent = nullptr);
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };

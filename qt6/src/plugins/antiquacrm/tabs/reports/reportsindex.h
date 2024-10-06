@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_REPORTS_INDEX_H
 #define ANTIQUACRM_REPORTS_INDEX_H
 
+#include "reportsconfig.h"
 #include <AntiquaTabs>
 #include <QDate>
 #include <QObject>
@@ -17,14 +18,14 @@
 class ReportsTableView;
 class ReportsToolBar;
 
-class ANTIQUACRM_LIBRARY ReportsIndex final : public AntiquaCRM::TabsIndex {
+class ANTIQUACRM_REPORTS_PLUGIN ReportsIndex final : public AntiquaCRM::TabsIndex {
   Q_OBJECT
 
 private:
   QDate p_date;
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
-  ReportsTableView *m_table;
-  ReportsToolBar *m_toolBar;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
+  ReportsTableView* m_table;
+  ReportsToolBar* m_toolBar;
   void setDefaultTableView() override;
   const QString getBasename();
   const QString printHeader();
@@ -38,7 +39,7 @@ private Q_SLOTS:
    *
    * Das Datum muss immer den letzten Tag des Monats enthalten!
    */
-  void createReport(const QDate &date);
+  void createReport(const QDate& date);
 
   /**
    * @brief Standard Drucken Dialog
@@ -51,14 +52,14 @@ private Q_SLOTS:
   void saveReport();
 
 public:
-  explicit ReportsIndex(QWidget *parent = nullptr);
-  void openStartPage() override{};
-  void createSearchQuery(const QString &) override{};
-  void createNewEntry() override{};
+  explicit ReportsIndex(QWidget* parent = nullptr);
+  void openStartPage() override {};
+  void createSearchQuery(const QString&) override {};
+  void createNewEntry() override {};
   void openEntry(qint64) override{};
   void onEnterChanged() override;
   const QString getTitle() const override;
-  bool customAction(const QJsonObject &obj) override;
+  bool customAction(const QJsonObject& obj) override;
   const QStringList acceptsCustomActions() const override;
 };
 

@@ -9,22 +9,22 @@
 #ifndef ANTIQUACRM_PLUGIN_STITCHESSTATUSBAR_H
 #define ANTIQUACRM_PLUGIN_STITCHESSTATUSBAR_H
 
+#include "stitchesconfig.h"
 #include <AntiquaTabs>
 
-class ANTIQUACRM_LIBRARY StitchesStatusBar final
-    : public AntiquaCRM::TabsStatusBar {
+class ANTIQUACRM_STITCHES_PLUGIN StitchesStatusBar final : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
 private:
-  QPushButton *btn_create;
-  QPushButton *btn_history;
-  void setHistoryActionMenu(QPushButton *parent) override;
+  QPushButton* btn_create;
+  QPushButton* btn_history;
+  void setHistoryActionMenu(QPushButton* parent) override;
 
 public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit StitchesStatusBar(QWidget *parent = nullptr);
+  explicit StitchesStatusBar(QWidget* parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 

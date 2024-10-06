@@ -12,18 +12,18 @@
 #include <AntiquaWidgets>
 #include <QLabel>
 
-class ANTIQUACRM_LIBRARY PurchaseHeader final : public QWidget {
+class PurchaseHeader final : public QWidget {
   Q_OBJECT
 
 private:
   qint64 p_customer_id = -1;
-  QLabel *m_buyer;
-  QLabel *m_cid;
+  QLabel* m_buyer;
+  QLabel* m_cid;
 
 public:
-  explicit PurchaseHeader(QWidget *parent = nullptr);
+  explicit PurchaseHeader(QWidget* parent = nullptr);
   qint64 getCustomerId();
-  void setHeader(const QString &name, qint64 cid = -1);
+  void setHeader(const QString& name, qint64 cid = -1);
 };
 
 #endif // ANTIQUACRM_PLUGIN_SELLERS_PURCHASEHEADER_H

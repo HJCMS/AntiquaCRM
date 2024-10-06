@@ -10,6 +10,17 @@
 #define ANTIQUACRM_PLUGIN_STITCHESCONFIG_H
 
 #include <QString>
+#include <QtGlobal>
+
+/**
+ * @ingroup ProviderPlugin
+ * @brief library export definition
+ */
+#ifdef Stitches_EXPORTS
+#  define ANTIQUACRM_STITCHES_PLUGIN Q_DECL_EXPORT
+#else
+#  define ANTIQUACRM_STITCHES_PLUGIN Q_DECL_IMPORT
+#endif
 
 /**
  * @brief Prints & Stitches tab plugin Macros
@@ -17,23 +28,23 @@
  * @{
  */
 #ifndef STITCHES_INTERFACE_NAME
-#define STITCHES_INTERFACE_NAME QString("stitches")
+#  define STITCHES_INTERFACE_NAME QString("stitches")
 #endif
 
 #ifndef STITCHES_CONFIG_POINTER
-#define STITCHES_CONFIG_POINTER QString("CONFIG_PRINTS_TAB")
+#  define STITCHES_CONFIG_POINTER QString("CONFIG_PRINTS_TAB")
 #endif
 
 #ifndef STITCHES_TABLE_NAME
-#define STITCHES_TABLE_NAME QString("inventory_prints")
+#  define STITCHES_TABLE_NAME QString("inventory_prints")
 #endif
 
 #ifndef STITCHES_INDEX_COLUMN
-#define STITCHES_INDEX_COLUMN QString("ip_id")
+#  define STITCHES_INDEX_COLUMN QString("ip_id")
 #endif
 
 #ifndef STITCHES_SQL_EDITOR_PATTERN
-#define STITCHES_SQL_EDITOR_PATTERN "^ip_[a-z_]+[0-9]?\\b$"
+#  define STITCHES_SQL_EDITOR_PATTERN "^ip_[a-z_]+[0-9]?\\b$"
 #endif
 
 /**

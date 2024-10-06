@@ -15,7 +15,7 @@
 #include <QWidget>
 
 #ifndef ANTIQUACRM_REFUNDING_PAGES
-#include "refundingpages.h"
+#  include "refundingpages.h"
 #endif
 
 /**
@@ -31,7 +31,7 @@ class RefundingDialog final : public AntiquaCRM::ADialog {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASqlCore *m_sql = nullptr;
+  AntiquaCRM::ASqlCore* m_sql = nullptr;
 
   /**
    * @brief current order id
@@ -43,27 +43,27 @@ private:
   /**
    * @brief Introduction to the process
    */
-  RefundIntroduction *m_intro;
+  RefundIntroduction* m_intro;
 
   /**
    * @brief Select return item from order.
    */
-  RefundSelecter *m_select;
+  RefundSelecter* m_select;
 
   /**
    * @brief Set and send cancellation costs.
    */
-  RefundFinalize *m_final;
+  RefundFinalize* m_final;
 
   /**
    * @brief Dialog follow context widget
    */
-  QStackedWidget *m_stackedWidget;
+  QStackedWidget* m_stackedWidget;
 
   /**
    * @brief Navigation bar, not dialog button box!
    */
-  AntiquaCRM::ANavigationBar *m_navBar;
+  AntiquaCRM::ANavigationBar* m_navBar;
 
 private Q_SLOTS:
   void goForward();
@@ -87,7 +87,7 @@ public:
    * @param orderId - Id from order, which will be refunded.
    * @param parent - parent object
    */
-  explicit RefundingDialog(qint64 orderId, QWidget *parent = nullptr);
+  explicit RefundingDialog(qint64 orderId, QWidget* parent = nullptr);
 
   /**
    * @brief Call Refundings after accept

@@ -9,37 +9,37 @@
 #ifndef ANTIQUACRM_PLUGIN_VARIOUSTABLEVIEW_H
 #define ANTIQUACRM_PLUGIN_VARIOUSTABLEVIEW_H
 
+#include "variousconfig.h"
 #include <AntiquaTabs>
 #include <QObject>
 #include <QWidget>
 
 class VariousTableModel;
 
-class ANTIQUACRM_LIBRARY VariousTableView final : public AntiquaCRM::TableView {
+class ANTIQUACRM_VARIOUS_PLUGIN VariousTableView final : public AntiquaCRM::TableView {
   Q_OBJECT
 
 private:
-  VariousTableModel *m_model;
+  VariousTableModel* m_model;
   QString where_clause;
   QSqlRecord p_tableRecord;
-  qint64 getTableID(const QModelIndex &index, int column = 0) override;
-  bool sqlModelQuery(const QString &query) override;
-  void contextMenuEvent(QContextMenuEvent *) override;
+  qint64 getTableID(const QModelIndex& index, int column = 0) override;
+  bool sqlModelQuery(const QString& query) override;
+  void contextMenuEvent(QContextMenuEvent*) override;
 
 private Q_SLOTS:
-  void contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                         const QModelIndex &) override;
+  void contextMenuAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex&) override;
   void setSortByColumn(int column, Qt::SortOrder order) override;
-  void getSelectedItem(const QModelIndex &) override;
-  void createSocketOperation(const QModelIndex &) override;
+  void getSelectedItem(const QModelIndex&) override;
+  void createSocketOperation(const QModelIndex&) override;
 
 public Q_SLOTS:
   void setReloadView() override;
 
 public:
-  explicit VariousTableView(QWidget *parent = nullptr);
+  explicit VariousTableView(QWidget* parent = nullptr);
   int rowCount() override;
-  bool setQuery(const QString &clause = QString()) override;
+  bool setQuery(const QString& clause = QString()) override;
   const QString defaultWhereClause() override;
 };
 

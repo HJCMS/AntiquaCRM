@@ -23,14 +23,15 @@
  *
  * @ingroup PluginOrders
  */
-class ANTIQUACRM_LIBRARY OrdersTableDelegate final : public QItemDelegate {
+class OrdersTableDelegate final : public QItemDelegate {
   Q_OBJECT
 
 public:
   /**
    * @brief Input properties
    */
-  struct EditorProperties {
+  struct EditorProperties
+  {
     qreal minPrice;
     qreal maxPrice;
     int minCount;
@@ -42,7 +43,7 @@ public:
   /**
    * @brief parent - parent object
    */
-  explicit OrdersTableDelegate(QObject *parent = nullptr);
+  explicit OrdersTableDelegate(QObject* parent = nullptr);
 
   /**
    * @brief Change minimum sale price
@@ -50,15 +51,15 @@ public:
    */
   void setMinPrice(double price);
 
-  void setProperties(const OrdersTableDelegate::EditorProperties &);
+  void setProperties(const OrdersTableDelegate::EditorProperties&);
 
-  QWidget *createEditor(QWidget *parent, const QStyleOptionViewItem &option,
-                        const QModelIndex &index) const override;
+  QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option,
+                        const QModelIndex& index) const override;
 
-  void setEditorData(QWidget *editor, const QModelIndex &index) const override;
+  void setEditorData(QWidget* editor, const QModelIndex& index) const override;
 
-  void setModelData(QWidget *editor, QAbstractItemModel *model,
-                    const QModelIndex &index) const override;
+  void setModelData(QWidget* editor, QAbstractItemModel* model,
+                    const QModelIndex& index) const override;
 
 private:
   EditorProperties config;

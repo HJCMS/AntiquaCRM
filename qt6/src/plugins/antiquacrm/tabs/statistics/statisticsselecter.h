@@ -9,27 +9,28 @@
 #ifndef ANTIQUACRM_STATISTICS_SELECTER_H
 #define ANTIQUACRM_STATISTICS_SELECTER_H
 
+#include "statisticsconfig.h"
 #include <AntiquaWidgets>
-#include <QToolBar>
 #include <QPushButton>
+#include <QToolBar>
 
-class ANTIQUACRM_LIBRARY StatisticsSelecter : public QToolBar {
+class ANTIQUACRM_STATISTICS_PLUGIN StatisticsSelecter : public QToolBar {
   Q_OBJECT
 
 private:
-  AntiquaCRM::ASpinBox *m_date;
-  AntiquaCRM::AComboBox *m_box;
-  QPushButton *m_button;
+  AntiquaCRM::ASpinBox* m_date;
+  AntiquaCRM::AComboBox* m_box;
+  QPushButton* m_button;
 
 private Q_SLOTS:
   void chartSelected(int);
   void updateView();
 
 Q_SIGNALS:
-  void sendChartSelected(qint64, const QString &);
+  void sendChartSelected(qint64, const QString&);
 
 public:
-  explicit StatisticsSelecter(QWidget *parent = nullptr);
+  explicit StatisticsSelecter(QWidget* parent = nullptr);
 };
 
 #endif // ANTIQUACRM_STATISTICS_SELECTER_H

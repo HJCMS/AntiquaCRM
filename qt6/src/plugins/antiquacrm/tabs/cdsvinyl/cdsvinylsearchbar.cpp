@@ -3,7 +3,6 @@
 
 #include "cdsvinylsearchbar.h"
 #include "cdsvinylselectfilter.h"
-#include "cdsvinylconfig.h"
 
 #include <QIcon>
 #include <QJsonObject>

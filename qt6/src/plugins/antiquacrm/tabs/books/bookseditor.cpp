@@ -2,7 +2,6 @@
 // vim: set fileencoding=utf-8
 
 #include "bookseditor.h"
-#include "booksconfig.h"
 #include "catalogsearchbutton.h"
 
 #include <AntiquaCRM>

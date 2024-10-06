@@ -21,10 +21,10 @@ class ImportRepairFinder final : public QWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::TextLine *m_firstname;
-  AntiquaCRM::TextLine *m_lastname;
-  QTableWidget *m_table;
-  QLabel *info(const QString &title);
+  AntiquaCRM::TextLine* m_firstname;
+  AntiquaCRM::TextLine* m_lastname;
+  QTableWidget* m_table;
+  QLabel* info(const QString& title);
 
 private Q_SLOTS:
   void itemClicked(int row, int column);
@@ -32,14 +32,14 @@ private Q_SLOTS:
 
 Q_SIGNALS:
   void sendUseClause(qint64);
-  void sendFindClause(const QString &);
+  void sendFindClause(const QString&);
 
 public Q_SLOTS:
   void clear();
 
 public:
-  explicit ImportRepairFinder(QWidget *parent = nullptr);
-  void addCustomer(const QJsonObject &customer);
+  explicit ImportRepairFinder(QWidget* parent = nullptr);
+  void addCustomer(const QJsonObject& customer);
 };
 
 #endif // ANTIQUACRM_SELLERS_REPAIR_FINDER_H

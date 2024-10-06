@@ -9,25 +9,25 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKS_CONFIGWIDGET_H
 #define ANTIQUACRM_PLUGIN_BOOKS_CONFIGWIDGET_H
 
+#include "booksconfig.h"
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
 #include <QJsonObject>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BooksTabConfigWidget final
-    : public AntiquaCRM::PluginConfigWidget {
+class ANTIQUACRM_BOOKS_PLUGIN BooksTabConfigWidget final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::PriceEdit *m_minPrice;
-  AntiquaCRM::PriceEdit *m_normalPrice;
+  AntiquaCRM::PriceEdit* m_minPrice;
+  AntiquaCRM::PriceEdit* m_normalPrice;
 
 public Q_SLOTS:
   void loadSectionConfig() override;
   void saveSectionConfig() override;
 
 public:
-  explicit BooksTabConfigWidget(QWidget *parent = nullptr);
+  explicit BooksTabConfigWidget(QWidget* parent = nullptr);
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
 };

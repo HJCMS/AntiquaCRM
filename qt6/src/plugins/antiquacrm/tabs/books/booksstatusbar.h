@@ -9,24 +9,24 @@
 #ifndef ANTIQUACRM_PLUGIN_BOOKSSTATUSBAR_H
 #define ANTIQUACRM_PLUGIN_BOOKSSTATUSBAR_H
 
+#include "booksconfig.h"
 #include <AntiquaTabs>
 #include <QPushButton>
 #include <QWidget>
 
-class ANTIQUACRM_LIBRARY BooksStatusBar final
-    : public AntiquaCRM::TabsStatusBar {
+class ANTIQUACRM_BOOKS_PLUGIN BooksStatusBar final : public AntiquaCRM::TabsStatusBar {
   Q_OBJECT
 
 private:
-  QPushButton *btn_create;
-  QPushButton *btn_history;
-  void setHistoryActionMenu(QPushButton *parent) override;
+  QPushButton* btn_create;
+  QPushButton* btn_history;
+  void setHistoryActionMenu(QPushButton* parent) override;
 
 public Q_SLOTS:
   void setCreateButtonEnabled(bool) override;
 
 public:
-  explicit BooksStatusBar(QWidget *parent = nullptr);
+  explicit BooksStatusBar(QWidget* parent = nullptr);
   bool isCreateButtonEnabled() override;
 };
 

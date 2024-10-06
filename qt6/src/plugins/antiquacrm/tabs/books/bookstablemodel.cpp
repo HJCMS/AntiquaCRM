@@ -3,7 +3,6 @@
 
 #include "bookstablemodel.h"
 #include "antiquaicon.h"
-#include "booksconfig.h"
 
 BooksTableModel::BooksTableModel(QObject *parent)
     : AntiquaCRM::ASqlQueryModel{BOOKS_SQL_TABLE_NAME, parent} {
