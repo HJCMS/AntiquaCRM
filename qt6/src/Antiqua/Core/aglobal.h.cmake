@@ -7,7 +7,7 @@
 //
 
 /**
- * @mainpage @DISPLAYNAME@
+ * @mainpage AntiquaCRM
  * API Documentation for „AntiquaCRM“ core library.
  */
 
@@ -115,7 +115,7 @@
  * @brief Application Display title
  */
 #ifndef ANTIQUACRM_DISPLAYNAME
-#define ANTIQUACRM_DISPLAYNAME "@DISPLAYNAME@"
+#define ANTIQUACRM_DISPLAYNAME "AntiquaCRM"
 #endif
 
 /**
@@ -123,7 +123,7 @@
  * @brief Application Window title inkl. Version string
  */
 #ifndef ANTIQUACRM_WINDOW_TITLE
-#define ANTIQUACRM_WINDOW_TITLE "@DISPLAYNAME@ (v@ANTIQUACRM_VERSION_STRING@)"
+#define ANTIQUACRM_WINDOW_TITLE "AntiquaCRM (v@ANTIQUACRM_VERSION_STRING@)"
 #endif
 
 /**
@@ -182,7 +182,7 @@
  * @ingroup AMacros
  * @brief library export definition
  */
-#if defined(ANTIQUACRM_SHARED_LIBRARY) || defined(AntiquaCRM_EXPORTS)
+#if defined (AntiquaCRM_EXPORTS) || defined(AntiquaWidgets_EXPORTS) || defined(AntiquaTabs_EXPORTS) || defined(AntiquaProviders_EXPORTS) || defined(AntiquaPrinting_EXPORTS) || defined(AntiquaImage_EXPORTS)
 # define ANTIQUACRM_LIBRARY Q_DECL_EXPORT
 #else
 # define ANTIQUACRM_LIBRARY Q_DECL_IMPORT

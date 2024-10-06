@@ -237,11 +237,9 @@ void CmdAbeBooks::prepareContent(const QDomDocument& document) {
             // Find valid Article Type
             AntiquaCRM::ArticleType _type = findArticlType(temp.toString());
             order_article.insert("a_type", QJsonValue(_type));
-            switch (_type) {
-              case (AntiquaCRM::ArticleType::OTHER):
+            if (_type == AntiquaCRM::ArticleType::OTHER) {
                 order_article.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_WITH));
-
-              default:
+            } else {
                 order_article.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
             }
             // Article Count

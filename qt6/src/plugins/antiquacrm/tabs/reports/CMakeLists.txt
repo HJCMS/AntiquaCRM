@@ -17,8 +17,6 @@ SET (plugin_FILES
   reports.json
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_pluginTarget} MODULE
   ${plugin_FILES}
   reportsconfigwidget.h reportsconfigwidget.cpp

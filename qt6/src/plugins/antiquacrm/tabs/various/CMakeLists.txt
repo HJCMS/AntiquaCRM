@@ -17,8 +17,6 @@ SET (plugin_FILES
  various.json
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_pluginTarget} MODULE
  ${plugin_FILES} variousconfig.h
  tabvarious.h tabvarious.cpp

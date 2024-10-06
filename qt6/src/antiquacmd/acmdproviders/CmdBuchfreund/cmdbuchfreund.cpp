@@ -325,11 +325,9 @@ void CmdBuchfreund::prepareContent(const QJsonDocument& document) {
       // Find valid Article Type ("bestellnr"=>"a_article_id");
       AntiquaCRM::ArticleType _type = findArticlType(_jso.value("bestellnr").toString());
       antiqua_articles_item.insert("a_type", QJsonValue(_type));
-      switch (_type) {
-        case (AntiquaCRM::ArticleType::OTHER):
+      if (_type == AntiquaCRM::ArticleType::OTHER) {
           antiqua_articles_item.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_WITH));
-
-        default:
+      } else {
           antiqua_articles_item.insert("a_tax", QJsonValue(AntiquaCRM::SalesTax::TAX_INCL));
       }
       antiqua_articles.append(antiqua_articles_item);

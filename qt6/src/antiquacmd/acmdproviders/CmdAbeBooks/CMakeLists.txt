@@ -12,8 +12,6 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_pluginTarget} SHARED
   cmdabebooks.json
   cmdabebooks.h cmdabebooks.cpp

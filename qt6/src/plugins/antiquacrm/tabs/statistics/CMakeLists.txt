@@ -17,8 +17,6 @@ SET (plugin_FILES
   statistics.json
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_pluginTarget} MODULE
   ${plugin_FILES} AChartView
   achartview.h achartview.cpp

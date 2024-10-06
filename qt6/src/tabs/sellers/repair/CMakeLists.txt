@@ -13,8 +13,6 @@ INCLUDE_DIRECTORIES (
   ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
-ADD_DEFINITIONS (-DANTIQUACRM_SHARED_LIBRARY)
-
 ADD_LIBRARY (${_sublib} STATIC
   sellerimportrepair.h sellerimportrepair.cpp
   importrepairfinder.h importrepairfinder.cpp
