@@ -1,0 +1,9 @@
+<h3>Datenbank Zugang</h3>
+<p>Bitte halten Sie die Zugangsdaten für den Datenbankserver bereit.</p>
+<p>Sie wurden von <a href="https://www.hjcms.de">www.hjcms.de</a> oder dem zuständigen Administrator zu verfügung gestellt.</p>
+<dt><i>Benötigte Einstellungen sind:</i></dt>
+<dd>Für lokale Datenbankserver die IP Adresse, bei externen Zugängen der Hostname.</dd>
+<dd>Den Schnittstellen Port zum Server, der Standard ist 5432.</dd>
+<dd>Der Benutzername mit dem sie Angemeldet werden.</dd>
+<dd>Das Passwort für den Benutzer.</dd>
+<p>Antiqua CRM verwendet ausschließlich SSL/TLS gesicherte Verbindungen zu externen Servern (Internet). Eine auf Zertifikat basierende Konfiguration sollte nur von sachkundigen Administratoren durchgeführt werden.</p>

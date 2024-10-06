@@ -6,7 +6,6 @@
 
 #include <AntiquaCRM>
 #include <QByteArray>
-#include <QResource>
 #include <QString>
 #include <QtGlobal>
 

@@ -18,14 +18,13 @@ SET (plugin_FILES
 )
 
 ADD_LIBRARY (${_pluginTarget} MODULE
-  ${plugin_FILES}
+  ${plugin_FILES} reportsconfig.h
   reportsconfigwidget.h reportsconfigwidget.cpp
   reportstoolbar.h reportstoolbar.cpp
   reportsindex.h reportsindex.cpp
   tabreports.h tabreports.cpp
   reportstableview.h reportstableview.cpp
   reportstablemodel.h reportstablemodel.cpp
-  reportsconfig.h
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
@@ -33,7 +32,7 @@ SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
   OUTPUT_NAME ${_pluginTarget}
 )
 
-TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
+TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
  Qt6::Core
  Qt6::Widgets
  Qt6::Sql
