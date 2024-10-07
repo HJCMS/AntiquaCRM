@@ -4,7 +4,7 @@
 <context>
     <name>ACmdProviders</name>
     <message>
-        <location filename="../antiquacmd/acmdproviders/acmdproviders.cpp" line="+134"/>
+        <location filename="../antiquacmd/acmdproviders/acmdproviders.cpp" line="+133"/>
         <source>Germany</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12,7 +12,7 @@
 <context>
     <name>AbeBooksActionsDialog</name>
     <message>
-        <location filename="../plugins/antiquacrm/providers/AbeBooks/abebooksactionsdialog.cpp" line="+17"/>
+        <location filename="../plugins/antiquacrm/providers/AbeBooks/abebooksactionsdialog.cpp" line="+16"/>
         <source>Update AbeBooks order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -35,7 +35,7 @@
 <context>
     <name>AbeBooksConfigWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/providers/AbeBooks/abebooksconfigwidget.cpp" line="+25"/>
+        <location filename="../plugins/antiquacrm/providers/AbeBooks/abebooksconfigwidget.cpp" line="+24"/>
         <source>Access Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -516,7 +516,7 @@ Please check your network connection.</source>
 <context>
     <name>AntiquaCRM::AttachmentInfo</name>
     <message>
-        <location filename="../Antiqua/Widgets/private/mailattachments.cpp" line="+16"/>
+        <location filename="../Antiqua/Widgets/mailattachments.cpp" line="+15"/>
         <source>Attachment path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1231,7 +1231,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::KeywordLabel</name>
     <message>
-        <location filename="../Antiqua/Widgets/private/keywordlabel.cpp" line="+44"/>
+        <location filename="../Antiqua/Widgets/keywordlabel.cpp" line="+44"/>
         <source>Remove this keyword</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1239,7 +1239,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::KeywordListView</name>
     <message>
-        <location filename="../Antiqua/Widgets/private/keywordlistview.cpp" line="+89"/>
+        <location filename="../Antiqua/Widgets/keywordlistview.cpp" line="+89"/>
         <source>Current Keywords length %1 from allowed %2 used.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1295,7 +1295,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::MailAttachments</name>
     <message>
-        <location filename="../Antiqua/Widgets/private/mailattachments.cpp" line="+46"/>
+        <location filename="../Antiqua/Widgets/mailattachments.cpp" line="+46"/>
         <source>Attach file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1336,12 +1336,12 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::MailCommand</name>
     <message>
-        <location filename="../Antiqua/Widgets/private/mailcommand.cpp" line="+81"/>
+        <location filename="../Antiqua/Widgets/mailcommand.cpp" line="+135"/>
         <source>Invalid eMail Address</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="-94"/>
         <source>Attachments are disabled in this mode!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1412,17 +1412,17 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::MailTemplateKeys</name>
     <message>
-        <location filename="../Antiqua/Widgets/private/mailtemplatekeys.cpp" line="+44"/>
+        <location filename="../Antiqua/Widgets/mailtemplatekeys.cpp" line="+47"/>
         <source>Dear Mr.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Dear Mrs.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Dear Ladies and Gentlemen</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2469,7 +2469,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectPaymentStatus</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectpaymentstatus.cpp" line="+39"/>
+        <location filename="../Antiqua/Widgets/selectpaymentstatus.cpp" line="+38"/>
         <source>Waiting for payment</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2499,7 +2499,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+68"/>
         <source>a valid Payment status is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3159,9 +3159,77 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
 </context>
 <context>
+    <name>Assistant</name>
+    <message>
+        <location filename="../utils/config/assistant/assistant.cpp" line="+15"/>
+        <source>AntiquaCRM Wizard</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+38"/>
+        <source>Restart</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Restart Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Back</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Previous page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Next page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Save current changes</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Finalize</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Finishing and close the assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+46"/>
+        <source>Do not close the wizard without saving if you make changes that you do not want to lose!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+45"/>
+        <source>Success</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-46"/>
+        <source>Unfinished Assistant</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>BookLookerActions</name>
     <message>
-        <location filename="../plugins/antiquacrm/providers/Booklooker/booklookeractions.cpp" line="+16"/>
+        <location filename="../plugins/antiquacrm/providers/Booklooker/booklookeractions.cpp" line="+15"/>
         <source>Update BookLooker order.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3204,7 +3272,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>BookLookerConfigWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/providers/Booklooker/booklookerconfigwidget.cpp" line="+24"/>
+        <location filename="../plugins/antiquacrm/providers/Booklooker/booklookerconfigwidget.cpp" line="+23"/>
         <source>Access Configuration</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3307,7 +3375,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>BooksEditor</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookseditor.cpp" line="+16"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookseditor.cpp" line="+15"/>
         <source>Edit Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3759,7 +3827,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+177"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+176"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3977,7 +4045,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksTabConfigWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookstabconfigwidget.cpp" line="+27"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookstabconfigwidget.cpp" line="+26"/>
         <source>Book price limits</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4015,7 +4083,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksTableModel</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookstablemodel.cpp" line="+16"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookstablemodel.cpp" line="+15"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4303,7 +4371,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDsVinylConfigWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylconfigwidget.cpp" line="+27"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylconfigwidget.cpp" line="+26"/>
         <source>Media price limits</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4351,7 +4419,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDsVinylEditor</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinyleditor.cpp" line="+18"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinyleditor.cpp" line="+17"/>
         <source>Edit entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4592,7 +4660,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDsVinylSearchBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylsearchbar.cpp" line="+20"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylsearchbar.cpp" line="+19"/>
         <source>Default search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4701,7 +4769,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDsVinylTableModel</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinyltablemodel.cpp" line="+16"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinyltablemodel.cpp" line="+15"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4787,7 +4855,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDsVinylWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+174"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+173"/>
         <source>CDs &amp;&amp; Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5539,7 +5607,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+108"/>
         <source>Customer saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5554,7 +5622,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+155"/>
+        <location line="+157"/>
         <source>Send eMail finished!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6486,7 +6554,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>Result of current customer search in the system database.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6835,7 +6903,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrderStatusActionFrame</name>
     <message>
-        <location filename="../tabs/orders/orderstatusactionframe.cpp" line="+19"/>
+        <location filename="../tabs/orders/orderstatusactionframe.cpp" line="+18"/>
         <source>Order status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8572,7 +8640,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SellerImportRepair</name>
     <message>
-        <location filename="../tabs/sellers/repair/sellerimportrepair.cpp" line="+21"/>
+        <location filename="../tabs/sellers/repair/sellerimportrepair.cpp" line="+22"/>
         <source>You can use this input mask to repair customer data imports from your service provider.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8587,18 +8655,18 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+84"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+6"/>
-        <location line="+31"/>
+        <location line="+32"/>
         <source>Failed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+21"/>
         <source>Edit %1 order %2</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9038,7 +9106,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>StitchesConfigWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitchesconfigwidget.cpp" line="+27"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitchesconfigwidget.cpp" line="+26"/>
         <source>Stitches price limits</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9076,7 +9144,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>StitchesEditor</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheseditor.cpp" line="+15"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheseditor.cpp" line="+14"/>
         <source>Edit entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9345,12 +9413,12 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+32"/>
+        <location line="+33"/>
         <source>No Modifications found, Update aborted!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+102"/>
+        <location line="+107"/>
         <source>When setting the Article Count to 0.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9385,7 +9453,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+24"/>
         <source>Remove Image from Database</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9415,7 +9483,7 @@ Image - Article Id: %2</source>
 <context>
     <name>StitchesSearchBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitchessearchbar.cpp" line="+20"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitchessearchbar.cpp" line="+19"/>
         <source>Default search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9898,7 +9966,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabBooks</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/tabbooks.cpp" line="+11"/>
+        <location filename="../plugins/antiquacrm/tabs/books/tabbooks.cpp" line="+10"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9911,7 +9979,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabCDsVinyl</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/tabcdsvinyl.cpp" line="+13"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/tabcdsvinyl.cpp" line="+12"/>
         <source>CD &amp;&amp; Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9985,7 +10053,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStitches</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/tabstitches.cpp" line="+14"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/tabstitches.cpp" line="+13"/>
         <location line="+22"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation type="unfinished"></translation>
@@ -9999,7 +10067,7 @@ Image - Article Id: %2</source>
 <context>
     <name>TabVarious</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/tabvarious.cpp" line="+13"/>
+        <location filename="../plugins/antiquacrm/tabs/various/tabvarious.cpp" line="+12"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10071,7 +10139,7 @@ Image - Article Id: %2</source>
 <context>
     <name>VariousConfigWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/variousconfigwidget.cpp" line="+19"/>
+        <location filename="../plugins/antiquacrm/tabs/various/variousconfigwidget.cpp" line="+18"/>
         <source>Various price limits</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10109,7 +10177,7 @@ Image - Article Id: %2</source>
 <context>
     <name>VariousEditor</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/variouseditor.cpp" line="+15"/>
+        <location filename="../plugins/antiquacrm/tabs/various/variouseditor.cpp" line="+14"/>
         <source>Edit entry</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10299,7 +10367,7 @@ Image - Article Id: %2</source>
 <context>
     <name>VariousIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+169"/>
+        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+168"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10328,7 +10396,7 @@ Image - Article Id: %2</source>
 <context>
     <name>VariousTableModel</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/varioustablemodel.cpp" line="+17"/>
+        <location filename="../plugins/antiquacrm/tabs/various/varioustablemodel.cpp" line="+16"/>
         <source>Article Id</source>
         <translation type="unfinished"></translation>
     </message>

@@ -59,3 +59,8 @@ TARGET_LINK_LIBRARIES (${_library} PRIVATE
  AntiquaProviders
  AntiquaWidgets
 )
+
+## AntiquaCRM Assistant
+ADD_SUBDIRECTORY(assistant)
+
+##EOF

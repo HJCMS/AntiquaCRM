@@ -1,15 +1,14 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "infopage.h"
+#include "assistantwelcome.h"
 
 #include <QFile>
 #include <QTextStream>
 #include <QVBoxLayout>
 
-InfoPage::InfoPage(QWidget *parent) : QWidget{parent} {
-
-  QVBoxLayout *layout = new QVBoxLayout(this);
+AssistantWelcome::AssistantWelcome(QWidget* parent) : QWidget{parent} {
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setContentsMargins(4, 4, 4, 4);
 
   m_text = new QLabel(this);
@@ -20,8 +19,8 @@ InfoPage::InfoPage(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 }
 
-void InfoPage::setContent(const QString &key) {
-  QFile fp(":/documents/" + key + "_de.txt");
+void AssistantWelcome::setContent(const QString& key) {
+  QFile fp(":/assistant/documents/" + key + "_de.txt");
   if (fp.open(QFile::ReadOnly)) {
     QString buffer;
     QTextStream in(&fp);

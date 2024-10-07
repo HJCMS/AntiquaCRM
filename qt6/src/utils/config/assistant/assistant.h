@@ -9,6 +9,8 @@
 #ifndef ANTIQUA_ASSISTANT_H
 #define ANTIQUA_ASSISTANT_H
 
+#include <AntiquaCRM>
+#include <AntiquaWidgets>
 #include <QCloseEvent>
 #include <QDialog>
 #include <QDialogButtonBox>
@@ -21,45 +23,36 @@
 #include <QStatusBar>
 #include <QWidget>
 
-class InfoPage;
-class ConfigPgSQL;
-class ConfigSSL;
-class TestConfig;
+class ConfigGeneral;
+class ConfigDatabase;
 
-class Assistant : public QDialog {
+class Assistant final : public QDialog {
   Q_OBJECT
 
 private:
   bool unsaved = true;
-  QSettings* cfg;
   QStackedWidget* m_stackedWidget;
-  InfoPage* m_page0;
-  InfoPage* m_page1;
-  ConfigPgSQL* m_configPgSQL;
-  ConfigSSL* m_configSSL;
-  TestConfig* m_lastTest;
+  ConfigDatabase* m_page1;
+  ConfigGeneral* m_page2;
   QDialogButtonBox* m_buttonBox;
   QStatusBar* m_statusBar;
   QPushButton* btn_close;
   QString p_lastError;
-  int index();
-  void goTo(int index = 0);
   void setButtonBox();
-  bool connectionTest();
+  int getPage();
   void keyPressEvent(QKeyEvent*);
   void closeEvent(QCloseEvent*);
   bool event(QEvent*);
-  void migrationData(const QString& section);
 
 private Q_SLOTS:
   void restart();
+  void setPage(int index = 0);
   void previousPage();
   void nextPage();
   void beforeAccept();
   void beforeClose();
-  void runTest();
+  void pageChanged(int);
   void save();
-  void pageEntered(int);
 
 public:
   explicit Assistant(QWidget* parent = nullptr);
