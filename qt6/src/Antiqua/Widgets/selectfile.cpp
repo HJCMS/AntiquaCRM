@@ -8,9 +8,10 @@
 #include <QFileDialog>
 #include <QFileInfo>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectFile::SelectFile(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+SelectFile::SelectFile(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setPlaceholderText(tr("set file path"));
   layout->addWidget(m_edit);
@@ -23,8 +24,7 @@ SelectFile::SelectFile(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   initData();
 
   connect(m_open, SIGNAL(clicked()), SLOT(setFile()));
-  connect(m_edit, SIGNAL(textChanged(const QString &)),
-          SLOT(valueChanged(const QString &)));
+  connect(m_edit, SIGNAL(textChanged(QString)), SLOT(valueChanged(QString)));
 }
 
 bool SelectFile::isAccessible() {
@@ -37,7 +37,7 @@ bool SelectFile::isAccessible() {
   return false;
 }
 
-void SelectFile::valueChanged(const QString &data) {
+void SelectFile::valueChanged(const QString& data) {
   Q_UNUSED(data);
   if (isAccessible()) {
     setWindowModified(true);
@@ -51,7 +51,7 @@ void SelectFile::setFile() {
   QString _old = m_edit->text();
   QString _app = QFileDialog::getOpenFileName(this, m_edit->toolTip(), _old);
   QFileInfo _info(_app);
-  if (_info.isWritable() && _info.filePath() != _old) {
+  if ((_info.isWritable() || _info.isExecutable()) && (_info.filePath() != _old)) {
     m_edit->setText(_info.filePath());
     valueChanged();
   }
@@ -65,34 +65,36 @@ void SelectFile::initData() {
   setWindowModified(false);
 }
 
-void SelectFile::setValue(const QVariant &value) {
+void SelectFile::setValue(const QVariant& value) {
   if (value.metaType().id() != getType().id())
     return;
 
   m_edit->setText(value.toString());
 }
 
-void SelectFile::setFocus() { m_edit->setFocus(); }
+void SelectFile::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectFile::reset() {
   m_edit->clear();
   setWindowModified(false);
 }
 
-void SelectFile::setRestrictions(const QSqlField &field) {
+void SelectFile::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void SelectFile::setInputToolTip(const QString &tip) {
+void SelectFile::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectFile::setBuddyLabel(const QString &text) {
+void SelectFile::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 

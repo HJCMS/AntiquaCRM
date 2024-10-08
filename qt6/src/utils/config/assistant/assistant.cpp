@@ -119,10 +119,10 @@ void Assistant::keyPressEvent(QKeyEvent* e) {
 void Assistant::closeEvent(QCloseEvent* e) {
   if (e->type() == QEvent::Close) {
     if (unsaved) {
-      int retval = QMessageBox::warning(
-          this, tr("Unfinished Assistant"),
-          tr("Do not close the wizard without saving if you make changes that you do not want to lose!"),
-          (QMessageBox::Ok | QMessageBox::Ignore));
+      int retval = QMessageBox::warning(this, tr("Unfinished Assistant"),
+                                        tr("Do not close the wizard without saving if you make "
+                                           "changes that you do not want to lose!"),
+                                        (QMessageBox::Ok | QMessageBox::Ignore));
       if (retval == QMessageBox::Ok) {
         e->ignore();
         return;
