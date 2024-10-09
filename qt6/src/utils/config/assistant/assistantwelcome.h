@@ -10,6 +10,7 @@
 #define ANTIQUA_ASSISTANT_WELCOME_H
 
 #include <QLabel>
+#include <QStringList>
 #include <QObject>
 #include <QWidget>
 
@@ -21,7 +22,7 @@ private:
 
 public:
   explicit AssistantWelcome(QWidget* parent = nullptr);
-  void setContent(const QString& key);
+  void setContent(const QString& key = QString("database"));
 };
 
 #endif // ANTIQUA_ASSISTANT_WELCOME_H

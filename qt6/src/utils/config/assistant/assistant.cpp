@@ -22,7 +22,6 @@ Assistant::Assistant(QWidget* parent) : QDialog(parent) {
   m_stackedWidget = new QStackedWidget(this);
 
   AssistantWelcome* m_page0 = new AssistantWelcome(m_stackedWidget);
-  m_page0->setContent("database");
   m_stackedWidget->insertWidget(0, m_page0);
 
   m_page1 = new ConfigDatabase(m_stackedWidget);

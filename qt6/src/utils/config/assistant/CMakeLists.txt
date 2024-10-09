@@ -18,11 +18,10 @@ INCLUDE_DIRECTORIES (
 
 QT_ADD_RESOURCES(ASSISTANT_QRC
   ../../../application.qrc
-  assistant.qrc
 )
 
 ADD_EXECUTABLE(antiqua_assistant
- assistant.qrc ${ASSISTANT_QRC}
+ ${ASSISTANT_QRC}
  main.cpp assistant.h assistant.cpp
  assistantwelcome.h assistantwelcome.cpp
 )
@@ -44,3 +43,10 @@ TARGET_LINK_LIBRARIES(antiqua_assistant PRIVATE
   AntiquaWidgets
   ConfigDialog
 )
+
+INSTALL(TARGETS antiqua_assistant
+  RUNTIME DESTINATION ${CMAKE_INSTALL_PREFIX}/bin/
+  COMPONENT Core
+)
+
+##EOF

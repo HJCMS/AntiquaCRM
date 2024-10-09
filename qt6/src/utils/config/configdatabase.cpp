@@ -14,21 +14,21 @@
 #include <QSslConfiguration>
 #include <QtWidgets>
 
-ConfigDatabase::ConfigDatabase(QWidget *parent)
+ConfigDatabase::ConfigDatabase(QWidget* parent)
     : AntiquaCRM::PluginConfigWidget{QString(), parent},
       p_connection_id{"antiquacrm_db_connection_test"} {
   setObjectName("configdatabase");
   setWindowTitle(getMenuEntry().value("title").toString());
 
-  QWidget *m_central = new QWidget(this);
+  QWidget* m_central = new QWidget(this);
   m_central->setContentsMargins(0, 0, 0, 20);
 
   QString _info = tr("Database Connection settings to PostgreSQL server.");
 
-  QVBoxLayout *layout = new QVBoxLayout(m_central);
+  QVBoxLayout* layout = new QVBoxLayout(m_central);
   layout->setContentsMargins(5, 5, 5, 5);
 
-  QLabel *lb_title = new QLabel(this);
+  QLabel* lb_title = new QLabel(this);
   lb_title->setText(_info);
   layout->addWidget(lb_title);
 
@@ -37,13 +37,14 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   layout->addWidget(m_profil);
 
   // BEGIN:Primary Connection Settings
-  QGroupBox *connectionGroup = new QGroupBox(this);
+  QGroupBox* connectionGroup = new QGroupBox(this);
   connectionGroup->setTitle(tr("Access Configuration"));
-  QVBoxLayout *m_groupLayout1 = new QVBoxLayout(connectionGroup);
+  QVBoxLayout* m_groupLayout1 = new QVBoxLayout(connectionGroup);
 
-  _info = tr("Hostname of the server you want to connect to.\n"
-             "If you are not using SSL, the IP address can also be added in "
-             "this field.");
+  _info =
+      tr("Hostname of the server you want to connect to.\n"
+         "If you are not using SSL, the IP address can also be added in "
+         "this field.");
   pg_hostname = new AntiquaCRM::TextLine(connectionGroup);
   pg_hostname->setObjectName("pg_hostname");
   pg_hostname->setRequired(true);
@@ -80,11 +81,12 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   pg_password->setPasswordInput(true);
   m_groupLayout1->addWidget(pg_password);
   // BEGIN:Singleline Layout
-  QHBoxLayout *m_groupLayout1s = new QHBoxLayout;
-  _info = tr("Port number to connect to the server. The default port address "
-             "to a PostgreSQL server is 5432. However, if you connect from "
-             "outside, you need the configured router port. To know this, ask "
-             "your Network Administrator.");
+  QHBoxLayout* m_groupLayout1s = new QHBoxLayout;
+  _info =
+      tr("Port number to connect to the server. The default port address "
+         "to a PostgreSQL server is 5432. However, if you connect from "
+         "outside, you need the configured router port. To know this, ask "
+         "your Network Administrator.");
   pg_port = new AntiquaCRM::NumEdit(connectionGroup);
   pg_port->setObjectName("pg_port");
   pg_port->setRequired(true);
@@ -94,8 +96,9 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   pg_port->setRange(1024, 49152);
   pg_port->setValue(5432);
   m_groupLayout1s->addWidget(pg_port);
-  _info = tr("Maximum waiting time before the application aborts the "
-             "connection attempt.");
+  _info =
+      tr("Maximum waiting time before the application aborts the "
+         "connection attempt.");
   pg_timeout = new AntiquaCRM::NumEdit(connectionGroup);
   pg_timeout->setObjectName("pg_timeout");
   pg_timeout->setRequired(true);
@@ -114,18 +117,18 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   // END:Primary Connection Settings
 
   // BEGIN:SSL/TLS Settings
-  QGroupBox *m_sslGroup = new QGroupBox(this);
+  QGroupBox* m_sslGroup = new QGroupBox(this);
   m_sslGroup->setObjectName("pg_ssl");
   m_sslGroup->setTitle(tr("Required SSL/TLS Settings"));
 
-  QBoxLayout *m_sslLayout = new QBoxLayout(QBoxLayout::TopToBottom, m_sslGroup);
+  QBoxLayout* m_sslLayout = new QBoxLayout(QBoxLayout::TopToBottom, m_sslGroup);
   m_sslLayout->setContentsMargins(5, 5, 5, 5);
 
-  _info = tr(
-      "Certification Authority (CA) contains root or intermediate certificate. "
-      "Together with your server certificate (issued specifically for your "
-      "domain), these certificates complete the SSL chain of trust. The chain "
-      "is required to verify the Authentication with the main application.");
+  _info =
+      tr("Certification Authority (CA) contains root or intermediate certificate. "
+         "Together with your server certificate (issued specifically for your "
+         "domain), these certificates complete the SSL chain of trust. The chain "
+         "is required to verify the Authentication with the main application.");
   ssl_CA = new SslCaSelecter(m_sslGroup);
   ssl_CA->setObjectName("ssl_CA");
   ssl_CA->setBuddyLabel(tr("Certification Authority"));
@@ -133,10 +136,11 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   ssl_CA->setWhatsThisText(_info);
   m_sslLayout->addWidget(ssl_CA);
 
-  _info = tr("Common Name (CN) of the Server Certificate. "
-             "Normally the Hostname of the SQL Server or from connected "
-             "Dynamic DNS Client. It is important that this Name is equal "
-             "to the Server certificate.");
+  _info =
+      tr("Common Name (CN) of the Server Certificate. "
+         "Normally the Hostname of the SQL Server or from connected "
+         "Dynamic DNS Client. It is important that this Name is equal "
+         "to the Server certificate.");
   ssl_CN = new AntiquaCRM::TextLine(m_sslGroup);
   ssl_CN->setObjectName("ssl_CN");
   ssl_CN->setBuddyLabel(tr("Common Name"));
@@ -145,9 +149,10 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   ssl_CN->appendStretch(0);
   m_sslLayout->addWidget(ssl_CN);
 
-  _info = tr("Exhibitor Certificate from SQL Server. This is needed for "
-             "Certification Handshake mechanism. It depends to CA Issuers. If "
-             "not know, add Alternative the CA-Issuer Certificate.");
+  _info =
+      tr("Exhibitor Certificate from SQL Server. This is needed for "
+         "Certification Handshake mechanism. It depends to CA Issuers. If "
+         "not know, add Alternative the CA-Issuer Certificate.");
   ssl_root_cert = new AntiquaCRM::SelectFile(m_sslGroup);
   ssl_root_cert->setObjectName("ssl_root_cert");
   ssl_root_cert->setBuddyLabel(tr("Exhibitor Certificate"));
@@ -155,13 +160,14 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   ssl_root_cert->setWhatsThisText(_info);
   m_sslLayout->addWidget(ssl_root_cert);
 
-  _info = tr("For a connection to be known as SSL-secured, SSL usage must be "
-             "configured on both the client and server before the connection "
-             "is established. If it is only configured on the server, the "
-             "client may send sensitive information (e.g. passwords) before "
-             "knowing that the server requires high security. In this case, "
-             "secure connections can be guaranteed by setting the SSL "
-             "connection to „Required“, „Verify full“ or „Verify-CA“.");
+  _info =
+      tr("For a connection to be known as SSL-secured, SSL usage must be "
+         "configured on both the client and server before the connection "
+         "is established. If it is only configured on the server, the "
+         "client may send sensitive information (e.g. passwords) before "
+         "knowing that the server requires high security. In this case, "
+         "secure connections can be guaranteed by setting the SSL "
+         "connection to „Required“, „Verify full“ or „Verify-CA“.");
   ssl_mode = new SslMode(m_sslGroup);
   ssl_mode->setObjectName("ssl_mode");
   ssl_mode->setBuddyLabel(tr("SSL Mode"));
@@ -173,8 +179,7 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   // END:SSL/TLS Settings
 
   // Final Info Widgets
-  _info =
-      tr("For more Information about Secure SQL Connection visit PostgreSQL");
+  _info = tr("For more Information about Secure SQL Connection visit PostgreSQL");
   _info.prepend("<p>");
   _info.append(" - <a href='" + pgSqlAuthDocUrl().toString());
   _info.append("' target='_blank'>");
@@ -182,14 +187,16 @@ ConfigDatabase::ConfigDatabase(QWidget *parent)
   _info.append("</a>.</p>");
   // GDPR https://gdpr.eu/
   _info.append("<p>");
-  _info.append(tr("As part of the GDPR (General Data Protection Regulation), "
-                  "SSL/TLS is always active."));
+  _info.append(
+      tr("As part of the GDPR (General Data Protection Regulation), "
+         "SSL/TLS is always active."));
   _info.append(" ");
-  _info.append(tr("Complete guide to <a href='https://gdpr.eu/' "
-                  "target='_blank'>GDPR</a> compliance."));
+  _info.append(
+      tr("Complete guide to <a href='https://gdpr.eu/' "
+         "target='_blank'>GDPR</a> compliance."));
   _info.append("</p>");
 
-  QLabel *m_info_link = new QLabel(this);
+  QLabel* m_info_link = new QLabel(this);
   m_info_link->setIndent(5);
   m_info_link->setWordWrap(true);
   m_info_link->setOpenExternalLinks(true);
@@ -219,24 +226,22 @@ const QUrl ConfigDatabase::pgSqlAuthDocUrl() {
 }
 
 bool ConfigDatabase::resetInput() {
-  QListIterator<AntiquaCRM::AInputWidget *> it(
-      findChildren<AntiquaCRM::AInputWidget *>(QString()));
+  QListIterator<AntiquaCRM::AInputWidget*> it(findChildren<AntiquaCRM::AInputWidget*>(QString()));
   while (it.hasNext()) {
-    AntiquaCRM::AInputWidget *inp = it.next();
+    AntiquaCRM::AInputWidget* inp = it.next();
     if (inp != nullptr)
       inp->reset();
   }
   return true;
 }
 
-bool ConfigDatabase::loadProfile(const QString &id) {
+bool ConfigDatabase::loadProfile(const QString& id) {
   QString _group = QString("database/%1").arg(id);
   config->beginGroup(_group);
   // qInfo("Profile:'database/%s'!", qPrintable(id));
-  QList<AntiquaCRM::AInputWidget *> _l =
-      findChildren<AntiquaCRM::AInputWidget *>(QString());
+  QList<AntiquaCRM::AInputWidget*> _l = findChildren<AntiquaCRM::AInputWidget*>(QString());
   for (int i = 0; i < _l.count(); i++) {
-    AntiquaCRM::AInputWidget *m_inp = _l.at(i);
+    AntiquaCRM::AInputWidget* m_inp = _l.at(i);
     if (m_inp != nullptr && !m_inp->objectName().isEmpty()) {
       const QString _key = m_inp->objectName();
       QVariant _value = config->getValue(_key, m_inp->getType());
@@ -298,8 +303,8 @@ void ConfigDatabase::testConnection() {
 
   // Realm
   const QString _user = pg_username->getValue().toString();
-  const QString _pass = QByteArray::fromBase64(
-      pg_password->getValue().toByteArray(), QByteArray::Base64UrlEncoding);
+  const QString _pass =
+      QByteArray::fromBase64(pg_password->getValue().toByteArray(), QByteArray::Base64UrlEncoding);
 
   QStringList _ret;
   if (_db.open(_user, _pass)) {
@@ -342,10 +347,9 @@ void ConfigDatabase::saveSectionConfig() {
   config->setValue("profile", m_profil->currentProfile());
   // SSL/TLS is always enabled!
   config->setValue("pg_ssl", true);
-  QList<AntiquaCRM::AInputWidget *> _l =
-      findChildren<AntiquaCRM::AInputWidget *>(QString());
+  QList<AntiquaCRM::AInputWidget*> _l = findChildren<AntiquaCRM::AInputWidget*>(QString());
   for (int i = 0; i < _l.count(); i++) {
-    AntiquaCRM::AInputWidget *m_inp = _l.at(i);
+    AntiquaCRM::AInputWidget* m_inp = _l.at(i);
     if (m_inp != nullptr) {
       const QString _key = m_inp->objectName();
       QVariant _value = m_inp->getValue();
@@ -355,9 +359,13 @@ void ConfigDatabase::saveSectionConfig() {
         continue;
       }
 #endif
-      if (!_value.isValid())
-        config->remove(_key);
-      else
+      if (!_value.isValid()) {
+        if (_key.compare("pg_port", Qt::CaseSensitive) == 0) {
+          config->setValue(_key, 5432); // prevent default reset
+        } else {
+          config->remove(_key);
+        }
+      } else
         config->setValue(_key, _value);
     }
   }

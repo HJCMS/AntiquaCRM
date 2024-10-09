@@ -12,7 +12,8 @@
 #include <QTranslator>
 
 void initialAssistantTheme(QApplication& appl) {
-  Q_INIT_RESOURCE(assistant);
+  // this name is equal to main application qrc file
+  Q_INIT_RESOURCE(application);
   appl.setStyle(QStyleFactory::create("Fusion"));
 
   // WARNING - Do not init Database Connections in constructors!

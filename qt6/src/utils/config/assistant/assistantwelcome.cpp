@@ -3,7 +3,8 @@
 
 #include "assistantwelcome.h"
 
-#include <QFile>
+#include <AntiquaCRM>
+#include <QFileInfo>
 #include <QTextStream>
 #include <QVBoxLayout>
 
@@ -17,10 +18,24 @@ AssistantWelcome::AssistantWelcome(QWidget* parent) : QWidget{parent} {
 
   layout->addStretch(1);
   setLayout(layout);
+
+  setContent();
 }
 
 void AssistantWelcome::setContent(const QString& key) {
-  QFile fp(":/assistant/documents/" + key + "_de.txt");
+  // @note Currently - only bcp47 (de) is supported in ressource file.
+  QString _filename("de"); // = QLocale::system().bcp47Name().toLower();
+  _filename.append(".txt");
+  _filename.prepend(key.trimmed() + "_");
+
+  QFileInfo _info(AntiquaCRM::ASettings::getDataDir("documents"), _filename);
+  if (!_info.isReadable()) {
+    qWarning("Missing „%s“ file.", qPrintable(_info.filePath()));
+    m_text->setText(QString("Error: Invalid documents target!"));
+    return;
+  }
+
+  QFile fp(_info.filePath());
   if (fp.open(QFile::ReadOnly)) {
     QString buffer;
     QTextStream in(&fp);

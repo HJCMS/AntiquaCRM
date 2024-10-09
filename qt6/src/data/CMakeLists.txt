@@ -4,6 +4,7 @@
 ADD_SUBDIRECTORY(pgsql)
 ADD_SUBDIRECTORY(json)
 ADD_SUBDIRECTORY(fonts)
+ADD_SUBDIRECTORY(documents)
 
 SET(DATA_FILES
   antiquacrm.qcss
