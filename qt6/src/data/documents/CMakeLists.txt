@@ -8,6 +8,9 @@ SET (text_FILES
 
 IF (CMAKE_HOST_WIN32)
  FILE (COPY ${text_FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+ ## only used in test environment
+ FILE (COPY ${text_FILES} DESTINATION
+   ${CMAKE_CURRENT_BINARY_DIR}/../../utils/config/assistant/data/documents)
 ELSE (CMAKE_HOST_WIN32)
  INSTALL (FILES ${font_FILES}
    DESTINATION share/${PROJECTNAME}/data/documents

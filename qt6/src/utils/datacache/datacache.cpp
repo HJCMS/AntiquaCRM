@@ -38,17 +38,7 @@ const QList<DataCacheConfig> DataCache::configs() {
   return _l;
 }
 
-bool DataCache::createCacheTarget() {
-  QFileInfo cti(m_cfg->getUserTempDir().path());
-  return cti.isWritable();
-}
-
 bool DataCache::createCaches() {
-  if (!createCacheTarget()) {
-    qWarning("DataCache: Premission denied!");
-    return false;
-  }
-
   DataCacheQuery *m_cq = new DataCacheQuery(m_sql);
   QListIterator<DataCacheConfig> it(configs());
   while (it.hasNext()) {

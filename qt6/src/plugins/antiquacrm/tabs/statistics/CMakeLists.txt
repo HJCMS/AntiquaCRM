@@ -56,4 +56,9 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
  AntiquaWidgets
 )
 
+INSTALL (TARGETS ${_pluginTarget}
+  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/tabs
+  COMPONENT Plugin
+)
+
 ##EOF

@@ -32,7 +32,7 @@ SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
   OUTPUT_NAME ${_pluginTarget}
 )
 
-TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
+TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
  Qt6::Core
  Qt6::Widgets
  Qt6::Sql
@@ -43,6 +43,11 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
  AntiquaTabs
  AntiquaWidgets
  AntiquaPrinting
+)
+
+INSTALL (TARGETS ${_pluginTarget}
+  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/tabs
+  COMPONENT Plugin
 )
 
 ##EOF

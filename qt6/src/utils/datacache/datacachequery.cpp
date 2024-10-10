@@ -4,21 +4,20 @@
 #include "datacachequery.h"
 #include "datacacheconfig.h"
 
-DataCacheQuery::DataCacheQuery(AntiquaCRM::ASqlCore *pgsql)
-    : QObject{}, m_sql{pgsql} {}
+DataCacheQuery::DataCacheQuery(AntiquaCRM::ASqlCore* pgsql) : QObject{}, m_sql{pgsql} {
+}
 
-bool DataCacheQuery::isCacheUpdateRequired(const QString &name) {
+bool DataCacheQuery::isCacheUpdateRequired(const QString& name) {
   AntiquaCRM::ASharedDataFiles p_store;
   return p_store.needsUpdate(name, p_days);
 }
 
-bool DataCacheQuery::saveDocument(const QString &key,
-                                  const QJsonDocument &json) const {
+bool DataCacheQuery::saveDocument(const QString& key, const QJsonDocument& json) const {
   AntiquaCRM::ASharedDataFiles p_store;
   return p_store.storeJson(key, json);
 }
 
-const QJsonArray DataCacheQuery::createTable(const QString &query) {
+const QJsonArray DataCacheQuery::createTable(const QString& query) {
   QJsonArray _array;
   QSqlQuery _q = m_sql->query(query);
   if (_q.size() > 0) {
@@ -33,7 +32,7 @@ const QJsonArray DataCacheQuery::createTable(const QString &query) {
   return _array;
 }
 
-bool DataCacheQuery::createCache(const DataCacheConfig &config) {
+bool DataCacheQuery::createCache(const DataCacheConfig& config) {
   if (!isCacheUpdateRequired(config.indicator))
     return false;
 
@@ -56,8 +55,8 @@ bool DataCacheQuery::postalCodes() {
   if (sql.isEmpty())
     return false;
 
-  const QString _sql_select = AntiquaCRM::ASqlFiles::queryStatement(
-      "select_statement_postalcode_tables");
+  const QString _sql_select =
+      AntiquaCRM::ASqlFiles::queryStatement("select_statement_postalcode_tables");
   const QString _sql_order(" ORDER BY p_plz ASC;");
 
   QSqlQuery _q = m_sql->query(sql);

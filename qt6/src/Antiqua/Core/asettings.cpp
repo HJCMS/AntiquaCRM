@@ -82,6 +82,10 @@ const QDir ASettings::getArchivPath(const QString &section) {
   else
     location = QStandardPaths::DocumentsLocation;
 
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << Q_FUNC_INFO << section << " = " << location;
+#endif
+
   QString fallback = QStandardPaths::writableLocation(location);
   beginGroup(ANTIQUACRM_ARCHIVE_CONFIG_DIRS);
   d.setPath(value(section, fallback).toString());
@@ -161,7 +165,7 @@ const QDir ASettings::getDataDir(const QString &name) {
   p.append(QDir::separator());
   p.append(name);
   QDir t(p);
-  QStringList filters({"*.xml", "*.sql", "*.json"});
+  QStringList filters({"*.xml", "*.sql", "*.json", "*.txt"});
   t.setNameFilters(filters);
   t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);

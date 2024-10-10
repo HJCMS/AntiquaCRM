@@ -32,7 +32,6 @@ Q_SIGNALS:
 public:
   explicit DataCache(AntiquaCRM::ASettings *cfg, AntiquaCRM::ASqlCore *pgsql,
                      QObject *parent = nullptr);
-  bool createCacheTarget();
   bool createCaches();
 };
 

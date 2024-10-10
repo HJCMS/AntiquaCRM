@@ -12,9 +12,10 @@
 #include <QLocale>
 #include <QTextStream>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ASharedDataFiles::ASharedDataFiles(const QDir &d) : QDir{d} {
+ASharedDataFiles::ASharedDataFiles(const QDir& d) : QDir{d} {
   setNameFilters(defaultFilter());
 }
 
@@ -29,11 +30,10 @@ const QStringList ASharedDataFiles::dataFiles() {
 }
 
 const QStringList ASharedDataFiles::defaultFilter() {
-  return QStringList({"*.xml", "*.sql", "*.json"});
+  return QStringList({"*.xml", "*.sql", "*.json", "*.txt"});
 }
 
-bool ASharedDataFiles::needsUpdate(const QString &basename, int days,
-                                   const QStringList &ext) {
+bool ASharedDataFiles::needsUpdate(const QString& basename, int days, const QStringList& ext) {
   if (ext.count() > 0)
     setNameFilters(ext);
 
@@ -58,8 +58,7 @@ bool ASharedDataFiles::needsUpdate(const QString &basename, int days,
   return true;
 }
 
-bool ASharedDataFiles::fileExists(const QString &basename,
-                                  const QStringList &ext) {
+bool ASharedDataFiles::fileExists(const QString& basename, const QStringList& ext) {
   if (ext.count() > 0)
     setNameFilters(ext);
 
@@ -75,8 +74,7 @@ bool ASharedDataFiles::fileExists(const QString &basename,
   return status;
 }
 
-bool ASharedDataFiles::storeJson(const QString &basename,
-                                 const QJsonDocument &doc) {
+bool ASharedDataFiles::storeJson(const QString& basename, const QJsonDocument& doc) {
   QFileInfo info(path(), basename + ".json");
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
@@ -87,6 +85,7 @@ bool ASharedDataFiles::storeJson(const QString &basename,
     data << doc.toJson(QJsonDocument::Compact);
 #endif
     fp.close();
+    qInfo("Saved: %s", qPrintable(info.filePath()));
     return true;
   }
 #ifdef ANTIQUA_DEVELOPMENT
@@ -97,15 +96,14 @@ bool ASharedDataFiles::storeJson(const QString &basename,
   return false;
 }
 
-const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
+const QJsonDocument ASharedDataFiles::getJson(const QString& basename) {
   QJsonDocument _doc;
   QFileInfo _info(path(), basename + bcp47Suffix() + ".json");
   if (!_info.isReadable())
     _info.setFile(path(), basename + ".json");
 
   if (!_info.isReadable()) {
-    qWarning("Missing Json Document or Permission denied for (%s).",
-             qPrintable(_info.filePath()));
+    qWarning("Missing Json Document or Permission denied for (%s).", qPrintable(_info.filePath()));
     return _doc;
   }
 
@@ -125,8 +123,7 @@ const QJsonDocument ASharedDataFiles::getJson(const QString &basename) {
   return _doc;
 }
 
-bool ASharedDataFiles::storeXml(const QString &basename,
-                                const QDomDocument &xml) {
+bool ASharedDataFiles::storeXml(const QString& basename, const QDomDocument& xml) {
   QFileInfo info(path(), basename + ".xml");
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
@@ -149,7 +146,7 @@ bool ASharedDataFiles::storeXml(const QString &basename,
   return false;
 }
 
-const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
+const QDomDocument ASharedDataFiles::getXML(const QString& basename) {
   QDomDocument _doc;
   QFileInfo _info(path(), basename + bcp47Suffix() + ".xml");
   if (!_info.isReadable())
@@ -172,13 +169,11 @@ const QDomDocument ASharedDataFiles::getXML(const QString &basename) {
   return _doc;
 }
 
-const QStringList ASharedDataFiles::getCompleterList(const QString &basename,
-                                                     const QString &key) {
+const QStringList ASharedDataFiles::getCompleterList(const QString& basename, const QString& key) {
   QStringList _list;
   QJsonDocument _data = getJson(basename);
   if (_data.isEmpty() || _data.object().isEmpty()) {
-    qWarning("ACompleterData::getCompleterList missing '%s'",
-             qPrintable(basename));
+    qWarning("ACompleterData::getCompleterList missing '%s'", qPrintable(basename));
     return _list;
   }
 
@@ -190,10 +185,10 @@ const QStringList ASharedDataFiles::getCompleterList(const QString &basename,
   return _list;
 }
 
-ASharedCacheFiles::ASharedCacheFiles(const QDir &d) : QDir{d} {}
+ASharedCacheFiles::ASharedCacheFiles(const QDir& d) : QDir{d} {
+}
 
-bool ASharedCacheFiles::storeTempFile(const QString &filename,
-                                      const QByteArray &data) {
+bool ASharedCacheFiles::storeTempFile(const QString& filename, const QByteArray& data) {
   QFileInfo info(path(), filename);
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
@@ -210,8 +205,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
   return false;
 }
 
-bool ASharedCacheFiles::storeTempFile(const QString &filename,
-                                      const QString &data) {
+bool ASharedCacheFiles::storeTempFile(const QString& filename, const QString& data) {
   QFileInfo info(path(), filename);
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
@@ -228,7 +222,7 @@ bool ASharedCacheFiles::storeTempFile(const QString &filename,
   return false;
 }
 
-const QString ASharedCacheFiles::getTempFile(const QString &filename) {
+const QString ASharedCacheFiles::getTempFile(const QString& filename) {
   QFileInfo info(path(), filename);
   if (!info.isReadable()) {
 #ifdef ANTIQUA_DEVELOPMENT
@@ -248,7 +242,7 @@ const QString ASharedCacheFiles::getTempFile(const QString &filename) {
   return buffer;
 }
 
-const QJsonObject ASharedCacheFiles::getTempJson(const QString &md5sum) {
+const QJsonObject ASharedCacheFiles::getTempJson(const QString& md5sum) {
   QFileInfo info(path(), md5sum + ".json");
   if (!info.isReadable()) {
 #ifdef ANTIQUA_DEVELOPMENT
@@ -267,8 +261,7 @@ const QJsonObject ASharedCacheFiles::getTempJson(const QString &md5sum) {
     QByteArray buffer = data.readAll().toLocal8Bit();
     doc = QJsonDocument::fromJson(buffer, &parseHandle);
     if (parseHandle.error != QJsonParseError::NoError) {
-      qWarning("Json Document Error: '%s'.",
-               qPrintable(parseHandle.errorString()));
+      qWarning("Json Document Error: '%s'.", qPrintable(parseHandle.errorString()));
       doc = QJsonDocument();
     }
     fp.close();

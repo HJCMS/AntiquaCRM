@@ -116,7 +116,7 @@ public:
   /**
    * @param d - Working Directory
    */
-  explicit ASharedCacheFiles(const QDir &d = ASettings::getUserTempDir());
+  explicit ASharedCacheFiles(const QDir &d = ASettings::getUserDataDir());
 
   /**
    * @brief Save cache file with QTextStream
