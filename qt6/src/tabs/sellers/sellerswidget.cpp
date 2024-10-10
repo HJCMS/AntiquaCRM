@@ -7,14 +7,14 @@
 #include "sellerssalestab.h"
 #include "sellerssalewidget.h"
 
-SellersWidget::SellersWidget(QWidget *parent)
+SellersWidget::SellersWidget(QWidget* parent)
     : AntiquaCRM::TabsIndex{SELLERS_INTERFACE_TABID, parent} {
   setObjectName("sellers_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("view-financial-transfer"));
   setWindowTitle(tr("Providers"));
   setClosable(false);
 
-  AntiquaCRM::Splitter *m_splitter = new AntiquaCRM::Splitter(this);
+  AntiquaCRM::Splitter* m_splitter = new AntiquaCRM::Splitter(this);
 
   m_pages = new SellersSalesTab(this);
   m_splitter->addLeft(m_pages);
@@ -27,8 +27,7 @@ SellersWidget::SellersWidget(QWidget *parent)
   setCurrentIndex(ViewPage::MainView);
 
   // Signals:SellersSalesList
-  connect(m_tree, SIGNAL(sendQueryOrder(const QString &, const QString &)),
-          SLOT(openOrderPage(const QString &, const QString &)));
+  connect(m_tree, SIGNAL(sendQueryOrder(QString,QString)),SLOT(openOrderPage(QString,QString)));
 }
 
 bool SellersWidget::loadProviderPlugins() {
@@ -41,7 +40,7 @@ bool SellersWidget::loadProviderPlugins() {
   return true;
 }
 
-bool SellersWidget::findPage(const QString &provider, const QString &oid) {
+bool SellersWidget::findPage(const QString& provider, const QString& oid) {
   Q_UNUSED(provider);
   for (int p = 0; p < m_pages->count(); p++) {
     if (m_pages->widget(p)->windowTitle() == oid) {
@@ -52,14 +51,14 @@ bool SellersWidget::findPage(const QString &provider, const QString &oid) {
   return false;
 }
 
-void SellersWidget::openProviderAction(const QJsonObject &data) {
+void SellersWidget::openProviderAction(const QJsonObject& data) {
   if (!data.contains("PROVIDER"))
     return;
 
   const QString _provider = data.value("PROVIDER").toString();
-  QListIterator<AntiquaCRM::ProviderInterface *> it(p_list);
+  QListIterator<AntiquaCRM::ProviderInterface*> it(p_list);
   while (it.hasNext()) {
-    AntiquaCRM::ProviderInterface *iface = it.next();
+    AntiquaCRM::ProviderInterface* iface = it.next();
     if (iface == nullptr)
       continue;
 
@@ -69,7 +68,7 @@ void SellersWidget::openProviderAction(const QJsonObject &data) {
   }
 }
 
-void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
+void SellersWidget::openOrderPage(const QString& provider, const QString& oid) {
   if (provider.isEmpty() || oid.isEmpty())
     return;
 
@@ -85,8 +84,18 @@ void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
   if (_query.size() == 1) {
     _query.next();
     _cid = _query.value("pr_customer_id").toInt();
-    QByteArray _data = _query.value("pr_order_data").toString().toLocal8Bit();
-    const QJsonDocument _jdoc = QJsonDocument::fromJson(_data);
+    QByteArray _data = _query.value("pr_order_data").toString().toUtf8();
+    QJsonParseError _parser;
+    const QJsonDocument _jdoc = QJsonDocument::fromJson(_data, &_parser);
+    if (_parser.error != QJsonParseError::NoError) {
+#ifdef ANTIQUA_DEVELOPMENT
+      qDebug() << Q_FUNC_INFO << provider << oid << _parser.errorString();
+#else
+      qWarning("SellersWidget::openOrderPage Error: '%s'.", qPrintable(_parser.errorString()));
+#endif
+      return;
+    }
+
     if (_jdoc.isEmpty() || _jdoc.object().isEmpty()) {
 #ifdef ANTIQUA_DEVELOPMENT
       qDebug() << Q_FUNC_INFO << provider << oid << _sql;
@@ -100,11 +109,10 @@ void SellersWidget::openOrderPage(const QString &provider, const QString &oid) {
     QJsonObject _jobj = _jdoc.object();
     _jobj.insert("c_id", _cid);
 
-    SellersSalesWidget *mp = new SellersSalesWidget(_jobj, m_pages);
+    SellersSalesWidget* mp = new SellersSalesWidget(_jobj, m_pages);
     if (mp->init()) {
       int index = m_pages->addPage(oid, mp);
-      connect(mp, SIGNAL(sendOpenRemoteAction(const QJsonObject &)),
-              SLOT(openProviderAction(const QJsonObject &)));
+      connect(mp, SIGNAL(sendOpenRemoteAction(QJsonObject)), SLOT(openProviderAction(QJsonObject)));
 
       m_pages->setCurrentIndex(index);
     }
@@ -125,9 +133,11 @@ void SellersWidget::onEnterChanged() {
   m_tree->loadUpdate();
 }
 
-const QString SellersWidget::getTitle() const { return tr("Providers"); }
+const QString SellersWidget::getTitle() const {
+  return tr("Providers");
+}
 
-bool SellersWidget::customAction(const QJsonObject &obj) {
+bool SellersWidget::customAction(const QJsonObject& obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 

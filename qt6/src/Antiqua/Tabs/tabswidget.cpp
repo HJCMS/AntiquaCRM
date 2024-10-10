@@ -6,9 +6,10 @@
 #include "tabsbar.h"
 #include "tabsindex.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TabsWidget::TabsWidget(QWidget *parent) : QTabWidget{parent} {
+TabsWidget::TabsWidget(QWidget* parent) : QTabWidget{parent} {
   setContentsMargins(1, 1, 1, 1);
   setTabsClosable(false);
 
@@ -30,7 +31,7 @@ TabsWidget::TabsWidget(QWidget *parent) : QTabWidget{parent} {
 }
 
 void TabsWidget::tabInserted(int index) {
-  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  AntiquaCRM::TabsIndex* m_ti = tabIndex(index);
   if (m_ti != nullptr) {
     m_tabBar->setTabCloseable(index, m_ti->isClosable());
   } else {
@@ -46,7 +47,10 @@ void TabsWidget::tabRemoved(int) {
 }
 
 bool TabsWidget::removeIndex(int index) {
-  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  if (!(index > 0))
+    return true;
+
+  AntiquaCRM::TabsIndex* m_ti = tabIndex(index);
   if (m_ti != nullptr && m_ti->isClosable()) {
     if (!m_ti->isWindowModified()) {
       m_tmp = m_ti;
@@ -59,7 +63,7 @@ bool TabsWidget::removeIndex(int index) {
 }
 
 void TabsWidget::setTabChanged(int index) {
-  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  AntiquaCRM::TabsIndex* m_ti = tabIndex(index);
   if (m_ti != nullptr && m_ti->currentPage() == TabsIndex::ViewPage::MainView)
     m_ti->onEnterChanged();
 }
@@ -68,7 +72,7 @@ void TabsWidget::setTabClosed(int index) {
   if (!m_tabBar->isTabCloseable(index))
     return;
 
-  AntiquaCRM::TabsIndex *m_ti = tabIndex(index);
+  AntiquaCRM::TabsIndex* m_ti = tabIndex(index);
   if (m_ti->currentPage() != TabsIndex::ViewPage::MainView) {
     setCurrentIndex(index);
     emit sendMessage(tr("The tab cannot be closed in Edit mode!"));
@@ -77,7 +81,7 @@ void TabsWidget::setTabClosed(int index) {
   removeIndex(index);
 }
 
-void TabsWidget::setCurrentTab(const QString &name) {
+void TabsWidget::setCurrentTab(const QString& name) {
   QString _id = name.trimmed();
   if (_id.isEmpty() && sender() != nullptr) {
     _id = sender()->objectName();
@@ -97,12 +101,12 @@ const QIcon TabsWidget::defaultIcon() {
   return AntiquaCRM::antiquaIcon("action-edit-document");
 }
 
-int TabsWidget::indexByName(const QString &name) const {
+int TabsWidget::indexByName(const QString& name) const {
   if (name.isEmpty())
     return -1;
 
   for (int i = 0; i < m_tabBar->count(); i++) {
-    AntiquaCRM::TabsIndex *m_ti = tabIndex(i);
+    AntiquaCRM::TabsIndex* m_ti = tabIndex(i);
     if (m_ti == nullptr)
       continue;
 
@@ -113,7 +117,7 @@ int TabsWidget::indexByName(const QString &name) const {
   return -1;
 }
 
-int TabsWidget::registerTab(AntiquaCRM::TabsIndex *tab) {
+int TabsWidget::registerTab(AntiquaCRM::TabsIndex* tab) {
   if (tab->tabIndexId().isEmpty()) {
     qWarning("Invalid tab „IndexId“ - rejected!");
     return -1;
@@ -134,17 +138,17 @@ void TabsWidget::sortTabs() {
   }
 }
 
-AntiquaCRM::TabsIndex *TabsWidget::tabIndex(int index) const {
-  return qobject_cast<AntiquaCRM::TabsIndex *>(widget(index));
+AntiquaCRM::TabsIndex* TabsWidget::tabIndex(int index) const {
+  return qobject_cast<AntiquaCRM::TabsIndex*>(widget(index));
 }
 
-AntiquaCRM::TabsIndex *TabsWidget::tabIndex(const QString &name) const {
-  return qobject_cast<AntiquaCRM::TabsIndex *>(widget(indexByName(name)));
+AntiquaCRM::TabsIndex* TabsWidget::tabIndex(const QString& name) const {
+  return qobject_cast<AntiquaCRM::TabsIndex*>(widget(indexByName(name)));
 }
 
 bool TabsWidget::unloadTabs() {
   for (int t = 0; t < count(); t++) {
-    TabsIndex *m_ti = tabIndex(t);
+    TabsIndex* m_ti = tabIndex(t);
     if (m_ti == nullptr)
       continue;
 

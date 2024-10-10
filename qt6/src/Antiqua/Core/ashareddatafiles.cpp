@@ -110,11 +110,13 @@ const QJsonDocument ASharedDataFiles::getJson(const QString& basename) {
   QFile _fp(_info.filePath());
   if (_fp.open(QIODevice::ReadOnly)) {
     QTextStream _stream(&_fp);
-    QByteArray _jsdata = _stream.readAll().toLocal8Bit();
+    QByteArray _jsdata = _stream.readAll().toUtf8();
     QJsonParseError _parser;
     _doc = QJsonDocument::fromJson(_jsdata, &_parser);
     if (_parser.error != QJsonParseError::NoError) {
-      qWarning("Json Document Error: '%s'.", qPrintable(_parser.errorString()));
+      qWarning("ASharedDataFiles::getJson Error: '%s' '%s'.",
+               qPrintable(_parser.errorString()), // handle error
+               qPrintable(_info.fileName()));
       _doc = QJsonDocument();
     }
     _fp.close();
@@ -193,7 +195,7 @@ bool ASharedCacheFiles::storeTempFile(const QString& filename, const QByteArray&
   QFile fp(info.filePath());
   if (fp.open(QIODevice::WriteOnly)) {
     QTextStream stream(&fp);
-    stream << QString::fromLocal8Bit(data);
+    stream << QString::fromUtf8(data);
     fp.close();
     return true;
   }
@@ -243,25 +245,27 @@ const QString ASharedCacheFiles::getTempFile(const QString& filename) {
 }
 
 const QJsonObject ASharedCacheFiles::getTempJson(const QString& md5sum) {
-  QFileInfo info(path(), md5sum + ".json");
-  if (!info.isReadable()) {
+  QFileInfo _info(path(), md5sum + ".json");
+  if (!_info.isReadable()) {
 #ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << Q_FUNC_INFO << "Permissions:" << info;
+    qDebug() << Q_FUNC_INFO << "Permissions:" << _info;
 #else
-    qWarning("Temp file: %s not exists", qPrintable(info.fileName()));
+    qWarning("Temp file: %s not exists", qPrintable(_info.fileName()));
 #endif
     return QJsonObject();
   }
 
   QJsonDocument doc;
   QJsonParseError parseHandle;
-  QFile fp(info.filePath());
+  QFile fp(_info.filePath());
   if (fp.open(QIODevice::ReadOnly)) {
     QTextStream data(&fp);
-    QByteArray buffer = data.readAll().toLocal8Bit();
+    QByteArray buffer = data.readAll().toUtf8();
     doc = QJsonDocument::fromJson(buffer, &parseHandle);
     if (parseHandle.error != QJsonParseError::NoError) {
-      qWarning("Json Document Error: '%s'.", qPrintable(parseHandle.errorString()));
+      qWarning("ASharedCacheFiles::getTempJson Error: '%s' '%s'.",
+               qPrintable(parseHandle.errorString()), // hanlde errno
+               qPrintable(_info.fileName()));
       doc = QJsonDocument();
     }
     fp.close();
