@@ -169,6 +169,9 @@ void PostalCodeEdit::initData() {
   m_countries->setWithoutDisclosures(QString());
 
   AntiquaCRM::ASharedDataFiles dataFile;
+  // TODO Check WIN path settings
+  qDebug() << Q_FUNC_INFO << dataFile.path();
+
   if (dataFile.fileExists(QString("postalcodes"))) {
     QJsonDocument jdoc = dataFile.getJson("postalcodes");
     QJsonObject tables = jdoc.object().value("tables").toObject();
