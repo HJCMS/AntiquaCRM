@@ -19,23 +19,7 @@
 #include <QToolBar>
 #include <QWidget>
 
-class ANTIQUACRM_REPORTS_PLUGIN ReportAction final : public QAction {
-  Q_OBJECT
-
-private:
-  const QDate p_date;
-
-private Q_SLOTS:
-  void clicked();
-
-Q_SIGNALS:
-  void signalClicked(const QDate&);
-
-public:
-  explicit ReportAction(const QDate& date, const QString& title, QObject* parent = nullptr);
-};
-
-class ANTIQUACRM_LIBRARY ReportsToolBar final : public QToolBar {
+class ANTIQUACRM_REPORTS_PLUGIN ReportsToolBar final : public QToolBar {
   Q_OBJECT
 
 private:

@@ -2,22 +2,13 @@
 // vim: set fileencoding=utf-8
 
 #include "reportstoolbar.h"
-
+#include "reportaction.h"
 #include <AntiquaWidgets>
 #include <QCalendar>
 #include <QLocale>
 #include <QSizePolicy>
 
 inline const QIcon _micon = AntiquaCRM::antiquaIcon("view-calendar-timeline");
-
-ReportAction::ReportAction(const QDate& date, const QString& title, QObject* parent)
-    : QAction{_micon, title, parent}, p_date{date} {
-  connect(this, SIGNAL(triggered()), SLOT(clicked()));
-}
-
-void ReportAction::clicked() {
-  emit signalClicked(p_date);
-}
 
 ReportsToolBar::ReportsToolBar(QWidget* parent) : QToolBar{parent}, p_lc{QLocale::system()} {
   m_info = new QLabel(this);

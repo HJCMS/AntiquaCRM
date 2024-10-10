@@ -25,6 +25,7 @@ ADD_LIBRARY (${_pluginTarget} MODULE
   tabreports.h tabreports.cpp
   reportstableview.h reportstableview.cpp
   reportstablemodel.h reportstablemodel.cpp
+  reportaction.h reportaction.cpp
 )
 
 SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
