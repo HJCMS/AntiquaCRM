@@ -70,7 +70,7 @@ OrdersEditor::OrdersEditor(QWidget* parent)
   hideColumn << "a_modified";
   hideColumn << "a_provider_id";
   hideColumn << "a_refunds_cost";
-  m_table->hideColumns(hideColumn);
+  m_ordersTable->hideColumns(hideColumn);
 #endif
   mainLayout->addWidget(m_ordersTable);
   mainLayout->setStretch(2, 0);

@@ -32,7 +32,6 @@ private:
   void setDefaultTableView() override;
 
 public Q_SLOTS:
-  void clearArea();
   void setChart(qint64 year, const QString& chart);
 
 public:

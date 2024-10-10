@@ -71,6 +71,7 @@ QT_ADD_RESOURCES(APPLICATION_QRC
 
 SET(APPLICATION_FILES
   data/antiquacrm.qcss
+  antiquacrm.ico
 )
 
 SET(APPLICATION_SOURCES
