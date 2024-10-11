@@ -27,7 +27,7 @@ SellersWidget::SellersWidget(QWidget* parent)
   setCurrentIndex(ViewPage::MainView);
 
   // Signals:SellersSalesList
-  connect(m_tree, SIGNAL(sendQueryOrder(QString,QString)),SLOT(openOrderPage(QString,QString)));
+  connect(m_tree, SIGNAL(sendQueryOrder(QString,QString)), SLOT(openOrderPage(QString,QString)));
 }
 
 bool SellersWidget::loadProviderPlugins() {
@@ -138,11 +138,12 @@ const QString SellersWidget::getTitle() const {
 }
 
 bool SellersWidget::customAction(const QJsonObject& obj) {
-  if (obj.isEmpty() || !obj.contains("ACTION"))
-    return false;
-
-  qDebug() << Q_FUNC_INFO << "customAction" << obj;
-
+#ifdef ANTIQUA_DEVELOPMENT
+  // if (obj.isEmpty() || !obj.contains("ACTION"))
+  qDebug() << Q_FUNC_INFO << "TODO" << obj;
+#else
+  Q_UNUSED(obj);
+#endif
   return false;
 }
 

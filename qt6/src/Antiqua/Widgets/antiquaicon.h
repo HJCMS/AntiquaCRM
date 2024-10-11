@@ -13,6 +13,9 @@
 #include <QIcon>
 #include <QResource>
 #include <QString>
+#ifdef ANTIQUA_DEVELOPMENT
+#  include <QDebug>
+#endif
 
 namespace AntiquaCRM
 {
@@ -27,11 +30,7 @@ namespace AntiquaCRM
  * @ingroup IconTheme
  */
 inline const QIcon qrcIcon(const QString& name) {
-  QIcon _icon = QIcon(":/icons/" + name + ".png");
-  if (_icon.isNull())
-    _icon = QIcon(":/icons/unknown.png");
-
-  return _icon;
+  return QIcon(":/icons/" + name + ".png");
 }
 
 /**

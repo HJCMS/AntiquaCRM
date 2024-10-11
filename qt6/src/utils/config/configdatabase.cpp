@@ -6,7 +6,6 @@
 #include "sslcaselecter.h"
 #include "sslmode.h"
 
-#include <QGroupBox>
 #include <QLabel>
 #include <QLocale>
 #include <QMetaType>
@@ -117,9 +116,11 @@ ConfigDatabase::ConfigDatabase(QWidget* parent)
   // END:Primary Connection Settings
 
   // BEGIN:SSL/TLS Settings
-  QGroupBox* m_sslGroup = new QGroupBox(this);
+  m_sslGroup = new QGroupBox(this);
   m_sslGroup->setObjectName("pg_ssl");
   m_sslGroup->setTitle(tr("Required SSL/TLS Settings"));
+  m_sslGroup->setCheckable(true);
+  m_sslGroup->setChecked(true);
 
   QBoxLayout* m_sslLayout = new QBoxLayout(QBoxLayout::TopToBottom, m_sslGroup);
   m_sslLayout->setContentsMargins(5, 5, 5, 5);
@@ -345,8 +346,7 @@ void ConfigDatabase::saveSectionConfig() {
   config->setValue("database_profile", _profile_id);
   config->beginGroup("database/" + _profile_id);
   config->setValue("profile", m_profil->currentProfile());
-  // SSL/TLS is always enabled!
-  config->setValue("pg_ssl", true);
+  config->setValue("pg_ssl", m_sslGroup->isChecked());
   QList<AntiquaCRM::AInputWidget*> _l = findChildren<AntiquaCRM::AInputWidget*>(QString());
   for (int i = 0; i < _l.count(); i++) {
     AntiquaCRM::AInputWidget* m_inp = _l.at(i);

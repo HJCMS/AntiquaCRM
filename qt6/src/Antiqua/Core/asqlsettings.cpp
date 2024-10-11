@@ -28,14 +28,14 @@ const QByteArray ASqlSettings::toRealm(const QString &pass) {
   if (pass.isEmpty())
     return QByteArray();
 
-  QByteArray out = pass.toLocal8Bit();
-  return out.toBase64();
+  QByteArray _o = pass.toLocal8Bit();
+  return _o.toBase64();
 }
 
 const QString ASqlSettings::fromRealm(const QByteArray &array) {
-  QString out;
+  QString _o;
   QByteArray buf = QByteArray::fromBase64(array, QByteArray::Base64UrlEncoding);
-  return out.fromLocal8Bit(buf);
+  return _o.fromLocal8Bit(buf);
 }
 
 const QString ASqlSettings::connectionName() {

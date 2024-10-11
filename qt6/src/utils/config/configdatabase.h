@@ -11,6 +11,7 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
+#include <QGroupBox>
 #include <QObject>
 
 class DatabaseProfile;
@@ -24,24 +25,25 @@ private:
   // Database connectionName
   const QString p_connection_id;
   // Connection Settings
-  DatabaseProfile *m_profil;
-  AntiquaCRM::TextLine *pg_hostname;
-  AntiquaCRM::TextLine *pg_database;
-  AntiquaCRM::TextLine *pg_username;
-  AntiquaCRM::TextLine *pg_password;
-  AntiquaCRM::NumEdit *pg_port;
-  AntiquaCRM::NumEdit *pg_timeout;
+  DatabaseProfile* m_profil;
+  AntiquaCRM::TextLine* pg_hostname;
+  AntiquaCRM::TextLine* pg_database;
+  AntiquaCRM::TextLine* pg_username;
+  AntiquaCRM::TextLine* pg_password;
+  AntiquaCRM::NumEdit* pg_port;
+  AntiquaCRM::NumEdit* pg_timeout;
   // SSL/TLS Settings
-  SslCaSelecter *ssl_CA;
-  AntiquaCRM::TextLine *ssl_CN;
-  AntiquaCRM::SelectFile *ssl_root_cert;
-  SslMode *ssl_mode;
+  QGroupBox* m_sslGroup;
+  SslCaSelecter* ssl_CA;
+  AntiquaCRM::TextLine* ssl_CN;
+  AntiquaCRM::SelectFile* ssl_root_cert;
+  SslMode* ssl_mode;
 
   static const QUrl pgSqlAuthDocUrl();
 
   bool resetInput();
 
-  bool loadProfile(const QString &id);
+  bool loadProfile(const QString& id);
 
 private Q_SLOTS:
   void testConnection();
@@ -52,7 +54,7 @@ public Q_SLOTS:
   void saveSectionConfig() override;
 
 public:
-  explicit ConfigDatabase(QWidget *parent = nullptr);
+  explicit ConfigDatabase(QWidget* parent = nullptr);
   virtual ~ConfigDatabase();
   AntiquaCRM::ConfigType getType() const override;
   const QJsonObject getMenuEntry() const override;
