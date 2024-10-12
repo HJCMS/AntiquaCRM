@@ -1,4 +1,7 @@
 build
 version.txt
+de.hjcms.*.desktop
+*.iss
+*.spec
 .clang-format
 
