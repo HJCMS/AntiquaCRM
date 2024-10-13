@@ -32,6 +32,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  RUNTIME DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/acmdproviders
-  COMPONENT Core
+  DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/antiquacmd/plugins/acmdproviders
+  COMPONENT Libraries
 )
