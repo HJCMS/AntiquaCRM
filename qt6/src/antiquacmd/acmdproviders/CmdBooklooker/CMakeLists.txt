@@ -22,7 +22,7 @@ SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
   OUTPUT_NAME ${_pluginTarget}
 )
 
-TARGET_LINK_LIBRARIES (${_pluginTarget} LINK_PRIVATE
+TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
   Qt6::Core
   Qt6::Sql
   Qt6::Network

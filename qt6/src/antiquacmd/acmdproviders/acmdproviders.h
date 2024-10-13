@@ -9,6 +9,7 @@
 #ifndef ANTIQUACMD_PROVIDERS_H
 #define ANTIQUACMD_PROVIDERS_H
 
+#include "acmdconfig.h"
 #include <AntiquaCRM>
 #include <QDomDocument>
 #include <QJsonDocument>
@@ -25,7 +26,7 @@
 #  define ANTIQUACMD_INTERFACE "de.hjcms.antiquacmd"
 #endif
 
-class ACmdProviders : public QObject {
+class ACMDPLUGIN_LIBRARY ACmdProviders : public QObject {
   Q_OBJECT
   Q_CLASSINFO("Interface", ANTIQUACMD_INTERFACE)
   Q_CLASSINFO("Description", "AntiquaCMD Providers Interface")

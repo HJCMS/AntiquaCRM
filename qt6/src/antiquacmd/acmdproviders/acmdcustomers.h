@@ -9,12 +9,13 @@
 #ifndef ANTIQUACMD_CUSTOMERS_H
 #define ANTIQUACMD_CUSTOMERS_H
 
+#include "acmdconfig.h"
 #include <AntiquaCRM>
 #include <QJsonObject>
 #include <QJsonValue>
 #include <QString>
 
-class ACmdCustomers final : public QJsonObject {
+class ACMDPLUGIN_LIBRARY ACmdCustomers final : public QJsonObject {
 private:
   AntiquaCRM::ASqlCore *m_sql;
   qint64 sqlInsert();
