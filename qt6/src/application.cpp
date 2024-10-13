@@ -125,6 +125,7 @@ void Application::initStyleTheme() {
 
   // Loading stylesheet
   QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
+  // qDebug() << Q_FUNC_INFO << m_cfg->getDataDir();
   if (_info.isReadable()) {
     QFile _fp(_info.filePath());
     if (_fp.exists() && _fp.open(QFile::ReadOnly)) {

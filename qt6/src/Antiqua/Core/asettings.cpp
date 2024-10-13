@@ -8,18 +8,18 @@
 #include <QLocale>
 #include <QStandardPaths>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ASettings::ASettings(QObject *parent)
-    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
-                ANTIQUACRM_NAME, parent) {
+ASettings::ASettings(QObject* parent)
+    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(), ANTIQUACRM_NAME,
+                parent) {
   setValue("name", ANTIQUACRM_NAME);
   setValue("version", ANTIQUACRM_VERSION);
 }
 
-ASettings::ASettings(const QString &applName, QObject *parent)
-    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(),
-                applName, parent) {
+ASettings::ASettings(const QString& applName, QObject* parent)
+    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(), applName, parent) {
   setValue("name", applName);
   setValue("version", ANTIQUACRM_VERSION);
 }
@@ -33,42 +33,41 @@ const QString ASettings::configDomain() {
   return str;
 }
 
-bool ASettings::check(const QString &pkey) const {
+bool ASettings::check(const QString& pkey) const {
   if (contains(pkey)) {
     return (!value(pkey).isNull());
   }
   return false;
 }
 
-const QVariant ASettings::getValue(const QString &key,
-                                   const QMetaType &type) const {
+const QVariant ASettings::getValue(const QString& key, const QMetaType& type) const {
   if (key.isEmpty())
     return QVariant();
 
   QVariant _value = QSettings::value(key);
   switch (type.id()) {
-  case (QMetaType::Bool):
-    return _value.toBool();
+    case (QMetaType::Bool):
+      return _value.toBool();
 
-  case (QMetaType::Int):
-  case (QMetaType::Long):
-  case (QMetaType::LongLong):
-    return _value.toInt();
+    case (QMetaType::Int):
+    case (QMetaType::Long):
+    case (QMetaType::LongLong):
+      return _value.toInt();
 
-  case (QMetaType::Float):
-    return _value.toFloat();
+    case (QMetaType::Float):
+      return _value.toFloat();
 
-  case (QMetaType::Double):
-    return _value.toDouble();
+    case (QMetaType::Double):
+      return _value.toDouble();
 
-  default:
-    break;
+    default:
+      break;
   };
 
   return _value;
 }
 
-const QDir ASettings::getArchivPath(const QString &section) {
+const QDir ASettings::getArchivPath(const QString& section) {
   QDir d;
   QStandardPaths::StandardLocation location;
   if (section.contains("import"))
@@ -93,8 +92,8 @@ const QDir ASettings::getArchivPath(const QString &section) {
   return d;
 }
 
-const QVariant ASettings::groupValue(const QString &group, const QString &key,
-                                     const QVariant &fallback) {
+const QVariant ASettings::groupValue(const QString& group, const QString& key,
+                                     const QVariant& fallback) {
   if (group.isEmpty() || key.isEmpty())
     return fallback;
 
@@ -138,7 +137,7 @@ const QStringList ASettings::pluginSearchFilter() {
 #endif
 }
 
-const QDir ASettings::getPluginDir(const QString &target) {
+const QDir ASettings::getPluginDir(const QString& target) {
   QString _path(ANTIQUACRM_PLUGIN_TARGET);
   if (!target.isEmpty()) {
     _path.append(QDir::separator());
@@ -160,12 +159,16 @@ const QDir ASettings::getTranslationDir() {
   return t;
 }
 
-const QDir ASettings::getDataDir(const QString &name) {
+const QDir ASettings::getDataDir(const QString& name) {
   QString p(ANTIQUACRM_DATA_TARGET);
   p.append(QDir::separator());
-  p.append(name);
+  if (!name.isEmpty()) {
+    p.append(QDir::separator());
+    p.append(name);
+  }
+
   QDir t(p);
-  QStringList filters({"*.xml", "*.sql", "*.json", "*.txt"});
+  QStringList filters({"*.xml", "*.sql", "*.json", "*.txt", "*.qcss"});
   t.setNameFilters(filters);
   t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);
@@ -173,8 +176,7 @@ const QDir ASettings::getDataDir(const QString &name) {
 }
 
 const QDir ASettings::getUserDataDir() {
-  QString data =
-      QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
+  QString data = QStandardPaths::writableLocation(QStandardPaths::AppLocalDataLocation);
   QDir d(data);
   if (!d.mkpath(d.path())) {
     qWarning("DataLocation: Permission denied!");

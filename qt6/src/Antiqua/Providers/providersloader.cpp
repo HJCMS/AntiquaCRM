@@ -6,9 +6,10 @@
 
 #include <ASettings>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ProvidersLoader::ProvidersLoader(QObject *parent) : QPluginLoader{parent} {
+ProvidersLoader::ProvidersLoader(QObject* parent) : QPluginLoader{parent} {
   AntiquaCRM::ASettings config(this);
   // ANTIQUACRM_PLUGIN_TARGET
   p_dir = config.getPluginDir("providers");
@@ -34,11 +35,13 @@ const QStringList ProvidersLoader::getInterfaceList() {
   if (plugins.isEmpty()) {
     qDebug() << Q_FUNC_INFO << "Missing Plugins:" << p_dir.path();
   }
+#else
+  qWarning("Missing plugins target %s", qPrintable(p_dir.path()));
 #endif
   return plugins;
 }
 
-const QString ProvidersLoader::getInterface(const QString &name) {
+const QString ProvidersLoader::getInterface(const QString& name) {
   foreach (QString plugin, getInterfaceList()) {
     if (plugin.contains(name, Qt::CaseInsensitive))
       return plugin;
@@ -46,7 +49,7 @@ const QString ProvidersLoader::getInterface(const QString &name) {
   return QString();
 }
 
-bool ProvidersLoader::setInterfaceName(const QString &name) {
+bool ProvidersLoader::setInterfaceName(const QString& name) {
   QString _plugin = getInterface(name);
   if (_plugin.isEmpty())
     return false;
@@ -55,9 +58,8 @@ bool ProvidersLoader::setInterfaceName(const QString &name) {
   return true;
 }
 
-const QList<AntiquaCRM::ProviderInterface *>
-ProvidersLoader::interfaces(QObject *parent) {
-  QList<AntiquaCRM::ProviderInterface *> _list;
+const QList<AntiquaCRM::ProviderInterface*> ProvidersLoader::interfaces(QObject* parent) {
+  QList<AntiquaCRM::ProviderInterface*> _list;
   if (parent == nullptr)
     return _list;
 
@@ -67,7 +69,7 @@ ProvidersLoader::interfaces(QObject *parent) {
       continue;
 
     setFileName(path);
-    QObject *m_plugin = instance();
+    QObject* m_plugin = instance();
     if (m_plugin) {
       QJsonObject info = metaData().value("MetaData").toObject();
       QString objName = info.value("Name").toString();
@@ -76,14 +78,13 @@ ProvidersLoader::interfaces(QObject *parent) {
         continue;
       }
 
-      AntiquaCRM::ProviderInterface *m_iface =
-          qobject_cast<AntiquaCRM::ProviderInterface *>(m_plugin);
+      AntiquaCRM::ProviderInterface* m_iface =
+          qobject_cast<AntiquaCRM::ProviderInterface*>(m_plugin);
       if (m_iface != nullptr && m_iface->createInterface(parent)) {
         m_iface->setObjectName(objName);
         _list << m_iface;
       } else {
-        qWarning("Plugin loading for '%s' failed.",
-                 qPrintable(info.value("Name").toString()));
+        qWarning("Plugin loading for '%s' failed.", qPrintable(info.value("Name").toString()));
       }
     } else {
       qWarning("AntiquaCRM::APluginLoader: %s", qPrintable(errorString()));
