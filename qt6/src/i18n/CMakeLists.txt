@@ -12,7 +12,7 @@ EXECUTE_PROCESS (COMMAND ${QT_QMAKE_EXECUTABLE}
  -query QT_INSTALL_BINS OUTPUT_VARIABLE QT_BINARY_TARGET)
 
 FIND_PROGRAM (LRELEASE_EXECUTABLE
- "lrelease" "lrelease-qt6" "lrelease-libqt6" "qt6-lrelease" "libqt6-lrelease"
+ "lrelease6" "lrelease-qt6" "qt6-lrelease" "qt6lrelease" "lrelease"
  PATHS ${QT_BINARY_TARGET})
 
 SET(LRELEASE_OPTIONS -silent -compress -nounfinished -removeidentical)
