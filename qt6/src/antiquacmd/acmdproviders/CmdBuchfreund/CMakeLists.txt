@@ -32,6 +32,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  DESTINATION lib${LIB_SUFFIX}/antiquacmd/plugins
+  DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/acmdproviders
   COMPONENT Libraries
 )

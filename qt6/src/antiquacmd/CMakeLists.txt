@@ -4,7 +4,7 @@
 # SPDX-License-Identifier: MIT
 #
 
-SET(_sub_application "antiquacmd")
+SET(_cron_application "antiquacmd")
 
 SET(ANTIQUACMD_INCLUDE_DIRS
   ${ANTIQUACRM_INCLUDE_DIRS}
@@ -26,15 +26,15 @@ SET(CRON_SCRIPTS
 
 INCLUDE_DIRECTORIES (${ANTIQUACMD_INCLUDE_DIRS})
 
-ADD_EXECUTABLE(${_sub_application}
+ADD_EXECUTABLE(${_cron_application}
   main.cpp
   antiquacmd.h antiquacmd.cpp
   ${CRON_SCRIPTS}
 )
 
-TARGET_COMPILE_FEATURES(${_sub_application} PUBLIC cxx_std_17)
+TARGET_COMPILE_FEATURES(${_cron_application} PUBLIC cxx_std_17)
 
-TARGET_LINK_LIBRARIES(${_sub_application} PRIVATE
+TARGET_LINK_LIBRARIES(${_cron_application} PRIVATE
   Qt6::Core
   Qt6::Network
   Qt6::Sql
@@ -43,17 +43,17 @@ TARGET_LINK_LIBRARIES(${_sub_application} PRIVATE
   ACmdPlugin
 )
 
-SET_TARGET_PROPERTIES(${_sub_application} PROPERTIES
-  OUTPUT_NAME ${_sub_application}
+SET_TARGET_PROPERTIES(${_cron_application} PROPERTIES
+  OUTPUT_NAME ${_cron_application}
   LINKER_LANGUAGE CXX
 )
 
-INSTALL (TARGETS ${_sub_application}
-  DESTINATION lib${LIB_SUFFIX}/antiquacmd/
+INSTALL (TARGETS ${_cron_application}
+  DESTINATION lib${LIB_SUFFIX}/${PROJECTNAME}/
   COMPONENT Core
 )
 
 INSTALL (FILES ${CRON_SCRIPTS}
-  DESTINATION lib${LIB_SUFFIX}/antiquacmd/cron
-  COMPONENT Core
+  DESTINATION share/${PROJECTNAME}/data/cron
+  COMPONENT Data
 )

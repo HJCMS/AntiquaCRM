@@ -144,7 +144,7 @@
 
 /**
  * @ingroup AMacros
- * @brief Plugins target
+ * @brief Antiqua CRM Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
 #define ANTIQUACRM_PLUGIN_TARGET "@ANTIQUACRM_PLUGIN_TARGET@"
