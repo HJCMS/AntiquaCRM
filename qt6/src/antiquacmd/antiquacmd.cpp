@@ -12,7 +12,7 @@
 
 QMutex AntiquaCMD::s_mutex;
 
-AntiquaCMD::AntiquaCMD(int &argc, char **argv) : QCoreApplication{argc, argv} {
+AntiquaCMD::AntiquaCMD(int& argc, char** argv) : QCoreApplication{argc, argv} {
   setApplicationName("antiquacmd");
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
@@ -21,7 +21,11 @@ AntiquaCMD::AntiquaCMD(int &argc, char **argv) : QCoreApplication{argc, argv} {
 const QStringList AntiquaCMD::providers() {
   QStringList _l;
   const QStringList nFilter({"*.so"});
+#ifdef ANTIQUA_DEVELOPMENT
   QDir _dir(QCoreApplication::applicationDirPath() + "/acmdproviders/");
+#else
+  QDir _dir(QCoreApplication::applicationDirPath() + "/plugins/acmdproviders/");
+#endif
   QDir::Filters sFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
   foreach (QString p, _dir.entryList(QDir::AllDirs | QDir::NoDotAndDotDot)) {
     if (_dir.cd(p)) {
@@ -36,7 +40,7 @@ const QStringList AntiquaCMD::providers() {
   return _l;
 }
 
-int AntiquaCMD::update(ACmdProviders *provider) {
+int AntiquaCMD::update(ACmdProviders* provider) {
   QMutexLocker l(&s_mutex);
   QTimer timer;
   QEventLoop loop;
@@ -62,17 +66,15 @@ void AntiquaCMD::queryAll() {
     QFileInfo _file(_plugins.at(i));
     if (_file.isReadable()) {
       _loader.setFileName(_file.filePath());
-      QObject *obj = _loader.instance();
+      QObject* obj = _loader.instance();
       if (obj == nullptr) {
-        qWarning("AntiquaCMD: Failed to load '%s' plugin!",
-                 qPrintable(_file.baseName()));
+        qWarning("AntiquaCMD: Failed to load '%s' plugin!", qPrintable(_file.baseName()));
         continue;
       }
 
-      ACmdProviders *prv = qobject_cast<ACmdProviders *>(obj);
+      ACmdProviders* prv = qobject_cast<ACmdProviders*>(obj);
       if (prv == nullptr) {
-        qWarning("AntiquaCMD: '%s' invalid object!",
-                 qPrintable(_file.baseName()));
+        qWarning("AntiquaCMD: '%s' invalid object!", qPrintable(_file.baseName()));
         continue;
       }
 

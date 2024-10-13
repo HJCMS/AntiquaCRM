@@ -48,6 +48,8 @@ SET_TARGET_PROPERTIES(${_cron_application} PROPERTIES
   LINKER_LANGUAGE CXX
 )
 
+## WARNING Do not use other locations!
+## antiquacmd will search inside from antiuacrm plugins destination.
 INSTALL (TARGETS ${_cron_application}
   DESTINATION lib${LIB_SUFFIX}/${PROJECTNAME}/
   COMPONENT Core
