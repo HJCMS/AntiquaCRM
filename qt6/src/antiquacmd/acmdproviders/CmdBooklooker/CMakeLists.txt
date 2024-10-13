@@ -32,6 +32,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  DESTINATION ${CMAKE_INSTALL_LIBEXECDIR}/antiquacmd/plugins
+  DESTINATION lib${LIB_SUFFIX}/antiquacmd/plugins
   COMPONENT Libraries
 )
