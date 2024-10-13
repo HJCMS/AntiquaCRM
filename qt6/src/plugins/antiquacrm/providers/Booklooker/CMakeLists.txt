@@ -38,7 +38,7 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PUBLIC
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/providers
+  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/providers
   COMPONENT Plugin
 )
 
