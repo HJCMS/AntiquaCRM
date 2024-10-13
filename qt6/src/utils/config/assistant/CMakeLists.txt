@@ -56,7 +56,7 @@ INSTALL(TARGETS antiqua_assistant
   COMPONENT Core
 )
 
-INSTALL(FILES ${ANTIQUACRM_DOMAIN_SCOPE}.desktop
+INSTALL(FILES ${ANTIQUACRM_DOMAIN_SCOPE}_assistant.desktop
   DESTINATION share/applications
   COMPONENT Data
 )
