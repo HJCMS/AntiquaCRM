@@ -74,6 +74,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  LIBRARY DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/tabs/cdsvinyl
+  LIBRARY DESTINATION antiquacrm/plugins/tabs/cdsvinyl
   COMPONENT Plugin
 )
