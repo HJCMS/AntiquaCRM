@@ -12,7 +12,7 @@ IF (CMAKE_HOST_WIN32)
  FILE (COPY ${text_FILES} DESTINATION
    ${CMAKE_CURRENT_BINARY_DIR}/../../utils/config/assistant/data/documents)
 ELSE (CMAKE_HOST_WIN32)
- INSTALL (FILES ${font_FILES}
+ INSTALL (FILES ${text_FILES}
    DESTINATION share/${PROJECTNAME}/data/documents
    COMPONENT data
  )
