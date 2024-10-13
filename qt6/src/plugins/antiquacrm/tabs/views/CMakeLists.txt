@@ -55,6 +55,6 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
 )
 
 INSTALL (TARGETS ${_pluginTarget}
-  DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/tabs/views
+  DESTINATION lib${LIB_SUFFIX}/antiquacrm/plugins/tabs/${_pluginTarget}
   COMPONENT Plugin
 )
