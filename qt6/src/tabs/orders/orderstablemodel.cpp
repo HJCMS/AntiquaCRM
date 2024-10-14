@@ -178,16 +178,10 @@ QVariant OrdersTableModel::data(const QModelIndex& index, int role) const {
       return _item.data().toDouble();
 
     case QMetaType::QDate:
-      {
-        QDate dt = _item.data().toDate();
-        return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
-      }
+      return _item.data().toDate().toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
 
     case QMetaType::QDateTime:
-      {
-        QDateTime dt = _item.data().toDateTime();
-        return dt.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
-      }
+      return _item.data().toDateTime().toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
 
     default:
       {

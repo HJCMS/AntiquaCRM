@@ -13,7 +13,8 @@ namespace AntiquaCRM
 
 ASettings::ASettings(QObject* parent)
     : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(), ANTIQUACRM_NAME,
-                parent) {
+                parent),
+      p_locale(QLocale::system()) {
   setValue("name", ANTIQUACRM_NAME);
   setValue("version", ANTIQUACRM_VERSION);
 }
@@ -123,6 +124,11 @@ const QHash<QString, QVariant> ASettings::payment() {
   endGroup();
   _d.clear();
   return _hash;
+}
+
+const QString ASettings::shortDateFormat(const QDate& date) {
+  QDate _d = p_locale.toDate(date.toString(Qt::RFC2822Date));
+  return _d.toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
 }
 
 QDir::Filters ASettings::directoryFilter() {

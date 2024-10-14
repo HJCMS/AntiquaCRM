@@ -5,23 +5,27 @@
 #include "antiquaicon.h"
 
 #ifdef Q_OS_LINUX
-#include <fcntl.h>
-#include <unistd.h>
-#define _SYSTEM_ACCESS_MODES (F_OK | X_OK | W_OK | R_OK)
+#  include <fcntl.h>
+#  include <unistd.h>
+#  define _SYSTEM_ACCESS_MODES (F_OK | X_OK | W_OK | R_OK)
 #endif
 
 #ifdef Q_OS_WIN
-#include <io.h>
-#define _SYSTEM_ACCESS_MODES (00 | 01 | 02 | 04)
+#  include <io.h>
+#  define _SYSTEM_ACCESS_MODES (00 | 01 | 02 | 04)
 #endif
 
+#include <QByteArray>
+#include <QDir>
 #include <QFileDialog>
-#include <QtCore>
+#include <QFileInfo>
+#include <QStandardPaths>
+#include <QUrl>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectTargets::SelectTargets(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectTargets::SelectTargets(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setPlaceholderText(tr("Target directory"));
   layout->addWidget(m_edit);
@@ -41,7 +45,7 @@ bool SelectTargets::isAccessible() {
   const QDir _dir(m_edit->text().trimmed());
   if (_dir.exists()) {
 #ifdef _SYSTEM_ACCESS_MODES
-    QByteArray _p = _dir.path().toLocal8Bit();
+    QByteArray _p = _dir.path().toUtf8();
     // If path cannot be found or if any of the desired access modes would not
     // be granted, then a -1 value is returned.
     _ret = (access(_p.constData(), _SYSTEM_ACCESS_MODES) != -1);
@@ -60,7 +64,7 @@ bool SelectTargets::isAccessible() {
   return false;
 }
 
-void SelectTargets::valueChanged(const QString &data) {
+void SelectTargets::valueChanged(const QString& data) {
   Q_UNUSED(data);
   if (isAccessible()) {
     setWindowModified(true);
@@ -72,8 +76,7 @@ void SelectTargets::valueChanged(const QString &data) {
 
 void SelectTargets::setTarget() {
   QString _old = m_edit->text();
-  QString _dir =
-      QFileDialog::getExistingDirectory(this, m_edit->toolTip(), _old);
+  QString _dir = QFileDialog::getExistingDirectory(this, m_edit->toolTip(), _old);
   QFileInfo _info(_dir);
   if (_info.isWritable() && _info.filePath() != _old) {
     m_edit->setText(_info.filePath());
@@ -85,44 +88,50 @@ void SelectTargets::initData() {
   QSqlField _f;
   _f.setMetaType(getType());
   _f.setRequiredStatus(QSqlField::Required);
-  _f.setDefaultValue(QDir::homePath());
+  _f.setDefaultValue(QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation));
   setRestrictions(_f);
   setWindowModified(false);
 }
 
-void SelectTargets::setValue(const QVariant &value) {
+void SelectTargets::setValue(const QVariant& value) {
   if (value.metaType().id() != getType().id())
     return;
 
-  m_edit->setText(value.toString());
+  QByteArray _arr(value.toString().trimmed().toUtf8());
+  if (_arr.isEmpty())
+    return;
+
+  m_edit->setText(QString::fromUtf8(QByteArray::fromPercentEncoding(_arr)));
   valueChanged();
 }
 
-void SelectTargets::setFocus() { m_edit->setFocus(); }
+void SelectTargets::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectTargets::reset() {
   m_edit->clear();
   setWindowModified(false);
 }
 
-void SelectTargets::setRestrictions(const QSqlField &field) {
+void SelectTargets::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
-  if (m_edit->text().isEmpty()) {
+  if (m_edit->text().trimmed().isEmpty()) {
     m_edit->setText(field.defaultValue().toString());
   }
 }
 
-void SelectTargets::setInputToolTip(const QString &tip) {
+void SelectTargets::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectTargets::setBuddyLabel(const QString &text) {
+void SelectTargets::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -138,7 +147,20 @@ const QMetaType SelectTargets::getType() const {
 }
 
 const QVariant SelectTargets::getValue() {
-  return (isAccessible() ? m_edit->text().trimmed() : QString());
+  if (!isAccessible())
+    return QString();
+
+  QUrl _url;
+  _url.setScheme("file");
+  _url.setPath(m_edit->text().trimmed());
+  if (!_url.isLocalFile()) {
+    qWarning("AntiquaCRM::SelectTargets:getValue - Target not found!");
+    return QVariant();
+  }
+  _url.setScheme(QString());
+
+  QDir _dir(_url.toDisplayString(QUrl::EncodeSpaces));
+  return _dir.path();
 }
 
 const QString SelectTargets::popUpHints() {

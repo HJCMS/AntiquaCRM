@@ -6,15 +6,18 @@
 #define ANTIQUACRM_SETTINGS_H
 
 #include <AGlobal>
+#include <QDate>
 #include <QDir>
 #include <QHash>
+#include <QLocale>
 #include <QMetaType>
 #include <QObject>
 #include <QSettings>
 #include <QString>
 #include <QVariant>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class ASettings
@@ -28,12 +31,15 @@ namespace AntiquaCRM {
 class ANTIQUACRM_LIBRARY ASettings : public QSettings {
   Q_OBJECT
 
+protected:
+  QLocale p_locale; /**< System locale */
+
 public:
   /**
    * @param parent - parent object
    */
-  explicit ASettings(QObject *parent = nullptr);
-  explicit ASettings(const QString &applName, QObject *parent = nullptr);
+  explicit ASettings(QObject* parent = nullptr);
+  explicit ASettings(const QString& applName, QObject* parent = nullptr);
 
   /**
    * @brief AntiquaCRM Configuration Domain
@@ -49,14 +55,14 @@ public:
    *
    * This function is a extended call from QSettings::contains
    */
-  bool check(const QString &pkey) const;
+  bool check(const QString& pkey) const;
 
   /**
    * @brief Get value with given Path and MetaType.
    * @param key - config path to key
    * @param type - required Meta type
    */
-  const QVariant getValue(const QString &key, const QMetaType &type) const;
+  const QVariant getValue(const QString& key, const QMetaType& type) const;
 
   /**
    * @brief Returns Directory from Section[dirs]
@@ -69,7 +75,7 @@ public:
    *   qDebug() << config.getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES);
    * @endcode
    */
-  const QDir getArchivPath(const QString &section);
+  const QDir getArchivPath(const QString& section);
 
   /**
    * @brief get value from group and key
@@ -77,13 +83,19 @@ public:
    * @param key   - key from group
    * @param fallback - what it says
    */
-  const QVariant groupValue(const QString &group, const QString &key,
-                            const QVariant &fallback = QVariant());
+  const QVariant groupValue(const QString& group, const QString& key,
+                            const QVariant& fallback = QVariant());
 
   /**
    * @brief Payment Settings with Default values.
    */
   const QHash<QString, QVariant> payment();
+
+  /**
+   * @brief Format QDate to current locale date string.
+   * @note View aglobal.h for formating options!
+   */
+  const QString shortDateFormat(const QDate& date);
 
   /**
    * @brief Default Filter for all Dir requests!
@@ -111,7 +123,7 @@ public:
    *
    * Creates a search target from Install Plugin Directory.
    */
-  static const QDir getPluginDir(const QString &target = QString());
+  static const QDir getPluginDir(const QString& target = QString());
 
   /**
    * @brief Translations Target
@@ -125,7 +137,7 @@ public:
    *
    * Search Datafiles directory in @ref ANTIQUACRM_DATA_TARGET
    */
-  static const QDir getDataDir(const QString &name = QString());
+  static const QDir getDataDir(const QString& name = QString());
 
   /**
    * @brief Users Data Directory

@@ -29,7 +29,7 @@ SelectFile::SelectFile(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
 
 bool SelectFile::isAccessible() {
   const QFileInfo _info(m_edit->text().trimmed());
-  if (_info.isReadable()) {
+  if (_info.isReadable() || _info.isExecutable()) {
     m_edit->setValidContent(true);
     return true;
   }
@@ -69,7 +69,11 @@ void SelectFile::setValue(const QVariant& value) {
   if (value.metaType().id() != getType().id())
     return;
 
-  m_edit->setText(value.toString());
+  QByteArray _arr(value.toString().trimmed().toUtf8());
+  if (_arr.isEmpty())
+    return;
+
+  m_edit->setText(QString::fromUtf8(QByteArray::fromPercentEncoding(_arr)));
 }
 
 void SelectFile::setFocus() {
@@ -110,7 +114,12 @@ const QMetaType SelectFile::getType() const {
 }
 
 const QVariant SelectFile::getValue() {
-  return (isAccessible() ? m_edit->text().trimmed() : QString());
+  if (!isAccessible())
+    return QString();
+
+  QUrl _url(m_edit->text().trimmed());
+  QFileInfo _info(_url.toDisplayString(QUrl::EncodeSpaces));
+  return _info.filePath();
 }
 
 const QString SelectFile::popUpHints() {

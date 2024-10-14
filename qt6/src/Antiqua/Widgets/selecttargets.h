@@ -27,7 +27,6 @@ class ANTIQUACRM_LIBRARY SelectTargets final : public AntiquaCRM::AInputWidget {
 private:
   ALineEdit *m_edit;
   QPushButton *m_open;
-
   bool isAccessible();
 
 private Q_SLOTS:
