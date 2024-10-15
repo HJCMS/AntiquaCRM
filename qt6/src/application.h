@@ -97,6 +97,7 @@ public:
 
   /**
    * @brief Default execution method to start AntiquaCRM.
+   * @return STD Outputs
    */
   int exec();
 };

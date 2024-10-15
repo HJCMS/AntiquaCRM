@@ -11,8 +11,7 @@
 #include <QSslConfiguration>
 #include <QtCore>
 
-SslCaSelecter::SslCaSelecter(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent}, p_ca_bundle{} {
+SslCaSelecter::SslCaSelecter(QWidget* parent) : AntiquaCRM::AInputWidget{parent}, p_ca_bundle{} {
   // Select
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
@@ -35,8 +34,7 @@ SslCaSelecter::SslCaSelecter(QWidget *parent)
   initData();
 
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
-  connect(m_search, SIGNAL(textChanged(const QString &)),
-          SLOT(setSearch(const QString &)));
+  connect(m_search, SIGNAL(textChanged(QString)), SLOT(setSearch(QString)));
   connect(m_open, SIGNAL(clicked()), SLOT(setBundleFile()));
 }
 
@@ -48,10 +46,14 @@ const QRegularExpression SslCaSelecter::pattern() {
                             QRegularExpression::CaseInsensitiveOption);
 }
 
-void SslCaSelecter::updateBundle(const QString &path) {
+void SslCaSelecter::updateBundle(const QString& path) {
   QFileInfo _fi(path);
   if (!_fi.isReadable())
     return;
+
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << Q_FUNC_INFO << _fi.filePath();
+#endif
 
   QSslConfiguration sslConfig;
   if (sslConfig.addCaCertificates(_fi.filePath(), QSsl::Pem)) {
@@ -76,7 +78,7 @@ void SslCaSelecter::valueChanged(int) {
   emit sendInputChanged();
 }
 
-void SslCaSelecter::setSearch(const QString &search) {
+void SslCaSelecter::setSearch(const QString& search) {
   int _index = m_edit->findText(search, Qt::MatchStartsWith);
   if (_index > 0)
     m_edit->setCurrentIndex(_index);
@@ -93,13 +95,15 @@ void SslCaSelecter::setBundleFile() {
   updateBundle(_file);
 }
 
-void SslCaSelecter::setValue(const QVariant &value) {
+void SslCaSelecter::setValue(const QVariant& value) {
   int _index = m_edit->findData(value, Qt::UserRole, Qt::MatchExactly);
   if (_index > 0)
     m_edit->setCurrentIndex(_index);
 }
 
-void SslCaSelecter::setFocus() { m_edit->setFocus(); }
+void SslCaSelecter::setFocus() {
+  m_edit->setFocus();
+}
 
 void SslCaSelecter::reset() {
   m_edit->setCurrentIndex(0);
@@ -109,17 +113,24 @@ void SslCaSelecter::reset() {
 void SslCaSelecter::initData() {
   QStringList _dirs;
 #ifdef Q_OS_LINUX
-  _dirs << "/etc/pki/tls/certs";
-  _dirs << "/var/lib/ca-certificates";
-  _dirs << "/etc/ssl/certs";
+  _dirs << "/etc/ssl/certs";           /**< Debian/Gentoo */
+  _dirs << "/etc/pki/tls/certs";       /**< Fedora/RedHat/CentOS */
+  _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE link:/etc/ssl/certs */
+  _dirs << "/var/ssl/certs";           /**< AIX */
+  _dirs << "/etc/ssl";                 /**< Alpine OpenSuSE.OLD */
+  _dirs << "/etc/openssl/certs";       /**< OpenBSD */
+  _dirs << "/etc/pki/tls";             /**< OpenELEC */
 #endif
 
 #ifdef Q_OS_WIN
   QString _ap = qApp->applicationDirPath();
+  _dirs << _ap; // .\ca-bundle*.crt
+  _ap.append(QDir::separator());
+  _ap.append("data");
   _ap.append(QDir::separator());
   _ap.append("certs");
   _ap.append(QDir::separator());
-  _dirs << _ap;
+  _dirs << _ap; // .\data\certs\ca-bundle*.crt
 #endif
 
   QString _bundle = QString();
@@ -142,15 +153,21 @@ void SslCaSelecter::initData() {
   updateBundle(p_ca_bundle);
 }
 
-void SslCaSelecter::setBundle(const QString &path) {
-  QFileInfo _fi(path);
+void SslCaSelecter::setBundle(const QString& path) {
+  QByteArray _arr(path.trimmed().toUtf8());
+  if (_arr.isEmpty())
+    return;
+
+  QFileInfo _fi(QString::fromUtf8(QByteArray::fromPercentEncoding(_arr)));
   if (!_fi.isReadable())
     return;
 
   p_ca_bundle = _fi.filePath();
 }
 
-const QString SslCaSelecter::getBundle() { return p_ca_bundle; }
+const QString SslCaSelecter::getBundle() {
+  return p_ca_bundle;
+}
 
 const QSslCertificate SslCaSelecter::getCert() {
   QSslCertificate cert;
@@ -172,19 +189,19 @@ const QSslCertificate SslCaSelecter::getCert() {
   return cert;
 }
 
-void SslCaSelecter::setRestrictions(const QSqlField &field) {
+void SslCaSelecter::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SslCaSelecter::setInputToolTip(const QString &tip) {
+void SslCaSelecter::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SslCaSelecter::setBuddyLabel(const QString &text) {
+void SslCaSelecter::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  AntiquaCRM::ALabel *m_lb = addTitleLabel(text + ":");
+  AntiquaCRM::ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -207,4 +224,6 @@ const QString SslCaSelecter::popUpHints() {
   return tr("A selected CA Root Bundle is missing.");
 }
 
-const QString SslCaSelecter::statusHints() { return popUpHints(); }
+const QString SslCaSelecter::statusHints() {
+  return popUpHints();
+}

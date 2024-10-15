@@ -4,12 +4,8 @@
 // SPDX-License-Identifier: LGPL-3.0-or-later
 //
 
-#include <AntiquaCRM>
-#include <QByteArray>
-#include <QString>
-#include <QtGlobal>
-
 #include "application.h"
+#include <AntiquaCRM>
 
 #ifdef Q_OS_LINUX
 #  include <syslog.h>
@@ -49,7 +45,13 @@ int main(int argc, char* argv[]) {
 #  endif
 #endif
 
-#ifdef Q_OS_WIN64
+  // We use a custom session manager
+  QApplication::setAttribute(Qt::AA_DisableSessionManager, true);
+
+  // Ensure that color palettes and font propagation are not inherited.
+  QApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, false);
+
+#ifdef Q_OS_WIN
   /*
    * Is the attempt to display the selected font a little better if the font
    * scaling is faulty.
@@ -65,12 +67,6 @@ int main(int argc, char* argv[]) {
         Qt::HighDpiScaleFactorRoundingPolicy::PassThrough);
   }
 #endif
-
-  // We use a custom session manager
-  QApplication::setAttribute(Qt::AA_DisableSessionManager, true);
-
-  // Ensure that color palettes and font propagation are not inherited.
-  QApplication::setAttribute(Qt::AA_UseStyleSheetPropagationInWidgetStyles, false);
 
   Application* m_app = new Application(argc, argv);
   if (m_app->isRunning()) {

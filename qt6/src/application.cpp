@@ -45,7 +45,7 @@ bool Application::registerSessionBus() {
     }
 #  ifdef ANTIQUA_DEVELOPMENT
     else {
-      qDebug() << Q_FUNC_INFO << m_dbus->lastError().message();
+      qDebug() << "QDBus::registerService" << m_dbus->lastError().message();
     }
 #  endif
     return true;
@@ -103,8 +103,23 @@ void Application::initStyleTheme() {
   QIcon::setFallbackThemeName(_fallback);
   QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
 
+  // NOTE Loading stylesheet before change fonts!
+  QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
+  if (_info.isReadable()) {
+    QFile _fp(_info.filePath());
+    if (_fp.exists() && _fp.open(QFile::ReadOnly)) {
+      QString buffer;
+      QTextStream in(&_fp);
+      while (!in.atEnd()) {
+        buffer.append(in.readLine());
+      }
+      _fp.close();
+      setStyleSheet(buffer);
+    }
+  }
+
   QPalette _palette = palette();
-  // @fixme KDE theme
+  // @fixme XDesktop themes
   if (_platform.startsWith("xcb")) {
     const QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
     if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
@@ -123,21 +138,9 @@ void Application::initStyleTheme() {
   }
   setPalette(_palette);
 
-  // Loading stylesheet
-  QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
-  // qDebug() << Q_FUNC_INFO << m_cfg->getDataDir();
-  if (_info.isReadable()) {
-    QFile _fp(_info.filePath());
-    if (_fp.exists() && _fp.open(QFile::ReadOnly)) {
-      QString buffer;
-      QTextStream in(&_fp);
-      while (!in.atEnd()) {
-        buffer.append(in.readLine());
-      }
-      _fp.close();
-      setStyleSheet(buffer);
-    }
-  }
+#ifdef ANTIQUA_DEVELOPMENT
+  qInfo("Style changes for '%s' initialed.", qUtf8Printable(_platform));
+#endif
 }
 
 void Application::initTranslations() {
@@ -309,13 +312,13 @@ int Application::exec() {
   // Step 6 - UIX
   if (!initMainWindow()) {
     qFatal("failed to initital window");
-    return 2;
+    return 1;
   }
 
   // Step 7 - Systemtray
   p_splash.setMessage("Open Systemtray icon.");
   if (!initSystemTray())
-    return 2;
+    return 1;
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {

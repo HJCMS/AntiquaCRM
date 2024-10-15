@@ -92,8 +92,7 @@ ConfigDatabase::ConfigDatabase(QWidget* parent)
   pg_port->setBuddyLabel(tr("Port"));
   pg_port->setInputToolTip(tr("Database connection port"));
   pg_port->setWhatsThisText(_info);
-  pg_port->setRange(1024, 49152);
-  pg_port->setValue(5432);
+  pg_port->setRange(5432, 49152);
   m_groupLayout1s->addWidget(pg_port);
   _info =
       tr("Maximum waiting time before the application aborts the "
@@ -360,7 +359,7 @@ void ConfigDatabase::saveSectionConfig() {
       }
 #endif
       if (!_value.isValid()) {
-        if (_key.compare("pg_port", Qt::CaseSensitive) == 0) {
+        if (_key.contains("pg_port", Qt::CaseSensitive)) {
           config->setValue(_key, 5432); // prevent default reset
         } else {
           config->remove(_key);
