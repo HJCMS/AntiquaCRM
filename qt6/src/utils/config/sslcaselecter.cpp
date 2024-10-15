@@ -123,26 +123,28 @@ void SslCaSelecter::reset() {
 }
 
 void SslCaSelecter::initData() {
+  bool _found = false;
+  QString _bundle = QString();
+  QStringList _filter({"*.pem", "*.crt", "*.cert", "*.ca"});
   QStringList _dirs;
 #ifdef Q_OS_LINUX
   _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE */
   _dirs << "/etc/pki/tls/certs";       /**< Fedora/REHL */
   _dirs << "/etc/ssl/certs";           /**< Debian/Gentoo */
-#endif
-
-#ifdef Q_OS_WIN
+#elif Q_OS_WIN
   QString _ap = qApp->applicationDirPath();
-  _dirs << _ap; // .\ca-bundle*.crt
+  _dirs << _ap; // .\ca-bundle*
   _ap.append(QDir::separator());
   _ap.append("data");
   _ap.append(QDir::separator());
   _ap.append("certs");
   _ap.append(QDir::separator());
-  _dirs << _ap; // .\data\certs\ca-bundle*.crt
+  _dirs << _ap; // .\data\certs\ca-bundle*
+#else
+  _dirs << "/etc/ssl";
+  _dirs << "/etc/ssl/openssl";
 #endif
 
-  QString _bundle = QString();
-  QStringList _filter({"*.pem", "*.crt", "*.cert", "*.ca"});
   foreach (QString p, _dirs) {
     QDir _d(p);
     if (!_d.isReadable())
@@ -154,9 +156,13 @@ void SslCaSelecter::initData() {
 
       if (pattern().match(_f.baseName()).hasMatch()) {
         _bundle = _f.filePath();
+        _found = true;
         break;
       }
     }
+
+    if (_found)
+      break;
   }
 
   if (_bundle.isEmpty())
