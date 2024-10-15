@@ -125,13 +125,9 @@ void SslCaSelecter::reset() {
 void SslCaSelecter::initData() {
   QStringList _dirs;
 #ifdef Q_OS_LINUX
-  _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE link:/etc/ssl/certs */
+  _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE */
+  _dirs << "/etc/pki/tls/certs";       /**< Fedora/REHL */
   _dirs << "/etc/ssl/certs";           /**< Debian/Gentoo */
-  _dirs << "/etc/pki/tls/certs";       /**< Fedora/RedHat/CentOS */
-  // _dirs << "/var/ssl/certs";           /**< AIX */
-  // _dirs << "/etc/ssl";                 /**< Alpine OpenSuSE.OLD */
-  // _dirs << "/etc/openssl/certs";       /**< OpenBSD */
-  // _dirs << "/etc/pki/tls";             /**< OpenELEC */
 #endif
 
 #ifdef Q_OS_WIN
