@@ -38,12 +38,24 @@ SslCaSelecter::SslCaSelecter(QWidget* parent) : AntiquaCRM::AInputWidget{parent}
   connect(m_open, SIGNAL(clicked()), SLOT(setBundleFile()));
 }
 
+bool SslCaSelecter::simpleMatch(const QString& baseName) const {
+  QString _n = baseName.trimmed().replace(" ", "");
+  return (_n.contains("bundle", Qt::CaseInsensitive)
+          || _n.contains("certificate", Qt::CaseInsensitive));
+}
+
 const QRegularExpression SslCaSelecter::pattern() {
-  const QString _prefix("(\\w+[\\-_])?");
-  const QString _basename("ca[\\-_](bundle|certificate)");
+  const QString _prefix("(ca[\\-_])");
+  const QString _basename("(bundle|certificate)");
   const QString _suffix("([\\-_\\.]trust)?");
-  return QRegularExpression("^" + _prefix + _basename + _suffix + "$",
-                            QRegularExpression::CaseInsensitiveOption);
+  QRegularExpression _exp;
+  _exp.setPatternOptions(QRegularExpression::CaseInsensitiveOption
+                         | QRegularExpression::InvertedGreedinessOption);
+  _exp.setPattern("^" + _prefix + _basename + _suffix + "$");
+  if (!_exp.isValid())
+    qWarning("Invalid CA bundle file pattern!");
+
+  return _exp;
 }
 
 void SslCaSelecter::updateBundle(const QString& path) {
@@ -113,13 +125,13 @@ void SslCaSelecter::reset() {
 void SslCaSelecter::initData() {
   QStringList _dirs;
 #ifdef Q_OS_LINUX
+  _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE link:/etc/ssl/certs */
   _dirs << "/etc/ssl/certs";           /**< Debian/Gentoo */
   _dirs << "/etc/pki/tls/certs";       /**< Fedora/RedHat/CentOS */
-  _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE link:/etc/ssl/certs */
-  _dirs << "/var/ssl/certs";           /**< AIX */
-  _dirs << "/etc/ssl";                 /**< Alpine OpenSuSE.OLD */
-  _dirs << "/etc/openssl/certs";       /**< OpenBSD */
-  _dirs << "/etc/pki/tls";             /**< OpenELEC */
+  // _dirs << "/var/ssl/certs";           /**< AIX */
+  // _dirs << "/etc/ssl";                 /**< Alpine OpenSuSE.OLD */
+  // _dirs << "/etc/openssl/certs";       /**< OpenBSD */
+  // _dirs << "/etc/pki/tls";             /**< OpenELEC */
 #endif
 
 #ifdef Q_OS_WIN
@@ -136,14 +148,19 @@ void SslCaSelecter::initData() {
   QString _bundle = QString();
   QStringList _filter({"*.pem", "*.crt", "*.cert", "*.ca"});
   foreach (QString p, _dirs) {
-    foreach (QFileInfo i, QDir(p).entryInfoList(_filter, QDir::Files)) {
-      if (i.isReadable() && pattern().match(i.baseName()).isValid()) {
-        _bundle = i.filePath();
+    QDir _d(p);
+    if (!_d.isReadable())
+      continue;
+
+    foreach (QFileInfo _f, _d.entryInfoList(_filter, QDir::Files)) {
+      if (!_f.isReadable() || !simpleMatch(_f.baseName()))
+        continue;
+
+      if (pattern().match(_f.baseName()).hasMatch()) {
+        _bundle = _f.filePath();
         break;
       }
     }
-    if (!_bundle.isEmpty())
-      break;
   }
 
   if (_bundle.isEmpty())

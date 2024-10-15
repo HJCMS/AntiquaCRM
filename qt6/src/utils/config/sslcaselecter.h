@@ -24,7 +24,31 @@ private:
   AntiquaCRM::AComboBox *m_edit;
   QPushButton *m_open;
   QLineEdit *m_search;
+
+  /**
+   * @brief Simple File Basename match
+   * @param baseName file basename
+   *
+   * Simplified file basename match to reduce buffercosumption by using regular expressions.
+   */
+  inline bool simpleMatch(const QString &baseName) const;
+
+  /**
+   * @brief Regular Expression pattern for ca-bundle
+   *
+   * Pattern for matching file base names without extension.
+   * @code
+   *  '^(ca[\\-_])(bundle|certificate)([\\-_\\.]trust)?$'
+   * @endcode
+   */
   static const QRegularExpression pattern();
+
+  /**
+   * @brief updateBundle
+   * @param path File Path
+   *
+   * Updates the Ssl configuration when bundle file was changed.
+   */
   void updateBundle(const QString &path);
 
 private Q_SLOTS:
