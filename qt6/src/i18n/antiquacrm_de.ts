@@ -1473,7 +1473,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Postleitzahl</translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+286"/>
         <location line="+4"/>
         <source>a valid postal code is required!</source>
         <translation>Eine gültige Postleitzahl ist erforderlich!</translation>
@@ -2113,7 +2113,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectFile</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectfile.cpp" line="+15"/>
+        <location filename="../Antiqua/Widgets/selectfile.cpp" line="+16"/>
         <source>set file path</source>
         <translation>Dateipfad festlegen</translation>
     </message>
@@ -2123,7 +2123,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Dateipfad ändern</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+105"/>
         <source>This entry requires a file path specification.</source>
         <translation>Dieser Eintrag erfordert eine Dateipfadangabe.</translation>
     </message>
@@ -2532,7 +2532,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectTargets</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecttargets.cpp" line="+26"/>
+        <location filename="../Antiqua/Widgets/selecttargets.cpp" line="+30"/>
         <source>Target directory</source>
         <translation>Zielverzeichnis</translation>
     </message>
@@ -2542,7 +2542,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Zielverzeichnis ändern</translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+132"/>
         <source>This entry requires a directory specification.</source>
         <translation>Für den Eintrag ist eine Verzeichnisangabe erforderlich.</translation>
     </message>
@@ -2732,7 +2732,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Wenn Sie diese Nachricht erhalten, überprüfen Sie bitte Ihre Netzwerk- und Datenbankverbindung!</translation>
     </message>
     <message>
-        <location line="+296"/>
+        <location line="+298"/>
         <source>Do not leave this page until you have saved your changes!</source>
         <translation>Bitte verlassen Sie diese Seite erst, wenn Sie Ihre Änderungen gespeichert haben!</translation>
     </message>
@@ -3011,7 +3011,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TabsWidget</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+56"/>
+        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+60"/>
         <source>Unsaved changes for &apos;%1&apos;!</source>
         <translation>Nicht gespeicherte Änderungen für „%1“!</translation>
     </message>
@@ -3091,7 +3091,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+179"/>
+        <location filename="../application.cpp" line="+183"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -3169,7 +3169,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>AntiquaCRM Assistent</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>Restart</source>
         <translation>Neustart</translation>
     </message>
@@ -3214,17 +3214,17 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Abschließen und den Assitenten beenden</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Do not close the wizard without saving if you make changes that you do not want to lose!</source>
         <translation>Schließen Sie den Assistenten nicht ohne zu speichern, wenn Sie Änderungen vorgenommen haben, die Sie nicht verlieren möchten!</translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+46"/>
         <source>Success</source>
         <translation>Erfolgreich</translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-47"/>
         <source>Unfinished Assistant</source>
         <translation>Assistent nicht abgeschlossen</translation>
     </message>
@@ -3849,7 +3849,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+176"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+169"/>
         <source>Books</source>
         <translation>Bücher</translation>
     </message>
@@ -4522,8 +4522,8 @@ Bild – Artikel-ID: %2</translation>
     </message>
     <message>
         <location line="+5"/>
-        <source>Publisher</source>
-        <translation>Herausgeber</translation>
+        <source>Musiclabel</source>
+        <translation>Musiklabel</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -4880,7 +4880,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>CDsVinylWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+173"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+167"/>
         <source>CDs &amp;&amp; Vinyl</source>
         <translation></translation>
     </message>
@@ -5135,7 +5135,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>ConfigDatabase</name>
     <message>
-        <location filename="../utils/config/configdatabase.cpp" line="+26"/>
+        <location filename="../utils/config/configdatabase.cpp" line="+25"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation>Datenbankverbindungseinstellungen zum PostgreSQL-Server.</translation>
     </message>
@@ -5145,7 +5145,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Zugriffskonfiguration</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Hostname of the server you want to connect to.
 If you are not using SSL, the IP address can also be added in this field.</source>
         <translation>Hostname des Servers, zu dem Sie eine Verbindung herstellen möchten.
@@ -5168,12 +5168,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+4"/>
-        <location line="+317"/>
+        <location line="+324"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
     <message>
-        <location line="-316"/>
+        <location line="-323"/>
         <source>Databasename</source>
         <translation>Datenbankname</translation>
     </message>
@@ -5208,7 +5208,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Datenbankpasswort</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Port number to connect to the server. The default port address to a PostgreSQL server is 5432. However, if you connect from outside, you need the configured router port. To know this, ask your Network Administrator.</source>
         <translation>Portnummer zur Verbindung mit dem Server. Die Standard-Portadresse zu einem PostgreSQL-Server ist 5432. Wenn Sie jedoch eine Verbindung von außen herstellen, benötigen Sie den konfigurierten Router-Port. Um dies zu erfahren, fragen Sie Ihren Netzwerkadministrator.</translation>
     </message>
@@ -5243,12 +5243,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Erforderliche SSL/TLS-Einstellungen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Certification Authority (CA) contains root or intermediate certificate. Together with your server certificate (issued specifically for your domain), these certificates complete the SSL chain of trust. The chain is required to verify the Authentication with the main application.</source>
         <translation>Die Zertifizierungsstelle (CA) enthält ein Stamm- oder Zwischenzertifikat. Zusammen mit Ihrem Serverzertifikat (speziell für Ihre Domain ausgestellt) vervollständigen diese Zertifikate die SSL-Vertrauenskette. Die Kette wird benötigt, um die Authentifizierung mit der Hauptanwendung zu überprüfen.</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Certification Authority</source>
         <translation>Zertifizierungsstelle</translation>
     </message>
@@ -5258,7 +5258,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Auflistung der CA-Pakete</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Common Name (CN) of the Server Certificate. Normally the Hostname of the SQL Server or from connected Dynamic DNS Client. It is important that this Name is equal to the Server certificate.</source>
         <translation>Allgemeiner Name (CN) des Serverzertifikats. Normalerweise der Hostname des SQL Servers oder des verbundenen dynamischen DNS-Clients. Es ist wichtig, dass dieser Name mit dem Serverzertifikat übereinstimmt.</translation>
     </message>
@@ -5273,7 +5273,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Allgemeiner Name (CN)</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Exhibitor Certificate from SQL Server. This is needed for Certification Handshake mechanism. It depends to CA Issuers. If not know, add Alternative the CA-Issuer Certificate.</source>
         <translation>Ausstellerzertifikat von SQL Server. Dies ist für den Zertifizierungs-Handshake-Mechanismus erforderlich. Es hängt von den CA-Ausstellern ab. Wenn Sie es nicht wissen, fügen Sie alternativ das CA-Ausstellerzertifikat hinzu.</translation>
     </message>
@@ -5288,7 +5288,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Ausstellerzertifikat vom Server</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>For a connection to be known as SSL-secured, SSL usage must be configured on both the client and server before the connection is established. If it is only configured on the server, the client may send sensitive information (e.g. passwords) before knowing that the server requires high security. In this case, secure connections can be guaranteed by setting the SSL connection to „Required“, „Verify full“ or „Verify-CA“.</source>
         <translation>Damit eine Verbindung als SSL-gesichert bezeichnet wird, muss die SSL-Nutzung sowohl auf dem Client als auch auf dem Server konfiguriert werden, bevor die Verbindung hergestellt wird. Wenn es nur auf dem Server konfiguriert ist, sendet der Client möglicherweise vertrauliche Informationen (z. B. Passwörter), bevor er weiß, dass der Server hohe Sicherheit erfordert. In diesem Fall können sichere Verbindungen gewährleistet werden, indem die SSL-Verbindung auf „Erforderlich“, „Vollständig überprüfen“ oder „CA überprüfen“ eingestellt wird.</translation>
     </message>
@@ -5303,7 +5303,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>SSL-Schutz in verschiedenen Modi bereitgestellt.</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>For more Information about Secure SQL Connection visit PostgreSQL</source>
         <translation>Weitere Informationen zur sicheren SQL-Verbindung finden Sie unter PostgreSQL</translation>
     </message>
@@ -5313,17 +5313,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Dokumentation zur Clientauthentifizierung</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>As part of the GDPR (General Data Protection Regulation), SSL/TLS is always active.</source>
         <translation>Im Rahmen der DSGVO (Datenschutz-Grundverordnung) ist SSL/TLS immer aktiv.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Complete guide to &lt;a href=&apos;https://gdpr.eu/&apos; target=&apos;_blank&apos;&gt;GDPR&lt;/a&gt; compliance.</source>
         <translation>Vollständiger Leitfaden zur Einhaltung der &lt;a href=&apos;https://gdpr.eu/&apos; target=&apos;_blank&apos;&gt;DSGVO&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+116"/>
         <source>Connection successfully!</source>
         <translation>Verbindung erfolgreich!</translation>
     </message>
@@ -5338,7 +5338,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Verbindungstest</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+62"/>
         <source>Database configuration.</source>
         <translation>Datenbankkonfiguration.</translation>
     </message>
@@ -6111,7 +6111,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>DataCache</name>
     <message>
-        <location filename="../utils/datacache/datacache.cpp" line="+57"/>
+        <location filename="../utils/datacache/datacache.cpp" line="+47"/>
         <source>Create</source>
         <translation>Erstellen</translation>
     </message>
@@ -7469,7 +7469,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Nein</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+113"/>
         <source>Payment Id</source>
         <translation>Zahlungs Id</translation>
     </message>
@@ -8564,7 +8564,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>ReportsToolBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/reports/reportstoolbar.cpp" line="+28"/>
+        <location filename="../plugins/antiquacrm/tabs/reports/reportstoolbar.cpp" line="+19"/>
         <source>Select report</source>
         <translation>Bericht auswählen</translation>
     </message>
@@ -8659,7 +8659,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SelectGenre</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/dialog/selectgenre.cpp" line="+15"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/dialog/selectgenre.cpp" line="+14"/>
         <source>Without disclosures</source>
         <translation>Ohne Angaben</translation>
     </message>
@@ -8915,7 +8915,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+114"/>
+        <location line="+123"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -8939,7 +8939,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SslCaSelecter</name>
     <message>
-        <location filename="../utils/config/sslcaselecter.cpp" line="+24"/>
+        <location filename="../utils/config/sslcaselecter.cpp" line="+23"/>
         <source>Set CA Bundle file</source>
         <translation>Festelegen der CA-Paketdatei</translation>
     </message>
@@ -8949,7 +8949,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Suche</translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+72"/>
         <source>Open Certfile</source>
         <translation>Öffne Zertifikatsdatei</translation>
     </message>
@@ -8959,7 +8959,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Zertifikate</translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+141"/>
         <source>A selected CA Root Bundle is missing.</source>
         <translation>Ein ausgewähltes CA-Root-Paket fehlt.</translation>
     </message>
@@ -9236,8 +9236,8 @@ Hinweise: Sie können im Hauptkonfigurationsdialog jederzeit Grenzwerte für Pre
     </message>
     <message>
         <location line="+1"/>
-        <source>Is it a landscape format?</source>
-        <translation>Handelt es sich um ein Querformat?</translation>
+        <source>Is it a portrait or landscape format?</source>
+        <translation>Handelt es sich um ein Hoch- oder Querformat?</translation>
     </message>
     <message>
         <location line="+6"/>
@@ -9441,7 +9441,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Mit Exlibris</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Data saved successfully!</source>
         <translation>Daten erfolgreich gespeichert!</translation>
     </message>
@@ -9763,7 +9763,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StitchesWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+174"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+166"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation>Drucke &amp;&amp; Stiche</translation>
     </message>
@@ -10409,7 +10409,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>VariousIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+168"/>
+        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+162"/>
         <source>Various</source>
         <translation>Verschiedenes</translation>
     </message>
@@ -10528,17 +10528,17 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>ViewsIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/views/viewsindex.cpp" line="+29"/>
+        <location filename="../plugins/antiquacrm/tabs/views/viewsindex.cpp" line="+28"/>
         <source>Select/Show predefined view</source>
         <translation>Vordefinierte Ansicht auswählen/anzeigen</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+70"/>
         <source>View with %1 rows.</source>
         <translation>Ansicht mit %1 Zeilen.</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Views</source>
         <translation>Ansichten</translation>
     </message>

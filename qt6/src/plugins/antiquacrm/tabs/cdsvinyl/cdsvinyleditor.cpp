@@ -113,7 +113,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_author, row2c++, 1, 1, 4);
 
   // cv_publisher
-  infolabel = new AntiquaCRM::ALabel(tr("Publisher"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Musiclabel"), row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_publisher = new AntiquaCRM::TextLine(this);
   cv_publisher->setObjectName("cv_publisher");

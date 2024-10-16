@@ -1471,7 +1471,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+284"/>
+        <location line="+286"/>
         <location line="+4"/>
         <source>a valid postal code is required!</source>
         <translation type="unfinished"></translation>
@@ -2111,7 +2111,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectFile</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectfile.cpp" line="+15"/>
+        <location filename="../Antiqua/Widgets/selectfile.cpp" line="+16"/>
         <source>set file path</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2121,7 +2121,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+105"/>
         <source>This entry requires a file path specification.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2530,7 +2530,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectTargets</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecttargets.cpp" line="+26"/>
+        <location filename="../Antiqua/Widgets/selecttargets.cpp" line="+30"/>
         <source>Target directory</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2540,7 +2540,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+114"/>
+        <location line="+132"/>
         <source>This entry requires a directory specification.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2729,7 +2729,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+296"/>
+        <location line="+298"/>
         <source>Do not leave this page until you have saved your changes!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3008,7 +3008,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::TabsWidget</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+56"/>
+        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+60"/>
         <source>Unsaved changes for &apos;%1&apos;!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3088,7 +3088,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+179"/>
+        <location filename="../application.cpp" line="+183"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3166,7 +3166,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+37"/>
         <source>Restart</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3211,17 +3211,17 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Do not close the wizard without saving if you make changes that you do not want to lose!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+45"/>
+        <location line="+46"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-46"/>
+        <location line="-47"/>
         <source>Unfinished Assistant</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3827,7 +3827,7 @@ Image - Article Id: %2</source>
 <context>
     <name>BooksIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+176"/>
+        <location filename="../plugins/antiquacrm/tabs/books/booksindex.cpp" line="+169"/>
         <source>Books</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4500,7 +4500,7 @@ Image - Article Id: %2</source>
     </message>
     <message>
         <location line="+5"/>
-        <source>Publisher</source>
+        <source>Musiclabel</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -4855,7 +4855,7 @@ Image - Article Id: %2</source>
 <context>
     <name>CDsVinylWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+173"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinylwidget.cpp" line="+167"/>
         <source>CDs &amp;&amp; Vinyl</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5110,7 +5110,7 @@ Image - Article Id: %2</source>
 <context>
     <name>ConfigDatabase</name>
     <message>
-        <location filename="../utils/config/configdatabase.cpp" line="+26"/>
+        <location filename="../utils/config/configdatabase.cpp" line="+25"/>
         <source>Database Connection settings to PostgreSQL server.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5120,7 +5120,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Hostname of the server you want to connect to.
 If you are not using SSL, the IP address can also be added in this field.</source>
         <translation type="unfinished"></translation>
@@ -5142,12 +5142,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+4"/>
-        <location line="+317"/>
+        <location line="+324"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-316"/>
+        <location line="-323"/>
         <source>Databasename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5182,7 +5182,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Port number to connect to the server. The default port address to a PostgreSQL server is 5432. However, if you connect from outside, you need the configured router port. To know this, ask your Network Administrator.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5217,12 +5217,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+8"/>
         <source>Certification Authority (CA) contains root or intermediate certificate. Together with your server certificate (issued specifically for your domain), these certificates complete the SSL chain of trust. The chain is required to verify the Authentication with the main application.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Certification Authority</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5232,7 +5232,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Common Name (CN) of the Server Certificate. Normally the Hostname of the SQL Server or from connected Dynamic DNS Client. It is important that this Name is equal to the Server certificate.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5247,7 +5247,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>Exhibitor Certificate from SQL Server. This is needed for Certification Handshake mechanism. It depends to CA Issuers. If not know, add Alternative the CA-Issuer Certificate.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5262,7 +5262,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>For a connection to be known as SSL-secured, SSL usage must be configured on both the client and server before the connection is established. If it is only configured on the server, the client may send sensitive information (e.g. passwords) before knowing that the server requires high security. In this case, secure connections can be guaranteed by setting the SSL connection to „Required“, „Verify full“ or „Verify-CA“.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5277,7 +5277,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+8"/>
         <source>For more Information about Secure SQL Connection visit PostgreSQL</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5287,17 +5287,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>As part of the GDPR (General Data Protection Regulation), SSL/TLS is always active.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Complete guide to &lt;a href=&apos;https://gdpr.eu/&apos; target=&apos;_blank&apos;&gt;GDPR&lt;/a&gt; compliance.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+118"/>
+        <location line="+116"/>
         <source>Connection successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5312,7 +5312,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+62"/>
         <source>Database configuration.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6085,7 +6085,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>DataCache</name>
     <message>
-        <location filename="../utils/datacache/datacache.cpp" line="+57"/>
+        <location filename="../utils/datacache/datacache.cpp" line="+47"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7443,7 +7443,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+113"/>
         <source>Payment Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8537,7 +8537,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>ReportsToolBar</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/reports/reportstoolbar.cpp" line="+28"/>
+        <location filename="../plugins/antiquacrm/tabs/reports/reportstoolbar.cpp" line="+19"/>
         <source>Select report</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8632,7 +8632,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SelectGenre</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/dialog/selectgenre.cpp" line="+15"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/dialog/selectgenre.cpp" line="+14"/>
         <source>Without disclosures</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8888,7 +8888,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+114"/>
+        <location line="+123"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8912,7 +8912,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SslCaSelecter</name>
     <message>
-        <location filename="../utils/config/sslcaselecter.cpp" line="+24"/>
+        <location filename="../utils/config/sslcaselecter.cpp" line="+23"/>
         <source>Set CA Bundle file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8922,7 +8922,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+57"/>
+        <location line="+72"/>
         <source>Open Certfile</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8932,7 +8932,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+119"/>
+        <location line="+141"/>
         <source>A selected CA Root Bundle is missing.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9207,7 +9207,7 @@ Notes: You can always set limits for Prices in the main Configuration dialog.</s
     </message>
     <message>
         <location line="+1"/>
-        <source>Is it a landscape format?</source>
+        <source>Is it a portrait or landscape format?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9403,7 +9403,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+72"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9723,7 +9723,7 @@ Image - Article Id: %2</source>
 <context>
     <name>StitchesWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+174"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+166"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10367,7 +10367,7 @@ Image - Article Id: %2</source>
 <context>
     <name>VariousIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+168"/>
+        <location filename="../plugins/antiquacrm/tabs/various/variousindex.cpp" line="+162"/>
         <source>Various</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10486,17 +10486,17 @@ Image - Article Id: %2</source>
 <context>
     <name>ViewsIndex</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/views/viewsindex.cpp" line="+29"/>
+        <location filename="../plugins/antiquacrm/tabs/views/viewsindex.cpp" line="+28"/>
         <source>Select/Show predefined view</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+70"/>
         <source>View with %1 rows.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Views</source>
         <translation type="unfinished"></translation>
     </message>

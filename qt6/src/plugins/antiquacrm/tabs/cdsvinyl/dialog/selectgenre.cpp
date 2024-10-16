@@ -8,20 +8,18 @@
 #include <QJsonArray>
 #include <QJsonDocument>
 
-SelectGenre::SelectGenre(QWidget *parent) : QComboBox{parent} {
+SelectGenre::SelectGenre(QWidget* parent) : QComboBox{parent} {
   setObjectName("id3_tag_selecter");
-
   m_search = new QLineEdit(this);
   m_search->setPlaceholderText(tr("Without disclosures"));
   setLineEdit(m_search);
-
-  reload();
-
-  connect(m_search, SIGNAL(textChanged(const QString &)),
-          SLOT(find(const QString &)));
+  reload(); // create Completer data
+  // connect(m_search, SIGNAL(textChanged(QString)), SLOT(find(QString)));
 }
 
-void SelectGenre::find(const QString &s) { qDebug() << Q_FUNC_INFO << s; }
+void SelectGenre::find(const QString& s) {
+  qDebug() << Q_FUNC_INFO << s;
+}
 
 void SelectGenre::reload() {
   clear();
