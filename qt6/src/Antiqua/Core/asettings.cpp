@@ -69,7 +69,7 @@ const QVariant ASettings::getValue(const QString& key, const QMetaType& type) co
 }
 
 const QDir ASettings::getArchivPath(const QString& section) {
-  QDir d;
+  QDir _dir;
   QStandardPaths::StandardLocation location;
   if (section.contains("import"))
     location = QStandardPaths::DownloadLocation;
@@ -82,15 +82,18 @@ const QDir ASettings::getArchivPath(const QString& section) {
   else
     location = QStandardPaths::DocumentsLocation;
 
-#ifdef ANTIQUA_DEVELOPMENT
-  qDebug() << Q_FUNC_INFO << section << " = " << location;
-#endif
-
   QString fallback = QStandardPaths::writableLocation(location);
+
   beginGroup(ANTIQUACRM_ARCHIVE_CONFIG_DIRS);
-  d.setPath(value(section, fallback).toString());
+  _dir.setPath(value(section, fallback).toString());
+  if (!_dir.exists() || !_dir.isReadable()) {
+#ifdef ANTIQUA_DEVELOPMENT
+    qDebug() << "ASettings::getArchivPath:" << section << " = " << location;
+#endif
+    _dir.setPath(fallback);
+  }
   endGroup();
-  return d;
+  return _dir;
 }
 
 const QVariant ASettings::groupValue(const QString& group, const QString& key,

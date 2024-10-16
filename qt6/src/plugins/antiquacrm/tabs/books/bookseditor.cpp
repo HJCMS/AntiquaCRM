@@ -899,8 +899,7 @@ void BooksEditor::setImportEditImage() {
 
   AntiquaCRM::ImageImportDialog *d =
       new AntiquaCRM::ImageImportDialog(_id, "Books", this);
-  connect(d, SIGNAL(sendThumbnail(const QPixmap &)), m_thumbnail,
-          SLOT(setPixmap(const QPixmap &)));
+  connect(d, SIGNAL(sendThumbnail(QPixmap)), m_thumbnail, SLOT(setPixmap(QPixmap)));
 
   d->exec();
   d->deleteLater();

@@ -7,7 +7,7 @@
 #include "variousstatusbar.h"
 #include "varioustableview.h"
 
-VariousIndex::VariousIndex(QWidget *parent)
+VariousIndex::VariousIndex(QWidget* parent)
     : AntiquaCRM::TabsIndex{VARIOUS_INTERFACE_TABID, parent} {
   setObjectName("various_tab_index");
   setWindowIcon(AntiquaCRM::antiquaIcon("applications-other"));
@@ -15,7 +15,7 @@ VariousIndex::VariousIndex(QWidget *parent)
 
   // Begin MainPage layout
   m_mainPage = new QWidget(this);
-  QVBoxLayout *m_p1Layout = new QVBoxLayout(m_mainPage);
+  QVBoxLayout* m_p1Layout = new QVBoxLayout(m_mainPage);
   m_p1Layout->setContentsMargins(0, 0, 0, 0);
 
   m_searchBar = new VariousSearchBar(m_mainPage);
@@ -45,45 +45,38 @@ VariousIndex::VariousIndex(QWidget *parent)
   setCurrentIndex(ViewPage::MainView);
 
   // Signals
-  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar,
-          SLOT(setSearchFocus()));
+  connect(this, SIGNAL(sendSetSearchFocus()), m_searchBar, SLOT(setSearchFocus()));
 
-  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar,
-          SLOT(setFilterFocus()));
+  connect(this, SIGNAL(sendSetSearchFilter()), m_searchBar, SLOT(setFilterFocus()));
 
   connect(m_searchBar, SIGNAL(sendSearchClicked()), SLOT(createSearchQuery()));
 
   connect(m_searchBar, SIGNAL(sendWithStockEnabled(bool)), m_statusBar,
           SLOT(setStockEnabled(bool)));
 
-  connect(m_searchBar, SIGNAL(sendNotify(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
+  connect(m_searchBar, SIGNAL(sendNotify(QString)), m_statusBar, SLOT(showMessage(QString)));
 
   // Signals::BooksTableView
-  connect(m_table, SIGNAL(sendQueryReport(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
+  connect(m_table, SIGNAL(sendQueryReport(QString)), m_statusBar, SLOT(showMessage(QString)));
 
-  connect(m_table, SIGNAL(sendCopyToClibboard(const QString &)),
-          SLOT(copyToClipboard(const QString &)));
+  connect(m_table, SIGNAL(sendCopyToClibboard(QString)), SLOT(copyToClipboard(QString)));
 
   connect(m_table, SIGNAL(sendOpenEntry(qint64)), SLOT(openEntry(qint64)));
 
   connect(m_table, SIGNAL(sendCreateNewEntry()), SLOT(createNewEntry()));
 
-  connect(m_table, SIGNAL(sendSocketOperation(const QJsonObject &)),
-          SLOT(sendSocketOperation(const QJsonObject &)));
+  connect(m_table, SIGNAL(sendSocketOperation(QJsonObject)),
+          SLOT(sendSocketOperation(QJsonObject)));
 
   // Signals::BooksEditor
   connect(m_editorWidget, SIGNAL(sendLeaveEditor()), SLOT(openStartPage()));
 
   // Signals::BookStatusBar
   connect(m_statusBar, SIGNAL(sendCreateEntry()), SLOT(createNewEntry()));
-  connect(m_statusBar, SIGNAL(sendHistoryQuery(const QString &)),
-          SLOT(createSearchQuery(const QString &)));
+  connect(m_statusBar, SIGNAL(sendHistoryQuery(QString)), SLOT(createSearchQuery(QString)));
 
   connect(m_statusBar, SIGNAL(sendDefaultView()), SLOT(setDefaultTableView()));
-  connect(m_statusBar, SIGNAL(sendReloadView()), m_table,
-          SLOT(setReloadView()));
+  connect(m_statusBar, SIGNAL(sendReloadView()), m_table, SLOT(setReloadView()));
 }
 
 void VariousIndex::setDefaultTableView() {
@@ -108,7 +101,7 @@ void VariousIndex::openStartPage() {
 #endif
 }
 
-void VariousIndex::createSearchQuery(const QString &history) {
+void VariousIndex::createSearchQuery(const QString& history) {
   // Verlaufs und Suchanfrage
   if (history.length() > 10) {
     m_statusBar->startProgress();
@@ -165,9 +158,11 @@ void VariousIndex::onEnterChanged() {
     m_table->setReloadView();
 }
 
-const QString VariousIndex::getTitle() const { return tr("Various"); }
+const QString VariousIndex::getTitle() const {
+  return tr("Various");
+}
 
-bool VariousIndex::customAction(const QJsonObject &obj) {
+bool VariousIndex::customAction(const QJsonObject& obj) {
   if (obj.isEmpty() || !obj.contains("ACTION"))
     return false;
 

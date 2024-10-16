@@ -316,6 +316,7 @@ int ImageImportDialog::exec() {
     treeView->setDirectory(p_import);
   }
 
+  setWindowModified(false);
   return QDialog::exec();
 }
 

@@ -73,7 +73,7 @@ StitchesEditor::StitchesEditor(QWidget* parent)
   ip_landscape = new AntiquaCRM::BoolBox(this);
   ip_landscape->setObjectName("ip_landscape");
   ip_landscape->setBuddyLabel(tr("Landscape"));
-  tempWhatsThis = tr("Is it a landscape format?");
+  tempWhatsThis = tr("Is it a portrait or landscape format?");
   ip_landscape->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ip_landscape);
 
@@ -400,6 +400,7 @@ void StitchesEditor::importSqlResult() {
     m_imageToolBar->setArticleId(id);
 
   m_actionBar->setRestoreable(m_tableData->isValid());
+  // qDebug() << Q_FUNC_INFO << inputFields;
   setResetModified(inputFields);
 }
 
