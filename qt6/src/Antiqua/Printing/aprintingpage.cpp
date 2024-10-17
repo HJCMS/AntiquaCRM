@@ -138,8 +138,8 @@ void APrintingPage::paintAddressBox(QPainter& painter) {
   const QPointF _top = addressZone().topLeft();
   const QString _address = toRichText(contentData.value("address").toString());
 
-  QStaticText _recipient =
-      textBlock((Qt::AlignLeft | Qt::AlignTop), QTextOption::WrapAtWordBoundaryOrAnywhere);
+  QStaticText _recipient = textBlock((Qt::AlignLeft | Qt::AlignTop), // align
+                                     QTextOption::WrapAtWordBoundaryOrAnywhere);
   _recipient.setTextWidth(getPoints(80));
   _recipient.setText(_address);
   _recipient.prepare(painter.transform(), addressFont);
@@ -375,15 +375,15 @@ const QImage APrintingPage::watermark() const {
       qWarning("unsupported image type");
       return QImage();
     }
-    QByteArray buffer;
+    QByteArray _buffer;
     QFile fp(_watermark.filePath());
     if (fp.open(QIODevice::ReadOnly)) {
       while (!fp.atEnd()) {
-        buffer += fp.readLine();
+        _buffer += fp.readLine();
       }
     }
     fp.close();
-    return QImage::fromData(buffer, _suffix.toUtf8().constData());
+    return QImage::fromData(_buffer, _suffix.toUtf8().constData());
   } else {
 #ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Missing Watermark" << cfg->group()
