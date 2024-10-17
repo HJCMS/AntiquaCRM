@@ -172,6 +172,18 @@ public:
    * @param query
    */
   static const QString strEncode(const QString& query);
+
+  /**
+   * @brief Encode local dir/file paths
+   * @return UTF8 encoded string
+   */
+  static const QString pathEncoded(const QString& path);
+
+  /**
+   * @brief Decode local dir/file paths
+   * @return UTF8 decoded string
+   */
+  static const QString pathDecoded(const QString& path);
 };
 
 }; // namespace AntiquaCRM

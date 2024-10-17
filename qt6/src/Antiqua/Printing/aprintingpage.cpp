@@ -13,9 +13,10 @@
 // #define PRINTPAGE_DEBUG
 // #endif
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-APrintingPage::APrintingPage(QWidget *parent, QPageSize::PageSizeId id)
+APrintingPage::APrintingPage(QWidget* parent, QPageSize::PageSizeId id)
     : QWidget{parent}, APrintTools{id} {
   setAttribute(Qt::WA_OpaquePaintEvent, true);
   QPalette _p = palette();
@@ -101,10 +102,9 @@ void APrintingPage::initConfiguration() {
 #endif
 }
 
-void APrintingPage::paintHeader(QPainter &painter) {
+void APrintingPage::paintHeader(QPainter& painter) {
   // DIN 5008 Letter Header
-  const QRectF _rect(QPointF(borderLeft(), 0),
-                     QPointF(borderRight(), getPoints(45)));
+  const QRectF _rect(QPointF(borderLeft(), 0), QPointF(borderRight(), getPoints(45)));
   painter.setFont(headerFont);
   painter.setPen(fontPen());
 
@@ -119,7 +119,7 @@ void APrintingPage::paintHeader(QPainter &painter) {
   painter.drawText(_rect, (Qt::AlignCenter | Qt::AlignTop), _text);
 }
 
-void APrintingPage::paintAddressBox(QPainter &painter) {
+void APrintingPage::paintAddressBox(QPainter& painter) {
   // DIN 5008B Address Window position
   const QRectF _lwr = letterWindow();
   painter.setFont(footerFont);
@@ -138,8 +138,8 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   const QPointF _top = addressZone().topLeft();
   const QString _address = toRichText(contentData.value("address").toString());
 
-  QStaticText _recipient = textBlock((Qt::AlignLeft | Qt::AlignTop),
-                                     QTextOption::WrapAtWordBoundaryOrAnywhere);
+  QStaticText _recipient =
+      textBlock((Qt::AlignLeft | Qt::AlignTop), QTextOption::WrapAtWordBoundaryOrAnywhere);
   _recipient.setTextWidth(getPoints(80));
   _recipient.setText(_address);
   _recipient.prepare(painter.transform(), addressFont);
@@ -148,7 +148,7 @@ void APrintingPage::paintAddressBox(QPainter &painter) {
   painter.drawStaticText(_top, _recipient);
 }
 
-void APrintingPage::paintIdentities(QPainter &painter) {
+void APrintingPage::paintIdentities(QPainter& painter) {
   const QFont _font = getFont("normal");
   // DIN 5008B Address Area
   const QPointF _point(getPoints(125), getPoints(55));
@@ -173,7 +173,7 @@ void APrintingPage::paintIdentities(QPainter &painter) {
   painter.drawStaticText(_point, _info);
 }
 
-void APrintingPage::paintFooter(QPainter &painter) {
+void APrintingPage::paintFooter(QPainter& painter) {
   // Footer line
   painter.setPen(linePen());
   painter.drawLine(footerLine());
@@ -247,7 +247,7 @@ void APrintingPage::paintFooter(QPainter &painter) {
   painter.drawStaticText(QPoint(_right_box_x, _right_box_y), _rightBox);
 }
 
-void APrintingPage::paintEvent(QPaintEvent *event) {
+void APrintingPage::paintEvent(QPaintEvent* event) {
   // Config Defaults
   const QBrush _base(Qt::white, Qt::SolidPattern);
   // Start Painter
@@ -269,9 +269,8 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
                      QPoint(((borderLeft() / 3) * 2), _ym));
     // END::Letter_folding_lines
 #ifdef PRINTPAGE_DEBUG
-    const QRectF _frame(
-        QPointF(borderLeft(), 0),                     // top left
-        QPointF(borderRight(), pagePoints().height()) // bottom right
+    const QRectF _frame(QPointF(borderLeft(), 0),                     // top left
+                        QPointF(borderRight(), pagePoints().height()) // bottom right
     );
     painter.setPen(QPen(Qt::yellow));
     painter.drawLine(_frame.topLeft(), _frame.bottomLeft());
@@ -302,7 +301,7 @@ void APrintingPage::paintEvent(QPaintEvent *event) {
   QWidget::paintEvent(event);
 }
 
-const QFont APrintingPage::getFont(const QString &key) const {
+const QFont APrintingPage::getFont(const QString& key) const {
   QFont _font;
   QString _str("print_font_");
   _str.append(key);
@@ -318,7 +317,9 @@ const QLineF APrintingPage::footerLine() const {
   return QLineF(_sp, QPointF(borderRight(), _sp.y()));
 }
 
-qreal APrintingPage::borderLeft() const { return margin.left(); }
+qreal APrintingPage::borderLeft() const {
+  return margin.left();
+}
 
 qreal APrintingPage::borderRight() const {
   return qRound(pagePoints().width() - margin.right());
@@ -361,39 +362,37 @@ const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {
   return _map;
 }
 
-const QString APrintingPage::companyData(const QString &key) {
+const QString APrintingPage::companyData(const QString& key) {
   return p_companyData.value(key.toUpper());
 }
 
 const QImage APrintingPage::watermark() const {
-  QStringList accept({"PNG", "JPG"});
-  QString file(cfg->value("print_attachments_path").toString());
-  file.append(QDir::separator());
-  file.append(cfg->value("print_watermark_file").toString());
-  QFileInfo info(file);
-  if (info.isFile() && info.isReadable()) {
-    QString type = info.completeSuffix().split(".").last().toUpper();
-    if (!accept.contains(type, Qt::CaseSensitive)) {
+  QString _apath(cfg->value("print_attachments_path").toString());
+  QFileInfo _watermark(_apath, cfg->value("print_watermark_file").toString());
+  if (_watermark.isReadable()) {
+    QString _suffix = _watermark.completeSuffix().split(".").last().toUpper();
+    if (!QStringList({"PNG", "JPG"}).contains(_suffix, Qt::CaseSensitive)) {
       qWarning("unsupported image type");
       return QImage();
     }
     QByteArray buffer;
-    QFile fp(info.filePath());
+    QFile fp(_watermark.filePath());
     if (fp.open(QIODevice::ReadOnly)) {
       while (!fp.atEnd()) {
         buffer += fp.readLine();
       }
     }
     fp.close();
-    return QImage::fromData(buffer, type.toLocal8Bit());
-  }
+    return QImage::fromData(buffer, _suffix.toUtf8().constData());
+  } else {
 #ifdef ANTIQUA_DEVELOPMENT
-  else {
-    qDebug() << Q_FUNC_INFO << cfg->group()
+    qDebug() << Q_FUNC_INFO << "Missing Watermark" << cfg->group()
              << cfg->value("print_attachments_path").toString()
              << cfg->value("print_watermark_file").toString();
-  }
+#else
+    qWarning("Watermark '%s' not exists!", qPrintable(_watermark.filePath()));
 #endif
+  }
   return QImage();
 }
 

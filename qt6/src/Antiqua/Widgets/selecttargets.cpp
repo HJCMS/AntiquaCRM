@@ -97,12 +97,11 @@ void SelectTargets::setValue(const QVariant& value) {
   if (value.metaType().id() != getType().id())
     return;
 
-  QByteArray _arr(value.toString().trimmed().toUtf8());
-  if (_arr.isEmpty())
+  QString _str = value.toString().trimmed();
+  if (_str.isEmpty())
     return;
 
-  m_edit->setText(QString::fromUtf8(QByteArray::fromPercentEncoding(_arr)));
-  valueChanged();
+  m_edit->setText(AUtil::pathDecoded(_str));
 }
 
 void SelectTargets::setFocus() {
@@ -150,17 +149,7 @@ const QVariant SelectTargets::getValue() {
   if (!isAccessible())
     return QString();
 
-  QUrl _url;
-  _url.setScheme("file");
-  _url.setPath(m_edit->text().trimmed());
-  if (!_url.isLocalFile()) {
-    qWarning("AntiquaCRM::SelectTargets:getValue - Target not found!");
-    return QVariant();
-  }
-  _url.setScheme(QString());
-
-  QDir _dir(_url.toDisplayString(QUrl::EncodeSpaces));
-  return _dir.path();
+  return m_edit->text().trimmed();
 }
 
 const QString SelectTargets::popUpHints() {

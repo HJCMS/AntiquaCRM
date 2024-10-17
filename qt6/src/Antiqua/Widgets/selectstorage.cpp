@@ -8,10 +8,10 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectStorage::SelectStorage(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectStorage::SelectStorage(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_select = new AntiquaCRM::AComboBox(this);
   m_select->setToolTip(tr("Storage Location"));
   m_select->setWithoutDisclosures();
@@ -32,9 +32,7 @@ SelectStorage::SelectStorage(QWidget *parent)
   setRestrictions(_f);
 
   connect(m_select, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
-
-  connect(m_edit, SIGNAL(textChanged(const QString &)),
-          SLOT(filterChanged(const QString &)));
+  connect(m_edit, SIGNAL(textChanged(QString)), SLOT(filterChanged(QString)));
 }
 
 void SelectStorage::valueChanged(int index) {
@@ -45,7 +43,7 @@ void SelectStorage::valueChanged(int index) {
   emit sendInputChanged();
 }
 
-void SelectStorage::filterChanged(const QString &filter) {
+void SelectStorage::filterChanged(const QString& filter) {
   int index = 0;
   if (filter.length() < 3) {
     index = m_select->findText(filter, Qt::MatchStartsWith);
@@ -57,29 +55,31 @@ void SelectStorage::filterChanged(const QString &filter) {
     m_select->setCurrentIndex(index);
 }
 
-void SelectStorage::setValue(const QVariant &value) {
+void SelectStorage::setValue(const QVariant& value) {
   int _index = -1;
   switch (value.metaType().id()) {
-  case (QMetaType::Int):
-  case (QMetaType::LongLong):
-  case (QMetaType::Double):
-    _index = m_select->findData(value, Qt::UserRole, Qt::MatchExactly);
-    break;
+    case (QMetaType::Int):
+    case (QMetaType::LongLong):
+    case (QMetaType::Double):
+      _index = m_select->findData(value, Qt::UserRole, Qt::MatchExactly);
+      break;
 
-  case (QMetaType::QString): {
-    QString _find = value.toString().trimmed();
-    const QRegularExpression pattern("\\b" + _find.toLower() + "\\b",
-                                     QRegularExpression::CaseInsensitiveOption);
-    _index = m_select->findData(pattern, Qt::DisplayRole, // Display
-                                Qt::MatchRegularExpression);
-  } break;
+    case (QMetaType::QString):
+      {
+        QString _find = value.toString().trimmed();
+        const QRegularExpression pattern("\\b" + _find.toLower() + "\\b",
+                                         QRegularExpression::CaseInsensitiveOption);
+        _index = m_select->findData(pattern, Qt::DisplayRole, // Display
+                                    Qt::MatchRegularExpression);
+      }
+      break;
 
-  default:
-    qWarning("Invalid given Data Type in SelectStorage.");
+    default:
+      qWarning("Invalid given Data Type in SelectStorage.");
 #ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << "SelectStorage Requires type int but get:" << value;
+      qDebug() << "SelectStorage Requires type int but get:" << value;
 #endif
-    break;
+      break;
   };
 
   if (_index < 1)
@@ -88,7 +88,9 @@ void SelectStorage::setValue(const QVariant &value) {
   m_select->setCurrentIndex(_index);
 }
 
-void SelectStorage::setFocus() { m_select->setFocus(); }
+void SelectStorage::setFocus() {
+  m_select->setFocus();
+}
 
 void SelectStorage::reset() {
   m_edit->clear();
@@ -168,19 +170,19 @@ const QStringList SelectStorage::getCompartments() {
   return _list;
 }
 
-void SelectStorage::setRestrictions(const QSqlField &field) {
+void SelectStorage::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectStorage::setInputToolTip(const QString &tip) {
+void SelectStorage::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectStorage::setBuddyLabel(const QString &text) {
+void SelectStorage::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -224,6 +226,8 @@ const QString SelectStorage::popUpHints() {
   return tr("Storage location is required and must set.");
 }
 
-const QString SelectStorage::statusHints() { return popUpHints(); }
+const QString SelectStorage::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

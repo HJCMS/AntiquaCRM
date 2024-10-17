@@ -182,4 +182,13 @@ const QString AUtil::strEncode(const QString& query) {
   return _o;
 }
 
+const QString AUtil::pathEncoded(const QString& path) {
+  return QString::fromUtf8(QUrl::toPercentEncoding(path));
+}
+
+const QString AUtil::pathDecoded(const QString& path) {
+  QByteArray _arr(path.trimmed().toUtf8());
+  return QUrl::fromPercentEncoding(_arr);
+}
+
 }; // namespace AntiquaCRM

@@ -25,7 +25,7 @@ class LineInputValidator;
  * @class ALineEdit
  * @brief AntiquaCRM Line input edit widget
  *
- * This is a final sub class of QTextEdit with some extended Functions with
+ * This is a final sub class of QLineEdit with some extended Functions with
  * SQL-Field properties, predefined Validators, Completers and visual feedback
  * functions. It  also includes the minLength property for SQL table field
  * constraints.

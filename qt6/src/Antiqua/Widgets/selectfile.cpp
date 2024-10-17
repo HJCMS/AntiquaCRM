@@ -69,11 +69,11 @@ void SelectFile::setValue(const QVariant& value) {
   if (value.metaType().id() != getType().id())
     return;
 
-  QByteArray _arr(value.toString().trimmed().toUtf8());
-  if (_arr.isEmpty())
+  QString _str = value.toString().trimmed();
+  if (_str.isEmpty())
     return;
 
-  m_edit->setText(QString::fromUtf8(QByteArray::fromPercentEncoding(_arr)));
+  m_edit->setText(AUtil::pathDecoded(_str));
 }
 
 void SelectFile::setFocus() {
@@ -117,9 +117,7 @@ const QVariant SelectFile::getValue() {
   if (!isAccessible())
     return QString();
 
-  QUrl _url(m_edit->text().trimmed());
-  QFileInfo _info(_url.toDisplayString(QUrl::EncodeSpaces));
-  return _info.filePath();
+  return m_edit->text().trimmed();
 }
 
 const QString SelectFile::popUpHints() {

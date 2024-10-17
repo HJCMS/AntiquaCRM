@@ -131,7 +131,7 @@ void SslCaSelecter::initData() {
   _dirs << "/var/lib/ca-certificates"; /**< OpenSuSE */
   _dirs << "/etc/pki/tls/certs";       /**< Fedora/REHL */
   _dirs << "/etc/ssl/certs";           /**< Debian/Gentoo */
-#elif Q_OS_WIN
+#elif defined Q_OS_WIN
   QString _ap = qApp->applicationDirPath();
   _dirs << _ap; // .\ca-bundle*
   _ap.append(QDir::separator());
