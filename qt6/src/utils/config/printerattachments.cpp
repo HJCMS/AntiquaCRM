@@ -7,9 +7,9 @@
 #include <QFileInfo>
 #include <QLayout>
 
-PrinterAttachments::PrinterAttachments(QWidget *parent) : QGroupBox{parent} {
+PrinterAttachments::PrinterAttachments(QWidget* parent) : QGroupBox{parent} {
   setTitle(tr("Document heading attachment."));
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
 
   m_path = new AntiquaCRM::SelectTargets(this);
   m_path->setObjectName("print_attachments_path");
@@ -21,9 +21,9 @@ PrinterAttachments::PrinterAttachments(QWidget *parent) : QGroupBox{parent} {
   m_watermark->setBuddyLabel(tr("Watermark"));
   layout->addWidget(m_watermark);
 
-  QHBoxLayout *opacityLayout = new QHBoxLayout();
+  QHBoxLayout* opacityLayout = new QHBoxLayout();
 
-  AntiquaCRM::ALabel *m_opacityInfo = new AntiquaCRM::ALabel(this);
+  AntiquaCRM::ALabel* m_opacityInfo = new AntiquaCRM::ALabel(this);
   m_opacityInfo->setText(tr("Opacity") + ":");
   opacityLayout->addWidget(m_opacityInfo);
 
@@ -44,7 +44,9 @@ PrinterAttachments::PrinterAttachments(QWidget *parent) : QGroupBox{parent} {
   connect(m_opacity, SIGNAL(valueChanged(int)), SLOT(opacityChanged(int)));
 }
 
-void PrinterAttachments::subWidgetChanged() { setWindowModified(true); }
+void PrinterAttachments::subWidgetChanged() {
+  setWindowModified(true);
+}
 
 void PrinterAttachments::opacityChanged(int i) {
   if (i == m_opacity->minimum()) {
@@ -58,14 +60,19 @@ void PrinterAttachments::opacityChanged(int i) {
   subWidgetChanged();
 }
 
-void PrinterAttachments::loadSection(AntiquaCRM::ASettings *config) {
+void PrinterAttachments::loadSection(AntiquaCRM::ASettings* config) {
   QDir _dir(config->value("print_attachments_path").toString());
-  if (_dir.exists())
+  if (_dir.exists()) {
     m_path->setValue(_dir.path());
-
-  QFileInfo _file(_dir, config->value("print_watermark_file").toString());
-  if (_file.isReadable())
-    m_watermark->setValue(_file.filePath());
+    QFileInfo _file(_dir, config->value("print_watermark_file").toString());
+    if (_file.isReadable()) {
+      m_watermark->setValue(_file.filePath());
+    } else {
+      qWarning("Missing print_watermark_file:%s", qPrintable(_file.fileName()));
+    }
+  } else {
+    qWarning("Missing print_attachments_path:%s", qPrintable(_dir.path()));
+  }
 
   QString _pwo(config->value("print_watermark_opacity").toString());
   for (int i = m_opacity->minimum(); i < m_opacity->maximum(); ++i) {
@@ -76,14 +83,19 @@ void PrinterAttachments::loadSection(AntiquaCRM::ASettings *config) {
   }
 }
 
-void PrinterAttachments::saveSection(AntiquaCRM::ASettings *config) {
+void PrinterAttachments::saveSection(AntiquaCRM::ASettings* config) {
   QDir _dir(m_path->getValue().toString());
-  if (_dir.exists())
+  if (_dir.exists()) {
     config->setValue("print_attachments_path", _dir.path());
-
-  QFileInfo _file(_dir, m_watermark->getValue().toString());
-  if (_file.isReadable())
-    config->setValue("print_watermark_file", _file.fileName());
+    QFileInfo _file(_dir, m_watermark->getValue().toString());
+    if (_file.isReadable()) {
+      config->setValue("print_watermark_file", _file.fileName());
+    } else {
+      qWarning("Missing print_watermark_file:%s", qPrintable(_file.fileName()));
+    }
+  } else {
+    qWarning("Missing print_attachments_path:%s", qPrintable(_dir.path()));
+  }
 
   QString _opacity(m_opacityLabel->text());
   config->setValue("print_watermark_opacity", _opacity.toDouble());
