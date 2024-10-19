@@ -287,6 +287,14 @@ int PrintRefund::exec(const QJsonObject &options, bool pdfbtn) {
     return QDialog::Rejected;
   }
 
+  // A Delivery number is generated with: {jear}{day of jear}{order id}
+  // Thus the minimum length is (4+3+1)=8
+  const QString d_id = options.value("o_delivery").toString();
+  if (d_id.length() < 8) {
+    qWarning("Missing Delivery Number %s.", qUtf8Printable(d_id));
+    return QDialog::Rejected;
+  }
+
   pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
   pdfFileName.append(".pdf");
 
@@ -298,7 +306,7 @@ int PrintRefund::exec(const QJsonObject &options, bool pdfbtn) {
   _config.insert("invoice_id", i_id);
   _config.insert("order_id", o_id);
   _config.insert("customer_id", c_id);
-  _config.insert("delivery_id", o_id);
+  _config.insert("delivery_id", d_id);
   _config.insert("vat_level", options.value("o_vat_levels").toInt());
   int _status = options.value("o_payment_status").toInt();
   if (static_cast<AntiquaCRM::OrderPayment>(_status) ==
@@ -331,7 +339,7 @@ int PrintRefund::exec(const QJsonObject &options, bool pdfbtn) {
 
   _array = QJsonArray();
   _array.append(tr("Delivery No."));
-  _array.append(AntiquaCRM::AUtil::zerofill(o_id, 10));
+  _array.append(d_id);
   _content.insert("delivery_id", _array);
 
   if (!page->setContentData(_content))

@@ -506,6 +506,9 @@ const QJsonObject OrdersEditor::createDialogData(qint64 oid) const {
     }
     _query.clear();
   }
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << Q_FUNC_INFO << _jso;
+#endif
   return _jso;
 }
 

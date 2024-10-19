@@ -6,17 +6,16 @@
 #include <QLayout>
 #include <QPrintDialog>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-DeliveryNote::DeliveryNote(QWidget *parent)
-    : AntiquaCRM::APrintingPage{parent} {
+DeliveryNote::DeliveryNote(QWidget* parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_deliverynote_page");
 }
 
 void DeliveryNote::setBodyLayout() {
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(margin.left(), getPoints(100), margin.right(),
-                             margin.bottom());
+  QVBoxLayout* layout = new QVBoxLayout(this);
+  layout->setContentsMargins(margin.left(), getPoints(100), margin.right(), margin.bottom());
   m_body = new APrintingBody(this);
   m_body->setFont(normalFont);
   layout->addWidget(m_body);
@@ -26,7 +25,7 @@ void DeliveryNote::setBodyLayout() {
   QTextTableFormat _tableFormat = m_body->tableFormat();
   _tableFormat.setBottomMargin(10);
 
-  QTextTable *m_table = cursor.insertTable(1, 2, _tableFormat);
+  QTextTable* m_table = cursor.insertTable(1, 2, _tableFormat);
   QTextTableCell hcl = m_table->cellAt(0, 0);
   hcl.setFormat(m_body->tableCellFormat());
   hcl.firstCursorPosition().insertText(tr("Delivery note"));
@@ -45,7 +44,7 @@ void DeliveryNote::setBodyLayout() {
   cursor.endEditBlock();
 }
 
-int DeliveryNote::addArticle(int row, const QSqlQuery &result) {
+int DeliveryNote::addArticle(int row, const QSqlQuery& result) {
   if (m_articles == nullptr)
     return row;
 
@@ -68,9 +67,11 @@ int DeliveryNote::addArticle(int row, const QSqlQuery &result) {
   return row;
 }
 
-void DeliveryNote::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+void DeliveryNote::paintContent(QPainter& painter) {
+  Q_UNUSED(painter);
+}
 
-bool DeliveryNote::setContentData(QJsonObject &data) {
+bool DeliveryNote::setContentData(QJsonObject& data) {
   setBodyLayout();
   if (!data.contains("config") || m_body == nullptr) {
     qWarning("Unable to read invoice delivery note data!");
@@ -132,7 +133,7 @@ bool DeliveryNote::setContentData(QJsonObject &data) {
   return true;
 }
 
-PrintDeliveryNote::PrintDeliveryNote(QWidget *parent) : APrintDialog{parent} {
+PrintDeliveryNote::PrintDeliveryNote(QWidget* parent) : APrintDialog{parent} {
   setObjectName("print_deliverynote_dialog");
   pageLayout.setOrientation(QPageLayout::Portrait);
   pageLayout.setPageSize(QPageSize(QPageSize::A4));
@@ -142,7 +143,7 @@ PrintDeliveryNote::PrintDeliveryNote(QWidget *parent) : APrintDialog{parent} {
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
-void PrintDeliveryNote::renderPage(QPrinter *printer) {
+void PrintDeliveryNote::renderPage(QPrinter* printer) {
   Q_CHECK_PTR(page);
   QPainter painter(printer);
   painter.setWindow(page->rect());
@@ -155,7 +156,7 @@ void PrintDeliveryNote::createPDF() {
   QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_DELIVERY);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
-    QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+    QPrinter* printer = new QPrinter(QPrinter::HighResolution);
     printer->setPageLayout(pageLayout);
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setCreator("AntiquaCRM");
@@ -171,21 +172,21 @@ void PrintDeliveryNote::openPrintDialog() {
   QPageLayout pageLayout = page->pageLayout();
   pageLayout.setMode(QPageLayout::FullPageMode);
 
-  QPrinter *printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
+  QPrinter* printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
   printer->setDocName("Invoice");
   printer->setPrinterName(printerInfo.printerName());
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  QPrintDialog* dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
-  connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
+  connect(dialog, SIGNAL(accepted(QPrinter*)), SLOT(renderPage(QPrinter*)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
     sendStatusMessage(tr("Delivery note printed!"));
   }
 }
 
-int PrintDeliveryNote::exec(const QJsonObject &options, bool pdfbtn) {
+int PrintDeliveryNote::exec(const QJsonObject& options, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
   qint64 o_id = options.value("o_id").toInteger(0);
   if (o_id < 1) {
@@ -205,14 +206,22 @@ int PrintDeliveryNote::exec(const QJsonObject &options, bool pdfbtn) {
     return QDialog::Rejected;
   }
 
-  pdfFileName = AntiquaCRM::AUtil::zerofill(o_id);
+  // A Delivery number is generated with: {jear}{day of jear}{order id}
+  // Thus the minimum length is (4+3+1)=8
+  const QString d_id = options.value("o_delivery").toString();
+  if (d_id.length() < 8) {
+    qWarning("Missing Delivery Number %s.", qUtf8Printable(d_id));
+    return QDialog::Rejected;
+  }
+
+  pdfFileName = d_id;
   pdfFileName.append(".pdf");
 
   QJsonObject _config;
   _config.insert("invoice_id", i_id);
   _config.insert("order_id", o_id);
   _config.insert("customer_id", c_id);
-  _config.insert("delivery_id", o_id);
+  _config.insert("delivery_id", d_id);
 
   page = new DeliveryNote(this);
   QMap<QString, QVariant> _person = page->queryCustomerData(c_id);
@@ -239,7 +248,7 @@ int PrintDeliveryNote::exec(const QJsonObject &options, bool pdfbtn) {
 
   _array = QJsonArray();
   _array.append(tr("Delivery No."));
-  _array.append(AntiquaCRM::AUtil::zerofill(o_id, 10));
+  _array.append(d_id);
   _content.insert("delivery_id", _array);
 
   if (!page->setContentData(_content))
