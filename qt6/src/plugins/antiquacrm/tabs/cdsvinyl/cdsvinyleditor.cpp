@@ -12,18 +12,20 @@
 #include <QLayout>
 #include <QPixmap>
 
-CDsVinylEditor::CDsVinylEditor(QWidget *parent)
+CDsVinylEditor::CDsVinylEditor(QWidget* parent)
     : AntiquaCRM::TabsEditor{CDSVINYL_SQL_EDITOR_PATTERN, parent} {
   setWindowTitle(tr("Edit entry"));
   setObjectName("tab_cdsvinyl_editor");
 
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  QVBoxLayout* mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("media_editor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
 
   QString tempWhatsThis;
+  AntiquaCRM::ALabel::Align _lbAlign = AntiquaCRM::ALabel::Align::MiddleRight;
+
   // Row 0
-  QHBoxLayout *row0 = new QHBoxLayout();
+  QHBoxLayout* row0 = new QHBoxLayout();
   cv_id = new AntiquaCRM::SerialId(this);
   cv_id->setObjectName("cv_id");
   cv_id->setBuddyLabel(tr("Article ID"));
@@ -62,10 +64,11 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_restricted = new AntiquaCRM::BoolBox(this);
   cv_restricted->setObjectName("cv_restricted");
   cv_restricted->setBuddyLabel(tr("Local Usage only"));
-  tempWhatsThis = tr("If the option is selected, the article will be listed on "
-                     "your online portals. Please keep in mind that articles "
-                     "are not automatically removed from your Providers, if "
-                     "this option is subsequently deactivated!");
+  tempWhatsThis =
+      tr("If the option is selected, the article will be listed on "
+         "your online portals. Please keep in mind that articles "
+         "are not automatically removed from your Providers, if "
+         "this option is subsequently deactivated!");
   cv_restricted->setWhatsThisText(tempWhatsThis);
   row0->addWidget(cv_restricted);
 
@@ -73,17 +76,17 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   mainLayout->addLayout(row0, 0);
 
   // Row 1
-  AntiquaCRM::ALabel *infolabel;
+  AntiquaCRM::ALabel* infolabel;
   m_splitter = new AntiquaCRM::Splitter(this);
-  QWidget *row2Widget = new QWidget(m_splitter);
+  QWidget* row2Widget = new QWidget(m_splitter);
   row2Widget->setContentsMargins(0, 0, 0, 0);
   int row2c = 0;
-  QGridLayout *row2 = new QGridLayout(row2Widget);
+  QGridLayout* row2 = new QGridLayout(row2Widget);
   row2->setContentsMargins(0, 0, 0, 0);
   row2->setColumnStretch(1, 1);
 
   // cv_title
-  infolabel = new AntiquaCRM::ALabel(tr("Title"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Title"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_title = new AntiquaCRM::TextLine(this);
   cv_title->setObjectName("cv_title");
@@ -92,7 +95,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_title, row2c++, 1, 1, 4);
 
   // cv_title_extended
-  infolabel = new AntiquaCRM::ALabel(tr("Extended"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Extended"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_title_extended = new AntiquaCRM::TextLine(this);
   cv_title_extended->setObjectName("cv_title_extended");
@@ -103,7 +106,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_title_extended, row2c++, 1, 1, 4);
 
   // cv_author
-  infolabel = new AntiquaCRM::ALabel(tr("Artists"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Artists"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_author = new AntiquaCRM::TextLine(this);
   cv_author->setObjectName("cv_author");
@@ -113,19 +116,18 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_author, row2c++, 1, 1, 4);
 
   // cv_publisher
-  infolabel = new AntiquaCRM::ALabel(tr("Musiclabel"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Musiclabel"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_publisher = new AntiquaCRM::TextLine(this);
   cv_publisher->setObjectName("cv_publisher");
   cv_publisher->setToolTip(infolabel->text());
-  tempWhatsThis =
-      tr("In this field please indicate the publisher or the record label.");
+  tempWhatsThis = tr("In this field please indicate the publisher or the record label.");
   cv_publisher->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_publisher, row2c++, 1, 1, 4);
 
   // @BEGIN_GROUP {
   // cv_mtype
-  infolabel = new AntiquaCRM::ALabel(tr("Mediatype"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Mediatype"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_mtype = new AntiquaCRM::SelectMediaType(this);
   cv_mtype->setObjectName("cv_mtype");
@@ -133,21 +135,22 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   cv_mtype->appendStretch(0);
   row2->addWidget(cv_mtype, row2c, 1, 1, 1);
   // cv_condition
-  infolabel = new AntiquaCRM::ALabel(tr("Condition"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Condition"), _lbAlign, row2Widget);
   infolabel->setToolTip(tr("Booklet or Cover condition"));
   row2->addWidget(infolabel, row2c, 2, 1, 1);
   cv_condition = new AntiquaCRM::ConditionEdit(this);
   cv_condition->setObjectName("cv_condition");
   cv_condition->setToolTip(infolabel->toolTip());
-  tempWhatsThis = tr("The current condition for the medium such as CD or vinyl."
-                     "\nNote: In the case of a CD, the plastic sleeve is not "
-                     "included in the description.");
+  tempWhatsThis =
+      tr("The current condition for the medium such as CD or vinyl."
+         "\nNote: In the case of a CD, the plastic sleeve is not "
+         "included in the description.");
   cv_condition->setWhatsThisText(tempWhatsThis);
   row2->addWidget(cv_condition, row2c++, 3, 1, 1);
   // } @END_GROUP
 
   // cv_designation
-  infolabel = new AntiquaCRM::ALabel(tr("Designation"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Designation"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_designation = new AntiquaCRM::TextLine(this);
   cv_designation->setObjectName("cv_designation");
@@ -157,7 +160,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_designation, row2c++, 1, 1, 4);
 
   // cv_storage
-  infolabel = new AntiquaCRM::ALabel(tr("Storage"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_storage = new AntiquaCRM::SelectStorage(this);
   cv_storage->setObjectName("cv_storage");
@@ -170,7 +173,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_storage, row2c++, 1, 1, 4);
 
   // cv_keywords
-  infolabel = new AntiquaCRM::ALabel(tr("Keywords"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Keywords"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_keyword = new AntiquaCRM::KeywordsEdit(this);
   cv_keyword->setObjectName("cv_keyword");
@@ -178,7 +181,7 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->addWidget(cv_keyword, row2c++, 1, 1, 4);
 
   // cv_eangtin
-  infolabel = new AntiquaCRM::ALabel(tr("Barcode"), row2Widget);
+  infolabel = new AntiquaCRM::ALabel(tr("Barcode"), _lbAlign, row2Widget);
   row2->addWidget(infolabel, row2c, 0, 1, 1);
   cv_eangtin = new AntiquaCRM::IsbnEdit(this, // GTIN13
                                         AntiquaCRM::IsbnEdit::CodeType::GTIN);
@@ -189,9 +192,9 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   row2->setRowStretch(row2c++, 1);
 
   // @BEGIN_GROUP {
-  QFrame *toolBarFrame = new QFrame(this);
+  QFrame* toolBarFrame = new QFrame(this);
   toolBarFrame->setContentsMargins(0, 2, 0, 2);
-  QHBoxLayout *tbfLayout = new QHBoxLayout(toolBarFrame);
+  QHBoxLayout* tbfLayout = new QHBoxLayout(toolBarFrame);
   tbfLayout->setContentsMargins(0, 0, 0, 0);
   // Erfordert: http://musicbrainz.org/doc/libdiscid 64Bit
   btn_cdread = new QPushButton(tr("Read CD"), toolBarFrame);
@@ -211,7 +214,8 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
 
   m_splitter->addLeft(row2Widget);
   m_splitter->addRight(m_thumbnail);
-  mainLayout->addWidget(m_splitter, 1);
+  mainLayout->addWidget(m_splitter);
+  mainLayout->setStretch(2, 1);
 
   // Row3
   m_tabWidget = new AntiquaCRM::TabsWidget(this);
@@ -224,11 +228,10 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
   // cv_internal_description
   cv_internal_description = new AntiquaCRM::TextField(m_tabWidget);
   cv_internal_description->setObjectName("cv_internal_description");
-  m_tabWidget->insertTab(1, cv_internal_description, tabIcons,
-                         tr("Internal Description"));
+  m_tabWidget->insertTab(1, cv_internal_description, tabIcons, tr("Internal Description"));
   // Info Tab
-  QWidget *m_infos = new QWidget(m_tabWidget);
-  QVBoxLayout *m_infoLayout = new QVBoxLayout(m_infos);
+  QWidget* m_infos = new QWidget(m_tabWidget);
+  QVBoxLayout* m_infoLayout = new QVBoxLayout(m_infos);
   // cv_since
   cv_since = new AntiquaCRM::DateTimeInfo(this);
   cv_since->setObjectName("cv_since");
@@ -258,17 +261,14 @@ CDsVinylEditor::CDsVinylEditor(QWidget *parent)
 
   // Signals:ToolBar
   connect(btn_cdread, SIGNAL(clicked()), SLOT(setReadMediaDialog()));
-  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
-          SLOT(setRemoveThumbnail(qint64)));
+  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)), SLOT(setRemoveThumbnail(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setImportEditImage()));
 
   // Signals:ActionBar
-  connect(m_actionBar, SIGNAL(sendCancelClicked()),
-          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
-  connect(m_actionBar, SIGNAL(sendFinishClicked()),
-          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()), SLOT(setCheckLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintQRCode()));
 }
 
@@ -323,16 +323,15 @@ void CDsVinylEditor::setInputFields() {
     cv_storage->setValue(_storage_id);
 }
 
-bool CDsVinylEditor::setDataField(const QSqlField &field,
-                                  const QVariant &value) {
+bool CDsVinylEditor::setDataField(const QSqlField& field, const QVariant& value) {
   if (!field.isValid())
     return false;
 
   QString key = field.name();
   // qDebug() << "setDataField:" << key << value << ignoreFields.contains(key);
   bool required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AInputWidget *inp =
-      findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);
+  AntiquaCRM::AInputWidget* inp =
+      findChild<AntiquaCRM::AInputWidget*>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setRestrictions(field);
     // Muss nach setRestrictions kommen!
@@ -375,7 +374,7 @@ void CDsVinylEditor::importSqlResult() {
   setResetModified(inputFields);
 }
 
-bool CDsVinylEditor::sendSqlQuery(const QString &query) {
+bool CDsVinylEditor::sendSqlQuery(const QString& query) {
   //  qDebug() << Q_FUNC_INFO << query;
   //  return true;
   QSqlQuery q = m_sql->query(query);
@@ -398,12 +397,11 @@ bool CDsVinylEditor::sendSqlQuery(const QString &query) {
 
 const QHash<QString, QVariant> CDsVinylEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  QList<AntiquaCRM::AInputWidget *> list =
-      findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                               Qt::FindChildrenRecursively);
-  QList<AntiquaCRM::AInputWidget *>::Iterator it;
+  QList<AntiquaCRM::AInputWidget*> list =
+      findChildren<AntiquaCRM::AInputWidget*>(fieldPattern, Qt::FindChildrenRecursively);
+  QList<AntiquaCRM::AInputWidget*>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
-    AntiquaCRM::AInputWidget *cur = *it;
+    AntiquaCRM::AInputWidget* cur = *it;
     QString objName = cur->objectName();
     if (ignoreFields.contains(objName))
       continue;
@@ -607,8 +605,7 @@ void CDsVinylEditor::setRemoveThumbnail(qint64 articleId) {
   QMessageBox::StandardButton set = QMessageBox::question(
       this, tr("Remove Image from Database"),
       tr("%1\n\nImage - Article Id: %2")
-          .arg(tr("Do you really want to delete the Image?"),
-               QString::number(_id)));
+          .arg(tr("Do you really want to delete the Image?"), QString::number(_id)));
   if (set == QMessageBox::Yes) {
     AntiquaCRM::ImageFileSource thumbnail;
     thumbnail.setFileId(_id);
@@ -626,24 +623,22 @@ void CDsVinylEditor::setImportEditImage() {
     return;
   }
 
-  AntiquaCRM::ImageImportDialog *d =
-      new AntiquaCRM::ImageImportDialog(_id, "Media", this);
-  connect(d, SIGNAL(sendThumbnail(const QPixmap &)), m_thumbnail,
-          SLOT(setPixmap(const QPixmap &)));
+  AntiquaCRM::ImageImportDialog* d = new AntiquaCRM::ImageImportDialog(_id, "Media", this);
+  connect(d, SIGNAL(sendThumbnail(const QPixmap&)), m_thumbnail, SLOT(setPixmap(const QPixmap&)));
 
   d->exec();
   d->deleteLater();
 }
 
 void CDsVinylEditor::setReadMediaDialog() {
-  CDReadDialog *d = new CDReadDialog(this);
+  CDReadDialog* d = new CDReadDialog(this);
   if (d->exec() == QDialog::Accepted) {
     QJsonObject obj = d->data();
     foreach (QString key, obj.keys()) {
       if (key == "tracks" || obj.value(key).isNull())
         continue;
 
-      AntiquaCRM::TextLine *e = findChild<AntiquaCRM::TextLine *>(key);
+      AntiquaCRM::TextLine* e = findChild<AntiquaCRM::TextLine*>(key);
       if (e != nullptr) {
         e->setValue(obj.value(key).toVariant());
       }
@@ -698,12 +693,10 @@ void CDsVinylEditor::setPrintQRCode() {
   _config.insert("qrquery", _qr_url.toString());
   m_cfg->endGroup();
 
-  QString _changed = getDataValue("cv_changed")
-                         .toDate()
-                         .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+  QString _changed = getDataValue("cv_changed").toDate().toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   _config.insert("changed", _changed.trimmed());
 
-  AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
+  AntiquaCRM::PrintBookCard* m_d = new AntiquaCRM::PrintBookCard(this);
   if (m_d->exec(_config) == QDialog::Accepted) {
     pushStatusMessage(tr("Card print successfully."));
   } else {
@@ -764,7 +757,7 @@ bool CDsVinylEditor::createNewEntry() {
   return isEnabled();
 }
 
-bool CDsVinylEditor::createCustomEntry(const QJsonObject &object) {
+bool CDsVinylEditor::createCustomEntry(const QJsonObject& object) {
   Q_UNUSED(object);
   qInfo("Unused function for this plugin, skipped!");
   return true;

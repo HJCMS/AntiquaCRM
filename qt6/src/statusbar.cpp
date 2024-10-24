@@ -5,6 +5,7 @@
 
 #include <AntiquaCRM>
 #include <AntiquaWidgets>
+#include <QDebug>
 #include <QIcon>
 #include <QMessageBox>
 
@@ -150,12 +151,8 @@ StatusBar::StatusBar(QWidget* parent) : QStatusBar{parent} {
   m_timer = new StatusTimer(this);
 
   // SIGNALS
-  connect(m_toolBar, SIGNAL(signalErrorMessage(const QString&)), this,
-          SLOT(statusFatalMessage(const QString&)));
-
-  connect(m_sql, SIGNAL(sendStatementError(const QSqlError&)),
-          SLOT(openErrorPopUp(const QSqlError&)));
-
+  connect(m_toolBar, SIGNAL(signalErrorMessage(QString)), SLOT(statusFatalMessage(QString)));
+  connect(m_sql, SIGNAL(sendStatementError(QSqlError)), SLOT(openErrorPopUp(QSqlError)));
   connect(m_timer, SIGNAL(sendTrigger()), SLOT(startTest()));
 
   if (m_sql->status())
@@ -173,14 +170,12 @@ void StatusBar::startTest() {
   if (!m_sql->status()) {
     statusFatalMessage(tr("No Remote Connection!"));
     m_toolBar->setStatus(StatusCheck::Status::NETWORK_DISCONNECTED);
-    return;
   }
 
   StatusCheck* m_check = new StatusCheck(this);
   connect(m_check, SIGNAL(signalFinished(StatusCheck::Status)), m_toolBar,
           SLOT(setStatus(StatusCheck::Status)));
   connect(m_check, SIGNAL(finished()), m_check, SLOT(deleteLater()));
-
   m_check->wait(qRound(m_check->timeout / 2) * 1000);
   m_check->start();
 }

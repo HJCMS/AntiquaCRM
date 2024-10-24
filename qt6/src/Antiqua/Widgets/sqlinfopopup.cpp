@@ -46,16 +46,16 @@ void SqlInfoPopUp::addRow(const QString& title, const QString& value) {
 }
 
 int SqlInfoPopUp::exec() {
-  AntiquaCRM::ASqlCore sql(this);
-  QSqlQuery _query = sql.query(AntiquaCRM::ASqlFiles::queryStatement("query_connection_info"));
+  AntiquaCRM::ASqlCore _sql(this);
+  QSqlQuery _query = _sql.query(AntiquaCRM::ASqlFiles::queryStatement("query_connection_info"));
   if (_query.size() > 0) {
-    QSqlRecord r = _query.record();
+    addRow(tr("Remote"), _sql.db().hostName());
+    QSqlRecord _rec = _query.record();
     while (_query.next()) {
-      for (int i = 0; i < r.count(); i++) {
-        QSqlField _field = r.field(i);
+      for (int i = 0; i < _rec.count(); i++) {
+        QSqlField _field = _rec.field(i);
         const QString _title = _field.name();
-        const QMetaType _type = _query.value(_title).metaType();
-        if (_type.id() == QMetaType::QString) {
+        if (_query.value(_title).metaType().id() == QMetaType::QString) {
           QString _value = _query.value(_title).toString();
           addRow(translate(_title), translate(_value));
         }

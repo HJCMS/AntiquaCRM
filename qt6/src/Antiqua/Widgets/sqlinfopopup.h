@@ -29,10 +29,8 @@ class ANTIQUACRM_LIBRARY SqlInfoPopUp final : public QDialog {
 private:
   qint8 row_count = 0;
   QGridLayout* layout;
-
   QMap<QString, QString> p_trMap;
   const QString translate(const QString& str) const;
-
   void addRow(const QString& title, const QString& value);
 
 public:
