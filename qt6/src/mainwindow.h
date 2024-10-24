@@ -10,6 +10,8 @@
 #define ANTIQUA_UI_MAINWINDOW_H
 
 #include <AntiquaTabs>
+#include <QCloseEvent>
+#include <QHideEvent>
 #include <QList>
 #include <QMainWindow>
 #include <QObject>
@@ -30,32 +32,32 @@ private:
   /**
    * @brief Configuration will initialed in openWindow()
    */
-  AntiquaCRM::ASettings *config = nullptr;
+  AntiquaCRM::ASettings* config = nullptr;
 
   /**
    * @brief Window Menu bar
    */
-  MenuBar *m_menuBar;
+  MenuBar* m_menuBar;
 
   /**
    * @brief Tabs Interfaces list
    */
-  QList<AntiquaCRM::TabsInterface *> tabInterfaces;
+  QList<AntiquaCRM::TabsInterface*> tabInterfaces;
 
   /**
    * @brief Central Tab widget for all operations!
    */
-  AntiquaCRM::TabsWidget *m_tabWidget;
+  AntiquaCRM::TabsWidget* m_tabWidget;
 
   /**
    * @brief Window Status bar
    */
-  StatusBar *m_statusBar;
+  StatusBar* m_statusBar;
 
   /**
    * @brief Socket receiver
    */
-  AntiquaCRM::AReceiver *m_rx;
+  AntiquaCRM::AReceiver* m_rx;
 
   /**
    * @brief Initial and start local Socket server.
@@ -86,7 +88,7 @@ private:
    * If AntiquaCRM::TabsIndex not present in Tab Widget,
    * AntiquaCRM::TabsWidget::registerTab is called.
    */
-  bool tabViewAction(const QString &id);
+  bool tabViewAction(const QString& id);
 
 private Q_SLOTS:
   /**
@@ -103,7 +105,7 @@ private Q_SLOTS:
    * @brief Slot to View/Open tabs
    * @param name - identifier
    */
-  void setViewTab(const QString &name);
+  void setViewTab(const QString& name);
 
   /**
    * @brief Set/Send Tab operations
@@ -112,7 +114,11 @@ private Q_SLOTS:
    *
    * This slot is called by Socket server.
    */
-  void setAction(const QString &name, const QJsonObject &data);
+  void setAction(const QString& name, const QJsonObject& data);
+
+protected:
+  void hideEvent(QHideEvent*) override;
+  void closeEvent(QCloseEvent*) override;
 
 Q_SIGNALS:
   void sendApplicationQuit();
@@ -132,7 +138,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit MainWindow(QWidget *parent = nullptr);
+  explicit MainWindow(QWidget* parent = nullptr);
 
   /**
    * @brief Primary Window initialisation

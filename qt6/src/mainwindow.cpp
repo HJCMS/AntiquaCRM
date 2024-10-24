@@ -29,22 +29,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
 
   // Begin:Menu:Signals
   connect(m_menuBar, SIGNAL(sendApplicationQuit()), SIGNAL(sendApplicationQuit()));
-
-  connect(m_menuBar->tabsMenu, SIGNAL(sendOpenTab(const QString&)),
-          SLOT(setViewTab(const QString&)));
+  connect(m_menuBar->tabsMenu, SIGNAL(sendOpenTab(QString)), SLOT(setViewTab(QString)));
   // End:Menu:Signals
-
-  connect(m_tabWidget, SIGNAL(sendMessage(const QString&)), m_statusBar,
-          SLOT(showMessage(const QString&)));
+  connect(m_tabWidget, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(showMessage(QString)));
 }
 
 bool MainWindow::createSocketListener() {
   m_rx = new AntiquaCRM::AReceiver(this);
-  connect(m_rx, SIGNAL(sendOperation(const QString&, const QJsonObject&)),
-          SLOT(setAction(const QString&, const QJsonObject&)));
-  connect(m_rx, SIGNAL(sendMessage(const QString&)), m_statusBar,
-          SLOT(statusInfoMessage(const QString&)));
-
+  connect(m_rx, SIGNAL(sendOperation(QString, QJsonObject)), SLOT(setAction(QString, QJsonObject)));
+  connect(m_rx, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(statusInfoMessage(QString)));
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
 }
 
@@ -172,6 +165,26 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
 #endif
 }
 
+void MainWindow::hideEvent(QHideEvent* event) {
+  if (isVisible() && event->isAccepted()) {
+    config->setValue("window/geometry", saveGeometry());
+    if (isFullScreen()) // do not save fullscreen window
+      setWindowState(windowState() & ~Qt::WindowFullScreen);
+
+    config->setValue("window/windowState", saveState());
+  }
+  QMainWindow::hideEvent(event);
+}
+
+void MainWindow::closeEvent(QCloseEvent* event) {
+  // NOTE: QApplication::setQuitOnLastWindowClosed is set to false.
+  // Prevent window close events from window decoration.
+  QHideEvent hide;
+  hide.setAccepted(true);
+  hideEvent(&hide);
+  QMainWindow::closeEvent(event);
+}
+
 void MainWindow::setToggleWindow() {
   if (isVisible()) {
     hide();
@@ -223,11 +236,8 @@ bool MainWindow::closeWindow() {
 
   _geometry.clear();
 
-#ifdef ANTIQUA_DEVELOPMENT
-  return close();
-#else
+  // DEVELOPMENT return close();
   return (m_tabWidget->unloadTabs() && close());
-#endif
 }
 
 MainWindow::~MainWindow() {

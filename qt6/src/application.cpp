@@ -30,6 +30,7 @@ Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   setDesktopFileName(ANTIQUACRM_NAME);
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
+  setQuitOnLastWindowClosed(false);
   // WARNING - Do not init Database Connections in constructors!
   m_cfg = new AntiquaCRM::ASettings(this);
 }
