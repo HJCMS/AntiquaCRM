@@ -170,6 +170,7 @@ void StatusBar::startTest() {
   if (!m_sql->status()) {
     statusFatalMessage(tr("No Remote Connection!"));
     m_toolBar->setStatus(StatusCheck::Status::NETWORK_DISCONNECTED);
+    return;
   }
 
   StatusCheck* m_check = new StatusCheck(this);
