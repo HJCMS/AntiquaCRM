@@ -176,13 +176,12 @@ void MainWindow::hideEvent(QHideEvent* event) {
   QMainWindow::hideEvent(event);
 }
 
-void MainWindow::closeEvent(QCloseEvent* event) {
+void MainWindow::closeEvent(QCloseEvent*) {
   // NOTE: QApplication::setQuitOnLastWindowClosed is set to false.
   // Prevent window close events from window decoration.
   QHideEvent hide;
   hide.setAccepted(true);
   hideEvent(&hide);
-  QMainWindow::closeEvent(event);
 }
 
 void MainWindow::setToggleWindow() {

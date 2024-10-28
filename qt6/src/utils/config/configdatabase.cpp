@@ -106,6 +106,32 @@ ConfigDatabase::ConfigDatabase(QWidget* parent)
   pg_timeout->setRange(1, 30);
   pg_timeout->setValue(5);
   m_groupLayout1s->addWidget(pg_timeout);
+
+  _info =
+      tr("To increase the application performance of sql queries, you can limit the sql query "
+         "result in the main table.");
+  pg_querylimit = new AntiquaCRM::NumEdit(connectionGroup);
+  pg_querylimit->setObjectName("querylimit");
+  pg_querylimit->setRange(100, 999);
+  pg_querylimit->setValue(999);
+  pg_querylimit->setBuddyLabel(tr("Limit"));
+  pg_querylimit->setInputToolTip(tr("Query limit for Table views"));
+  pg_querylimit->setWhatsThisText(_info);
+  m_groupLayout1s->addWidget(pg_querylimit);
+
+  _info =
+      tr("This Numeric value will stop auto refresh table view if table row size is greater then "
+         "this. You can limit this value to prevent freezes on large table views when come back to "
+         "this tab. ");
+  pg_autoupdatecount = new AntiquaCRM::NumEdit(connectionGroup);
+  pg_autoupdatecount->setObjectName("autoupdatecount");
+  pg_autoupdatecount->setRange(50, 999);
+  pg_autoupdatecount->setValue(150);
+  pg_autoupdatecount->setBuddyLabel(tr("Update"));
+  pg_autoupdatecount->setInputToolTip(tr("Auto update limit by rows."));
+  pg_autoupdatecount->setWhatsThisText(_info);
+  m_groupLayout1s->addWidget(pg_autoupdatecount);
+
   m_groupLayout1s->addStretch(1);
   m_groupLayout1->addLayout(m_groupLayout1s);
   // END:Singleline Layout

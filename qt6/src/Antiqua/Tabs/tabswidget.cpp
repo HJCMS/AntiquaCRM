@@ -51,10 +51,14 @@ bool TabsWidget::removeIndex(int index) {
     return true;
 
   AntiquaCRM::TabsIndex* m_ti = tabIndex(index);
-  if (m_ti != nullptr && m_ti->isClosable()) {
+  if (m_ti != nullptr) {
+    // Check for unsaved changes
     if (!m_ti->isWindowModified()) {
       m_tmp = m_ti;
-      removeTab(index);
+      // if tab is Closable then remove it
+      if (m_ti->isClosable())
+        removeTab(index);
+
       return true;
     }
     emit sendMessage(tr("Unsaved changes for '%1'!").arg(m_ti->windowTitle()));
@@ -157,9 +161,7 @@ bool TabsWidget::unloadTabs() {
       emit sendMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
       return false;
     }
-
-    if (!removeIndex(t))
-      qWarning("Tab %s not removed!", qPrintable(m_ti->tabIndexId()));
+    removeIndex(t);
   }
   return true;
 }

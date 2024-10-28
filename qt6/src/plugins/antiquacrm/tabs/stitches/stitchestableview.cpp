@@ -4,19 +4,17 @@
 #include "stitchestableview.h"
 #include "stitchestablemodel.h"
 
-StitchesTableView::StitchesTableView(QWidget *parent)
-    : AntiquaCRM::TableView{parent} {
+StitchesTableView::StitchesTableView(QWidget* parent) : AntiquaCRM::TableView{parent} {
   setEnableTableViewSorting(true);
   m_model = new StitchesTableModel(this);
   where_clause = defaultWhereClause();
-  connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          SLOT(sqlModelError(const QString &, const QString &)));
+  connect(m_model, SIGNAL(sqlErrorMessage(QString,QString)),
+          SLOT(sqlModelError(QString,QString)));
 
-  connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
-          SLOT(getSelectedItem(const QModelIndex &)));
+  connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(getSelectedItem(QModelIndex)));
 }
 
-qint64 StitchesTableView::getTableID(const QModelIndex &index, int column) {
+qint64 StitchesTableView::getTableID(const QModelIndex& index, int column) {
   QModelIndex id(index);
   if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
     return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
@@ -24,11 +22,11 @@ qint64 StitchesTableView::getTableID(const QModelIndex &index, int column) {
   return -1;
 }
 
-int StitchesTableView::getArticleCount(const QModelIndex &index) {
+int StitchesTableView::getArticleCount(const QModelIndex& index) {
   return getTableID(index, 1);
 }
 
-bool StitchesTableView::sqlModelQuery(const QString &query) {
+bool StitchesTableView::sqlModelQuery(const QString& query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -42,22 +40,18 @@ bool StitchesTableView::sqlModelQuery(const QString &query) {
   return false;
 }
 
-void StitchesTableView::contextMenuEvent(QContextMenuEvent *event) {
+void StitchesTableView::contextMenuEvent(QContextMenuEvent* event) {
   QModelIndex index = indexAt(event->pos());
   qint64 rows = m_model->rowCount();
-  AntiquaCRM::TableContextMenu *m_menu =
-      new AntiquaCRM::TableContextMenu(index, rows, this);
+  AntiquaCRM::TableContextMenu* m_menu = new AntiquaCRM::TableContextMenu(index, rows, this);
   m_menu->addOpenAction(tr("Open entry"));
   m_menu->addCreateAction(tr("Create entry"));
   m_menu->addCopyAction(tr("Copy Article Id"));
   m_menu->addOrderAction(tr("Add Article to opened Order"));
   m_menu->addReloadAction(tr("Update"));
 
-  connect(m_menu,
-          SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
-                            const QModelIndex &)),
-          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                                 const QModelIndex &)));
+  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)),
+          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)));
 
   connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
@@ -66,29 +60,28 @@ void StitchesTableView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->deleteLater();
 }
 
-void StitchesTableView::contextMenuAction(
-    AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
-
+void StitchesTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
+                                          const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid < 1)
     return;
 
   switch (ac) {
-  case (AntiquaCRM::TableContextMenu::Actions::Open):
-    emit sendOpenEntry(aid);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Open):
+      emit sendOpenEntry(aid);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Order):
-    createSocketOperation(index);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Order):
+      createSocketOperation(index);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Copy):
-    emit sendCopyToClibboard(QString::number(aid));
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Copy):
+      emit sendCopyToClibboard(QString::number(aid));
+      break;
 
-  default:
-    qWarning("Unknown Menu context request!");
-    return;
+    default:
+      qWarning("Unknown Menu context request!");
+      return;
   };
 }
 
@@ -127,13 +120,13 @@ void StitchesTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlModelQuery(query.getQueryContent());
 }
 
-void StitchesTableView::getSelectedItem(const QModelIndex &index) {
+void StitchesTableView::getSelectedItem(const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid >= 1)
     emit sendOpenEntry(aid);
 }
 
-void StitchesTableView::createSocketOperation(const QModelIndex &index) {
+void StitchesTableView::createSocketOperation(const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid >= 1 && getArticleCount(index) > 0) {
     QJsonObject obj;
@@ -150,9 +143,11 @@ void StitchesTableView::setReloadView() {
   sqlModelQuery(m_model->query().lastQuery());
 }
 
-int StitchesTableView::rowCount() { return m_model->rowCount(); }
+int StitchesTableView::rowCount() {
+  return m_model->rowCount();
+}
 
-bool StitchesTableView::setQuery(const QString &clause) {
+bool StitchesTableView::setQuery(const QString& clause) {
   AntiquaCRM::ASqlFiles query("query_tab_prints_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);

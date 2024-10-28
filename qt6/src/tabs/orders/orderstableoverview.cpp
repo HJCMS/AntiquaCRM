@@ -13,11 +13,11 @@ OrdersTableOverView::OrdersTableOverView(QWidget* parent)
   setEnableTableViewSorting(true);
   m_model = new OrdersTableOverViewModel(this);
   where_clause = defaultWhereClause();
-  connect(m_model, SIGNAL(sqlErrorMessage(const QString&, const QString&)),
-          SLOT(sqlModelError(const QString&, const QString&)));
+  connect(m_model, SIGNAL(sqlErrorMessage(QString,QString)),
+          SLOT(sqlModelError(QString,QString)));
 
-  connect(this, SIGNAL(doubleClicked(const QModelIndex&)),
-          SLOT(getSelectedItem(const QModelIndex&)));
+  connect(this, SIGNAL(doubleClicked(QModelIndex)),
+          SLOT(getSelectedItem(QModelIndex)));
 }
 
 const QStringList OrdersTableOverView::sortOrder() const
@@ -60,8 +60,8 @@ void OrdersTableOverView::contextMenuEvent(QContextMenuEvent* event)
   ac_customer->setIcon(AntiquaCRM::antiquaIcon("system-users"));
   m_menu->addRefundAction(tr("Create refund"));
   m_menu->addReloadAction(tr("Update"));
-  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex&)),
-          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex&)));
+  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)),
+          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)));
 
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
   m_menu->exec(event->globalPos());

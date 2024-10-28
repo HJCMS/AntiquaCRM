@@ -4,19 +4,17 @@
 #include "customerstableview.h"
 #include "customerstablemodel.h"
 
-CustomersTableView::CustomersTableView(QWidget *parent)
-    : AntiquaCRM::TableView{parent} {
+CustomersTableView::CustomersTableView(QWidget* parent) : AntiquaCRM::TableView{parent} {
   setEnableTableViewSorting(true);
   m_model = new CustomersTableModel(this);
   where_clause = defaultWhereClause();
-  connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          SLOT(sqlModelError(const QString &, const QString &)));
+  connect(m_model, SIGNAL(sqlErrorMessage(QString,QString)),
+          SLOT(sqlModelError(QString,QString)));
 
-  connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
-          SLOT(getSelectedItem(const QModelIndex &)));
+  connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(getSelectedItem(QModelIndex)));
 }
 
-qint64 CustomersTableView::getTableID(const QModelIndex &index, int column) {
+qint64 CustomersTableView::getTableID(const QModelIndex& index, int column) {
   QModelIndex id(index);
   if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
     return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
@@ -24,7 +22,7 @@ qint64 CustomersTableView::getTableID(const QModelIndex &index, int column) {
   return -1;
 }
 
-int CustomersTableView::getArticleCount(const QModelIndex &index) {
+int CustomersTableView::getArticleCount(const QModelIndex& index) {
   Q_UNUSED(index);
 #ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "unused - always returns -1!";
@@ -32,7 +30,7 @@ int CustomersTableView::getArticleCount(const QModelIndex &index) {
   return -1;
 }
 
-bool CustomersTableView::sqlModelQuery(const QString &query) {
+bool CustomersTableView::sqlModelQuery(const QString& query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -46,11 +44,10 @@ bool CustomersTableView::sqlModelQuery(const QString &query) {
   return false;
 }
 
-void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
+void CustomersTableView::contextMenuEvent(QContextMenuEvent* event) {
   QModelIndex index = indexAt(event->pos());
   qint64 rows = m_model->rowCount();
-  AntiquaCRM::TableContextMenu *m_menu =
-      new AntiquaCRM::TableContextMenu(index, rows, this);
+  AntiquaCRM::TableContextMenu* m_menu = new AntiquaCRM::TableContextMenu(index, rows, this);
   m_menu->addOpenAction(tr("Open entry"));
   m_menu->addCreateAction(tr("Create entry"));
   m_menu->addDeleteAction(tr("Delete selected Customer"));
@@ -58,11 +55,8 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->addOrderAction(tr("Create new Order for this Customer"));
   m_menu->addReloadAction(tr("Update"));
 
-  connect(m_menu,
-          SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
-                            const QModelIndex &)),
-          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                                 const QModelIndex &)));
+  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)),
+          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)));
 
   connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
@@ -71,33 +65,32 @@ void CustomersTableView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->deleteLater();
 }
 
-void CustomersTableView::contextMenuAction(
-    AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
-
+void CustomersTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
+                                           const QModelIndex& index) {
   qint64 _id = getTableID(index);
   if (_id < 1)
     return;
 
   switch (ac) {
-  case (AntiquaCRM::TableContextMenu::Actions::Open):
-    emit sendOpenEntry(_id);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Open):
+      emit sendOpenEntry(_id);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Delete):
-    emit sendDeleteEntry(_id);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Delete):
+      emit sendDeleteEntry(_id);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Order):
-    createSocketOperation(index);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Order):
+      createSocketOperation(index);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Copy):
-    emit sendCopyToClibboard(QString::number(_id));
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Copy):
+      emit sendCopyToClibboard(QString::number(_id));
+      break;
 
-  default:
-    qWarning("Unknown Menu context request!");
-    return;
+    default:
+      qWarning("Unknown Menu context request!");
+      return;
   };
 }
 
@@ -136,13 +129,13 @@ void CustomersTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlModelQuery(query.getQueryContent());
 }
 
-void CustomersTableView::getSelectedItem(const QModelIndex &index) {
+void CustomersTableView::getSelectedItem(const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid >= 1)
     emit sendOpenEntry(aid);
 }
 
-void CustomersTableView::createSocketOperation(const QModelIndex &index) {
+void CustomersTableView::createSocketOperation(const QModelIndex& index) {
   qint64 cid = getTableID(index);
   if (cid >= 1) {
     QJsonObject obj;
@@ -159,9 +152,11 @@ void CustomersTableView::setReloadView() {
   sqlModelQuery(m_model->query().lastQuery());
 }
 
-int CustomersTableView::rowCount() { return m_model->rowCount(); }
+int CustomersTableView::rowCount() {
+  return m_model->rowCount();
+}
 
-bool CustomersTableView::setQuery(const QString &clause) {
+bool CustomersTableView::setQuery(const QString& clause) {
   AntiquaCRM::ASqlFiles query("query_tab_customers_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);

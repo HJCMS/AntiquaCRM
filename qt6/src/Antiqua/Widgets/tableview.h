@@ -17,7 +17,8 @@
 // required by contextMenuAction
 #include "tablecontextmenu.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class TableHeader;
 
@@ -28,36 +29,34 @@ class TableHeader;
  */
 class ANTIQUACRM_LIBRARY TableView : public QTableView {
   Q_OBJECT
-  Q_PROPERTY(int QueryLimit READ getQueryLimit WRITE setQueryLimit NOTIFY
-                 sendQueryLimitChanged)
 
 private:
   /**
    * @brief Limiting sql query in Main view
-   * @note default:500
+   * @note default:999
    * @see Configurations Dialog "Feel and View"
    */
-  int QueryLimit = 500;
+  int QueryLimit = 999;
 
   /**
    * @brief Only Autoupdate the MainView if smaller then this.
    * @note default:50
    * @see Configurations Dialog "Feel and View"
    */
-  int QueryAutoUpdate = 50;
+  int QueryAutoUpdate = 100;
 
   /**
    * @brief Paint a visual information text for SQL queries!
    */
-  virtual void paintEvent(QPaintEvent *) override final;
+  virtual void paintEvent(QPaintEvent*) override final;
 
 protected:
-  AntiquaCRM::ASettings *m_cfg;
+  AntiquaCRM::ASettings* m_cfg;
 
   /**
    * @brief Horizontal Table header
    */
-  AntiquaCRM::TableHeader *m_header;
+  AntiquaCRM::TableHeader* m_header;
 
   /**
    * @brief Temporary SQL query history
@@ -70,6 +69,14 @@ protected:
   void setEnableTableViewSorting(bool);
 
   /**
+   * @brief this function will set table view limits.
+   *
+   * normally the parameters Query Limit and Query Auto Update set with parent class initialisation.
+   * With this function must call manually to update this limits in your sub class.
+   */
+  void setTableViewLimits();
+
+  /**
    * @brief this slot is used to finalize queries from model.
    */
   void queryFinished(bool);
@@ -77,20 +84,20 @@ protected:
   /**
    * @brief Get table ID from column
    */
-  virtual qint64 getTableID(const QModelIndex &index, int column = 0) = 0;
+  virtual qint64 getTableID(const QModelIndex& index, int column = 0) = 0;
 
   /**
    * @brief Method to prepare SQL Model Query.
    * In this function you can do some checks.
    * @note The SQL table model query must do in this method.
    */
-  virtual bool sqlModelQuery(const QString &query) = 0;
+  virtual bool sqlModelQuery(const QString& query) = 0;
 
 protected Q_SLOTS:
   /**
    * @brief always print sql model error to terminal or syslog
    */
-  void sqlModelError(const QString &table, const QString &message);
+  void sqlModelError(const QString& table, const QString& message);
 
   /**
    * @brief Open a SQL Error PopUp Window
@@ -104,13 +111,12 @@ protected Q_SLOTS:
    *           SLOT(sqlErrorPopUp(const QSqlError &)));
    * @endcode
    */
-  void sqlErrorPopUp(const QSqlError &error);
+  void sqlErrorPopUp(const QSqlError& error);
 
   /**
    * @brief create Table context menu actions
    */
-  virtual void contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                                 const QModelIndex &) = 0;
+  virtual void contextMenuAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex&) = 0;
 
   /**
    * @brief sort table with column and Qt::SortOrder
@@ -124,12 +130,12 @@ protected Q_SLOTS:
   /**
    * @brief slot to prepare getTableID
    */
-  virtual void getSelectedItem(const QModelIndex &) = 0;
+  virtual void getSelectedItem(const QModelIndex&) = 0;
 
   /**
    * @brief create a local socket operation.
    */
-  virtual void createSocketOperation(const QModelIndex &) = 0;
+  virtual void createSocketOperation(const QModelIndex&) = 0;
 
 public Q_SLOTS:
   /**
@@ -144,21 +150,11 @@ public Q_SLOTS:
    */
   virtual void setReloadView() = 0;
 
-  /**
-   * @brief set QueryLimit property
-   */
-  void setQueryLimit(int);
-
 Q_SIGNALS:
-  /**
-   * @brief Property QueryLimit was changed
-   */
-  void sendQueryLimitChanged(int);
-
   /**
    * @brief A Socket operation has been send...
    */
-  void sendSocketOperation(const QJsonObject &);
+  void sendSocketOperation(const QJsonObject&);
 
   /**
    * @brief Automatically emitted when a query has been finished.
@@ -170,12 +166,12 @@ Q_SIGNALS:
    * @brief A Query report was send ...
    * Normally reserved for Status bar messages.
    */
-  void sendQueryReport(const QString &report);
+  void sendQueryReport(const QString& report);
 
   /**
    * @brief Send string to System Clipboard was triggered.
    */
-  void sendCopyToClibboard(const QString &str);
+  void sendCopyToClibboard(const QString& str);
 
   /**
    * @brief Send Open entry by Id
@@ -201,17 +197,22 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit TableView(QWidget *parent = nullptr);
+  explicit TableView(QWidget* parent = nullptr);
 
   /**
    * @brief get application resource icon by name
    */
-  static const QIcon cellIcon(const QString &name);
+  static const QIcon cellIcon(const QString& name);
 
   /**
    * @brief get QueryLimit property
    */
   int getQueryLimit();
+
+  /**
+   * @brief get QueryAutoUpdate property
+   */
+  int getQueryAutoUpdate();
 
   /**
    * @brief compares Auto Update Configuration with current result
@@ -242,7 +243,7 @@ public:
       return sqlModelQuery(tpl.getQueryContent());
    * @endcode
    */
-  virtual bool setQuery(const QString &clause = QString()) = 0;
+  virtual bool setQuery(const QString& clause = QString()) = 0;
 
   /**
    * @brief default where clause when nothing has changed.

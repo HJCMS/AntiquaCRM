@@ -17,8 +17,7 @@
 #include <QPainter>
 #include <QPalette>
 
-OrdersTableView::OrdersTableView(QWidget *parent, bool readOnly)
-    : QTableView{parent} {
+OrdersTableView::OrdersTableView(QWidget* parent, bool readOnly) : QTableView{parent} {
   setObjectName("OrdersTableView");
   setWindowTitle("Purchases [*]");
   setToolTip(tr("Article purchases"));
@@ -41,19 +40,17 @@ OrdersTableView::OrdersTableView(QWidget *parent, bool readOnly)
     setItemDelegate(m_delegate);
   }
 
-  QHeaderView *m_header = horizontalHeader();
+  QHeaderView* m_header = horizontalHeader();
   m_header->setHighlightSections(true);
   m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
   setHorizontalHeader(m_header);
 
-  connect(m_model,
-          SIGNAL(dataChanged(const QModelIndex &, const QModelIndex &)),
-          SLOT(articleChanged(const QModelIndex &, const QModelIndex &)));
-  connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
-          SLOT(rowSelected(const QModelIndex &)));
+  connect(m_model, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
+          SLOT(articleChanged(QModelIndex, QModelIndex)));
+  connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(rowSelected(QModelIndex)));
 }
 
-void OrdersTableView::changeEvent(QEvent *event) {
+void OrdersTableView::changeEvent(QEvent* event) {
   if (event->type() == QEvent::ModifiedChange && isWindowModified())
     parentWidget()->setWindowModified(true);
 
@@ -61,7 +58,7 @@ void OrdersTableView::changeEvent(QEvent *event) {
   QTableView::changeEvent(event);
 }
 
-void OrdersTableView::paintEvent(QPaintEvent *event) {
+void OrdersTableView::paintEvent(QPaintEvent* event) {
   if (rowCount() == 0) {
     QStringList _info;
     _info << tr("Please insert here, the required Order article.");
@@ -75,7 +72,7 @@ void OrdersTableView::paintEvent(QPaintEvent *event) {
   QTableView::paintEvent(event);
 }
 
-void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
+void OrdersTableView::contextMenuEvent(QContextMenuEvent* event) {
   if (editTriggers() == QAbstractItemView::NoEditTriggers)
     return;
 
@@ -83,22 +80,20 @@ void OrdersTableView::contextMenuEvent(QContextMenuEvent *event) {
   if (!p_modelIndex.isValid())
     return;
 
-  QMenu *m = new QMenu("Actions", this);
-  QAction *ac_del = m->addAction(AntiquaCRM::antiquaIcon("database-remove"),
-                                 tr("Delete selected Article"));
+  QMenu* m = new QMenu("Actions", this);
+  QAction* ac_del =
+      m->addAction(AntiquaCRM::antiquaIcon("database-remove"), tr("Delete selected Article"));
   ac_del->setEnabled((m_model->rowCount() > 1));
   connect(ac_del, SIGNAL(triggered()), SLOT(addDeleteQuery()));
 
-  QAction *ac_open = m->addAction(AntiquaCRM::antiquaIcon("view-info"),
-                                  tr("Open article ..."));
+  QAction* ac_open = m->addAction(AntiquaCRM::antiquaIcon("view-info"), tr("Open article ..."));
   ac_open->setEnabled((m_model->rowCount() > 0));
   connect(ac_open, SIGNAL(triggered()), SLOT(addArticleQuery()));
   m->exec(event->globalPos());
   delete m;
 }
 
-void OrdersTableView::articleChanged(const QModelIndex &topLeft,
-                                     const QModelIndex &bottomRight) {
+void OrdersTableView::articleChanged(const QModelIndex& topLeft, const QModelIndex& bottomRight) {
   Q_UNUSED(topLeft);
   resizeColumnToContents(bottomRight.column());
   horizontalHeader()->setStretchLastSection(true);
@@ -106,7 +101,7 @@ void OrdersTableView::articleChanged(const QModelIndex &topLeft,
   // qDebug() << Q_FUNC_INFO;
 }
 
-void OrdersTableView::rowSelected(const QModelIndex &index) {
+void OrdersTableView::rowSelected(const QModelIndex& index) {
   QModelIndex _index = index.sibling(index.row(), 0);
   if (!_index.isValid())
     return;
@@ -156,25 +151,25 @@ void OrdersTableView::addArticleQuery() {
   _action.insert("ACTION", "open_article");
   // mediaType
   switch (_type) {
-  case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
-    _action.insert("TARGET", "cdvinyl_tab");
-    break;
+    case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
+      _action.insert("TARGET", "cdvinyl_tab");
+      break;
 
-  case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
-    _action.insert("TARGET", "printsstitches_tab");
-    break;
+    case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
+      _action.insert("TARGET", "printsstitches_tab");
+      break;
 
-  case AntiquaCRM::ArticleType::OTHER: /**< Various */
-    _action.insert("TARGET", "various_tab");
-    break;
+    case AntiquaCRM::ArticleType::OTHER: /**< Various */
+      _action.insert("TARGET", "various_tab");
+      break;
 
-  default: /**< Default: Books */
-    _action.insert("TARGET", "books_tab");
-    break;
+    default: /**< Default: Books */
+      _action.insert("TARGET", "books_tab");
+      break;
   };
   _action.insert("VALUE", _aid);
 
-  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
+  AntiquaCRM::ATransmitter* m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(_action))
     m_sock->close();
@@ -200,7 +195,7 @@ void OrdersTableView::clearContents() {
   sql_cache.clear();
 }
 
-void OrdersTableView::addArticle(const AntiquaCRM::OrderArticleItems &order) {
+void OrdersTableView::addArticle(const AntiquaCRM::OrderArticleItems& order) {
   if (m_model->addArticle(order)) {
     setWindowModified(true);
     return;
@@ -237,15 +232,14 @@ bool OrdersTableView::isEmpty() {
   return (m_model->rowCount() < 1);
 }
 
-void OrdersTableView::hideColumns(const QStringList &list) {
+void OrdersTableView::hideColumns(const QStringList& list) {
   foreach (QString fieldName, list) {
     int column = m_model->columnIndex(fieldName);
     horizontalHeader()->setSectionHidden(column, true);
   }
 }
 
-bool OrdersTableView::addArticles(
-    const QList<AntiquaCRM::OrderArticleItems> &items) {
+bool OrdersTableView::addArticles(const QList<AntiquaCRM::OrderArticleItems>& items) {
   if (items.size() < 1)
     return false;
 

@@ -14,9 +14,10 @@
 #include <QPainter>
 #include <QPalette>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TableView::TableView(QWidget *parent) : QTableView{parent} {
+TableView::TableView(QWidget* parent) : QTableView{parent} {
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
   setDragEnabled(false);
@@ -27,10 +28,7 @@ TableView::TableView(QWidget *parent) : QTableView{parent} {
   setSelectionMode(QAbstractItemView::SingleSelection);
 
   m_cfg = new AntiquaCRM::ASettings(this);
-  m_cfg->beginGroup("database");
-  QueryLimit = m_cfg->value("SqlQueryLimit", 1000).toInt();
-  QueryAutoUpdate = m_cfg->value("SqlAutoUpdateCount", 50).toInt();
-  m_cfg->endGroup();
+  setTableViewLimits(); // ASettings requiered
 
   /* Kopfzeilen anpassen */
   m_header = new TableHeader(this);
@@ -42,12 +40,11 @@ TableView::TableView(QWidget *parent) : QTableView{parent} {
           SLOT(setSortByColumn(int, Qt::SortOrder)));
 }
 
-void TableView::paintEvent(QPaintEvent *ev) {
+void TableView::paintEvent(QPaintEvent* ev) {
   if (rowCount() == 0) {
     QString time = QTime::currentTime().toString("hh:mm");
     QStringList l(tr("The query at %1 returned no result.").arg(time));
-    l.append(
-        tr("Change the search query or choose a different history query."));
+    l.append(tr("Change the search query or choose a different history query."));
 
     QPainter painter(viewport());
     painter.setBrush(palette().text());
@@ -63,19 +60,29 @@ void TableView::setEnableTableViewSorting(bool b) {
   m_header->setSectionsClickable(b);
 }
 
+void TableView::setTableViewLimits() {
+  QString _group = m_cfg->value("database_profile", "Default").toString();
+  _group.prepend("database/");
+
+  m_cfg->beginGroup(_group);
+  QueryLimit = m_cfg->value("querylimit", QueryLimit).toInt();
+  QueryAutoUpdate = m_cfg->value("autoupdatecount", QueryAutoUpdate).toInt();
+  m_cfg->endGroup();
+}
+
 void TableView::queryFinished(bool b) {
   m_header->resizeToContents(b);
   emit sendQueryFinished();
 }
 
-void TableView::sqlModelError(const QString &table, const QString &message) {
+void TableView::sqlModelError(const QString& table, const QString& message) {
   qWarning("SQL-Model-Error in Table:%s\n%s\n", // verbose
            qPrintable(table),                   // table
            qPrintable(message));
 }
 
-void TableView::sqlErrorPopUp(const QSqlError &error) {
-  AntiquaCRM::APopUpMessage *d = new AntiquaCRM::APopUpMessage(this);
+void TableView::sqlErrorPopUp(const QSqlError& error) {
+  AntiquaCRM::APopUpMessage* d = new AntiquaCRM::APopUpMessage(this);
   d->setWindowTitle(tr("SQL Table query error"));
   d->setText(error.driverText());
   const QString _code = tr("Error code: %1\n").arg(error.nativeErrorCode());
@@ -84,19 +91,17 @@ void TableView::sqlErrorPopUp(const QSqlError &error) {
   d->deleteLater();
 }
 
-void TableView::setQueryLimit(int limit) {
-  if (limit < 1)
-    return;
-
-  QueryLimit = limit;
-  emit sendQueryLimitChanged(QueryLimit);
-}
-
-const QIcon TableView::cellIcon(const QString &name) {
+const QIcon TableView::cellIcon(const QString& name) {
   return AntiquaCRM::antiquaIcon(name);
 }
 
-int TableView::getQueryLimit() { return QueryLimit; }
+int TableView::getQueryLimit() {
+  return QueryLimit;
+}
+
+int TableView::getQueryAutoUpdate() {
+  return QueryAutoUpdate;
+}
 
 bool TableView::isAutoRefreshEnabled() {
   return (rowCount() > 0 && rowCount() < QueryAutoUpdate);

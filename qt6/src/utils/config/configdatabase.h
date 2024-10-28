@@ -32,6 +32,8 @@ private:
   AntiquaCRM::TextLine* pg_password;
   AntiquaCRM::NumEdit* pg_port;
   AntiquaCRM::NumEdit* pg_timeout;
+  AntiquaCRM::NumEdit* pg_querylimit;
+  AntiquaCRM::NumEdit* pg_autoupdatecount;
   // SSL/TLS Settings
   QGroupBox* m_sslGroup;
   SslCaSelecter* ssl_CA;

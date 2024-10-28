@@ -4,19 +4,16 @@
 #include "cdsvinyltableview.h"
 #include "cdsvinyltablemodel.h"
 
-CDsVinylTableView::CDsVinylTableView(QWidget *parent)
-    : AntiquaCRM::TableView{parent} {
+CDsVinylTableView::CDsVinylTableView(QWidget* parent) : AntiquaCRM::TableView{parent} {
   setEnableTableViewSorting(true);
   m_model = new CDsVinylTableModel(this);
   where_clause = defaultWhereClause();
-  connect(m_model, SIGNAL(sqlErrorMessage(const QString &, const QString &)),
-          SLOT(sqlModelError(const QString &, const QString &)));
-
-  connect(this, SIGNAL(doubleClicked(const QModelIndex &)),
-          SLOT(getSelectedItem(const QModelIndex &)));
+  connect(m_model, SIGNAL(sqlErrorMessage(QString,QString)),
+          SLOT(sqlModelError(QString,QString)));
+  connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(getSelectedItem(QModelIndex)));
 }
 
-qint64 CDsVinylTableView::getTableID(const QModelIndex &index, int column) {
+qint64 CDsVinylTableView::getTableID(const QModelIndex& index, int column) {
   QModelIndex id(index);
   if (m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt() >= 1) {
     return m_model->data(id.sibling(id.row(), column), Qt::EditRole).toInt();
@@ -24,11 +21,11 @@ qint64 CDsVinylTableView::getTableID(const QModelIndex &index, int column) {
   return -1;
 }
 
-int CDsVinylTableView::getArticleCount(const QModelIndex &index) {
+int CDsVinylTableView::getArticleCount(const QModelIndex& index) {
   return getTableID(index, 1);
 }
 
-bool CDsVinylTableView::sqlModelQuery(const QString &query) {
+bool CDsVinylTableView::sqlModelQuery(const QString& query) {
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
@@ -42,22 +39,18 @@ bool CDsVinylTableView::sqlModelQuery(const QString &query) {
   return false;
 }
 
-void CDsVinylTableView::contextMenuEvent(QContextMenuEvent *event) {
+void CDsVinylTableView::contextMenuEvent(QContextMenuEvent* event) {
   QModelIndex index = indexAt(event->pos());
   qint64 rows = m_model->rowCount();
-  AntiquaCRM::TableContextMenu *m_menu =
-      new AntiquaCRM::TableContextMenu(index, rows, this);
+  AntiquaCRM::TableContextMenu* m_menu = new AntiquaCRM::TableContextMenu(index, rows, this);
   m_menu->addOpenAction(tr("Open entry"));
   m_menu->addCreateAction(tr("Create entry"));
   m_menu->addCopyAction(tr("Copy Article Id"));
   m_menu->addOrderAction(tr("Add Article to opened Order"));
   m_menu->addReloadAction(tr("Update"));
 
-  connect(m_menu,
-          SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,
-                            const QModelIndex &)),
-          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                                 const QModelIndex &)));
+  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)),
+          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)));
 
   connect(m_menu, SIGNAL(sendCreate()), SIGNAL(sendCreateNewEntry()));
   connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
@@ -66,29 +59,28 @@ void CDsVinylTableView::contextMenuEvent(QContextMenuEvent *event) {
   m_menu->deleteLater();
 }
 
-void CDsVinylTableView::contextMenuAction(
-    AntiquaCRM::TableContextMenu::Actions ac, const QModelIndex &index) {
-
+void CDsVinylTableView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
+                                          const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid < 1)
     return;
 
   switch (ac) {
-  case (AntiquaCRM::TableContextMenu::Actions::Open):
-    emit sendOpenEntry(aid);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Open):
+      emit sendOpenEntry(aid);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Order):
-    createSocketOperation(index);
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Order):
+      createSocketOperation(index);
+      break;
 
-  case (AntiquaCRM::TableContextMenu::Actions::Copy):
-    emit sendCopyToClibboard(QString::number(aid));
-    break;
+    case (AntiquaCRM::TableContextMenu::Actions::Copy):
+      emit sendCopyToClibboard(QString::number(aid));
+      break;
 
-  default:
-    qWarning("Unknown Menu context request!");
-    return;
+    default:
+      qWarning("Unknown Menu context request!");
+      return;
   };
 }
 
@@ -127,13 +119,13 @@ void CDsVinylTableView::setSortByColumn(int column, Qt::SortOrder order) {
   sqlModelQuery(query.getQueryContent());
 }
 
-void CDsVinylTableView::getSelectedItem(const QModelIndex &index) {
+void CDsVinylTableView::getSelectedItem(const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid >= 1)
     emit sendOpenEntry(aid);
 }
 
-void CDsVinylTableView::createSocketOperation(const QModelIndex &index) {
+void CDsVinylTableView::createSocketOperation(const QModelIndex& index) {
   qint64 aid = getTableID(index);
   if (aid >= 1 && getArticleCount(index) > 0) {
     QJsonObject obj;
@@ -150,9 +142,11 @@ void CDsVinylTableView::setReloadView() {
   sqlModelQuery(m_model->query().lastQuery());
 }
 
-int CDsVinylTableView::rowCount() { return m_model->rowCount(); }
+int CDsVinylTableView::rowCount() {
+  return m_model->rowCount();
+}
 
-bool CDsVinylTableView::setQuery(const QString &clause) {
+bool CDsVinylTableView::setQuery(const QString& clause) {
   AntiquaCRM::ASqlFiles query("query_tab_cdv_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
