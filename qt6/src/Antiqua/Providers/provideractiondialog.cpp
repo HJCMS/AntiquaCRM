@@ -9,20 +9,20 @@
 #include <QPushButton>
 #include <QStatusTipEvent>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ProviderActionDialog::ProviderActionDialog(QWidget *parent, bool remote)
-    : QDialog{parent} {
+ProviderActionDialog::ProviderActionDialog(QWidget* parent, bool remote) : QDialog{parent} {
   setSizeGripEnabled(true);
   setMinimumSize(500, 400);
   setContentsMargins(0, 0, 0, 0);
   setWindowTitle(tr("Provider Actions Dialog") + " [*]");
   setWindowIcon(AntiquaCRM::antiquaIcon("view-financial-transfer"));
 
-  QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+  QBoxLayout* layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
   layout->setContentsMargins(5, 5, 5, 5);
 
-  QScrollArea *m_scrollArea = new QScrollArea(this);
+  QScrollArea* m_scrollArea = new QScrollArea(this);
   m_scrollArea->setFrameStyle(QFrame::NoFrame);
   m_scrollArea->setWidgetResizable(true);
   m_scrollArea->setContentsMargins(0, 0, 0, 0);
@@ -40,13 +40,13 @@ ProviderActionDialog::ProviderActionDialog(QWidget *parent, bool remote)
 
   m_buttonBox = new QDialogButtonBox(this);
   if (remote) {
-    QPushButton *btn_send = m_buttonBox->addButton(QDialogButtonBox::Apply);
+    QPushButton* btn_send = m_buttonBox->addButton(QDialogButtonBox::Apply);
     btn_send->setText(tr("Submit"));
     btn_send->setToolTip(tr("Sends selected changes to your provider."));
     btn_send->setIcon(windowIcon());
   }
 
-  QPushButton *btn_cancel = m_buttonBox->addButton(QDialogButtonBox::Cancel);
+  QPushButton* btn_cancel = m_buttonBox->addButton(QDialogButtonBox::Cancel);
   btn_cancel->setToolTip(tr("Cancel all operations and close this Dialog."));
 
   m_buttonBox->addButton(QDialogButtonBox::Close);
@@ -59,14 +59,11 @@ ProviderActionDialog::ProviderActionDialog(QWidget *parent, bool remote)
   layout->setStretch(0, 1);
   setLayout(layout);
 
-  connect(m_navigator, SIGNAL(sendGotoPage(int)), stackedWidget,
-          SLOT(setCurrentIndex(int)));
-
-  connect(m_buttonBox, SIGNAL(clicked(QAbstractButton *)),
-          SLOT(buttonAction(QAbstractButton *)));
+  connect(m_navigator, SIGNAL(sendGotoPage(int)), stackedWidget, SLOT(setCurrentIndex(int)));
+  connect(m_buttonBox, SIGNAL(clicked(QAbstractButton*)), SLOT(buttonAction(QAbstractButton*)));
 }
 
-void ProviderActionDialog::closeEvent(QCloseEvent *e) {
+void ProviderActionDialog::closeEvent(QCloseEvent* e) {
   if (e->type() == QEvent::Close) {
     if (isWindowModified()) {
       e->setAccepted(false);
@@ -77,9 +74,9 @@ void ProviderActionDialog::closeEvent(QCloseEvent *e) {
   QDialog::closeEvent(e);
 }
 
-bool ProviderActionDialog::event(QEvent *e) {
+bool ProviderActionDialog::event(QEvent* e) {
   if (e->type() == QEvent::StatusTip && e->isAccepted()) {
-    QStatusTipEvent *t = static_cast<QStatusTipEvent *>(e);
+    QStatusTipEvent* t = static_cast<QStatusTipEvent*>(e);
     if (t == nullptr)
       return false;
 
@@ -94,31 +91,33 @@ void ProviderActionDialog::setRejectMessage() {
   m_statusBar->showMessage(_m, 5000);
 }
 
-void ProviderActionDialog::buttonAction(QAbstractButton *button) {
+void ProviderActionDialog::buttonAction(QAbstractButton* button) {
   switch (m_buttonBox->standardButton(button)) {
-  case (QDialogButtonBox::Apply):
-    emit sendSubmitClicked();
-    break;
+    case (QDialogButtonBox::Apply):
+      emit sendSubmitClicked();
+      break;
 
-  case (QDialogButtonBox::Cancel):
-    done(QDialog::Rejected);
-    break;
+    case (QDialogButtonBox::Cancel):
+      done(QDialog::Rejected);
+      break;
 
-  case (QDialogButtonBox::Close): {
-    if (isWindowModified()) {
-      setRejectMessage();
-      return;
-    }
-    done(QDialog::Accepted);
-  } break;
+    case (QDialogButtonBox::Close):
+      {
+        if (isWindowModified()) {
+          setRejectMessage();
+          return;
+        }
+        done(QDialog::Accepted);
+      }
+      break;
 
-  default:
-    qWarning("Unregistered action '%s'!", qPrintable(button->text()));
-    break;
+    default:
+      qWarning("Unregistered action '%s'!", qPrintable(button->text()));
+      break;
   }
 }
 
-void ProviderActionDialog::statusMessage(const QString &message) {
+void ProviderActionDialog::statusMessage(const QString& message) {
   m_statusBar->showMessage(message);
 }
 

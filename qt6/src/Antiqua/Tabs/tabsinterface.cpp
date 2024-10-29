@@ -3,6 +3,10 @@
 
 #include "tabsinterface.h"
 
+/*
+ * Required in header class definition
+ * @{
+ */
 #ifndef ANTIQUACRM_TABS_INDEX_H
 #  include "tabsindex.h"
 #endif
@@ -10,13 +14,14 @@
 #ifndef ANTIQUACRM_PLUGIN_CONFIGWIDGET_H
 #  include "apluginconfigwidget.h"
 #endif
-
-#include <QDebug>
+/*
+ * }@
+ */
 
 namespace AntiquaCRM
 {
-
 TabsInterface::TabsInterface(QObject* parent) : QObject{parent}, serialId{"UNKNOWN_PLUGIN_SERIAL"} {
+  // TODO
 }
 
 const QJsonObject TabsInterface::menuObject() {

@@ -6,25 +6,23 @@
 
 #include <QMenu>
 
-SystemTrayIcon::SystemTrayIcon(const QIcon &icon, QObject *parent)
-    : QSystemTrayIcon{icon, parent} {
+SystemTrayIcon::SystemTrayIcon(const QIcon& icon, QObject* parent) : QSystemTrayIcon{icon, parent} {
   setObjectName("antiquacrm_systemtray");
   setToolTip(tr("Database connected."));
 
   const QIcon _fc = AntiquaCRM::antiquaIcon("view-fullscreen");
 
-  QMenu *m_menu = new QMenu();
+  QMenu* m_menu = new QMenu();
   ac_show = m_menu->addAction(_fc, tr("Window show"));
   ac_hide = m_menu->addAction(_fc, tr("Window hide"));
   m_menu->addSeparator();
-  ac_quit = m_menu->addAction(AntiquaCRM::antiquaIcon("dialog-close"),
-                              tr("Application Quit"));
+  ac_quit = m_menu->addAction(AntiquaCRM::antiquaIcon("dialog-close"), tr("Application Quit"));
   setContextMenu(m_menu);
 
-  connect(ac_show, SIGNAL(triggered()), this, SIGNAL(sendShowWindow()));
-  connect(ac_hide, SIGNAL(triggered()), this, SIGNAL(sendHideWindow()));
-  connect(ac_quit, SIGNAL(triggered()), this, SIGNAL(sendApplQuit()));
-  connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)), this,
+  connect(ac_show, SIGNAL(triggered()), SIGNAL(sendShowWindow()));
+  connect(ac_hide, SIGNAL(triggered()), SIGNAL(sendHideWindow()));
+  connect(ac_quit, SIGNAL(triggered()), SIGNAL(sendApplQuit()));
+  connect(this, SIGNAL(activated(QSystemTrayIcon::ActivationReason)),
           SLOT(actionReason(QSystemTrayIcon::ActivationReason)));
 }
 
@@ -45,7 +43,7 @@ void SystemTrayIcon::setConnectionStatus(bool b) {
   }
 }
 
-void SystemTrayIcon::setMessage(const QString &body) {
+void SystemTrayIcon::setMessage(const QString& body) {
   QString title(ANTIQUACRM_WINDOW_TITLE);
   showMessage(title, body + "\n", icon(), (5 * 1000));
 }

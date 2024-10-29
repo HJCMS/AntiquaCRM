@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
 
 bool MainWindow::createSocketListener() {
   m_rx = new AntiquaCRM::AReceiver(this);
-  connect(m_rx, SIGNAL(sendOperation(QString, QJsonObject)), SLOT(setAction(QString, QJsonObject)));
+  connect(m_rx, SIGNAL(sendOperation(QString,QJsonObject)), SLOT(setAction(QString,QJsonObject)));
   connect(m_rx, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(statusInfoMessage(QString)));
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
 }

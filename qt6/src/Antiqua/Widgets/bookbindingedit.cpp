@@ -5,14 +5,13 @@
 
 #include <AntiquaCRM>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-BookBindingEdit::BookBindingEdit(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+BookBindingEdit::BookBindingEdit(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
-  connect(m_edit, SIGNAL(currentIndexChanged(int)), this,
-          SLOT(valueChanged(int)));
+  connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
 void BookBindingEdit::valueChanged(int index) {
@@ -43,31 +42,32 @@ void BookBindingEdit::initData() {
   int _c = m_edit->count();
   for (int i = 0; i < arr.count(); i++) {
     QJsonObject obj = arr[i].toObject();
-    m_edit->insertItem(_c, obj.value("description").toString(),
-                       obj.value("id").toInt());
+    m_edit->insertItem(_c, obj.value("description").toString(), obj.value("id").toInt());
     _c++;
   }
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void BookBindingEdit::setValue(const QVariant &value) {
+void BookBindingEdit::setValue(const QVariant& value) {
   int _index = 0;
   QMetaType _type = value.metaType();
   switch (_type.id()) {
-  case (QMetaType::Int):
-  case (QMetaType::Long):
-  case (QMetaType::LongLong):
-  case (QMetaType::Double): {
-    _index = m_edit->findData(value.toInt(), Qt::UserRole, Qt::MatchExactly);
-  } break;
+    case (QMetaType::Int):
+    case (QMetaType::Long):
+    case (QMetaType::LongLong):
+    case (QMetaType::Double):
+      {
+        _index = m_edit->findData(value.toInt(), Qt::UserRole, Qt::MatchExactly);
+      }
+      break;
 
-  default:
-    qWarning("Invalid given Data Type in BookBindingEdit.");
+    default:
+      qWarning("Invalid given Data Type in BookBindingEdit.");
 #ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << "BookBindingEdit Requires type int but get:" << value;
+      qDebug() << "BookBindingEdit Requires type int but get:" << value;
 #endif
-    break;
+      break;
   };
 
   if (_index >= 0)
@@ -84,17 +84,19 @@ void BookBindingEdit::reset() {
   setWindowModified(false);
 }
 
-void BookBindingEdit::setRestrictions(const QSqlField &) { setRequired(true); }
+void BookBindingEdit::setRestrictions(const QSqlField&) {
+  setRequired(true);
+}
 
-void BookBindingEdit::setInputToolTip(const QString &tip) {
+void BookBindingEdit::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void BookBindingEdit::setBuddyLabel(const QString &text) {
+void BookBindingEdit::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 

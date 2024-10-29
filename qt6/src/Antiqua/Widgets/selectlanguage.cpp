@@ -5,10 +5,10 @@
 
 #include <QLocale>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectLanguage::SelectLanguage(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectLanguage::SelectLanguage(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
   initData();
@@ -48,32 +48,34 @@ void SelectLanguage::initData() {
   setWindowModified(false);
 }
 
-void SelectLanguage::setValue(const QVariant &value) {
+void SelectLanguage::setValue(const QVariant& value) {
   int _index = m_edit->findData(value, Qt::UserRole, Qt::MatchExactly);
   if (_index > 0)
     m_edit->setCurrentIndex(_index);
 }
 
-void SelectLanguage::setFocus() { m_edit->setFocus(); }
+void SelectLanguage::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectLanguage::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void SelectLanguage::setRestrictions(const QSqlField &field) {
+void SelectLanguage::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectLanguage::setInputToolTip(const QString &tip) {
+void SelectLanguage::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectLanguage::setBuddyLabel(const QString &text) {
+void SelectLanguage::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -110,6 +112,8 @@ const QString SelectLanguage::popUpHints() {
   return tr("Language field is required and must set.");
 }
 
-const QString SelectLanguage::statusHints() { return popUpHints(); }
+const QString SelectLanguage::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

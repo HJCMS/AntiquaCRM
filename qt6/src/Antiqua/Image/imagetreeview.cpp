@@ -5,9 +5,10 @@
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ImageTreeView::ImageTreeView(QWidget *parent) : QTreeView{parent} {
+ImageTreeView::ImageTreeView(QWidget* parent) : QTreeView{parent} {
   setWordWrap(false);
   setAlternatingRowColors(true);
   setAnimated(false);
@@ -32,16 +33,11 @@ ImageTreeView::ImageTreeView(QWidget *parent) : QTreeView{parent} {
   m_headerView->resizeSections(QHeaderView::ResizeToContents);
   m_headerView->setSectionResizeMode(0, QHeaderView::ResizeToContents);
   setHeader(m_headerView);
-
-  connect(this, SIGNAL(expanded(const QModelIndex &)),
-          SLOT(folderChanged(const QModelIndex &)));
-
-  connect(m_model, SIGNAL(rootPathChanged(const QString &)),
-          SLOT(targetChanged(const QString &)));
+  connect(this, SIGNAL(expanded(QModelIndex)), SLOT(folderChanged(QModelIndex)));
+  connect(m_model, SIGNAL(rootPathChanged(QString)), SLOT(targetChanged(QString)));
 }
 
-void ImageTreeView::currentChanged(const QModelIndex &current,
-                                   const QModelIndex &previous) {
+void ImageTreeView::currentChanged(const QModelIndex& current, const QModelIndex& previous) {
   Q_UNUSED(previous);
   if (!current.isValid())
     return;
@@ -54,7 +50,7 @@ void ImageTreeView::currentChanged(const QModelIndex &current,
     emit sendSelected(info);
 }
 
-void ImageTreeView::targetChanged(const QString &path) {
+void ImageTreeView::targetChanged(const QString& path) {
   p_rootIndex = m_model->index(path);
   if (!p_rootIndex.isValid())
     return;
@@ -63,16 +59,18 @@ void ImageTreeView::targetChanged(const QString &path) {
   expandTopLevel();
 }
 
-void ImageTreeView::folderChanged(const QModelIndex &index) {
+void ImageTreeView::folderChanged(const QModelIndex& index) {
   if (!index.isValid())
     return;
 
   resizeColumnToContents(p_rootIndex.column());
 }
 
-void ImageTreeView::expandTopLevel() { expand(p_rootIndex); }
+void ImageTreeView::expandTopLevel() {
+  expand(p_rootIndex);
+}
 
-void ImageTreeView::setShowSource(const QString &path) {
+void ImageTreeView::setShowSource(const QString& path) {
   QModelIndex index = m_model->index(path);
   if (index.isValid()) {
     int _d = 0;
@@ -90,9 +88,11 @@ void ImageTreeView::setShowSource(const QString &path) {
   }
 }
 
-void ImageTreeView::setChangeRoot(const QDir &dir) { setDirectory(dir); }
+void ImageTreeView::setChangeRoot(const QDir& dir) {
+  setDirectory(dir);
+}
 
-bool ImageTreeView::setDirectory(const QDir &dir) {
+bool ImageTreeView::setDirectory(const QDir& dir) {
   if (!dir.exists())
     return false;
 

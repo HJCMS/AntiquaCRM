@@ -7,9 +7,10 @@
 #include <AntiquaCRM>
 #include <QIcon>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-MailButton::MailButton(QWidget *parent) : QPushButton{parent} {
+MailButton::MailButton(QWidget* parent) : QPushButton{parent} {
   setIcon(antiquaIcon("mail-message"));
   setText(tr("Mail Messages"));
   setToolTip(tr("Selection for different eMail messages."));
@@ -37,9 +38,9 @@ bool MailButton::createMailButtonActions() {
   if (q.size() > 0) {
     while (q.next()) {
       QString title = q.value("tb_title").toString();
-      QAction *ac = m_menu->addAction(icon(), title);
+      QAction* ac = m_menu->addAction(icon(), title);
       ac->setObjectName(q.value("tb_caller").toString());
-      connect(ac, SIGNAL(triggered()), this, SLOT(setMailAction()));
+      connect(ac, SIGNAL(triggered()), SLOT(setMailAction()));
     }
     return true;
   }
@@ -76,6 +77,8 @@ void MailButton::setSections(AntiquaCRM::MailGroups flags) {
   emit sendSectionChanged();
 }
 
-AntiquaCRM::MailGroups MailButton::getSections() { return buttons; }
+AntiquaCRM::MailGroups MailButton::getSections() {
+  return buttons;
+}
 
 } // namespace AntiquaCRM

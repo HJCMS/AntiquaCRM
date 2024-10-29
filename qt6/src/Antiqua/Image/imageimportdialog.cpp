@@ -3,9 +3,9 @@
 
 #include "imageimportdialog.h"
 #include "imagefilesource.h"
-#include "imageviewer.h"
 #include "imagetreepathview.h"
 #include "imagetreeview.h"
+#include "imageviewer.h"
 #include "imageviewtoolbar.h"
 
 #include <AntiquaWidgets>
@@ -18,10 +18,10 @@
 #include <QPushButton>
 #include <QStatusTipEvent>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
-                                     QWidget *parent)
+ImageImportDialog::ImageImportDialog(int articleId, const QString& category, QWidget* parent)
     : QDialog{parent}, p_article_id{articleId}, p_category{category} {
   setObjectName("image_import_dialog");
   setWindowTitle(tr("Import Edit Source Images") + "[*]");
@@ -45,8 +45,8 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   splitter->addLeft(viewer);
 
   // ImageTreeView
-  QFrame *rightFrame = new QFrame(this);
-  QBoxLayout *rLayout = new QBoxLayout(QBoxLayout::TopToBottom, rightFrame);
+  QFrame* rightFrame = new QFrame(this);
+  QBoxLayout* rLayout = new QBoxLayout(QBoxLayout::TopToBottom, rightFrame);
   rLayout->setContentsMargins(0, 0, 0, 0);
   pathView = new ImageTreePathView(rightFrame);
   rLayout->addWidget(pathView);
@@ -65,11 +65,11 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
 
   // ButtonBox
   buttonBox = new QDialogButtonBox(this);
-  QPushButton *btn_save = buttonBox->addButton(QDialogButtonBox::Save);
+  QPushButton* btn_save = buttonBox->addButton(QDialogButtonBox::Save);
   btn_save->setIcon(antiquaIcon("action-save"));
   btn_save->setToolTip(tr("Save image to database."));
   btn_save->setStatusTip(btn_save->toolTip());
-  QPushButton *btn_close = buttonBox->addButton(QDialogButtonBox::Close);
+  QPushButton* btn_close = buttonBox->addButton(QDialogButtonBox::Close);
   btn_close->setIcon(antiquaIcon("action-quit"));
   btn_close->setToolTip(tr("End dialog and process data."));
   btn_close->setStatusTip(btn_close->toolTip());
@@ -83,25 +83,18 @@ ImageImportDialog::ImageImportDialog(int articleId, const QString &category,
   setLayout(layout);
 
   // Signals::ImageTreeView
-  connect(treeView, SIGNAL(sendSelected(const QFileInfo &)),
-          SLOT(imageSelected(const QFileInfo &)));
-
-  connect(treeView, SIGNAL(sendPathChanged(const QDir &)), pathView,
-          SLOT(setDirectory(const QDir &)));
-
+  connect(treeView, SIGNAL(sendSelected(QFileInfo)), SLOT(imageSelected(QFileInfo)));
+  connect(treeView, SIGNAL(sendPathChanged(QDir)), pathView, SLOT(setDirectory(QDir)));
   // Signals::ImageTreePathView
-  connect(pathView, SIGNAL(sendSelected(const QFileInfo &)),
-          SLOT(imageSelected(const QFileInfo &)));
+  connect(pathView, SIGNAL(sendSelected(QFileInfo)), SLOT(imageSelected(QFileInfo)));
 
   // Signals::ImageViewToolBar
   connect(toolBar, SIGNAL(sendReset()), viewer, SLOT(reset()));
   connect(toolBar, SIGNAL(sendCutting()), viewer, SLOT(cutting()));
   connect(toolBar, SIGNAL(sendRotate()), viewer, SLOT(rotate()));
   connect(toolBar, SIGNAL(sendAdjust()), viewer, SLOT(adjust()));
-  connect(toolBar, SIGNAL(sendChangeTarget(const QDir &)), treeView,
-          SLOT(setChangeRoot(const QDir &)));
-  connect(toolBar, SIGNAL(sendSelectArticle(const QString &)), treeView,
-          SLOT(setShowSource(const QString &)));
+  connect(toolBar, SIGNAL(sendChangeTarget(QDir)), treeView, SLOT(setChangeRoot(QDir)));
+  connect(toolBar, SIGNAL(sendSelectArticle(QString)), treeView, SLOT(setShowSource(QString)));
 
   // Signals::QDialogButtonBox
   connect(btn_save, SIGNAL(clicked()), SLOT(aboutToSave()));
@@ -138,8 +131,8 @@ void ImageImportDialog::initialConfiguration() {
   config->endGroup();
 }
 
-ImageFileSource *ImageImportDialog::findSource(QDir dir, qint64 id) {
-  ImageFileSource *_ifs = new ImageFileSource(p_target.path());
+ImageFileSource* ImageImportDialog::findSource(QDir dir, qint64 id) {
+  ImageFileSource* _ifs = new ImageFileSource(p_target.path());
   _ifs->setFileId(id);
 
   if (dir.exists()) {
@@ -166,7 +159,7 @@ ImageFileSource *ImageImportDialog::findSource(QDir dir, qint64 id) {
   return _ifs;
 }
 
-void ImageImportDialog::closeEvent(QCloseEvent *e) {
+void ImageImportDialog::closeEvent(QCloseEvent* e) {
   if (e->type() == QEvent::Close) {
     e->setAccepted(false);
     statusBar->showMessage(tr("Please use Dialog Buttons to safely quit!"));
@@ -175,9 +168,9 @@ void ImageImportDialog::closeEvent(QCloseEvent *e) {
   QDialog::closeEvent(e);
 }
 
-bool ImageImportDialog::event(QEvent *e) {
+bool ImageImportDialog::event(QEvent* e) {
   if (e->type() == QEvent::StatusTip) {
-    QStatusTipEvent *t = static_cast<QStatusTipEvent *>(e);
+    QStatusTipEvent* t = static_cast<QStatusTipEvent*>(e);
     if (t->tip().isEmpty())
       return false;
 
@@ -187,9 +180,9 @@ bool ImageImportDialog::event(QEvent *e) {
   return QDialog::event(e);
 }
 
-bool ImageImportDialog::eventFilter(QObject *obj, QEvent *event) {
+bool ImageImportDialog::eventFilter(QObject* obj, QEvent* event) {
   if (event->type() == QEvent::ModifiedChange) {
-    QWidget *w = qobject_cast<QWidget *>(obj);
+    QWidget* w = qobject_cast<QWidget*>(obj);
     if (w != nullptr && w->isWindowModified()) {
       setWindowModified(true);
       return true;
@@ -198,7 +191,7 @@ bool ImageImportDialog::eventFilter(QObject *obj, QEvent *event) {
   return QObject::eventFilter(obj, event);
 }
 
-void ImageImportDialog::setViewerImage(const QString &path) {
+void ImageImportDialog::setViewerImage(const QString& path) {
   QImageReader reader(path);
   QImage _image = reader.read();
   if (_image.isNull())
@@ -207,7 +200,7 @@ void ImageImportDialog::setViewerImage(const QString &path) {
   viewer->setImage(_image);
 }
 
-void ImageImportDialog::imageSelected(const QFileInfo &src) {
+void ImageImportDialog::imageSelected(const QFileInfo& src) {
   if (!src.isReadable())
     return;
 
@@ -284,7 +277,9 @@ void ImageImportDialog::aboutToQuit() {
     done(QDialog::Rejected);
 }
 
-ImageFileSource *ImageImportDialog::currentSource() { return source; }
+ImageFileSource* ImageImportDialog::currentSource() {
+  return source;
+}
 
 int ImageImportDialog::exec() {
   if (p_article_id < 1) {

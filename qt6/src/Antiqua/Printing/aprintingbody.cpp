@@ -7,9 +7,10 @@
 #include <QMetaType>
 #include <QPalette>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-APrintingBody::APrintingBody(QWidget *parent) : QTextEdit{parent} {
+APrintingBody::APrintingBody(QWidget* parent) : QTextEdit{parent} {
   setContentsMargins(0, 0, 0, 0);
   QPalette _palette = parentWidget()->palette();
   _palette.setColor(QPalette::Base, Qt::white);
@@ -99,7 +100,7 @@ const QTextBlockFormat APrintingBody::alignCenter() {
   return blockFormat(Qt::AlignCenter | Qt::AlignVCenter);
 }
 
-void APrintingBody::insertText(const QString &text) {
+void APrintingBody::insertText(const QString& text) {
   QTextBlockFormat _bf = blockFormat(Qt::AlignLeft | Qt::AlignTop);
   _bf.setProperty(QTextFormat::LayoutDirection, Qt::LeftToRight);
   _bf.setProperty(QTextFormat::BlockLeftMargin, p_margin);
@@ -114,8 +115,7 @@ void APrintingBody::insertText(const QString &text) {
   _cursor.insertText(carriageReturn());
 }
 
-void APrintingBody::insertText(const QTextCursor &cursor,
-                               const QString &text) const {
+void APrintingBody::insertText(const QTextCursor& cursor, const QString& text) const {
   if (cursor.isNull())
     return;
 
@@ -126,28 +126,31 @@ void APrintingBody::insertText(const QTextCursor &cursor,
   _cursor.insertText(carriageReturn());
 }
 
-void APrintingBody::setCellItem(QTextTableCell &cell, const QVariant &value,
-                                Qt::Alignment align) {
+void APrintingBody::setCellItem(QTextTableCell& cell, const QVariant& value, Qt::Alignment align) {
   // qDebug() << Q_FUNC_INFO  << cell.row() << cell.column();
   QTextCursor cursor = cell.firstCursorPosition();
   cursor.setBlockFormat(blockFormat(align));
   cursor.beginEditBlock();
   switch (value.metaType().id()) {
-  case (QMetaType::Int):
-  case (QMetaType::Long):
-  case (QMetaType::LongLong): {
-    qint64 _value = value.toLongLong();
-    cursor.insertText(QString::number(_value));
-  } break;
+    case (QMetaType::Int):
+    case (QMetaType::Long):
+    case (QMetaType::LongLong):
+      {
+        qint64 _value = value.toLongLong();
+        cursor.insertText(QString::number(_value));
+      }
+      break;
 
-  case (QMetaType::Double): {
-    double _value = value.toDouble();
-    cursor.insertText(QString::number(_value));
-  } break;
+    case (QMetaType::Double):
+      {
+        double _value = value.toDouble();
+        cursor.insertText(QString::number(_value));
+      }
+      break;
 
-  default:
-    cursor.insertText(value.toString());
-    break;
+    default:
+      cursor.insertText(value.toString());
+      break;
   }
   cursor.endEditBlock();
 }

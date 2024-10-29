@@ -6,9 +6,10 @@
 #include <QDebug>
 #include <QLineEdit>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectCurrency::SelectCurrency(QWidget *parent)
+SelectCurrency::SelectCurrency(QWidget* parent)
     : AntiquaCRM::AInputWidget{parent}, QLocale{QLocale::system()} {
   m_box = new AntiquaCRM::AComboBox(this);
   m_edit = new ALineEdit(m_box);
@@ -41,7 +42,7 @@ SelectCurrency::SelectCurrency(QWidget *parent)
   initData();
 }
 
-bool SelectCurrency::checkSymbol(const QString &symbol) const {
+bool SelectCurrency::checkSymbol(const QString& symbol) const {
   const QString _s(symbol.trimmed());
   if (_s.length() == 1)
     return true;
@@ -77,15 +78,15 @@ void SelectCurrency::initData() {
   _f.setDefaultValue(currencySymbol(QLocale::CurrencySymbol));
   setRestrictions(_f);
 
-  int index = m_box->findData(currencySymbol(QLocale::CurrencySymbol),
-                              Qt::UserRole, Qt::MatchExactly);
+  int index =
+      m_box->findData(currencySymbol(QLocale::CurrencySymbol), Qt::UserRole, Qt::MatchExactly);
   if (index > 0)
     m_box->setCurrentIndex(index);
 
   setWindowModified(false);
 }
 
-void SelectCurrency::setValue(const QVariant &value) {
+void SelectCurrency::setValue(const QVariant& value) {
   int _index = m_box->findData(value, Qt::UserRole, Qt::MatchExactly);
   if (_index > 0) {
     m_edit->clear();
@@ -107,20 +108,20 @@ void SelectCurrency::reset() {
   setWindowModified(false);
 }
 
-void SelectCurrency::setRestrictions(const QSqlField &field) {
+void SelectCurrency::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void SelectCurrency::setInputToolTip(const QString &tip) {
+void SelectCurrency::setInputToolTip(const QString& tip) {
   m_box->setToolTip(tip);
 }
 
-void SelectCurrency::setBuddyLabel(const QString &text) {
+void SelectCurrency::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_box);
 }
 

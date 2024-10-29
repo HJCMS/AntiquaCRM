@@ -3,10 +3,10 @@
 
 #include "tableheader.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TableHeader::TableHeader(QWidget *parent)
-    : QHeaderView{Qt::Horizontal, parent} {
+TableHeader::TableHeader(QWidget* parent) : QHeaderView{Qt::Horizontal, parent} {
   setSectionsMovable(false);
   setDefaultAlignment(Qt::AlignCenter);
   setSectionResizeMode(QHeaderView::Interactive);

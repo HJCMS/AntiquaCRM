@@ -9,9 +9,10 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-AReceiver::AReceiver(QObject *parent) : QLocalServer{parent} {
+AReceiver::AReceiver(QObject* parent) : QLocalServer{parent} {
   setObjectName("socket_notifier");
   setSocketOptions(QLocalServer::UserAccessOption);
   setMaxPendingConnections(100);
@@ -28,7 +29,7 @@ AReceiver::~AReceiver() {
 #endif
 }
 
-bool AReceiver::createAction(const QJsonObject &obj) {
+bool AReceiver::createAction(const QJsonObject& obj) {
   if (!obj.contains("ACTION") || !obj.contains("VALUE")) {
     qInfo("Socket action aborted by policy rules!");
     return false;
@@ -84,7 +85,7 @@ bool AReceiver::createAction(const QJsonObject &obj) {
 }
 
 void AReceiver::getTransmitter() {
-  QLocalSocket *m_ls = nextPendingConnection();
+  QLocalSocket* m_ls = nextPendingConnection();
   if (m_ls == nullptr)
     return;
 
@@ -109,8 +110,7 @@ void AReceiver::getTransmitter() {
 #endif
       }
     } else {
-      qWarning("Socketserver parse error: '%s'",
-               qPrintable(_parser.errorString()));
+      qWarning("Socketserver parse error: '%s'", qPrintable(_parser.errorString()));
     }
   }
 }

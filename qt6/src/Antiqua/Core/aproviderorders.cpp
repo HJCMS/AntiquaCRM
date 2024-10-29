@@ -8,23 +8,24 @@
 #include <QDateTime>
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-AProviderOrder::AProviderOrder(const QString &provider, const QString &uniqId) {
+AProviderOrder::AProviderOrder(const QString& provider, const QString& uniqId) {
   providerName = provider;
   bookingId = uniqId;
   p_data = QHash<QString, QVariant>();
   p_orderItems = QList<OrderArticleItems>();
 }
 
-AProviderOrder::AProviderOrder(const AProviderOrder &other) {
+AProviderOrder::AProviderOrder(const AProviderOrder& other) {
   providerName = other.providerName;
   bookingId = other.bookingId;
   p_data = other.p_data;
   p_orderItems = other.p_orderItems;
 }
 
-AProviderOrder &AProviderOrder::operator=(const AProviderOrder &other) {
+AProviderOrder& AProviderOrder::operator=(const AProviderOrder& other) {
   if (this == &other)
     return *this;
 
@@ -361,7 +362,7 @@ const QStringList AProviderOrder::filledKeys() const {
   return list;
 }
 
-bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
+bool AProviderOrder::setValue(const QString& key, const QVariant& value) {
   QHashIterator<QString, QMetaType::Type> it(orderEditKeys());
   while (it.hasNext()) {
     it.next();
@@ -382,16 +383,13 @@ bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
         p_data.insert(key, value);
 
       return true;
-    } else if ((it.key() == key) &&
-               (value.metaType().id() == QMetaType::LongLong)) {
+    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::LongLong)) {
       p_data.insert(key, value.toInt());
       return true;
-    } else if ((it.key() == key) &&
-               (value.metaType().id() == QMetaType::Double)) {
+    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::Double)) {
       p_data.insert(key, value.toDouble());
       return true;
-    } else if ((it.key() == key) &&
-               (value.metaType().id() == QMetaType::QDateTime)) {
+    } else if ((it.key() == key) && (value.metaType().id() == QMetaType::QDateTime)) {
       p_data.insert(key, value.toDateTime());
       return true;
     }
@@ -399,7 +397,7 @@ bool AProviderOrder::setValue(const QString &key, const QVariant &value) {
   return false;
 }
 
-const QVariant AProviderOrder::getValue(const QString &key) {
+const QVariant AProviderOrder::getValue(const QString& key) {
   if (count() < 1)
     return QVariant();
 
@@ -413,8 +411,7 @@ const QVariant AProviderOrder::getValue(const QString &key) {
   return QVariant();
 }
 
-AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString &key,
-                                                        const QVariant &value,
+AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString& key, const QVariant& value,
                                                         int maxLength) {
   QVariant _buffer(value);
   // FIXME Zeichenkettenüberlängen vermeiden.
@@ -443,19 +440,20 @@ AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QString &key,
   return item;
 }
 
-AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QSqlField &field,
-                                                        int maxLength) {
+AntiquaCRM::ArticleOrderItem AProviderOrder::createItem(const QSqlField& field, int maxLength) {
   return createItem(field.name(), field.value(), maxLength);
 }
 
-const QList<OrderArticleItems> AProviderOrder::orders() { return p_orderItems; }
+const QList<OrderArticleItems> AProviderOrder::orders() {
+  return p_orderItems;
+}
 
-bool AProviderOrder::insertOrderItems(const OrderArticleItems &article) {
+bool AProviderOrder::insertOrderItems(const OrderArticleItems& article) {
   p_orderItems.append(article);
   return true;
 }
 
-bool AProviderOrder::removeOrderItem(const QString &orderItemId) {
+bool AProviderOrder::removeOrderItem(const QString& orderItemId) {
   if (p_orderItems.size() < 1) {
     qWarning("AProviderOrderItems ist empty, nothing to remove!");
     return false;

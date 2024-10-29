@@ -6,10 +6,10 @@
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-DescripeEditor::DescripeEditor(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+DescripeEditor::DescripeEditor(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   setObjectName("description_edit");
 
   m_splitter = new Splitter(this);
@@ -28,8 +28,7 @@ DescripeEditor::DescripeEditor(QWidget *parent)
   initData();
 
   connect(m_edit, SIGNAL(textChanged()), SLOT(valueChanged()));
-  connect(m_list, SIGNAL(itemDoubleClicked(QListWidgetItem *)),
-          SLOT(appendText(QListWidgetItem *)));
+  connect(m_list, SIGNAL(itemDoubleClicked(QListWidgetItem*)), SLOT(appendText(QListWidgetItem*)));
 }
 
 void DescripeEditor::initData() {
@@ -45,7 +44,7 @@ void DescripeEditor::valueChanged() {
   emit sendInputChanged();
 }
 
-void DescripeEditor::appendText(QListWidgetItem *item) {
+void DescripeEditor::appendText(QListWidgetItem* item) {
   const QString _txt = item->text();
   m_edit->setFocus();
   m_edit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
@@ -66,7 +65,7 @@ void DescripeEditor::appendText(QListWidgetItem *item) {
   _buf.clear();
 }
 
-void DescripeEditor::setValue(const QVariant &value) {
+void DescripeEditor::setValue(const QVariant& value) {
   if (value.metaType().id() == QMetaType::QString) {
     m_edit->setText(value.toString());
   } else {
@@ -74,7 +73,9 @@ void DescripeEditor::setValue(const QVariant &value) {
   }
 }
 
-void DescripeEditor::setFocus() { m_edit->setFocus(); }
+void DescripeEditor::setFocus() {
+  m_edit->setFocus();
+}
 
 void DescripeEditor::reset() {
   m_edit->setText(QString());
@@ -82,7 +83,7 @@ void DescripeEditor::reset() {
   setWindowModified(false);
 }
 
-void DescripeEditor::setWordsList(const QStringList &list) {
+void DescripeEditor::setWordsList(const QStringList& list) {
   if (list.size() < 1)
     return;
 
@@ -94,20 +95,20 @@ void DescripeEditor::setWordsList(const QStringList &list) {
   }
 }
 
-void DescripeEditor::setRestrictions(const QSqlField &field) {
+void DescripeEditor::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void DescripeEditor::setInputToolTip(const QString &tip) {
+void DescripeEditor::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void DescripeEditor::setBuddyLabel(const QString &text) {
+void DescripeEditor::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -122,12 +123,16 @@ const QMetaType DescripeEditor::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant DescripeEditor::getValue() { return m_edit->text(); }
+const QVariant DescripeEditor::getValue() {
+  return m_edit->text();
+}
 
 const QString DescripeEditor::popUpHints() {
   return tr("A valid Description is required.");
 }
 
-const QString DescripeEditor::statusHints() { return popUpHints(); }
+const QString DescripeEditor::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

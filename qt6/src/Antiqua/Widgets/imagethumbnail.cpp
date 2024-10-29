@@ -69,8 +69,7 @@ void ImageThumbnail::setPixmap(const QPixmap &pixmap) {
   }
 
   /*
-   * Den Speicher möglichst klein halten, wenn das limit überschritten wird eine
-   * Größenänderung durchführen.
+   * Keep the memory as small as possible, if the limit is exceeded, resize it.
    */
   const QSize _ms = maxScaleSize();
   if (_source.width() <= _ms.width() || _source.height() <= _ms.height()) {

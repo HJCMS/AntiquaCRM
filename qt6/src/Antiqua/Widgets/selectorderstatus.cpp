@@ -4,10 +4,10 @@
 #include "selectorderstatus.h"
 #include "antiquaicon.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectOrderStatus::SelectOrderStatus(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectOrderStatus::SelectOrderStatus(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setMinimumContentsLength(m_edit->withoutDisclosures().length());
   layout->addWidget(m_edit);
@@ -62,7 +62,7 @@ void SelectOrderStatus::initData() {
   setWindowModified(false);
 }
 
-void SelectOrderStatus::setValue(const QVariant &value) {
+void SelectOrderStatus::setValue(const QVariant& value) {
   if (value.metaType().id() != QMetaType::Int) {
 #ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Reject:" << value;
@@ -76,30 +76,36 @@ void SelectOrderStatus::setValue(const QVariant &value) {
   }
 }
 
-void SelectOrderStatus::setFocus() { m_edit->setFocus(); }
+void SelectOrderStatus::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectOrderStatus::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void SelectOrderStatus::setReadOnly(bool b) { m_edit->setEnabled(!b); }
+void SelectOrderStatus::setReadOnly(bool b) {
+  m_edit->setEnabled(!b);
+}
 
-void SelectOrderStatus::setReject() { setValue(p_onload_status); }
+void SelectOrderStatus::setReject() {
+  setValue(p_onload_status);
+}
 
-void SelectOrderStatus::setRestrictions(const QSqlField &field) {
+void SelectOrderStatus::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectOrderStatus::setInputToolTip(const QString &tip) {
+void SelectOrderStatus::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectOrderStatus::setBuddyLabel(const QString &text) {
+void SelectOrderStatus::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -124,6 +130,8 @@ const QString SelectOrderStatus::popUpHints() {
   return tr("a valid Order status is required.");
 }
 
-const QString SelectOrderStatus::statusHints() { return popUpHints(); }
+const QString SelectOrderStatus::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

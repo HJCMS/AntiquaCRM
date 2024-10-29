@@ -4,10 +4,10 @@
 #include "selectdeliverservice.h"
 #include "antiquaicon.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectDeliverService::SelectDeliverService(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectDeliverService::SelectDeliverService(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setMinimumContentsLength(8);
   layout->addWidget(m_edit);
@@ -22,7 +22,7 @@ void SelectDeliverService::valueChanged(int index) {
     emit sendSelectedService(index);
 }
 
-void SelectDeliverService::setValue(const QVariant &value) {
+void SelectDeliverService::setValue(const QVariant& value) {
   if (m_edit->count() < 1)
     return;
 
@@ -31,7 +31,9 @@ void SelectDeliverService::setValue(const QVariant &value) {
     m_edit->setCurrentIndex(_index);
 }
 
-void SelectDeliverService::setFocus() { m_edit->setFocus(); }
+void SelectDeliverService::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectDeliverService::reset() {
   m_edit->setCurrentIndex(0);
@@ -41,8 +43,7 @@ void SelectDeliverService::reset() {
 void SelectDeliverService::initData() {
   m_edit->clear();
   const QIcon _icon = AntiquaCRM::qrcIcon("package-deliver");
-  const QString _union_query =
-      AntiquaCRM::ASqlFiles::queryStatement("union_default_delivery");
+  const QString _union_query = AntiquaCRM::ASqlFiles::queryStatement("union_default_delivery");
   if (_union_query.isEmpty())
     return;
 
@@ -75,19 +76,19 @@ void SelectDeliverService::initData() {
   }
 }
 
-void SelectDeliverService::setRestrictions(const QSqlField &field) {
+void SelectDeliverService::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectDeliverService::setInputToolTip(const QString &tip) {
+void SelectDeliverService::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectDeliverService::setBuddyLabel(const QString &text) {
+void SelectDeliverService::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -111,6 +112,8 @@ const QString SelectDeliverService::popUpHints() {
   return tr("a Deliver Service is required.");
 }
 
-const QString SelectDeliverService::statusHints() { return popUpHints(); }
+const QString SelectDeliverService::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

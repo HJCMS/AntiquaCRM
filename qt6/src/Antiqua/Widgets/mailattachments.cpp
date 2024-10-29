@@ -9,9 +9,10 @@
 #include <QFileDialog>
 #include <QLayout>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-AttachmentInfo::AttachmentInfo(QWidget *parent) : QLineEdit{parent} {
+AttachmentInfo::AttachmentInfo(QWidget* parent) : QLineEdit{parent} {
   p_tip = tr("Attachment path");
   setToolTip(p_tip);
   setPlaceholderText(tr("No Attachment changed!"));
@@ -40,7 +41,7 @@ void AttachmentInfo::setExistsFrame(bool b) {
   setStyleSheet(b ? styleValid() : styleInvalid());
 }
 
-void AttachmentInfo::setPath(const QString &path) {
+void AttachmentInfo::setPath(const QString& path) {
   QFileInfo _info(path);
   if (_info.isReadable()) {
     p_path = _info.filePath();
@@ -49,10 +50,12 @@ void AttachmentInfo::setPath(const QString &path) {
   }
 }
 
-const QString AttachmentInfo::path() { return p_path; }
+const QString AttachmentInfo::path() {
+  return p_path;
+}
 
-MailAttachments::MailAttachments(QWidget *parent) : QFrame{parent} {
-  QHBoxLayout *layout = new QHBoxLayout(this);
+MailAttachments::MailAttachments(QWidget* parent) : QFrame{parent} {
+  QHBoxLayout* layout = new QHBoxLayout(this);
 
   m_cfg = new AntiquaCRM::ASettings(this);
 
@@ -63,8 +66,7 @@ MailAttachments::MailAttachments(QWidget *parent) : QFrame{parent} {
   m_btn->setText(tr("Attach file"));
   m_btn->setIcon(antiquaIcon("view-search"));
   m_btn->setToolTip(tr("Search file to attach"));
-  m_btn->setWhatsThis(
-      tr("Open the file dialog and change the attachment path."));
+  m_btn->setWhatsThis(tr("Open the file dialog and change the attachment path."));
   layout->addWidget(m_btn);
 
   layout->setStretch(0, 1);
@@ -80,10 +82,9 @@ const QDir MailAttachments::invoiceArchive() {
 }
 
 void MailAttachments::openFileDialog() {
-  QString _file = QFileDialog::getOpenFileName(
-      this, tr("Attachment"), invoiceArchive().path(),
-      tr("Mail Attachments (*.pdf *.PDF *.txt *.TXT)"), nullptr,
-      QFileDialog::HideNameFilterDetails);
+  QString _file = QFileDialog::getOpenFileName(this, tr("Attachment"), invoiceArchive().path(),
+                                               tr("Mail Attachments (*.pdf *.PDF *.txt *.TXT)"),
+                                               nullptr, QFileDialog::HideNameFilterDetails);
   if (!_file.isEmpty()) {
     m_info->setPath(_file);
     m_info->setExistsFrame(true);
@@ -93,12 +94,13 @@ void MailAttachments::openFileDialog() {
   }
 }
 
-void MailAttachments::setActive(bool b) { m_btn->setEnabled(b); }
+void MailAttachments::setActive(bool b) {
+  m_btn->setEnabled(b);
+}
 
-bool MailAttachments::setAttachment(const QString &name) {
+bool MailAttachments::setAttachment(const QString& name) {
   QStringList filter({"*.pdf", "*.PDF"});
-  QDirIterator it(invoiceArchive().path(), filter, QDir::NoFilter,
-                  QDirIterator::Subdirectories);
+  QDirIterator it(invoiceArchive().path(), filter, QDir::NoFilter, QDirIterator::Subdirectories);
 
   while (it.hasNext()) {
     QFileInfo f(it.next());

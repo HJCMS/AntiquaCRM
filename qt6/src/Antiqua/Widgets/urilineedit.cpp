@@ -8,16 +8,15 @@
 #include <QDesktopServices>
 #include <QSize>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-URILineEdit::URILineEdit(const QString &name, QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+URILineEdit::URILineEdit(const QString& name, QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   setObjectName(name);
   m_edit = new AntiquaCRM::ALineEdit(this);
 
   if (objectName().contains("email")) {
-    ac_icon = m_edit->addAction(AntiquaCRM::antiquaIcon("edit-paste"),
-                                QLineEdit::TrailingPosition);
+    ac_icon = m_edit->addAction(AntiquaCRM::antiquaIcon("edit-paste"), QLineEdit::TrailingPosition);
     ac_icon->setObjectName("copy_action");
     ac_icon->setToolTip(tr("Copy eMail into system clipboard."));
     ac_icon->setVisible(false);
@@ -34,14 +33,13 @@ URILineEdit::URILineEdit(const QString &name, QWidget *parent)
   layout->addWidget(m_edit);
   initData();
 
-  connect(m_edit, SIGNAL(textChanged(const QString &)),
-          SLOT(valueChanged(const QString &)));
+  connect(m_edit, SIGNAL(textChanged(QString)), SLOT(valueChanged(QString)));
 }
 
-URILineEdit::URILineEdit(QWidget *parent)
-    : URILineEdit{"uri_line_edit", parent} {}
+URILineEdit::URILineEdit(QWidget* parent) : URILineEdit{"uri_line_edit", parent} {
+}
 
-bool URILineEdit::validate(const QString &uri) const {
+bool URILineEdit::validate(const QString& uri) const {
   if (uri.length() < 4)
     return false;
 
@@ -63,7 +61,7 @@ void URILineEdit::initData() {
   setWindowModified(false);
 }
 
-void URILineEdit::valueChanged(const QString &uri) {
+void URILineEdit::valueChanged(const QString& uri) {
   bool _b = validate(uri);
   m_edit->setValidContent(_b);
   ac_icon->setVisible(_b);
@@ -81,7 +79,7 @@ void URILineEdit::openWeblink() {
     QDesktopServices::openUrl(QUrl(_l));
 }
 
-void URILineEdit::setValue(const QVariant &value) {
+void URILineEdit::setValue(const QVariant& value) {
   if (value.metaType().id() != QMetaType::QString)
     return;
 
@@ -90,14 +88,16 @@ void URILineEdit::setValue(const QVariant &value) {
   setWindowModified(false);
 }
 
-void URILineEdit::setFocus() { m_edit->setFocus(); }
+void URILineEdit::setFocus() {
+  m_edit->setFocus();
+}
 
 void URILineEdit::reset() {
   m_edit->clear();
   setWindowModified(false);
 }
 
-void URILineEdit::setRestrictions(const QSqlField &field) {
+void URILineEdit::setRestrictions(const QSqlField& field) {
   QMetaType _type = field.metaType();
   if (_type.id() == QMetaType::QString && field.length() > 0) {
     m_edit->setMaxLength(field.length());
@@ -118,15 +118,15 @@ void URILineEdit::setRestrictions(const QSqlField &field) {
   }
 }
 
-void URILineEdit::setInputToolTip(const QString &tip) {
+void URILineEdit::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void URILineEdit::setBuddyLabel(const QString &text) {
+void URILineEdit::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
   layout->setStretch(1, 1);
 }
@@ -142,12 +142,16 @@ const QMetaType URILineEdit::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant URILineEdit::getValue() { return m_edit->text(); }
+const QVariant URILineEdit::getValue() {
+  return m_edit->text();
+}
 
 const QString URILineEdit::popUpHints() {
   return tr("Please enter a valid URI.");
 }
 
-const QString URILineEdit::statusHints() { return tr("Missing URI ..."); }
+const QString URILineEdit::statusHints() {
+  return tr("Missing URI ...");
+}
 
 } // namespace AntiquaCRM

@@ -9,9 +9,10 @@
 #include <QtCore>
 #include <QtNetwork>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ANetworker::ANetworker(AntiquaCRM::NetworkQueryType type, QObject *parent)
+ANetworker::ANetworker(AntiquaCRM::NetworkQueryType type, QObject* parent)
     : QNetworkAccessManager{parent}, queryType{type} {
   setObjectName("antiquacrm_networker");
   setCache(new AntiquaCRM::ANetworkCache(this));
@@ -33,37 +34,37 @@ ANetworker::~ANetworker() {
 
 void ANetworker::slotError(QNetworkReply::NetworkError error) {
   switch (error) {
-  case QNetworkReply::ConnectionRefusedError:
-    qWarning("Network: Connection Refused Error");
-    return;
+    case QNetworkReply::ConnectionRefusedError:
+      qWarning("Network: Connection Refused Error");
+      return;
 
-  case QNetworkReply::TimeoutError:
-    qWarning("Network: Timeout Error");
-    return;
+    case QNetworkReply::TimeoutError:
+      qWarning("Network: Timeout Error");
+      return;
 
-  case QNetworkReply::HostNotFoundError:
-    qWarning("Network: Host NotFound Error");
-    return;
+    case QNetworkReply::HostNotFoundError:
+      qWarning("Network: Host NotFound Error");
+      return;
 
-  case QNetworkReply::RemoteHostClosedError:
-    qWarning("Network: RemoteHost Closed Error");
-    return;
+    case QNetworkReply::RemoteHostClosedError:
+      qWarning("Network: RemoteHost Closed Error");
+      return;
 
-  case QNetworkReply::OperationCanceledError:
-    qWarning("Network: Operation Canceled Error");
-    return;
+    case QNetworkReply::OperationCanceledError:
+      qWarning("Network: Operation Canceled Error");
+      return;
 
-  case QNetworkReply::InsecureRedirectError:
-    qWarning("Network: Insecure Redirect Error");
-    return;
+    case QNetworkReply::InsecureRedirectError:
+      qWarning("Network: Insecure Redirect Error");
+      return;
 
-  case QNetworkReply::InternalServerError:
-    qWarning("Network: Internal Server Error");
-    return;
+    case QNetworkReply::InternalServerError:
+      qWarning("Network: Internal Server Error");
+      return;
 
-  default:
-    qWarning("Network: Unknown Error (%s)", qPrintable(QString::number(error)));
-    return;
+    default:
+      qWarning("Network: Unknown Error (%s)", qPrintable(QString::number(error)));
+      return;
   }
 }
 
@@ -72,8 +73,7 @@ void ANetworker::slotReadResponse() {
     return;
 
   // Don't re-emit this signal for redirect replies.
-  if (m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute)
-          .isValid()) {
+  if (m_reply->attribute(QNetworkRequest::RedirectionTargetAttribute).isValid()) {
     qWarning("Redirected not supported in this section!");
     return;
   }
@@ -165,7 +165,7 @@ void ANetworker::slotReadResponse() {
   qWarning("Network: Unknown response type!");
 }
 
-void ANetworker::slotSslErrors(const QList<QSslError> &list) {
+void ANetworker::slotSslErrors(const QList<QSslError>& list) {
   for (int i = 0; i < list.count(); i++) {
     QSslError ssl_error = list.at(i);
     QString ssl_error_str = ssl_error.errorString();
@@ -173,8 +173,7 @@ void ANetworker::slotSslErrors(const QList<QSslError> &list) {
   }
 }
 
-QNetworkReply *ANetworker::loginRequest(const QUrl &url,
-                                        const QByteArray &data) {
+QNetworkReply* ANetworker::loginRequest(const QUrl& url, const QByteArray& data) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderCacheControl();
@@ -183,20 +182,16 @@ QNetworkReply *ANetworker::loginRequest(const QUrl &url,
   request.setTransferTimeout((transfer_timeout * 1000));
   m_reply = post(request, data);
 
-  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
-
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
-          SLOT(slotSslErrors(QList<QSslError>)));
-
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(slotSslErrors(QList<QSslError>)));
+  connect(m_reply, SIGNAL(readyRead()), SLOT(slotReadResponse()));
 
   return m_reply;
 }
 
-QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
-                                           const QJsonDocument &body,
-                                           const QByteArray &charset) {
+QNetworkReply* ANetworker::jsonPostRequest(const QUrl& url, const QJsonDocument& body,
+                                           const QByteArray& charset) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage(charset);
@@ -210,20 +205,16 @@ QNetworkReply *ANetworker::jsonPostRequest(const QUrl &url,
 
   m_reply = post(request, data);
 
-  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
-
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
-          SLOT(slotSslErrors(QList<QSslError>)));
-
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(slotSslErrors(QList<QSslError>)));
+  connect(m_reply, SIGNAL(readyRead()), SLOT(slotReadResponse()));
 
   return m_reply;
 }
 
-QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
-                                          const QDomDocument &body,
-                                          const QByteArray &charset) {
+QNetworkReply* ANetworker::xmlPostRequest(const QUrl& url, const QDomDocument& body,
+                                          const QByteArray& charset) {
   ANetworkRequest _req(url);
   _req.setHeaderUserAgent();
   _req.setHeaderAcceptLanguage(charset);
@@ -237,20 +228,16 @@ QNetworkReply *ANetworker::xmlPostRequest(const QUrl &url,
 
   m_reply = post(_req, data);
 
-  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
-
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
-          SLOT(slotSslErrors(QList<QSslError>)));
-
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(slotSslErrors(QList<QSslError>)));
+  connect(m_reply, SIGNAL(readyRead()), SLOT(slotReadResponse()));
 
   return m_reply;
 }
 
-QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
-                                                const QString &name,
-                                                const QJsonDocument &body) {
+QNetworkReply* ANetworker::jsonMultiPartRequest(const QUrl& url, const QString& name,
+                                                const QJsonDocument& body) {
   ANetworkRequest _req(url);
   _req.setHeaderUserAgent();
   _req.setHeaderAcceptLanguage();
@@ -267,24 +254,21 @@ QNetworkReply *ANetworker::jsonMultiPartRequest(const QUrl &url,
   json_part.setHeader(QNetworkRequest::ContentLengthHeader, data.size());
   json_part.setBody(data);
 
-  QHttpMultiPart *m_form = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+  QHttpMultiPart* m_form = new QHttpMultiPart(QHttpMultiPart::FormDataType);
   m_form->append(json_part);
 
   m_reply = post(_req, m_form);
   m_form->setParent(m_reply);
 
-  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
-
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
-          SLOT(slotSslErrors(QList<QSslError>)));
-
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(slotSslErrors(QList<QSslError>)));
+  connect(m_reply, SIGNAL(readyRead()), SLOT(slotReadResponse()));
 
   return m_reply;
 }
 
-QNetworkReply *ANetworker::putRequest(const QUrl &url, const QByteArray &data) {
+QNetworkReply* ANetworker::putRequest(const QUrl& url, const QByteArray& data) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptText();
@@ -295,18 +279,15 @@ QNetworkReply *ANetworker::putRequest(const QUrl &url, const QByteArray &data) {
 
   m_reply = put(request, data);
 
-  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)), this,
+  connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
-
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), this,
-          SLOT(slotSslErrors(QList<QSslError>)));
-
-  connect(m_reply, SIGNAL(readyRead()), this, SLOT(slotReadResponse()));
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(slotSslErrors(QList<QSslError>)));
+  connect(m_reply, SIGNAL(readyRead()), SLOT(slotReadResponse()));
 
   return m_reply;
 }
 
-QNetworkReply *ANetworker::getRequest(const QUrl &url) {
+QNetworkReply* ANetworker::getRequest(const QUrl& url) {
   ANetworkRequest request(url);
   request.setHeaderUserAgent();
   request.setHeaderAcceptLanguage();
@@ -324,8 +305,7 @@ QNetworkReply *ANetworker::getRequest(const QUrl &url) {
   connect(m_reply, SIGNAL(errorOccurred(QNetworkReply::NetworkError)),
           SLOT(slotError(QNetworkReply::NetworkError)));
 
-  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)),
-          SLOT(slotSslErrors(QList<QSslError>)));
+  connect(m_reply, SIGNAL(sslErrors(QList<QSslError>)), SLOT(slotSslErrors(QList<QSslError>)));
 
   return m_reply;
 }

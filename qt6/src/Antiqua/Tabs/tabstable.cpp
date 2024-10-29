@@ -40,8 +40,8 @@ TabsTable::TabsTable(QWidget *parent) : QTableView{parent} {
   // Warning not before HeaderView initialed
   setEnableTableViewSorting(false);
 
-  connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)),
-          SLOT(setSortByColumn(int, Qt::SortOrder)));
+  connect(m_header, SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+          SLOT(setSortByColumn(int,Qt::SortOrder)));
 
   connect(this, SIGNAL(sendResultExists(bool)), m_header,
           SLOT(resizeToContents(bool)));

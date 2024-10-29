@@ -8,18 +8,20 @@
 #include <QPrintDialog>
 #include <QTableWidgetItem>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-InvoicePage::InvoicePage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
+InvoicePage::InvoicePage(QWidget* parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
 }
 
-void InvoicePage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+void InvoicePage::paintContent(QPainter& painter) {
+  Q_UNUSED(painter);
+}
 
 void InvoicePage::setBodyLayout() {
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(margin.left(), getPoints(95), margin.right(),
-                             margin.bottom());
+  QVBoxLayout* layout = new QVBoxLayout(this);
+  layout->setContentsMargins(margin.left(), getPoints(95), margin.right(), margin.bottom());
   m_body = new APrintingBody(this);
   m_body->setFont(normalFont);
   layout->addWidget(m_body);
@@ -29,7 +31,7 @@ void InvoicePage::setBodyLayout() {
   QTextTableFormat _tableFormat = m_body->tableFormat();
   _tableFormat.setBottomMargin(10);
 
-  QTextTable *m_table = cursor.insertTable(1, 2, _tableFormat);
+  QTextTable* m_table = cursor.insertTable(1, 2, _tableFormat);
   m_table->setObjectName("header_table");
 
   QTextTableCell hcl = m_table->cellAt(0, 0);
@@ -44,27 +46,25 @@ void InvoicePage::setBodyLayout() {
   m_body->setCellItem(hcr, _dtext, Qt::AlignRight);
 }
 
-void InvoicePage::setArticleCell(int row, const QVariant &value) {
+void InvoicePage::setArticleCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 0);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
-  m_body->setCellItem(_tc, value.toLongLong(),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_tc, value.toLongLong(), (Qt::AlignRight | Qt::AlignVCenter));
 }
 
-void InvoicePage::setDescripeCell(int row, const QVariant &value) {
+void InvoicePage::setDescripeCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 1);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toString(), (Qt::AlignLeft | Qt::AlignTop));
 }
 
-void InvoicePage::setQuantityCell(int row, const QVariant &value) {
+void InvoicePage::setQuantityCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 2);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
-  m_body->setCellItem(_tc, value.toLongLong(),
-                      (Qt::AlignCenter | Qt::AlignVCenter));
+  m_body->setCellItem(_tc, value.toLongLong(), (Qt::AlignCenter | Qt::AlignVCenter));
 }
 
-int InvoicePage::addArticleRows(int row, const QSqlQuery &result) {
+int InvoicePage::addArticleRows(int row, const QSqlQuery& result) {
   if (m_articles == nullptr)
     return row;
 
@@ -84,23 +84,22 @@ int InvoicePage::addArticleRows(int row, const QSqlQuery &result) {
   _calc.setBillingMode(config.value("vat_level").toInt());
 
   switch (_calc.getBillingMode()) {
-  case TAX_INCL:
-    _vat_prefix = tr("incl."); // including sales tax
-    break;
+    case TAX_INCL:
+      _vat_prefix = tr("incl."); // including sales tax
+      break;
 
-  case TAX_WITH:
-    _vat_prefix = tr("with"); // with sales tax
-    break;
+    case TAX_WITH:
+      _vat_prefix = tr("with"); // with sales tax
+      break;
 
-  default:
-    _vat_prefix = tr("without"); // without sales tax
-    break;
+    default:
+      _vat_prefix = tr("without"); // without sales tax
+      break;
   }
 
   QTextTableCell _price_cell = m_articles->cellAt(_row, 3);
   _price_cell.setFormat(m_body->articleTableCellFormat((_row > 1)));
-  m_body->setCellItem(_price_cell, _calc.money(_price),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_price_cell, _calc.money(_price), (Qt::AlignRight | Qt::AlignVCenter));
 
   _row++;
   // m_articles->mergeCells(row, 0, 0, 3);
@@ -112,38 +111,42 @@ int InvoicePage::addArticleRows(int row, const QSqlQuery &result) {
 
   int _type = result.value("a_type").toInt();
   switch (static_cast<AntiquaCRM::ArticleType>(_type)) {
-  case (AntiquaCRM::ArticleType::BOOK): {
-    QString _str(_vat_prefix);
-    _str.append(" ");
-    if (_calc.salesTaxRate() > 0) {
-      _str.append(QString::number(_calc.salesTaxRate()));
-      _str.append("% ");
-    }
-    _str.append(tr("VAT"));
-    m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
-                        (Qt::AlignRight | Qt::AlignVCenter));
-  } break;
+    case (AntiquaCRM::ArticleType::BOOK):
+      {
+        QString _str(_vat_prefix);
+        _str.append(" ");
+        if (_calc.salesTaxRate() > 0) {
+          _str.append(QString::number(_calc.salesTaxRate()));
+          _str.append("% ");
+        }
+        _str.append(tr("VAT"));
+        m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
+        m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
+                            (Qt::AlignRight | Qt::AlignVCenter));
+      }
+      break;
 
-  default: {
-    QString _str(_vat_prefix);
-    _str.append(" ");
-    if (_calc.salesTaxRate() > 0) {
-      _str.append(QString::number(_calc.salesTaxRate()));
-      _str.append("% ");
-    }
-    _str.append(tr("VAT"));
-    m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
-                        (Qt::AlignRight | Qt::AlignVCenter));
-  } break;
+    default:
+      {
+        QString _str(_vat_prefix);
+        _str.append(" ");
+        if (_calc.salesTaxRate() > 0) {
+          _str.append(QString::number(_calc.salesTaxRate()));
+          _str.append("% ");
+        }
+        _str.append(tr("VAT"));
+        m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
+        m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
+                            (Qt::AlignRight | Qt::AlignVCenter));
+      }
+      break;
   }
   summary += _calc.salesPrice();
   // qDebug() << "Summary" << summary;
   return _row;
 }
 
-bool InvoicePage::setContentData(QJsonObject &data) {
+bool InvoicePage::setContentData(QJsonObject& data) {
   setBodyLayout();
   if (!data.contains("config") || m_body == nullptr) {
     qWarning("Unable to read invoice content data!");
@@ -212,8 +215,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   // Subtotal Price
   QTextTableCell _st1 = m_articles->cellAt(_row, 3);
   _st1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_st1, AntiquaCRM::ATaxCalculator::money(summary),
-                      Qt::AlignRight);
+  m_body->setCellItem(_st1, AntiquaCRM::ATaxCalculator::money(summary), Qt::AlignRight);
 
   _row++;
   double delivery_cost = config.value("package_price").toDouble();
@@ -224,8 +226,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   // Delivery cost
   QTextTableCell _dc1 = m_articles->cellAt(_row, 3);
   _dc1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(delivery_cost),
-                      Qt::AlignRight);
+  m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(delivery_cost), Qt::AlignRight);
 
   _row++;
   // Total
@@ -236,8 +237,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   summary += delivery_cost;
   QTextTableCell _tp1 = m_articles->cellAt(_row, 3);
   _tp1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
-                      Qt::AlignRight);
+  m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary), Qt::AlignRight);
 
   if (config.value("payment_status").toBool()) {
     m_body->insertText(companyData("COMPANY_INVOICE_PAYED"));
@@ -247,7 +247,7 @@ bool InvoicePage::setContentData(QJsonObject &data) {
   return true;
 }
 
-PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {
+PrintInvoice::PrintInvoice(QWidget* parent) : APrintDialog{parent} {
   setObjectName("print_invoice_dialog");
   pageLayout.setOrientation(QPageLayout::Portrait);
   pageLayout.setPageSize(QPageSize(QPageSize::A4));
@@ -257,7 +257,7 @@ PrintInvoice::PrintInvoice(QWidget *parent) : APrintDialog{parent} {
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
-void PrintInvoice::renderPage(QPrinter *printer) {
+void PrintInvoice::renderPage(QPrinter* printer) {
   Q_CHECK_PTR(page);
   // Bug Windows lost pageLayout
   if (!printer->pageLayout().isValid())
@@ -273,7 +273,7 @@ void PrintInvoice::createPDF() {
   QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_INVOICES);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
-    QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+    QPrinter* printer = new QPrinter(QPrinter::HighResolution);
     printer->setPageLayout(page->pageLayout());
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setPdfVersion(QPagedPaintDevice::PdfVersion_1_6);
@@ -291,21 +291,21 @@ void PrintInvoice::openPrintDialog() {
   QPageLayout pageLayout = page->pageLayout();
   pageLayout.setMode(QPageLayout::FullPageMode);
 
-  QPrinter *printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
+  QPrinter* printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
   printer->setDocName("Invoice");
   printer->setPrinterName(printerInfo.printerName());
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  QPrintDialog* dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
-  connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
+  connect(dialog, SIGNAL(accepted(QPrinter*)), SLOT(renderPage(QPrinter*)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
     sendStatusMessage(tr("Invoice printed!"));
   }
 }
 
-int PrintInvoice::exec(const QJsonObject &options, bool pdfbtn) {
+int PrintInvoice::exec(const QJsonObject& options, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
   qint64 o_id = options.value("o_id").toInteger(0);
   if (o_id < 1) {
@@ -347,8 +347,7 @@ int PrintInvoice::exec(const QJsonObject &options, bool pdfbtn) {
   _config.insert("delivery_id", d_id);
   _config.insert("vat_level", options.value("o_vat_levels").toInt());
   int _status = options.value("o_payment_status").toInt();
-  if (static_cast<AntiquaCRM::OrderPayment>(_status) ==
-      AntiquaCRM::OrderPayment::NOTPAID) {
+  if (static_cast<AntiquaCRM::OrderPayment>(_status) == AntiquaCRM::OrderPayment::NOTPAID) {
     _config.insert("payment_status", false);
   } else {
     _config.insert("payment_status", true);

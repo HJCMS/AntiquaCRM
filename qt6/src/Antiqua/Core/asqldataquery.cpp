@@ -6,12 +6,13 @@
 #include <QSqlDatabase>
 #include <QVariant>
 #ifdef ANTIQUA_DEVELOPMENT
-#include <QDebug>
+#  include <QDebug>
 #endif
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-static const QSqlRecord asql_table_record(const QString &name) {
+static const QSqlRecord asql_table_record(const QString& name) {
   if (name.isEmpty()) {
     qWarning("AntiquaCRM::ASqlDataQuery 'Missing SQL table name'!");
 #ifdef ANTIQUA_DEVELOPMENT
@@ -31,17 +32,16 @@ static const QSqlRecord asql_table_record(const QString &name) {
   return (db.isValid() ? db.record(name) : QSqlRecord());
 }
 
-ASqlDataQuery::ASqlDataQuery(const QString &tableName)
-    : p_record{asql_table_record(tableName)} {}
+ASqlDataQuery::ASqlDataQuery(const QString& tableName) : p_record{asql_table_record(tableName)} {
+}
 
-ASqlDataQuery::ASqlDataQuery(const QSqlRecord &record)
-    : p_record{record}, p_data{} {
+ASqlDataQuery::ASqlDataQuery(const QSqlRecord& record) : p_record{record}, p_data{} {
   if (p_record.isEmpty()) {
     qWarning("AntiquaCRM::ASqlDataQuery Invalid class Initialisation!");
   }
 }
 
-ASqlDataQuery::ASqlDataQuery(const ASqlDataQuery &other)
+ASqlDataQuery::ASqlDataQuery(const ASqlDataQuery& other)
     : p_record{other.p_record}, p_data{other.p_data} {
   if (p_record.isEmpty()) {
     qWarning("AntiquaCRM::ASqlDataQuery Invalid class Initialisation!");
@@ -55,9 +55,13 @@ bool ASqlDataQuery::checkMetaType(QMetaType from, QMetaType cur) const {
   return QMetaType::hasRegisteredConverterFunction(from, cur);
 }
 
-const QSqlRecord ASqlDataQuery::record() const { return p_record; }
+const QSqlRecord ASqlDataQuery::record() const {
+  return p_record;
+}
 
-int ASqlDataQuery::size() const { return p_data.size(); }
+int ASqlDataQuery::size() const {
+  return p_data.size();
+}
 
 const QString ASqlDataQuery::tableName() const {
   if (isValid())
@@ -82,7 +86,7 @@ const QStringList ASqlDataQuery::columnNames() const {
   return fields;
 }
 
-const QSqlField ASqlDataQuery::getProperties(const QString &column) const {
+const QSqlField ASqlDataQuery::getProperties(const QString& column) const {
   QSqlField _field;
   if (!isValid())
     return _field;
@@ -96,7 +100,7 @@ const QSqlField ASqlDataQuery::getProperties(const QString &column) const {
   return _field;
 }
 
-const QMetaType ASqlDataQuery::getType(const QString &column) const {
+const QMetaType ASqlDataQuery::getType(const QString& column) const {
   QSqlField field = getProperties(column);
   if (field.isValid())
     return field.metaType();
@@ -104,7 +108,7 @@ const QMetaType ASqlDataQuery::getType(const QString &column) const {
   return QMetaType();
 }
 
-void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
+void ASqlDataQuery::setValue(const QString& column, const QVariant& value) {
   if (!isValid())
     return;
 
@@ -114,14 +118,13 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
 
   const QMetaType _type = _field.metaType();
   if (!checkMetaType(_type, value.metaType())) {
-    qWarning("Warning MetaType for '%s' require '%s' but get '%s'!",
-             qPrintable(column), _type.name(), value.metaType().name());
+    qWarning("Warning MetaType for '%s' require '%s' but get '%s'!", qPrintable(column),
+             _type.name(), value.metaType().name());
   }
 
   if (_field.requiredStatus() == QSqlField::Required && value.isNull()) {
     if (_field.defaultValue().isNull()) {
-      qFatal("Invalid value! Field:'%s' is required and can't null.",
-             qPrintable(column));
+      qFatal("Invalid value! Field:'%s' is required and can't null.", qPrintable(column));
       return;
     }
     p_data.insert(column, _field.defaultValue());
@@ -130,8 +133,7 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
 
   if (_type.id() == QMetaType::QString && _field.length() > 0) {
     if (value.toString().length() > _field.length()) {
-      qFatal("Invalid datasize! '%s' max length is '%d'", qPrintable(column),
-             _field.length());
+      qFatal("Invalid datasize! '%s' max length is '%d'", qPrintable(column), _field.length());
       return;
     }
   }
@@ -144,7 +146,7 @@ void ASqlDataQuery::setValue(const QString &column, const QVariant &value) {
   p_data.insert(column, value);
 }
 
-const QVariant ASqlDataQuery::getValue(const QString &column) {
+const QVariant ASqlDataQuery::getValue(const QString& column) {
   if (!isValid())
     return QVariant();
 
@@ -157,6 +159,8 @@ const QVariant ASqlDataQuery::getValue(const QString &column) {
   return QVariant();
 }
 
-const QHash<QString, QVariant> ASqlDataQuery::getDataset() { return p_data; }
+const QHash<QString, QVariant> ASqlDataQuery::getDataset() {
+  return p_data;
+}
 
 }; // namespace AntiquaCRM

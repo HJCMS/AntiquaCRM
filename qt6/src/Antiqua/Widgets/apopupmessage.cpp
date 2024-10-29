@@ -3,9 +3,10 @@
 
 #include "apopupmessage.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-APopUpMessage::APopUpMessage(QWidget *parent) : QMessageBox{parent} {
+APopUpMessage::APopUpMessage(QWidget* parent) : QMessageBox{parent} {
   setWindowFlags(Qt::Tool);
   setDefaultButton(QMessageBox::Ok);
   setTextFormat(Qt::PlainText);
@@ -13,8 +14,7 @@ APopUpMessage::APopUpMessage(QWidget *parent) : QMessageBox{parent} {
   setSizeGripEnabled(true);
 }
 
-void APopUpMessage::setErrorMessage(const QString &error,
-                                    const QString &details) {
+void APopUpMessage::setErrorMessage(const QString& error, const QString& details) {
   setIcon(QMessageBox::Critical);
   setTextFormat(Qt::PlainText);
   if (windowTitle().isEmpty())
@@ -28,27 +28,27 @@ void APopUpMessage::setErrorMessage(const QString &error,
   setSizeGripEnabled(false);
 }
 
-void APopUpMessage::setWarnMessage(const QString &title, const QString &body) {
+void APopUpMessage::setWarnMessage(const QString& title, const QString& body) {
   setIcon(QMessageBox::Warning);
   setWindowTitle(title);
   setTextFormat(Qt::RichText);
   setText(body);
 }
 
-void APopUpMessage::setNoticeMessage(const QString &body) {
+void APopUpMessage::setNoticeMessage(const QString& body) {
   setIcon(QMessageBox::Warning);
   setWindowTitle(tr("Warning"));
   setTextFormat(Qt::RichText);
   setText(body);
 }
 
-void APopUpMessage::setSuccessMessage(const QString &body) {
+void APopUpMessage::setSuccessMessage(const QString& body) {
   setIcon(QMessageBox::Information);
   setWindowTitle(tr("Success"));
   setText(body);
 }
 
-void APopUpMessage::setUnsavedMessage(const QString &body, bool ask) {
+void APopUpMessage::setUnsavedMessage(const QString& body, bool ask) {
   setIcon(QMessageBox::Warning);
   if (ask) {
     setStandardButtons(QMessageBox::Yes | QMessageBox::No);
@@ -71,13 +71,13 @@ int APopUpMessage::exec() {
 
   // We use Standard Buttons!
   switch (QMessageBox::exec()) {
-  case (QMessageBox::Ok):
-  case (QMessageBox::Yes):
-  case (QMessageBox::Ignore):
-    return QDialog::Accepted;
+    case (QMessageBox::Ok):
+    case (QMessageBox::Yes):
+    case (QMessageBox::Ignore):
+      return QDialog::Accepted;
 
-  default:
-    return QDialog::Rejected;
+    default:
+      return QDialog::Rejected;
   }
 }
 

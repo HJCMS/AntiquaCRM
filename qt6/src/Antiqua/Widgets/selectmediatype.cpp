@@ -3,10 +3,10 @@
 
 #include "selectmediatype.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectMediaType::SelectMediaType(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectMediaType::SelectMediaType(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   QIcon _warn = style()->standardIcon(QStyle::SP_MessageBoxWarning);
   QIcon _icon = style()->standardIcon(QStyle::SP_DriveCDIcon);
   m_edit = new AntiquaCRM::AComboBox(this);
@@ -20,10 +20,8 @@ SelectMediaType::SelectMediaType(QWidget *parent)
                   AntiquaCRM::MediaType::MEDIA_DISC_VIDEO);
   m_edit->addItem(_icon, tr("Vinyl single record"), // vinyl
                   AntiquaCRM::MediaType::MEDIA_VINYL_SINGLE);
-  m_edit->addItem(_icon, tr("Vinyl longplay record"),
-                  AntiquaCRM::MediaType::MEDIA_VINYL_LONGPLAY);
-  m_edit->addItem(_icon, tr("Vinyl Multi Groove"),
-                  AntiquaCRM::MediaType::MEDIA_VINYL_MULTI_GROOVE);
+  m_edit->addItem(_icon, tr("Vinyl longplay record"), AntiquaCRM::MediaType::MEDIA_VINYL_LONGPLAY);
+  m_edit->addItem(_icon, tr("Vinyl Multi Groove"), AntiquaCRM::MediaType::MEDIA_VINYL_MULTI_GROOVE);
   m_edit->addItem(_icon, tr("Vinyl colored record"), // vinyl
                   AntiquaCRM::MediaType::MEDIA_VINYL_COLORED);
   m_edit->addItem(_icon, tr("Vinyl video record"), // vinyl
@@ -37,7 +35,9 @@ SelectMediaType::SelectMediaType(QWidget *parent)
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 
-void SelectMediaType::valueChanged(int) { setWindowModified(true); }
+void SelectMediaType::valueChanged(int) {
+  setWindowModified(true);
+}
 
 void SelectMediaType::initData() {
   QSqlField _f;
@@ -48,7 +48,7 @@ void SelectMediaType::initData() {
   setWindowModified(false);
 }
 
-void SelectMediaType::setValue(const QVariant &value) {
+void SelectMediaType::setValue(const QVariant& value) {
   if (value.metaType().id() != getType().id())
     return;
 
@@ -57,27 +57,29 @@ void SelectMediaType::setValue(const QVariant &value) {
     m_edit->setCurrentIndex(_index);
 }
 
-void SelectMediaType::setFocus() { m_edit->setFocus(); }
+void SelectMediaType::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectMediaType::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void SelectMediaType::setRestrictions(const QSqlField &field) {
+void SelectMediaType::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void SelectMediaType::setInputToolTip(const QString &tip) {
+void SelectMediaType::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectMediaType::setBuddyLabel(const QString &text) {
+void SelectMediaType::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 

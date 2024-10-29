@@ -7,17 +7,16 @@
 #include <QJsonDocument>
 #include <QJsonParseError>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-PluginConfigWidget::PluginConfigWidget(const QString &id, QWidget *parent)
+PluginConfigWidget::PluginConfigWidget(const QString& id, QWidget* parent)
     : QScrollArea{parent}, p_identifier{id} {
   setWidgetResizable(true);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
   config = new AntiquaCRM::ASettings(this);
   signalMapper = new QSignalMapper(this);
-
-  connect(signalMapper, SIGNAL(mappedObject(QObject *)),
-          SLOT(setInputEditChanged(QObject *)));
+  connect(signalMapper, SIGNAL(mappedObject(QObject*)), SLOT(setInputEditChanged(QObject*)));
 }
 
 PluginConfigWidget::~PluginConfigWidget() {
@@ -31,32 +30,28 @@ PluginConfigWidget::~PluginConfigWidget() {
     signalMapper->deleteLater();
 }
 
-void PluginConfigWidget::setInputEditChanged(QObject *object) {
+void PluginConfigWidget::setInputEditChanged(QObject* object) {
   if (signalMapper->mapping(object) != nullptr)
     setWindowModified(true);
 }
 
-AntiquaCRM::AInputWidget *PluginConfigWidget::inputWidget(QWidget *parent,
-                                                          const QString &name) {
+AntiquaCRM::AInputWidget* PluginConfigWidget::inputWidget(QWidget* parent, const QString& name) {
   Q_CHECK_PTR(parent);
   Q_ASSERT_X(name.isEmpty() != true, "name", "objectName is empty");
-  return parent->findChild<AntiquaCRM::AInputWidget *>(
-      name, Qt::FindDirectChildrenOnly);
+  return parent->findChild<AntiquaCRM::AInputWidget*>(name, Qt::FindDirectChildrenOnly);
 }
 
-QList<AntiquaCRM::AInputWidget *>
-PluginConfigWidget::getInputList(QObject *parent) {
+QList<AntiquaCRM::AInputWidget*> PluginConfigWidget::getInputList(QObject* parent) {
   Q_CHECK_PTR(parent);
-  return parent->findChildren<AntiquaCRM::AInputWidget *>(
-      QString(), Qt::FindChildrenRecursively);
+  return parent->findChildren<AntiquaCRM::AInputWidget*>(QString(), Qt::FindChildrenRecursively);
 }
 
-void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
+void PluginConfigWidget::registerInputChangeSignals(QObject* base) {
   Q_CHECK_PTR(base);
-  QListIterator<AntiquaCRM::AInputWidget *> it(
-      base->findChildren<AntiquaCRM::AInputWidget *>(QString()));
+  QListIterator<AntiquaCRM::AInputWidget*> it(
+      base->findChildren<AntiquaCRM::AInputWidget*>(QString()));
   while (it.hasNext()) {
-    AntiquaCRM::AInputWidget *inp = it.next();
+    AntiquaCRM::AInputWidget* inp = it.next();
     if (inp == nullptr)
       continue;
 
@@ -66,7 +61,7 @@ void PluginConfigWidget::registerInputChangeSignals(QObject *base) {
   }
 }
 
-const QJsonObject PluginConfigWidget::getDatabaseConfig(const QString &key) {
+const QJsonObject PluginConfigWidget::getDatabaseConfig(const QString& key) {
   QJsonObject _errno;
   _errno.insert("status", false);
 
@@ -98,8 +93,7 @@ const QJsonObject PluginConfigWidget::getDatabaseConfig(const QString &key) {
   return _errno;
 }
 
-bool PluginConfigWidget::saveDatabaseConfig(const QString &key,
-                                            const QJsonObject &obj) {
+bool PluginConfigWidget::saveDatabaseConfig(const QString& key, const QJsonObject& obj) {
   if (!key.startsWith("CONFIG_") || obj.isEmpty())
     return false;
 
@@ -121,7 +115,7 @@ const QString PluginConfigWidget::getIdentifier() {
   return p_identifier;
 }
 
-const QStringList PluginConfigWidget::getCurrentKeys(const QString &path) {
+const QStringList PluginConfigWidget::getCurrentKeys(const QString& path) {
   if (getType() == ConfigType::CONFIG_DATABASE)
     qWarning("Invalid usage with ConfigType::CONFIG_DATABASE.");
 

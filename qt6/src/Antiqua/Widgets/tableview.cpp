@@ -36,8 +36,8 @@ TableView::TableView(QWidget* parent) : QTableView{parent} {
   // Warning not before HeaderView initialed
   setEnableTableViewSorting(false);
 
-  connect(m_header, SIGNAL(sortIndicatorChanged(int, Qt::SortOrder)), this,
-          SLOT(setSortByColumn(int, Qt::SortOrder)));
+  connect(m_header, SIGNAL(sortIndicatorChanged(int,Qt::SortOrder)),
+          SLOT(setSortByColumn(int,Qt::SortOrder)));
 }
 
 void TableView::paintEvent(QPaintEvent* ev) {

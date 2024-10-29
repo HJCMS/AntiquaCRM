@@ -6,7 +6,8 @@
 
 #include <QLocale>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 ATaxCalculator::ATaxCalculator(double price, int vat_type) : p_origin{price} {
   ASettings cfg;
@@ -22,18 +23,18 @@ ATaxCalculator::ATaxCalculator(double price, int vat_type) : p_origin{price} {
 void ATaxCalculator::setBillingMode(int mode) {
   AntiquaCRM::SalesTax _mode = static_cast<AntiquaCRM::SalesTax>(mode);
   switch (_mode) {
-  case (AntiquaCRM::SalesTax::TAX_INCL):
-    p_vat_mode = AntiquaCRM::SalesTax::TAX_INCL;
-    break;
+    case (AntiquaCRM::SalesTax::TAX_INCL):
+      p_vat_mode = AntiquaCRM::SalesTax::TAX_INCL;
+      break;
 
-  case (AntiquaCRM::SalesTax::TAX_WITH):
-    p_vat_mode = AntiquaCRM::SalesTax::TAX_WITH;
-    break;
+    case (AntiquaCRM::SalesTax::TAX_WITH):
+      p_vat_mode = AntiquaCRM::SalesTax::TAX_WITH;
+      break;
 
-  default:
-    p_vat_value = 0.00;
-    p_vat_mode = AntiquaCRM::SalesTax::TAX_NOT;
-    break;
+    default:
+      p_vat_value = 0.00;
+      p_vat_mode = AntiquaCRM::SalesTax::TAX_NOT;
+      break;
   }
 }
 
@@ -41,7 +42,9 @@ AntiquaCRM::SalesTax ATaxCalculator::getBillingMode() const {
   return p_vat_mode;
 }
 
-double ATaxCalculator::salesTaxRate() const { return p_vat_value; }
+double ATaxCalculator::salesTaxRate() const {
+  return p_vat_value;
+}
 
 double ATaxCalculator::toAdd(double vat) const {
   return ((p_origin / (100)) * vat);
@@ -51,9 +54,13 @@ double ATaxCalculator::getIncl(double vat) const {
   return ((p_origin * vat) / (100 + vat));
 }
 
-double ATaxCalculator::vatCosts() const { return getIncl(p_vat_value); }
+double ATaxCalculator::vatCosts() const {
+  return getIncl(p_vat_value);
+}
 
-double ATaxCalculator::netPrice() const { return p_origin; }
+double ATaxCalculator::netPrice() const {
+  return p_origin;
+}
 
 double ATaxCalculator::plus(double vat) const {
   return (p_origin + toAdd(vat));
@@ -70,8 +77,7 @@ double ATaxCalculator::salesPrice() const {
   return p_origin;
 }
 
-const QString ATaxCalculator::money(double value,
-                                    QLocale::CurrencySymbolFormat format) {
+const QString ATaxCalculator::money(double value, QLocale::CurrencySymbolFormat format) {
   QLocale _l = QLocale::system();
   QString _s = _l.currencySymbol(format);
   return _l.toCurrencyString(value, _s, 2);

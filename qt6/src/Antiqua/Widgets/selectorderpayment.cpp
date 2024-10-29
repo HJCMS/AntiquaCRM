@@ -4,10 +4,10 @@
 #include "selectorderpayment.h"
 #include "antiquaicon.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectOrderPayment::SelectOrderPayment(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectOrderPayment::SelectOrderPayment(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   m_edit->setMinimumContentsLength(m_edit->withoutDisclosures().length());
   layout->addWidget(m_edit);
@@ -51,27 +51,23 @@ void SelectOrderPayment::initData() {
 
   // Ermahnung
   m_edit->insertItem(_c, tr("Admonished"), AntiquaCRM::OrderPayment::ADMONISH);
-  m_edit->setItemData(_c, tr("The recipient has been admonished."),
-                      Qt::ToolTipRole);
+  m_edit->setItemData(_c, tr("The recipient has been admonished."), Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("flag-yellow"));
 
   // Rücksendung
   m_edit->insertItem(_c, tr("Refunding"), AntiquaCRM::OrderPayment::RETURN);
-  m_edit->setItemData(_c, tr("Creates a refunding for this order."),
-                      Qt::ToolTipRole);
+  m_edit->setItemData(_c, tr("Creates a refunding for this order."), Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("action-redo"));
 
   // Inkasso
-  m_edit->insertItem(_c, tr("Collection process"),
-                     AntiquaCRM::OrderPayment::COLLPROC);
-  m_edit->setItemData(_c, tr("This order containing a collection transaction."),
-                      Qt::ToolTipRole);
+  m_edit->insertItem(_c, tr("Collection process"), AntiquaCRM::OrderPayment::COLLPROC);
+  m_edit->setItemData(_c, tr("This order containing a collection transaction."), Qt::ToolTipRole);
   m_edit->setItemIcon(_c++, AntiquaCRM::antiquaIcon("flag-red"));
 
   setWindowModified(false);
 }
 
-void SelectOrderPayment::setValue(const QVariant &value) {
+void SelectOrderPayment::setValue(const QVariant& value) {
   if (value.metaType().id() != QMetaType::Int) {
 #ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Reject:" << value;
@@ -85,30 +81,36 @@ void SelectOrderPayment::setValue(const QVariant &value) {
   }
 }
 
-void SelectOrderPayment::setFocus() { m_edit->setFocus(); }
+void SelectOrderPayment::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectOrderPayment::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void SelectOrderPayment::setReadOnly(bool b) { m_edit->setEnabled(!b); }
+void SelectOrderPayment::setReadOnly(bool b) {
+  m_edit->setEnabled(!b);
+}
 
-void SelectOrderPayment::setReject() { setValue(p_onload_status); }
+void SelectOrderPayment::setReject() {
+  setValue(p_onload_status);
+}
 
-void SelectOrderPayment::setRestrictions(const QSqlField &field) {
+void SelectOrderPayment::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectOrderPayment::setInputToolTip(const QString &tip) {
+void SelectOrderPayment::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectOrderPayment::setBuddyLabel(const QString &text) {
+void SelectOrderPayment::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -133,6 +135,8 @@ const QString SelectOrderPayment::popUpHints() {
   return tr("a valid Order status is required.");
 }
 
-const QString SelectOrderPayment::statusHints() { return popUpHints(); }
+const QString SelectOrderPayment::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

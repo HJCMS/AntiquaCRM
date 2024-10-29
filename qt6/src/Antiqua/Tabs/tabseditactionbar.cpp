@@ -6,10 +6,11 @@
 
 #include <QLayout>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
-  QHBoxLayout *layout = new QHBoxLayout(this);
+TabsEditActionBar::TabsEditActionBar(QWidget* parent) : QWidget{parent} {
+  QHBoxLayout* layout = new QHBoxLayout(this);
 
   m_cancelBtn = new QPushButton(tr("Cancel"), this);
   m_cancelBtn->setObjectName("editor_action_button_cancel");
@@ -76,24 +77,19 @@ TabsEditActionBar::TabsEditActionBar(QWidget *parent) : QWidget{parent} {
   setLayout(layout);
 
   // Signals::PrinterButton
-  connect(m_printerButton, SIGNAL(sendPrintDelivery()),
-          SIGNAL(sendPrintDeliveryNote()));
-  connect(m_printerButton, SIGNAL(sendPrintInvoice()),
-          SIGNAL(sendPrintInvoiceNote()));
-  connect(m_printerButton, SIGNAL(sendPaymentReminder()),
-          SIGNAL(sendPrintPaymentReminder()));
-  connect(m_printerButton, SIGNAL(sendPrintBookcard()),
-          SIGNAL(sendPrintBookCard()));
-  connect(m_printerButton, SIGNAL(sendPrintRefunding()),
-          SIGNAL(sendPrintRefunding()));
-  connect(m_printerButton, SIGNAL(sendPrintAdmonition()),
-          SIGNAL(sendPrintAdmonition()));
+  connect(m_printerButton, SIGNAL(sendPrintDelivery()), SIGNAL(sendPrintDeliveryNote()));
+  connect(m_printerButton, SIGNAL(sendPrintInvoice()), SIGNAL(sendPrintInvoiceNote()));
+  connect(m_printerButton, SIGNAL(sendPaymentReminder()), SIGNAL(sendPrintPaymentReminder()));
+  connect(m_printerButton, SIGNAL(sendPrintBookcard()), SIGNAL(sendPrintBookCard()));
+  connect(m_printerButton, SIGNAL(sendPrintRefunding()), SIGNAL(sendPrintRefunding()));
+  connect(m_printerButton, SIGNAL(sendPrintAdmonition()), SIGNAL(sendPrintAdmonition()));
   // Signals:MailButton
-  connect(m_mailButton, SIGNAL(sendMailAction(const QString &)),
-          SIGNAL(sendCreateMailMessage(const QString &)));
+  connect(m_mailButton, SIGNAL(sendMailAction(QString)), SIGNAL(sendCreateMailMessage(QString)));
 }
 
-void TabsEditActionBar::setRestoreable(bool b) { m_restoreBtn->setEnabled(b); }
+void TabsEditActionBar::setRestoreable(bool b) {
+  m_restoreBtn->setEnabled(b);
+}
 
 void TabsEditActionBar::setViewPrintButton(bool view) {
   m_printerButton->setEnabled(view);
@@ -113,8 +109,7 @@ void TabsEditActionBar::setMailMenu(AntiquaCRM::MailGroups group) {
   m_mailButton->setSections(group);
 }
 
-void TabsEditActionBar::setViewActionAddButton(bool view,
-                                               const QString &title) {
+void TabsEditActionBar::setViewActionAddButton(bool view, const QString& title) {
   if (!title.isEmpty()) {
     m_addArticle->setText(title);
     m_addArticle->setToolTip(title);
@@ -129,6 +124,8 @@ void TabsEditActionBar::setViewRestoreButton(bool view) {
   m_restoreBtn->setVisible(view);
 }
 
-bool TabsEditActionBar::isRestoreable() { return m_restoreBtn->isEnabled(); }
+bool TabsEditActionBar::isRestoreable() {
+  return m_restoreBtn->isEnabled();
+}
 
 } // namespace AntiquaCRM

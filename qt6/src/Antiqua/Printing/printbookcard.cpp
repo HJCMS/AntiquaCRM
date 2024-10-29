@@ -6,10 +6,10 @@
 
 #include <QPrintDialog>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-PrintBookCard::PrintBookCard(QWidget *parent)
-    : AntiquaCRM::APrintDialog{parent} {
+PrintBookCard::PrintBookCard(QWidget* parent) : AntiquaCRM::APrintDialog{parent} {
   setObjectName("print_bookcard_dialog");
   setMinimumSize(300, 500);
   pageLayout.setOrientation(QPageLayout::Portrait);
@@ -20,21 +20,21 @@ PrintBookCard::PrintBookCard(QWidget *parent)
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
-bool PrintBookCard::notValid(const QJsonValue &value) const {
+bool PrintBookCard::notValid(const QJsonValue& value) const {
   switch (value.type()) {
-  case (QJsonValue::Double):
-    return (value.toInteger(0) == 0);
+    case (QJsonValue::Double):
+      return (value.toInteger(0) == 0);
 
-  case (QJsonValue::String):
-    return (value.toString().length() < 1);
+    case (QJsonValue::String):
+      return (value.toString().length() < 1);
 
-  default: // null or unknown = not valid
-    return true;
+    default: // null or unknown = not valid
+      return true;
   }
   return true;
 }
 
-void PrintBookCard::renderPage(QPrinter *printer) {
+void PrintBookCard::renderPage(QPrinter* printer) {
   Q_CHECK_PTR(page);
   QPainter _painter(printer);
   _painter.setWindow(page->rect());
@@ -51,7 +51,7 @@ void PrintBookCard::createPDF() {
   }
 
   QFileInfo _file(_dir, pdfFileName);
-  QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
   printer->setPageLayout(pageLayout);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
@@ -70,23 +70,23 @@ void PrintBookCard::openPrintDialog() {
     p_info = QPrinterInfo::printerInfo(_device);
   }
 
-  QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
+  QPrinter* printer = new QPrinter(p_info, QPrinter::ScreenResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setDocName(pdfFileName);
 
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  QPrintDialog* dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   dialog->setOption(QAbstractPrintDialog::PrintShowPageSize, true);
 
-  connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
+  connect(dialog, SIGNAL(accepted(QPrinter*)), SLOT(renderPage(QPrinter*)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
   }
 }
 
-int PrintBookCard::exec(const QJsonObject &opts, bool pdfbtn) {
+int PrintBookCard::exec(const QJsonObject& opts, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
   if (!opts.contains("aid") || !opts.contains("basename")) {
     qWarning("Missing Article Id!");

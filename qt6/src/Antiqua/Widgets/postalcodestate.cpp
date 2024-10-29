@@ -5,10 +5,10 @@
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-PostalCodeState::PostalCodeState(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+PostalCodeState::PostalCodeState(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ALineEdit(this);
   layout->addWidget(m_edit);
   initData();
@@ -34,14 +34,14 @@ void PostalCodeState::updateChanged() {
   }
 }
 
-void PostalCodeState::setCountry(const AntiquaCRM::PostalCode &code) {
+void PostalCodeState::setCountry(const AntiquaCRM::PostalCode& code) {
   if (code.state.isEmpty())
     return;
 
   m_edit->setText(code.state);
 }
 
-void PostalCodeState::setValue(const QVariant &value) {
+void PostalCodeState::setValue(const QVariant& value) {
   QString _country;
   if (value.metaType().id() == QMetaType::QString) {
     _country = value.toString().trimmed();
@@ -53,7 +53,9 @@ void PostalCodeState::setValue(const QVariant &value) {
   m_edit->setText(_country);
 }
 
-void PostalCodeState::setFocus() { m_edit->setFocus(); }
+void PostalCodeState::setFocus() {
+  m_edit->setFocus();
+}
 
 void PostalCodeState::reset() {
   p_history.clear();
@@ -61,7 +63,7 @@ void PostalCodeState::reset() {
   setWindowModified(false);
 }
 
-void PostalCodeState::setRestrictions(const QSqlField &field) {
+void PostalCodeState::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 
@@ -78,15 +80,15 @@ bool PostalCodeState::isValid() {
   return true;
 }
 
-void PostalCodeState::setInputToolTip(const QString &tip) {
+void PostalCodeState::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void PostalCodeState::setBuddyLabel(const QString &text) {
+void PostalCodeState::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -94,7 +96,9 @@ const QMetaType PostalCodeState::getType() const {
   return QMetaType(QMetaType::QString);
 }
 
-const QVariant PostalCodeState::getValue() { return m_edit->text().trimmed(); }
+const QVariant PostalCodeState::getValue() {
+  return m_edit->text().trimmed();
+}
 
 const QString PostalCodeState::popUpHints() {
   QStringList _l(tr("Missing Country/State in this dataset!"));

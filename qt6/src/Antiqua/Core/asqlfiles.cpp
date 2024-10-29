@@ -6,16 +6,17 @@
 #include "asettings.h"
 
 #ifdef ANTIQUA_DEVELOPMENT
-#include <QDebug>
+#  include <QDebug>
 #endif
 
 #include <QFile>
 #include <QStandardPaths>
 #include <QTextStream>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ASqlFiles::ASqlFiles(const QString &file)
+ASqlFiles::ASqlFiles(const QString& file)
     : QFileInfo{ASettings::getDataDir("pgsql"), file + ".sql"} {
   p_content = QString();
 }
@@ -53,7 +54,7 @@ bool ASqlFiles::openTemplate() {
   return false;
 }
 
-void ASqlFiles::setWhereClause(const QString &replacement) {
+void ASqlFiles::setWhereClause(const QString& replacement) {
   if (p_content.isEmpty()) {
     qWarning("No Content: Did you forget to call openTemplate?");
     return;
@@ -64,7 +65,7 @@ void ASqlFiles::setWhereClause(const QString &replacement) {
   buf.clear();
 }
 
-void ASqlFiles::setOrderBy(const QString &replacement) {
+void ASqlFiles::setOrderBy(const QString& replacement) {
   if (p_content.isEmpty()) {
     qWarning("No Content: Did you forget to call openTemplate?");
     return;
@@ -108,12 +109,11 @@ const QString ASqlFiles::getQueryContent() {
   return p_content.trimmed();
 }
 
-const QString ASqlFiles::queryStatement(const QString &basename) {
+const QString ASqlFiles::queryStatement(const QString& basename) {
   const QFileInfo _info(ASettings::getDataDir("pgsql"), basename + ".sql");
   QString _out;
   if (!_info.isReadable()) {
-    qWarning("Sql file (%s) not found or Permission Denied!",
-             qPrintable(basename));
+    qWarning("Sql file (%s) not found or Permission Denied!", qPrintable(basename));
     return _out;
   }
 

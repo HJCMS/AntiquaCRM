@@ -7,15 +7,15 @@
 #include <QHBoxLayout>
 #include <QSpacerItem>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ProviderActionNavigator::ProviderActionNavigator(QStackedWidget *pager,
-                                                 QWidget *parent)
+ProviderActionNavigator::ProviderActionNavigator(QStackedWidget* pager, QWidget* parent)
     : QFrame{parent}, stackedWidget{pager} {
   setFrameStyle(QFrame::NoFrame);
   setContentsMargins(0, 0, 0, 0);
 
-  QHBoxLayout *layout = new QHBoxLayout(this);
+  QHBoxLayout* layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
   btn_back = new QPushButton(tr("Previous"), this);
@@ -35,8 +35,7 @@ ProviderActionNavigator::ProviderActionNavigator(QStackedWidget *pager,
 
   connect(btn_back, SIGNAL(clicked()), SLOT(prepareGotoSignal()));
   connect(btn_next, SIGNAL(clicked()), SLOT(prepareGotoSignal()));
-  connect(stackedWidget, SIGNAL(currentChanged(int)),
-          SLOT(updateButtonAccess(int)));
+  connect(stackedWidget, SIGNAL(currentChanged(int)), SLOT(updateButtonAccess(int)));
 }
 
 void ProviderActionNavigator::updateButtonAccess(int index) {
@@ -50,7 +49,7 @@ void ProviderActionNavigator::updateButtonAccess(int index) {
 }
 
 void ProviderActionNavigator::prepareGotoSignal() {
-  QPushButton *btn = qobject_cast<QPushButton *>(sender());
+  QPushButton* btn = qobject_cast<QPushButton*>(sender());
   if (btn == nullptr)
     return;
 

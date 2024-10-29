@@ -6,9 +6,10 @@
 #include <QDebug>
 #include <QSizePolicy>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SerialId::SerialId(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+SerialId::SerialId(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new ASpinBox(this);
   m_edit->setReadOnly(true);
   m_edit->setMinimum(0);
@@ -24,47 +25,53 @@ void SerialId::valueChanged() {
   emit sendInputChanged();
 }
 
-void SerialId::initData() { setWindowModified(false); }
+void SerialId::initData() {
+  setWindowModified(false);
+}
 
-void SerialId::setValue(const QVariant &value) {
+void SerialId::setValue(const QVariant& value) {
   QMetaType _type = value.metaType();
   switch (_type.id()) {
-  case (QMetaType::Int):
-  case (QMetaType::Long):
-  case (QMetaType::Double):
-  case (QMetaType::LongLong):
-    m_edit->setValue(value.toLongLong());
-    break;
+    case (QMetaType::Int):
+    case (QMetaType::Long):
+    case (QMetaType::Double):
+    case (QMetaType::LongLong):
+      m_edit->setValue(value.toLongLong());
+      break;
 
-  default:
-    qWarning("Invalid given Data Type in SerialId.");
+    default:
+      qWarning("Invalid given Data Type in SerialId.");
 #ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << "SerialId Requires type int but get:" << value;
+      qDebug() << "SerialId Requires type int but get:" << value;
 #endif
-    m_edit->setValue(value.toLongLong());
-    break;
+      m_edit->setValue(value.toLongLong());
+      break;
   };
 }
 
-void SerialId::setFocus() { m_edit->setFocus(); }
+void SerialId::setFocus() {
+  m_edit->setFocus();
+}
 
 void SerialId::reset() {
   m_edit->clear();
   setWindowModified(false);
 }
 
-void SerialId::setRestrictions(const QSqlField &field) {
+void SerialId::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void SerialId::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
+void SerialId::setInputToolTip(const QString& tip) {
+  m_edit->setToolTip(tip);
+}
 
-void SerialId::setBuddyLabel(const QString &text) {
+void SerialId::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -92,6 +99,8 @@ const QString SerialId::popUpHints() {
   return tr("Id field is required and can not empty.");
 }
 
-const QString SerialId::statusHints() { return tr("a valid Id is important!"); }
+const QString SerialId::statusHints() {
+  return tr("a valid Id is important!");
+}
 
 } // namespace AntiquaCRM

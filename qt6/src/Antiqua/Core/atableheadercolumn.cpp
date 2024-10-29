@@ -6,20 +6,26 @@
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ATableHeaderColumn::ATableHeaderColumn() : p_f(QString()), p_n(QString()) {}
+ATableHeaderColumn::ATableHeaderColumn() : p_f(QString()), p_n(QString()) {
+}
 
-ATableHeaderColumn::ATableHeaderColumn(const QSqlField &field,
-                                       const QString &displayname)
-    : p_f(field.name()), p_n(displayname) {}
+ATableHeaderColumn::ATableHeaderColumn(const QSqlField& field, const QString& displayname)
+    : p_f(field.name()), p_n(displayname) {
+}
 
-ATableHeaderColumn::ATableHeaderColumn(const QString &f, const QString &n)
-    : p_f(f), p_n(n) {}
+ATableHeaderColumn::ATableHeaderColumn(const QString& f, const QString& n) : p_f(f), p_n(n) {
+}
 
-const QString ATableHeaderColumn::field() { return p_f; }
+const QString ATableHeaderColumn::field() {
+  return p_f;
+}
 
-const QString ATableHeaderColumn::name() { return p_n; }
+const QString ATableHeaderColumn::name() {
+  return p_n;
+}
 
 QMetaType::Type ATableHeaderColumn::type(HeaderSection section) {
   if (p_f.isEmpty())

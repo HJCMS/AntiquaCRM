@@ -8,9 +8,10 @@
 #include <QLayout>
 #include <QMessageBox>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ImageToolBar::ImageToolBar(QWidget *parent) : QToolBar{parent} {
+ImageToolBar::ImageToolBar(QWidget* parent) : QToolBar{parent} {
   setContentsMargins(0, 1, 0, 1);
 
   QIcon img_icon = AntiquaCRM::antiquaIcon("view-image");
@@ -43,6 +44,8 @@ void ImageToolBar::setRestoreState() {
   m_btnRemove->setEnabled(false);
 }
 
-qint64 ImageToolBar::getArticleId() { return articleId; }
+qint64 ImageToolBar::getArticleId() {
+  return articleId;
+}
 
 } // namespace AntiquaCRM

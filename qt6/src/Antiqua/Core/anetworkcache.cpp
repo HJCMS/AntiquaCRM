@@ -4,12 +4,13 @@
 #include "anetworkcache.h"
 #include "asettings.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 QMutex ANetworkCache::s_mutex;
-QNetworkDiskCache *ANetworkCache::s_cache = nullptr;
+QNetworkDiskCache* ANetworkCache::s_cache = nullptr;
 
-ANetworkCache::ANetworkCache(QObject *parent) : QAbstractNetworkCache{parent} {
+ANetworkCache::ANetworkCache(QObject* parent) : QAbstractNetworkCache{parent} {
   AntiquaCRM::ASettings cfg(this);
   QMutexLocker l(&s_mutex);
   if (!s_cache) {
@@ -23,32 +24,32 @@ qint64 ANetworkCache::cacheSize() const {
   return s_cache->cacheSize();
 }
 
-QIODevice *ANetworkCache::data(const QUrl &url) {
+QIODevice* ANetworkCache::data(const QUrl& url) {
   QMutexLocker l(&s_mutex);
   return s_cache->data(url);
 }
 
-void ANetworkCache::insert(QIODevice *device) {
+void ANetworkCache::insert(QIODevice* device) {
   QMutexLocker l(&s_mutex);
   s_cache->insert(device);
 }
 
-QNetworkCacheMetaData ANetworkCache::metaData(const QUrl &url) {
+QNetworkCacheMetaData ANetworkCache::metaData(const QUrl& url) {
   QMutexLocker l(&s_mutex);
   return s_cache->metaData(url);
 }
 
-QIODevice *ANetworkCache::prepare(const QNetworkCacheMetaData &data) {
+QIODevice* ANetworkCache::prepare(const QNetworkCacheMetaData& data) {
   QMutexLocker l(&s_mutex);
   return s_cache->prepare(data);
 }
 
-bool ANetworkCache::remove(const QUrl &url) {
+bool ANetworkCache::remove(const QUrl& url) {
   QMutexLocker l(&s_mutex);
   return s_cache->remove(url);
 }
 
-void ANetworkCache::updateMetaData(const QNetworkCacheMetaData &data) {
+void ANetworkCache::updateMetaData(const QNetworkCacheMetaData& data) {
   QMutexLocker l(&s_mutex);
   s_cache->updateMetaData(data);
 }

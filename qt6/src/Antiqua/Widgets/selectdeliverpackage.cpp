@@ -6,10 +6,10 @@
 
 #include <QSizePolicy>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectDeliverPackage::SelectDeliverPackage(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectDeliverPackage::SelectDeliverPackage(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_sql = new AntiquaCRM::ASqlCore(this);
 
   m_edit = new AntiquaCRM::AComboBox(this);
@@ -68,7 +68,7 @@ void SelectDeliverPackage::loadPackages(int service) {
   }
 }
 
-void SelectDeliverPackage::setValue(const QVariant &value) {
+void SelectDeliverPackage::setValue(const QVariant& value) {
   if (m_edit->count() < 1)
     return;
 
@@ -84,7 +84,9 @@ void SelectDeliverPackage::setValue(const QVariant &value) {
   }
 }
 
-void SelectDeliverPackage::setFocus() { m_edit->setFocus(); }
+void SelectDeliverPackage::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectDeliverPackage::reset() {
   m_edit->setCurrentIndex(0);
@@ -92,19 +94,19 @@ void SelectDeliverPackage::reset() {
   setWindowModified(false);
 }
 
-void SelectDeliverPackage::setRestrictions(const QSqlField &field) {
+void SelectDeliverPackage::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectDeliverPackage::setInputToolTip(const QString &tip) {
+void SelectDeliverPackage::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectDeliverPackage::setBuddyLabel(const QString &text) {
+void SelectDeliverPackage::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -129,7 +131,9 @@ const QString SelectDeliverPackage::popUpHints() {
   return tr("a Deliver Package is required.");
 }
 
-const QString SelectDeliverPackage::statusHints() { return popUpHints(); }
+const QString SelectDeliverPackage::statusHints() {
+  return popUpHints();
+}
 
 qreal SelectDeliverPackage::getPackagePrice() {
   int _id = getValue().toInt();

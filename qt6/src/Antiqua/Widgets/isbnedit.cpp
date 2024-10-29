@@ -8,9 +8,10 @@
 #include <QFont>
 #include <QFontMetrics>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
+IsbnEdit::IsbnEdit(QWidget* parent, IsbnEdit::CodeType ctype)
     : AntiquaCRM::AInputWidget{parent}, p_codeType{ctype} {
   m_edit = new AntiquaCRM::ALineEdit(this);
   m_edit->setMaxLength(13);
@@ -21,12 +22,12 @@ IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
   m_validator = new QRegularExpressionValidator(basePattern, m_edit);
   m_edit->setValidator(m_validator);
 
-  // Autovervollständigung nur bei ISBN Buchpräfixe einsetzen!
+  // Use auto-completion only for ISBN book prefixes!
   if (p_codeType == IsbnEdit::CodeType::ISBN) {
     m_edit->setToolTip(tr("It must consist of 10 or 13 digits."));
     m_edit->setPlaceholderText("ISBN10/13 (ISO 2108)");
     QStringList list({"978", "979"});
-    QCompleter *m_completer = new QCompleter(list, m_edit);
+    QCompleter* m_completer = new QCompleter(list, m_edit);
     m_completer->setCompletionMode(QCompleter::PopupCompletion);
     m_completer->setFilterMode(Qt::MatchStartsWith);
     m_edit->setCompleter(m_completer);
@@ -37,11 +38,10 @@ IsbnEdit::IsbnEdit(QWidget *parent, IsbnEdit::CodeType ctype)
 
   initData();
 
-  connect(m_edit, SIGNAL(textChanged(const QString &)),
-          SLOT(valueChanged(const QString &)));
+  connect(m_edit, SIGNAL(textChanged(QString)), SLOT(valueChanged(QString)));
 }
 
-bool IsbnEdit::isISBN10(const QString &isbn) const {
+bool IsbnEdit::isISBN10(const QString& isbn) const {
   if (p_codeType == IsbnEdit::CodeType::GTIN)
     return false;
 
@@ -49,7 +49,7 @@ bool IsbnEdit::isISBN10(const QString &isbn) const {
   return c.hasMatch();
 }
 
-bool IsbnEdit::validateGTIN(const QString &ean, int type) const {
+bool IsbnEdit::validateGTIN(const QString& ean, int type) const {
   if (ean.size() != type)
     return false;
 
@@ -78,7 +78,7 @@ bool IsbnEdit::validateGTIN(const QString &ean, int type) const {
   return ((_brd - _apd) == _ccd);
 }
 
-bool IsbnEdit::isISBN13(const QString &isbn) const {
+bool IsbnEdit::isISBN13(const QString& isbn) const {
   if (p_codeType == IsbnEdit::CodeType::GTIN)
     return isGTIN(isbn);
 
@@ -86,7 +86,7 @@ bool IsbnEdit::isISBN13(const QString &isbn) const {
   return c.hasMatch();
 }
 
-bool IsbnEdit::isGTIN(const QString &ean) const {
+bool IsbnEdit::isGTIN(const QString& ean) const {
   int l = ean.length();
   if (l < 12)
     return false;
@@ -100,7 +100,7 @@ bool IsbnEdit::isGTIN(const QString &ean) const {
   return false;
 }
 
-void IsbnEdit::valueChanged(const QString &data) {
+void IsbnEdit::valueChanged(const QString& data) {
   bool valid = false;
   int len = data.trimmed().length();
   if (len == 10 && isISBN10(data)) {
@@ -130,7 +130,7 @@ void IsbnEdit::initData() {
   setWindowModified(false);
 }
 
-void IsbnEdit::setValue(const QVariant &value) {
+void IsbnEdit::setValue(const QVariant& value) {
   // GTIN
   if (p_codeType == IsbnEdit::CodeType::GTIN) {
     QString _gtin = value.toString().trimmed();
@@ -144,13 +144,13 @@ void IsbnEdit::setValue(const QVariant &value) {
   QString _buf;
   QMetaType _type = value.metaType();
   switch (_type.id()) {
-  case QMetaType::ULongLong:
-  case QMetaType::LongLong:
-    _buf = QString::number(value.toLongLong());
-    break;
+    case QMetaType::ULongLong:
+    case QMetaType::LongLong:
+      _buf = QString::number(value.toLongLong());
+      break;
 
-  default:
-    _buf = value.toString().trimmed();
+    default:
+      _buf = value.toString().trimmed();
   }
 
   // ISBN check
@@ -165,14 +165,16 @@ void IsbnEdit::setValue(const QVariant &value) {
   }
 }
 
-void IsbnEdit::setFocus() { m_edit->setFocus(); }
+void IsbnEdit::setFocus() {
+  m_edit->setFocus();
+}
 
 void IsbnEdit::reset() {
   m_edit->clear();
   setWindowModified(false);
 }
 
-void IsbnEdit::setRestrictions(const QSqlField &field) {
+void IsbnEdit::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
   QString _str;
   _str.append(_str.leftJustified(m_edit->maxLength(), QChar('0')));
@@ -181,13 +183,15 @@ void IsbnEdit::setRestrictions(const QSqlField &field) {
   m_edit->setMinimumWidth(_w + m_edit->height());
 }
 
-void IsbnEdit::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
+void IsbnEdit::setInputToolTip(const QString& tip) {
+  m_edit->setToolTip(tip);
+}
 
-void IsbnEdit::setBuddyLabel(const QString &text) {
+void IsbnEdit::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -242,6 +246,8 @@ const QString IsbnEdit::popUpHints() {
   return tr("Invalid ISBN/EAN/UPC detected.");
 }
 
-const QString IsbnEdit::statusHints() { return popUpHints(); }
+const QString IsbnEdit::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

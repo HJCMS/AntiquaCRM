@@ -11,6 +11,7 @@ GenderEdit::GenderEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit->setToolTip(tr("Gender"));
   layout->addWidget(m_edit);
   initData();
+
   connect(m_edit, SIGNAL(currentIndexChanged(int)), SLOT(valueChanged(int)));
 }
 

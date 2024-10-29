@@ -9,9 +9,10 @@
 #include <QScreen>
 #include <QTransform>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ImageViewer::ImageViewer(QWidget *parent) : QGraphicsView{parent} {
+ImageViewer::ImageViewer(QWidget* parent) : QGraphicsView{parent} {
   setViewportUpdateMode(QGraphicsView::SmartViewportUpdate);
   setBackgroundRole(QPalette::Base);
   setCacheMode(QGraphicsView::CacheNone);
@@ -28,13 +29,13 @@ ImageViewer::~ImageViewer() {
   m_scene->deleteLater();
 }
 
-void ImageViewer::initSourceCache(const QSize &size, int depth) {
+void ImageViewer::initSourceCache(const QSize& size, int depth) {
   p_sourceCache.clear();
   qint64 _cache = ((size.width() * size.height() * depth) / 8);
   p_sourceCache.setCacheLimit(_cache);
 }
 
-bool ImageViewer::setPixmapItem(const QPixmap &pixmap) {
+bool ImageViewer::setPixmapItem(const QPixmap& pixmap) {
   m_scene->clear();
   m_pixItem = m_scene->addPixmap(pixmap);
   setSceneRect(pixmap.rect());
@@ -42,19 +43,19 @@ bool ImageViewer::setPixmapItem(const QPixmap &pixmap) {
   return (m_pixItem != nullptr);
 }
 
-void ImageViewer::wheelEvent(QWheelEvent *event) {
+void ImageViewer::wheelEvent(QWheelEvent* event) {
   if (event->buttons() & Qt::RightButton)
     zoom(qPow(1.2, event->angleDelta().y() / 240.0));
 }
 
-void ImageViewer::resizeEvent(QResizeEvent *event) {
+void ImageViewer::resizeEvent(QResizeEvent* event) {
   if (m_pixItem != nullptr && !m_pixItem->pixmap().isNull()) {
     fitInView(m_pixItem, Qt::KeepAspectRatio);
   }
   QGraphicsView::resizeEvent(event);
 }
 
-void ImageViewer::mousePressEvent(QMouseEvent *event) {
+void ImageViewer::mousePressEvent(QMouseEvent* event) {
   if (event->button() == Qt::LeftButton) {
     if (m_rubberband == nullptr) {
       m_rubberband = new ImageRubberBand(this);
@@ -66,13 +67,13 @@ void ImageViewer::mousePressEvent(QMouseEvent *event) {
   QGraphicsView::mousePressEvent(event);
 }
 
-void ImageViewer::mouseMoveEvent(QMouseEvent *event) {
+void ImageViewer::mouseMoveEvent(QMouseEvent* event) {
   if (m_rubberband != nullptr) {
     const QPoint sp = p_startPoint;
     const QPoint ep = event->pos();
     m_rubberband->setGeometry(QRect(sp, ep).normalized());
-    p_rubberRect = QRect(qMin(sp.x(), ep.x()), qMin(sp.y(), ep.y()),
-                         qAbs(sp.x() - ep.x()) + 1, qAbs(sp.y() - ep.y()) + 1);
+    p_rubberRect = QRect(qMin(sp.x(), ep.x()), qMin(sp.y(), ep.y()), qAbs(sp.x() - ep.x()) + 1,
+                         qAbs(sp.y() - ep.y()) + 1);
   }
   QGraphicsView::mouseMoveEvent(event);
 }
@@ -86,9 +87,13 @@ void ImageViewer::zoom(qreal f) {
   scale(f, f);
 }
 
-void ImageViewer::zoomIn() { zoom(2); }
+void ImageViewer::zoomIn() {
+  zoom(2);
+}
 
-void ImageViewer::zoomOut() { zoom(0.5); }
+void ImageViewer::zoomOut() {
+  zoom(0.5);
+}
 
 void ImageViewer::adjust() {
   if (!qFuzzyCompare(transform().m11(), qreal(1))) {
@@ -102,8 +107,7 @@ void ImageViewer::rotate() {
 
   QTransform transform;
   transform.rotate(90.0);
-  QPixmap _pixmap =
-      m_pixItem->pixmap().transformed(transform, Qt::SmoothTransformation);
+  QPixmap _pixmap = m_pixItem->pixmap().transformed(transform, Qt::SmoothTransformation);
   if (_pixmap.isNull())
     return;
 
@@ -151,7 +155,7 @@ void ImageViewer::clear() {
   p_sourceCache.clear();
 }
 
-void ImageViewer::setPixmap(const QPixmap &pixmap) {
+void ImageViewer::setPixmap(const QPixmap& pixmap) {
   const QSize _s = getMaxScaleSize();
   qreal _max_with = qMax(_s.width(), p_maxSize.width());
   qreal _max_height = qMax(_s.height(), p_maxSize.height());
@@ -184,7 +188,7 @@ void ImageViewer::setPixmap(const QPixmap &pixmap) {
   }
 }
 
-void ImageViewer::setImage(const QImage &image) {
+void ImageViewer::setImage(const QImage& image) {
   QPixmap _pixmap = QPixmap::fromImage(image);
   if (_pixmap.isNull())
     return;

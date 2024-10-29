@@ -4,10 +4,11 @@
 #include "aorderimport.h"
 
 #ifdef ANTIQUA_DEVELOPMENT
-#include <QDebug>
+#  include <QDebug>
 #endif
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 // BEGIN::AOrderArticle
 AOrderArticle::AOrderArticle(qint64 articleId)
@@ -15,11 +16,11 @@ AOrderArticle::AOrderArticle(qint64 articleId)
   insert("a_article_id", QJsonValue(articleId));
 }
 
-AntiquaCRM::SalesTax AOrderArticle::tax(const QJsonValue &v) const {
+AntiquaCRM::SalesTax AOrderArticle::tax(const QJsonValue& v) const {
   return static_cast<AntiquaCRM::SalesTax>(v.toInt());
 }
 
-AntiquaCRM::ArticleType AOrderArticle::media(const QJsonValue &v) const {
+AntiquaCRM::ArticleType AOrderArticle::media(const QJsonValue& v) const {
   return static_cast<AntiquaCRM::ArticleType>(v.toInt());
 }
 
@@ -37,7 +38,7 @@ const QMap<QString, QJsonValue::Type> AOrderArticle::keys() {
   return map;
 }
 
-bool AOrderArticle::add(const QString &key, const QJsonValue &value) {
+bool AOrderArticle::add(const QString& key, const QJsonValue& value) {
   QMapIterator<QString, QJsonValue::Type> it(permitted);
   while (it.hasNext()) {
     if (it.key() == key && value.type() == it.value()) {
@@ -76,7 +77,7 @@ const QMap<QString, QJsonValue::Type> AOrderCustomer::keys() {
   return map;
 }
 
-bool AOrderCustomer::add(const QString &key, const QJsonValue &value) {
+bool AOrderCustomer::add(const QString& key, const QJsonValue& value) {
   QMapIterator<QString, QJsonValue::Type> it(permitted);
   while (it.hasNext()) {
     if (it.key() == key && value.type() == it.value()) {
@@ -91,7 +92,7 @@ bool AOrderCustomer::add(const QString &key, const QJsonValue &value) {
 // BEGIN::Articles
 AOrderArticles::AOrderArticles() : QJsonArray{} {};
 
-bool AOrderArticles::add(const AOrderArticle &article) {
+bool AOrderArticles::add(const AOrderArticle& article) {
   if (article.isEmpty() || !article.contains("a_article_id"))
     return false;
 
@@ -101,23 +102,22 @@ bool AOrderArticles::add(const AOrderArticle &article) {
 // END::Articles
 
 // BEGIN::AOrderInfo
-AOrderInfo::AOrderInfo() : QJsonObject{}, permitted{keys()} {}
+AOrderInfo::AOrderInfo() : QJsonObject{}, permitted{keys()} {
+}
 
-AntiquaCRM::OrderStatus AOrderInfo::orderStatus(const QJsonValue &val) const {
+AntiquaCRM::OrderStatus AOrderInfo::orderStatus(const QJsonValue& val) const {
   return static_cast<AntiquaCRM::OrderStatus>(val.toInt());
 }
 
-AntiquaCRM::ArticleType AOrderInfo::mediaType(const QJsonValue &v) const {
+AntiquaCRM::ArticleType AOrderInfo::mediaType(const QJsonValue& v) const {
   return static_cast<AntiquaCRM::ArticleType>(v.toInt());
 }
 
-AntiquaCRM::PaymentMethod
-AOrderInfo::paymentMethod(const QJsonValue &val) const {
+AntiquaCRM::PaymentMethod AOrderInfo::paymentMethod(const QJsonValue& val) const {
   return static_cast<AntiquaCRM::PaymentMethod>(val.toInt());
 }
 
-AntiquaCRM::ProviderPaymentStatus
-AOrderInfo::paymentStatus(const QJsonValue &val) const {
+AntiquaCRM::ProviderPaymentStatus AOrderInfo::paymentStatus(const QJsonValue& val) const {
   return static_cast<AntiquaCRM::ProviderPaymentStatus>(val.toInt());
 }
 
@@ -136,7 +136,7 @@ const QMap<QString, QJsonValue::Type> AOrderInfo::keys() {
   return map;
 }
 
-bool AOrderInfo::add(const QString &key, const QJsonValue &value) {
+bool AOrderInfo::add(const QString& key, const QJsonValue& value) {
   QMapIterator<QString, QJsonValue::Type> it(permitted);
   while (it.hasNext()) {
     if (it.key() == key && value.type() == it.value()) {
@@ -158,31 +158,29 @@ bool AOrderInfo::add(const QString &key, const QJsonValue &value) {
 // END::AOrderInfo
 
 // BEGIN::AOrder
-AOrderImport::AOrderImport(const QString &provider, const QString &id)
+AOrderImport::AOrderImport(const QString& provider, const QString& id)
     : QJsonObject{}, p_provider{provider}, p_order_id{id} {
   insert("provider", QJsonValue(provider.trimmed()));
   insert("orderid", QJsonValue(id.trimmed()));
 }
 
-bool AOrderImport::checkObject(const QString &section) {
+bool AOrderImport::checkObject(const QString& section) {
   if (!contains(section) || value(section).type() != QJsonValue::Object) {
-    qWarning("order document does not have valid %s object!",
-             qPrintable(section));
+    qWarning("order document does not have valid %s object!", qPrintable(section));
     return false;
   }
   return true;
 }
 
-bool AOrderImport::checkArray(const QString &section) {
+bool AOrderImport::checkArray(const QString& section) {
   if (!contains(section) || value(section).type() != QJsonValue::Array) {
-    qWarning("order document does not have valid %s array!",
-             qPrintable(section));
+    qWarning("order document does not have valid %s array!", qPrintable(section));
     return false;
   }
   return true;
 }
 
-bool AOrderImport::add(const AOrderInfo &info) {
+bool AOrderImport::add(const AOrderInfo& info) {
   if (info.isEmpty() || !info.contains("o_provider_order_id"))
     return false;
 
@@ -190,7 +188,7 @@ bool AOrderImport::add(const AOrderInfo &info) {
   return true;
 }
 
-bool AOrderImport::add(const AOrderCustomer &customer) {
+bool AOrderImport::add(const AOrderCustomer& customer) {
   if (customer.isEmpty() || !customer.contains("c_provider_import"))
     return false;
 
@@ -198,7 +196,7 @@ bool AOrderImport::add(const AOrderCustomer &customer) {
   return true;
 }
 
-bool AOrderImport::add(const AOrderArticles &array) {
+bool AOrderImport::add(const AOrderArticles& array) {
   if (array.size() < 1)
     return false;
 

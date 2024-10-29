@@ -1,8 +1,8 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "keywordlabel_p.h"
 #include "antiquaicon.h"
+#include "keywordlabel_p.h"
 
 #include <QHBoxLayout>
 #include <QIcon>
@@ -10,9 +10,10 @@
 #include <QStylePainter>
 #include <QToolButton>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
+KeywordLabel::KeywordLabel(QWidget* parent) : QFrame{parent} {
   setContentsMargins(0, 0, 0, 0);
   setObjectName("keywordlabel");
   setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
@@ -24,10 +25,10 @@ KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
   QStringList css;
   css << "padding-left:2px;padding-right:2px;";
   css << "padding-top:1px;padding-bottom:1px;";
-  css << "border:1px solid "+ color + ";border-radius:3px;";
+  css << "border:1px solid " + color + ";border-radius:3px;";
   setStyleSheet("QFrame#keywordlabel {" + css.join("") + "}");
 
-  QHBoxLayout *layout = new QHBoxLayout(this);
+  QHBoxLayout* layout = new QHBoxLayout(this);
   layout->setObjectName("keyword::layout");
   layout->setContentsMargins(1, 1, 1, 1);
 
@@ -37,7 +38,7 @@ KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
   m_label->setIndent(1);
   layout->addWidget(m_label);
 
-  QToolButton *m_close = new QToolButton(this);
+  QToolButton* m_close = new QToolButton(this);
   m_close->setObjectName("keyword::button");
   m_close->setIcon(AntiquaCRM::antiquaIcon("edit-delete"));
   m_close->setToolButtonStyle(Qt::ToolButtonIconOnly);
@@ -46,21 +47,22 @@ KeywordLabel::KeywordLabel(QWidget *parent) : QFrame{parent} {
 
   setLayout(layout);
 
-  connect(m_close, SIGNAL(clicked()), this, SIGNAL(aboutToRemove()));
+  connect(m_close, SIGNAL(clicked()), SIGNAL(aboutToRemove()));
 }
 
-KeywordLabel::KeywordLabel(const QString &keyword, QWidget *parent)
-    : KeywordLabel{parent} {
+KeywordLabel::KeywordLabel(const QString& keyword, QWidget* parent) : KeywordLabel{parent} {
   setText(keyword);
 }
 
-void KeywordLabel::setText(const QString &keyword) {
+void KeywordLabel::setText(const QString& keyword) {
   if (keyword.isEmpty())
     return;
 
   m_label->setText(keyword);
 }
 
-const QString KeywordLabel::text() { return m_label->text(); }
+const QString KeywordLabel::text() {
+  return m_label->text();
+}
 
 } // namespace AntiquaCRM

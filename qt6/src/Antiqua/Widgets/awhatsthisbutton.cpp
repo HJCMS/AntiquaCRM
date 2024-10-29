@@ -7,9 +7,10 @@
 #include <QIcon>
 #include <QWhatsThis>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-AWhatsThisButton::AWhatsThisButton(const QString &help, QWidget *parent)
+AWhatsThisButton::AWhatsThisButton(const QString& help, QWidget* parent)
     : QPushButton{parent}, p_text{help} {
   setContentsMargins(0, 0, 0, 0);
   setIcon(AntiquaCRM::antiquaIcon("help-contents"));
@@ -27,7 +28,7 @@ void AWhatsThisButton::showWhatsThis() {
   QWhatsThis::showText(pos(), p_text, this);
 }
 
-bool AWhatsThisButton::event(QEvent *e) {
+bool AWhatsThisButton::event(QEvent* e) {
   if (e->type() == QEvent::HoverEnter) {
     setCursor(Qt::WhatsThisCursor);
   } else if (e->type() == QEvent::HoverLeave) {

@@ -11,10 +11,10 @@
 #include <QJsonValue>
 #include <QLocalServer>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ATransmitter::ATransmitter(QObject *parent)
-    : QLocalSocket{parent}, connected{false} {
+ATransmitter::ATransmitter(QObject* parent) : QLocalSocket{parent}, connected{false} {
   setServerName(AntiquaCRM::AUtil::socketName());
 
   connect(this, SIGNAL(errorOccurred(QLocalSocket::LocalSocketError)),
@@ -25,70 +25,70 @@ ATransmitter::ATransmitter(QObject *parent)
 
 void ATransmitter::getErrors(QLocalSocket::LocalSocketError error) {
   switch (error) {
-  case QLocalSocket::ConnectionRefusedError:
-    qWarning("ConnectionRefusedError");
-    return;
+    case QLocalSocket::ConnectionRefusedError:
+      qWarning("ConnectionRefusedError");
+      return;
 
-  case QLocalSocket::PeerClosedError:
-    qWarning("PeerClosedError");
-    return;
+    case QLocalSocket::PeerClosedError:
+      qWarning("PeerClosedError");
+      return;
 
-  case QLocalSocket::ServerNotFoundError:
-    qWarning("ServerNotFoundError");
-    return;
+    case QLocalSocket::ServerNotFoundError:
+      qWarning("ServerNotFoundError");
+      return;
 
-  case QLocalSocket::SocketAccessError:
-    qWarning("SocketAccessError");
-    return;
+    case QLocalSocket::SocketAccessError:
+      qWarning("SocketAccessError");
+      return;
 
-  case QLocalSocket::SocketResourceError:
-    qWarning("SocketResourceError");
-    return;
+    case QLocalSocket::SocketResourceError:
+      qWarning("SocketResourceError");
+      return;
 
-  case QLocalSocket::SocketTimeoutError:
-    qWarning("SocketTimeoutError");
-    return;
+    case QLocalSocket::SocketTimeoutError:
+      qWarning("SocketTimeoutError");
+      return;
 
-  case QLocalSocket::DatagramTooLargeError:
-    qWarning("DatagramTooLargeError");
-    return;
+    case QLocalSocket::DatagramTooLargeError:
+      qWarning("DatagramTooLargeError");
+      return;
 
-  case QLocalSocket::ConnectionError:
-    qWarning("ConnectionError");
-    return;
+    case QLocalSocket::ConnectionError:
+      qWarning("ConnectionError");
+      return;
 
-  case QLocalSocket::UnsupportedSocketOperationError:
-    qWarning("Unsupported Socket Operation Error");
-    return;
+    case QLocalSocket::UnsupportedSocketOperationError:
+      qWarning("Unsupported Socket Operation Error");
+      return;
 
-  case QLocalSocket::OperationError:
-    qWarning("OperationError");
-    return;
+    case QLocalSocket::OperationError:
+      qWarning("OperationError");
+      return;
 
-  default:
-    qWarning("UnknownSocketError");
+    default:
+      qWarning("UnknownSocketError");
   }
 }
 
 void ATransmitter::getState(QLocalSocket::LocalSocketState state) {
   QString verbose;
   switch (state) {
-  case QLocalSocket::UnconnectedState:
-    verbose = "Disconnected";
-    connected = false;
-    break;
+    case QLocalSocket::UnconnectedState:
+      verbose = "Disconnected";
+      connected = false;
+      break;
 
-  case QLocalSocket::ConnectedState:
-    verbose = "Connected";
-    connected = true;
-    break;
+    case QLocalSocket::ConnectedState:
+      verbose = "Connected";
+      connected = true;
+      break;
 
-  case QLocalSocket::ClosingState:
-    verbose = "ClosingState";
-    break;
+    case QLocalSocket::ClosingState:
+      verbose = "ClosingState";
+      break;
 
-  default:
-    return;
+    default:
+      return;
   }
 
 #ifdef ANTIQUA_DEVELOPMENT
@@ -96,7 +96,7 @@ void ATransmitter::getState(QLocalSocket::LocalSocketState state) {
 #endif
 }
 
-bool ATransmitter::pushOperation(const QJsonObject &json) {
+bool ATransmitter::pushOperation(const QJsonObject& json) {
   if (!connected) {
     connectToServer(ANTIQUACRM_TRANSMITTER_MODE);
     if (!waitForConnected(ANTIQUACRM_SOCKET_TIMEOUT)) {
@@ -114,7 +114,7 @@ bool ATransmitter::pushOperation(const QJsonObject &json) {
 #endif
 }
 
-bool ATransmitter::pushStatusBarMessage(const QString &message) {
+bool ATransmitter::pushStatusBarMessage(const QString& message) {
   if (message.isEmpty())
     return false;
 

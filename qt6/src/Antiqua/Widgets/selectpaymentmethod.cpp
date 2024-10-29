@@ -6,10 +6,10 @@
 
 #include <QIcon>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SelectPaymentMethod::SelectPaymentMethod(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectPaymentMethod::SelectPaymentMethod(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
   initData();
@@ -43,12 +43,9 @@ void SelectPaymentMethod::initData() {
                      AntiquaCRM::PaymentMethod::CREDIT_CARD_PREPAYMENT);
   m_edit->insertItem(c++, tr("Cash on delivery payment"),
                      AntiquaCRM::PaymentMethod::CASH_ON_DELIVERY);
-  m_edit->insertItem(c++, tr("PayPal prepayment"),
-                     AntiquaCRM::PaymentMethod::PAYPAL_PREPAYMENT);
-  m_edit->insertItem(c++, tr("Skrill prepayment"),
-                     AntiquaCRM::PaymentMethod::SKRILL_PREPAYMENT);
-  m_edit->insertItem(c++, tr("GiroPay prepayment"),
-                     AntiquaCRM::PaymentMethod::GIROPAY_PREPAYMENT);
+  m_edit->insertItem(c++, tr("PayPal prepayment"), AntiquaCRM::PaymentMethod::PAYPAL_PREPAYMENT);
+  m_edit->insertItem(c++, tr("Skrill prepayment"), AntiquaCRM::PaymentMethod::SKRILL_PREPAYMENT);
+  m_edit->insertItem(c++, tr("GiroPay prepayment"), AntiquaCRM::PaymentMethod::GIROPAY_PREPAYMENT);
   m_edit->insertItem(c++, tr("GooglePay prepayment"),
                      AntiquaCRM::PaymentMethod::GOOGLEPAY_PREPAYMENT);
   m_edit->insertItem(c++, tr("Payment in advance from an unknown provider"),
@@ -70,7 +67,7 @@ void SelectPaymentMethod::initData() {
   setWindowModified(false);
 }
 
-void SelectPaymentMethod::setValue(const QVariant &value) {
+void SelectPaymentMethod::setValue(const QVariant& value) {
   if (value.metaType().id() != QMetaType::Int) {
 #ifdef ANTIQUA_DEVELOPMENT
     qDebug() << Q_FUNC_INFO << "Reject:" << value;
@@ -78,8 +75,7 @@ void SelectPaymentMethod::setValue(const QVariant &value) {
     return;
   }
 
-  AntiquaCRM::PaymentMethod _method =
-      static_cast<AntiquaCRM::PaymentMethod>(value.toInt());
+  AntiquaCRM::PaymentMethod _method = static_cast<AntiquaCRM::PaymentMethod>(value.toInt());
   int _index = m_edit->findData(_method, Qt::UserRole);
   if (_index > 0)
     m_edit->setCurrentIndex(_index);
@@ -95,21 +91,23 @@ void SelectPaymentMethod::reset() {
   setWindowModified(false);
 }
 
-void SelectPaymentMethod::setReadOnly(bool b) { m_edit->setEnabled(!b); }
+void SelectPaymentMethod::setReadOnly(bool b) {
+  m_edit->setEnabled(!b);
+}
 
-void SelectPaymentMethod::setRestrictions(const QSqlField &field) {
+void SelectPaymentMethod::setRestrictions(const QSqlField& field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectPaymentMethod::setInputToolTip(const QString &tip) {
+void SelectPaymentMethod::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectPaymentMethod::setBuddyLabel(const QString &text) {
+void SelectPaymentMethod::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -134,6 +132,8 @@ const QString SelectPaymentMethod::popUpHints() {
   return tr("a Valid payment method is required.");
 }
 
-const QString SelectPaymentMethod::statusHints() { return popUpHints(); }
+const QString SelectPaymentMethod::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

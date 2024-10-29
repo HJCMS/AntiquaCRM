@@ -3,10 +3,10 @@
 
 #include "aeucountries.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-AEUCountries::AEUCountries(const QLocale &locale)
-    : QLocale{locale}, QMap<QString, QString>{} {
+AEUCountries::AEUCountries(const QLocale& locale) : QLocale{locale}, QMap<QString, QString>{} {
   insert("XX", QString());
   QListIterator<QLocale::Country> it(europeanUnion());
   while (it.hasNext()) {
@@ -21,11 +21,11 @@ AEUCountries::AEUCountries(const QLocale &locale)
   }
 }
 
-const QString AEUCountries::isoCode(const QString &country) {
+const QString AEUCountries::isoCode(const QString& country) {
   return key(country, "XX");
 }
 
-const QString AEUCountries::countryName(const QString &iso) {
+const QString AEUCountries::countryName(const QString& iso) {
   return contains(iso) ? value(iso) : QString();
 }
 

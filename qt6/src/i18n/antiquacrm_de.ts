@@ -524,7 +524,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
     <message>
         <location line="+2"/>
         <source>No Attachment changed!</source>
-        <translation></translation>
+        <translation>Kein Anhang geändert!</translation>
     </message>
 </context>
 <context>
@@ -555,7 +555,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
     <message>
         <location filename="../Antiqua/Printing/bookcardpage.cpp" line="+69"/>
         <source>Compartment</source>
-        <translation>Fächer</translation>
+        <translation>Fach</translation>
     </message>
     <message>
         <location line="+7"/>
@@ -821,7 +821,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::DeliveryNote</name>
     <message>
-        <location filename="../Antiqua/Printing/printdeliverynote.cpp" line="+32"/>
+        <location filename="../Antiqua/Printing/printdeliverynote.cpp" line="+31"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -831,7 +831,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>den</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+72"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1554,7 +1554,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Mahnung gedruckt!</translation>
     </message>
     <message>
-        <location line="+25"/>
+        <location line="+33"/>
         <source>admonition.pdf</source>
         <translation>mahnungs.pdf</translation>
     </message>
@@ -1605,7 +1605,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Lieferschein ausgedruckt!</translation>
     </message>
     <message>
-        <location line="+38"/>
+        <location line="+46"/>
         <source>Delivery note</source>
         <translation>Lieferschein</translation>
     </message>
@@ -1643,7 +1643,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Rechnung gedruckt!</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+56"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1681,7 +1681,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Rechnung gedruckt!</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+56"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1719,7 +1719,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Erinnerung gedruckt!</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+56"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1873,7 +1873,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::RefundPage</name>
     <message>
-        <location filename="../Antiqua/Printing/printrefund.cpp" line="-296"/>
+        <location filename="../Antiqua/Printing/printrefund.cpp" line="-304"/>
         <source>Refund</source>
         <translation>Rückerstattung</translation>
     </message>
@@ -1926,7 +1926,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::ReminderPage</name>
     <message>
-        <location filename="../Antiqua/Printing/printreminder.cpp" line="-333"/>
+        <location filename="../Antiqua/Printing/printreminder.cpp" line="-341"/>
         <source>Reminder</source>
         <translation>Erinnerung</translation>
     </message>
@@ -2123,7 +2123,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Dateipfad ändern</translation>
     </message>
     <message>
-        <location line="+105"/>
+        <location line="+103"/>
         <source>This entry requires a file path specification.</source>
         <translation>Dieser Eintrag erfordert eine Dateipfadangabe.</translation>
     </message>
@@ -2524,7 +2524,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Lager suchen</translation>
     </message>
     <message>
-        <location line="+201"/>
+        <location line="+203"/>
         <source>Storage location is required and must set.</source>
         <translation>Lagerort ist erforderlich und muss festgelegt werden.</translation>
     </message>
@@ -2542,7 +2542,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Zielverzeichnis ändern</translation>
     </message>
     <message>
-        <location line="+132"/>
+        <location line="+121"/>
         <source>This entry requires a directory specification.</source>
         <translation>Für den Eintrag ist eine Verzeichnisangabe erforderlich.</translation>
     </message>
@@ -2635,21 +2635,26 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <source>Connectioninfo</source>
         <translation>Verbindungsinfo</translation>
     </message>
+    <message>
+        <location line="+26"/>
+        <source>Remote</source>
+        <translation>Gegenstelle</translation>
+    </message>
 </context>
 <context>
     <name>AntiquaCRM::TableView</name>
     <message>
-        <location filename="../Antiqua/Widgets/tableview.cpp" line="+48"/>
+        <location filename="../Antiqua/Widgets/tableview.cpp" line="+46"/>
         <source>The query at %1 returned no result.</source>
         <translation>Die Abfrage %1 hat kein Ergebnis zurückgegeben.</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Change the search query or choose a different history query.</source>
         <translation>Ändern Sie die Suchabfrage oder wählen Sie eine andere Verlaufsabfrage.</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+39"/>
         <source>SQL Table query error</source>
         <translation>Fehler bei der SQL-Tabellenabfrage</translation>
     </message>
@@ -3011,7 +3016,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TabsWidget</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+60"/>
+        <location filename="../Antiqua/Tabs/tabswidget.cpp" line="+64"/>
         <source>Unsaved changes for &apos;%1&apos;!</source>
         <translation>Nicht gespeicherte Änderungen für „%1“!</translation>
     </message>
@@ -3091,7 +3096,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+183"/>
+        <location filename="../application.cpp" line="+184"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -4168,7 +4173,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>BooksTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+51"/>
+        <location filename="../plugins/antiquacrm/tabs/books/bookstableview.cpp" line="+48"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -4446,7 +4451,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Eintrag bearbeiten</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+14"/>
         <source>Article ID</source>
         <translation>Artikelnummer</translation>
     </message>
@@ -4486,7 +4491,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Nur lokale Nutzung</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>If the option is selected, the article will be listed on your online portals. Please keep in mind that articles are not automatically removed from your Providers, if this option is subsequently deactivated!</source>
         <translation>Bei Auswahl der Option wird der Artikel auf Ihren Online-Portalen gelistet. Bitte beachten Sie, dass Artikel nicht automatisch von Ihren Anbietern entfernt werden, wenn diese Option nachträglich deaktiviert wird!</translation>
     </message>
@@ -4526,7 +4531,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Musiklabel</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>In this field please indicate the publisher or the record label.</source>
         <translation>Bitte geben Sie in diesem Feld den Verlag oder die Plattenfirma an.</translation>
     </message>
@@ -4546,7 +4551,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Zustand der Hülle oder des Einbands</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>The current condition for the medium such as CD or vinyl.
 Note: In the case of a CD, the plastic sleeve is not included in the description.</source>
         <translation>Der aktuelle Zustand des Mediums wie CD oder Vinyl.
@@ -4598,12 +4603,12 @@ Hinweis: Bei einer CD ist die Kunststoffhülle nicht in der Beschreibung enthalt
         <translation>Öffnet den Metadaten-Auslesedialog für Musik-CDs.</translation>
     </message>
     <message>
-        <location line="+24"/>
+        <location line="+25"/>
         <source>Description</source>
         <translation>Beschreibung</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -4623,12 +4628,12 @@ Hinweis: Bei einer CD ist die Kunststoffhülle nicht in der Beschreibung enthalt
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+148"/>
+        <location line="+144"/>
         <source>Data saved successfully!</source>
         <translation>Daten erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>Missing Article ID for Update.</source>
         <translation>Fehlende Artikel-ID für Update.</translation>
     </message>
@@ -4657,7 +4662,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Möchten Sie das Bild wirklich löschen?</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Image delete successfully!</source>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
@@ -4667,12 +4672,12 @@ Bild – Artikel-ID: %2</translation>
         <translation>Keine Artikelnummer für Bildimport!</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+51"/>
         <source>Missing valid Article Id!</source>
         <translation>Es fehlt eine gültige Artikel-ID!</translation>
     </message>
     <message>
-        <location line="+30"/>
+        <location line="+28"/>
         <source>Card print successfully.</source>
         <translation>Kartendruck erfolgreich.</translation>
     </message>
@@ -4852,7 +4857,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>CDsVinylTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinyltableview.cpp" line="+50"/>
+        <location filename="../plugins/antiquacrm/tabs/cdsvinyl/cdsvinyltableview.cpp" line="+46"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -5168,12 +5173,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+4"/>
-        <location line="+324"/>
+        <location line="+350"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
     <message>
-        <location line="-323"/>
+        <location line="-349"/>
         <source>Databasename</source>
         <translation>Datenbankname</translation>
     </message>
@@ -5238,7 +5243,37 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Timeout in Sekunden</translation>
     </message>
     <message>
-        <location line="+16"/>
+        <location line="+7"/>
+        <source>To increase the application performance of sql queries, you can limit the sql query result in the main table.</source>
+        <translation>Um die Anwendungsleistung von SQL-Abfragen zu erhöhen, können Sie das SQL-Abfrageergebnis in der Haupttabelle begrenzen.</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Limit</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Query limit for Table views</source>
+        <translation>Abfragelimit für Tabellenansichten</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>This Numeric value will stop auto refresh table view if table row size is greater then this. You can limit this value to prevent freezes on large table views when come back to this tab. </source>
+        <translation>Dieser numerische Wert stoppt die automatische Aktualisierung der Tabellenansicht, wenn die Tabellenzeilengröße größer ist. Sie können diesen Wert begrenzen, um ein Einfrieren großer Tabellenansichten zu verhindern, wenn Sie zu dieser Registerkarte zurückkehren. </translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Update</source>
+        <translation>Aktualisieren</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Auto update limit by rows.</source>
+        <translation>Automatisches Aktualisierungslimit nach Zeilen.</translation>
+    </message>
+    <message>
+        <location line="+15"/>
         <source>Required SSL/TLS Settings</source>
         <translation>Erforderliche SSL/TLS-Einstellungen</translation>
     </message>
@@ -5979,7 +6014,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>CustomersTableView</name>
     <message>
-        <location filename="../tabs/customers/customerstableview.cpp" line="+54"/>
+        <location filename="../tabs/customers/customerstableview.cpp" line="+51"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -6806,7 +6841,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+198"/>
+        <location filename="../mainwindow.cpp" line="+210"/>
         <source>No tabs available</source>
         <translation>Keine Registerkarten verfügbar</translation>
     </message>
@@ -7176,7 +7211,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>&lt;b&gt;Vorgangsausführung abgelehnt!&lt;/b&gt;&lt;p&gt;Erforderliche Bestell-, Rechnungs- oder Kundennummer fehlt.&lt;/p&gt;&lt;p&gt;Bitte speichern Sie zunächst Ihre aktuelle Bestellung und stellen Sie sicher, dass alle erforderlichen Felder verfügbar sind.&lt;/p &gt;</translation>
     </message>
     <message>
-        <location line="+88"/>
+        <location line="+91"/>
         <source>Article: %1 already Exists!</source>
         <translation>Artikel: %1 existiert bereits!</translation>
     </message>
@@ -7761,12 +7796,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>OrdersTableView</name>
     <message>
-        <location filename="../tabs/orders/orderstableview.cpp" line="+24"/>
+        <location filename="../tabs/orders/orderstableview.cpp" line="+23"/>
         <source>Article purchases</source>
         <translation>Artikelkäufe</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+41"/>
         <source>Please insert here, the required Order article.</source>
         <translation>Bitte geben Sie hier den gewünschten Bestellartikel ein.</translation>
     </message>
@@ -7781,7 +7816,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Ausgewählten Artikel löschen</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Open article ...</source>
         <translation>Öffne Artikel ...</translation>
     </message>
@@ -9092,7 +9127,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>StatusBar</name>
     <message>
-        <location filename="../statusbar.cpp" line="+169"/>
+        <location filename="../statusbar.cpp" line="+166"/>
         <source>Connection Errors</source>
         <translation>Verbindungsfehler</translation>
     </message>
@@ -9105,7 +9140,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>StatusToolBar</name>
     <message>
-        <location line="-80"/>
+        <location line="-76"/>
         <source>Network status</source>
         <translation>Netzwerkstatus</translation>
     </message>
@@ -9735,7 +9770,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StitchesTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitchestableview.cpp" line="+50"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitchestableview.cpp" line="+47"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>
@@ -10487,7 +10522,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>VariousTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/various/varioustableview.cpp" line="+47"/>
+        <location filename="../plugins/antiquacrm/tabs/various/varioustableview.cpp" line="+43"/>
         <source>Open entry</source>
         <translation>Eintrag öffnen</translation>
     </message>

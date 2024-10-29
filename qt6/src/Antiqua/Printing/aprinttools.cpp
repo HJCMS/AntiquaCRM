@@ -5,16 +5,17 @@
 
 #include <QRegularExpression>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-APrintTools::APrintTools(QPageSize::PageSizeId id) : pageSize{id} {}
+APrintTools::APrintTools(QPageSize::PageSizeId id) : pageSize{id} {
+}
 
 qreal APrintTools::getPoints(int millimeter) const {
   return qRound(millimeter * points);
 }
 
-const QStaticText APrintTools::textBlock(Qt::Alignment align,
-                                         QTextOption::WrapMode mode,
+const QStaticText APrintTools::textBlock(Qt::Alignment align, QTextOption::WrapMode mode,
                                          Qt::TextFormat format) const {
   QTextOption _opts(align);
   _opts.setWrapMode(mode);
@@ -25,9 +26,8 @@ const QStaticText APrintTools::textBlock(Qt::Alignment align,
   return _box;
 }
 
-const QString APrintTools::toRichText(const QString &txt) const {
-  static const QRegularExpression pattern("[\\n\\r]+",
-                                          QRegularExpression::NoPatternOption);
+const QString APrintTools::toRichText(const QString& txt) const {
+  static const QRegularExpression pattern("[\\n\\r]+", QRegularExpression::NoPatternOption);
   QString _txt(txt.trimmed());
   _txt.replace(pattern, "<br>");
   return _txt;
@@ -66,14 +66,13 @@ const QPageLayout APrintTools::pageLayout() const {
   return _layout;
 }
 
-const QTextOption APrintTools::textOption(Qt::Alignment align,
-                                          QTextOption::WrapMode mode) {
+const QTextOption APrintTools::textOption(Qt::Alignment align, QTextOption::WrapMode mode) {
   QTextOption _opts(align);
   _opts.setWrapMode(mode);
   return _opts;
 }
 
-const QPen APrintTools::linePen(const QColor &color) const {
+const QPen APrintTools::linePen(const QColor& color) const {
   QPen _pen(color);
   _pen.setStyle(Qt::SolidLine);
   _pen.setCapStyle(Qt::FlatCap);
@@ -83,18 +82,18 @@ const QPen APrintTools::linePen(const QColor &color) const {
   return _pen;
 }
 
-const QPen APrintTools::fontPen(const QColor &color) const {
+const QPen APrintTools::fontPen(const QColor& color) const {
   QPen _pen(color);
   _pen.setCosmetic(true);
   return _pen;
 }
 
-qreal APrintTools::fontHeight(const QFont &font) const {
+qreal APrintTools::fontHeight(const QFont& font) const {
   const QFontMetrics _metrics(font);
   return _metrics.height();
 }
 
-const QBrush APrintTools::borderBrush(const QColor &color) const {
+const QBrush APrintTools::borderBrush(const QColor& color) const {
   return QBrush(color, Qt::SolidPattern);
 }
 

@@ -10,9 +10,10 @@
 #include <QDebug>
 #include <QLayout>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-MailDialog::MailDialog(QWidget *parent) : QDialog{parent} {
+MailDialog::MailDialog(QWidget* parent) : QDialog{parent} {
   setObjectName("create_mail_forward_dialog");
   setWindowTitle(tr("Mailler"));
   setMinimumSize(QSize(650, 500));
@@ -22,7 +23,7 @@ MailDialog::MailDialog(QWidget *parent) : QDialog{parent} {
   m_cfg = new AntiquaCRM::ASettings(this);
   m_keys = new AntiquaCRM::MailTemplateKeys(this);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   // row 0
   m_subject = new AntiquaCRM::ALabel(this);
   m_subject->setObjectName("tb_subject");
@@ -58,11 +59,11 @@ MailDialog::MailDialog(QWidget *parent) : QDialog{parent} {
 
   connect(m_keys, SIGNAL(sendSuccess()), SLOT(setRecipientData()));
   connect(m_keys, SIGNAL(sendNoResult()), SLOT(setFailed()));
-  connect(m_btnBox, SIGNAL(rejected()), this, SLOT(reject()));
-  connect(btn_email, SIGNAL(clicked()), this, SLOT(setMailCommand()));
+  connect(m_btnBox, SIGNAL(rejected()), SLOT(reject()));
+  connect(btn_email, SIGNAL(clicked()), SLOT(setMailCommand()));
 }
 
-void MailDialog::closeEvent(QCloseEvent *event) {
+void MailDialog::closeEvent(QCloseEvent* event) {
   if (event->type() == QEvent::Close) {
     event->setAccepted(false);
     m_statusBar->showMessage(tr("Please use the Close button!"));
@@ -71,7 +72,7 @@ void MailDialog::closeEvent(QCloseEvent *event) {
   QDialog::closeEvent(event);
 }
 
-bool MailDialog::selectTemplate(const QString &caller) {
+bool MailDialog::selectTemplate(const QString& caller) {
   QString sql("SELECT * FROM ui_template_body");
   sql.append(" WHERE tb_caller='" + caller + "';");
   QSqlQuery q = m_sql->query(sql);
@@ -101,7 +102,7 @@ bool MailDialog::selectTemplate(const QString &caller) {
   return false;
 }
 
-const QJsonObject MailDialog::articleObject(const QVariant &value) {
+const QJsonObject MailDialog::articleObject(const QVariant& value) {
   QJsonDocument doc = QJsonDocument::fromJson(value.toByteArray());
   return doc.object();
 }
@@ -128,9 +129,8 @@ void MailDialog::setRecipientData() {
       for (int r = 0; r < _record.count(); r++) {
         QString _name = _record.field(r).name();
         QVariant _value = _q.value(_name);
-        if (_value.isValid() &&
-            (_value.metaType().id() == QMetaType::QString) &&
-            _value.toString().isEmpty())
+        if (_value.isValid() && (_value.metaType().id() == QMetaType::QString)
+            && _value.toString().isEmpty())
           continue;
 
         if (_name == "c_gender")
@@ -156,8 +156,7 @@ void MailDialog::setRecipientData() {
           QSqlField sf = rec.field(r);
           QString fn = sf.name();
           QVariant v = q.value(sf.name());
-          if (v.isValid() && (v.metaType().id() == QMetaType::QString) &&
-              v.toString().isEmpty())
+          if (v.isValid() && (v.metaType().id() == QMetaType::QString) && v.toString().isEmpty())
             continue;
 
           _map.insert(fn, v);
@@ -202,10 +201,9 @@ void MailDialog::setFailed() {
 }
 
 void MailDialog::setMailCommand() {
-  MailCommand *cli = new MailCommand(this);
+  MailCommand* cli = new MailCommand(this);
   cli->setObjectName("start_mail_command");
-  connect(cli, SIGNAL(sendMessage(const QString &)), m_statusBar,
-          SLOT(showMessage(const QString &)));
+  connect(cli, SIGNAL(sendMessage(const QString&)), m_statusBar, SLOT(showMessage(const QString&)));
 
   QString eMail = m_keys->getData("c_email_0").toString();
   cli->setSubject(m_subject->text());
@@ -220,9 +218,11 @@ void MailDialog::setMailCommand() {
   QTimer::singleShot(2000, this, SLOT(accept()));
 }
 
-void MailDialog::setSubject(const QString &txt) { m_subject->setText(txt); }
+void MailDialog::setSubject(const QString& txt) {
+  m_subject->setText(txt);
+}
 
-void MailDialog::setBody(const QString &txt) {
+void MailDialog::setBody(const QString& txt) {
   QString buffer(txt);
   QRegularExpressionMatchIterator i = p_regexp.globalMatch(txt);
   while (i.hasNext()) {
@@ -263,7 +263,7 @@ int MailDialog::exec() {
   return QDialog::Rejected;
 }
 
-int MailDialog::exec(const QJsonObject &data) {
+int MailDialog::exec(const QJsonObject& data) {
   m_sql = new AntiquaCRM::ASqlCore(this);
   if (m_sql == nullptr)
     return QDialog::Rejected;

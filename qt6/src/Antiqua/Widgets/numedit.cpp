@@ -5,9 +5,10 @@
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-NumEdit::NumEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+NumEdit::NumEdit(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::ASpinBox(this);
   m_edit->setMinimum(0);
   layout->addWidget(m_edit);
@@ -32,30 +33,34 @@ void NumEdit::initData() {
   setWindowModified(false);
 }
 
-void NumEdit::setValue(const QVariant &value) {
+void NumEdit::setValue(const QVariant& value) {
   int _num = value.toInt();
   switch (value.metaType().id()) {
-  case (QMetaType::Int):
-  case (QMetaType::Double):
-  case (QMetaType::Long):
-  case (QMetaType::ULong):
-  case (QMetaType::LongLong):
-    m_edit->setValue(_num);
-    return;
-
-  default: {
-    if (_num > 0) {
+    case (QMetaType::Int):
+    case (QMetaType::Double):
+    case (QMetaType::Long):
+    case (QMetaType::ULong):
+    case (QMetaType::LongLong):
       m_edit->setValue(_num);
       return;
-    }
-  } break;
+
+    default:
+      {
+        if (_num > 0) {
+          m_edit->setValue(_num);
+          return;
+        }
+      }
+      break;
   };
 #ifdef ANTIQUA_DEVELOPMENT
   qDebug() << "NumEdit Invalid:" << value;
 #endif
 }
 
-void NumEdit::setFocus() { m_edit->setFocus(); }
+void NumEdit::setFocus() {
+  m_edit->setFocus();
+}
 
 void NumEdit::reset() {
   m_edit->setValue(m_edit->minimum());
@@ -70,26 +75,36 @@ void NumEdit::setReadOnly(bool b) {
     m_edit->setButtonSymbols(QAbstractSpinBox::NoButtons);
 }
 
-void NumEdit::setRestrictions(const QSqlField &field) {
+void NumEdit::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void NumEdit::setRange(int min, int max) { m_edit->setRange(min, max); }
+void NumEdit::setRange(int min, int max) {
+  m_edit->setRange(min, max);
+}
 
-void NumEdit::setSingleStep(int step) { m_edit->setSingleStep(step); }
+void NumEdit::setSingleStep(int step) {
+  m_edit->setSingleStep(step);
+}
 
-void NumEdit::setPrefix(const QString &prefix) { m_edit->setPrefix(prefix); }
+void NumEdit::setPrefix(const QString& prefix) {
+  m_edit->setPrefix(prefix);
+}
 
-void NumEdit::setSuffix(const QString &suffix) { m_edit->setSuffix(suffix); }
+void NumEdit::setSuffix(const QString& suffix) {
+  m_edit->setSuffix(suffix);
+}
 
-void NumEdit::setInputToolTip(const QString &tip) { m_edit->setToolTip(tip); }
+void NumEdit::setInputToolTip(const QString& tip) {
+  m_edit->setToolTip(tip);
+}
 
-void NumEdit::setBuddyLabel(const QString &text) {
+void NumEdit::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -100,14 +115,20 @@ bool NumEdit::isValid() {
   return true;
 }
 
-const QMetaType NumEdit::getType() const { return QMetaType(QMetaType::Int); }
+const QMetaType NumEdit::getType() const {
+  return QMetaType(QMetaType::Int);
+}
 
-const QVariant NumEdit::getValue() { return m_edit->value(); }
+const QVariant NumEdit::getValue() {
+  return m_edit->value();
+}
 
 const QString NumEdit::popUpHints() {
   return tr("A Numeric Input is required!");
 }
 
-const QString NumEdit::statusHints() { return popUpHints(); }
+const QString NumEdit::statusHints() {
+  return popUpHints();
+}
 
 } // namespace AntiquaCRM

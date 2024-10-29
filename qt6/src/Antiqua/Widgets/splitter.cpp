@@ -5,17 +5,18 @@
 
 #include <QDebug>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-SplitterHandle::SplitterHandle(QSplitter *parent)
-    : QSplitterHandle{Qt::Horizontal, parent} {}
+SplitterHandle::SplitterHandle(QSplitter* parent) : QSplitterHandle{Qt::Horizontal, parent} {
+}
 
-void SplitterHandle::mouseReleaseEvent(QMouseEvent *e) {
+void SplitterHandle::mouseReleaseEvent(QMouseEvent* e) {
   emit sendSaveState();
   QSplitterHandle::mouseReleaseEvent(e);
 }
 
-Splitter::Splitter(QWidget *parent) : QSplitter{Qt::Horizontal, parent} {
+Splitter::Splitter(QWidget* parent) : QSplitter{Qt::Horizontal, parent} {
   setObjectName("antiqua_hsplitter");
   setChildrenCollapsible(false);
   setContentsMargins(0, 0, 0, 0);
@@ -39,14 +40,14 @@ const QString Splitter::configPath() {
   return p;
 }
 
-SplitterHandle *Splitter::createHandle() {
-  SplitterHandle *sph = new SplitterHandle(this);
+SplitterHandle* Splitter::createHandle() {
+  SplitterHandle* sph = new SplitterHandle(this);
   sph->setObjectName(name);
   connect(sph, SIGNAL(sendSaveState()), SLOT(setSaveState()));
   return sph;
 }
 
-void Splitter::showEvent(QShowEvent *event) {
+void Splitter::showEvent(QShowEvent* event) {
   if (event->type() == QEvent::Show) {
     QByteArray state = m_cfg->value(configPath()).toByteArray();
     if (!state.isNull())
@@ -55,14 +56,16 @@ void Splitter::showEvent(QShowEvent *event) {
   QSplitter::showEvent(event);
 }
 
-void Splitter::setSaveState() { m_cfg->setValue(configPath(), saveState()); }
+void Splitter::setSaveState() {
+  m_cfg->setValue(configPath(), saveState());
+}
 
-void Splitter::addLeft(QWidget *widget) {
+void Splitter::addLeft(QWidget* widget) {
   insertWidget(0, widget);
   setStretchFactor(0, 2);
 }
 
-void Splitter::addRight(QWidget *widget) {
+void Splitter::addRight(QWidget* widget) {
   insertWidget(1, widget);
   setStretchFactor(1, 1);
 }

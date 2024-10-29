@@ -3,9 +3,10 @@
 
 #include "groupboxedit.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-GroupBoxEdit::GroupBoxEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
+GroupBoxEdit::GroupBoxEdit(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new QGroupBox(this);
   m_edit->setCheckable(true);
   m_edit->setChecked(false);
@@ -18,7 +19,9 @@ GroupBoxEdit::GroupBoxEdit(QWidget *parent) : AntiquaCRM::AInputWidget{parent} {
   connect(m_edit, SIGNAL(clicked(bool)), SLOT(valueChanged(bool)));
 }
 
-void GroupBoxEdit::valueChanged(bool) { setWindowModified(true); }
+void GroupBoxEdit::valueChanged(bool) {
+  setWindowModified(true);
+}
 
 void GroupBoxEdit::initData() {
   QSqlField _f;
@@ -29,44 +32,55 @@ void GroupBoxEdit::initData() {
   setWindowModified(false);
 }
 
-void GroupBoxEdit::setValue(const QVariant &value) {
+void GroupBoxEdit::setValue(const QVariant& value) {
   if (value.metaType().id() == QMetaType::Bool)
     m_edit->setChecked(value.toBool());
   else
     m_edit->setChecked(false);
 }
 
-void GroupBoxEdit::setFocus() {}
+void GroupBoxEdit::setFocus() {
+}
 
-void GroupBoxEdit::reset() { setWindowModified(false); }
+void GroupBoxEdit::reset() {
+  setWindowModified(false);
+}
 
-QBoxLayout *GroupBoxEdit::boxLayout() { return m_layout; }
+QBoxLayout* GroupBoxEdit::boxLayout() {
+  return m_layout;
+}
 
-void GroupBoxEdit::setRestrictions(const QSqlField &field) {
+void GroupBoxEdit::setRestrictions(const QSqlField& field) {
   if (field.requiredStatus() == QSqlField::Required)
     setRequired(true);
 }
 
-void GroupBoxEdit::setInputToolTip(const QString &tip) {
+void GroupBoxEdit::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void GroupBoxEdit::setBuddyLabel(const QString &text) {
+void GroupBoxEdit::setBuddyLabel(const QString& text) {
   m_edit->setTitle(text);
 }
 
-bool GroupBoxEdit::isValid() { return true; }
+bool GroupBoxEdit::isValid() {
+  return true;
+}
 
 const QMetaType GroupBoxEdit::getType() const {
   return QMetaType(QMetaType::Bool);
 }
 
-const QVariant GroupBoxEdit::getValue() { return m_edit->isChecked(); }
+const QVariant GroupBoxEdit::getValue() {
+  return m_edit->isChecked();
+}
 
 const QString GroupBoxEdit::popUpHints() {
   return tr("This grouped input field requires a value specification.");
 }
 
-const QString GroupBoxEdit::statusHints() { return tr("No choice!"); }
+const QString GroupBoxEdit::statusHints() {
+  return tr("No choice!");
+}
 
 } // namespace AntiquaCRM

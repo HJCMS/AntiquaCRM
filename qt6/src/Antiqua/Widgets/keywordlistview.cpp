@@ -1,24 +1,25 @@
 // -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
-#include "keywordlistview_p.h"
 #include "keywordlabel_p.h"
+#include "keywordlistview_p.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-KeywordListView::KeywordListView(QWidget *parent) : QWidget{parent} {
+KeywordListView::KeywordListView(QWidget* parent) : QWidget{parent} {
   setContentsMargins(0, 0, 0, 0);
   layout = new QHBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
   setLayout(layout);
 }
 
-void KeywordListView::setKeywordList(const QStringList &list) {
+void KeywordListView::setKeywordList(const QStringList& list) {
   foreach (QString _k, list) {
     if (p_uniqList.contains(_k) || _k.isEmpty())
       continue;
 
-    KeywordLabel *klb = new KeywordLabel(_k, this);
+    KeywordLabel* klb = new KeywordLabel(_k, this);
     layout->addWidget(klb);
     connect(klb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
     p_uniqList << _k;
@@ -26,7 +27,7 @@ void KeywordListView::setKeywordList(const QStringList &list) {
   setToolTip(getToolTip());
 }
 
-void KeywordListView::insertKeyword(const QString &keyword) {
+void KeywordListView::insertKeyword(const QString& keyword) {
   p_uniqList.clear();
   QString _k = keyword.trimmed();
   if (p_uniqList.contains(_k) || _k.isEmpty())
@@ -34,7 +35,7 @@ void KeywordListView::insertKeyword(const QString &keyword) {
 
   const QString _keyword = keyword.trimmed();
   p_uniqList << _keyword;
-  KeywordLabel *klb = new KeywordLabel(_keyword, this);
+  KeywordLabel* klb = new KeywordLabel(_keyword, this);
   layout->addWidget(klb);
   connect(klb, SIGNAL(aboutToRemove()), SLOT(removeKeyword()));
   setToolTip(getToolTip());
@@ -42,7 +43,7 @@ void KeywordListView::insertKeyword(const QString &keyword) {
 }
 
 void KeywordListView::removeKeyword() {
-  KeywordLabel *klb = qobject_cast<KeywordLabel *>(sender());
+  KeywordLabel* klb = qobject_cast<KeywordLabel*>(sender());
   if (klb != nullptr) {
     QString key = klb->text();
     for (int i = 0; i < p_uniqList.count(); i++) {
@@ -57,11 +58,11 @@ void KeywordListView::removeKeyword() {
 }
 
 void KeywordListView::clearKeywords() {
-  QList<KeywordLabel *> _list = findChildren<KeywordLabel *>(QString());
+  QList<KeywordLabel*> _list = findChildren<KeywordLabel*>(QString());
   if (_list.size() > 0) {
-    QListIterator<KeywordLabel *> it(_list);
+    QListIterator<KeywordLabel*> it(_list);
     while (it.hasNext()) {
-      KeywordLabel *lb = it.next();
+      KeywordLabel* lb = it.next();
       layout->removeWidget(lb);
       lb->deleteLater();
     }
@@ -73,11 +74,11 @@ void KeywordListView::clearKeywords() {
 
 const QString KeywordListView::getKeywords() {
   QStringList _keys;
-  QList<KeywordLabel *> _list = findChildren<KeywordLabel *>(QString());
+  QList<KeywordLabel*> _list = findChildren<KeywordLabel*>(QString());
   if (_list.size() > 0) {
-    QListIterator<KeywordLabel *> it(_list);
+    QListIterator<KeywordLabel*> it(_list);
     while (it.hasNext()) {
-      KeywordLabel *lb = it.next();
+      KeywordLabel* lb = it.next();
       _keys << lb->text();
     }
     _list.clear();
@@ -86,9 +87,8 @@ const QString KeywordListView::getKeywords() {
 }
 
 const QString KeywordListView::getToolTip() {
-  QString _tip = tr("Current Keywords length %1 from allowed %2 used.")
-                     .arg(curLength())
-                     .arg(maxLength());
+  QString _tip =
+      tr("Current Keywords length %1 from allowed %2 used.").arg(curLength()).arg(maxLength());
   return _tip;
 }
 
@@ -97,10 +97,16 @@ bool KeywordListView::isValid() {
   return (_len >= minLength() && _len <= maxLength());
 }
 
-int KeywordListView::curLength() { return getKeywords().size(); }
+int KeywordListView::curLength() {
+  return getKeywords().size();
+}
 
-int KeywordListView::minLength() { return 5; }
+int KeywordListView::minLength() {
+  return 5;
+}
 
-int KeywordListView::maxLength() { return 60; }
+int KeywordListView::maxLength() {
+  return 60;
+}
 
 } // namespace AntiquaCRM

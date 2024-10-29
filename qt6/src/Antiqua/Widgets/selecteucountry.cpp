@@ -7,7 +7,8 @@
 #include <AntiquaCRM>
 #include <QPalette>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 // BEGIN::CountryItem
 EUCountry::EUCountry(int ro, QString is, QString na) {
@@ -18,19 +19,19 @@ EUCountry::EUCountry(int ro, QString is, QString na) {
 // END::CountryItem
 
 // BEGIN::SelectEUCountryModel
-SelectEUCountryModel::SelectEUCountryModel(QWidget *parent)
+SelectEUCountryModel::SelectEUCountryModel(QWidget* parent)
     : QAbstractListModel{parent}, p_palette{parent->palette()},
       euIcon(AntiquaCRM::antiquaIcon("european-flag")),
       dwIcon(AntiquaCRM::antiquaIcon("dialog-warning")) {
   p_list.clear();
 }
 
-int SelectEUCountryModel::rowCount(const QModelIndex &parent) const {
+int SelectEUCountryModel::rowCount(const QModelIndex& parent) const {
   Q_UNUSED(parent);
   return p_list.size();
 }
 
-QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
+QVariant SelectEUCountryModel::data(const QModelIndex& index, int role) const {
   if (!index.isValid())
     return QVariant();
 
@@ -41,27 +42,27 @@ QVariant SelectEUCountryModel::data(const QModelIndex &index, int role) const {
   const EUCountry _country = p_list[index.row()];
   const QString _bcp47(_country.iso);
   switch (role) {
-  case (Qt::DisplayRole):
-    return _country.name;
+    case (Qt::DisplayRole):
+      return _country.name;
 
-  case (Qt::EditRole):
-  case (Qt::UserRole):
-    return _bcp47;
+    case (Qt::EditRole):
+    case (Qt::UserRole):
+      return _bcp47;
 
-  case (Qt::ToolTipRole):
-    return _country.name;
+    case (Qt::ToolTipRole):
+      return _country.name;
 
-  case (Qt::DecorationRole):
-    return (_bcp47 == "XX" || _bcp47.isEmpty()) ? dwIcon : euIcon;
+    case (Qt::DecorationRole):
+      return (_bcp47 == "XX" || _bcp47.isEmpty()) ? dwIcon : euIcon;
 
-  case (Qt::BackgroundRole):
-    return ((row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
+    case (Qt::BackgroundRole):
+      return ((row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
 
-  case (Qt::InitialSortOrderRole):
-    return _country.index;
+    case (Qt::InitialSortOrderRole):
+      return _country.index;
 
-  default:
-    return QVariant();
+    default:
+      return QVariant();
   };
 
   return QVariant();
@@ -80,8 +81,7 @@ bool SelectEUCountryModel::initModel() {
     p_list.append(EUCountry(row++, "XX", tr("Non European Country")));
     for (int i = 0; i < _arr.size(); i++) {
       QJsonObject item = _arr[i].toObject();
-      EUCountry eu(row++, item.value("code").toString(),
-                   item.value("country").toString());
+      EUCountry eu(row++, item.value("code").toString(), item.value("country").toString());
       p_list.append(eu);
     }
     endInsertRows();
@@ -89,13 +89,14 @@ bool SelectEUCountryModel::initModel() {
   return (p_list.size() > 0);
 }
 
-int SelectEUCountryModel::size() { return p_list.size(); }
+int SelectEUCountryModel::size() {
+  return p_list.size();
+}
 
 // END::SelectEUCountryModel
 
 // BEGIN::SelectEUCountry
-SelectEUCountry::SelectEUCountry(QWidget *parent)
-    : AntiquaCRM::AInputWidget{parent} {
+SelectEUCountry::SelectEUCountry(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   m_edit = new AntiquaCRM::AComboBox(this);
   layout->addWidget(m_edit);
 
@@ -140,7 +141,7 @@ void SelectEUCountry::initData() {
   setWindowModified(false);
 }
 
-void SelectEUCountry::setValue(const QVariant &value) {
+void SelectEUCountry::setValue(const QVariant& value) {
   QMetaType _type = value.metaType();
   if (_type.id() != QMetaType::QString) {
     qWarning("Invalid Data Type for SelectEUCountry.");
@@ -163,14 +164,16 @@ void SelectEUCountry::setValue(const QVariant &value) {
   m_edit->setCurrentIndex(noMemberIndex());
 }
 
-void SelectEUCountry::setFocus() { m_edit->setFocus(); }
+void SelectEUCountry::setFocus() {
+  m_edit->setFocus();
+}
 
 void SelectEUCountry::reset() {
   m_edit->setCurrentIndex(0);
   setWindowModified(false);
 }
 
-void SelectEUCountry::setRestrictions(const QSqlField &field) {
+void SelectEUCountry::setRestrictions(const QSqlField& field) {
   if (m_edit->currentIndex() == 0) {
     QString _default = field.defaultValue().toString();
     if (_default.isEmpty())
@@ -181,15 +184,15 @@ void SelectEUCountry::setRestrictions(const QSqlField &field) {
   setRequired((field.requiredStatus() == QSqlField::Required));
 }
 
-void SelectEUCountry::setInputToolTip(const QString &tip) {
+void SelectEUCountry::setInputToolTip(const QString& tip) {
   m_edit->setToolTip(tip);
 }
 
-void SelectEUCountry::setBuddyLabel(const QString &text) {
+void SelectEUCountry::setBuddyLabel(const QString& text) {
   if (text.isEmpty())
     return;
 
-  ALabel *m_lb = addTitleLabel(text + ":");
+  ALabel* m_lb = addTitleLabel(text + ":");
   m_lb->setBuddy(m_edit);
 }
 
@@ -217,7 +220,9 @@ const QString SelectEUCountry::popUpHints() {
   return tr("A valid Country selection is required!");
 }
 
-const QString SelectEUCountry::statusHints() { return popUpHints(); }
+const QString SelectEUCountry::statusHints() {
+  return popUpHints();
+}
 // END::SelectEUCountry
 
 } // namespace AntiquaCRM

@@ -8,18 +8,20 @@
 #include <QPrintDialog>
 #include <QTableWidgetItem>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-RefundPage::RefundPage(QWidget *parent) : AntiquaCRM::APrintingPage{parent} {
+RefundPage::RefundPage(QWidget* parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_invoice_page");
 }
 
-void RefundPage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+void RefundPage::paintContent(QPainter& painter) {
+  Q_UNUSED(painter);
+}
 
 void RefundPage::setBodyLayout() {
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(margin.left(), getPoints(95), margin.right(),
-                             margin.bottom());
+  QVBoxLayout* layout = new QVBoxLayout(this);
+  layout->setContentsMargins(margin.left(), getPoints(95), margin.right(), margin.bottom());
   m_body = new APrintingBody(this);
   m_body->setFont(normalFont);
   layout->addWidget(m_body);
@@ -29,7 +31,7 @@ void RefundPage::setBodyLayout() {
   QTextTableFormat _tableFormat = m_body->tableFormat();
   _tableFormat.setBottomMargin(10);
 
-  QTextTable *m_table = cursor.insertTable(1, 2, _tableFormat);
+  QTextTable* m_table = cursor.insertTable(1, 2, _tableFormat);
   m_table->setObjectName("header_table");
 
   QTextTableCell hcl = m_table->cellAt(0, 0);
@@ -44,27 +46,25 @@ void RefundPage::setBodyLayout() {
   m_body->setCellItem(hcr, _dtext, Qt::AlignRight);
 }
 
-void RefundPage::setArticleCell(int row, const QVariant &value) {
+void RefundPage::setArticleCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 0);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
-  m_body->setCellItem(_tc, value.toLongLong(),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_tc, value.toLongLong(), (Qt::AlignRight | Qt::AlignVCenter));
 }
 
-void RefundPage::setDescripeCell(int row, const QVariant &value) {
+void RefundPage::setDescripeCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 1);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toString(), (Qt::AlignLeft | Qt::AlignTop));
 }
 
-void RefundPage::setQuantityCell(int row, const QVariant &value) {
+void RefundPage::setQuantityCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 2);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
-  m_body->setCellItem(_tc, value.toLongLong(),
-                      (Qt::AlignCenter | Qt::AlignVCenter));
+  m_body->setCellItem(_tc, value.toLongLong(), (Qt::AlignCenter | Qt::AlignVCenter));
 }
 
-int RefundPage::addArticleRows(int row, const QSqlQuery &result) {
+int RefundPage::addArticleRows(int row, const QSqlQuery& result) {
   if (m_articles == nullptr)
     return row;
 
@@ -83,26 +83,24 @@ int RefundPage::addArticleRows(int row, const QSqlQuery &result) {
 
   QTextTableCell _price_cell = m_articles->cellAt(_row, 3);
   _price_cell.setFormat(m_body->articleTableCellFormat((_row > 1)));
-  m_body->setCellItem(_price_cell, _calc.money(_price),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_price_cell, _calc.money(_price), (Qt::AlignRight | Qt::AlignVCenter));
   // End:ArticleRow
   _row++;
   // Refund Cells
   QTextTableCell _rf_info_cell = m_articles->cellAt(_row, 2);
-  m_body->setCellItem(_rf_info_cell, tr("refund cost"),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_rf_info_cell, tr("refund cost"), (Qt::AlignRight | Qt::AlignVCenter));
 
   QTextTableCell _rf_cost_cell = m_articles->cellAt(_row, 3);
   _rf_cost_cell.setFormat(m_body->articleTableCellFormat(true));
   m_body->setCellItem(_rf_cost_cell, _calc.money(_refund_cost),
                       (Qt::AlignRight | Qt::AlignVCenter));
 
-  refund_cost  += _refund_cost;
+  refund_cost += _refund_cost;
   summary += _calc.netPrice();
   return _row;
 }
 
-bool RefundPage::setContentData(QJsonObject &data) {
+bool RefundPage::setContentData(QJsonObject& data) {
   setBodyLayout();
   if (!data.contains("config") || m_body == nullptr) {
     qWarning("Unable to read invoice content data!");
@@ -175,8 +173,7 @@ bool RefundPage::setContentData(QJsonObject &data) {
   // Subtotal Price
   QTextTableCell _st1 = m_articles->cellAt(_row, 3);
   _st1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_st1, AntiquaCRM::ATaxCalculator::money(summary),
-                      Qt::AlignRight);
+  m_body->setCellItem(_st1, AntiquaCRM::ATaxCalculator::money(summary), Qt::AlignRight);
 
   _row++;
   // Refunding cost summary
@@ -185,8 +182,7 @@ bool RefundPage::setContentData(QJsonObject &data) {
   m_body->setCellItem(_dc0, tr("total refund cost"), Qt::AlignRight);
   QTextTableCell _dc1 = m_articles->cellAt(_row, 3);
   _dc1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(refund_cost),
-                      Qt::AlignRight);
+  m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(refund_cost), Qt::AlignRight);
 
   _row++;
   // Total
@@ -197,8 +193,7 @@ bool RefundPage::setContentData(QJsonObject &data) {
   summary += refund_cost;
   QTextTableCell _tp1 = m_articles->cellAt(_row, 3);
   _tp1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
-                      Qt::AlignRight);
+  m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary), Qt::AlignRight);
 
   if (config.value("payment_status").toBool()) {
     m_body->insertText(companyData("COMPANY_INVOICE_PAYED"));
@@ -209,7 +204,7 @@ bool RefundPage::setContentData(QJsonObject &data) {
 }
 
 // Printing Refund
-PrintRefund::PrintRefund(QWidget *parent) : APrintDialog{parent} {
+PrintRefund::PrintRefund(QWidget* parent) : APrintDialog{parent} {
   setObjectName("print_refund_dialog");
   pageLayout.setOrientation(QPageLayout::Portrait);
   pageLayout.setPageSize(QPageSize(QPageSize::A4));
@@ -219,7 +214,7 @@ PrintRefund::PrintRefund(QWidget *parent) : APrintDialog{parent} {
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
-void PrintRefund::renderPage(QPrinter *printer) {
+void PrintRefund::renderPage(QPrinter* printer) {
   Q_CHECK_PTR(page);
   // Bug Windows lost pageLayout
   if (!printer->pageLayout().isValid())
@@ -235,7 +230,7 @@ void PrintRefund::createPDF() {
   QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_INVOICES);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
-    QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+    QPrinter* printer = new QPrinter(QPrinter::HighResolution);
     printer->setPageLayout(page->pageLayout());
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setPdfVersion(QPagedPaintDevice::PdfVersion_1_6);
@@ -253,21 +248,21 @@ void PrintRefund::openPrintDialog() {
   QPageLayout pageLayout = page->pageLayout();
   pageLayout.setMode(QPageLayout::FullPageMode);
 
-  QPrinter *printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
+  QPrinter* printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
   printer->setDocName("Invoice");
   printer->setPrinterName(printerInfo.printerName());
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  QPrintDialog* dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
-  connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
+  connect(dialog, SIGNAL(accepted(QPrinter*)), SLOT(renderPage(QPrinter*)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
     sendStatusMessage(tr("Invoice printed!"));
   }
 }
 
-int PrintRefund::exec(const QJsonObject &options, bool pdfbtn) {
+int PrintRefund::exec(const QJsonObject& options, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
   qint64 o_id = options.value("o_id").toInteger(0);
   if (o_id < 1) {
@@ -309,8 +304,7 @@ int PrintRefund::exec(const QJsonObject &options, bool pdfbtn) {
   _config.insert("delivery_id", d_id);
   _config.insert("vat_level", options.value("o_vat_levels").toInt());
   int _status = options.value("o_payment_status").toInt();
-  if (static_cast<AntiquaCRM::OrderPayment>(_status) ==
-      AntiquaCRM::OrderPayment::NOTPAID) {
+  if (static_cast<AntiquaCRM::OrderPayment>(_status) == AntiquaCRM::OrderPayment::NOTPAID) {
     _config.insert("payment_status", false);
   } else {
     _config.insert("payment_status", true);

@@ -11,13 +11,12 @@
 #include <QLocale>
 #include <QRegularExpression>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ANetworkRequest::ANetworkRequest(const QUrl &remoteUrl)
-    : QNetworkRequest{remoteUrl} {
+ANetworkRequest::ANetworkRequest(const QUrl& remoteUrl) : QNetworkRequest{remoteUrl} {
   setPriority(QNetworkRequest::HighPriority);
-  setAttribute(QNetworkRequest::RedirectPolicyAttribute,
-               QNetworkRequest::NoLessSafeRedirectPolicy);
+  setAttribute(QNetworkRequest::RedirectPolicyAttribute, QNetworkRequest::NoLessSafeRedirectPolicy);
 
   QUrl checkUrl = url();
   if (checkUrl.host().isEmpty() || checkUrl.scheme().isEmpty()) {
@@ -32,7 +31,7 @@ ANetworkRequest::ANetworkRequest(const QUrl &remoteUrl)
 
 const QString ANetworkRequest::findCaBundleFile() const {
   QString ca_bundle;
-  QRegularExpression pattern("^(curl\\-)?ca[\\-_](bundle|certificate)$");
+  static const QRegularExpression pattern("^(curl\\-)?ca[\\-_](bundle|certificate)$");
   QStringList filter({"*.crt", "*.pem"});
   QStringList dirs(qApp->applicationDirPath());
 #ifdef Q_OS_UNIX
@@ -66,7 +65,7 @@ const QSslConfiguration ANetworkRequest::sslConfigguration() {
   return cfg;
 }
 
-void ANetworkRequest::setHeaderAcceptLanguage(const QByteArray &charset) {
+void ANetworkRequest::setHeaderAcceptLanguage(const QByteArray& charset) {
   QLocale locale = QLocale::system();
   QString str = locale.bcp47Name();
   str.append(", ");
@@ -106,23 +105,22 @@ void ANetworkRequest::setHeaderAcceptJson() {
   setRawHeader(QByteArray("Accept"), accept);
 }
 
-void ANetworkRequest::setHeaderContentTypeJson(const QByteArray &charset) {
+void ANetworkRequest::setHeaderContentTypeJson(const QByteArray& charset) {
   QByteArray contentType("application/json charset=");
   contentType.append(charset);
   setRawHeader(QByteArray("Content-Type"), contentType);
 }
 
-void ANetworkRequest::setHeaderContentTypeXml(const QByteArray &charset) {
+void ANetworkRequest::setHeaderContentTypeXml(const QByteArray& charset) {
   QByteArray contentType("application/xml charset=");
   contentType.append(charset);
   setRawHeader(QByteArray("Content-Type"), contentType);
 }
 
-void ANetworkRequest::setHeaderCacheControl(const QByteArray &cache) {
+void ANetworkRequest::setHeaderCacheControl(const QByteArray& cache) {
   QByteArray data = cache.isNull() ? ("no-cache,private") : cache;
   if (QString(data).contains("no-cache", Qt::CaseInsensitive)) {
-    setAttribute(QNetworkRequest::CacheLoadControlAttribute,
-                 QNetworkRequest::PreferNetwork);
+    setAttribute(QNetworkRequest::CacheLoadControlAttribute, QNetworkRequest::PreferNetwork);
   }
   setRawHeader(QByteArray("Cache-Control"), data);
 }

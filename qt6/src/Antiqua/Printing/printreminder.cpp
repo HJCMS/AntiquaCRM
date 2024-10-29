@@ -8,19 +8,20 @@
 #include <QPrintDialog>
 #include <QTableWidgetItem>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ReminderPage::ReminderPage(QWidget *parent)
-    : AntiquaCRM::APrintingPage{parent} {
+ReminderPage::ReminderPage(QWidget* parent) : AntiquaCRM::APrintingPage{parent} {
   setObjectName("printing_reminder_page");
 }
 
-void ReminderPage::paintContent(QPainter &painter) { Q_UNUSED(painter); }
+void ReminderPage::paintContent(QPainter& painter) {
+  Q_UNUSED(painter);
+}
 
 void ReminderPage::setBodyLayout() {
-  QVBoxLayout *layout = new QVBoxLayout(this);
-  layout->setContentsMargins(margin.left(), getPoints(95), margin.right(),
-                             margin.bottom());
+  QVBoxLayout* layout = new QVBoxLayout(this);
+  layout->setContentsMargins(margin.left(), getPoints(95), margin.right(), margin.bottom());
   m_body = new APrintingBody(this);
   m_body->setFont(normalFont);
   layout->addWidget(m_body);
@@ -30,7 +31,7 @@ void ReminderPage::setBodyLayout() {
   QTextTableFormat _tableFormat = m_body->tableFormat();
   _tableFormat.setBottomMargin(10);
 
-  QTextTable *m_table = cursor.insertTable(1, 2, _tableFormat);
+  QTextTable* m_table = cursor.insertTable(1, 2, _tableFormat);
   m_table->setObjectName("header_table");
 
   QTextTableCell hcl = m_table->cellAt(0, 0);
@@ -45,27 +46,25 @@ void ReminderPage::setBodyLayout() {
   m_body->setCellItem(hcr, _dtext, Qt::AlignRight);
 }
 
-void ReminderPage::setArticleCell(int row, const QVariant &value) {
+void ReminderPage::setArticleCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 0);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
-  m_body->setCellItem(_tc, value.toLongLong(),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_tc, value.toLongLong(), (Qt::AlignRight | Qt::AlignVCenter));
 }
 
-void ReminderPage::setDescripeCell(int row, const QVariant &value) {
+void ReminderPage::setDescripeCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 1);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
   m_body->setCellItem(_tc, value.toString(), (Qt::AlignLeft | Qt::AlignTop));
 }
 
-void ReminderPage::setQuantityCell(int row, const QVariant &value) {
+void ReminderPage::setQuantityCell(int row, const QVariant& value) {
   QTextTableCell _tc = m_articles->cellAt(row, 2);
   _tc.setFormat(m_body->articleTableCellFormat((row > 1)));
-  m_body->setCellItem(_tc, value.toLongLong(),
-                      (Qt::AlignCenter | Qt::AlignVCenter));
+  m_body->setCellItem(_tc, value.toLongLong(), (Qt::AlignCenter | Qt::AlignVCenter));
 }
 
-int ReminderPage::addArticleRows(int row, const QSqlQuery &result) {
+int ReminderPage::addArticleRows(int row, const QSqlQuery& result) {
   if (m_articles == nullptr)
     return row;
 
@@ -85,23 +84,22 @@ int ReminderPage::addArticleRows(int row, const QSqlQuery &result) {
   _calc.setBillingMode(config.value("vat_level").toInt());
 
   switch (_calc.getBillingMode()) {
-  case TAX_INCL:
-    _vat_prefix = tr("incl."); // including sales tax
-    break;
+    case TAX_INCL:
+      _vat_prefix = tr("incl."); // including sales tax
+      break;
 
-  case TAX_WITH:
-    _vat_prefix = tr("with"); // with sales tax
-    break;
+    case TAX_WITH:
+      _vat_prefix = tr("with"); // with sales tax
+      break;
 
-  default:
-    _vat_prefix = tr("without"); // without sales tax
-    break;
+    default:
+      _vat_prefix = tr("without"); // without sales tax
+      break;
   }
 
   QTextTableCell _price_cell = m_articles->cellAt(_row, 3);
   _price_cell.setFormat(m_body->articleTableCellFormat((_row > 1)));
-  m_body->setCellItem(_price_cell, _calc.money(_price),
-                      (Qt::AlignRight | Qt::AlignVCenter));
+  m_body->setCellItem(_price_cell, _calc.money(_price), (Qt::AlignRight | Qt::AlignVCenter));
 
   _row++;
   // m_articles->mergeCells(row, 0, 0, 3);
@@ -113,38 +111,42 @@ int ReminderPage::addArticleRows(int row, const QSqlQuery &result) {
 
   int _type = result.value("a_type").toInt();
   switch (static_cast<AntiquaCRM::ArticleType>(_type)) {
-  case (AntiquaCRM::ArticleType::BOOK): {
-    QString _str(_vat_prefix);
-    _str.append(" ");
-    if (_calc.salesTaxRate() > 0) {
-      _str.append(QString::number(_calc.salesTaxRate()));
-      _str.append("% ");
-    }
-    _str.append(tr("VAT"));
-    m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
-                        (Qt::AlignRight | Qt::AlignVCenter));
-  } break;
+    case (AntiquaCRM::ArticleType::BOOK):
+      {
+        QString _str(_vat_prefix);
+        _str.append(" ");
+        if (_calc.salesTaxRate() > 0) {
+          _str.append(QString::number(_calc.salesTaxRate()));
+          _str.append("% ");
+        }
+        _str.append(tr("VAT"));
+        m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
+        m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
+                            (Qt::AlignRight | Qt::AlignVCenter));
+      }
+      break;
 
-  default: {
-    QString _str(_vat_prefix);
-    _str.append(" ");
-    if (_calc.salesTaxRate() > 0) {
-      _str.append(QString::number(_calc.salesTaxRate()));
-      _str.append("% ");
-    }
-    _str.append(tr("VAT"));
-    m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
-    m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
-                        (Qt::AlignRight | Qt::AlignVCenter));
-  } break;
+    default:
+      {
+        QString _str(_vat_prefix);
+        _str.append(" ");
+        if (_calc.salesTaxRate() > 0) {
+          _str.append(QString::number(_calc.salesTaxRate()));
+          _str.append("% ");
+        }
+        _str.append(tr("VAT"));
+        m_body->setCellItem(_vat_cell, _str, (Qt::AlignRight | Qt::AlignVCenter));
+        m_body->setCellItem(_subtotal_cell, _calc.money(_calc.vatCosts()),
+                            (Qt::AlignRight | Qt::AlignVCenter));
+      }
+      break;
   }
   summary += _calc.salesPrice();
   // qDebug() << "Summary" << summary;
   return _row;
 }
 
-bool ReminderPage::setContentData(QJsonObject &data) {
+bool ReminderPage::setContentData(QJsonObject& data) {
   setBodyLayout();
   if (!data.contains("config") || m_body == nullptr) {
     qWarning("Unable to read Reminder content data!");
@@ -215,8 +217,7 @@ bool ReminderPage::setContentData(QJsonObject &data) {
   // Subtotal Price
   QTextTableCell _st1 = m_articles->cellAt(_row, 3);
   _st1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_st1, AntiquaCRM::ATaxCalculator::money(summary),
-                      Qt::AlignRight);
+  m_body->setCellItem(_st1, AntiquaCRM::ATaxCalculator::money(summary), Qt::AlignRight);
 
   _row++;
   double delivery_cost = config.value("package_price").toDouble();
@@ -227,8 +228,7 @@ bool ReminderPage::setContentData(QJsonObject &data) {
   // Delivery cost
   QTextTableCell _dc1 = m_articles->cellAt(_row, 3);
   _dc1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(delivery_cost),
-                      Qt::AlignRight);
+  m_body->setCellItem(_dc1, AntiquaCRM::ATaxCalculator::money(delivery_cost), Qt::AlignRight);
 
   _row++;
   // Total
@@ -239,15 +239,14 @@ bool ReminderPage::setContentData(QJsonObject &data) {
   summary += delivery_cost;
   QTextTableCell _tp1 = m_articles->cellAt(_row, 3);
   _tp1.setFormat(m_body->articleTableCellFormat(true));
-  m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary),
-                      Qt::AlignRight);
+  m_body->setCellItem(_tp1, AntiquaCRM::ATaxCalculator::money(summary), Qt::AlignRight);
 
   m_body->insertText(companyData("COMPANY_PAYMENT_REMINDER_FINAL"));
 
   return true;
 }
 
-PrintReminder::PrintReminder(QWidget *parent) : APrintDialog{parent} {
+PrintReminder::PrintReminder(QWidget* parent) : APrintDialog{parent} {
   setObjectName("print_Reminder_dialog");
   pageLayout.setOrientation(QPageLayout::Portrait);
   pageLayout.setPageSize(QPageSize(QPageSize::A4));
@@ -257,7 +256,7 @@ PrintReminder::PrintReminder(QWidget *parent) : APrintDialog{parent} {
   pageLayout.setMode(QPageLayout::FullPageMode);
 }
 
-void PrintReminder::renderPage(QPrinter *printer) {
+void PrintReminder::renderPage(QPrinter* printer) {
   Q_CHECK_PTR(page);
   // Bug Windows lost pageLayout
   if (!printer->pageLayout().isValid())
@@ -273,7 +272,7 @@ void PrintReminder::createPDF() {
   QDir _dir = config->getArchivPath(ANTIQUACRM_ARCHIVE_REMINDERS);
   if (_dir.exists()) {
     QFileInfo _file(_dir, pdfFileName);
-    QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+    QPrinter* printer = new QPrinter(QPrinter::HighResolution);
     printer->setPageLayout(page->pageLayout());
     printer->setOutputFormat(QPrinter::PdfFormat);
     printer->setPdfVersion(QPagedPaintDevice::PdfVersion_1_6);
@@ -291,21 +290,21 @@ void PrintReminder::openPrintDialog() {
   QPageLayout pageLayout = page->pageLayout();
   pageLayout.setMode(QPageLayout::FullPageMode);
 
-  QPrinter *printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
+  QPrinter* printer = new QPrinter(printerInfo, QPrinter::PrinterResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
   printer->setDocName("Reminder");
   printer->setPrinterName(printerInfo.printerName());
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  QPrintDialog* dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
-  connect(dialog, SIGNAL(accepted(QPrinter *)), SLOT(renderPage(QPrinter *)));
+  connect(dialog, SIGNAL(accepted(QPrinter*)), SLOT(renderPage(QPrinter*)));
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
     sendStatusMessage(tr("Reminder printed!"));
   }
 }
 
-int PrintReminder::exec(const QJsonObject &options, bool pdfbtn) {
+int PrintReminder::exec(const QJsonObject& options, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
   qint64 o_id = options.value("o_id").toInteger(0);
   if (o_id < 1) {
@@ -347,8 +346,7 @@ int PrintReminder::exec(const QJsonObject &options, bool pdfbtn) {
   _config.insert("delivery_id", d_id);
   _config.insert("vat_level", options.value("o_vat_levels").toInt());
   int _status = options.value("o_payment_status").toInt();
-  if (static_cast<AntiquaCRM::OrderPayment>(_status) ==
-      AntiquaCRM::OrderPayment::NOTPAID) {
+  if (static_cast<AntiquaCRM::OrderPayment>(_status) == AntiquaCRM::OrderPayment::NOTPAID) {
     _config.insert("payment_status", false);
   } else {
     _config.insert("payment_status", true);

@@ -4,15 +4,15 @@
 #include "configgridlayout.h"
 #include "awhatsthisbutton.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ConfigGridLayout::ConfigGridLayout(QWidget *parent) : QGridLayout{parent} {
+ConfigGridLayout::ConfigGridLayout(QWidget* parent) : QGridLayout{parent} {
   setContentsMargins(5, 5, 5, 5);
 }
 
-void ConfigGridLayout::addToolTip(int row, int column, const QString &text) {
-  AntiquaCRM::AWhatsThisButton *btn =
-      new AntiquaCRM::AWhatsThisButton(text, parentWidget());
+void ConfigGridLayout::addToolTip(int row, int column, const QString& text) {
+  AntiquaCRM::AWhatsThisButton* btn = new AntiquaCRM::AWhatsThisButton(text, parentWidget());
   btn->setFocusPolicy(Qt::NoFocus);
   addWidget(btn, row, column, 1, 1, Qt::AlignRight);
 }

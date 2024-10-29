@@ -7,32 +7,34 @@
 #include <QLabel>
 #include <QLayout>
 
-SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
-                                 QWidget *parent)
+SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings* settings, QWidget* parent)
     : QDialog{parent}, config{settings} {
   setObjectName("switch_db_connection");
   setWindowTitle(tr("Database connection"));
   setMinimumSize(450, 400);
   setSizeGripEnabled(true);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
 
   QString _body("<p>");
-  _body.append(tr("Either there is no Internet connection at the target level "
-                  "or the DynDns registration isn't available."));
+  _body.append(
+      tr("Either there is no Internet connection at the target level "
+         "or the DynDns registration isn't available."));
   _body.append("</p><p>");
-  _body.append(tr("You can wait until the server is available again or contact "
-                  "the system administrator."));
+  _body.append(
+      tr("You can wait until the server is available again or contact "
+         "the system administrator."));
   _body.append("</p><p>");
-  _body.append(tr("If you have configured more than one connection profile, "
-                  "you can alternatively switch."));
+  _body.append(
+      tr("If you have configured more than one connection profile, "
+         "you can alternatively switch."));
   _body.append("</p>");
 
   QStringList _info;
   _info << "<b>" + tr("SQL Server is temporarily unavailable.") + "</b>";
   _info << _body;
 
-  QLabel *m_info = new QLabel(this);
+  QLabel* m_info = new QLabel(this);
   m_info->setText(_info.join(""));
   m_info->setWordWrap(true);
   layout->addWidget(m_info);
@@ -48,8 +50,7 @@ SwitchDatabaseProfile::SwitchDatabaseProfile(AntiquaCRM::ASettings *settings,
   sql_profiles->addItem(tr("Database profile"), QString());
   layout->addWidget(sql_profiles, 0, Qt::AlignLeft);
 
-  btn_box = new QDialogButtonBox(
-      (QDialogButtonBox::Save | QDialogButtonBox::Close), this);
+  btn_box = new QDialogButtonBox((QDialogButtonBox::Save | QDialogButtonBox::Close), this);
   layout->addWidget(btn_box);
 
   setLayout(layout);
@@ -68,14 +69,12 @@ void SwitchDatabaseProfile::saveAndQuit() {
   config->setValue("database_profile", _profile);
 
 #ifdef ANTIQUA_DEVELOPMENT
-  qDebug() << Q_FUNC_INFO
-           << config->organizationName()
-           << config->applicationName()
+  qDebug() << Q_FUNC_INFO << config->organizationName() << config->applicationName()
            << config->value("database_profile");
 #endif
 }
 
-void SwitchDatabaseProfile::setRemoteInfo(const QString &msg) {
+void SwitchDatabaseProfile::setRemoteInfo(const QString& msg) {
   m_sqlError->setPlainText(msg);
 }
 

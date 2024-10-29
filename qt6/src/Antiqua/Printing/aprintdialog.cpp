@@ -7,9 +7,10 @@
 
 #include <QLayout>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
+APrintDialog::APrintDialog(QWidget* parent) : QDialog{parent} {
   setSizeGripEnabled(true);
   setMinimumSize(580, 480);
   setContentsMargins(5, 5, 5, 5);
@@ -17,7 +18,7 @@ APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
   config = new AntiquaCRM::ASettings(this);
   pdfFileName = "unknown.pdf";
 
-  QBoxLayout *layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
+  QBoxLayout* layout = new QBoxLayout(QBoxLayout::TopToBottom, this);
   layout->setContentsMargins(2, 2, 2, 2);
 
   viewPort = new QScrollArea(this);
@@ -33,7 +34,7 @@ APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
   btn_pdf->setEnabled(false);
   m_buttonBox->addButton(btn_pdf, QDialogButtonBox::ActionRole);
 
-  QPushButton *btn_print = new QPushButton(this);
+  QPushButton* btn_print = new QPushButton(this);
   btn_print->setText(tr("Print"));
   btn_print->setIcon(AntiquaCRM::antiquaIcon("printer"));
   btn_print->setToolTip(tr("Print this view."));
@@ -53,13 +54,13 @@ APrintDialog::APrintDialog(QWidget *parent) : QDialog{parent} {
   connect(m_buttonBox, SIGNAL(rejected()), SLOT(reject()));
 }
 
-void APrintDialog::setPrintingPage(AntiquaCRM::APrintingPage *page) {
+void APrintDialog::setPrintingPage(AntiquaCRM::APrintingPage* page) {
   Q_CHECK_PTR(page);
   viewPort->setWidget(page);
   viewPort->update();
 }
 
-void APrintDialog::sendStatusMessage(const QString &message) {
+void APrintDialog::sendStatusMessage(const QString& message) {
   m_statusBar->showMessage(message, 5000);
 }
 

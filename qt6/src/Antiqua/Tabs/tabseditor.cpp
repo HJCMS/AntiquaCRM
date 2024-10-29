@@ -21,8 +21,7 @@ TabsEditor::TabsEditor(const QString& pattern, QWidget* parent)
   messages_timeout = m_cfg->groupValue("window_behavior", "popup_timeout", 1).toInt();
   m_tableData = nullptr;
   m_signalMapper = new QSignalMapper(this);
-  connect(m_signalMapper, SIGNAL(mappedString(const QString&)),
-          SLOT(checkInputModified(const QString&)));
+  connect(m_signalMapper, SIGNAL(mappedString(QString)), SLOT(checkInputModified(QString)));
 }
 
 TabsEditor::~TabsEditor() {

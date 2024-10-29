@@ -14,9 +14,10 @@
 #include <QStaticText>
 #include <QTextOption>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-BookCardPage::BookCardPage(const QJsonObject &data, QWidget *parent)
+BookCardPage::BookCardPage(const QJsonObject& data, QWidget* parent)
     : QWidget{parent}, p_data{data} {
   setObjectName("printing_bookcard_page");
   setAttribute(Qt::WA_OpaquePaintEvent, true);
@@ -29,7 +30,7 @@ BookCardPage::BookCardPage(const QJsonObject &data, QWidget *parent)
   setFixedSize(_prf.size().toSize());
 }
 
-void BookCardPage::paintEvent(QPaintEvent *) {
+void BookCardPage::paintEvent(QPaintEvent*) {
   QFontMetricsF _fmf(font());
   qreal _fontHeight = _fmf.height();
   static qreal _margin = 5;

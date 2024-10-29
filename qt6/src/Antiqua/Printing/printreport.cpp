@@ -9,12 +9,13 @@
 #include <QPdfWriter>
 #include <QPrintDialog>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-PrintReportPage::PrintReportPage(QWidget *parent, QPageLayout pl)
+PrintReportPage::PrintReportPage(QWidget* parent, QPageLayout pl)
     : QWidget{parent}, APrintTools{pl.pageSize().id()}, p_pageLayout{pl} {
   setContentsMargins(0, 0, 0, 0);
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setContentsMargins(contentsMargins());
   body = new APrintingBody(this);
   body->setContentsMargins(contentsMargins());
@@ -23,7 +24,7 @@ PrintReportPage::PrintReportPage(QWidget *parent, QPageLayout pl)
   setLayout(layout);
 }
 
-bool PrintReportPage::setContentData(QJsonObject &data) {
+bool PrintReportPage::setContentData(QJsonObject& data) {
   QTextCursor cursor = body->textCursor();
   body->insertText(cursor, data.value("info").toString());
 
@@ -34,7 +35,7 @@ bool PrintReportPage::setContentData(QJsonObject &data) {
   QJsonArray _data = data.value("sold").toArray();
   int _columns = _header.size();
   int _rows = _data.size();
-  QTextTable *table = cursor.insertTable(1, _columns, _tFormat);
+  QTextTable* table = cursor.insertTable(1, _columns, _tFormat);
   for (int c = 0; c < _columns; c++) {
     QTextTableCell _tc = table->cellAt(0, c);
     _tc.setFormat(body->tableCellFormat());
@@ -66,7 +67,7 @@ bool PrintReportPage::setContentData(QJsonObject &data) {
   return true;
 }
 
-PrintReport::PrintReport(QWidget *parent) : AntiquaCRM::APrintDialog{parent} {
+PrintReport::PrintReport(QWidget* parent) : AntiquaCRM::APrintDialog{parent} {
   setObjectName("print_report_dialog");
 
   pageLayout.setOrientation(QPageLayout::Portrait);
@@ -78,7 +79,7 @@ PrintReport::PrintReport(QWidget *parent) : AntiquaCRM::APrintDialog{parent} {
   viewPort->setWidget(m_page);
 }
 
-void PrintReport::renderPage(QPrinter *printer) {
+void PrintReport::renderPage(QPrinter* printer) {
   printer->setPageLayout(pageLayout);
   m_page->body->print(printer);
 }
@@ -91,7 +92,7 @@ void PrintReport::createPDF() {
   }
 
   QFileInfo _file(_dir, pdfFileName);
-  QPrinter *printer = new QPrinter(QPrinter::HighResolution);
+  QPrinter* printer = new QPrinter(QPrinter::HighResolution);
   printer->setPageLayout(pageLayout);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setCreator("AntiquaCRM");
@@ -111,24 +112,23 @@ void PrintReport::openPrintDialog() {
     p_info = QPrinterInfo::printerInfo(_device);
   }
 
-  QPrinter *printer = new QPrinter(p_info, QPrinter::ScreenResolution);
+  QPrinter* printer = new QPrinter(p_info, QPrinter::ScreenResolution);
   printer->setColorMode(QPrinter::GrayScale);
   printer->setPageLayout(pageLayout);
   printer->setOutputFormat(QPrinter::PdfFormat);
   printer->setDocName(pdfFileName);
 
-  QPrintDialog *dialog = new QPrintDialog(printer, this);
+  QPrintDialog* dialog = new QPrintDialog(printer, this);
   dialog->setPrintRange(QAbstractPrintDialog::CurrentPage);
   dialog->setOption(QAbstractPrintDialog::PrintShowPageSize, true);
-  connect(dialog, SIGNAL(accepted(QPrinter *)),
-          SLOT(renderPage(QPrinter *)));
+  connect(dialog, SIGNAL(accepted(QPrinter*)), SLOT(renderPage(QPrinter*)));
 
   if (dialog->exec() == QDialog::Accepted) {
     done(QDialog::Accepted);
   }
 }
 
-int PrintReport::exec(const QJsonObject &opts, bool pdfbtn) {
+int PrintReport::exec(const QJsonObject& opts, bool pdfbtn) {
   btn_pdf->setEnabled(pdfbtn);
 
   QJsonObject _obj = opts;

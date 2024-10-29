@@ -3,11 +3,13 @@
 
 #include "profiderinterface.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ProviderInterface::ProviderInterface(QObject *parent) : QObject{parent} {}
+ProviderInterface::ProviderInterface(QObject* parent) : QObject{parent} {
+}
 
-bool ProviderInterface::createInterface(QObject *parent) {
+bool ProviderInterface::createInterface(QObject* parent) {
   Q_UNUSED(parent);
   return false;
 }
