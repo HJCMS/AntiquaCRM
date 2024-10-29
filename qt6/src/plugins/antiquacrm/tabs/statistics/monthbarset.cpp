@@ -6,7 +6,7 @@
 #include <AntiquaCRM>
 #include <QToolTip>
 
-MonthBarSet::MonthBarSet(int year, QChart *parent, MonthBarSet::Type type)
+MonthBarSet::MonthBarSet(int year, QChart* parent, MonthBarSet::Type type)
     : QBarSet{QString(), parent}, p_year{year} {
   if (type == MonthBarSet::Type::Sales) {
     setLabel(tr("Volume (%1)").arg(year));
@@ -17,18 +17,29 @@ MonthBarSet::MonthBarSet(int year, QChart *parent, MonthBarSet::Type type)
 }
 
 void MonthBarSet::showToolTip(bool b, int i) {
-  if (b && p_sales.size() > i) {
+  if (b && (p_sales.size() > i)) {
     double _cost = p_sales[(i + 1)];
     if (_cost > 0.00) {
       const QString _money = AntiquaCRM::ATaxCalculator::money(_cost);
       const QString _info = tr("Summary %1 (%2)").arg(_money).arg(p_year);
-      QToolTip::showText(QCursor::pos(), _info, nullptr);
+      QToolTip::showText(QCursor::pos(), _info, m_chartWidget);
       return;
     }
   }
   QToolTip::hideText();
 }
 
-void MonthBarSet::setSales(const QMap<int, double> &sales) { p_sales = sales; }
+void MonthBarSet::setParent(QWidget* w) {
+  if (w != nullptr)
+    m_chartWidget = w;
+  else
+    m_chartWidget = nullptr;
+}
 
-int MonthBarSet::year() const { return p_year; }
+void MonthBarSet::setSales(const QMap<int, double>& sales) {
+  p_sales = sales;
+}
+
+int MonthBarSet::year() const {
+  return p_year;
+}

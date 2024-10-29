@@ -6,9 +6,10 @@
 #include <QFontMetricsF>
 #include <cmath>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-AChartView::AChartView(QWidget *parent) : QChartView{parent} {
+AChartView::AChartView(QWidget* parent) : QChartView{parent} {
   setContentsMargins(0, 0, 0, 0);
   setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
@@ -23,8 +24,8 @@ AChartView::AChartView(QWidget *parent) : QChartView{parent} {
   cfg.endGroup();
 }
 
-QPieSeries *AChartView::initSeries(QChart *parent) const {
-  QPieSeries *m_s = new QPieSeries(parent);
+QPieSeries* AChartView::initSeries(QChart* parent) const {
+  QPieSeries* m_s = new QPieSeries(parent);
   m_s->setVisible(false); // no header labels
   return m_s;
 }
@@ -33,17 +34,19 @@ const QDateTime AChartView::getEpoch(qint64 ct) const {
   return QDateTime::fromSecsSinceEpoch(ct, Qt::LocalTime);
 }
 
-int AChartView::getYear(const QDateTime &dt) const { return dt.date().year(); }
+int AChartView::getYear(const QDateTime& dt) const {
+  return dt.date().year();
+}
 
-int AChartView::getMonth(const QDateTime &dt) const {
+int AChartView::getMonth(const QDateTime& dt) const {
   return dt.date().month();
 }
 
-const QSqlQuery AChartView::getSqlQuery(const QString &query) {
+const QSqlQuery AChartView::getSqlQuery(const QString& query) {
   return m_sql->query(query);
 }
 
-const QSqlQuery AChartView::getTplSqlQuery(const QString &tpl) {
+const QSqlQuery AChartView::getTplSqlQuery(const QString& tpl) {
   QString _query = AntiquaCRM::ASqlFiles::queryStatement(tpl);
   if (_query.isEmpty()) {
     qWarning("Can't open SQL template file '%s'", qPrintable(tpl));

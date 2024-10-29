@@ -6,11 +6,12 @@
 #include <QLayout>
 #include <QStyle>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ANavigationBar::ANavigationBar(QWidget *parent, int count)
+ANavigationBar::ANavigationBar(QWidget* parent, int count)
     : QWidget{parent}, p_count{count - 1}, p_index{0} {
-  QHBoxLayout *layout = new QHBoxLayout(this);
+  QHBoxLayout* layout = new QHBoxLayout(this);
   btn_back = new QPushButton(tr("Back"), this);
   btn_back->setIcon(style()->standardIcon(QStyle::SP_ArrowBack));
   btn_back->setEnabled(false);
@@ -47,6 +48,8 @@ void ANavigationBar::setAllowNext(int index, bool status) {
   btn_next->setEnabled(false);
 }
 
-int ANavigationBar::getCurrentIndex() { return p_index; }
+int ANavigationBar::getCurrentIndex() {
+  return p_index;
+}
 
 } // namespace AntiquaCRM

@@ -22,11 +22,23 @@ class ANTIQUACRM_STATISTICS_PLUGIN MonthBarSet final : public QBarSet {
 private:
   int p_year;
   QMap<int, double> p_sales;
+  QWidget* m_chartWidget = nullptr;
 
 private Q_SLOTS:
   void showToolTip(bool, int);
 
 public Q_SLOTS:
+  /**
+   * @brief set Parent Widget
+   *
+   * We need a valid QWidget for QToolTip::showText and Timeout behavior.
+   */
+  void setParent(QWidget*);
+
+  /**
+   * @brief setSales
+   * @param sales Map
+   */
   void setSales(const QMap<int, double>& sales);
 
 public:

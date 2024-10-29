@@ -9,7 +9,7 @@
 #include <QFontMetricsF>
 #include <QSqlQuery>
 
-SalesInMonth::SalesInMonth(QWidget *parent) : AntiquaCRM::AChartView{parent} {
+SalesInMonth::SalesInMonth(QWidget* parent) : AntiquaCRM::AChartView{parent} {
   setObjectName("statistics_sales_in_month");
   m_chart = new QChart(itemAt(0, 0));
   m_chart->setTitleFont(headersFont);
@@ -40,11 +40,12 @@ SalesInMonth::~SalesInMonth() {
     m_chart->deleteLater();
 }
 
-MonthBarSet *SalesInMonth::createBarset(int year, int type) {
+MonthBarSet* SalesInMonth::createBarset(int year, int type) {
   MonthBarSet::Type _t = static_cast<MonthBarSet::Type>(type);
-  MonthBarSet *bs = new MonthBarSet(year, m_chart, _t);
+  MonthBarSet* bs = new MonthBarSet(year, m_chart, _t);
   bs->setLabelFont(labelsFont);
   bs->setLabelColor(Qt::black);
+  bs->setParent(this);
   return bs;
 }
 
@@ -55,8 +56,7 @@ void SalesInMonth::setMiniViewWidth(qreal i) {
 }
 
 bool SalesInMonth::initMaps() {
-  const QString _sql = AntiquaCRM::ASqlFiles::queryStatement(
-      "statistics_from_until_delivery_year");
+  const QString _sql = AntiquaCRM::ASqlFiles::queryStatement("statistics_from_until_delivery_year");
   QSqlQuery _q = getSqlQuery(_sql);
   if (_q.size() < 1) {
     qWarning("Sales in Month chart, without ranges!");
@@ -114,9 +114,9 @@ bool SalesInMonth::initialChartView(int year) {
   // finally insert chart data
   foreach (int y, p_voluMap.keys()) {
     QMap<int, qint64> _m = p_voluMap[y];
-    MonthBarSet *m_counts = createBarset(y);
+    MonthBarSet* m_counts = createBarset(y, MonthBarSet::Type::Volume);
     QMap<int, double> _s = p_soldMap[y];
-    MonthBarSet *m_solded = createBarset(y, MonthBarSet::Type::Sales);
+    MonthBarSet* m_solded = createBarset(y, MonthBarSet::Type::Sales);
     m_solded->setSales(_s);
     for (int m = 1; m <= 12; m++) {
       QDate _curr(y, m, 1);

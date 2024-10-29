@@ -8,3 +8,4 @@ WHERE ((o_payment_status=1 AND o_order_status=4)
     OR (o_order_status=6 AND o_payment_status=4)
   ) AND date_part('year', o_delivered) <= date_part('year', CURRENT_DATE)
 GROUP BY o_delivered ORDER BY o_delivered;
+

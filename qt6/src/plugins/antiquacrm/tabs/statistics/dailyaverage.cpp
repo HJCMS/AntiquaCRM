@@ -8,7 +8,7 @@
 
 #include <QLineSeries>
 
-DailyAverage::DailyAverage(QWidget *parent)
+DailyAverage::DailyAverage(QWidget* parent)
     : AntiquaCRM::AChartView{parent}, p_date{QDate::currentDate()} {
   setObjectName("daily_average_chart");
 
@@ -46,13 +46,13 @@ bool DailyAverage::initialChartView(int year) {
     _points.insert(_dt.toMSecsSinceEpoch(), _c);
   }
 
-  YearAxis *m_axisYear = new YearAxis(year, this);
+  YearAxis* m_axisYear = new YearAxis(year, this);
   m_chart->addAxis(m_axisYear, Qt::AlignBottom);
 
-  CountAxis *m_axisCount = new CountAxis(_max, this);
+  CountAxis* m_axisCount = new CountAxis(_max, this);
   m_chart->addAxis(m_axisCount, Qt::AlignLeft);
 
-  QLineSeries *_series = new QLineSeries(this);
+  QLineSeries* _series = new QLineSeries(this);
   _series->setName(tr("Orders"));
 
   QMapIterator<qint64, int> it(_points);

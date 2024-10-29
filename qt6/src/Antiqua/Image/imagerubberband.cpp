@@ -9,9 +9,10 @@
 #include <QStyle>
 #include <QStylePainter>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ImageRubberBand::ImageRubberBand(QGraphicsView *parent)
+ImageRubberBand::ImageRubberBand(QGraphicsView* parent)
     : QRubberBand{QRubberBand::Rectangle, parent} {
   setAttribute(Qt::WA_TransparentForMouseEvents);
   setAttribute(Qt::WA_NoSystemBackground);
@@ -33,7 +34,7 @@ const QPen ImageRubberBand::pen() {
   return p;
 }
 
-void ImageRubberBand::paintEvent(QPaintEvent *event) {
+void ImageRubberBand::paintEvent(QPaintEvent* event) {
   QRect cp = event->rect();
   QRectF rectF(QPointF(cp.topLeft()), QPointF(cp.bottomRight()));
   QStylePainter sp(this);
@@ -49,6 +50,8 @@ void ImageRubberBand::reset() {
   hide();
 }
 
-bool ImageRubberBand::isValid() { return !rect().isEmpty(); }
+bool ImageRubberBand::isValid() {
+  return !rect().isEmpty();
+}
 
 } // namespace AntiquaCRM
