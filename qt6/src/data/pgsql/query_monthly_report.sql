@@ -20,14 +20,15 @@ SELECT DATE(o_delivered) AS date,
     ELSE a_sell_price::MONEY
     END) AS total,
   (CASE o_delivery_add_price WHEN true
-    THEN (a_sell_price + d_price)::NUMERIC
-    ELSE a_sell_price::NUMERIC
+    THEN (a_sell_price + d_price)::NUMERIC(10,2)
+    ELSE a_sell_price::NUMERIC(10,2)
     END) AS calc,
-  a_refunds_cost AS refundscost
+  a_refunds_cost AS refundscost,
+  a_sell_price::NUMERIC(8,2) AS netto
 FROM inventory_orders
 LEFT JOIN article_orders ON a_order_id=o_id
 LEFT JOIN ref_delivery_cost ON d_cid=o_delivery_package
 LEFT JOIN ref_sales_tax ON st_tax_type=(SELECT func_get_article_type(a_article_id))
 WHERE ((o_payment_status=1 AND o_order_status=4) OR (o_order_status=6 AND o_payment_status=4))
- AND @SQL_WHERE_CLAUSE@ AND date_part('month', a_modified)=date_part('month',o_delivered)
+ AND @SQL_WHERE_CLAUSE@ AND date_part('month',a_modified)=date_part('month',o_delivered)
 ORDER BY o_delivered;

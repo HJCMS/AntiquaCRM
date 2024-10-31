@@ -10,16 +10,19 @@
 #include <QPainter>
 #include <QTime>
 
-#ifdef DEBUG_REPORTS_VIEW
-#include <QDebug>
+// #define DEBUG_REPORTS_VIEW
 
-static void debugCalculate(QString &id, double calc, double summary) {
+#ifdef DEBUG_REPORTS_VIEW
+#  include <QDebug>
+
+static void debugCalculate(QString& id, double calc, double summary, double netto) {
   QByteArray arr = id.toLocal8Bit();
-  qDebug("Article: %s, Calc: %0.2f, Summary: %0.2f", arr.data(), calc, summary);
+  qDebug("Article: %s, Calc: %0.2f, Cost-Summary: %0.2f Netto-Summary: %0.2f",
+         arr.data(), calc, summary, netto);
 }
 #endif
 
-ReportsTableView::ReportsTableView(QWidget *parent) : QTableView{parent} {
+ReportsTableView::ReportsTableView(QWidget* parent) : QTableView{parent} {
   setObjectName("reporting_table");
   setEditTriggers(QAbstractItemView::NoEditTriggers);
   setCornerButtonEnabled(false);
@@ -39,43 +42,45 @@ ReportsTableView::ReportsTableView(QWidget *parent) : QTableView{parent} {
   m_tableHeader->setStretchLastSection(false);
 }
 
-void ReportsTableView::paintEvent(QPaintEvent *ev) {
+void ReportsTableView::paintEvent(QPaintEvent* ev) {
   if (m_model->rowCount() == 0) {
     QPainter painter(viewport());
     painter.setBrush(palette().text());
     painter.setFont(font());
     painter.setOpacity(0.8);
-    painter.drawText(rect(), Qt::AlignCenter,
-                     tr("No result for current selection."));
+    painter.drawText(rect(), Qt::AlignCenter, tr("No result for current selection."));
   }
   QTableView::paintEvent(ev);
 }
 
-void ReportsTableView::setQuery(const QString &query) {
+void ReportsTableView::setQuery(const QString& query) {
   calc_section = -1;
   refunds_section = -1;
+  netto_section = -1;
   // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
     refunds_section = m_model->record().indexOf("refundscost");
-#ifndef ANTIQUA_DEVELOPMENT
+    netto_section = m_model->record().indexOf("netto");
+#ifndef DEBUG_REPORTS_VIEW
     m_tableHeader->hideSection(calc_section);
     m_tableHeader->hideSection(refunds_section);
+    m_tableHeader->hideSection(netto_section);
 #endif
     resizeColumnsToContents();
     emit sendFinished();
   }
 }
 
-const QString ReportsTableView::headerName(const QString &key) {
+const QString ReportsTableView::headerName(const QString& key) {
   int index = m_model->record().indexOf(key);
   return m_model->headerList().value(index);
 }
 
-const QString ReportsTableView::dataHeader(const QChar &delimiter) {
+const QString ReportsTableView::dataHeader(const QChar& delimiter) {
   QStringList list;
   for (int i = 0; i < horizontalHeader()->count(); i++) {
-    if (calc_section == i || refunds_section == i)
+    if (calc_section == i || refunds_section == i || netto_section == i)
       continue;
 
     list << m_model->headerData(i, Qt::Horizontal).toString();
@@ -83,13 +88,13 @@ const QString ReportsTableView::dataHeader(const QChar &delimiter) {
   return list.join(delimiter);
 }
 
-const QStringList ReportsTableView::dataRows(const QChar &delimiter) {
+const QStringList ReportsTableView::dataRows(const QChar& delimiter) {
   int columns = horizontalHeader()->count();
   QStringList list;
   for (int r = 0; r < m_model->rowCount(); r++) {
     QStringList cells;
     for (int c = 0; c < columns; c++) {
-      if (calc_section == c || refunds_section == c)
+      if (calc_section == c || refunds_section == c || netto_section == c)
         continue;
 
       QModelIndex index = m_model->index(r, c);
@@ -101,13 +106,13 @@ const QStringList ReportsTableView::dataRows(const QChar &delimiter) {
   return list;
 }
 
-const QStringList ReportsTableView::csvExport(const QChar &delimiter) {
+const QStringList ReportsTableView::csvExport(const QChar& delimiter) {
   int columns = horizontalHeader()->count();
   QStringList list;
   for (int r = 0; r < m_model->rowCount(); r++) {
     QStringList cells;
     for (int c = 0; c < columns; c++) {
-      if (calc_section == c || refunds_section == c)
+      if (calc_section == c || refunds_section == c || netto_section == c)
         continue;
 
       QModelIndex _index = m_model->index(r, c);
@@ -127,13 +132,15 @@ const QStringList ReportsTableView::csvExport(const QChar &delimiter) {
 }
 
 double ReportsTableView::salesVolume() {
-  if (calc_section < 1 || refunds_section < 1) {
+  if (calc_section < 1 || refunds_section < 1 || netto_section < 1) {
     qWarning("Invalid Report configuration!");
     return 0.00;
   }
 
   double sum_price = 0.00;
-  QStringList list;
+#ifdef DEBUG_REPORTS_VIEW
+  double sum_netto = 0.00;
+#endif
   for (int r = 0; r < m_model->rowCount(); r++) {
     QModelIndex calc_index = m_model->index(r, calc_section);
     double calc = m_model->data(calc_index, Qt::EditRole).toDouble();
@@ -144,6 +151,11 @@ double ReportsTableView::salesVolume() {
     if (refunds != 0) {
       sum_price += refunds;
     }
+#ifdef DEBUG_REPORTS_VIEW
+    sum_netto += m_model->data(m_model->index(r, netto_section)).toDouble();
+    QString _article = m_model->data(m_model->index(r, 2)).toString();
+    debugCalculate(_article, calc, sum_price, sum_netto);
+#endif
   }
   return sum_price;
 }
@@ -157,8 +169,7 @@ const QJsonObject ReportsTableView::printingData() {
     if (calc_section == c || refunds_section == c)
       continue;
 
-    _header.insert(QString::number(c),
-                   m_model->headerData(c, Qt::Horizontal).toString());
+    _header.insert(QString::number(c), m_model->headerData(c, Qt::Horizontal).toString());
   }
   _obj.insert("header", _header);
   // Sold

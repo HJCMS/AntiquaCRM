@@ -25,6 +25,7 @@ class ANTIQUACRM_REPORTS_PLUGIN ReportsTableView final : public QTableView {
 private:
   int calc_section = -1;
   int refunds_section = -1;
+  int netto_section = -1;
   ReportsTableModel* m_model;
   QHeaderView* m_tableHeader;
   virtual void paintEvent(QPaintEvent*) override;

@@ -22,6 +22,7 @@ const QMap<int, QString> ReportsTableModel::headerIndex() const {
   m.insert(i++, "total");
   m.insert(i++, "calc");
   m.insert(i++, "refundscost");
+  m.insert(i++, "netto");
   return m;
 }
 
@@ -81,6 +82,7 @@ const QMap<int, QString> ReportsTableModel::headerList() const {
    */
   m.insert(i++, "calc");
   m.insert(i++, "refundscost");
+  m.insert(i++, "netto");
   return m;
 }
 

@@ -9,6 +9,10 @@
 #include <QFontMetricsF>
 #include <QSqlQuery>
 
+#ifdef ANTIQUA_DEVELOPMENT
+#define CURRENT_DATE QDate::currentDate()
+#endif
+
 SalesInMonth::SalesInMonth(QWidget* parent) : AntiquaCRM::AChartView{parent} {
   setObjectName("statistics_sales_in_month");
   m_chart = new QChart(itemAt(0, 0));
@@ -69,10 +73,11 @@ bool SalesInMonth::initMaps() {
   for (int _y = _from.year(); _y <= _until.year(); _y++) {
     QMap<int, qint64> _vol;
     QMap<int, double> _sel;
-    for (int m = 1; m < 12; m++) {
+    for (int m = 1; m < 13; m++) {
       _vol.insert(m, 0);
       _sel.insert(m, 0.00);
     }
+    // qDebug() << Q_FUNC_INFO << _vol.size()  << _sel.size();
     p_voluMap.insert(_y, _vol);
     p_soldMap.insert(_y, _sel);
   }
@@ -101,11 +106,15 @@ bool SalesInMonth::initialChartView(int year) {
     int _m = getMonth(_dt);
     // verkäufe
     QMap<int, qint64> _vmap = p_voluMap[_y];
-    _vmap[_m] = (_vmap[_m] + _c);
+    _vmap[_m] += _c;
     p_voluMap[_y] = _vmap;
     // preise
     QMap<int, double> _smap = p_soldMap[_y];
-    _smap[_m] = (_smap[_m] + _s);
+    _smap[_m] += _s;
+#ifdef ANTIQUA_DEVELOPMENT
+    if (_y == CURRENT_DATE.year() && _m == CURRENT_DATE.month())
+      qDebug() << _m << _s << _smap[_m];
+#endif
     p_soldMap[_y] = _smap;
   }
   _query.clear();
@@ -118,12 +127,16 @@ bool SalesInMonth::initialChartView(int year) {
     QMap<int, double> _s = p_soldMap[y];
     MonthBarSet* m_solded = createBarset(y, MonthBarSet::Type::Sales);
     m_solded->setSales(_s);
-    for (int m = 1; m <= 12; m++) {
+    for (int m = 1; m < 13; m++) {
       QDate _curr(y, m, 1);
       m_counts->append(_m[m]);
       m_solded->append(_s[m]);
+      // @note label beginn with 0
       m_label->insert((m - 1), _curr.toString("MMMM"));
-      // qDebug() << _curr.toString("MMMM") << _m[m];
+#ifdef ANTIQUA_DEVELOPMENT
+      if (y == CURRENT_DATE.year() && m == CURRENT_DATE.month())
+        qDebug() << _curr.toString("MMMM") << _m[m] << _s[m];
+#endif
     }
     m_numsBar->insert(0, m_counts);
     m_paidBar->insert(0, m_solded);
