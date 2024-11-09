@@ -54,12 +54,14 @@ CONFIGURE_FILE (version.txt.cmake
 ### BEGIN::FIND_QMAKE
 ## Many Distributions have different targets for Qt-6, the best way is is to find
 ## the right qmake binary for query all Enviroment data.
-## Hints: Debian uses qtchooser but this utility is to buggy :-/
+## Hints: Debian uses qtchooser, but this utility is to buggy :-/
 FIND_PROGRAM (QMAKE_EXECUTABLE "qmake6" "qmake-qt6" "qt6-qmake" "qt6qmake" "qmake")
 IF(EXISTS "${QMAKE_EXECUTABLE}")
   SET(QT_QMAKE_EXECUTABLE ${QMAKE_EXECUTABLE} CACHE FILEPATH "QMAKE from System")
 ENDIF()
 MESSAGE(STATUS "Using: ${QT_QMAKE_EXECUTABLE}")
+EXECUTE_PROCESS (COMMAND ${QT_QMAKE_EXECUTABLE} -query QT_INSTALL_BINS OUTPUT_VARIABLE QT_BINARY_TARGET)
+MESSAGE(STATUS "Using QT_INSTALL_BINS: ${QT_BINARY_TARGET}")
 ### END:FIND_QMAKE
 
 ## Not changed in custom-config, then set it to default
