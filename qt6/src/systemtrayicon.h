@@ -13,13 +13,15 @@
 #include <QAction>
 #include <QSystemTrayIcon>
 
+class MainWindow;
+
 class SystemTrayIcon final : public QSystemTrayIcon {
   Q_OBJECT
 
 private:
-  QAction *ac_show;
-  QAction *ac_hide;
-  QAction *ac_quit;
+  QAction* ac_show;
+  QAction* ac_hide;
+  QAction* ac_quit;
 
 private Q_SLOTS:
   void actionReason(QSystemTrayIcon::ActivationReason r);
@@ -32,10 +34,10 @@ Q_SIGNALS:
 
 public Q_SLOTS:
   void setConnectionStatus(bool);
-  Q_INVOKABLE void setMessage(const QString &body);
+  Q_INVOKABLE void setMessage(const QString& body);
 
 public:
-  explicit SystemTrayIcon(const QIcon &icon, QObject *parent = nullptr);
+  explicit SystemTrayIcon(const QIcon& icon, MainWindow* parent = nullptr);
 };
 
 #endif // ANTIQUA_UI_SYSTEMTRAYICON_H

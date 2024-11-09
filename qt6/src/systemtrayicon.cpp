@@ -3,10 +3,12 @@
 
 #include "systemtrayicon.h"
 #include "antiquaicon.h"
+#include "mainwindow.h"
 
 #include <QMenu>
 
-SystemTrayIcon::SystemTrayIcon(const QIcon& icon, QObject* parent) : QSystemTrayIcon{icon, parent} {
+SystemTrayIcon::SystemTrayIcon(const QIcon& icon, MainWindow* parent)
+    : QSystemTrayIcon{icon, parent} {
   setObjectName("antiquacrm_systemtray");
   setToolTip(tr("Database connected."));
 

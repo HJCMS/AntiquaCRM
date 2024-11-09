@@ -165,7 +165,10 @@ bool Application::initMainWindow() {
 
 bool Application::initSystemTray() {
   // SystemTray
-  m_systray = new SystemTrayIcon(applIcon(), this);
+  if (m_window == nullptr)
+    return false;
+
+  m_systray = new SystemTrayIcon(applIcon(), m_window);
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
   connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
