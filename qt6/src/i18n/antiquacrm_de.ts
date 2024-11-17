@@ -226,7 +226,7 @@
 <context>
     <name>AntiquaCRM::AComboBox</name>
     <message>
-        <location filename="../Antiqua/Widgets/acombobox.cpp" line="+37"/>
+        <location filename="../Antiqua/Widgets/acombobox.cpp" line="+35"/>
         <source>Without disclosures</source>
         <translation>Ohne Angaben</translation>
     </message>
@@ -290,7 +290,7 @@
 <context>
     <name>AntiquaCRM::ANavigationBar</name>
     <message>
-        <location filename="../Antiqua/Widgets/anavigationbar.cpp" line="+14"/>
+        <location filename="../Antiqua/Widgets/anavigationbar.cpp" line="+15"/>
         <source>Back</source>
         <translation>Zurück</translation>
     </message>
@@ -331,7 +331,7 @@
 <context>
     <name>AntiquaCRM::APrintDialog</name>
     <message>
-        <location filename="../Antiqua/Printing/aprintdialog.cpp" line="+30"/>
+        <location filename="../Antiqua/Printing/aprintdialog.cpp" line="+31"/>
         <source>PDF</source>
         <translation></translation>
     </message>
@@ -412,7 +412,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::ASqlQueryModel</name>
     <message>
-        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+112"/>
+        <location filename="../Antiqua/Core/asqlquerymodel.cpp" line="+110"/>
         <source>Yes</source>
         <translation>Ja</translation>
     </message>
@@ -440,7 +440,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::AWhatsThisButton</name>
     <message>
-        <location filename="../Antiqua/Widgets/awhatsthisbutton.cpp" line="+16"/>
+        <location filename="../Antiqua/Widgets/awhatsthisbutton.cpp" line="+17"/>
         <source>Click here for Additional Information.</source>
         <translation>Klicken Sie hier für zusätzliche Informationen.</translation>
     </message>
@@ -448,7 +448,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::AdmonitionNote</name>
     <message>
-        <location filename="../Antiqua/Printing/printadmonition.cpp" line="+36"/>
+        <location filename="../Antiqua/Printing/printadmonition.cpp" line="+37"/>
         <source>Admonition</source>
         <translation>Mahnung</translation>
     </message>
@@ -458,7 +458,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>den</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+44"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
@@ -474,12 +474,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
     </message>
     <message>
         <location line="+26"/>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>VAT</source>
         <translation>USt.</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+49"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -504,12 +504,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Zwischensumme</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>delivery cost</source>
         <translation>Versandkosten</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>total</source>
         <translation>Gesamt</translation>
     </message>
@@ -517,7 +517,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::AttachmentInfo</name>
     <message>
-        <location filename="../Antiqua/Widgets/mailattachments.cpp" line="+15"/>
+        <location filename="../Antiqua/Widgets/mailattachments.cpp" line="+16"/>
         <source>Attachment path</source>
         <translation>Anhangspfad</translation>
     </message>
@@ -530,7 +530,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::BookBindingEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+119"/>
+        <location filename="../Antiqua/Widgets/bookbindingedit.cpp" line="+121"/>
         <source>A valid book binding is required for this input!</source>
         <translation>Für diese Eingabe ist eine gültige Buchbindung erforderlich!</translation>
     </message>
@@ -553,7 +553,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::BookCardPage</name>
     <message>
-        <location filename="../Antiqua/Printing/bookcardpage.cpp" line="+69"/>
+        <location filename="../Antiqua/Printing/bookcardpage.cpp" line="+70"/>
         <source>Compartment</source>
         <translation>Fach</translation>
     </message>
@@ -813,7 +813,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::DateTimeInfo</name>
     <message>
-        <location filename="../Antiqua/Widgets/datetimeinfo.cpp" line="+93"/>
+        <location filename="../Antiqua/Widgets/datetimeinfo.cpp" line="+97"/>
         <source>Date Time information required!</source>
         <translation>Datum-Uhrzeit-Angabe erforderlich!</translation>
     </message>
@@ -854,7 +854,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Vordefinierte Textblöcke</translation>
     </message>
     <message>
-        <location line="+104"/>
+        <location line="+107"/>
         <source>A valid Description is required.</source>
         <translation>Eine gültige Beschreibung ist erforderlich.</translation>
     </message>
@@ -867,7 +867,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Geschlecht</translation>
     </message>
     <message>
-        <location line="+19"/>
+        <location line="+20"/>
         <location line="+54"/>
         <source>Male</source>
         <translation>Männlich</translation>
@@ -898,12 +898,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::GroupBoxEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/groupboxedit.cpp" line="+67"/>
+        <location filename="../Antiqua/Widgets/groupboxedit.cpp" line="+79"/>
         <source>This grouped input field requires a value specification.</source>
         <translation>Die gruppierten Eingabefelder erfordern eine Wertangabe.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>No choice!</source>
         <translation>Keine Auswahl!</translation>
     </message>
@@ -926,7 +926,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Dialog beenden und Daten verarbeiten.</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+41"/>
         <source>Configuration Error</source>
         <translation>Konfigurationsfehler</translation>
     </message>
@@ -981,7 +981,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>&lt;b&gt;Sie haben nicht gespeicherte Änderungen.&lt;/b&gt;&lt;p&gt;Möchten Sie diesen Dialog wirklich schließen?&lt;/p&gt;&lt;b&gt;Hinweise:&lt;/b&gt;&lt;br&gt;Beim Speichern wird die Miniaturansicht der Datenbank ersetzt.&lt; p&gt;Der Server lädt die Quelldatei in Ihren Online-Speicher hoch oder ersetzt sie.&lt;/p&gt;&lt;p&gt;Wenn Sie keine Bilder ersetzen möchten, klicken Sie auf „Ja“.&lt;/p&gt;</translation>
     </message>
     <message>
-        <location line="+37"/>
+        <location line="+39"/>
         <source>No stored Sources by Article number found!</source>
         <translation>Keine hinterlegten Quellen für Artikelnummer gefunden!</translation>
     </message>
@@ -989,7 +989,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::ImageToolBar</name>
     <message>
-        <location filename="../Antiqua/Widgets/imagetoolbar.cpp" line="+19"/>
+        <location filename="../Antiqua/Widgets/imagetoolbar.cpp" line="+20"/>
         <source>Image Dialog</source>
         <translation>Bilddialog</translation>
     </message>
@@ -1139,7 +1139,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::InvoicePage</name>
     <message>
-        <location filename="../Antiqua/Printing/printinvoice.cpp" line="+37"/>
+        <location filename="../Antiqua/Printing/printinvoice.cpp" line="+39"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1149,7 +1149,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>den</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+44"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
@@ -1165,12 +1165,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
     </message>
     <message>
         <location line="+26"/>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>VAT</source>
         <translation>MwSt</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+47"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1195,12 +1195,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Zwischensumme</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>delivery cost</source>
         <translation>Versandkosten</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>total</source>
         <translation>Gesamt</translation>
     </message>
@@ -1208,7 +1208,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::IsbnEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/isbnedit.cpp" line="+26"/>
+        <location filename="../Antiqua/Widgets/isbnedit.cpp" line="+27"/>
         <source>It must consist of 10 or 13 digits.</source>
         <translation>Sie muss aus 10 oder 13 Ziffern bestehen.</translation>
     </message>
@@ -1218,14 +1218,14 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
         <translation>Sie muss aus 13 Ziffern bestehen.</translation>
     </message>
     <message>
-        <location line="+91"/>
+        <location line="+90"/>
         <source>EAN/GTIN-10 or EAN/GTIN-13.
 This Code only represent digits 0-9 with  a length of 10 or 13. For detailed description visit www.gs1.org. AntiquaCRM contains a calc based Validator to check the Input. Invalid EAN’s will not saved.</source>
         <translation>EAN/GTIN-10 oder EAN/GTIN-13.
 Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine detaillierte Beschreibung finden Sie unter www.gs1.org. AntiquaCRM enthält einen rechnerbasierten Validator zur Überprüfung der Eingabe. Ungültige EANs werden nicht gespeichert.</translation>
     </message>
     <message>
-        <location line="+117"/>
+        <location line="+121"/>
         <source>Invalid ISBN/EAN/UPC detected.</source>
         <translation>Ungültige ISBN/EAN/UPC erkannt.</translation>
     </message>
@@ -1233,7 +1233,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::KeywordLabel</name>
     <message>
-        <location filename="../Antiqua/Widgets/keywordlabel.cpp" line="+44"/>
+        <location filename="../Antiqua/Widgets/keywordlabel.cpp" line="+45"/>
         <source>Remove this keyword</source>
         <translation>Entferne dieses Schlüsselwort</translation>
     </message>
@@ -1241,7 +1241,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::KeywordListView</name>
     <message>
-        <location filename="../Antiqua/Widgets/keywordlistview.cpp" line="+89"/>
+        <location filename="../Antiqua/Widgets/keywordlistview.cpp" line="+91"/>
         <source>Current Keywords length %1 from allowed %2 used.</source>
         <translation>Aktuelle Schlüsselwortlänge %1 von %2 verwenden.</translation>
     </message>
@@ -1297,7 +1297,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::MailAttachments</name>
     <message>
-        <location filename="../Antiqua/Widgets/mailattachments.cpp" line="+46"/>
+        <location filename="../Antiqua/Widgets/mailattachments.cpp" line="+48"/>
         <source>Attach file</source>
         <translation>Datei anhängen</translation>
     </message>
@@ -1307,12 +1307,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Suche anzuhängende Datei</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Open the file dialog and change the attachment path.</source>
         <translation>Öffne Dateidialog und ändere den Anhangspfad.</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+16"/>
         <source>Attachment</source>
         <translation>Anhang</translation>
     </message>
@@ -1325,7 +1325,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::MailButton</name>
     <message>
-        <location filename="../Antiqua/Widgets/mailbutton.cpp" line="+14"/>
+        <location filename="../Antiqua/Widgets/mailbutton.cpp" line="+15"/>
         <source>Mail Messages</source>
         <translation>E-Mail-Nachrichten</translation>
     </message>
@@ -1361,7 +1361,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::MailDialog</name>
     <message>
-        <location filename="../Antiqua/Widgets/maildialog.cpp" line="+17"/>
+        <location filename="../Antiqua/Widgets/maildialog.cpp" line="+18"/>
         <source>Mailler</source>
         <translation>E-Mailer</translation>
     </message>
@@ -1401,12 +1401,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>ein Fehler ist aufgetreten</translation>
     </message>
     <message>
-        <location line="+106"/>
+        <location line="+104"/>
         <source>No Template data loaded!</source>
         <translation>Keine Vorlage geladen!</translation>
     </message>
     <message>
-        <location line="+53"/>
+        <location line="+54"/>
         <source>Missing Attachment</source>
         <translation>Fehlender Anhang</translation>
     </message>
@@ -1442,7 +1442,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::NumEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/numedit.cpp" line="+108"/>
+        <location filename="../Antiqua/Widgets/numedit.cpp" line="+127"/>
         <source>A Numeric Input is required!</source>
         <translation>Eine numerische Eingabe ist erforderlich!</translation>
     </message>
@@ -1450,7 +1450,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PhoneEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/phoneedit.cpp" line="+234"/>
+        <location filename="../Antiqua/Widgets/phoneedit.cpp" line="+239"/>
         <source>Please enter a valid phone number.</source>
         <translation>Bitte geben Sie eine gültige Telefonnummer ein.</translation>
     </message>
@@ -1508,7 +1508,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PostalCodeState</name>
     <message>
-        <location filename="../Antiqua/Widgets/postalcodestate.cpp" line="+100"/>
+        <location filename="../Antiqua/Widgets/postalcodestate.cpp" line="+104"/>
         <source>Missing Country/State in this dataset!</source>
         <translation>Fehlendes Land/Bundesland in diesem Datensatz!</translation>
     </message>
@@ -1526,7 +1526,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PriceEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/priceedit.cpp" line="+164"/>
+        <location filename="../Antiqua/Widgets/priceedit.cpp" line="+179"/>
         <source>This entry requires a valid price!</source>
         <translation>Für diesen Eintrag ist ein gültiger Preis erforderlich!</translation>
     </message>
@@ -1536,7 +1536,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Der in der Konfiguration angegebene Mindestwert wurde unterschritten oder der Eintrag ist kein gültiger Preis!</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+7"/>
         <source>Price is invalid or empty!</source>
         <translation>Der Preis ist ungültig oder leer!</translation>
     </message>
@@ -1544,7 +1544,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PrintAdmonition</name>
     <message>
-        <location filename="../Antiqua/Printing/printadmonition.cpp" line="+42"/>
+        <location filename="../Antiqua/Printing/printadmonition.cpp" line="+41"/>
         <source>Admonition - PDF created!</source>
         <translation>Mahnung - PDF erstellt!</translation>
     </message>
@@ -1559,7 +1559,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>mahnungs.pdf</translation>
     </message>
     <message>
-        <location line="+23"/>
+        <location line="+22"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1633,7 +1633,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PrintInvoice</name>
     <message>
-        <location filename="../Antiqua/Printing/printinvoice.cpp" line="+51"/>
+        <location filename="../Antiqua/Printing/printinvoice.cpp" line="+50"/>
         <source>Invoice PDF created!</source>
         <translation>Rechnungs-PDF erstellt!</translation>
     </message>
@@ -1643,7 +1643,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Rechnung gedruckt!</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+55"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1671,7 +1671,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PrintRefund</name>
     <message>
-        <location filename="../Antiqua/Printing/printrefund.cpp" line="+247"/>
+        <location filename="../Antiqua/Printing/printrefund.cpp" line="+242"/>
         <source>Invoice PDF created!</source>
         <translation>PDF-Rechnung erstellt!</translation>
     </message>
@@ -1681,7 +1681,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Rechnung gedruckt!</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+55"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1709,7 +1709,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PrintReminder</name>
     <message>
-        <location filename="../Antiqua/Printing/printreminder.cpp" line="+285"/>
+        <location filename="../Antiqua/Printing/printreminder.cpp" line="+284"/>
         <source>Reminder PDF created!</source>
         <translation>Erinnerungs-PDF erstellt!</translation>
     </message>
@@ -1719,7 +1719,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Erinnerung gedruckt!</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+55"/>
         <source>Invoice</source>
         <translation>Rechnung</translation>
     </message>
@@ -1747,7 +1747,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::PrintReport</name>
     <message>
-        <location filename="../Antiqua/Printing/printreport.cpp" line="+102"/>
+        <location filename="../Antiqua/Printing/printreport.cpp" line="+103"/>
         <source>PDF Document created!</source>
         <translation>PDF-Dokument erstellt!</translation>
     </message>
@@ -1852,7 +1852,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Alle Vorgänge abbrechen und den Dialog schließen.</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+40"/>
         <source>This Dialog have changes, close request rejected!</source>
         <translation>Dieser Dialog hat Änderungen, das beenden wurde abgelehnt!</translation>
     </message>
@@ -1873,7 +1873,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::RefundPage</name>
     <message>
-        <location filename="../Antiqua/Printing/printrefund.cpp" line="-304"/>
+        <location filename="../Antiqua/Printing/printrefund.cpp" line="-296"/>
         <source>Refund</source>
         <translation>Rückerstattung</translation>
     </message>
@@ -1883,12 +1883,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>den</translation>
     </message>
     <message>
-        <location line="+50"/>
+        <location line="+47"/>
         <source>refund cost</source>
         <translation>Erstattungskosten</translation>
     </message>
     <message>
-        <location line="+49"/>
+        <location line="+48"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1913,12 +1913,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Zwischensumme</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>total refund cost</source>
         <translation>Gesamtkosten der Rückerstattung</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>total</source>
         <translation>Gesamt</translation>
     </message>
@@ -1926,7 +1926,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::ReminderPage</name>
     <message>
-        <location filename="../Antiqua/Printing/printreminder.cpp" line="-341"/>
+        <location filename="../Antiqua/Printing/printreminder.cpp" line="-338"/>
         <source>Reminder</source>
         <translation>Erinnerung</translation>
     </message>
@@ -1936,7 +1936,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>den</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+44"/>
         <source>incl.</source>
         <translation>inkl.</translation>
     </message>
@@ -1952,12 +1952,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+26"/>
-        <location line="+13"/>
+        <location line="+15"/>
         <source>VAT</source>
         <translation>USt</translation>
     </message>
     <message>
-        <location line="+48"/>
+        <location line="+49"/>
         <source>Article</source>
         <translation>Artikel</translation>
     </message>
@@ -1982,12 +1982,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Zwischensumme</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>delivery cost</source>
         <translation>Versandkosten</translation>
     </message>
     <message>
-        <location line="+11"/>
+        <location line="+10"/>
         <source>total</source>
         <translation>Gesamt</translation>
     </message>
@@ -2008,7 +2008,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectCurrency</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectcurrency.cpp" line="+155"/>
+        <location filename="../Antiqua/Widgets/selectcurrency.cpp" line="+156"/>
         <source>A valid currency is required for this entry.</source>
         <translation>Für diesen Eintrag ist eine gültige Währung erforderlich.</translation>
     </message>
@@ -2076,7 +2076,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectDeliverPackage</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectdeliverpackage.cpp" line="+129"/>
+        <location filename="../Antiqua/Widgets/selectdeliverpackage.cpp" line="+131"/>
         <source>a Deliver Package is required.</source>
         <translation>Es ist ein Lieferpaket erforderlich.</translation>
     </message>
@@ -2084,7 +2084,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectDeliverService</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectdeliverservice.cpp" line="+111"/>
+        <location filename="../Antiqua/Widgets/selectdeliverservice.cpp" line="+112"/>
         <source>a Deliver Service is required.</source>
         <translation>Ein Lieferservice ist erforderlich.</translation>
     </message>
@@ -2092,7 +2092,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectEUCountry</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+217"/>
+        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+220"/>
         <source>A valid Country selection is required!</source>
         <translation>Eine gültige Länderauswahl ist erforderlich!</translation>
     </message>
@@ -2100,7 +2100,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectEUCountryModel</name>
     <message>
-        <location line="-138"/>
+        <location line="-140"/>
         <source>Without disclosures</source>
         <translation>Ohne Angaben</translation>
     </message>
@@ -2216,7 +2216,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Schwedisch</translation>
     </message>
     <message>
-        <location line="+64"/>
+        <location line="+66"/>
         <source>Language field is required and must set.</source>
         <translation>Eine Sprache ist erforderlich und muss festgelegt werden.</translation>
     </message>
@@ -2249,12 +2249,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Vinyl-Longplay-Platte</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Vinyl Multi Groove</source>
         <translation>Vinyl Multi Groove</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Vinyl colored record</source>
         <translation>Farbige Vinyl-Schallplatte</translation>
     </message>
@@ -2269,7 +2269,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Schallplatte und DISC</translation>
     </message>
     <message>
-        <location line="+70"/>
+        <location line="+74"/>
         <source>Please select a valid Media type for this Input.</source>
         <translation>Bitte wählen Sie einen gültiges Medium für diese Eingabe aus.</translation>
     </message>
@@ -2322,7 +2322,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Der Empfänger wurde ermahnt.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Refunding</source>
         <translation>Rückerstattung</translation>
     </message>
@@ -2332,17 +2332,17 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Eine Rückerstattung für diese Bestellung.</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Collection process</source>
         <translation>Inkassoprozess</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>This order containing a collection transaction.</source>
         <translation>Dieser Auftrag enthält eine Inkassotransaktion.</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+71"/>
         <source>a valid Order status is required.</source>
         <translation>Es ist ein gültiger Bestellstatus erforderlich.</translation>
     </message>
@@ -2385,7 +2385,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Abgesagt</translation>
     </message>
     <message>
-        <location line="+65"/>
+        <location line="+71"/>
         <source>a valid Order status is required.</source>
         <translation>Es ist ein gültiger Bestellstatus erforderlich.</translation>
     </message>
@@ -2423,17 +2423,17 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>PayPal-Vorauszahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Skrill prepayment</source>
         <translation>Skrill-Vorauszahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>GiroPay prepayment</source>
         <translation>GiroPay-Vorauszahlung</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>GooglePay prepayment</source>
         <translation>Google Pay-Vorauszahlung</translation>
     </message>
@@ -2463,7 +2463,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Scheck – Zahlung im Voraus</translation>
     </message>
     <message>
-        <location line="+72"/>
+        <location line="+73"/>
         <source>a Valid payment method is required.</source>
         <translation>Eine gültige Zahlungsmethode ist erforderlich.</translation>
     </message>
@@ -2560,17 +2560,17 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Ohne Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Including sales tax</source>
         <translation>Inklusive Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>With sales tax</source>
         <translation>Mit Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+60"/>
+        <location line="+68"/>
         <source>a valid VAT is required.</source>
         <translation>Eine gültige Mehrwertsteuer ist erforderlich.</translation>
     </message>
@@ -2578,12 +2578,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SerialId</name>
     <message>
-        <location filename="../Antiqua/Widgets/serialid.cpp" line="+92"/>
+        <location filename="../Antiqua/Widgets/serialid.cpp" line="+99"/>
         <source>Id field is required and can not empty.</source>
         <translation>ID-Feld ist erforderlich und darf nicht leer sein.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>a valid Id is important!</source>
         <translation>Ein gültige Id ist wichtig!</translation>
     </message>
@@ -2669,7 +2669,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TabsEditActionBar</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabseditactionbar.cpp" line="+14"/>
+        <location filename="../Antiqua/Tabs/tabseditactionbar.cpp" line="+15"/>
         <source>Cancel</source>
         <translation>Abbrechen</translation>
     </message>
@@ -2722,7 +2722,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::TabsEditor</name>
     <message>
-        <location filename="../Antiqua/Tabs/tabseditor.cpp" line="+52"/>
+        <location filename="../Antiqua/Tabs/tabseditor.cpp" line="+51"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -3055,7 +3055,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::URILineEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/urilineedit.cpp" line="+22"/>
+        <location filename="../Antiqua/Widgets/urilineedit.cpp" line="+21"/>
         <source>Copy eMail into system clipboard.</source>
         <translation>E-Mail in die Systemzwischenablage kopieren.</translation>
     </message>
@@ -3065,7 +3065,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Öffnen Sie Weblink in einem externen Webbrowser</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+87"/>
         <source>a.name@domain.tld</source>
         <translation></translation>
     </message>
@@ -3075,12 +3075,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+33"/>
         <source>Please enter a valid URI.</source>
         <translation>Geben Sie eine gültige Adresse an.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>Missing URI ...</source>
         <translation>Fehlende Adresse ...</translation>
     </message>
@@ -3096,7 +3096,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+184"/>
+        <location filename="../application.cpp" line="+187"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -3161,7 +3161,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Cache-Datei erstellen ist fehlgeschlagen ...</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+13"/>
         <source>Open AntiquaCRM application ...</source>
         <translation>Öffne AntiquaCRM-Anwendung ...</translation>
     </message>
@@ -6859,7 +6859,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MenuBar</name>
     <message>
-        <location filename="../menubar.cpp" line="+16"/>
+        <location filename="../menubar.cpp" line="+17"/>
         <source>Application Quit</source>
         <translation>Programm schließen</translation>
     </message>
@@ -8543,7 +8543,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>ReportsTableModel</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/reports/reportstablemodel.cpp" line="+34"/>
+        <location filename="../plugins/antiquacrm/tabs/reports/reportstablemodel.cpp" line="+35"/>
         <source>Date</source>
         <translation>Datum</translation>
     </message>
@@ -8591,7 +8591,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>ReportsTableView</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/reports/reportstableview.cpp" line="+49"/>
+        <location filename="../plugins/antiquacrm/tabs/reports/reportstableview.cpp" line="+51"/>
         <source>No result for current selection.</source>
         <translation>Kein Ergebnis für die aktuelle Auswahl.</translation>
     </message>
@@ -8645,7 +8645,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+16"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+20"/>
         <source>Compare sales from past years with current.</source>
         <translation>Vergleichen Sie die Umsätze vergangener Jahre mit den aktuellen.</translation>
     </message>
@@ -9974,22 +9974,22 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>SwitchDatabaseProfile</name>
     <message>
-        <location filename="../switchdatabaseprofile.cpp" line="+14"/>
+        <location filename="../switchdatabaseprofile.cpp" line="+13"/>
         <source>Database connection</source>
         <translation>Datenbankverbindung</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Either there is no Internet connection at the target level or the DynDns registration isn&apos;t available.</source>
         <translation>Entweder besteht auf der Zielebene keine Internetverbindung oder die DynDns-Registrierung ist nicht verfügbar.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>You can wait until the server is available again or contact the system administrator.</source>
         <translation>Sie können warten, bis der Server wieder verfügbar ist, oder sich an den Systemadministrator wenden.</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+4"/>
         <source>If you have configured more than one connection profile, you can alternatively switch.</source>
         <translation>Wenn Sie mehr als ein Verbindungsprofil konfiguriert haben, können Sie alternativ wechseln.</translation>
     </message>
@@ -10012,13 +10012,12 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>SystemTrayIcon</name>
     <message>
-        <location filename="../systemtrayicon.cpp" line="+12"/>
-        <location line="+28"/>
+        <location filename="../systemtrayicon.cpp" line="+39"/>
         <source>Database connected.</source>
         <translation>Datenbank verbunden.</translation>
     </message>
     <message>
-        <location line="-23"/>
+        <location line="-22"/>
         <source>Window show</source>
         <translation>Fenster anzeigen</translation>
     </message>
@@ -10028,7 +10027,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Fenster ausblenden</translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Application Quit</source>
         <translation>Programm schließen</translation>
     </message>

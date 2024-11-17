@@ -11,15 +11,15 @@
     <file>icons/action-reload.png</file>
     <file>icons/action-remove.png</file>
     <file>icons/action-restore.png</file>
-    <file>icons/action-saveas.png</file>
     <file>icons/action-save.png</file>
+    <file>icons/action-saveas.png</file>
     <file>icons/action-search.png</file>
     <file>icons/action-tab-new.png</file>
-    <file>icons/action-tab.png</file>
     <file>icons/action-tab-remove.png</file>
+    <file>icons/action-tab.png</file>
     <file>icons/action-undo.png</file>
-    <file>icons/antiquacrm.png</file>
     <file>icons/antiquacrm-splash.png</file>
+    <file>icons/antiquacrm.png</file>
     <file>icons/applications-other.png</file>
     <file>icons/archive-insert-directory.png</file>
     <file>icons/arrow-left.png</file>
@@ -68,20 +68,20 @@
     <file>icons/media-optical-dvd-video.png</file>
     <file>icons/network-connect.png</file>
     <file>icons/network-disconnect.png</file>
-    <file>icons/network.png</file>
     <file>icons/network-server-database.png</file>
+    <file>icons/network.png</file>
     <file>icons/office-chart-area.png</file>
     <file>icons/office-chart-bar.png</file>
     <file>icons/package-created.png</file>
-    <file>icons/package-delivered.png</file>
     <file>icons/package-deliver.png</file>
+    <file>icons/package-delivered.png</file>
     <file>icons/package.png</file>
     <file>icons/preferences-desktop.png</file>
     <file>icons/preferences-devices-printer.png</file>
     <file>icons/preferences-other.png</file>
     <file>icons/preferences-system.png</file>
-    <file>icons/printer.png</file>
     <file>icons/print-qrcode.png</file>
+    <file>icons/printer.png</file>
     <file>icons/server-database.png</file>
     <file>icons/spreadsheet.png</file>
     <file>icons/star.png</file>
@@ -94,8 +94,8 @@
     <file>icons/user-delete.png</file>
     <file>icons/user-group-delete.png</file>
     <file>icons/user-group-new.png</file>
-    <file>icons/user-group.png</file>
     <file>icons/user-group-properties.png</file>
+    <file>icons/user-group.png</file>
     <file>icons/user-identity.png</file>
     <file>icons/user-properties.png</file>
     <file>icons/view-books.png</file>
@@ -128,4 +128,3 @@
     <file>icons/x-office-spreadsheet.png</file>
   </qresource>
 </RCC>
-

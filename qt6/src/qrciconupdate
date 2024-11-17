@@ -39,13 +39,21 @@ $qresource->setAttribute("prefix","/");
 $rcc->appendChild($qresource);
 
 my $it = Directory::Iterator->new("./icons/", show_dotfiles=>0, recursive=>0, show_directories=>0);
+my @list = ();
 while (my $file = <$it>) {
   my $_f = basename($file);
   if ($_f =~ qr/\.png$/i) {
-    my $child = $doc->createElement("file");
-    $child->appendChild($doc->createTextNode("icons/$_f"));
-    $qresource->appendChild($child);
+    push(@list, $_f);
+    ## my $child = $doc->createElement("file");
+    ## $child->appendChild($doc->createTextNode("icons/$_f"));
+    ## $qresource->appendChild($child);
   }
+}
+
+foreach (sort @list) {
+  my $child = $doc->createElement("file");
+  $child->appendChild($doc->createTextNode("icons/$_"));
+  $qresource->appendChild($child);
 }
 
 $doc->toFile("./application.qrc", 1);
