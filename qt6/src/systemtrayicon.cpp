@@ -10,7 +10,6 @@
 SystemTrayIcon::SystemTrayIcon(const QIcon& icon, MainWindow* parent)
     : QSystemTrayIcon{icon, parent} {
   setObjectName("antiquacrm_systemtray");
-  setToolTip(tr("Database connected."));
 
   const QIcon _fc = AntiquaCRM::antiquaIcon("view-fullscreen");
 

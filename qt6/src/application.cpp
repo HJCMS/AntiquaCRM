@@ -163,21 +163,21 @@ bool Application::initMainWindow() {
   return (m_window != nullptr);
 }
 
-bool Application::initSystemTray() {
+void Application::initSystemTray() {
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
+    return;
+
   // SystemTray
   if (m_window == nullptr)
-    return false;
+    return;
 
   m_systray = new SystemTrayIcon(applIcon(), m_window);
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
   connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-  if (m_systray != nullptr) {
+  if (m_systray != nullptr)
     m_systray->show();
-    return true;
-  }
-  return false;
 }
 
 void Application::applicationQuit() {
@@ -319,10 +319,16 @@ int Application::exec() {
     return 1;
   }
 
-  // Step 7 - Systemtray
+  // Step 7 - finish splash and unlock
+  p_splash.setMessage(tr("Open AntiquaCRM application ..."));
+
+  // Step 8 - open application window
+  if (m_window->openWindow())
+    p_splash.finish(m_window);
+
+  // Step 9 - Systemtray
   p_splash.setMessage("Open Systemtray icon.");
-  if (!initSystemTray())
-    return 1;
+  initSystemTray();
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {
@@ -334,13 +340,6 @@ int Application::exec() {
     connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
   }
 #endif
-
-  // Step 8 - finish splash and unlock
-  p_splash.setMessage(tr("Open AntiquaCRM application ..."));
-
-  // Step 9 - open application window
-  if (m_window->openWindow())
-    p_splash.finish(m_window);
 
   return QApplication::exec();
 }

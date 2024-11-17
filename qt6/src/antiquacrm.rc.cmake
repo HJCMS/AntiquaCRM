@@ -41,14 +41,14 @@ FILESUBTYPE     VFT2_UNKNOWN
     BLOCK "040904B0"
     {
       VALUE "CompanyName",      "HJCMS @HOMEPAGEURL@"
-      VALUE "FileDescription",  "@DESCRIPTION@"
+      VALUE "FileDescription",  "@PROJECTNAME@"
       VALUE "FileVersion",      "@ANTIQUACRM_VERSION_STRING@\0"
       VALUE "InternalName",     "@PROJECTNAME@"
       VALUE "OriginalFilename",  VER_ORIGINALFILENAME_STR
       VALUE "AppId",            "@ANTIQUACRM_APPID@"
-      VALUE "ProductName",      "@DISPLAYNAME@"
+      VALUE "ProductName",      "AntiquaCRM"
       VALUE "ProductVersion",   "@ANTIQUACRM_VERSION_STRING@\0"
-      VALUE "LegalCopyright",   "Copyright(C) 2013-2024 HJCMS https://www.hjcms.de"
+      VALUE "LegalCopyright",   "Copyright(C) 2013-2025 HJCMS https://www.hjcms.de"
     }
   }
 

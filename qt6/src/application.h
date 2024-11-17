@@ -68,7 +68,7 @@ private:
   /**
    * @brief Load and initial systemtray
    */
-  bool initSystemTray();
+  void initSystemTray();
 
 Q_SIGNALS:
   /**
