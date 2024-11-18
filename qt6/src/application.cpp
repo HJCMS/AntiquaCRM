@@ -323,12 +323,16 @@ int Application::exec() {
   p_splash.setMessage(tr("Open AntiquaCRM application ..."));
 
   // Step 8 - open application window
-  if (m_window->openWindow())
+  if (m_window->openWindow()) {
     p_splash.finish(m_window);
-
-  // Step 9 - Systemtray
-  p_splash.setMessage("Open Systemtray icon.");
-  initSystemTray();
+    // @fixme - Windows hack ...
+    // The system tray in Windows must start with a delay.
+    // Because the loading of the plugins and database is delayed.
+#ifdef Q_OS_WIN
+    Sleep(3000);
+#endif
+    initSystemTray();
+  }
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
   if (registerSessionBus()) {
