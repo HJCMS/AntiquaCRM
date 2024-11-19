@@ -28,10 +28,15 @@ SystemTrayIcon::SystemTrayIcon(const QIcon& icon, MainWindow* parent)
 }
 
 void SystemTrayIcon::actionReason(QSystemTrayIcon::ActivationReason r) {
-  if (r == QSystemTrayIcon::Context)
-    return;
+  switch (r) {
+    case (QSystemTrayIcon::Trigger):
+    case (QSystemTrayIcon::MiddleClick):
+      emit sendToggleView();
+      return;
 
-  emit sendToggleView();
+    default:
+      return;
+  }
 }
 
 void SystemTrayIcon::setConnectionStatus(bool b) {

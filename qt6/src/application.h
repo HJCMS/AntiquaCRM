@@ -12,7 +12,7 @@
 #include <AntiquaCRM>
 #include <QApplication>
 #ifdef ANTIQUACRM_DBUS_ENABLED
-#include <QDBusConnection>
+#  include <QDBusConnection>
 #endif
 #include <QIcon>
 #include <QObject>
@@ -25,12 +25,12 @@ class Application final : public QApplication {
 
 private:
   bool errors = false;
-  AntiquaCRM::ASettings *m_cfg;          /**< @brief Configurations */
-  AntiquaCRM::ASqlCore *m_sql = nullptr; /**< @brief PostgreSQL Database */
-  MainWindow *m_window = nullptr;        /**< @brief UI Window */
-  SystemTrayIcon *m_systray = nullptr;   /**< @brief UI SystemTray */
+  AntiquaCRM::ASettings* m_cfg;          /**< @brief Configurations */
+  AntiquaCRM::ASqlCore* m_sql = nullptr; /**< @brief PostgreSQL Database */
+  MainWindow* m_window = nullptr;        /**< @brief UI Window */
+  SystemTrayIcon* m_systray = nullptr;   /**< @brief UI SystemTray */
 #ifdef ANTIQUACRM_DBUS_ENABLED
-  QDBusConnection *m_dbus = nullptr; /**< @brief D-Bus Connection */
+  QDBusConnection* m_dbus = nullptr; /**< @brief D-Bus Connection */
   bool registerSessionBus();
 #endif
 
@@ -43,6 +43,11 @@ private:
    * @brief Database remote port and status check
    */
   bool checkRemotePort();
+
+  /**
+   * @brief Is Systemtray enabled and visible?
+   */
+  bool checkSysTrayIcon();
 
   /**
    * @brief Connect to Database
@@ -74,7 +79,7 @@ Q_SIGNALS:
   /**
    * @brief Internal Message Signal for subclasses
    */
-  void sendStatusMessage(const QString &);
+  void sendStatusMessage(const QString&);
 
 public Q_SLOTS:
   /**
@@ -83,7 +88,7 @@ public Q_SLOTS:
   Q_INVOKABLE void applicationQuit();
 
 public:
-  explicit Application(int &argc, char **argv);
+  explicit Application(int& argc, char** argv);
 
   /**
    * @brief default application icon

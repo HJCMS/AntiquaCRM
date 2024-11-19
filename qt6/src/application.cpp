@@ -7,10 +7,6 @@
 #include "switchdatabaseprofile.h"
 #include "systemtrayicon.h"
 #include "utils/datacache/datacache.h"
-#ifdef ANTIQUACRM_DBUS_ENABLED
-#  include "abusadaptor.h"
-#  include <QDBusMessage>
-#endif
 
 #ifdef Q_OS_WIN
 #  include <Windows.h>
@@ -18,7 +14,13 @@
 #  include <unistd.h>
 #endif
 
+#ifdef ANTIQUACRM_DBUS_ENABLED
+#  include "abusadaptor.h"
+#  include <QDBusMessage>
+#endif
+
 #include <AntiquaWidgets>
+#include <QMessageBox>
 #include <QScreen>
 #include <QStyle>
 #include <QStyleFactory>
@@ -42,7 +44,8 @@ bool Application::registerSessionBus() {
     if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
       m_dbus->registerObject(QString("/"), this);
       m_dbus->registerObject(QString("/Window"), m_window);
-      m_dbus->registerObject(QString("/Systray"), m_systray);
+      if (checkSysTrayIcon())
+        m_dbus->registerObject(QString("/Systray"), m_systray);
     }
 #  ifdef ANTIQUA_DEVELOPMENT
     else {
@@ -68,12 +71,27 @@ bool Application::checkRemotePort() {
   AntiquaCRM::ASqlSettings _csql(this);
   AntiquaCRM::ASqlProfile _pr = _csql.connectionProfile();
   AntiquaCRM::ANetworkIface iface;
-  qInfo("Testing connection to %s:%d ...", qPrintable(_pr.getHostname()), _pr.getPort());
+#ifdef ANTIQUA_DEVELOPMENT
+  qInfo("Test SQL connection to %s:%d ...", qPrintable(_pr.getHostname()), _pr.getPort());
+#endif
   if (iface.checkRemotePort(_pr.getHostname(), _pr.getPort()))
     return true;
 
-  qWarning("Remote port „%d“, is unreachable!", _pr.getPort());
+  qWarning("Remote port „%s:%d“, is unreachable!", qPrintable(_pr.getHostname()), _pr.getPort());
   return false;
+}
+
+/*
+ * @FIXME
+ * There are currently problems with Windows and starting the application
+ * with a system tray. The application freezes when the system tray is
+ * initialized and visible. So far I have not found a solution :-(
+ */
+bool Application::checkSysTrayIcon() {
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
+    qWarning("SystemTray is not available!");
+
+  return (m_systray != nullptr);
 }
 
 bool Application::openDatabase() {
@@ -100,9 +118,11 @@ void Application::initStyleTheme() {
   // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
 
-  const QString _fallback("hicolor");
-  QIcon::setFallbackThemeName(_fallback);
-  QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
+  if (_platform.startsWith("xcb")) {
+    const QString _fallback("hicolor");
+    QIcon::setFallbackThemeName(_fallback);
+    QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
+  }
 
   // NOTE Loading stylesheet before change fonts!
   QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
@@ -138,10 +158,6 @@ void Application::initStyleTheme() {
     _palette.setColor(QPalette::Inactive, QPalette::Highlight, _highlight);
   }
   setPalette(_palette);
-
-#ifdef ANTIQUA_DEVELOPMENT
-  qInfo("Style changes for '%s' initialed.", qUtf8Printable(_platform));
-#endif
 }
 
 void Application::initTranslations() {
@@ -167,27 +183,31 @@ void Application::initSystemTray() {
   if (!QSystemTrayIcon::isSystemTrayAvailable())
     return;
 
-  // SystemTray
-  if (m_window == nullptr)
-    return;
-
   m_systray = new SystemTrayIcon(applIcon(), m_window);
+  m_systray->setVisible(true);
+
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
   connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-  if (m_systray != nullptr)
-    m_systray->show();
 }
 
 void Application::applicationQuit() {
   // close
   if (!m_window->closeWindow()) {
     m_window->showNormal();
-    m_systray->setMessage(tr("Please close all editors before exiting!"));
+    const QString _hint = tr("Please close all editors before exiting!");
+    if (checkSysTrayIcon()) {
+      m_systray->setMessage(_hint);
+    } else {
+      QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
+    }
     return;
   }
-  m_systray->setVisible(false);
+
+  if (checkSysTrayIcon())
+    m_systray->setVisible(false);
+
   m_sql->close();
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
@@ -199,7 +219,7 @@ void Application::applicationQuit() {
   if (m_window != nullptr)
     m_window->deleteLater();
 
-  if (m_systray != nullptr)
+  if (checkSysTrayIcon())
     m_systray->deleteLater();
 
   if (m_sql != nullptr)
@@ -218,12 +238,12 @@ bool Application::isRunning() {
   socket.setServerName(AntiquaCRM::AUtil::socketName());
   if (socket.open(QLocalSocket::ReadWrite)) {
 #ifdef ANTIQUACRM_DBUS_ENABLED
-    QDBusConnection bus =
+    QDBusConnection _dbc =
         QDBusConnection::connectToBus(QDBusConnection::SessionBus, ANTIQUACRM_CONNECTION_DOMAIN);
-    if (bus.isConnected()) {
-      bus.call(QDBusMessage::createMethodCall(ANTIQUACRM_CONNECTION_DOMAIN, // Service
-                                              "/", bus.name(), "toggle"),
-               QDBus::NoBlock);
+    if (_dbc.isConnected()) {
+      const QDBusMessage _call = QDBusMessage::createMethodCall(
+          ANTIQUACRM_CONNECTION_DOMAIN, "/", _dbc.name(), qUtf8Printable("toggle"));
+      _dbc.call(_call, QDBus::NoBlock);
     }
 #endif
     socket.close();
@@ -325,25 +345,21 @@ int Application::exec() {
   // Step 8 - open application window
   if (m_window->openWindow()) {
     p_splash.finish(m_window);
-    // @fixme - Windows hack ...
-    // The system tray in Windows must start with a delay.
-    // Because the loading of the plugins and database is delayed.
-#ifdef Q_OS_WIN
-    Sleep(3000);
-#endif
+    // NOTE Wait for Window is ready up
     initSystemTray();
-  }
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
-  if (registerSessionBus()) {
-    // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
-    ABusAdaptor* m_adaptor = new ABusAdaptor(this);
-    m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-    connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
-    connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-    connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
-  }
-#endif
+    if (registerSessionBus()) {
+      // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
+      ABusAdaptor* m_adaptor = new ABusAdaptor(this);
+      m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
+      if (checkSysTrayIcon())
+        connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
 
+      connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+      connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
+    }
+#endif
+  }
   return QApplication::exec();
 }

@@ -82,7 +82,7 @@ bool ASqlCore::initDatabase() {
     return false;
   }
 
-  qInfo("Database connected to Host '%s'.", qPrintable(database->hostName()));
+  qInfo("Database connected to '%s'.", qPrintable(database->hostName()));
   return isConnected();
 }
 
@@ -98,9 +98,9 @@ bool ASqlCore::isConnected() {
   if (database->open())
     return true;
 
-  QSqlError err = database->lastError();
-  if (err.isValid())
-    prepareSqlError(err);
+  QSqlError _err = database->lastError();
+  if (_err.isValid())
+    prepareSqlError(_err);
 
   return false;
 }
@@ -155,7 +155,12 @@ bool ASqlCore::networkStatus() {
 }
 
 qint64 ASqlCore::getQueryLimit() {
-  return config->value("database/SqlQueryLimit", 900).toInt();
+  int _limit = config->getParam("querylimit").toInt();
+  if (_limit > 0)
+    return _limit;
+
+  // fallback
+  return config->value("database/SqlQueryLimit", 999).toInt();
 }
 
 const QString ASqlCore::identifier() {
