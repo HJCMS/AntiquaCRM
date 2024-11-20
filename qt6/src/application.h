@@ -27,12 +27,21 @@ private:
   bool errors = false;
   AntiquaCRM::ASettings* m_cfg;          /**< @brief Configurations */
   AntiquaCRM::ASqlCore* m_sql = nullptr; /**< @brief PostgreSQL Database */
-  MainWindow* m_window = nullptr;        /**< @brief UI Window */
   SystemTrayIcon* m_systray = nullptr;   /**< @brief UI SystemTray */
+  MainWindow* m_window = nullptr;        /**< @brief UI Window */
 #ifdef ANTIQUACRM_DBUS_ENABLED
   QDBusConnection* m_dbus = nullptr; /**< @brief D-Bus Connection */
   bool registerSessionBus();
 #endif
+
+  /**
+   * @brief overlaps the POSIX sleep function
+   * @note The default timeout is 3000 MSecs
+   *
+   * If boot sequence get errors, network or database connection.
+   * Suspend some second for User visualization.
+   */
+  inline void suspending() const;
 
   /**
    * @brief Network Interfaces and connection check.
@@ -69,11 +78,6 @@ private:
    * @brief Load and initial window and components.
    */
   bool initMainWindow();
-
-  /**
-   * @brief Load and initial systemtray
-   */
-  void initSystemTray();
 
 Q_SIGNALS:
   /**

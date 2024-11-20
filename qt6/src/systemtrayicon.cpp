@@ -3,11 +3,11 @@
 
 #include "systemtrayicon.h"
 #include "antiquaicon.h"
-#include "mainwindow.h"
+#include "application.h"
 
 #include <QMenu>
 
-SystemTrayIcon::SystemTrayIcon(const QIcon& icon, MainWindow* parent)
+SystemTrayIcon::SystemTrayIcon(const QIcon& icon, Application* parent)
     : QSystemTrayIcon{icon, parent} {
   setObjectName("antiquacrm_systemtray");
 

@@ -58,6 +58,14 @@ bool Application::registerSessionBus() {
 }
 #endif
 
+void Application::suspending() const {
+#ifdef Q_OS_WIN
+  Sleep(3000);
+#else
+  sleep(3);
+#endif
+}
+
 bool Application::checkInterfaces() {
   AntiquaCRM::ANetworkIface iface;
   if (iface.connectedIfaceExists())
@@ -81,12 +89,6 @@ bool Application::checkRemotePort() {
   return false;
 }
 
-/*
- * @FIXME
- * There are currently problems with Windows and starting the application
- * with a system tray. The application freezes when the system tray is
- * initialized and visible. So far I have not found a solution :-(
- */
 bool Application::checkSysTrayIcon() {
   if (!QSystemTrayIcon::isSystemTrayAvailable())
     qWarning("SystemTray is not available!");
@@ -172,24 +174,32 @@ void Application::initTranslations() {
 }
 
 bool Application::initMainWindow() {
+  // Initial system tray
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
+    return false;
+
+  /*
+   * @FIXME
+   * There are currently problems with Windows and starting the application
+   * with a system tray. The application freezes when the system tray is
+   * initialized and visible. So far I have not found a solution :-(
+   */
+  m_systray = new SystemTrayIcon(applIcon(), this);
+
   // MainWindow
   m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
+
+  if (checkSysTrayIcon()) {
+    connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
+    connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
+    connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+    connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+    connect(this, SIGNAL(aboutToQuit()), m_systray, SLOT(hide()));
+    m_systray->setVisible(true);
+  }
   return (m_window != nullptr);
-}
-
-void Application::initSystemTray() {
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    return;
-
-  m_systray = new SystemTrayIcon(applIcon(), m_window);
-  m_systray->setVisible(true);
-
-  connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
-  connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
-  connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-  connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
 }
 
 void Application::applicationQuit() {
@@ -205,15 +215,7 @@ void Application::applicationQuit() {
     return;
   }
 
-  if (checkSysTrayIcon())
-    m_systray->setVisible(false);
-
   m_sql->close();
-
-#ifdef ANTIQUACRM_DBUS_ENABLED
-  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
-  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
-#endif
 
   // Force destructers
   if (m_window != nullptr)
@@ -221,6 +223,11 @@ void Application::applicationQuit() {
 
   if (checkSysTrayIcon())
     m_systray->deleteLater();
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
+  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
+#endif
 
   if (m_sql != nullptr)
     m_sql->deleteLater();
@@ -284,12 +291,7 @@ int Application::exec() {
   if (!checkRemotePort()) {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
     mutex.unlock();
-    // wait 3 seconds before exit
-#ifdef Q_OS_WIN
-    Sleep(3000);
-#else
-    sleep(3);
-#endif
+    suspending();
     return 0;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));
@@ -310,6 +312,7 @@ int Application::exec() {
       qInfo("Database profile changed, application restart required.");
     }
     mutex.unlock();
+    suspending();
     return 1;
   }
   p_splash.setMessage(tr("Database connection successfully."));
@@ -342,11 +345,9 @@ int Application::exec() {
   // Step 7 - finish splash and unlock
   p_splash.setMessage(tr("Open AntiquaCRM application ..."));
 
-  // Step 8 - open application window
+  // Step 8 - open window
   if (m_window->openWindow()) {
     p_splash.finish(m_window);
-    // NOTE Wait for Window is ready up
-    initSystemTray();
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
     if (registerSessionBus()) {

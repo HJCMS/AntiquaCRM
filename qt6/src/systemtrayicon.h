@@ -13,7 +13,7 @@
 #include <QAction>
 #include <QSystemTrayIcon>
 
-class MainWindow;
+class Application;
 
 class SystemTrayIcon final : public QSystemTrayIcon {
   Q_OBJECT
@@ -37,7 +37,7 @@ public Q_SLOTS:
   Q_INVOKABLE void setMessage(const QString& body);
 
 public:
-  explicit SystemTrayIcon(const QIcon& icon, MainWindow* parent = nullptr);
+  explicit SystemTrayIcon(const QIcon& icon, Application* parent = nullptr);
 };
 
 #endif // ANTIQUA_UI_SYSTEMTRAYICON_H
