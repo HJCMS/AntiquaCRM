@@ -119,6 +119,14 @@ void SellersWidget::openOrderPage(const QString& provider, const QString& oid) {
   }
 }
 
+void SellersWidget::updateSellersList() {
+  if (!initialed)
+    return;
+
+  qDebug() << Q_FUNC_INFO << "Reload Sellers Tree";
+  m_tree->loadUpdate();
+}
+
 void SellersWidget::openStartPage() {
   if (m_sql == nullptr)
     m_sql = new AntiquaCRM::ASqlCore(this);
@@ -129,8 +137,12 @@ void SellersWidget::onEnterChanged() {
   if (!initialed) {
     loadProviderPlugins();
     initialed = true;
+    // first shot on load
+    updateSellersList();
   }
-  m_tree->loadUpdate();
+  // only update if tab is visible
+  if (m_tree->isVisible())
+    updateSellersList();
 }
 
 const QString SellersWidget::getTitle() const {
@@ -138,15 +150,13 @@ const QString SellersWidget::getTitle() const {
 }
 
 bool SellersWidget::customAction(const QJsonObject& obj) {
-#ifdef ANTIQUA_DEVELOPMENT
-  // if (obj.isEmpty() || !obj.contains("ACTION"))
-  qDebug() << Q_FUNC_INFO << "TODO" << obj;
-#else
-  Q_UNUSED(obj);
-#endif
-  return false;
+  const QString _action = obj.value("ACTION").toString();
+  if (acceptsCustomActions().contains(_action, Qt::CaseInsensitive))
+    updateSellersList();
+
+  return true;
 }
 
 const QStringList SellersWidget::acceptsCustomActions() const {
-  return QStringList({"provider_order"});
+  return QStringList({"updateSellersTree"});
 }

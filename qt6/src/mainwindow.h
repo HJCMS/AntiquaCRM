@@ -10,8 +10,7 @@
 #define ANTIQUA_UI_MAINWINDOW_H
 
 #include <AntiquaTabs>
-#include <QCloseEvent>
-#include <QHideEvent>
+#include <QEvent>
 #include <QList>
 #include <QMainWindow>
 #include <QObject>
@@ -29,6 +28,13 @@ class MainWindow final : public QMainWindow {
   Q_OBJECT
 
 private:
+  /**
+   * @brief firstShown
+   *
+   * prevent duplicate triggers
+   */
+  bool firstShown = false;
+
   /**
    * @brief Configuration will initialed in openWindow()
    */
@@ -117,6 +123,7 @@ private Q_SLOTS:
   void setAction(const QString& name, const QJsonObject& data);
 
 protected:
+  void showEvent(QShowEvent*) override;
   void hideEvent(QHideEvent*) override;
   void closeEvent(QCloseEvent*) override;
 

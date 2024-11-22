@@ -34,6 +34,16 @@ private Q_SLOTS:
   void openProviderAction(const QJsonObject&);
   void openOrderPage(const QString& provider, const QString& oid);
 
+public Q_SLOTS:
+  /**
+   * @brief Reload SellersSalesList widget
+   * @note Only works if \ref initialed is true.
+   *
+   * This slot is only active if page was already used.
+   * It can reload the Sellers tree.
+   */
+  void updateSellersList();
+
 public:
   explicit SellersWidget(QWidget* parent = nullptr);
   void openStartPage() override;

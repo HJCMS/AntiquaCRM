@@ -111,6 +111,7 @@ bool MainWindow::tabViewAction(const QString& id) {
   QListIterator<AntiquaCRM::TabsInterface*> it(tabInterfaces);
   while (it.hasNext()) {
     AntiquaCRM::TabsInterface* _iface = it.next();
+    qDebug() << Q_FUNC_INFO << _iface->menuEntry().value("id").toString();
     if (_iface->menuEntry().value("id").toString() == id) {
       AntiquaCRM::TabsIndex* m_tab = _iface->indexWidget(m_tabWidget);
       m_tabWidget->registerTab(m_tab);
@@ -155,7 +156,8 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
   }
 
   const QString _action = data.value("ACTION").toString().toLower();
-  if (_tab->acceptsCustomActions().contains(_action) && _tab->customAction(data)) {
+  if (_tab->acceptsCustomActions().contains(_action, Qt::CaseInsensitive)
+      && _tab->customAction(data)) {
     m_tabWidget->setCurrentIndex(_index);
     return;
   }
@@ -163,6 +165,18 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
 #ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "REJECTED" << _index << name << data;
 #endif
+}
+
+void MainWindow::showEvent(QShowEvent* event) {
+  if (event->isAccepted() && firstShown) {
+    // SELLERS_INTERFACE_TABID
+    const QString _target("sellers_tab");
+    QJsonObject _obj;
+    _obj.insert("TARGET", _target);
+    _obj.insert("ACTION", "updateSellersTree");
+    setAction(_target, _obj);
+  }
+  QMainWindow::showEvent(event);
 }
 
 void MainWindow::hideEvent(QHideEvent* event) {
@@ -215,6 +229,7 @@ bool MainWindow::openWindow() {
   showNormal();
   m_statusBar->showMessage(tr("Window opened"), 5000);
 
+  firstShown = true;
   return true;
 }
 

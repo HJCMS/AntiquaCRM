@@ -215,6 +215,11 @@ void Application::applicationQuit() {
     return;
   }
 
+#ifdef ANTIQUACRM_DBUS_ENABLED
+  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
+  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
+#endif
+
   m_sql->close();
 
   // Force destructers
@@ -223,11 +228,6 @@ void Application::applicationQuit() {
 
   if (checkSysTrayIcon())
     m_systray->deleteLater();
-
-#ifdef ANTIQUACRM_DBUS_ENABLED
-  m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
-  m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
-#endif
 
   if (m_sql != nullptr)
     m_sql->deleteLater();

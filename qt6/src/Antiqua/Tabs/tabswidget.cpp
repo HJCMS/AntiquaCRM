@@ -130,7 +130,9 @@ int TabsWidget::registerTab(AntiquaCRM::TabsIndex* tab) {
   int _index = addTab(tab, tab->windowIcon(), tab->getTitle());
   if (_index >= 0) {
     m_tabBar->setTabCloseable(_index, tab->isClosable());
-    tab->onEnterChanged();
+#ifdef ANTIQUA_DEVELOPMENT
+    qDebug() << Q_FUNC_INFO << tab->tabIndexId() << tab->getTitle();
+#endif
   }
   return _index;
 }
