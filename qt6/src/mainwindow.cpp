@@ -111,7 +111,7 @@ bool MainWindow::tabViewAction(const QString& id) {
   QListIterator<AntiquaCRM::TabsInterface*> it(tabInterfaces);
   while (it.hasNext()) {
     AntiquaCRM::TabsInterface* _iface = it.next();
-    qDebug() << Q_FUNC_INFO << _iface->menuEntry().value("id").toString();
+    // qDebug() << Q_FUNC_INFO << _iface->menuEntry().value("id").toString();
     if (_iface->menuEntry().value("id").toString() == id) {
       AntiquaCRM::TabsIndex* m_tab = _iface->indexWidget(m_tabWidget);
       m_tabWidget->registerTab(m_tab);
