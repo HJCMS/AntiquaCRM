@@ -123,7 +123,9 @@ void SellersWidget::updateSellersList() {
   if (!initialed)
     return;
 
+#ifdef ANTIQUA_DEVELOPMENT
   qDebug() << Q_FUNC_INFO << "Reload Sellers Tree";
+#endif
   m_tree->loadUpdate();
 }
 
