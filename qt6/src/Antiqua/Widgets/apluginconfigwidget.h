@@ -19,7 +19,8 @@
 #include <QSignalMapper>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class PluginConfigWidget
@@ -48,38 +49,38 @@ class ANTIQUACRM_LIBRARY PluginConfigWidget : public QScrollArea {
   Q_OBJECT
 
 private:
-  QSignalMapper *signalMapper;
+  QSignalMapper* signalMapper;
   const QString p_identifier;
 
 private Q_SLOTS:
-  void setInputEditChanged(QObject *);
+  void setInputEditChanged(QObject*);
 
 protected:
   /**
    * @brief Global settings instance
    * Always initialized in constructor!
    */
-  AntiquaCRM::ASettings *config;
+  AntiquaCRM::ASettings* config;
 
   /**
    * @brief PostgreSql Database Connection
    * @note By default not initialized!
    * @warning Do not initialize SQL Connections in Constructors!
    */
-  AntiquaCRM::ASqlCore *pgsql = nullptr;
+  AntiquaCRM::ASqlCore* pgsql = nullptr;
 
   /**
    * @brief get InputWidget from Child widget
    * @param parent - parent Widget
    * @param name  - objectName
    */
-  AntiquaCRM::AInputWidget *inputWidget(QWidget *parent, const QString &name);
+  AntiquaCRM::AInputWidget* inputWidget(QWidget* parent, const QString& name);
 
   /**
    * @brief get all AntiquaCRM::AInputWidget from Widget
    * @param parent
    */
-  QList<AntiquaCRM::AInputWidget *> getInputList(QObject *parent);
+  QList<AntiquaCRM::AInputWidget*> getInputList(QObject* parent);
 
   /**
    * @brief Add AntiquaCRM::AInputWidget to SignalMapper
@@ -90,7 +91,14 @@ protected:
    * You must call this manually!
    * For example in loadSectionConfig when all AntiquaCRM::AInputWidget filled!
    */
-  void registerInputChangeSignals(QObject *base);
+  void registerInputChangeSignals(QObject* base);
+
+Q_SIGNALS:
+  /**
+   * @brief Reserved signal for status messages from subclasses.
+   */
+  void sendStatusMessage(const QString&);
+  void sendErrorMessage(const QString&);
 
 public Q_SLOTS:
   /**
@@ -108,19 +116,19 @@ public:
    * @param id     - Configuration Identifier
    * @param parent - Parent Widget
    */
-  explicit PluginConfigWidget(const QString &id, QWidget *parent = nullptr);
+  explicit PluginConfigWidget(const QString& id, QWidget* parent = nullptr);
 
   virtual ~PluginConfigWidget();
 
   /**
    * @brief read configuration from database
    */
-  const QJsonObject getDatabaseConfig(const QString &key);
+  const QJsonObject getDatabaseConfig(const QString& key);
 
   /**
    * @brief write configuration to database
    */
-  bool saveDatabaseConfig(const QString &key, const QJsonObject &obj);
+  bool saveDatabaseConfig(const QString& key, const QJsonObject& obj);
 
   /**
    * @brief configuration id for config section pointer
@@ -135,7 +143,7 @@ public:
    *
    * @note Not usable with ConfigType::CONFIG_DATABASE!
    */
-  const QStringList getCurrentKeys(const QString &path);
+  const QStringList getCurrentKeys(const QString& path);
 
   /**
    * @brief where this configuration will saved?

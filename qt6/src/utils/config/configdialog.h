@@ -58,8 +58,8 @@ private:
 private Q_SLOTS:
   void setModified(bool);
   void updateTitle(const QString &);
-  void statusMessage(const QString &message);
-  void openConfigGroup(const QString &name);
+  void statusMessage(const QString &);
+  void openConfigGroup(const QString &);
 
 public Q_SLOTS:
   void aboutToSave();

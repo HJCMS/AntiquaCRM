@@ -20,22 +20,22 @@
 #include <QMetaObject>
 #include <QScrollArea>
 
-ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
+ConfigDialog::ConfigDialog(QWidget* parent) : QDialog{parent} {
   setWindowTitle(tr("Configuration") + " [*]");
   setObjectName("configuration_dialog");
   setSizeGripEnabled(true);
   setMinimumSize(780, 550);
   setContentsMargins(5, 5, 5, 0);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setObjectName("antiqua_input_layout");
   layout->setContentsMargins(0, 0, 0, 0);
 
-  AntiquaCRM::Splitter *m_splitter = new AntiquaCRM::Splitter(this);
+  AntiquaCRM::Splitter* m_splitter = new AntiquaCRM::Splitter(this);
   layout->addWidget(m_splitter);
   layout->setStretch(0, 1);
 
-  QScrollArea *m_central = new QScrollArea(m_splitter);
+  QScrollArea* m_central = new QScrollArea(m_splitter);
   m_central->setWidgetResizable(true);
   m_splitter->addLeft(m_central);
 
@@ -84,13 +84,13 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   m_buttonBox = new QDialogButtonBox(this);
   m_buttonBox->setOrientation(Qt::Horizontal);
 
-  QPushButton *btn_save = m_buttonBox->addButton(QDialogButtonBox::Save);
+  QPushButton* btn_save = m_buttonBox->addButton(QDialogButtonBox::Save);
   btn_save->setText(tr("&Save"));
 
-  QPushButton *btn_cancel = m_buttonBox->addButton(QDialogButtonBox::Cancel);
+  QPushButton* btn_cancel = m_buttonBox->addButton(QDialogButtonBox::Cancel);
   btn_cancel->setText(tr("Cancel"));
 
-  QPushButton *btn_close = m_buttonBox->addButton(QDialogButtonBox::Close);
+  QPushButton* btn_close = m_buttonBox->addButton(QDialogButtonBox::Close);
   btn_close->setText(tr("Quit"));
 
   layout->addWidget(m_buttonBox);
@@ -102,23 +102,19 @@ ConfigDialog::ConfigDialog(QWidget *parent) : QDialog{parent} {
   setLayout(layout);
 
   connect(m_pageView, SIGNAL(sendModified(bool)), SLOT(setModified(bool)));
-  connect(m_pageView, SIGNAL(sendPageTitle(const QString &)),
-          SLOT(updateTitle(const QString &)));
-
-  connect(m_treeWidget, SIGNAL(sendPageIndex(int)), m_pageView,
-          SLOT(setPage(int)));
-
-  connect(m_treeWidget, SIGNAL(sendConfigGroup(const QString &)),
-          SLOT(openConfigGroup(const QString &)));
-
+  connect(m_pageView, SIGNAL(sendPageTitle(QString)), SLOT(updateTitle(QString)));
+  connect(m_pageView, SIGNAL(sendStatusMessage(QString)), SLOT(statusMessage(QString)));
+  connect(m_treeWidget, SIGNAL(sendPageIndex(int)), m_pageView, SLOT(setPage(int)));
+  connect(m_treeWidget, SIGNAL(sendConfigGroup(QString)), SLOT(openConfigGroup(QString)));
   connect(btn_save, SIGNAL(clicked()), SLOT(aboutToSave()));
   connect(btn_cancel, SIGNAL(clicked()), SLOT(reject()));
   connect(btn_close, SIGNAL(clicked()), SLOT(aboutToClose()));
 }
 
-ConfigDialog::~ConfigDialog() {}
+ConfigDialog::~ConfigDialog() {
+}
 
-void ConfigDialog::closeEvent(QCloseEvent *e) {
+void ConfigDialog::closeEvent(QCloseEvent* e) {
   if (e->type() == QEvent::Close) {
     if (isWindowModified()) {
       e->setAccepted(false);
@@ -134,16 +130,16 @@ void ConfigDialog::closeEvent(QCloseEvent *e) {
 
 bool ConfigDialog::loadConfigWidget() {
   AntiquaCRM::TabsLoader _pl_tabs(this);
-  const QList<AntiquaCRM::TabsInterface *> _ti = _pl_tabs.interfaces(this);
+  const QList<AntiquaCRM::TabsInterface*> _ti = _pl_tabs.interfaces(this);
   if (_ti.size() < 1)
     return false;
 
   int _count = m_pageView->count();
-  QListIterator<AntiquaCRM::TabsInterface *> t_ti(_ti);
+  QListIterator<AntiquaCRM::TabsInterface*> t_ti(_ti);
   while (t_ti.hasNext()) {
-    AntiquaCRM::TabsInterface *m_iface = t_ti.next();
+    AntiquaCRM::TabsInterface* m_iface = t_ti.next();
     if (m_iface) {
-      AntiquaCRM::PluginConfigWidget *m_w = m_iface->configWidget(m_pageView);
+      AntiquaCRM::PluginConfigWidget* m_w = m_iface->configWidget(m_pageView);
       m_pageView->insert(_count, m_w);
       m_treeWidget->addTabPlugin(_count, m_w->getMenuEntry());
       _count++;
@@ -153,27 +149,25 @@ bool ConfigDialog::loadConfigWidget() {
   m_pageView->insert(_count++, new ConfigProvidersView(m_pageView));
 
   AntiquaCRM::ProvidersLoader _pl_providers(this);
-  const QList<AntiquaCRM::ProviderInterface *> _pi =
-      _pl_providers.interfaces(this);
+  const QList<AntiquaCRM::ProviderInterface*> _pi = _pl_providers.interfaces(this);
   if (_pi.size() < 1)
     return false;
 
-  QListIterator<AntiquaCRM::ProviderInterface *> t_pi(_pi);
+  QListIterator<AntiquaCRM::ProviderInterface*> t_pi(_pi);
   while (t_pi.hasNext()) {
-    AntiquaCRM::ProviderInterface *m_iface = t_pi.next();
+    AntiquaCRM::ProviderInterface* m_iface = t_pi.next();
     if (m_iface) {
-      AntiquaCRM::PluginConfigWidget *m_w = m_iface->configWidget(m_pageView);
+      AntiquaCRM::PluginConfigWidget* m_w = m_iface->configWidget(m_pageView);
       m_pageView->insert(_count, m_w);
       m_treeWidget->addProviderPlugin(_count, m_w->getMenuEntry());
       _count++;
     }
   }
-
   return true;
 }
 
 void ConfigDialog::loadConfigs() {
-  QListIterator<AntiquaCRM::PluginConfigWidget *> it(m_pageView->pages());
+  QListIterator<AntiquaCRM::PluginConfigWidget*> it(m_pageView->pages());
   while (it.hasNext()) {
     it.next()->loadSectionConfig();
   }
@@ -184,7 +178,7 @@ void ConfigDialog::setModified(bool b) {
   // qDebug() << Q_FUNC_INFO << isWindowModified();
 }
 
-void ConfigDialog::updateTitle(const QString &title) {
+void ConfigDialog::updateTitle(const QString& title) {
   QString _title(tr("Configuration"));
   _title.append(" (");
   _title.append(title);
@@ -192,11 +186,11 @@ void ConfigDialog::updateTitle(const QString &title) {
   setWindowTitle(_title);
 }
 
-void ConfigDialog::statusMessage(const QString &message) {
+void ConfigDialog::statusMessage(const QString& message) {
   m_statusbar->showMessage(message, 5000);
 }
 
-void ConfigDialog::openConfigGroup(const QString &name) {
+void ConfigDialog::openConfigGroup(const QString& name) {
   if (!name.startsWith("config_"))
     return;
 
@@ -209,7 +203,7 @@ void ConfigDialog::openConfigGroup(const QString &name) {
 }
 
 void ConfigDialog::aboutToSave() {
-  QListIterator<AntiquaCRM::PluginConfigWidget *> it(m_pageView->pages());
+  QListIterator<AntiquaCRM::PluginConfigWidget*> it(m_pageView->pages());
   while (it.hasNext()) {
     it.next()->saveSectionConfig();
   }

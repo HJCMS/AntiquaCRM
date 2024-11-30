@@ -3,12 +3,12 @@
 
 #include "configpageswidget.h"
 
-ConfigPagesWidget::ConfigPagesWidget(QWidget *parent)
-    : QStackedWidget{parent} {}
+ConfigPagesWidget::ConfigPagesWidget(QWidget* parent) : QStackedWidget{parent} {
+}
 
-bool ConfigPagesWidget::eventFilter(QObject *obj, QEvent *event) {
+bool ConfigPagesWidget::eventFilter(QObject* obj, QEvent* event) {
   if (event->type() == QEvent::ModifiedChange) {
-    AntiquaCRM::PluginConfigWidget *w = page(obj);
+    AntiquaCRM::PluginConfigWidget* w = page(obj);
     if (w != nullptr) {
       bool status = w->isWindowModified();
       setWindowModified(status);
@@ -19,7 +19,7 @@ bool ConfigPagesWidget::eventFilter(QObject *obj, QEvent *event) {
   return QStackedWidget::eventFilter(obj, event);
 }
 
-void ConfigPagesWidget::changeEvent(QEvent *event) {
+void ConfigPagesWidget::changeEvent(QEvent* event) {
   if (event->type() == QEvent::EnabledChange)
     emit sendEnabledStatus(isEnabled());
 
@@ -27,7 +27,7 @@ void ConfigPagesWidget::changeEvent(QEvent *event) {
 }
 
 void ConfigPagesWidget::setPage(int index) {
-  AntiquaCRM::PluginConfigWidget *_page = page(index);
+  AntiquaCRM::PluginConfigWidget* _page = page(index);
   if (_page == nullptr)
     return;
 
@@ -38,25 +38,25 @@ void ConfigPagesWidget::setPage(int index) {
     emit sendPageTitle(_t);
 }
 
-int ConfigPagesWidget::insert(int index, AntiquaCRM::PluginConfigWidget *widget) {
+int ConfigPagesWidget::insert(int index, AntiquaCRM::PluginConfigWidget* widget) {
   int _index = insertWidget(index, widget);
   if (_index != -1)
     widget->installEventFilter(this);
 
+  connect(widget, SIGNAL(sendStatusMessage(QString)), SIGNAL(sendStatusMessage(QString)));
   return _index;
 }
 
-const QList<AntiquaCRM::PluginConfigWidget *> ConfigPagesWidget::pages() {
-  return findChildren<AntiquaCRM::PluginConfigWidget *>(
-      QString(), Qt::FindChildrenRecursively);
+const QList<AntiquaCRM::PluginConfigWidget*> ConfigPagesWidget::pages() {
+  return findChildren<AntiquaCRM::PluginConfigWidget*>(QString(), Qt::FindChildrenRecursively);
 }
 
-AntiquaCRM::PluginConfigWidget *ConfigPagesWidget::page(int index) {
-  AntiquaCRM::PluginConfigWidget *_w = nullptr;
-  _w = qobject_cast<AntiquaCRM::PluginConfigWidget *>(widget(index));
+AntiquaCRM::PluginConfigWidget* ConfigPagesWidget::page(int index) {
+  AntiquaCRM::PluginConfigWidget* _w = nullptr;
+  _w = qobject_cast<AntiquaCRM::PluginConfigWidget*>(widget(index));
   return _w;
 }
 
-AntiquaCRM::PluginConfigWidget *ConfigPagesWidget::page(QObject *object) {
-  return qobject_cast<AntiquaCRM::PluginConfigWidget *>(object);
+AntiquaCRM::PluginConfigWidget* ConfigPagesWidget::page(QObject* object) {
+  return qobject_cast<AntiquaCRM::PluginConfigWidget*>(object);
 }

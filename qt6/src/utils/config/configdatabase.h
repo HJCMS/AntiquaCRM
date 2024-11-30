@@ -11,7 +11,9 @@
 
 #include <AntiquaTabs>
 #include <AntiquaWidgets>
+#include <QDnsLookup>
 #include <QGroupBox>
+#include <QHostInfo>
 #include <QObject>
 
 class DatabaseProfile;
@@ -24,6 +26,8 @@ class ConfigDatabase final : public AntiquaCRM::PluginConfigWidget {
 private:
   // Database connectionName
   const QString p_connection_id;
+  // used for remote checks
+  QDnsLookup* m_nslookup = nullptr;
   // Connection Settings
   DatabaseProfile* m_profil;
   AntiquaCRM::TextLine* pg_hostname;
@@ -45,9 +49,11 @@ private:
 
   bool resetInput();
 
-  bool loadProfile(const QString& id);
+  bool loadProfile(const QString&);
 
 private Q_SLOTS:
+  void resolveHostname();
+  void remoteHostCheck(const QHostInfo&);
   void testConnection();
   void updateProfile();
 

@@ -18,27 +18,28 @@ class ConfigPagesWidget final : public QStackedWidget {
   Q_OBJECT
 
 protected Q_SLOTS:
-  bool eventFilter(QObject *, QEvent *) override;
-  void changeEvent(QEvent *) override;
+  bool eventFilter(QObject*, QEvent*) override;
+  void changeEvent(QEvent*) override;
 
 Q_SIGNALS:
   void sendModified(bool);
   void sendEnabledStatus(bool);
-  void sendPageTitle(const QString &);
+  void sendPageTitle(const QString&);
+  void sendStatusMessage(const QString&);
 
 public Q_SLOTS:
   void setPage(int);
 
 public:
-  explicit ConfigPagesWidget(QWidget *parent = nullptr);
+  explicit ConfigPagesWidget(QWidget* parent = nullptr);
 
-  int insert(int index, AntiquaCRM::PluginConfigWidget *widget);
+  int insert(int index, AntiquaCRM::PluginConfigWidget* widget);
 
-  const QList<AntiquaCRM::PluginConfigWidget *> pages();
+  const QList<AntiquaCRM::PluginConfigWidget*> pages();
 
-  AntiquaCRM::PluginConfigWidget *page(int index);
+  AntiquaCRM::PluginConfigWidget* page(int index);
 
-  AntiquaCRM::PluginConfigWidget *page(QObject *);
+  AntiquaCRM::PluginConfigWidget* page(QObject*);
 };
 
 #endif // ANTIQUACRM_DIALOGS_CONFIGPAGESWIDGET_H

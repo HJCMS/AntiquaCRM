@@ -180,7 +180,7 @@ void MainWindow::showEvent(QShowEvent* event) {
 }
 
 void MainWindow::hideEvent(QHideEvent* event) {
-  if (isVisible() && event->isAccepted()) {
+  if (event->isAccepted()) {
     config->setValue("window/geometry", saveGeometry());
     if (isFullScreen()) // do not save fullscreen window
       setWindowState(windowState() & ~Qt::WindowFullScreen);

@@ -292,11 +292,40 @@ bool ConfigDatabase::loadProfile(const QString& id) {
   return true;
 }
 
+void ConfigDatabase::resolveHostname() {
+  QString _remote = pg_hostname->getValue().toString();
+  if (m_nslookup->error() != QDnsLookup::NoError) {
+    emit sendStatusMessage(tr("Hostname %1 cannot resolved!").arg(_remote));
+    m_nslookup->deleteLater();
+    return;
+  }
+  foreach (QDnsHostAddressRecord r, m_nslookup->hostAddressRecords()) {
+    QString _host = r.name().trimmed().toLower();
+    if (_host.length() > 0 && _host == _remote) {
+      emit sendStatusMessage(tr("This hostname %1 is available.").arg(_remote));
+      break;
+    }
+  }
+  m_nslookup->deleteLater();
+}
+
+void ConfigDatabase::remoteHostCheck(const QHostInfo& info) {
+  // Start hostname resolver
+  m_nslookup = new QDnsLookup(this);
+  connect(m_nslookup, SIGNAL(finished()), SLOT(resolveHostname()));
+  // m_nslookup->setType(type);
+  m_nslookup->setName(info.hostName());
+  m_nslookup->lookup();
+}
+
 /*
  * https://www.postgresql.org/docs/current/libpq-ssl.html
  * https://www.postgresql.org/docs/current/ssl-tcp.html
  */
 void ConfigDatabase::testConnection() {
+  // Start DNS resolver check
+  QHostInfo::lookupHost(pg_hostname->getValue().toString(), this, SLOT(remoteHostCheck(QHostInfo)));
+  // Start connection test
   QSqlDatabase _db;
   if (QSqlDatabase::contains(p_connection_id)) {
     _db = QSqlDatabase::database(p_connection_id, false);
