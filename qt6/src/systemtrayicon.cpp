@@ -10,6 +10,8 @@
 SystemTrayIcon::SystemTrayIcon(const QIcon& icon, Application* parent)
     : QSystemTrayIcon{icon, parent} {
   setObjectName("antiquacrm_systemtray");
+  setToolTip(tr("%1 connected.").arg(ANTIQUACRM_NAME));
+  setVisible(false);
 
   const QIcon _fc = AntiquaCRM::antiquaIcon("view-fullscreen");
 

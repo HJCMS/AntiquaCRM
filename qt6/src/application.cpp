@@ -179,31 +179,40 @@ bool Application::initMainWindow() {
     return false;
 
   /*
-   * @FIXME
-   * There are currently problems with Windows and starting the application
-   * with a system tray. The application freezes when the system tray is
-   * initialized and visible. So far I have not found a solution :-(
+   * Current problem with Windows and start application in a system tray.
+   * The application freezes when the system tray is initialized and visible.
+   * So far I have not found a solution for that. :-(
    */
+  QWidget* m_topWidget = nullptr;
+  foreach (QWidget* m_w, topLevelWidgets()) {
+    if (m_w->isWindow()) {
+      m_topWidget = m_w;
+      break;
+    }
+  }
+
   m_systray = new SystemTrayIcon(applIcon(), this);
 
   // MainWindow
-  m_window = new MainWindow;
+  m_window = new MainWindow(m_topWidget);
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
+
+  // set application platform event handler
+  setActiveWindow(m_window);
 
   if (checkSysTrayIcon()) {
     connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
     connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
     connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
     connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-    connect(this, SIGNAL(aboutToQuit()), m_systray, SLOT(hide()));
+    // ready to view
     m_systray->setVisible(true);
   }
   return (m_window != nullptr);
 }
 
 void Application::applicationQuit() {
-  // close
   if (!m_window->closeWindow()) {
     m_window->showNormal();
     const QString _hint = tr("Please close all editors before exiting!");
@@ -220,17 +229,21 @@ void Application::applicationQuit() {
   m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
 #endif
 
-  m_sql->close();
-
   // Force destructers
-  if (m_window != nullptr)
+  if (m_window != nullptr) {
+    m_window->hide();
     m_window->deleteLater();
+  }
 
-  if (checkSysTrayIcon())
+  if (checkSysTrayIcon()) {
+    m_systray->setVisible(false);
     m_systray->deleteLater();
+  }
 
-  if (m_sql != nullptr)
+  if (m_sql != nullptr) {
+    m_sql->close();
     m_sql->deleteLater();
+  }
 
   // finaly
   quit();
@@ -329,8 +342,6 @@ int Application::exec() {
     // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {
       p_splash.setMessage(tr("Cachefiles completed ..."));
-    } else {
-      p_splash.setMessage(tr("Create Cachefile failed ..."));
     }
     m_cache->deleteLater();
     mutex.unlock();
