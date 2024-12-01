@@ -3026,7 +3026,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Die Registerkarte kann im Bearbeitungsmodus nicht geschlossen werden!</translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+81"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation>&apos;%1&apos; Editor ist geöffnet!</translation>
     </message>
@@ -3096,12 +3096,17 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+187"/>
+        <location filename="../application.cpp" line="+213"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>AntiquaCRM</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+72"/>
         <source>No Networkconnection found!</source>
         <translation>Keine Netzwerkverbindung gefunden!</translation>
     </message>
@@ -3121,7 +3126,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Netzwerkserver-Port ist nicht erreichbar!</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Network connection to remote port exists.</source>
         <translation>Netzwerkverbindung zum Remote-Port besteht.</translation>
     </message>
@@ -3136,7 +3141,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>SQL Server-Verbindung fehlgeschlagen!</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Database connection successfully.</source>
         <translation>Datenbankverbindung erfolgreich.</translation>
     </message>
@@ -3152,13 +3157,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+6"/>
-        <source>Cachefiles completed ...</source>
-        <translation>Cacheerstellung abgeschlossen ...</translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Create Cachefile failed ...</source>
-        <translation>Cache-Datei erstellen ist fehlgeschlagen ...</translation>
+        <source>Cachefiles updated ...</source>
+        <translation>Cachedateien aktualisiert ...</translation>
     </message>
     <message>
         <location line="+13"/>
@@ -5173,12 +5173,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+4"/>
-        <location line="+350"/>
+        <location line="+379"/>
         <source>Database</source>
         <translation>Datenbank</translation>
     </message>
     <message>
-        <location line="-349"/>
+        <location line="-378"/>
         <source>Databasename</source>
         <translation>Datenbankname</translation>
     </message>
@@ -5358,7 +5358,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Vollständiger Leitfaden zur Einhaltung der &lt;a href=&apos;https://gdpr.eu/&apos; target=&apos;_blank&apos;&gt;DSGVO&lt;/a&gt;.</translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+77"/>
+        <source>Hostname %1 cannot resolved!</source>
+        <translation>Hostname %1 kann nicht aufgelöst werden!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>This hostname %1 is available.</source>
+        <translation>Der Hostname %1 ist verfügbar.</translation>
+    </message>
+    <message>
+        <location line="+61"/>
         <source>Connection successfully!</source>
         <translation>Verbindung erfolgreich!</translation>
     </message>
@@ -5382,12 +5392,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     <name>ConfigDialog</name>
     <message>
         <location filename="../utils/config/configdialog.cpp" line="+24"/>
-        <location line="+164"/>
+        <location line="+158"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-94"/>
         <source>&amp;Save</source>
         <translation>&amp;Speichern</translation>
     </message>
@@ -5402,17 +5412,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Beenden</translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+27"/>
         <source>You have unsaved changes!</source>
         <translation>Nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+93"/>
         <source>unsaved changes!</source>
         <translation>nicht gespeicherte Änderungen!</translation>
     </message>
     <message>
-        <location line="-94"/>
+        <location line="-92"/>
         <source>Do your really want to close?</source>
         <translation>Möchten Sie wirklich schließen?</translation>
     </message>
@@ -6841,7 +6851,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+210"/>
+        <location filename="../mainwindow.cpp" line="+224"/>
         <source>No tabs available</source>
         <translation>Keine Registerkarten verfügbar</translation>
     </message>
@@ -6851,7 +6861,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Fenster geöffnet</translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Do you really want to close the application?&lt;/p&gt;</source>
         <translation>Möchten Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
     </message>
@@ -8950,7 +8960,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+123"/>
+        <location line="+137"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -10012,17 +10022,22 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>SystemTrayIcon</name>
     <message>
-        <location filename="../systemtrayicon.cpp" line="+39"/>
+        <location filename="../systemtrayicon.cpp" line="+46"/>
         <source>Database connected.</source>
         <translation>Datenbank verbunden.</translation>
     </message>
     <message>
-        <location line="-22"/>
+        <location line="-27"/>
         <source>Window show</source>
         <translation>Fenster anzeigen</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-6"/>
+        <source>%1 connected.</source>
+        <translation>%1 verbunden.</translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Window hide</source>
         <translation>Fenster ausblenden</translation>
     </message>
@@ -10032,7 +10047,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Programm schließen</translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+27"/>
         <source>No Database conenction!</source>
         <translation>Keine Datenbankverbindung!</translation>
     </message>

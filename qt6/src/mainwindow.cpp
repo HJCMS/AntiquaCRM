@@ -168,6 +168,10 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
 }
 
 void MainWindow::showEvent(QShowEvent* event) {
+  // Refresh seller widget if it is not an application launch.
+  // On application start, this is interrupted by AntiquaCRM::TabsIndex::onEnterChange
+  // The variable firstShown is set by the openWindow function.
+  // It is intended to prevent too many database queries from being initiated at startup.
   if (event->isAccepted() && firstShown) {
     // SELLERS_INTERFACE_TABID
     const QString _target("sellers_tab");
@@ -229,6 +233,7 @@ bool MainWindow::openWindow() {
   showNormal();
   m_statusBar->showMessage(tr("Window opened"), 5000);
 
+  // @see also showEvent handle
   firstShown = true;
   return true;
 }

@@ -174,15 +174,9 @@ void Application::initTranslations() {
 }
 
 bool Application::initMainWindow() {
-  // Initial system tray
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    return false;
-
-  /*
-   * Current problem with Windows and start application in a system tray.
-   * The application freezes when the system tray is initialized and visible.
-   * So far I have not found a solution for that. :-(
-   */
+  // We need a main widget for process trees into Windows taskbars.
+  // This must be initialized before a taskbar entry is created.
+  // Otherwise the application can freeze on startup :-(
   QWidget* m_topWidget = nullptr;
   foreach (QWidget* m_w, topLevelWidgets()) {
     if (m_w->isWindow()) {
@@ -190,17 +184,17 @@ bool Application::initMainWindow() {
       break;
     }
   }
+  // Now we can create the taskbar entry
+  if (QSystemTrayIcon::isSystemTrayAvailable())
+    m_systray = new SystemTrayIcon(applIcon(), this);
 
-  m_systray = new SystemTrayIcon(applIcon(), this);
-
-  // MainWindow
+  // The MainWindow must initialized behind the taskbar entry,
+  // otherwise it can't put the Window to the right process tree.
   m_window = new MainWindow(m_topWidget);
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
 
-  // set application platform event handler
-  setActiveWindow(m_window);
-
+  // Checks for System tray and create all required signal bindings.
   if (checkSysTrayIcon()) {
     connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
     connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
@@ -209,6 +203,7 @@ bool Application::initMainWindow() {
     // ready to view
     m_systray->setVisible(true);
   }
+
   return (m_window != nullptr);
 }
 
@@ -341,7 +336,7 @@ int Application::exec() {
 
     // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {
-      p_splash.setMessage(tr("Cachefiles completed ..."));
+      p_splash.setMessage(tr("Cachefiles updated ..."));
     }
     m_cache->deleteLater();
     mutex.unlock();
@@ -349,7 +344,7 @@ int Application::exec() {
 
   // Step 6 - UIX
   if (!initMainWindow()) {
-    qFatal("failed to initital window");
+    qFatal("failed to initital antiquacrm window");
     return 1;
   }
 

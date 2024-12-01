@@ -3023,7 +3023,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+81"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3093,12 +3093,17 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+187"/>
+        <location filename="../application.cpp" line="+213"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+4"/>
+        <source>AntiquaCRM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+72"/>
         <source>No Networkconnection found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3118,7 +3123,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+5"/>
         <source>Network connection to remote port exists.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3133,7 +3138,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Database connection successfully.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3149,12 +3154,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+6"/>
-        <source>Cachefiles completed ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+2"/>
-        <source>Create Cachefile failed ...</source>
+        <source>Cachefiles updated ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5147,12 +5147,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+4"/>
-        <location line="+350"/>
+        <location line="+379"/>
         <source>Database</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-349"/>
+        <location line="-378"/>
         <source>Databasename</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5332,7 +5332,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+116"/>
+        <location line="+77"/>
+        <source>Hostname %1 cannot resolved!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>This hostname %1 is available.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+61"/>
         <source>Connection successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5356,12 +5366,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <name>ConfigDialog</name>
     <message>
         <location filename="../utils/config/configdialog.cpp" line="+24"/>
-        <location line="+164"/>
+        <location line="+158"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-100"/>
+        <location line="-94"/>
         <source>&amp;Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5376,17 +5386,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+31"/>
+        <location line="+27"/>
         <source>You have unsaved changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+95"/>
+        <location line="+93"/>
         <source>unsaved changes!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-94"/>
+        <location line="-92"/>
         <source>Do your really want to close?</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6815,7 +6825,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+210"/>
+        <location filename="../mainwindow.cpp" line="+224"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6825,7 +6835,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+8"/>
+        <location line="+9"/>
         <source>Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8923,7 +8933,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+123"/>
+        <location line="+137"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9972,17 +9982,22 @@ Image - Article Id: %2</source>
 <context>
     <name>SystemTrayIcon</name>
     <message>
-        <location filename="../systemtrayicon.cpp" line="+39"/>
+        <location filename="../systemtrayicon.cpp" line="+46"/>
         <source>Database connected.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-22"/>
+        <location line="-27"/>
         <source>Window show</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="-6"/>
+        <source>%1 connected.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
         <source>Window hide</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9992,7 +10007,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+22"/>
+        <location line="+27"/>
         <source>No Database conenction!</source>
         <translation type="unfinished"></translation>
     </message>
