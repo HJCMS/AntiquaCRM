@@ -14,7 +14,8 @@
 #include <QListWidgetItem>
 #include <QObject>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class Splitter;
 
@@ -23,14 +24,30 @@ class Splitter;
  * @brief The „DescripeEditor“ input edit class.
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY DescripeEditor final
-    : public AntiquaCRM::AInputWidget {
+class ANTIQUACRM_LIBRARY DescripeEditorItem final : public QListWidgetItem {
+
+private:
+  QString p_keyword;
+
+public:
+  explicit DescripeEditorItem(QListWidget* parent = nullptr);
+  void setKeyword(const QString&);
+  const QString getKeyword();
+  void setLang(const QString&);
+};
+
+/**
+ * @class DescripeEditor
+ * @brief The „DescripeEditor“ input edit class.
+ * @ingroup AntiquaWidgets
+ */
+class ANTIQUACRM_LIBRARY DescripeEditor final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
-  Splitter *m_splitter;
-  ATextEdit *m_edit;
-  QListWidget *m_list;
+  Splitter* m_splitter;
+  ATextEdit* m_edit;
+  QListWidget* m_list;
   void initData() override;
 
 private Q_SLOTS:
@@ -39,13 +56,13 @@ private Q_SLOTS:
    */
   void valueChanged();
 
-  void appendText(QListWidgetItem *);
+  void appendText(QListWidgetItem*);
 
 public Q_SLOTS:
   /**
    * @brief set Value slot
    */
-  void setValue(const QVariant &) override;
+  void setValue(const QVariant&) override;
 
   /**
    * @brief Set focus to Input Editor
@@ -61,30 +78,35 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit DescripeEditor(QWidget *parent = nullptr);
+  explicit DescripeEditor(QWidget* parent = nullptr);
 
   /**
    * @brief set data words list
    */
-  void setWordsList(const QStringList &);
+  void setWordsList(const QStringList&);
+
+  /**
+   * @brief set data words list from database table
+   */
+  void setWordsList(AntiquaCRM::ArticleType t);
 
   /**
    * @brief Restrict input wirt QSqlField parameters.
    * With this function the Input Field can restricted.
    * The QSqlField class contains all Parameters to configure a Input field.
    */
-  void setRestrictions(const QSqlField &) override;
+  void setRestrictions(const QSqlField&) override;
 
   /**
    * @brief Append Tooltip Icon with Description text.
    * If Empty nothing will done.
    */
-  void setInputToolTip(const QString &) override;
+  void setInputToolTip(const QString&) override;
 
   /**
    * @brief Prepend a Textlabel with Buddy Focus.
    */
-  void setBuddyLabel(const QString &) override;
+  void setBuddyLabel(const QString&) override;
 
   /**
    * @brief Validate Input with given Parameters from setRestrictions.

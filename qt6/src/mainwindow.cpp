@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
 
 bool MainWindow::createSocketListener() {
   m_rx = new AntiquaCRM::AReceiver(this);
-  connect(m_rx, SIGNAL(sendOperation(QString, QJsonObject)), SLOT(setAction(QString, QJsonObject)));
+  connect(m_rx, SIGNAL(sendOperation(QString,QJsonObject)), SLOT(setAction(QString,QJsonObject)));
   connect(m_rx, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(statusInfoMessage(QString)));
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
 }
@@ -172,6 +172,7 @@ void MainWindow::showEvent(QShowEvent* event) {
   // On application start, this is interrupted by AntiquaCRM::TabsIndex::onEnterChange
   // The variable firstShown is set by the openWindow function.
   // It is intended to prevent too many database queries from being initiated at startup.
+  /*
   if (event->isAccepted() && firstShown) {
     // SELLERS_INTERFACE_TABID
     const QString _target("sellers_tab");
@@ -180,6 +181,7 @@ void MainWindow::showEvent(QShowEvent* event) {
     _obj.insert("ACTION", "updateSellersTree");
     setAction(_target, _obj);
   }
+  */
   QMainWindow::showEvent(event);
 }
 

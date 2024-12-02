@@ -342,14 +342,7 @@ void StitchesEditor::setInputFields() {
   _completer_data.clear();
 
   // description
-  QStringList _list;
-  _list << tr("Nice clean copy");
-  _list << tr("Clean copy");
-  _list << tr("Copy a bit dusty");
-  _list << tr("Year may differ from entry");
-  _list << tr("Age-related traces");
-  _list << tr("With bookplate");
-  ip_description->setWordsList(_list);
+  ip_description->setWordsList(AntiquaCRM::ArticleType::PRINTS);
 }
 
 bool StitchesEditor::setDataField(const QSqlField& field, const QVariant& value) {

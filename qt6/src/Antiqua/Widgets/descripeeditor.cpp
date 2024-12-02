@@ -3,11 +3,34 @@
 
 #include "descripeeditor.h"
 #include "splitter.h"
+#include "antiquaicon.h"
 
 #include <QDebug>
 
 namespace AntiquaCRM
 {
+
+DescripeEditorItem::DescripeEditorItem(QListWidget* parent)
+    : QListWidgetItem{parent, QListWidgetItem::UserType} {
+  p_keyword = QString();
+}
+
+void DescripeEditorItem::setKeyword(const QString& keyword) {
+  setData(Qt::ToolTipRole, keyword.left(80) + " ...");
+  p_keyword = keyword;
+}
+
+const QString DescripeEditorItem::getKeyword() {
+  return p_keyword;
+}
+
+void DescripeEditorItem::setLang(const QString& lng) {
+  if(lng.contains("de_DE")) {
+    setIcon(AntiquaCRM::antiquaIcon("de_DE"));
+  } else {
+    setIcon(AntiquaCRM::antiquaIcon("european-flag"));
+  }
+}
 
 DescripeEditor::DescripeEditor(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
   setObjectName("description_edit");
@@ -45,10 +68,13 @@ void DescripeEditor::valueChanged() {
 }
 
 void DescripeEditor::appendText(QListWidgetItem* item) {
-  const QString _txt = item->text();
+  DescripeEditorItem* _item = static_cast<DescripeEditorItem*>(item);
+  const QString _data = _item->getKeyword();
   m_edit->setFocus();
   m_edit->moveCursor(QTextCursor::End, QTextCursor::MoveAnchor);
-  if (m_edit->find(_txt, QTextDocument::FindBackward)) {
+
+  qsizetype _p = _data.indexOf(QChar('\n'), 0, Qt::CaseInsensitive);
+  if (m_edit->find(_data.left(_p), QTextDocument::FindBackward)) {
     return;
   }
 
@@ -56,9 +82,9 @@ void DescripeEditor::appendText(QListWidgetItem* item) {
   if (m_edit->text().length() > 0) {
     _buf = m_edit->text().trimmed();
     _buf.append(", ");
-    _buf.append(_txt);
+    _buf.append(_data);
   } else {
-    _buf.append(_txt);
+    _buf.append(_data);
   }
   m_edit->clear();
   m_edit->setText(_buf.trimmed());
@@ -93,6 +119,42 @@ void DescripeEditor::setWordsList(const QStringList& list) {
   foreach (QString l, list) {
     m_list->addItem(l);
   }
+}
+
+void DescripeEditor::setWordsList(AntiquaCRM::ArticleType t) {
+  switch (t) {
+    case (AntiquaCRM::ArticleType::BOOK):
+    case (AntiquaCRM::ArticleType::MEDIA):
+    case (AntiquaCRM::ArticleType::PRINTS):
+    case (AntiquaCRM::ArticleType::OTHER):
+      break;
+
+    default:
+      return;
+  }
+
+  AntiquaCRM::ASharedDataFiles dataFiles;
+  QJsonDocument doc = dataFiles.getJson("descripeeditor");
+  if (doc.isEmpty()) {
+    qWarning("DescripeEditor::descripeeditor.json not found!");
+    return;
+  }
+
+  if (m_list->count() > 0)
+    m_list->clear();
+
+  QJsonArray _arr = doc.object().value("descripeeditor").toArray();
+  for (int i = 0; i < _arr.count(); i++) {
+    QJsonObject _obj = _arr[i].toObject();
+    if (_obj.value("type").toInt() == t) {
+      DescripeEditorItem* _i = new DescripeEditorItem(m_list);
+      _i->setText(_obj.value("name").toString());
+      _i->setKeyword(_obj.value("description").toString());
+      _i->setLang(_obj.value("lang").toString());
+      m_list->addItem(_i);
+    }
+  }
+  setWindowModified(false);
 }
 
 void DescripeEditor::setRestrictions(const QSqlField& field) {
