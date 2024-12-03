@@ -36,6 +36,19 @@ inline const QIcon qrcIcon(const QString& name) {
 /**
  * @brief Icon from Theme or Application Resource file ...
  * @param name  - Iconname
+ * @warning The QResource must initialed in application first!
+ *
+ * Load qrc://flags/&lt;image&gt; from icon QResource.
+ *
+ * @ingroup IconTheme
+ */
+inline const QIcon flagIcon(const QString& name) {
+  return QIcon(":/flags/" + name + ".png");
+}
+
+/**
+ * @brief Icon from Theme or Application Resource file ...
+ * @param name  - Iconname
  *
  * @note The QResource must initialed in application first!
  *

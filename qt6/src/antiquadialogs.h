@@ -54,4 +54,9 @@
 #include "utils/mailtpl/mailtemplatesdialog.h"
 #endif
 
+// ArticleDescWordsDialog
+#ifndef ANTIQUACRM_UTILS_ARTICLEDESCWORDS_H
+#include "utils/articledescwords/articledescwordsdialog.h"
+#endif
+
 #endif // ANTIQUACRM_UTILS_DIALOGS_H

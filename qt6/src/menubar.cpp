@@ -62,6 +62,10 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar{parent} {
   QAction* ac_mtpl = m_dialogMenu->addAction(tr("eMail Templates"));
   ac_mtpl->setIcon(_conf_icon);
   connect(ac_mtpl, SIGNAL(triggered()), SLOT(openMailTemplatesDialog()));
+  // ArticleDescWordsDialog
+  QAction* ac_adwd = m_dialogMenu->addAction(tr("Descriptions"));
+  ac_adwd->setIcon(_conf_icon);
+  connect(ac_adwd, SIGNAL(triggered()), SLOT(openArticleDescriptions()));
   // END::Dialogs
 
   // BEGIN::SystemConfig
@@ -124,6 +128,12 @@ void MenuBar::openPublisherDialog() {
 
 void MenuBar::openMailTemplatesDialog() {
   MailTemplatesDialog* d = new MailTemplatesDialog(this);
+  d->exec();
+  d->deleteLater();
+}
+
+void MenuBar::openArticleDescriptions() {
+  ArticleDescWordsDialog* d = new ArticleDescWordsDialog(this);
   d->exec();
   d->deleteLater();
 }

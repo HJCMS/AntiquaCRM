@@ -2,6 +2,7 @@
 # vim: set fileencoding=utf-8
 
 ADD_SUBDIRECTORY(about)
+ADD_SUBDIRECTORY(articledescwords)
 ADD_SUBDIRECTORY(company)
 ADD_SUBDIRECTORY(config)
 ADD_SUBDIRECTORY(delivery)

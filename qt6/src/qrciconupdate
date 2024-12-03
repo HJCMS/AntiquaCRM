@@ -44,15 +44,27 @@ while (my $file = <$it>) {
   my $_f = basename($file);
   if ($_f =~ qr/\.png$/i) {
     push(@list, $_f);
-    ## my $child = $doc->createElement("file");
-    ## $child->appendChild($doc->createTextNode("icons/$_f"));
-    ## $qresource->appendChild($child);
   }
 }
 
 foreach (sort @list) {
   my $child = $doc->createElement("file");
   $child->appendChild($doc->createTextNode("icons/$_"));
+  $qresource->appendChild($child);
+}
+
+$it = Directory::Iterator->new("./flags/", show_dotfiles=>0, recursive=>0, show_directories=>0);
+@list = ();
+while (my $file = <$it>) {
+  my $_f = basename($file);
+  if ($_f =~ qr/\.png$/i) {
+    push(@list, $_f);
+  }
+}
+
+foreach (sort @list) {
+  my $child = $doc->createElement("file");
+  $child->appendChild($doc->createTextNode("flags/$_"));
   $qresource->appendChild($child);
 }
 

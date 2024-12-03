@@ -7,6 +7,7 @@
 ## Data libraries
 ADD_SUBDIRECTORY (data)
 ADD_SUBDIRECTORY (icons)
+ADD_SUBDIRECTORY (flags)
 ADD_SUBDIRECTORY (i18n)
 
 ## Shared libraries
@@ -66,7 +67,7 @@ IF (CMAKE_HOST_UNIX)
 ENDIF (CMAKE_HOST_UNIX)
 
 QT_ADD_RESOURCES(APPLICATION_QRC
-  application.qrc
+ application.qrc
 )
 
 SET(APPLICATION_FILES
@@ -105,6 +106,7 @@ SET(APPLICATION_LIBRARIES
   TabSellers
   TabOrders
   TabCustomers
+  ArticleDescWordsDialog
 )
 
 ## BEGIN:Customized OS Libraries

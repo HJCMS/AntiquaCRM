@@ -2,7 +2,9 @@
 // vim: set fileencoding=utf-8
 
 #include "selectlanguage.h"
+#include "antiquaicon.h"
 
+#include <QIcon>
 #include <QLocale>
 
 namespace AntiquaCRM
@@ -27,23 +29,53 @@ void SelectLanguage::initData() {
   _f.setLength(3);
   setRestrictions(_f);
 
+  int i = 1;
   m_edit->setToolTip(tr("Language"));
   m_edit->setWithoutDisclosures();
-  m_edit->addItem(tr("German"), "de_DE");
-  m_edit->addItem(tr("European"), "eu_EU");
-  m_edit->addItem(tr("Czech"), "cs_CS");
-  m_edit->addItem(tr("Danish"), "da_DA");
-  m_edit->addItem(tr("English"), "en_EN");
-  m_edit->addItem(tr("Spanish"), "es_ES");
-  m_edit->addItem(tr("Finnish"), "fi_FI");
-  m_edit->addItem(tr("French"), "fr_FR");
-  m_edit->addItem(tr("Italian"), "it_IT");
-  m_edit->addItem(tr("Dutch"), "nl_NL");
-  m_edit->addItem(tr("Norwegian"), "nn_NN");
-  m_edit->addItem(tr("Polish"), "pl_PL");
-  m_edit->addItem(tr("Portuguese"), "pt_PT");
-  m_edit->addItem(tr("Slovenian"), "sl_SL");
-  m_edit->addItem(tr("Swedish"), "sv_SV");
+  m_edit->insertItem(i, tr("German"), "de_DE");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("de"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("European"), "eu_EU");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("eu"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Czech"), "cs_CS");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("cs"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Danish"), "da_DA");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("de"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("English"), "en_EN");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("en"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Spanish"), "es_ES");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("es"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Finnish"), "fi_FI");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("fi"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("French"), "fr_FR");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("fr"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Italian"), "it_IT");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("it"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Dutch"), "nl_NL");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("nl"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Norwegian"), "nn_NN");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("nn"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Polish"), "pl_PL");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("pl"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Portuguese"), "pt_PT");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("pt"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Slovenian"), "sl_SL");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("sl"), Qt::DecorationRole);
+
+  m_edit->insertItem(i, tr("Swedish"), "sv_SV");
+  m_edit->setItemData(i++, AntiquaCRM::flagIcon("sv"), Qt::DecorationRole);
 
   setWindowModified(false);
 }

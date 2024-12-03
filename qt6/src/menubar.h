@@ -39,6 +39,7 @@ public Q_SLOTS:
   void openStoragesDialog();
   void openPublisherDialog();
   void openMailTemplatesDialog();
+  void openArticleDescriptions();
 
 public:
   AntiquaCRM::TabsMenu *tabsMenu;
