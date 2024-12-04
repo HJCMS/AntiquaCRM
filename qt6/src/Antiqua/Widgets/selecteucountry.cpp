@@ -13,7 +13,7 @@ namespace AntiquaCRM
 // BEGIN::CountryItem
 EUCountry::EUCountry(int ro, QString is, QString na) {
   index = ro;
-  iso = is;
+  iso = is.toLower(); // bcp47Name must in lowercase
   name = na;
 }
 // END::CountryItem
@@ -53,7 +53,7 @@ QVariant SelectEUCountryModel::data(const QModelIndex& index, int role) const {
       return _country.name;
 
     case (Qt::DecorationRole):
-      return (_bcp47 == "XX" || _bcp47.isEmpty()) ? dwIcon : euIcon;
+      return (_bcp47.isEmpty()) ? dwIcon : AntiquaCRM::flagIcon(_bcp47);
 
     case (Qt::BackgroundRole):
       return ((row % 2) & 1) ? p_palette.alternateBase() : p_palette.base();
@@ -78,7 +78,6 @@ bool SelectEUCountryModel::initModel() {
     beginInsertRows(createIndex(row, 0), 0, _arr.size() + 1);
     // No Selection (Fix sort order)
     p_list.append(EUCountry(row++, QString(), tr("Without disclosures")));
-    p_list.append(EUCountry(row++, "XX", tr("Non European Country")));
     for (int i = 0; i < _arr.size(); i++) {
       QJsonObject item = _arr[i].toObject();
       EUCountry eu(row++, item.value("code").toString(), item.value("country").toString());
@@ -113,7 +112,7 @@ SelectEUCountry::~SelectEUCountry() {
 }
 
 int SelectEUCountry::noMemberIndex() {
-  return m_edit->findData("XX", Qt::UserRole, Qt::MatchFixedString);
+  return m_edit->findData("xx", Qt::UserRole, Qt::MatchFixedString);
 }
 
 void SelectEUCountry::valueChanged(int index) {

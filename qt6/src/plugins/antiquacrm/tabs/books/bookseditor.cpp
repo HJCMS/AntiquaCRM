@@ -10,12 +10,12 @@
 #include <QDate>
 #include <QLayout>
 
-BooksEditor::BooksEditor(QWidget *parent)
+BooksEditor::BooksEditor(QWidget* parent)
     : AntiquaCRM::TabsEditor{BOOKS_SQL_EDITOR_PATTERN, parent} {
   setWindowTitle(tr("Edit Book"));
   setObjectName("tab_books_editor");
 
-  QVBoxLayout *mainLayout = new QVBoxLayout(this);
+  QVBoxLayout* mainLayout = new QVBoxLayout(this);
   mainLayout->setObjectName("bookeditor_main_layout");
   mainLayout->setSizeConstraint(QLayout::SetMaximumSize);
 
@@ -23,13 +23,14 @@ BooksEditor::BooksEditor(QWidget *parent)
   AntiquaCRM::ALabel::Align _lbAlign = AntiquaCRM::ALabel::Align::MiddleRight;
 
   // Row 0
-  QHBoxLayout *row0 = new QHBoxLayout();
+  QHBoxLayout* row0 = new QHBoxLayout();
   ib_id = new AntiquaCRM::SerialId(this);
   ib_id->setObjectName("ib_id");
   ib_id->setBuddyLabel(tr("Article ID"));
-  tempWhatsThis = tr("Probably the most important parameter for the article "
-                     "processing and is generated automatically when creating "
-                     "a book. AntiquaCRM use a running numbering system.");
+  tempWhatsThis =
+      tr("Probably the most important parameter for the article "
+         "processing and is generated automatically when creating "
+         "a book. AntiquaCRM use a running numbering system.");
   ib_id->setWhatsThisText(tempWhatsThis);
   row0->addWidget(ib_id);
 
@@ -75,12 +76,13 @@ BooksEditor::BooksEditor(QWidget *parent)
   mainLayout->addLayout(row0, 0);
 
   // Row 1
-  QHBoxLayout *row1 = new QHBoxLayout();
+  QHBoxLayout* row1 = new QHBoxLayout();
   ib_edition = new AntiquaCRM::NumEdit(this);
   ib_edition->setObjectName("ib_edition");
   ib_edition->setBuddyLabel(tr("Edition"));
-  tempWhatsThis = tr("If known, set here the Book edition with "
-                     "digits.\nExample: „first edition“ is equal to 1.");
+  tempWhatsThis =
+      tr("If known, set here the Book edition with "
+         "digits.\nExample: „first edition“ is equal to 1.");
   ib_edition->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_edition);
 
@@ -118,8 +120,9 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_volume->setPrefix(tr("Bd."));
   ib_volume->setInputToolTip(tr("Book volume"));
   ib_volume->setBuddyLabel(tr("Volume"));
-  tempWhatsThis = tr("Is this Book a part of a Book volume or the Article "
-                     "contains one or more volumes? Then enter this here.");
+  tempWhatsThis =
+      tr("Is this Book a part of a Book volume or the Article "
+         "contains one or more volumes? Then enter this here.");
   ib_volume->setWhatsThisText(tempWhatsThis);
   row1->addWidget(ib_volume);
   row1->addStretch(1);
@@ -131,13 +134,13 @@ BooksEditor::BooksEditor(QWidget *parent)
    * - right: Image Thumbnail Widget
    */
   m_splitter = new AntiquaCRM::Splitter(this);
-  QWidget *row2Widget = new QWidget(m_splitter);
+  QWidget* row2Widget = new QWidget(m_splitter);
   row2Widget->setContentsMargins(0, 0, 0, 0);
   int row2c = 0;
-  QGridLayout *row2 = new QGridLayout(row2Widget);
+  QGridLayout* row2 = new QGridLayout(row2Widget);
   row2->setContentsMargins(0, 0, 0, 0);
 
-  AntiquaCRM::ALabel *infoText; // multible
+  AntiquaCRM::ALabel* infoText; // multible
   // Book Title
   infoText = new AntiquaCRM::ALabel(tr("Title"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
@@ -169,12 +172,13 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_author = new AntiquaCRM::TextLine(row2Widget);
   ib_author->setObjectName("ib_author");
   ib_author->setInputToolTip(tr("Book Authors"));
-  tempWhatsThis = tr("This field is reserved for Book Authors.\n"
-                     "You can add more separated by comma.\n"
-                     "e.g.: Karl Valentin, Franz Kafka\n"
-                     "Some provider Platforms supporting spezial Keywords.\n"
-                     "AntiquaCRM suggests the most common author group names, "
-                     "when editing this field.");
+  tempWhatsThis =
+      tr("This field is reserved for Book Authors.\n"
+         "You can add more separated by comma.\n"
+         "e.g.: Karl Valentin, Franz Kafka\n"
+         "Some provider Platforms supporting spezial Keywords.\n"
+         "AntiquaCRM suggests the most common author group names, "
+         "when editing this field.");
   ib_author->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_author, row2c++, 1, 1, 1);
 
@@ -184,18 +188,19 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_publisher = new AntiquaCRM::TextLine(row2Widget);
   ib_publisher->setObjectName("ib_publisher");
   ib_publisher->setInputToolTip(infoText->text());
-  tempWhatsThis = tr("This field is reserved to insert Book Publishers.\n"
-                     "Used Format is: „Publisher, Location“\n"
-                     "Example: J.F. Lehmanns Verlag, Munich\n"
-                     "AntiquaCRM suggests the most common publisher names, "
-                     "when editing this field.");
+  tempWhatsThis =
+      tr("This field is reserved to insert Book Publishers.\n"
+         "Used Format is: „Publisher, Location“\n"
+         "Example: J.F. Lehmanns Verlag, Munich\n"
+         "AntiquaCRM suggests the most common publisher names, "
+         "when editing this field.");
   ib_publisher->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_publisher, row2c++, 1, 1, 1);
 
   // Begin:Condition+Language
   infoText = new AntiquaCRM::ALabel(tr("Condition"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
-  QHBoxLayout *conditionlayout = new QHBoxLayout();
+  QHBoxLayout* conditionlayout = new QHBoxLayout();
   ib_condition = new AntiquaCRM::ConditionEdit(row2Widget);
   ib_condition->setObjectName("ib_condition");
   ib_condition->setToolTip(tr("Book condition"));
@@ -211,8 +216,9 @@ BooksEditor::BooksEditor(QWidget *parent)
   ib_language = new AntiquaCRM::SelectLanguage(row2Widget);
   ib_language->setObjectName("ib_language");
   ib_language->setInputToolTip(tr("Book content language"));
-  tempWhatsThis = tr("This field is reserved to the content language of the "
-                     "book. If Multilingual content select Europe.");
+  tempWhatsThis =
+      tr("This field is reserved to the content language of the "
+         "book. If Multilingual content select Europe.");
   ib_language->setWhatsThisText(tempWhatsThis);
   conditionlayout->addWidget(ib_language);
   row2->addLayout(conditionlayout, row2c++, 1, 1, 1);
@@ -222,7 +228,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   infoText = new AntiquaCRM::ALabel(tr("Binding"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
   // Bucheinband und Bindungsart
-  QHBoxLayout *binding_layout = new QHBoxLayout();
+  QHBoxLayout* binding_layout = new QHBoxLayout();
   binding_layout->setContentsMargins(0, 0, 0, 0);
   ib_binding = new AntiquaCRM::BookBindingEdit(row2Widget);
   ib_binding->setObjectName("ib_binding");
@@ -249,7 +255,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   infoText = new AntiquaCRM::ALabel(tr("Storage"), _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
 
-  QHBoxLayout *m_storageLayout = new QHBoxLayout;
+  QHBoxLayout* m_storageLayout = new QHBoxLayout;
   row2->addLayout(m_storageLayout, row2c++, 1, 1, 1);
 
   ib_storage = new AntiquaCRM::SelectStorage(row2Widget);
@@ -280,15 +286,15 @@ BooksEditor::BooksEditor(QWidget *parent)
   row2->addWidget(infoText, row2c, 0, 1, 1);
   ib_keyword = new AntiquaCRM::KeywordsEdit(row2Widget);
   ib_keyword->setObjectName("ib_keyword");
-  tempWhatsThis = tr(
-      "Keywords will help Buyers, to find your Article on Provider pages. This "
-      "Articles keyword management can also be compared to „Search Engine "
-      "Optimization“ (SEO).\n"
-      "Restrictions:\n"
-      "- A Keyword must have a minimum length from 3 characters.\n"
-      "- A Keywords list is restricted to a Maximum length of 60 Characters.\n"
-      "- A keyword cannot contain spaces or non unicode special characters.\n"
-      "You can edit predefined Keywords in your Database Configuration Menu.");
+  tempWhatsThis =
+      tr("Keywords will help Buyers, to find your Article on Provider pages. This "
+         "Articles keyword management can also be compared to „Search Engine "
+         "Optimization“ (SEO).\n"
+         "Restrictions:\n"
+         "- A Keyword must have a minimum length from 3 characters.\n"
+         "- A Keywords list is restricted to a Maximum length of 60 Characters.\n"
+         "- A keyword cannot contain spaces or non unicode special characters.\n"
+         "You can edit predefined Keywords in your Database Configuration Menu.");
   ib_keyword->setWhatsThisText(tempWhatsThis);
   row2->addWidget(ib_keyword, row2c++, 1, 1, 1);
   row2->setRowStretch(row2c++, 1);
@@ -296,7 +302,7 @@ BooksEditor::BooksEditor(QWidget *parent)
   // @BEGIN_GROUP
   infoText = new AntiquaCRM::ALabel("ISBN/EAN", _lbAlign, row2Widget);
   row2->addWidget(infoText, row2c, 0, 1, 1);
-  QHBoxLayout *tbLayout = new QHBoxLayout;
+  QHBoxLayout* tbLayout = new QHBoxLayout;
   ib_isbn = new AntiquaCRM::IsbnEdit(row2Widget);
   ib_isbn->setObjectName("ib_isbn");
   tbLayout->addWidget(ib_isbn);
@@ -331,11 +337,10 @@ BooksEditor::BooksEditor(QWidget *parent)
   // Internal Description
   ib_internal_description = new AntiquaCRM::TextField(m_tabWidget);
   ib_internal_description->setObjectName("ib_internal_description");
-  m_tabWidget->insertTab(1, ib_internal_description, tabIcons,
-                         tr("Internal Description"));
+  m_tabWidget->insertTab(1, ib_internal_description, tabIcons, tr("Internal Description"));
   // Info Tab
-  QWidget *m_infos = new QWidget(m_tabWidget);
-  QGridLayout *infoLayout = new QGridLayout(m_infos);
+  QWidget* m_infos = new QWidget(m_tabWidget);
+  QGridLayout* infoLayout = new QGridLayout(m_infos);
   infoLayout->setColumnStretch(1, 1);
 
   infoText = new AntiquaCRM::ALabel(tr("Created"), _lbAlign, m_infos);
@@ -366,24 +371,20 @@ BooksEditor::BooksEditor(QWidget *parent)
   registerInputChanged();
 
   // Signals:ImageToolBar
-  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)),
-          SLOT(setRemoveThumbnail(qint64)));
+  connect(m_imageToolBar, SIGNAL(sendDeleteImage(qint64)), SLOT(setRemoveThumbnail(qint64)));
   connect(m_imageToolBar, SIGNAL(sendOpenImage()), SLOT(setImportEditImage()));
 
   // Signals::Storage
-  connect(ib_storage, SIGNAL(sendValueChanged()),
-          SLOT(setStorageCompartments()));
+  connect(ib_storage, SIGNAL(sendValueChanged()), SLOT(setStorageCompartments()));
 
   // Signals::CatalogSearchButton
   connect(btn_dnbQuery, SIGNAL(sendQuery()), SLOT(createDNBSearch()));
 
   // Signals:ActionBar
-  connect(m_actionBar, SIGNAL(sendCancelClicked()),
-          SLOT(setFinalLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
   connect(m_actionBar, SIGNAL(sendSaveClicked()), SLOT(setSaveData()));
-  connect(m_actionBar, SIGNAL(sendFinishClicked()),
-          SLOT(setCheckLeaveEditor()));
+  connect(m_actionBar, SIGNAL(sendFinishClicked()), SLOT(setCheckLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendPrintBookCard()), SLOT(setPrintBookCard()));
 }
 
@@ -450,15 +451,15 @@ void BooksEditor::setInputFields() {
   ib_description->setWordsList(AntiquaCRM::ArticleType::BOOK);
 }
 
-bool BooksEditor::setDataField(const QSqlField &field, const QVariant &value) {
+bool BooksEditor::setDataField(const QSqlField& field, const QVariant& value) {
   if (!field.isValid())
     return false;
 
   QString key = field.name();
   // qDebug() << "setDataField:" << key << value << ignoreFields.contains(key);
   bool required = (field.requiredStatus() == QSqlField::Required);
-  AntiquaCRM::AInputWidget *inp =
-      findChild<AntiquaCRM::AInputWidget *>(key, Qt::FindChildrenRecursively);
+  AntiquaCRM::AInputWidget* inp =
+      findChild<AntiquaCRM::AInputWidget*>(key, Qt::FindChildrenRecursively);
   if (inp != nullptr) {
     inp->setRestrictions(field);
     // Muss nach setRestrictions kommen!
@@ -501,7 +502,7 @@ void BooksEditor::importSqlResult() {
   setResetModified(inputFields);
 }
 
-bool BooksEditor::sendSqlQuery(const QString &query) {
+bool BooksEditor::sendSqlQuery(const QString& query) {
   //  qDebug() << Q_FUNC_INFO << query;
   //  return true;
   QSqlQuery q = m_sql->query(query);
@@ -524,12 +525,11 @@ bool BooksEditor::sendSqlQuery(const QString &query) {
 
 const QHash<QString, QVariant> BooksEditor::createSqlDataset() {
   QHash<QString, QVariant> data;
-  QList<AntiquaCRM::AInputWidget *> list =
-      findChildren<AntiquaCRM::AInputWidget *>(fieldPattern,
-                                               Qt::FindChildrenRecursively);
-  QList<AntiquaCRM::AInputWidget *>::Iterator it;
+  QList<AntiquaCRM::AInputWidget*> list =
+      findChildren<AntiquaCRM::AInputWidget*>(fieldPattern, Qt::FindChildrenRecursively);
+  QList<AntiquaCRM::AInputWidget*>::Iterator it;
   for (it = list.begin(); it != list.end(); ++it) {
-    AntiquaCRM::AInputWidget *cur = *it;
+    AntiquaCRM::AInputWidget* cur = *it;
     QString objName = cur->objectName();
     if (ignoreFields.contains(objName))
       continue;
@@ -836,13 +836,11 @@ void BooksEditor::setPrintBookCard() {
   _config.insert("compartment", _buffer.trimmed());
   _buffer.clear();
 
-  _buffer = getDataValue("ib_changed")
-                .toDate()
-                .toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
+  _buffer = getDataValue("ib_changed").toDate().toString(ANTIQUACRM_SHORT_DATE_DISPLAY);
   _config.insert("changed", _buffer.trimmed());
   _buffer.clear();
 
-  AntiquaCRM::PrintBookCard *m_d = new AntiquaCRM::PrintBookCard(this);
+  AntiquaCRM::PrintBookCard* m_d = new AntiquaCRM::PrintBookCard(this);
   if (m_d->exec(_config) == QDialog::Accepted) {
     pushStatusMessage(tr("Bookcard print successfully."));
   } else {
@@ -871,8 +869,7 @@ void BooksEditor::setRemoveThumbnail(qint64 articleId) {
   QMessageBox::StandardButton set = QMessageBox::question(
       this, tr("Remove Image from Database"),
       tr("%1\n\nImage - Article Id: %2")
-          .arg(tr("Do you really want to delete the Image?"),
-               QString::number(_id)));
+          .arg(tr("Do you really want to delete the Image?"), QString::number(_id)));
   if (set == QMessageBox::Yes) {
     AntiquaCRM::ImageFileSource thumbnail;
     thumbnail.setFileId(_id);
@@ -890,8 +887,7 @@ void BooksEditor::setImportEditImage() {
     return;
   }
 
-  AntiquaCRM::ImageImportDialog *d =
-      new AntiquaCRM::ImageImportDialog(_id, "Books", this);
+  AntiquaCRM::ImageImportDialog* d = new AntiquaCRM::ImageImportDialog(_id, "Books", this);
   connect(d, SIGNAL(sendThumbnail(QPixmap)), m_thumbnail, SLOT(setPixmap(QPixmap)));
 
   d->exec();
@@ -952,7 +948,7 @@ bool BooksEditor::createNewEntry() {
   return isEnabled();
 }
 
-bool BooksEditor::createCustomEntry(const QJsonObject &object) {
+bool BooksEditor::createCustomEntry(const QJsonObject& object) {
   Q_UNUSED(object);
   qInfo("Unused function for this plugin, skipped!");
   return true;

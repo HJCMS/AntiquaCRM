@@ -90,6 +90,7 @@ SET (_library_HEADERS
   priceedit.h
   printerbutton.h
   salutationedit.h
+  sectionselecter.h
   selectcurrency.h
   selectdeliverpackage.h
   selectdeliverservice.h
@@ -173,6 +174,7 @@ SET (_library_SOURCES
   priceedit.cpp
   printerbutton.cpp
   salutationedit.cpp
+  sectionselecter.cpp
   selectcurrency.cpp
   selectdeliverpackage.cpp
   selectdeliverservice.cpp

@@ -4,17 +4,19 @@
 #include "articledescwordstable.h"
 #include "descwordstablemodel.h"
 
+#include <QHeaderView>
+
 ArticleDescWordsTable::ArticleDescWordsTable(QWidget* parent) : AntiquaCRM::TableView{parent} {
   setObjectName("article_descriptions_table");
-  setEnableTableViewSorting(true);
   setSelectionMode(QAbstractItemView::SingleSelection);
-  setSelectionBehavior(QAbstractItemView::SelectItems);
+  setSelectionBehavior(QAbstractItemView::SelectRows);
   setEditTriggers(QAbstractItemView::DoubleClicked);
+  setEnableTableViewSorting(true);
 
   m_model = new DescWordsTableModel(this);
   p_wehreClause = defaultWhereClause();
 
-  // ??? horizontalHeader()->setSectionHidden(0, true);
+  m_header = horizontalHeader();
 
   connect(m_model, SIGNAL(sqlErrorMessage(QString, QString)),
           SLOT(sqlModelError(QString, QString)));
@@ -29,8 +31,38 @@ qint64 ArticleDescWordsTable::getTableID(const QModelIndex& index, int column) {
   return -1;
 }
 
-void ArticleDescWordsTable::contextMenuAction(AntiquaCRM::TableContextMenu::Actions,
-                                              const QModelIndex&) {
+void ArticleDescWordsTable::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
+                                              const QModelIndex& index) {
+  qint64 _id = getTableID(index);
+  if (_id < 1)
+    return;
+
+  switch (ac) {
+    case (AntiquaCRM::TableContextMenu::Actions::Open):
+      emit sendOpenEntry(_id);
+      break;
+
+    case (AntiquaCRM::TableContextMenu::Actions::Delete):
+      emit sendDeleteEntry(_id);
+      break;
+
+    default:
+      return;
+  };
+}
+
+void ArticleDescWordsTable::contextMenuEvent(QContextMenuEvent* event) {
+  QModelIndex index = indexAt(event->pos());
+  qint64 rows = m_model->rowCount();
+  AntiquaCRM::TableContextMenu* m_menu = new AntiquaCRM::TableContextMenu(index, rows, this);
+  m_menu->addOpenAction(tr("Open entry"));
+  m_menu->addDeleteAction(tr("Delete entry"));
+
+  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions, QModelIndex)),
+          SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions, QModelIndex)));
+
+  m_menu->exec(event->globalPos());
+  m_menu->deleteLater();
 }
 
 void ArticleDescWordsTable::setSortByColumn(int column, Qt::SortOrder order) {
@@ -70,20 +102,16 @@ void ArticleDescWordsTable::getSelectedItem(const QModelIndex& index) {
     emit sendOpenEntry(_id);
 }
 
-void ArticleDescWordsTable::createSocketOperation(const QModelIndex& index) {
-  qint64 _id = getTableID(index);
-  qDebug() << Q_FUNC_INFO << _id;
+void ArticleDescWordsTable::createSocketOperation(const QModelIndex&) {
 }
 
 bool ArticleDescWordsTable::sqlModelQuery(const QString& query) {
-  // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
-    // Table Record und NICHT QueryRecord abfragen!
-    // Siehe: setSortByColumn
     p_tableRecord = m_model->tableRecord();
     queryFinished(m_model->rowCount() > 0);
+    m_header->setSectionHidden(0, true);
     return true;
   }
   return false;
@@ -110,4 +138,13 @@ bool ArticleDescWordsTable::setQuery(const QString& clause) {
 
 const QString ArticleDescWordsTable::defaultWhereClause() {
   return QString("aes_title IS NOT NULL");
+}
+
+const QString ArticleDescWordsTable::tableName() {
+  return m_model->tableName();
+}
+
+qint64 ArticleDescWordsTable::getItemId(const QModelIndex& index) {
+  QModelIndex _child = index.sibling(index.row(), 0);
+  return m_model->data(_child).toInt();
 }

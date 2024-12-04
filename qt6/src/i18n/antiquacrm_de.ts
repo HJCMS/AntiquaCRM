@@ -849,12 +849,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+24"/>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+47"/>
         <source>Predefined text blocks</source>
         <translation>Vordefinierte Textblöcke</translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+146"/>
         <source>A valid Description is required.</source>
         <translation>Eine gültige Beschreibung ist erforderlich.</translation>
     </message>
@@ -2006,6 +2006,47 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::SectionSelecter</name>
+    <message>
+        <location filename="../Antiqua/Widgets/sectionselecter.cpp" line="+141"/>
+        <source>Section tab selecter is required and must set.</source>
+        <translation>Die Abschnittsregisterkartenauswahl ist erforderlich und muss festgelegt werden.</translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::SectionSelecterModel</name>
+    <message>
+        <location line="-122"/>
+        <source>Books</source>
+        <translation>Bücher</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Media</source>
+        <translation>Medien</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Prints &amp; Stitches</source>
+        <translation>Drucke &amp; Stiche</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Other</source>
+        <translation>Andere</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Tab</source>
+        <translation>Registerkarte</translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::SelectCurrency</name>
     <message>
         <location filename="../Antiqua/Widgets/selectcurrency.cpp" line="+156"/>
@@ -2092,7 +2133,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectEUCountry</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+220"/>
+        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+219"/>
         <source>A valid Country selection is required!</source>
         <translation>Eine gültige Länderauswahl ist erforderlich!</translation>
     </message>
@@ -2100,14 +2141,9 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectEUCountryModel</name>
     <message>
-        <location line="-140"/>
+        <location line="-139"/>
         <source>Without disclosures</source>
         <translation>Ohne Angaben</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Non European Country</source>
-        <translation>Außereuropäisches Land</translation>
     </message>
 </context>
 <context>
@@ -2136,7 +2172,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>AntiquaCRM::SelectLanguage</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectlanguage.cpp" line="+30"/>
+        <location filename="../Antiqua/Widgets/selectlanguage.cpp" line="+34"/>
         <source>Language</source>
         <translation>Sprache</translation>
     </message>
@@ -2197,11 +2233,6 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+1"/>
-        <source>Polish</source>
-        <translation>Polnisch</translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Portuguese</source>
         <translation>Portugiesisch</translation>
     </message>
@@ -2216,7 +2247,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Schwedisch</translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+78"/>
         <source>Language field is required and must set.</source>
         <translation>Eine Sprache ist erforderlich und muss festgelegt werden.</translation>
     </message>
@@ -3026,7 +3057,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Die Registerkarte kann im Bearbeitungsmodus nicht geschlossen werden!</translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+79"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation>&apos;%1&apos; Editor ist geöffnet!</translation>
     </message>
@@ -3164,6 +3195,67 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <location line="+13"/>
         <source>Open AntiquaCRM application ...</source>
         <translation>Öffne AntiquaCRM-Anwendung ...</translation>
+    </message>
+</context>
+<context>
+    <name>ArticleDescWordsDialog</name>
+    <message>
+        <location filename="../utils/articledescwords/articledescwordsdialog.cpp" line="+14"/>
+        <source>Description Settings</source>
+        <translation>Beschreibungs Einstellungen</translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Submit</source>
+        <translation>Einreichen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Save data and close this dialog.</source>
+        <translation>Daten speichern und diesen Dialog schließen.</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Close dialog without saving.</source>
+        <translation>Dialog ohne Speichern schließen.</translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Description data saving success!</source>
+        <translation>Beschreibungsdaten erfolgreich gespeichert!</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An error has occurred!</source>
+        <translation>Ein Fehler ist aufgetreten!</translation>
+    </message>
+</context>
+<context>
+    <name>ArticleDescWordsWidget</name>
+    <message>
+        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+21"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Section</source>
+        <translation>Abschnitt</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Language</source>
+        <translation>Sprache</translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Menu entry</source>
+        <translation>Menüeintrag</translation>
     </message>
 </context>
 <context>
@@ -3393,7 +3485,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Artikelnummer</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Probably the most important parameter for the article processing and is generated automatically when creating a book. AntiquaCRM use a running numbering system.</source>
         <translation>Der wohl wichtigste Parameter für die Artikelbearbeitung und wird beim Anlegen eines Buchs automatisch generiert. AntiquaCRM verwendet ein fortlaufendes Nummerierungssystem.</translation>
     </message>
@@ -3449,7 +3541,7 @@ Hinweise: Dies ist im Nachhinein nicht möglich, es gibt hierfür keine Remote-L
         <translation>Auflage</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>If known, set here the Book edition with digits.
 Example: „first edition“ is equal to 1.</source>
         <translation>Wenn bekannt, geben Sie hier die Buchausgabe mit Ziffern ein.
@@ -3506,7 +3598,7 @@ Beispiel: „Erstausgabe“ ist gleich 1.</translation>
         <translation>Band</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Is this Book a part of a Book volume or the Article contains one or more volumes? Then enter this here.</source>
         <translation>Ist dieses Buch Teil eines Buchbandes oder enthält der Artikel einen oder mehrere Bände? Dann geben Sie dies hier ein.</translation>
     </message>
@@ -3546,7 +3638,7 @@ Beispiel: „Erstausgabe“ ist gleich 1.</translation>
         <translation>Buchautoren</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>This field is reserved for Book Authors.
 You can add more separated by comma.
 e.g.: Karl Valentin, Franz Kafka
@@ -3564,7 +3656,7 @@ AntiquaCRM schlägt beim Bearbeiten dieses Feldes die gebräuchlichsten Autoreng
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>This field is reserved to insert Book Publishers.
 Used Format is: „Publisher, Location“
 Example: J.F. Lehmanns Verlag, Munich
@@ -3602,7 +3694,7 @@ Größtenteils mit 1-4 bewertet, sehr gut bis stark abgenutzt.</translation>
         <translation>Sprache des Buchinhalts</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>This field is reserved to the content language of the book. If Multilingual content select Europe.</source>
         <translation>Dieses Feld ist für die Inhaltssprache des Buchs reserviert. Bei mehrsprachigen Inhalten wählen Sie „Europäisch“ aus.</translation>
     </message>
@@ -3672,7 +3764,7 @@ Größtenteils mit 1-4 bewertet, sehr gut bis stark abgenutzt.</translation>
         <translation>Schlüsselwörter</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Keywords will help Buyers, to find your Article on Provider pages. This Articles keyword management can also be compared to „Search Engine Optimization“ (SEO).
 Restrictions:
 - A Keyword must have a minimum length from 3 characters.
@@ -3687,12 +3779,12 @@ Einschränkungen:
 Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmenü bearbeiten.</translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+46"/>
         <source>Public Description</source>
         <translation>Öffentliche Beschreibung</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Internal Description</source>
         <translation>Interne Beschreibung</translation>
     </message>
@@ -3712,7 +3804,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+67"/>
         <source>Authors group</source>
         <translation>Autorengruppe</translation>
     </message>
@@ -3727,42 +3819,12 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Verschiedene Autoren</translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Nice clean copy</source>
-        <translation>Schönes, sauberes Exemplar</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Clean copy</source>
-        <translation>Sauberes Exemplar</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Copy a bit dusty</source>
-        <translation>Etwas angestaubt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Year may differ from entry</source>
-        <translation>Jahr kann vom Eintrag abweichen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Age-related traces</source>
-        <translation>Altersbedingte Spuren</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>With bookplate</source>
-        <translation>Mit Exlibris</translation>
-    </message>
-    <message>
-        <location line="+71"/>
+        <location line="+92"/>
         <source>Bookdata saved successfully!</source>
         <translation>Buchdaten erfolgreich gespeichert!</translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>Missing Article ID for Update.</source>
         <translation>Fehlende Artikel-ID für Update.</translation>
     </message>
@@ -3812,7 +3874,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Es fehlt eine gültige Artikel-ID!</translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+33"/>
         <source>Bookcard print successfully.</source>
         <translation>Buchkartendruck erfolgreich.</translation>
     </message>
@@ -3841,7 +3903,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Möchten Sie das Bild wirklich löschen?</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Image delete successfully!</source>
         <translation>Bild erfolgreich gelöscht!</translation>
     </message>
@@ -6416,6 +6478,71 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
 </context>
 <context>
+    <name>DescWordsTableModel</name>
+    <message>
+        <location filename="../utils/articledescwords/descwordstablemodel.cpp" line="+27"/>
+        <source>Books</source>
+        <translation>Bücher</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Multimedia</source>
+        <translation></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Prints &amp; Stitches</source>
+        <translation>Drucke &amp; Stiche</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Other</source>
+        <translation>Andere</translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+12"/>
+        <location line="+19"/>
+        <source>Unknown</source>
+        <translation>Unbekannt</translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Id</source>
+        <translation>Id</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Section</source>
+        <translation>Abschnitt</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Language</source>
+        <translation>Sprache</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Menu title</source>
+        <translation>Menütitel</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Description data</source>
+        <translation>Beschreibungsdaten</translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>German</source>
+        <translation>Deutsch</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>European</source>
+        <translation>Mehrsprachig</translation>
+    </message>
+</context>
+<context>
     <name>DesignationEdit</name>
     <message>
         <location filename="../utils/designation/designationedit.cpp" line="+16"/>
@@ -6851,7 +6978,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+224"/>
+        <location filename="../mainwindow.cpp" line="+230"/>
         <source>No tabs available</source>
         <translation>Keine Registerkarten verfügbar</translation>
     </message>
@@ -6861,7 +6988,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Fenster geöffnet</translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Do you really want to close the application?&lt;/p&gt;</source>
         <translation>Möchten Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
     </message>
@@ -6880,12 +7007,12 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+5"/>
-        <location line="+39"/>
+        <location line="+43"/>
         <source>Configuration</source>
         <translation>Konfiguration</translation>
     </message>
     <message>
-        <location line="-34"/>
+        <location line="-38"/>
         <source>Dialogs</source>
         <translation>Dialoge</translation>
     </message>
@@ -6923,6 +7050,11 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <location line="+4"/>
         <source>eMail Templates</source>
         <translation>E-Mail Vorlagen</translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Descriptions</source>
+        <translation>Beschreibungen</translation>
     </message>
 </context>
 <context>
@@ -9456,37 +9588,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Verschiedene Autoren</translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Nice clean copy</source>
-        <translation>Schönes, sauberes Exemplar</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Clean copy</source>
-        <translation>Sauberes Exemplar</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Copy a bit dusty</source>
-        <translation>Etwas angestaubt</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Year may differ from entry</source>
-        <translation>Jahr kann vom Eintrag abweichen</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Age-related traces</source>
-        <translation>Altersbedingte Spuren</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>With bookplate</source>
-        <translation>Mit Exlibris</translation>
-    </message>
-    <message>
-        <location line="+72"/>
+        <location line="+86"/>
         <source>Data saved successfully!</source>
         <translation>Daten erfolgreich gespeichert!</translation>
     </message>

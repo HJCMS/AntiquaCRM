@@ -1,6 +1,8 @@
 {
   "description" : "EU Countries initialed with ISO 3166-1 Alpha-2 Code.",
   "european_countries" : [
+    {"code":"XX", "country":"Nichteuropäisches Land"},
+    {"code":"EU", "country":"Europa"},
     {"code":"AT", "country":"Österreich"},
     {"code":"BE", "country":"Belgien"},
     {"code":"BG", "country":"Bulgarien"},

@@ -82,17 +82,13 @@ QVariant DescWordsTableModel::data(const QModelIndex& item, int role) const {
   } else if (item.column() == 2) {
     QString _lang = AntiquaCRM::ASqlQueryModel::data(item, Qt::EditRole).toString();
     if (role == Qt::DisplayRole) {
-      if (_lang.contains("de_")) {
+      if (_lang.startsWith("de")) {
         return tr("German");
       } else {
         return tr("European");
       }
     } else if (role == Qt::DecorationRole) {
-      if (_lang.contains("de_")) {
-        return AntiquaCRM::antiquaIcon("de_DE");
-      } else {
-        return AntiquaCRM::antiquaIcon("european-flag");
-      }
+      return AntiquaCRM::flagIcon(_lang);
     }
   }
 

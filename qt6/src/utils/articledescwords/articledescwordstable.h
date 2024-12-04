@@ -10,8 +10,9 @@
 #define ANTIQUACRM_UTILS_ARTICLEDESCWORDSTABLE_H
 
 #include <AntiquaWidgets>
-#include <QTableWidget>
-#include <QWidget>
+#include <QContextMenuEvent>
+#include <QHeaderView>
+#include <QSqlRecord>
 
 class DescWordsTableModel;
 
@@ -21,25 +22,29 @@ class ArticleDescWordsTable final : public AntiquaCRM::TableView {
 private:
   QString p_wehreClause;
   QSqlRecord p_tableRecord;
+  QHeaderView* m_header;
   DescWordsTableModel* m_model;
 
-  virtual qint64 getTableID(const QModelIndex& index, int column = 0);
+  qint64 getTableID(const QModelIndex& index, int column = 0) override;
 
 private Q_SLOTS:
-  virtual void contextMenuAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex&);
-  virtual void setSortByColumn(int column, Qt::SortOrder order);
-  virtual void getSelectedItem(const QModelIndex&);
-  virtual void createSocketOperation(const QModelIndex&);
-  virtual bool sqlModelQuery(const QString& query);
+  void contextMenuAction(AntiquaCRM::TableContextMenu::Actions, const QModelIndex&) override;
+  void contextMenuEvent(QContextMenuEvent*) override;
+  void setSortByColumn(int column, Qt::SortOrder order) override;
+  void getSelectedItem(const QModelIndex&) override;
+  void createSocketOperation(const QModelIndex&) override;
+  bool sqlModelQuery(const QString& query) override;
 
 public Q_SLOTS:
-  virtual void setReloadView();
+  void setReloadView() override;
 
 public:
   explicit ArticleDescWordsTable(QWidget* parent = nullptr);
-  virtual int rowCount();
-  virtual bool setQuery(const QString& clause = QString());
-  virtual const QString defaultWhereClause();
+  int rowCount() override;
+  bool setQuery(const QString& clause = QString()) override;
+  const QString defaultWhereClause() override;
+  const QString tableName();
+  qint64 getItemId(const QModelIndex&);
 };
 
 #endif // ANTIQUACRM_UTILS_ARTICLEDESCWORDSTABLE_H

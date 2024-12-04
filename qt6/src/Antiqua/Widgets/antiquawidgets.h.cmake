@@ -90,6 +90,9 @@
 // AntiquaCRM::SalutationEdit
 #include "salutationedit.h"
 
+// AntiquaCRM::SectionSelecter
+#include "sectionselecter.h"
+
 // AntiquaCRM::SelectCurrency
 #include "selectcurrency.h"
 

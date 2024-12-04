@@ -10,29 +10,33 @@
 #define ANTIQUACRM_WIDGETS_SELECTLANGUAGE_H
 
 #include <AntiquaInput>
+#include <QAbstractListModel>
+#include <QJsonDocument>
+#include <QList>
 #include <QObject>
+#include <QPalette>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class SelectLanguage
  * @brief Content Language-Selecter e.g. Books language
  * @ingroup AntiquaWidgets
  */
-class ANTIQUACRM_LIBRARY SelectLanguage final
-    : public AntiquaCRM::AInputWidget {
+class ANTIQUACRM_LIBRARY SelectLanguage final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
-  AComboBox *m_edit;
+  AComboBox* m_edit;
   void initData() override;
 
 private Q_SLOTS:
   void valueChanged(int);
 
 public Q_SLOTS:
-  void setValue(const QVariant &) override;
+  void setValue(const QVariant&) override;
 
   void setFocus() override;
 
@@ -42,13 +46,13 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit SelectLanguage(QWidget *parent = nullptr);
+  explicit SelectLanguage(QWidget* parent = nullptr);
 
-  void setRestrictions(const QSqlField &) override;
+  void setRestrictions(const QSqlField&) override;
 
-  void setInputToolTip(const QString &) override;
+  void setInputToolTip(const QString&) override;
 
-  void setBuddyLabel(const QString &) override;
+  void setBuddyLabel(const QString&) override;
 
   bool isValid() override;
 

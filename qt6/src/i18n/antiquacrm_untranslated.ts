@@ -848,12 +848,12 @@ Please check your network connection.</source>
 <context>
     <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+24"/>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+47"/>
         <source>Predefined text blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+107"/>
+        <location line="+146"/>
         <source>A valid Description is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2004,6 +2004,47 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
 </context>
 <context>
+    <name>AntiquaCRM::SectionSelecter</name>
+    <message>
+        <location filename="../Antiqua/Widgets/sectionselecter.cpp" line="+141"/>
+        <source>Section tab selecter is required and must set.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>AntiquaCRM::SectionSelecterModel</name>
+    <message>
+        <location line="-122"/>
+        <source>Books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Media</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Prints &amp; Stitches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+26"/>
+        <source>Tab</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>AntiquaCRM::SelectCurrency</name>
     <message>
         <location filename="../Antiqua/Widgets/selectcurrency.cpp" line="+156"/>
@@ -2090,7 +2131,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectEUCountry</name>
     <message>
-        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+220"/>
+        <location filename="../Antiqua/Widgets/selecteucountry.cpp" line="+219"/>
         <source>A valid Country selection is required!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2098,13 +2139,8 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectEUCountryModel</name>
     <message>
-        <location line="-140"/>
+        <location line="-139"/>
         <source>Without disclosures</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Non European Country</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2134,7 +2170,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>AntiquaCRM::SelectLanguage</name>
     <message>
-        <location filename="../Antiqua/Widgets/selectlanguage.cpp" line="+30"/>
+        <location filename="../Antiqua/Widgets/selectlanguage.cpp" line="+34"/>
         <source>Language</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2195,11 +2231,6 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+1"/>
-        <source>Polish</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
         <source>Portuguese</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2214,7 +2245,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+66"/>
+        <location line="+78"/>
         <source>Language field is required and must set.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3023,7 +3054,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+81"/>
+        <location line="+79"/>
         <source>&apos;%1&apos; Editor is open!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3160,6 +3191,67 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <message>
         <location line="+13"/>
         <source>Open AntiquaCRM application ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ArticleDescWordsDialog</name>
+    <message>
+        <location filename="../utils/articledescwords/articledescwordsdialog.cpp" line="+14"/>
+        <source>Description Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+19"/>
+        <source>Submit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Save data and close this dialog.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Cancel</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Close dialog without saving.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+34"/>
+        <source>Description data saving success!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>An error has occurred!</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ArticleDescWordsWidget</name>
+    <message>
+        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+21"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
+        <source>Menu entry</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3390,7 +3482,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Probably the most important parameter for the article processing and is generated automatically when creating a book. AntiquaCRM use a running numbering system.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3443,7 +3535,7 @@ Notes: You cannot do this afterwards, there are no remote deletion processes wit
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>If known, set here the Book edition with digits.
 Example: „first edition“ is equal to 1.</source>
         <translation type="unfinished"></translation>
@@ -3499,7 +3591,7 @@ Example: „first edition“ is equal to 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Is this Book a part of a Book volume or the Article contains one or more volumes? Then enter this here.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3539,7 +3631,7 @@ Example: „first edition“ is equal to 1.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>This field is reserved for Book Authors.
 You can add more separated by comma.
 e.g.: Karl Valentin, Franz Kafka
@@ -3553,7 +3645,7 @@ AntiquaCRM suggests the most common author group names, when editing this field.
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+6"/>
         <source>This field is reserved to insert Book Publishers.
 Used Format is: „Publisher, Location“
 Example: J.F. Lehmanns Verlag, Munich
@@ -3587,7 +3679,7 @@ Mostly defined with 1-4, very good to heavily worn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>This field is reserved to the content language of the book. If Multilingual content select Europe.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3657,7 +3749,7 @@ Mostly defined with 1-4, very good to heavily worn.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+5"/>
         <source>Keywords will help Buyers, to find your Article on Provider pages. This Articles keyword management can also be compared to „Search Engine Optimization“ (SEO).
 Restrictions:
 - A Keyword must have a minimum length from 3 characters.
@@ -3667,12 +3759,12 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+47"/>
+        <location line="+46"/>
         <source>Public Description</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+4"/>
         <source>Internal Description</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3692,7 +3784,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+71"/>
+        <location line="+67"/>
         <source>Authors group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3707,42 +3799,12 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+23"/>
-        <source>Nice clean copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Clean copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Copy a bit dusty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Year may differ from entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Age-related traces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>With bookplate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+71"/>
+        <location line="+92"/>
         <source>Bookdata saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+36"/>
+        <location line="+35"/>
         <source>Missing Article ID for Update.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3792,7 +3854,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+35"/>
+        <location line="+33"/>
         <source>Bookcard print successfully.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3819,7 +3881,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+6"/>
         <source>Image delete successfully!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6390,6 +6452,71 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
 </context>
 <context>
+    <name>DescWordsTableModel</name>
+    <message>
+        <location filename="../utils/articledescwords/descwordstablemodel.cpp" line="+27"/>
+        <source>Books</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Multimedia</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Prints &amp; Stitches</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <source>Other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+3"/>
+        <location line="+12"/>
+        <location line="+19"/>
+        <source>Unknown</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-24"/>
+        <source>Id</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Section</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Language</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Menu title</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Description data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+36"/>
+        <source>German</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>European</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DesignationEdit</name>
     <message>
         <location filename="../utils/designation/designationedit.cpp" line="+16"/>
@@ -6825,7 +6952,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+224"/>
+        <location filename="../mainwindow.cpp" line="+230"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6835,7 +6962,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6854,12 +6981,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+5"/>
-        <location line="+39"/>
+        <location line="+43"/>
         <source>Configuration</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-34"/>
+        <location line="-38"/>
         <source>Dialogs</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6896,6 +7023,11 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+4"/>
         <source>eMail Templates</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+4"/>
+        <source>Descriptions</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9418,37 +9550,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+16"/>
-        <source>Nice clean copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Clean copy</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Copy a bit dusty</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Year may differ from entry</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>Age-related traces</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>With bookplate</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+72"/>
+        <location line="+86"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>

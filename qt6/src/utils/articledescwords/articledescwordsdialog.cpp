@@ -30,7 +30,7 @@ ArticleDescWordsDialog::ArticleDescWordsDialog(QWidget* parent) : QDialog{parent
 
   QPushButton* btn_save = m_btnBox->button(QDialogButtonBox::Ok);
   btn_save->setIcon(AntiquaCRM::antiquaIcon("action-save"));
-  btn_save->setText(tr("Complete"));
+  btn_save->setText(tr("Submit"));
   btn_save->setToolTip(tr("Save data and close this dialog."));
 
   QPushButton* btn_close = m_btnBox->button(QDialogButtonBox::Close);
@@ -44,7 +44,7 @@ ArticleDescWordsDialog::ArticleDescWordsDialog(QWidget* parent) : QDialog{parent
 
   setLayout(layout);
 
-  connect(m_editWidget, SIGNAL(sendCloseDialog(bool)), SLOT(closeDialog(bool)));
+  connect(m_editWidget, SIGNAL(sendStatusMessage(QString)), m_statusBar, SLOT(showMessage(QString)));
   connect(btn_save, SIGNAL(clicked()), m_editWidget, SLOT(sqlCommit()));
   connect(btn_close, SIGNAL(clicked()), SLOT(reject()));
 }

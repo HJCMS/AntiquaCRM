@@ -5,6 +5,8 @@
 #include "antiquaicon.h"
 
 #include <QIcon>
+#include <QJsonObject>
+#include <QJsonParseError>
 #include <QLocale>
 
 namespace AntiquaCRM
@@ -29,61 +31,48 @@ void SelectLanguage::initData() {
   _f.setLength(3);
   setRestrictions(_f);
 
-  int i = 1;
   m_edit->setToolTip(tr("Language"));
   m_edit->setWithoutDisclosures();
-  m_edit->insertItem(i, tr("German"), "de_DE");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("de"), Qt::DecorationRole);
+  m_edit->addItem(tr("German"), "de");
+  m_edit->addItem(tr("European"), "eu");
+  m_edit->addItem(tr("Czech"), "cz");
+  m_edit->addItem(tr("Danish"), "dk");
+  m_edit->addItem(tr("English"), "en");
+  m_edit->addItem(tr("Spanish"), "es");
+  m_edit->addItem(tr("Finnish"), "fi");
+  m_edit->addItem(tr("French"), "fr");
+  m_edit->addItem(tr("Italian"), "it");
+  m_edit->addItem(tr("Dutch"), "nl");
+  m_edit->addItem(tr("Norwegian"), "pl");
+  m_edit->addItem(tr("Portuguese"), "pt");
+  m_edit->addItem(tr("Slovenian"), "si");
+  m_edit->addItem(tr("Swedish"), "se");
 
-  m_edit->insertItem(i, tr("European"), "eu_EU");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("eu"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Czech"), "cs_CS");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("cs"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Danish"), "da_DA");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("de"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("English"), "en_EN");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("en"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Spanish"), "es_ES");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("es"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Finnish"), "fi_FI");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("fi"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("French"), "fr_FR");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("fr"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Italian"), "it_IT");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("it"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Dutch"), "nl_NL");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("nl"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Norwegian"), "nn_NN");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("nn"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Polish"), "pl_PL");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("pl"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Portuguese"), "pt_PT");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("pt"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Slovenian"), "sl_SL");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("sl"), Qt::DecorationRole);
-
-  m_edit->insertItem(i, tr("Swedish"), "sv_SV");
-  m_edit->setItemData(i++, AntiquaCRM::flagIcon("sv"), Qt::DecorationRole);
+  for (int r = 0; r < m_edit->count(); r++) {
+    QString _c = m_edit->itemData(r, Qt::UserRole).toString();
+    if (_c.length() == 2) {
+      const QIcon _icon = AntiquaCRM::flagIcon((_c == "en") ? "gb" : _c);
+      m_edit->setItemData(r, _icon, Qt::DecorationRole);
+    }
+  }
 
   setWindowModified(false);
 }
 
 void SelectLanguage::setValue(const QVariant& value) {
-  int _index = m_edit->findData(value, Qt::UserRole, Qt::MatchExactly);
+  QString _find = value.toString().trimmed().toLower();
+  int _index = m_edit->findData(_find, Qt::UserRole, Qt::MatchExactly);
   if (_index > 0)
     m_edit->setCurrentIndex(_index);
+
+  // Deprecated definition import
+  if (_find.contains("_")) {
+    qWarning("Deprecated ISO language import, convert to bcp47.");
+    QStringList _l = _find.split("_");
+    _index = m_edit->findData(_l.last().toLower(), Qt::UserRole, Qt::MatchExactly);
+    if (_index > 0)
+      m_edit->setCurrentIndex(_index);
+  }
 }
 
 void SelectLanguage::setFocus() {
@@ -124,20 +113,14 @@ const QMetaType SelectLanguage::getType() const {
 
 const QVariant SelectLanguage::getValue() {
   int _index = m_edit->currentIndex();
-  if (_index == 0) {
-    QString _lang = QLocale::system().bcp47Name();
-    return _lang.toLower() + "_" + _lang.toUpper();
-  } else {
-    return m_edit->itemData(_index, Qt::UserRole);
-  }
+  if (_index == 0)
+    return QString("xx");
+
+  return m_edit->itemData(_index, Qt::UserRole).toString();
 }
 
 const QString SelectLanguage::getBCP47Name() {
-  QString _lang = getValue().toString();
-  if (_lang.isEmpty())
-    return QLocale::system().bcp47Name();
-  else
-    return _lang.split("_").first().toUpper();
+  return getValue().toString();
 }
 
 const QString SelectLanguage::popUpHints() {

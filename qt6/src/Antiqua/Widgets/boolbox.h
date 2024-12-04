@@ -14,7 +14,8 @@
 #include <QObject>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @class BoolBox
@@ -26,7 +27,7 @@ class ANTIQUACRM_LIBRARY BoolBox final : public AntiquaCRM::AInputWidget {
   Q_OBJECT
 
 private:
-  QCheckBox *m_edit;
+  QCheckBox* m_edit;
 
 private Q_SLOTS:
   void valueChanged();
@@ -35,7 +36,7 @@ protected:
   void initData() override;
 
 public Q_SLOTS:
-  void setValue(const QVariant &) override;
+  void setValue(const QVariant&) override;
 
   void setFocus() override;
 
@@ -45,13 +46,13 @@ public:
   /**
    * @param parent - parent widget
    */
-  explicit BoolBox(QWidget *parent = nullptr);
+  explicit BoolBox(QWidget* parent = nullptr);
 
-  void setRestrictions(const QSqlField &) override;
+  void setRestrictions(const QSqlField&) override;
 
-  void setInputToolTip(const QString &) override;
+  void setInputToolTip(const QString&) override;
 
-  void setBuddyLabel(const QString &) override;
+  void setBuddyLabel(const QString&) override;
 
   bool isValid() override;
 

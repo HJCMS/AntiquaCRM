@@ -57,7 +57,7 @@ $it = Directory::Iterator->new("./flags/", show_dotfiles=>0, recursive=>0, show_
 @list = ();
 while (my $file = <$it>) {
   my $_f = basename($file);
-  if ($_f =~ qr/\.png$/i) {
+  if ($_f =~ qr/\.(png|json)$/i) {
     push(@list, $_f);
   }
 }
