@@ -11,7 +11,7 @@
 #include <QScrollArea>
 
 ArticleDescWordsDialog::ArticleDescWordsDialog(QWidget* parent) : QDialog{parent} {
-  setWindowTitle(tr("Description Settings") + " [*]");
+  setWindowTitle(tr("Description snippets") + " [*]");
   setSizeGripEnabled(true);
   setMinimumSize(780, 540);
 

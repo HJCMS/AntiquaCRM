@@ -848,7 +848,7 @@ Please check your network connection.</source>
 <context>
     <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+47"/>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+46"/>
         <source>Predefined text blocks</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3198,7 +3198,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <name>ArticleDescWordsDialog</name>
     <message>
         <location filename="../utils/articledescwords/articledescwordsdialog.cpp" line="+14"/>
-        <source>Description Settings</source>
+        <source>Description snippets</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -3233,14 +3233,32 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
 </context>
 <context>
+    <name>ArticleDescWordsTable</name>
+    <message>
+        <location filename="../utils/articledescwords/articledescwordstable.cpp" line="+58"/>
+        <source>Open entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ArticleDescWordsWidget</name>
     <message>
-        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+21"/>
+        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+22"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Section</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3252,6 +3270,31 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <message>
         <location line="+5"/>
         <source>Menu entry</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Database Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Section is not set!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing language!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing title!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Description is to small!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7027,7 +7070,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+4"/>
-        <source>Descriptions</source>
+        <source>Description snippets</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -23,6 +23,7 @@ ArticleDescWordsWidget::ArticleDescWordsWidget(QWidget* parent) : QWidget{parent
   m_layout->addWidget(m_id, 1, 0, 1, 1);
 
   QPushButton* btn_clear = new QPushButton(tr("Clear"));
+  btn_clear->setToolTip("Clear all input fields.");
   m_layout->addWidget(btn_clear, 1, 1, 1, 1);
 
   m_type = new AntiquaCRM::SectionSelecter(this);
@@ -57,6 +58,7 @@ void ArticleDescWordsWidget::clearInput() {
   foreach (AntiquaCRM::AInputWidget* w, _list) {
     w->reset();
   }
+  m_id->setValue(0);
 }
 
 void ArticleDescWordsWidget::openEntry(qint64 id) {

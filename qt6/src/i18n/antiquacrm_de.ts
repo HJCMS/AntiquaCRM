@@ -849,7 +849,7 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+47"/>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+46"/>
         <source>Predefined text blocks</source>
         <translation>Vordefinierte Textblöcke</translation>
     </message>
@@ -3201,8 +3201,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     <name>ArticleDescWordsDialog</name>
     <message>
         <location filename="../utils/articledescwords/articledescwordsdialog.cpp" line="+14"/>
-        <source>Description Settings</source>
-        <translation>Beschreibungs Einstellungen</translation>
+        <source>Description snippets</source>
+        <translation>Beschreibungs Schnipsel</translation>
     </message>
     <message>
         <location line="+19"/>
@@ -3236,14 +3236,32 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
 </context>
 <context>
+    <name>ArticleDescWordsTable</name>
+    <message>
+        <location filename="../utils/articledescwords/articledescwordstable.cpp" line="+58"/>
+        <source>Open entry</source>
+        <translation>Eintrag öffnen</translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Delete entry</source>
+        <translation>Eintrag entfernen</translation>
+    </message>
+</context>
+<context>
     <name>ArticleDescWordsWidget</name>
     <message>
-        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+21"/>
+        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+22"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
+        <source>Clear</source>
+        <translation>Leeren</translation>
+    </message>
+    <message>
+        <location line="+6"/>
         <source>Section</source>
         <translation>Abschnitt</translation>
     </message>
@@ -3256,6 +3274,31 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <location line="+5"/>
         <source>Menu entry</source>
         <translation>Menüeintrag</translation>
+    </message>
+    <message>
+        <location line="+54"/>
+        <source>Database Error</source>
+        <translation>Datenbankfehler</translation>
+    </message>
+    <message>
+        <location line="+18"/>
+        <source>Section is not set!</source>
+        <translation>Bereich ist nicht getzt!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing language!</source>
+        <translation>Keine Sprache angegeben!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Missing title!</source>
+        <translation>Kein Titel vorhanden!</translation>
+    </message>
+    <message>
+        <location line="+7"/>
+        <source>Description is to small!</source>
+        <translation>Beschreibung ist zu klein!</translation>
     </message>
 </context>
 <context>
@@ -7053,8 +7096,8 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+4"/>
-        <source>Descriptions</source>
-        <translation>Beschreibungen</translation>
+        <source>Description snippets</source>
+        <translation>Beschreibungs Schnipsel</translation>
     </message>
 </context>
 <context>

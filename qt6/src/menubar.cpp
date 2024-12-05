@@ -63,7 +63,7 @@ MenuBar::MenuBar(QWidget* parent) : QMenuBar{parent} {
   ac_mtpl->setIcon(_conf_icon);
   connect(ac_mtpl, SIGNAL(triggered()), SLOT(openMailTemplatesDialog()));
   // ArticleDescWordsDialog
-  QAction* ac_adwd = m_dialogMenu->addAction(tr("Descriptions"));
+  QAction* ac_adwd = m_dialogMenu->addAction(tr("Description snippets"));
   ac_adwd->setIcon(_conf_icon);
   connect(ac_adwd, SIGNAL(triggered()), SLOT(openArticleDescriptions()));
   // END::Dialogs

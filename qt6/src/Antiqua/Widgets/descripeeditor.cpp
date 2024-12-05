@@ -2,8 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "descripeeditor.h"
-#include "splitter.h"
 #include "antiquaicon.h"
+#include "splitter.h"
 
 #include <QDebug>
 
@@ -25,11 +25,10 @@ const QString DescripeEditorItem::getKeyword() {
 }
 
 void DescripeEditorItem::setLang(const QString& lng) {
-  if(lng.contains("de_DE")) {
-    setIcon(AntiquaCRM::antiquaIcon("de_DE"));
-  } else {
-    setIcon(AntiquaCRM::antiquaIcon("european-flag"));
-  }
+  if (lng.contains("xx"))
+    setIcon(AntiquaCRM::flagIcon("eu"));
+  else
+    setIcon(AntiquaCRM::flagIcon(lng));
 }
 
 DescripeEditor::DescripeEditor(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
