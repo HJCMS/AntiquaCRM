@@ -53,6 +53,13 @@ ArticleDescWordsWidget::ArticleDescWordsWidget(QWidget* parent) : QWidget{parent
   connect(m_table, SIGNAL(doubleClicked(QModelIndex)), SLOT(itemSelected(QModelIndex)));
 }
 
+void ArticleDescWordsWidget::openSqlErrorInfo(const QString& info, const QString& query) {
+  QMessageBox* _d = new QMessageBox(QMessageBox::Critical, // Critical
+                                    tr("Database Error"), info, QMessageBox::Ok, this);
+  _d->setInformativeText(query);
+  _d->exec();
+}
+
 void ArticleDescWordsWidget::clearInput() {
   QList<AntiquaCRM::AInputWidget*> _list = findChildren<AntiquaCRM::AInputWidget*>(QString());
   foreach (AntiquaCRM::AInputWidget* w, _list) {
@@ -90,11 +97,7 @@ void ArticleDescWordsWidget::deleteEntry(qint64 id) {
     if (p_sql.lastError().isEmpty()) {
       m_table->setQuery();
     } else {
-      QString info = p_sql.lastError();
-      QMessageBox* m_b = new QMessageBox(QMessageBox::Critical, // Critical
-                                         tr("Database Error"), info, QMessageBox::Ok, this);
-      m_b->setInformativeText(_sql);
-      m_b->exec();
+      openSqlErrorInfo(p_sql.lastError(), _sql);
     }
   }
 }
@@ -153,8 +156,16 @@ void ArticleDescWordsWidget::sqlCommit() {
     _sql.append("'" + _data + "'");
     _sql.append(");");
   }
-  qDebug() << Q_FUNC_INFO << _sql;
-  // emit sendCloseDialog(true);
+
+  AntiquaCRM::ASqlCore p_sql(this);
+  if (p_sql.open()) {
+    p_sql.query(_sql);
+    if (p_sql.lastError().isEmpty()) {
+      m_table->setQuery();
+    } else {
+      openSqlErrorInfo(p_sql.lastError(), _sql);
+    }
+  }
 }
 
 bool ArticleDescWordsWidget::sqlQuery() {

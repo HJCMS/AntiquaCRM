@@ -5,14 +5,14 @@
 
 #include <QLabel>
 
-ConfigStorageCache::ConfigStorageCache(QWidget *parent)
+ConfigStorageCache::ConfigStorageCache(QWidget* parent)
     : AntiquaCRM::PluginConfigWidget{"cacheconf", parent} {
   setWindowTitle(tr("Cache config"));
   setObjectName("antiquacrm_cacheconf");
   setContentsMargins(5, 5, 5, 0);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
   QStringList _labels({"Id",                         // item id
@@ -35,16 +35,15 @@ ConfigStorageCache::ConfigStorageCache(QWidget *parent)
          "works with a hard drive storage. You can set the cycle with which "
          "the memory is updated at Application start.");
 
-  QLabel *m_lb = new QLabel(_info, this);
+  QLabel* m_lb = new QLabel(_info, this);
   m_lb->setWordWrap(true);
   layout->addWidget(m_lb);
   setLayout(layout);
 
-  connect(m_table, SIGNAL(itemChanged(QTableWidgetItem *)),
-          SLOT(columnChanged(QTableWidgetItem *)));
+  connect(m_table, SIGNAL(itemChanged(QTableWidgetItem*)), SLOT(columnChanged(QTableWidgetItem*)));
 }
 
-void ConfigStorageCache::columnChanged(QTableWidgetItem *) {
+void ConfigStorageCache::columnChanged(QTableWidgetItem*) {
   setWindowModified(true);
 }
 
@@ -64,7 +63,7 @@ void ConfigStorageCache::loadSectionConfig() {
     QSqlRecord _record = _q.record();
     for (int c = 0; c < _record.count(); c++) {
       const QSqlField _field = _record.field(c);
-      QTableWidgetItem *item = new QTableWidgetItem(QTableWidgetItem::UserType);
+      QTableWidgetItem* item = new QTableWidgetItem(QTableWidgetItem::UserType);
       item->setData(Qt::EditRole, _field.value());
       if (!_editable.contains(_field.name())) {
         item->setFlags(Qt::NoItemFlags);
@@ -87,7 +86,7 @@ void ConfigStorageCache::saveSectionConfig() {
     QStringList _columnData;
     for (int c = 1; c < m_table->columnCount(); c++) {
       QSqlField _field = _record.field(c);
-      QTableWidgetItem *item = m_table->item(r, c);
+      QTableWidgetItem* item = m_table->item(r, c);
       if (item->flags() & Qt::ItemIsEditable) {
         QVariant _v = item->data(Qt::EditRole);
         if (_v.metaType().id() == QMetaType::QString)

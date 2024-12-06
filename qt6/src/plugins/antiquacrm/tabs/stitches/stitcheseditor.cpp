@@ -338,10 +338,9 @@ void StitchesEditor::setInputFields() {
   ip_keyword->setCompleterList(_completer_data);
 
   // ip_condition
-
   _completer_data.clear();
 
-  // description
+  // ip_description
   ip_description->setWordsList(AntiquaCRM::ArticleType::PRINTS);
 }
 

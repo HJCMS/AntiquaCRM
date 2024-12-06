@@ -33,28 +33,30 @@ const QStringList ASharedDataFiles::defaultFilter() {
   return QStringList({"*.xml", "*.sql", "*.json", "*.txt"});
 }
 
-bool ASharedDataFiles::needsUpdate(const QString& basename, int days, const QStringList& ext) {
+bool ASharedDataFiles::needsUpdate(const QString& basename, const QDateTime dateTime,
+                                   const QStringList& ext) {
   if (ext.count() > 0)
     setNameFilters(ext);
 
   bool _status = false;
-  // to past date
-  const QDate _tpd = QDate::currentDate().addDays(-days);
   // File Modification Date
-  QDate _fmd;
+  QDateTime _fmd;
   QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
   foreach (QFileInfo i, li) {
     if (i.baseName() == basename) {
       _status = true;
-      _fmd = i.fileTime(QFileDevice::FileMetadataChangeTime).date();
+      _fmd = i.lastModified();
       break;
     }
   }
   setNameFilters(defaultFilter());
 
-  if (_status)
-    return (_tpd >= _fmd);
-
+  if (_status) {
+#ifdef ANTIQUA_DEVELOPMENT
+    qDebug() << basename << ((dateTime.secsTo(_fmd) / 60) < 1);
+#endif
+    return ((dateTime.secsTo(_fmd) / 60) < 1);
+  }
   return true;
 }
 

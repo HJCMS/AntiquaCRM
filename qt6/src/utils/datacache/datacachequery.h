@@ -10,6 +10,7 @@
 #define ANTIQUACRM_UTILS_DATACACHEQUERY_H
 
 #include <AntiquaCRM>
+#include <QDateTime>
 #include <QList>
 #include <QObject>
 #include <QPair>
@@ -25,15 +26,16 @@ class DataCacheQuery final : public QObject {
 
 private:
   int p_days = 7;
-  AntiquaCRM::ASqlCore *m_sql;
-  bool isCacheUpdateRequired(const QString &name);
-  bool saveDocument(const QString &key, const QJsonDocument &json) const;
+  const QDateTime p_curDateTime;
+  AntiquaCRM::ASqlCore* m_sql;
+  bool isCacheUpdateRequired(const DataCacheConfig&);
+  bool saveDocument(const QString& key, const QJsonDocument& json) const;
   const QList<QPair<QString, QString>> tableList();
-  const QJsonArray createTable(const QString &query);
+  const QJsonArray createTable(const QString&);
 
 public:
-  explicit DataCacheQuery(AntiquaCRM::ASqlCore *pgsql);
-  bool createCache(const DataCacheConfig &config);
+  explicit DataCacheQuery(AntiquaCRM::ASqlCore* pgsql);
+  bool createCache(const DataCacheConfig&);
   bool postalCodes();
 };
 

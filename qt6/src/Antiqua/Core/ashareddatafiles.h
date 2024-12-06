@@ -7,13 +7,15 @@
 
 #include <AGlobal>
 #include <ASettings>
+#include <QDateTime>
 #include <QDir>
 #include <QDomDocument>
 #include <QJsonDocument>
 #include <QString>
 #include <QStringList>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 /**
  * @brief Data handling in the user directory
@@ -27,7 +29,7 @@ public:
   /**
    * @param d - Working Directory
    */
-  explicit ASharedDataFiles(const QDir &d = ASettings::getUserDataDir());
+  explicit ASharedDataFiles(const QDir& d = ASettings::getUserDataDir());
 
   /**
    * @brief Returning "_" with "Locale::bcp47Name" in lowercase.
@@ -51,13 +53,13 @@ public:
   /**
    * @brief Compares whether it has already been renewed on this day!
    * @param basename - File baseName
-   * @param days     - days to past before updating cache
+   * @param dateTime - check diff before updating cache
    * @param ext      - File extensions
    *
    * If this is the case then the method returns false!
    */
-  bool needsUpdate(const QString &basename, int days = 7,
-                   const QStringList &ext = defaultFilter());
+  bool needsUpdate(const QString& basename, const QDateTime dateTime,
+                   const QStringList& ext = defaultFilter());
 
   /**
    * @brief Search with basename and optional extension for availability!
@@ -66,42 +68,40 @@ public:
    *
    * @note Only writable files are considered!
    */
-  bool fileExists(const QString &basename,
-                  const QStringList &ext = defaultFilter());
+  bool fileExists(const QString& basename, const QStringList& ext = defaultFilter());
 
   /**
    * @brief Save json document.
    * @param basename - File baseName
    * @param doc      - Json Document
    */
-  bool storeJson(const QString &basename, const QJsonDocument &doc);
+  bool storeJson(const QString& basename, const QJsonDocument& doc);
 
   /**
    * @brief Get json Document from file.
    * @param basename - File baseName
    */
-  const QJsonDocument getJson(const QString &basename);
+  const QJsonDocument getJson(const QString& basename);
 
   /**
    * @brief Save XML document.
    * @param basename - File baseName
    * @param xml      - XML Document
    */
-  bool storeXml(const QString &basename, const QDomDocument &xml);
+  bool storeXml(const QString& basename, const QDomDocument& xml);
 
   /**
    * @brief Get XML Document from file.
    * @param basename - File baseName
    */
-  const QDomDocument getXML(const QString &basename);
+  const QDomDocument getXML(const QString& basename);
 
   /**
    * @brief get Completer data from Json Database
    * @param basename - File baseName
    * @param key - Key from Json::Object
    */
-  const QStringList getCompleterList(const QString &basename,
-                                     const QString &key);
+  const QStringList getCompleterList(const QString& basename, const QString& key);
 };
 
 /**
@@ -116,33 +116,33 @@ public:
   /**
    * @param d - Working Directory
    */
-  explicit ASharedCacheFiles(const QDir &d = ASettings::getUserDataDir());
+  explicit ASharedCacheFiles(const QDir& d = ASettings::getUserDataDir());
 
   /**
    * @brief Save cache file with QTextStream
    * @param filename
    * @param data
    */
-  bool storeTempFile(const QString &filename, const QByteArray &data);
+  bool storeTempFile(const QString& filename, const QByteArray& data);
 
   /**
    * @brief Save cache file with QTextStream
    * @param filename
    * @param data
    */
-  bool storeTempFile(const QString &filename, const QString &data);
+  bool storeTempFile(const QString& filename, const QString& data);
 
   /**
    * @brief Open cache file with QTextStream
    * @param filename
    */
-  const QString getTempFile(const QString &filename);
+  const QString getTempFile(const QString& filename);
 
   /**
    * @brief Open Cache Json Document
    * @param md5sum - The CacheBuilder stores the filenames with md5 hash
    */
-  const QJsonObject getTempJson(const QString &md5sum);
+  const QJsonObject getTempJson(const QString& md5sum);
 };
 
 }; // namespace AntiquaCRM

@@ -6,6 +6,9 @@
 #include "splitter.h"
 
 #include <QDebug>
+#include <QJsonArray>
+#include <QJsonDocument>
+#include <QJsonObject>
 
 namespace AntiquaCRM
 {
@@ -31,7 +34,8 @@ void DescripeEditorItem::setLang(const QString& lng) {
     setIcon(AntiquaCRM::flagIcon(lng));
 }
 
-DescripeEditor::DescripeEditor(QWidget* parent) : AntiquaCRM::AInputWidget{parent} {
+DescripeEditor::DescripeEditor(QWidget* parent, const QString& cbn)
+    : AntiquaCRM::AInputWidget{parent}, p_cache_basename{cbn} {
   setObjectName("description_edit");
 
   m_splitter = new Splitter(this);
@@ -108,18 +112,6 @@ void DescripeEditor::reset() {
   setWindowModified(false);
 }
 
-void DescripeEditor::setWordsList(const QStringList& list) {
-  if (list.size() < 1)
-    return;
-
-  if (m_list->count() > 0)
-    m_list->clear();
-
-  foreach (QString l, list) {
-    m_list->addItem(l);
-  }
-}
-
 void DescripeEditor::setWordsList(AntiquaCRM::ArticleType t) {
   switch (t) {
     case (AntiquaCRM::ArticleType::BOOK):
@@ -132,17 +124,23 @@ void DescripeEditor::setWordsList(AntiquaCRM::ArticleType t) {
       return;
   }
 
-  AntiquaCRM::ASharedDataFiles dataFiles;
-  QJsonDocument doc = dataFiles.getJson("descripeeditor");
-  if (doc.isEmpty()) {
-    qWarning("DescripeEditor::descripeeditor.json not found!");
+  AntiquaCRM::ASharedDataFiles dataFile;
+  if (!dataFile.fileExists(p_cache_basename)) {
+    qWarning("DescripeEditor::%s.json not found!", qPrintable(p_cache_basename));
     return;
   }
 
+  QJsonDocument doc = dataFile.getJson(p_cache_basename);
+  if (doc.isEmpty()) {
+    qWarning("DescripeEditor::%s invalid!", qPrintable(p_cache_basename));
+    return;
+  }
+
+  // qDebug() << Q_FUNC_INFO << __LINE__;
   if (m_list->count() > 0)
     m_list->clear();
 
-  QJsonArray _arr = doc.object().value("descripeeditor").toArray();
+  QJsonArray _arr = doc.object().value(p_cache_basename).toArray();
   for (int i = 0; i < _arr.count(); i++) {
     QJsonObject _obj = _arr[i].toObject();
     if (_obj.value("type").toInt() == t) {

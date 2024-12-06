@@ -30,7 +30,8 @@ const QList<DataCacheConfig> DataCache::configs() {
       DataCacheConfig _dcc(_q.value("cache_table").toString(),
                            _q.value("cache_basename").toString(),
                            _q.value("cache_display").toString(),
-                           _q.value("cache_runtime").toInt());
+                           _q.value("cache_runtime").toInt(),
+                           _q.value("cache_timestamp").toDateTime());
       _l.append(_dcc);
     }
     _q.clear();

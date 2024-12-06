@@ -4,12 +4,13 @@
 #include "datacachequery.h"
 #include "datacacheconfig.h"
 
-DataCacheQuery::DataCacheQuery(AntiquaCRM::ASqlCore* pgsql) : QObject{}, m_sql{pgsql} {
+DataCacheQuery::DataCacheQuery(AntiquaCRM::ASqlCore* pgsql)
+    : QObject{pgsql}, p_curDateTime{QDateTime::currentDateTime()}, m_sql{pgsql} {
 }
 
-bool DataCacheQuery::isCacheUpdateRequired(const QString& name) {
+bool DataCacheQuery::isCacheUpdateRequired(const DataCacheConfig& config) {
   AntiquaCRM::ASharedDataFiles p_store;
-  return p_store.needsUpdate(name, p_days);
+  return p_store.needsUpdate(config.indicator, config.timeStamp);
 }
 
 bool DataCacheQuery::saveDocument(const QString& key, const QJsonDocument& json) const {
@@ -33,7 +34,7 @@ const QJsonArray DataCacheQuery::createTable(const QString& query) {
 }
 
 bool DataCacheQuery::createCache(const DataCacheConfig& config) {
-  if (!isCacheUpdateRequired(config.indicator))
+  if (!isCacheUpdateRequired(config))
     return false;
 
   p_days = config.pastDays;
@@ -48,7 +49,9 @@ bool DataCacheQuery::createCache(const DataCacheConfig& config) {
 }
 
 bool DataCacheQuery::postalCodes() {
-  if (!isCacheUpdateRequired("postalcodes"))
+  QDateTime _t = p_curDateTime.addDays(-30);
+  DataCacheConfig cfg("query_postal_codes", "postalcodes", tr("Postalcode"), 30, _t);
+  if (!isCacheUpdateRequired(cfg))
     return false;
 
   QString sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");

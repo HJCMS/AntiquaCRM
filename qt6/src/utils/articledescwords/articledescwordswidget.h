@@ -26,6 +26,8 @@ private:
   AntiquaCRM::TextLine* m_title;
   AntiquaCRM::TextField* m_data;
 
+  void openSqlErrorInfo(const QString&, const QString&);
+
 private Q_SLOTS:
   void clearInput();
   void openEntry(qint64);
@@ -33,7 +35,7 @@ private Q_SLOTS:
   void itemSelected(const QModelIndex&);
 
 Q_SIGNALS:
-  void sendStatusMessage(const QString &);
+  void sendStatusMessage(const QString&);
 
 public Q_SLOTS:
   void sqlCommit();

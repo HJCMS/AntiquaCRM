@@ -25,7 +25,6 @@ class Splitter;
  * @ingroup AntiquaWidgets
  */
 class ANTIQUACRM_LIBRARY DescripeEditorItem final : public QListWidgetItem {
-
 private:
   QString p_keyword;
 
@@ -45,6 +44,7 @@ class ANTIQUACRM_LIBRARY DescripeEditor final : public AntiquaCRM::AInputWidget 
   Q_OBJECT
 
 private:
+  const QString p_cache_basename;
   Splitter* m_splitter;
   ATextEdit* m_edit;
   QListWidget* m_list;
@@ -77,18 +77,18 @@ public Q_SLOTS:
 public:
   /**
    * @param parent - parent widget
+   * @param cbn - cache file basename
+   *
+   * @note \b cbn must equal to sql://antiquacrm_cacheconf.cache_basename
    */
-  explicit DescripeEditor(QWidget* parent = nullptr);
-
-  /**
-   * @brief set data words list
-   */
-  void setWordsList(const QStringList&);
+  explicit DescripeEditor(QWidget* parent = nullptr, const QString& cbn = QString("descripeeditor"));
 
   /**
    * @brief set data words list from database table
+   *
+   * If not set, no fill will done.
    */
-  void setWordsList(AntiquaCRM::ArticleType t);
+  void setWordsList(AntiquaCRM::ArticleType t = AntiquaCRM::ArticleType::UNKNOWN);
 
   /**
    * @brief Restrict input wirt QSqlField parameters.
