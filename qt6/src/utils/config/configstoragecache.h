@@ -19,6 +19,7 @@ class ConfigStorageCache final : public AntiquaCRM::PluginConfigWidget {
   Q_OBJECT
 
 private:
+  const QString p_table;
   QHeaderView *m_header;
   QTableWidget *m_table;
 

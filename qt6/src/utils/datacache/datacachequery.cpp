@@ -8,9 +8,9 @@ DataCacheQuery::DataCacheQuery(AntiquaCRM::ASqlCore* pgsql)
     : QObject{pgsql}, p_curDateTime{QDateTime::currentDateTime()}, m_sql{pgsql} {
 }
 
-bool DataCacheQuery::isCacheUpdateRequired(const DataCacheConfig& config) {
+bool DataCacheQuery::isCacheUpdateRequired(const DataCacheConfig& config, int days) {
   AntiquaCRM::ASharedDataFiles p_store;
-  return p_store.needsUpdate(config.indicator, config.timeStamp);
+  return p_store.needsUpdate(config.indicator, config.timeStamp, days);
 }
 
 bool DataCacheQuery::saveDocument(const QString& key, const QJsonDocument& json) const {
@@ -37,8 +37,6 @@ bool DataCacheQuery::createCache(const DataCacheConfig& config) {
   if (!isCacheUpdateRequired(config))
     return false;
 
-  p_days = config.pastDays;
-
   QString _sql = AntiquaCRM::ASqlFiles::queryStatement(config.file);
   if (_sql.isEmpty())
     return false;
@@ -49,20 +47,30 @@ bool DataCacheQuery::createCache(const DataCacheConfig& config) {
 }
 
 bool DataCacheQuery::postalCodes() {
-  QDateTime _t = p_curDateTime.addDays(-30);
-  DataCacheConfig cfg("query_postal_codes", "postalcodes", tr("Postalcode"), 30, _t);
+  const QString _basename("postalcodes");
+  QString _sql("SELECT cache_timestamp FROM antiquacrm_cacheconf WHERE cache_basename='");
+  _sql.append(_basename + "';");
+
+  QDateTime _dt = p_curDateTime.addDays(-30);
+  QSqlQuery _fq = m_sql->query(_sql);
+  if (_fq.size() > 0) {
+    _fq.next();
+    _dt = _fq.value(0).toDateTime();
+  }
+
+  DataCacheConfig cfg("query_postal_codes", _basename, tr("Postalcode"), _dt);
   if (!isCacheUpdateRequired(cfg))
     return false;
 
-  QString sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");
-  if (sql.isEmpty())
+  _sql = AntiquaCRM::ASqlFiles::queryStatement("query_postal_codes");
+  if (_sql.isEmpty())
     return false;
 
   const QString _sql_select =
       AntiquaCRM::ASqlFiles::queryStatement("select_statement_postalcode_tables");
   const QString _sql_order(" ORDER BY p_plz ASC;");
 
-  QSqlQuery _q = m_sql->query(sql);
+  QSqlQuery _q = m_sql->query(_sql);
   if (_q.size() > 0) {
     QJsonObject _object;
     QJsonObject _countries;
@@ -75,7 +83,7 @@ bool DataCacheQuery::postalCodes() {
     _object.insert("tables", _countries);
     _q.clear();
 
-    if (!saveDocument("postalcodes", QJsonDocument(_object))) {
+    if (!saveDocument(_basename, QJsonDocument(_object))) {
       qWarning("Syntax errors in Json Postalcode!");
       return false;
     }

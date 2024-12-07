@@ -6,20 +6,20 @@
 #include <QLabel>
 
 ConfigStorageCache::ConfigStorageCache(QWidget* parent)
-    : AntiquaCRM::PluginConfigWidget{"cacheconf", parent} {
+    : AntiquaCRM::PluginConfigWidget{"cacheconf", parent}, p_table{"antiquacrm_cacheconf"} {
   setWindowTitle(tr("Cache config"));
-  setObjectName("antiquacrm_cacheconf");
+  setObjectName("configstoragecache");
   setContentsMargins(5, 5, 5, 0);
   setAlignment(Qt::AlignTop | Qt::AlignLeft);
 
   QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 0, 0, 0);
 
-  QStringList _labels({"Id",                         // item id
-                       tr("Table name"),             // tabele name
-                       tr("File basename"),          // file basename
-                       tr("Title"),                  // status display titel
-                       tr("Days until to update")}); // expiration days
+  QStringList _labels({"Id",                   // item id
+                       tr("Query script"),     // table query script name
+                       tr("Storage basename"), // file basename
+                       tr("Title"),            // status display title on bootsplash
+                       tr("Last changed")});   // expiration days
 
   m_table = new QTableWidget(this);
   m_table->setColumnCount(_labels.size());
@@ -51,13 +51,13 @@ void ConfigStorageCache::loadSectionConfig() {
   if (pgsql == nullptr)
     pgsql = new AntiquaCRM::ASqlCore(this);
 
-  QString _sql("SELECT * FROM antiquacrm_cacheconf ORDER BY cache_id;");
+  QString _sql("SELECT * FROM " + p_table + " ORDER BY cache_id;");
   QSqlQuery _q = pgsql->query(_sql);
   if (_q.size() < 1)
     return;
 
   int _row = 0;
-  const QStringList _editable({"cache_display", "cache_runtime"});
+  const QStringList _editable({"cache_display"});
   while (_q.next()) {
     m_table->setRowCount(_q.size());
     QSqlRecord _record = _q.record();
@@ -72,6 +72,10 @@ void ConfigStorageCache::loadSectionConfig() {
     }
     _row++;
   }
+  if (m_table->rowCount() > 1) {
+    m_header->setSectionHidden(0, true);
+    m_header->setStretchLastSection(true);
+  }
 }
 
 void ConfigStorageCache::saveSectionConfig() {
@@ -79,25 +83,26 @@ void ConfigStorageCache::saveSectionConfig() {
     pgsql = new AntiquaCRM::ASqlCore(this);
 
   QStringList _queries;
-  const QSqlRecord _record = pgsql->record("antiquacrm_cacheconf");
+  const QSqlRecord _record = pgsql->record(p_table);
+
   for (int r = 0; r < m_table->rowCount(); r++) {
-    QString _sql("UPDATE antiquacrm_cacheconf SET ");
-    int _id = m_table->item(r, 0)->data(Qt::EditRole).toInt();
-    QStringList _columnData;
-    for (int c = 1; c < m_table->columnCount(); c++) {
-      QSqlField _field = _record.field(c);
-      QTableWidgetItem* item = m_table->item(r, c);
-      if (item->flags() & Qt::ItemIsEditable) {
-        QVariant _v = item->data(Qt::EditRole);
-        if (_v.metaType().id() == QMetaType::QString)
-          _columnData.append(_field.name() + "='" + _v.toString() + "'");
-        else
-          _columnData.append(_field.name() + "=" + _v.toString());
-      }
+  QString _sql("UPDATE " + p_table + " SET ");
+  int _id = m_table->item(r, 0)->data(Qt::EditRole).toInt();
+  QStringList _columnData;
+  for (int c = 1; c < m_table->columnCount(); c++) {
+    QSqlField _field = _record.field(c);
+    QTableWidgetItem* item = m_table->item(r, c);
+    if (item->flags() & Qt::ItemIsEditable) {
+      QVariant _v = item->data(Qt::EditRole);
+      if (_v.metaType().id() == QMetaType::QString)
+        _columnData.append(_field.name() + "='" + _v.toString() + "'");
+      else
+        _columnData.append(_field.name() + "=" + _v.toString());
     }
-    _sql.append(_columnData.join(","));
-    _sql.append(" WHERE cache_id=" + QString::number(_id) + ";");
-    _queries << _sql;
+  }
+  _sql.append(_columnData.join(","));
+  _sql.append(" WHERE cache_id=" + QString::number(_id) + ";");
+  _queries << _sql;
   }
 
   if (_queries.size() > 0) {

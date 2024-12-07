@@ -54,11 +54,17 @@ public:
    * @brief Compares whether it has already been renewed on this day!
    * @param basename - File baseName
    * @param dateTime - check diff before updating cache
+   * @param maxDays  - optional value to force update after max days
    * @param ext      - File extensions
    *
-   * If this is the case then the method returns false!
+   * This method checks if an update is required based on the specified
+   * date and last modified time of the saved file.
+   *
+   * Optionally, you can set a maximum number of days after which updates are forced.
+   *
+   * If the number of minutes is greater than 1, the method returns true.
    */
-  bool needsUpdate(const QString& basename, const QDateTime dateTime,
+  bool needsUpdate(const QString& basename, const QDateTime dateTime, int maxDays = 5,
                    const QStringList& ext = defaultFilter());
 
   /**

@@ -4,6 +4,6 @@
 #include "datacacheconfig.h"
 
 DataCacheConfig::DataCacheConfig(const QString& name, const QString& pointer, const QString& info,
-                                 int days, const QDateTime& t)
-    : file{name}, indicator{pointer}, message{info}, pastDays{days}, timeStamp{t} {
+                                 const QDateTime& t)
+    : file{name}, indicator{pointer}, message{info}, timeStamp{t} {
 }

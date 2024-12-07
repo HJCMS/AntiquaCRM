@@ -33,7 +33,7 @@ const QStringList ASharedDataFiles::defaultFilter() {
   return QStringList({"*.xml", "*.sql", "*.json", "*.txt"});
 }
 
-bool ASharedDataFiles::needsUpdate(const QString& basename, const QDateTime dateTime,
+bool ASharedDataFiles::needsUpdate(const QString& basename, const QDateTime dateTime, int maxDays,
                                    const QStringList& ext) {
   if (ext.count() > 0)
     setNameFilters(ext);
@@ -52,10 +52,21 @@ bool ASharedDataFiles::needsUpdate(const QString& basename, const QDateTime date
   setNameFilters(defaultFilter());
 
   if (_status) {
-#ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << basename << ((dateTime.secsTo(_fmd) / 60) < 1);
-#endif
-    return ((dateTime.secsTo(_fmd) / 60) < 1);
+    // Greater then maxDays then force update
+    qint64 _days = (_fmd.daysTo(dateTime));
+    if (_days > maxDays)
+      return true;
+
+    // Calculate, how many minutes to the past.
+    qint64 _minutes = (dateTime.secsTo(_fmd) / 60);
+    /*
+        qDebug() << "ASharedDataFiles::needsUpdate" << basename << Qt::endl
+                 << "FTime" << _fmd << Qt::endl
+                 << "DTime" << dateTime  << Qt::endl
+                 << "Minutes" << _minutes << _days << maxDays << Qt::endl
+                 << "Update" << (dateTime > _fmd) << (_minutes < 1);
+    */
+    return (_minutes < 1);
   }
   return true;
 }

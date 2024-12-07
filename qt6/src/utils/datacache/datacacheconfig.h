@@ -18,10 +18,9 @@ public:
   const QString file;
   const QString indicator;
   const QString message;
-  const int pastDays;
   const QDateTime timeStamp;
   explicit DataCacheConfig(const QString& name, const QString& pointer, const QString& info,
-                           int days = 7, const QDateTime& t = QDateTime::currentDateTime());
+                           const QDateTime& t = QDateTime::currentDateTime());
 };
 Q_DECLARE_TYPEINFO(DataCacheConfig, Q_PRIMITIVE_TYPE);
 
