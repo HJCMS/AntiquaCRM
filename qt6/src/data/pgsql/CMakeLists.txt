@@ -4,6 +4,7 @@
 SET (query_tables_FILES
   query_antiquacrm_cacheconf.sql
   query_antiquacrm_config.sql
+  query_article_descriptions.sql
   query_article_order_with_id.sql
   query_articles_exists.sql
   query_article_to_refunding.sql
@@ -31,12 +32,12 @@ SET (query_tables_FILES
   query_order_import_customer.sql
   query_order_notifiaction.sql
   query_postal_codes.sql
+  query_printing_admonition.sql
   query_printing_billing_info.sql
   query_printing_cards.sql
   query_printing_delivery_note.sql
   query_printing_invoice.sql
   query_printing_refunding.sql
-  query_printing_admonition.sql
   query_provider_order_exists.sql
   query_provider_orders.sql
   query_returning_articles.sql
@@ -56,8 +57,8 @@ SET (query_tables_FILES
   select_statement_template_body.sql
   statistics_from_until_delivery_year.sql
   statistics_monthly_categories.sql
-  statistics_payments_storage.sql
   statistics_payments_month.sql
+  statistics_payments_storage.sql
   statistics_payments_year.sql
   statistics_provider_orders_year.sql
   statistics_provider_volume_year.sql
