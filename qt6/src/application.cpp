@@ -188,6 +188,10 @@ bool Application::initMainWindow() {
   if (QSystemTrayIcon::isSystemTrayAvailable())
     m_systray = new SystemTrayIcon(applIcon(), this);
 
+#ifdef Q_OS_WIN
+  Sleep(500);
+#endif
+
   // The MainWindow must initialized behind the taskbar entry,
   // otherwise it can't put the Window to the right process tree.
   m_window = new MainWindow(m_topWidget);
@@ -349,12 +353,10 @@ int Application::exec() {
   }
 
   // Step 7 - finish splash and unlock
-  p_splash.setMessage(tr("Open AntiquaCRM application ..."));
+  p_splash.finish(m_window);
 
   // Step 8 - open window
   if (m_window->openWindow()) {
-    p_splash.finish(m_window);
-
 #ifdef ANTIQUACRM_DBUS_ENABLED
     if (registerSessionBus()) {
       // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
