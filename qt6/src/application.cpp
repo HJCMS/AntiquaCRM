@@ -60,9 +60,9 @@ bool Application::registerSessionBus() {
 
 void Application::suspending() const {
 #ifdef Q_OS_WIN
-  Sleep(3000);
+  Sleep(1500);
 #else
-  sleep(3);
+  sleep(1);
 #endif
 }
 
@@ -344,6 +344,8 @@ int Application::exec() {
     }
     m_cache->deleteLater();
     mutex.unlock();
+    p_splash.setMessage(tr("Open Window ..."));
+    suspending();
   }
 
   // Step 6 - UIX

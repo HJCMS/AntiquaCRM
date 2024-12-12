@@ -88,20 +88,17 @@ void SellersWidget::openOrderPage(const QString& provider, const QString& oid) {
     QJsonParseError _parser;
     const QJsonDocument _jdoc = QJsonDocument::fromJson(_data, &_parser);
     if (_parser.error != QJsonParseError::NoError) {
+      qWarning("SellersWidget::openOrderPage Error: '%s'.", qPrintable(_parser.errorString()));
 #ifdef ANTIQUA_DEVELOPMENT
       qDebug() << Q_FUNC_INFO << provider << oid << _parser.errorString();
-#else
-      qWarning("SellersWidget::openOrderPage Error: '%s'.", qPrintable(_parser.errorString()));
 #endif
       return;
     }
 
     if (_jdoc.isEmpty() || _jdoc.object().isEmpty()) {
+      qWarning("Can't set Provider Order data for %s:%s", qPrintable(provider), qPrintable(oid));
 #ifdef ANTIQUA_DEVELOPMENT
       qDebug() << Q_FUNC_INFO << provider << oid << _sql;
-#else
-      qWarning("Can't set Provider Order data for %s:%s", // info
-               qPrintable(provider), qPrintable(oid));
 #endif
       return;
     }
@@ -124,7 +121,7 @@ void SellersWidget::updateSellersList() {
     return;
 
 #ifdef ANTIQUA_DEVELOPMENT
-  qDebug() << Q_FUNC_INFO << "Reload Sellers Tree";
+  qInfo(Q_FUNC_INFO);
 #endif
   m_tree->loadUpdate();
 }

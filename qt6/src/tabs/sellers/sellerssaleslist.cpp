@@ -12,14 +12,14 @@
 #include <QIcon>
 #include <QMenu>
 
-SellersSalesList::SellersSalesList(QWidget *parent) : QTreeWidget{parent} {
+SellersSalesList::SellersSalesList(QWidget* parent) : QTreeWidget{parent} {
   setColumnCount(3);
   setItemsExpandable(true);
   setSortingEnabled(false);
   setWordWrap(false);
   setAlternatingRowColors(true);
 
-  QTreeWidgetItem *m_header = headerItem();
+  QTreeWidgetItem* m_header = headerItem();
   m_header->setText(0, tr("Orders"));
   m_header->setIcon(0, AntiquaCRM::antiquaIcon("view-task-child"));
   m_header->setText(1, tr("Date"));
@@ -27,16 +27,16 @@ SellersSalesList::SellersSalesList(QWidget *parent) : QTreeWidget{parent} {
   m_header->setText(2, tr("Buyer"));
   m_header->setIcon(2, AntiquaCRM::antiquaIcon("system-users"));
 
-  connect(this, SIGNAL(itemClicked(QTreeWidgetItem *, int)), this,
-          SLOT(itemSelected(QTreeWidgetItem *, int)));
+  connect(this, SIGNAL(itemClicked(QTreeWidgetItem*, int)),
+          SLOT(itemSelected(QTreeWidgetItem*, int)));
 }
 
-void SellersSalesList::contextMenuEvent(QContextMenuEvent *event) {
+void SellersSalesList::contextMenuEvent(QContextMenuEvent* event) {
   QModelIndex _index = indexAt(event->pos());
   if (!_index.isValid())
     return;
 
-  QTreeWidgetItem *_item = itemFromIndex(_index);
+  QTreeWidgetItem* _item = itemFromIndex(_index);
   if (_item == nullptr || _item->parent() == nullptr)
     return;
 
@@ -47,28 +47,27 @@ void SellersSalesList::contextMenuEvent(QContextMenuEvent *event) {
   p_pair.first = _item->parent()->text(0);
   p_pair.second = _id;
 
-  QMenu *m = new QMenu("Actions", this);
-  QAction *ac_update = m->addAction(AntiquaCRM::antiquaIcon("view-refresh"),
-                                    tr("Update orders tree"));
+  QMenu* m = new QMenu("Actions", this);
+  QAction* ac_update =
+      m->addAction(AntiquaCRM::antiquaIcon("view-refresh"), tr("Update orders tree"));
   connect(ac_update, SIGNAL(triggered()), SLOT(loadUpdate()));
 
-  QAction *ac_copy = m->addAction(AntiquaCRM::antiquaIcon("edit-paste"),
-                                  tr("Copy Ordering Id"));
+  QAction* ac_copy = m->addAction(AntiquaCRM::antiquaIcon("edit-paste"), tr("Copy Ordering Id"));
   connect(ac_copy, SIGNAL(triggered()), SLOT(copyProviderId()));
 
-  QAction *ac_edit = m->addAction(AntiquaCRM::antiquaIcon("document-edit"),
-                                  tr("Repair Customer data"));
+  QAction* ac_edit =
+      m->addAction(AntiquaCRM::antiquaIcon("document-edit"), tr("Repair Customer data"));
   connect(ac_edit, SIGNAL(triggered()), SLOT(editProviderData()));
 
-  QAction *ac_ignore = m->addAction(AntiquaCRM::antiquaIcon("dialog-cancel"),
-                                  tr("Order canceled by Client"));
+  QAction* ac_ignore =
+      m->addAction(AntiquaCRM::antiquaIcon("dialog-cancel"), tr("Order canceled by Client"));
   connect(ac_ignore, SIGNAL(triggered()), SLOT(ignoreOrder()));
 
   m->exec(event->globalPos());
   m->deleteLater();
 }
 
-const QString SellersSalesList::setDateString(const QDateTime &dt) const {
+const QString SellersSalesList::setDateString(const QDateTime& dt) const {
   QString str = tr("Today");
   if (dt.date() != QDate::currentDate()) {
     str = dt.toString("dd.MM.yy");
@@ -76,9 +75,9 @@ const QString SellersSalesList::setDateString(const QDateTime &dt) const {
   return str;
 }
 
-QTreeWidgetItem *SellersSalesList::getParent(const QString &name) {
+QTreeWidgetItem* SellersSalesList::getParent(const QString& name) {
   for (int i = 0; i < topLevelItemCount(); i++) {
-    QTreeWidgetItem *parent = topLevelItem(i);
+    QTreeWidgetItem* parent = topLevelItem(i);
     if (parent != nullptr && parent->type() == QTreeWidgetItem::Type) {
       if (parent->text(0) == name)
         return parent;
@@ -87,22 +86,21 @@ QTreeWidgetItem *SellersSalesList::getParent(const QString &name) {
   return nullptr;
 }
 
-QTreeWidgetItem *SellersSalesList::getChild(const QString &provider,
-                                            const QString &id) {
-  QTreeWidgetItem *parent = getParent(provider);
+QTreeWidgetItem* SellersSalesList::getChild(const QString& provider, const QString& id) {
+  QTreeWidgetItem* parent = getParent(provider);
   if (parent == nullptr)
     return nullptr;
 
   for (int i = 0; i < parent->childCount(); i++) {
-    QTreeWidgetItem *item = parent->child(i);
+    QTreeWidgetItem* item = parent->child(i);
     if (item != nullptr && item->text(0) == id)
       return item;
   }
   return nullptr;
 }
 
-void SellersSalesList::addProvider(const QString &provider) {
-  QTreeWidgetItem *parent = getParent(provider);
+void SellersSalesList::addProvider(const QString& provider) {
+  QTreeWidgetItem* parent = getParent(provider);
   if (parent != nullptr) {
     parent->setSelected(true);
     return;
@@ -111,7 +109,7 @@ void SellersSalesList::addProvider(const QString &provider) {
   QFont fi = font();
   fi.setItalic(true);
 
-  QTreeWidgetItem *item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
+  QTreeWidgetItem* item = new QTreeWidgetItem(this, QTreeWidgetItem::Type);
   item->setChildIndicatorPolicy(QTreeWidgetItem::ShowIndicator);
   item->setFlags(Qt::ItemIsEnabled);
   item->setText(0, provider);
@@ -122,7 +120,7 @@ void SellersSalesList::addProvider(const QString &provider) {
   resizeColumnToContents(0);
 }
 
-void SellersSalesList::itemSelected(QTreeWidgetItem *item, int) {
+void SellersSalesList::itemSelected(QTreeWidgetItem* item, int) {
   if (item->type() != QTreeWidgetItem::UserType)
     return;
 
@@ -135,92 +133,95 @@ void SellersSalesList::itemSelected(QTreeWidgetItem *item, int) {
   }
 }
 
-void SellersSalesList::updateOrderStatus(QTreeWidgetItem *item,
-                                         AntiquaCRM::OrderStatus status) {
+void SellersSalesList::updateOrderStatus(QTreeWidgetItem* item, AntiquaCRM::OrderStatus status) {
   QString tip = item->toolTip(0);
   bool modified = item->data(1, Qt::UserRole).toBool();
 
   switch (status) {
-  case (AntiquaCRM::OrderStatus::OPEN):
-    return; /**< Nothing todo */
+    case (AntiquaCRM::OrderStatus::OPEN):
+      return; /**< Nothing todo */
 
-  case (AntiquaCRM::OrderStatus::STARTED): {
-    QString mTip = tr("Created");
-    if (modified != true || !tip.contains(mTip))
-      item->setToolTip(0, tip + " " + mTip);
+    case (AntiquaCRM::OrderStatus::STARTED):
+      {
+        QString mTip = tr("Created");
+        if (modified != true || !tip.contains(mTip))
+          item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::antiquaIcon("action-edit-document"));
-    item->setData(1, Qt::UserRole, true); // setModified
-    return;
-  }
+        item->setIcon(1, AntiquaCRM::antiquaIcon("action-edit-document"));
+        item->setData(1, Qt::UserRole, true); // setModified
+        return;
+      }
 
-  case (AntiquaCRM::OrderStatus::FETCHET): {
-    QString mTip = tr("Fetchet");
-    if (modified != true || !tip.contains(mTip))
-      item->setToolTip(0, tip + " " + mTip);
+    case (AntiquaCRM::OrderStatus::FETCHET):
+      {
+        QString mTip = tr("Fetchet");
+        if (modified != true || !tip.contains(mTip))
+          item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::qrcIcon("package-created"));
-    item->setData(1, Qt::UserRole, true); // setModified
-    return;
-  }
+        item->setIcon(1, AntiquaCRM::qrcIcon("package-created"));
+        item->setData(1, Qt::UserRole, true); // setModified
+        return;
+      }
 
-  case (AntiquaCRM::OrderStatus::DELIVERY): {
-    QString mTip = tr("Delivery");
-    if (modified != true || !tip.contains(mTip))
-      item->setToolTip(0, tip + " " + mTip);
+    case (AntiquaCRM::OrderStatus::DELIVERY):
+      {
+        QString mTip = tr("Delivery");
+        if (modified != true || !tip.contains(mTip))
+          item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::qrcIcon("package-deliver"));
-    item->setData(1, Qt::UserRole, true); // setModified
-    return;
-  }
+        item->setIcon(1, AntiquaCRM::qrcIcon("package-deliver"));
+        item->setData(1, Qt::UserRole, true); // setModified
+        return;
+      }
 
-  case (AntiquaCRM::OrderStatus::DELIVERED): {
-    QString mTip = tr("Delivered");
-    if (modified != true || !tip.contains(mTip))
-      item->setToolTip(0, tip + " " + mTip);
+    case (AntiquaCRM::OrderStatus::DELIVERED):
+      {
+        QString mTip = tr("Delivered");
+        if (modified != true || !tip.contains(mTip))
+          item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::antiquaIcon("package-delivered"));
-    item->setData(1, Qt::UserRole, true); // setModified
-    return;
-  }
+        item->setIcon(1, AntiquaCRM::antiquaIcon("package-delivered"));
+        item->setData(1, Qt::UserRole, true); // setModified
+        return;
+      }
 
-  case (AntiquaCRM::OrderStatus::CANCELED): {
-    QString mTip = tr("Canceled");
-    if (modified != true || !tip.contains(mTip))
-      item->setToolTip(0, tip + " " + mTip);
+    case (AntiquaCRM::OrderStatus::CANCELED):
+      {
+        QString mTip = tr("Canceled");
+        if (modified != true || !tip.contains(mTip))
+          item->setToolTip(0, tip + " " + mTip);
 
-    item->setIcon(1, AntiquaCRM::antiquaIcon("dialog-cancel"));
-    item->setData(1, Qt::UserRole, true); // setModified
-    return;
-  }
+        item->setIcon(1, AntiquaCRM::antiquaIcon("dialog-cancel"));
+        item->setData(1, Qt::UserRole, true); // setModified
+        return;
+      }
 
-  default:
-    return;
+    default:
+      return;
   };
 }
 
-void SellersSalesList::clearProvider(const QString &provider) {
-  QTreeWidgetItem *p = getParent(provider);
+void SellersSalesList::clearProvider(const QString& provider) {
+  QTreeWidgetItem* p = getParent(provider);
   if (p != nullptr) {
     for (int i = 0; i < p->childCount(); i++) {
-      QTreeWidgetItem *item = p->child(i);
+      QTreeWidgetItem* item = p->child(i);
       p->removeChild(item);
     }
   }
 }
 
-void SellersSalesList::addOrder(const QString &pro, const TreeOrderItem &data) {
+void SellersSalesList::addOrder(const QString& pro, const TreeOrderItem& data) {
   if (exists(pro, data.id))
     return;
 
   QFont font(SellersSalesList::font());
   font.setItalic(true);
 
-  QTreeWidgetItem *p = getParent(pro);
+  QTreeWidgetItem* p = getParent(pro);
   if (p != nullptr) {
-    QTreeWidgetItem *item = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
-    item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled |
-                   Qt::ItemNeverHasChildren);
+    QTreeWidgetItem* item = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
+    item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
     QDateTime dt(data.datetime);
     QString tip(data.buyer + "\n" + dt.toString("ddd dd. MMMM yyyy hh:mm"));
@@ -236,15 +237,14 @@ void SellersSalesList::addOrder(const QString &pro, const TreeOrderItem &data) {
   }
 }
 
-void SellersSalesList::updateItemStatus(const QString &provider,
-                                        const QString &orderId,
+void SellersSalesList::updateItemStatus(const QString& provider, const QString& orderId,
                                         AntiquaCRM::OrderStatus status) {
-  QTreeWidgetItem *parent = getParent(provider);
+  QTreeWidgetItem* parent = getParent(provider);
   if (parent == nullptr)
     return;
 
   for (int i = 0; i < parent->childCount(); i++) {
-    QTreeWidgetItem *item = parent->child(i);
+    QTreeWidgetItem* item = parent->child(i);
     if (item != nullptr && item->text(0) == orderId) {
       updateOrderStatus(item, status);
     }
@@ -255,8 +255,7 @@ void SellersSalesList::editProviderData() {
   if (p_pair.second.length() < 3)
     return;
 
-  SellerImportRepair *d =
-      new SellerImportRepair(p_pair.first, p_pair.second, this);
+  SellerImportRepair* d = new SellerImportRepair(p_pair.first, p_pair.second, this);
   d->exec();
   d->deleteLater();
 }
@@ -265,8 +264,7 @@ void SellersSalesList::ignoreOrder() {
   if (p_pair.second.length() < 3 || p_pair.first.length() < 3)
     return;
 
-  const QString _ask = tr("<p>This action is not reversible.</p>"
-                          "<b>Do you really want that?</b>");
+  const QString _ask = tr("<p>This action is not reversible.</p><b>Do you really want that?</b>");
   if (QMessageBox::question(this, tr("Hide order"), _ask) == QMessageBox::No)
     return;
 
@@ -278,8 +276,7 @@ void SellersSalesList::ignoreOrder() {
   AntiquaCRM::ASqlCore pgsql(this);
   pgsql.query(_sql);
   if (pgsql.lastError().isEmpty()) {
-    updateItemStatus(p_pair.first, p_pair.second,
-                     AntiquaCRM::OrderStatus::CANCELED);
+    updateItemStatus(p_pair.first, p_pair.second, AntiquaCRM::OrderStatus::CANCELED);
   }
 }
 
@@ -300,6 +297,11 @@ void SellersSalesList::loadUpdate() {
 
   QString table("query_provider_orders");
   AntiquaCRM::ASqlCore pgsql(this);
+  if (!pgsql.open()) {
+    qWarning("No SQL connection for load Update Sellers list.");
+    return;
+  }
+
   QString sql = AntiquaCRM::ASqlFiles::queryStatement(table);
   QSqlQuery q = pgsql.query(sql);
   int count = 0;
@@ -311,8 +313,7 @@ void SellersSalesList::loadUpdate() {
 
       AntiquaCRM::OrderStatus status = AntiquaCRM::OrderStatus::CANCELED;
       if (!q.value("pr_ignore").toBool())
-        status = static_cast<AntiquaCRM::OrderStatus>(
-            q.value("order_status").toInt());
+        status = static_cast<AntiquaCRM::OrderStatus>(q.value("order_status").toInt());
 
       count++;
 
@@ -337,22 +338,22 @@ void SellersSalesList::loadUpdate() {
     sortAndResize();
 }
 
-bool SellersSalesList::exists(const QString &provider, const QString &id) {
+bool SellersSalesList::exists(const QString& provider, const QString& id) {
   if (provider.isEmpty() || id.isEmpty())
     return true; // skip empty insert requests
 
   return (getChild(provider, id) != nullptr);
 }
 
-void SellersSalesList::removeOrder(const QString &provider, const QString &id) {
+void SellersSalesList::removeOrder(const QString& provider, const QString& id) {
   if (exists(provider, id))
     return;
 
-  QTreeWidgetItem *c = getChild(provider, id);
+  QTreeWidgetItem* c = getChild(provider, id);
   if (c == nullptr)
     return;
 
-  QTreeWidgetItem *p = c->parent();
+  QTreeWidgetItem* p = c->parent();
   p->removeChild(c);
   resizeColumnToContents(0);
 }
@@ -360,7 +361,7 @@ void SellersSalesList::removeOrder(const QString &provider, const QString &id) {
 void SellersSalesList::sortAndResize() {
   // Erst mal alles Ausgewählte aufheben!
   if (selectedItems().size() > 0) {
-    QListIterator<QTreeWidgetItem *> selections(selectedItems());
+    QListIterator<QTreeWidgetItem*> selections(selectedItems());
     while (selections.hasNext()) {
       selections.next()->setSelected(false);
     }

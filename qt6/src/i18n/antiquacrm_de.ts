@@ -849,12 +849,12 @@ Bitte überprüfen Sie Ihre Netzwerkverbindung.</translation>
 <context>
     <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+46"/>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+50"/>
         <source>Predefined text blocks</source>
         <translation>Vordefinierte Textblöcke</translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+140"/>
         <source>A valid Description is required.</source>
         <translation>Eine gültige Beschreibung ist erforderlich.</translation>
     </message>
@@ -3127,7 +3127,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+213"/>
+        <location filename="../application.cpp" line="+217"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -3192,9 +3192,9 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Cachedateien aktualisiert ...</translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Open AntiquaCRM application ...</source>
-        <translation>Öffne AntiquaCRM-Anwendung ...</translation>
+        <location line="+4"/>
+        <source>Open Window ...</source>
+        <translation>Öffne Fenster ...</translation>
     </message>
 </context>
 <context>
@@ -3276,12 +3276,12 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Menüeintrag</translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+17"/>
         <source>Database Error</source>
         <translation>Datenbankfehler</translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+58"/>
         <source>Section is not set!</source>
         <translation>Bereich ist nicht getzt!</translation>
     </message>
@@ -5661,24 +5661,24 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Speicher Konfiguration</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Table name</source>
-        <translation>Tabellenname</translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>File basename</source>
-        <translation>Dateiname</translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+11"/>
         <source>Title</source>
         <translation>Titel</translation>
     </message>
     <message>
+        <location line="-2"/>
+        <source>Query script</source>
+        <translation>Abfragescript</translation>
+    </message>
+    <message>
         <location line="+1"/>
-        <source>Days until to update</source>
-        <translation>Tage bis zur Aktualisierung</translation>
+        <source>Storage basename</source>
+        <translation>Dateispeichername</translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Last changed</source>
+        <translation>Geändert</translation>
     </message>
     <message>
         <location line="+12"/>
@@ -5686,7 +5686,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Um die Netzwerklast in Remote-Büros zu reduzieren, arbeitet AntiquaCRM mit einem Festplattenspeicher. Sie können den Zyklus einstellen, mit dem der Speicher beim Start der Anwendung aktualisiert wird.</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Disk storage</source>
         <translation>Plattenspeicher</translation>
     </message>
@@ -6269,6 +6269,14 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <location line="+5"/>
         <source>Create Postalcode cache</source>
         <translation>Postleitzahlen-Cache erstellen</translation>
+    </message>
+</context>
+<context>
+    <name>DataCacheQuery</name>
+    <message>
+        <location filename="../utils/datacache/datacachequery.cpp" line="+61"/>
+        <source>Postalcode</source>
+        <translation>Postleitzahl</translation>
     </message>
 </context>
 <context>
@@ -7021,17 +7029,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+230"/>
+        <location filename="../mainwindow.cpp" line="+228"/>
         <source>No tabs available</source>
         <translation>Keine Registerkarten verfügbar</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+13"/>
         <source>Window opened</source>
         <translation>Fenster geöffnet</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Do you really want to close the application?&lt;/p&gt;</source>
         <translation>Möchten Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
     </message>
@@ -8954,7 +8962,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Bestellungen aktualisieren</translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Copy Ordering Id</source>
         <translation>Bestellnummer kopieren</translation>
     </message>
@@ -8974,7 +8982,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Heute</translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Status</source>
         <translation></translation>
     </message>
@@ -8984,32 +8992,32 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Erstellt</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Fetchet</source>
         <translation>Abholbereit</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Delivery</source>
         <translation>Lieferung</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Delivered</source>
         <translation>Geliefert</translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Canceled</source>
         <translation>Storniert</translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+77"/>
         <source>&lt;p&gt;This action is not reversible.&lt;/p&gt;&lt;b&gt;Do you really want that?&lt;/b&gt;</source>
         <translation>&lt;p&gt;Diese Aktion ist nicht rückgängig zu machen.&lt;/p&gt;&lt;b&gt;Wollen Sie das wirklich?&lt;/b&gt;</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Hide order</source>
         <translation>Bestellung ausblenden</translation>
     </message>
@@ -9135,7 +9143,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+137"/>
+        <location line="+134"/>
         <source>Providers</source>
         <translation>Dienstleister</translation>
     </message>
@@ -9631,7 +9639,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Verschiedene Autoren</translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+85"/>
         <source>Data saved successfully!</source>
         <translation>Daten erfolgreich gespeichert!</translation>
     </message>

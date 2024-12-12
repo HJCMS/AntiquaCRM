@@ -230,9 +230,15 @@ bool MainWindow::openWindow() {
   if (config->contains("window/geometry"))
     restoreGeometry(config->value("window/geometry").toByteArray());
 
+  if (config->contains("window/windowState")) {
+    QByteArray state = config->value("window/windowState").toByteArray();
+    if (!state.isNull()) {
+      restoreState(state);
+    }
+  }
+  // Always show on application start
   showNormal();
   m_statusBar->showMessage(tr("Window opened"), 5000);
-
   // @see also showEvent handle
   firstShown = true;
   return true;
@@ -255,7 +261,7 @@ bool MainWindow::closeWindow() {
 
   _geometry.clear();
 
-  // DEVELOPMENT return close();
+         // DEVELOPMENT return close();
   return (m_tabWidget->unloadTabs() && close());
 }
 
@@ -263,7 +269,7 @@ MainWindow::~MainWindow() {
   if (config != nullptr)
     config->deleteLater();
 
-  // Destroy tab interfaces, tabs already closed in closeWindow().
+         // Destroy tab interfaces, tabs already closed in closeWindow().
   if (tabInterfaces.size() > 0) {
     for (int i = 0; i < tabInterfaces.size(); i++) {
       tabInterfaces.takeAt(i)->deleteLater();

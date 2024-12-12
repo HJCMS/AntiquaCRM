@@ -848,12 +848,12 @@ Please check your network connection.</source>
 <context>
     <name>AntiquaCRM::DescripeEditor</name>
     <message>
-        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+46"/>
+        <location filename="../Antiqua/Widgets/descripeeditor.cpp" line="+50"/>
         <source>Predefined text blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+146"/>
+        <location line="+140"/>
         <source>A valid Description is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3124,7 +3124,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+213"/>
+        <location filename="../application.cpp" line="+217"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3189,8 +3189,8 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
-        <source>Open AntiquaCRM application ...</source>
+        <location line="+4"/>
+        <source>Open Window ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3273,12 +3273,12 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+54"/>
+        <location line="+17"/>
         <source>Database Error</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+18"/>
+        <location line="+58"/>
         <source>Section is not set!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5635,23 +5635,23 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Table name</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
-        <source>File basename</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+1"/>
+        <location line="+11"/>
         <source>Title</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <location line="-2"/>
+        <source>Query script</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <location line="+1"/>
-        <source>Days until to update</source>
+        <source>Storage basename</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+2"/>
+        <source>Last changed</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5660,7 +5660,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+90"/>
         <source>Disk storage</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6242,6 +6242,14 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+5"/>
         <source>Create Postalcode cache</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>DataCacheQuery</name>
+    <message>
+        <location filename="../utils/datacache/datacachequery.cpp" line="+61"/>
+        <source>Postalcode</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6995,17 +7003,17 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+230"/>
+        <location filename="../mainwindow.cpp" line="+228"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+13"/>
         <source>Window opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+9"/>
         <source>Do you really want to close the application?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8927,7 +8935,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Copy Ordering Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8947,7 +8955,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+46"/>
+        <location line="+45"/>
         <source>Status</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8957,32 +8965,32 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Fetchet</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Delivery</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Delivered</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+10"/>
+        <location line="+11"/>
         <source>Canceled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+80"/>
+        <location line="+77"/>
         <source>&lt;p&gt;This action is not reversible.&lt;/p&gt;&lt;b&gt;Do you really want that?&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>Hide order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9108,7 +9116,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+137"/>
+        <location line="+134"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9593,7 +9601,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+86"/>
+        <location line="+85"/>
         <source>Data saved successfully!</source>
         <translation type="unfinished"></translation>
     </message>
