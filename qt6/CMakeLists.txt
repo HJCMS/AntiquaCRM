@@ -67,7 +67,8 @@ MESSAGE(STATUS "Using QT_INSTALL_BINS: ${QT_BINARY_TARGET}")
 ## Not changed in custom-config, then set it to default
 IF(NOT ANTIQUACRM_STD_STANDARD)
   ## https://doc.qt.io/qt-6/supported-platforms.html
-  SET(ANTIQUACRM_STD_STANDARD 11)
+  ## https://gcc.gnu.org/projects/cxx-status.html
+  SET(ANTIQUACRM_STD_STANDARD 17)
 ENDIF()
 
 ###
@@ -87,6 +88,7 @@ IF(ANTIQUA_DEVELOPMENT)
     ##  -Wno-implicit-fallthrough
     SET(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -W -Wall -Werror")
     SET(CMAKE_BUILD_TYPE "Debug")
+    SET(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
     SET(QT_VERSION_STRING "6.2.4")
     IF(QT_HOST_PREFIX)
       SET(_INSTALL_PREFIX ${QT_HOST_PREFIX})
