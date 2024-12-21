@@ -53,12 +53,12 @@ INCLUDE_DIRECTORIES (${ANTIQUA_APPL_INCLUDE_DIRS})
 ## If not exists - create icon resource file
 IF (CMAKE_HOST_UNIX)
   FIND_PROGRAM(QRC_UPDATE_PERL
-    "qrciconupdate" "iconupdate.pl"
+    "qrciconupdate" "qrcupdate"
     PATHS ${CMAKE_CURRENT_SOURCE_DIR}
   )
   IF(EXISTS ${QRC_UPDATE_PERL} AND NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/application.qrc)
     ## FILE(GLOB ICON_FILES ${CMAKE_CURRENT_SOURCE_DIR}/icons/*.png)
-    MESSAGE (STATUS "UPDATE application.qrc.")
+    MESSAGE (STATUS "Create application.qrc.")
     EXECUTE_PROCESS (COMMAND ${QRC_UPDATE_PERL}
       WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
       ERROR_QUIET

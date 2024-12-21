@@ -4,7 +4,7 @@ perf.data
 build-*
 build_*
 
-# kde temporary files
+# unix temporary files
 *~
 
 # xemacs temporary files
