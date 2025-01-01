@@ -344,7 +344,7 @@ int Application::exec() {
     }
     m_cache->deleteLater();
     mutex.unlock();
-    p_splash.setMessage(tr("Open Window ..."));
+    p_splash.setMessage(tr("Open Application ..."));
     suspending();
   }
 

@@ -3193,8 +3193,8 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
     </message>
     <message>
         <location line="+4"/>
-        <source>Open Window ...</source>
-        <translation>Öffne Fenster ...</translation>
+        <source>Open Application ...</source>
+        <translation>Starte Anwendung ...</translation>
     </message>
 </context>
 <context>

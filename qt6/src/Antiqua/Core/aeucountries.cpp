@@ -6,8 +6,12 @@
 namespace AntiquaCRM
 {
 
+#ifndef FALLBACK_CODE
+#  define FALLBACK_CODE QString("XX")
+#endif
+
 AEUCountries::AEUCountries(const QLocale& locale) : QLocale{locale}, QMap<QString, QString>{} {
-  insert("XX", QString());
+  insert(FALLBACK_CODE, QString());
   QListIterator<QLocale::Country> it(europeanUnion());
   while (it.hasNext()) {
     QLocale _c(QLocale::AnyLanguage, it.next());
@@ -22,7 +26,7 @@ AEUCountries::AEUCountries(const QLocale& locale) : QLocale{locale}, QMap<QStrin
 }
 
 const QString AEUCountries::isoCode(const QString& country) {
-  return key(country, "XX");
+  return key(country, FALLBACK_CODE);
 }
 
 const QString AEUCountries::countryName(const QString& iso) {
@@ -30,35 +34,35 @@ const QString AEUCountries::countryName(const QString& iso) {
 }
 
 const QList<QLocale::Country> AEUCountries::europeanUnion() {
-  QList<QLocale::Country> _eul;
-  _eul.append(QLocale::Austria);
-  _eul.append(QLocale::Belgium);
-  _eul.append(QLocale::Bulgaria);
-  _eul.append(QLocale::Croatia);
-  _eul.append(QLocale::Cyprus);
-  _eul.append(QLocale::Czechia);
-  _eul.append(QLocale::Denmark);
-  _eul.append(QLocale::Estonia);
-  _eul.append(QLocale::Finland);
-  _eul.append(QLocale::France);
-  _eul.append(QLocale::Germany);
-  _eul.append(QLocale::Greece);
-  _eul.append(QLocale::Hungary);
-  _eul.append(QLocale::Ireland);
-  _eul.append(QLocale::Italy);
-  _eul.append(QLocale::Latvia);
-  _eul.append(QLocale::Lithuania);
-  _eul.append(QLocale::Luxembourg);
-  _eul.append(QLocale::Malta);
-  _eul.append(QLocale::Netherlands);
-  _eul.append(QLocale::Poland);
-  _eul.append(QLocale::Portugal);
-  _eul.append(QLocale::Romania);
-  _eul.append(QLocale::Slovakia);
-  _eul.append(QLocale::Slovenia);
-  _eul.append(QLocale::Spain);
-  _eul.append(QLocale::Sweden);
-  return _eul;
+  QList<QLocale::Country> _l;
+  _l.append(QLocale::Austria);
+  _l.append(QLocale::Belgium);
+  _l.append(QLocale::Bulgaria);
+  _l.append(QLocale::Croatia);
+  _l.append(QLocale::Cyprus);
+  _l.append(QLocale::Czechia);
+  _l.append(QLocale::Denmark);
+  _l.append(QLocale::Estonia);
+  _l.append(QLocale::Finland);
+  _l.append(QLocale::France);
+  _l.append(QLocale::Germany);
+  _l.append(QLocale::Greece);
+  _l.append(QLocale::Hungary);
+  _l.append(QLocale::Ireland);
+  _l.append(QLocale::Italy);
+  _l.append(QLocale::Latvia);
+  _l.append(QLocale::Lithuania);
+  _l.append(QLocale::Luxembourg);
+  _l.append(QLocale::Malta);
+  _l.append(QLocale::Netherlands);
+  _l.append(QLocale::Poland);
+  _l.append(QLocale::Portugal);
+  _l.append(QLocale::Romania);
+  _l.append(QLocale::Slovakia);
+  _l.append(QLocale::Slovenia);
+  _l.append(QLocale::Spain);
+  _l.append(QLocale::Sweden);
+  return _l;
 }
 
 } // namespace AntiquaCRM

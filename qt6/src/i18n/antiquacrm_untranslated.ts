@@ -3190,7 +3190,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     </message>
     <message>
         <location line="+4"/>
-        <source>Open Window ...</source>
+        <source>Open Application ...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
