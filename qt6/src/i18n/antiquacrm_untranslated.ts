@@ -262,7 +262,7 @@
 <context>
     <name>AntiquaCRM::ALineEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+28"/>
+        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+29"/>
         <source>Show Completer Popup.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -272,7 +272,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+64"/>
         <source>Copied data into clipboard.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -282,7 +282,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+47"/>
         <source>Max allowed length</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3075,7 +3075,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+57"/>
         <source>This text line is required!</source>
         <translation type="unfinished"></translation>
     </message>

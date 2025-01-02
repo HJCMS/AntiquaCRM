@@ -5,17 +5,14 @@
 #include "alabel.h"
 #include "awhatsthisbutton.h"
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 // BEGIN::AInputWidget
-AInputWidget::AInputWidget(QWidget *parent) : QWidget{parent}, required{false} {
+AInputWidget::AInputWidget(QWidget* parent) : QWidget{parent}, required{false} {
   config = new AntiquaCRM::ASettings(this);
-  displayToolTips =
-      config->groupValue("window_behavior", "display_tooltip_buttons", true)
-          .toBool();
-  mouseWheelEvents =
-      config->groupValue("window_behavior", "mouse_wheel_support", false)
-          .toBool();
+  displayToolTips = config->groupValue("window_behavior", "display_tooltip_buttons", true).toBool();
+  mouseWheelEvents = config->groupValue("window_behavior", "mouse_wheel_support", false).toBool();
 
   setContentsMargins(0, 0, 0, 0);
   layout = new QBoxLayout(QBoxLayout::LeftToRight, this);
@@ -24,34 +21,49 @@ AInputWidget::AInputWidget(QWidget *parent) : QWidget{parent}, required{false} {
   setLayout(layout);
 }
 
-AInputWidget::~AInputWidget() {}
+AInputWidget::~AInputWidget() {
+}
 
-void AInputWidget::focusOutEvent(QFocusEvent *e) {
+const QString AInputWidget::replaceChars(const QString& data) {
+  QString _buffer = data.trimmed();
+  _buffer = _buffer.replace("'", "’");
+  _buffer = _buffer.replace("\"", "’");
+  _buffer = _buffer.replace("`", "’");
+  _buffer = _buffer.replace("´", "’");
+  _buffer = _buffer.replace("<", "«");
+  _buffer = _buffer.replace(">", "»");
+  return _buffer.trimmed();
+}
+
+void AInputWidget::focusOutEvent(QFocusEvent* e) {
   if (e->type() == QEvent::FocusOut)
     emit sendLeaveInput();
 
   QWidget::focusOutEvent(e);
 }
 
-void AInputWidget::setRequired(bool b) { required = b; }
+void AInputWidget::setRequired(bool b) {
+  required = b;
+}
 
-AntiquaCRM::ALabel *AInputWidget::addTitleLabel(const QString &title,
-                                                Qt::Alignment align) {
-  ALabel *m_lb = new ALabel(title, this);
+AntiquaCRM::ALabel* AInputWidget::addTitleLabel(const QString& title, Qt::Alignment align) {
+  ALabel* m_lb = new ALabel(title, this);
   m_lb->setAlignment(align);
   m_lb->setTextInteractionFlags(Qt::NoTextInteraction);
   layout->insertWidget(0, m_lb);
   return m_lb;
 }
 
-bool AInputWidget::isRequired() { return required; }
+bool AInputWidget::isRequired() {
+  return required;
+}
 
-void AInputWidget::setWhatsThisText(const QString &text) {
+void AInputWidget::setWhatsThisText(const QString& text) {
   if (text.isEmpty())
     return;
 
   if (displayToolTips) {
-    AWhatsThisButton *m_tbn = new AWhatsThisButton(text, this);
+    AWhatsThisButton* m_tbn = new AWhatsThisButton(text, this);
     m_tbn->setFocusPolicy(Qt::NoFocus);
     layout->addWidget(m_tbn);
   }

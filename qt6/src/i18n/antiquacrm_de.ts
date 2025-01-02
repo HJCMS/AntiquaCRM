@@ -262,7 +262,7 @@
 <context>
     <name>AntiquaCRM::ALineEdit</name>
     <message>
-        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+28"/>
+        <location filename="../Antiqua/Widgets/alineedit.cpp" line="+29"/>
         <source>Show Completer Popup.</source>
         <translation>Vervollständigungs Fenster anzeigen.</translation>
     </message>
@@ -272,7 +272,7 @@
         <translation>Ungültiger Inhalt</translation>
     </message>
     <message>
-        <location line="+62"/>
+        <location line="+64"/>
         <source>Copied data into clipboard.</source>
         <translation>Daten in die Zwischenablage kopiert.</translation>
     </message>
@@ -282,7 +282,7 @@
         <translation>Ungültiger Inhalt erkannt.</translation>
     </message>
     <message>
-        <location line="+43"/>
+        <location line="+47"/>
         <source>Max allowed length</source>
         <translation>Maximal zulässige Länge</translation>
     </message>
@@ -3078,7 +3078,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Maximal zulässige Länge</translation>
     </message>
     <message>
-        <location line="+56"/>
+        <location line="+57"/>
         <source>This text line is required!</source>
         <translation>Diese Eingabezeile ist erforderlich!</translation>
     </message>

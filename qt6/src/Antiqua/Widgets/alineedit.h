@@ -17,7 +17,8 @@
 #include <QSqlField>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class LineInputValidator;
 
@@ -34,8 +35,7 @@ class LineInputValidator;
  */
 class ANTIQUACRM_LIBRARY ALineEdit final : public QLineEdit {
   Q_OBJECT
-  Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY
-                 sendMinLengthChanged)
+  Q_PROPERTY(int minLength READ getMinLength WRITE setMinLength NOTIFY sendMinLengthChanged)
 
 private:
   /**
@@ -49,18 +49,18 @@ private:
    * Only visible if a QCompleter is add and Completers size is greater then 0.
    * See also QLineEdit::addAction
    */
-  QAction *ac_completer;
+  QAction* ac_completer;
 
   /**
    * @brief Action icon to note invalid content!
    */
-  QAction *ac_invalid;
+  QAction* ac_invalid;
 
   /**
    * @brief Default input Validator and initialized in constructor.
    * @sa invalidChars
    */
-  LineInputValidator *m_validator;
+  LineInputValidator* m_validator;
 
   /**
    * @brief Static List of Invalid Input chars
@@ -91,7 +91,7 @@ private Q_SLOTS:
   /**
    * @brief emit sendFocusOut if (text().length()>2)
    */
-  void focusOutEvent(QFocusEvent *) override;
+  void focusOutEvent(QFocusEvent*) override;
 
   /**
    * @brief prevent dialog acception when return pressed
@@ -108,7 +108,7 @@ protected Q_SLOTS:
    * @brief Sends a StatusTipEvent to MainWindow StatusBar
    * @note No timeout message will send to the Statusbar!
    */
-  void pushStatusTipMessage(const QString &);
+  void pushStatusTipMessage(const QString&);
 
   /**
    * @brief Copy content into system clipboard
@@ -169,7 +169,7 @@ public:
    * @brief AntiquaCRM Line input edit widget
    * @param parent - parent Widget
    */
-  explicit ALineEdit(QWidget *parent = nullptr);
+  explicit ALineEdit(QWidget* parent = nullptr);
 
   /**
    * @brief the minimum acceptable Characters length.
@@ -193,7 +193,7 @@ public:
    * modifies setMaxLength, setPlaceHolderText and if QSqlField::Required is
    * set, setClearButtonEnabled will change to false.
    */
-  void setLineEditProperties(const QSqlField &prop);
+  void setLineEditProperties(const QSqlField& prop);
 
   /**
    * @brief current text length

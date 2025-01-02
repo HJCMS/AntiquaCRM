@@ -13,6 +13,7 @@
 #include <QBoxLayout>
 #include <QFocusEvent>
 #include <QIcon>
+#include <QMap>
 #include <QMetaType>
 #include <QObject>
 #include <QResource>
@@ -20,7 +21,8 @@
 #include <QVariant>
 #include <QWidget>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
 class ALabel;
 
@@ -33,8 +35,7 @@ class ALabel;
  */
 class ANTIQUACRM_LIBRARY AInputWidget : public QWidget {
   Q_OBJECT
-  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY
-                 sendRequiredChanged)
+  Q_PROPERTY(bool required READ isRequired WRITE setRequired NOTIFY sendRequiredChanged)
 
 private:
   bool required;
@@ -45,7 +46,7 @@ protected:
    *
    * The main system configuration and is also initialized in constructor.
    */
-  AntiquaCRM::ASettings *config;
+  AntiquaCRM::ASettings* config;
 
   /**
    * @brief By default all mouse wheel Events disabled.
@@ -80,7 +81,7 @@ protected:
    * Read Qt's Api-Documentation to change the direction behavior.
    * By default it is a „QBoxLayout::LeftToRight“ layout.
    */
-  QBoxLayout *layout;
+  QBoxLayout* layout;
 
   /**
    * @brief e.g. initial database, container or model data
@@ -95,6 +96,13 @@ protected:
    */
   virtual void initData() = 0;
 
+  /**
+   * @brief replace inputs characters
+   *
+   * This list is used by Default get/setValue to prevent invalid characters.
+   */
+  static const QString replaceChars(const QString &);
+
 protected Q_SLOTS:
   /**
    * @brief focusOutEvent
@@ -102,7 +110,7 @@ protected Q_SLOTS:
    * The „focusOutEvent“ will emitted the „sendLeaveInput“ Signal for
    * subclassing Input wigets, to create modify changes checks.
    */
-  virtual void focusOutEvent(QFocusEvent *) override;
+  virtual void focusOutEvent(QFocusEvent*) override;
 
 Q_SIGNALS:
   /**
@@ -141,7 +149,7 @@ public Q_SLOTS:
    * give a QVariant. The conversion of the data takes place in the input class.
    * See also „setRestrictions“ Method and QSqlField.
    */
-  virtual void setValue(const QVariant &) = 0;
+  virtual void setValue(const QVariant&) = 0;
 
   /**
    * @brief focus input
@@ -161,7 +169,7 @@ public:
    * @brief Abstract class for edit widgets
    * @param parent - Important, we need a valid handle for AntiquaCRM::ASettings
    */
-  explicit AInputWidget(QWidget *parent = nullptr);
+  explicit AInputWidget(QWidget* parent = nullptr);
   virtual ~AInputWidget();
 
   /**
@@ -170,19 +178,18 @@ public:
    * Qt's QSqlField class gives us all Information to prepare input Data in the
    * right format. This method is reserved to do this.
    */
-  virtual void setRestrictions(const QSqlField &) = 0;
+  virtual void setRestrictions(const QSqlField&) = 0;
 
   /**
    * @brief Helper function to set Tooltips inside input layout.
    */
-  virtual void setInputToolTip(const QString &) = 0;
+  virtual void setInputToolTip(const QString&) = 0;
 
   /**
    * @brief Prepend a title label to the layout
    */
-  AntiquaCRM::ALabel *addTitleLabel(const QString &title,
-                                    Qt::Alignment align = (Qt::AlignRight |
-                                                           Qt::AlignVCenter));
+  AntiquaCRM::ALabel* addTitleLabel(const QString& title,
+                                    Qt::Alignment align = (Qt::AlignRight | Qt::AlignVCenter));
 
   /**
    * @brief get about status, if this input is required or not.
@@ -199,7 +206,7 @@ public:
    *
    * @note Use addTitleLabel() to set and get the Buddy label.
    */
-  virtual void setBuddyLabel(const QString &) = 0;
+  virtual void setBuddyLabel(const QString&) = 0;
 
   /**
    * @brief Append a WhatsThis Tool Button to the input widget.
@@ -207,7 +214,7 @@ public:
    * On not X11 Platforms the What’s this Button is missing on the taskbar.
    * We need it for additional User Information.
    */
-  virtual void setWhatsThisText(const QString &);
+  virtual void setWhatsThisText(const QString&);
 
   /**
    * @brief Finally appending a stretch to the Widget::layout

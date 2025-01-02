@@ -38,7 +38,7 @@ void TextLine::setValue(const QVariant& value) {
   QString _data;
   switch (_type.id()) {
     case (QMetaType::QString):
-      _data = value.toString().trimmed();
+      _data = replaceChars(value.toString());
       break;
 
     case (QMetaType::QByteArray): // Password
@@ -156,7 +156,8 @@ const QVariant TextLine::getValue() {
     QByteArray _pw = _data.toLocal8Bit().toBase64(QByteArray::Base64Encoding);
     return _pw;
   }
-  return _data;
+
+  return replaceChars(_data);
 }
 
 const QString TextLine::popUpHints() {

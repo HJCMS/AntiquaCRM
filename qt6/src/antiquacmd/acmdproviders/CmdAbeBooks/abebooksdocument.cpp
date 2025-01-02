@@ -224,7 +224,10 @@ const QVariant AbeBooksDocument::getNodeValue(const QDomNode &parent) {
 const QString AbeBooksDocument::getTagText(const QDomNode &parent,
                                            const QString &tag) const {
   QString _string = parent.namedItem(tag).firstChild().nodeValue();
-  return _string.trimmed().replace("'","’");
+  // Thanks to AbeBooks, they change strings to unwanted characters :-(
+  _string = _string.trimmed().replace("'","’");
+  _string = _string.trimmed().replace("`","’");
+  return _string.replace("´","’");
 }
 
 const QVariant AbeBooksDocument::getAddressValue(const QDomNode &addressNode,

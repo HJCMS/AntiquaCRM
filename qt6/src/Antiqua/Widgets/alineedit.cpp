@@ -17,9 +17,10 @@
 #include <QTimer>
 #include <QValidator>
 
-namespace AntiquaCRM {
+namespace AntiquaCRM
+{
 
-ALineEdit::ALineEdit(QWidget *parent) : QLineEdit{parent} {
+ALineEdit::ALineEdit(QWidget* parent) : QLineEdit{parent} {
   setObjectName("ALineEdit");
   setClearButtonEnabled(true);
   setFocusPolicy(Qt::StrongFocus);
@@ -56,9 +57,9 @@ void ALineEdit::setArticleValidator() {
 }
 
 void ALineEdit::initCompleter() {
-  QCompleter *m_cpl = completer();
+  QCompleter* m_cpl = completer();
   if (m_cpl != nullptr) {
-    QAbstractItemView *m_view = m_cpl->popup();
+    QAbstractItemView* m_view = m_cpl->popup();
     m_view->setAlternatingRowColors(true);
     m_view->setSelectionBehavior(QAbstractItemView::SelectRows);
     m_view->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -67,7 +68,7 @@ void ALineEdit::initCompleter() {
   }
 }
 
-void ALineEdit::focusOutEvent(QFocusEvent *event) {
+void ALineEdit::focusOutEvent(QFocusEvent* event) {
   if (event->lostFocus() && (text().length() > minLength)) {
     emit sendFocusOut();
   }
@@ -80,9 +81,11 @@ void ALineEdit::skipReturnPressed() {
     setModified(true);
 }
 
-void ALineEdit::resetVisualFeedback() { setValidContent(true); }
+void ALineEdit::resetVisualFeedback() {
+  setValidContent(true);
+}
 
-void ALineEdit::pushStatusTipMessage(const QString &info) {
+void ALineEdit::pushStatusTipMessage(const QString& info) {
   QStatusTipEvent _event(info);
   QApplication::sendEvent(this, &_event);
 }
@@ -121,25 +124,29 @@ void ALineEdit::setVisualFeedback(int timeout) {
   QTimer::singleShot(timeout, this, SLOT(resetVisualFeedback()));
 }
 
-int ALineEdit::getMinLength() { return minLength; }
+int ALineEdit::getMinLength() {
+  return minLength;
+}
 
 void ALineEdit::setValidation(AntiquaCRM::ALineEdit::InputValidator type) {
   switch (type) {
-  case (InputValidator::STRINGS):
-    setValidator(m_validator);
-    break;
+    case (InputValidator::STRINGS):
+      setValidator(m_validator);
+      break;
 
-  case (InputValidator::ARTICLE):
-    setArticleValidator();
-    break;
+    case (InputValidator::ARTICLE):
+      setArticleValidator();
+      break;
 
-  case (InputValidator::NUMERIC):
-    setNumericValidator();
-    break;
+    case (InputValidator::NUMERIC):
+      setNumericValidator();
+      break;
 
-  default: {
-    setValidator(m_validator);
-  } break;
+    default:
+      {
+        setValidator(m_validator);
+      }
+      break;
   };
 }
 
@@ -148,7 +155,7 @@ void ALineEdit::setCompleterAction(bool enabled) {
   ac_completer->setVisible(enabled);
 }
 
-void ALineEdit::setLineEditProperties(const QSqlField &prop) {
+void ALineEdit::setLineEditProperties(const QSqlField& prop) {
   if (prop.metaType().id() != QMetaType::QString)
     return;
 
@@ -175,7 +182,9 @@ void ALineEdit::setLineEditProperties(const QSqlField &prop) {
     setValidation(InputValidator::DEFAULT);
 }
 
-int ALineEdit::length() { return text().trimmed().length(); }
+int ALineEdit::length() {
+  return text().trimmed().length();
+}
 
 const QString ALineEdit::getArticleNumber() {
   QString _buffer = text().trimmed();
