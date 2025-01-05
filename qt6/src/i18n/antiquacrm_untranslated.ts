@@ -3124,7 +3124,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+217"/>
+        <location filename="../application.cpp" line="+219"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3191,6 +3191,11 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
     <message>
         <location line="+4"/>
         <source>Open Application ...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Open window failed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -5828,7 +5833,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>CustomersOrders</name>
     <message>
-        <location filename="../tabs/customers/customersorders.cpp" line="+16"/>
+        <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8915,7 +8920,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SellersSalesList</name>
     <message>
-        <location filename="../tabs/sellers/sellerssaleslist.cpp" line="+23"/>
+        <location filename="../tabs/sellers/sellerssaleslist.cpp" line="+24"/>
         <source>Orders</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8985,7 +8990,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+78"/>
         <source>&lt;p&gt;This action is not reversible.&lt;/p&gt;&lt;b&gt;Do you really want that?&lt;/b&gt;</source>
         <translation type="unfinished"></translation>
     </message>

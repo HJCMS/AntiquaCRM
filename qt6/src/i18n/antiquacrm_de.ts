@@ -3127,7 +3127,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+217"/>
+        <location filename="../application.cpp" line="+219"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -3195,6 +3195,11 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <location line="+4"/>
         <source>Open Application ...</source>
         <translation>Starte Anwendung ...</translation>
+    </message>
+    <message>
+        <location line="+6"/>
+        <source>Open window failed.</source>
+        <translation>Öffnen fehlgeschlagen.</translation>
     </message>
 </context>
 <context>
@@ -5854,7 +5859,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>CustomersOrders</name>
     <message>
-        <location filename="../tabs/customers/customersorders.cpp" line="+16"/>
+        <location filename="../tabs/customers/customersorders.cpp" line="+17"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -8942,7 +8947,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SellersSalesList</name>
     <message>
-        <location filename="../tabs/sellers/sellerssaleslist.cpp" line="+23"/>
+        <location filename="../tabs/sellers/sellerssaleslist.cpp" line="+24"/>
         <source>Orders</source>
         <translation>Aufträge</translation>
     </message>
@@ -9012,7 +9017,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Storniert</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+78"/>
         <source>&lt;p&gt;This action is not reversible.&lt;/p&gt;&lt;b&gt;Do you really want that?&lt;/b&gt;</source>
         <translation>&lt;p&gt;Diese Aktion ist nicht rückgängig zu machen.&lt;/p&gt;&lt;b&gt;Wollen Sie das wirklich?&lt;/b&gt;</translation>
     </message>

@@ -11,7 +11,8 @@
 #ifdef Q_OS_WIN
 #  include <Windows.h>
 #else
-#  include <unistd.h>
+#  include <chrono>
+#  include <thread>
 #endif
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
@@ -60,9 +61,9 @@ bool Application::registerSessionBus() {
 
 void Application::suspending() const {
 #ifdef Q_OS_WIN
-  Sleep(1500);
+  Sleep(500);
 #else
-  sleep(1);
+  std::this_thread::sleep_for(std::chrono::milliseconds(500));
 #endif
 }
 
@@ -189,7 +190,8 @@ bool Application::initMainWindow() {
     m_systray = new SystemTrayIcon(applIcon(), this);
 
 #ifdef Q_OS_WIN
-  Sleep(500);
+  // @fixme worker threads in windows taskbar
+  suspending();
 #endif
 
   // The MainWindow must initialized behind the taskbar entry,
@@ -350,14 +352,13 @@ int Application::exec() {
 
   // Step 6 - UIX
   if (!initMainWindow()) {
+    p_splash.errorMessage(tr("Open window failed."));
     qFatal("failed to initital antiquacrm window");
+    suspending();
     return 1;
   }
 
-  // Step 7 - finish splash and unlock
-  p_splash.finish(m_window);
-
-  // Step 8 - open window
+  // Step 7 - open window
   if (m_window->openWindow()) {
 #ifdef ANTIQUACRM_DBUS_ENABLED
     if (registerSessionBus()) {
@@ -372,5 +373,9 @@ int Application::exec() {
     }
 #endif
   }
+
+  // Step 8 - finish splash and unlock
+  p_splash.finish(m_window);
+
   return QApplication::exec();
 }

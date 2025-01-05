@@ -36,45 +36,44 @@ const QSqlError ASqlCore::sqlNetworkError() const {
 
 bool ASqlCore::initDatabase() {
   if (!networkStatus()) {
-#ifdef ANTIQUA_DEVELOPMENT
-    qDebug() << Q_FUNC_INFO << "Network interface is down!";
-#endif
+    qWarning("Network interface is down!");
     return false;
   }
 
-  if (database != nullptr)
-    return database->isValid();
+  if ((database != nullptr) && (database->isValid()))
+    return true;
 
+  // Initial DataBaseConnection
   // https://www.postgresql.org/docs/current/libpq-connect.html
-  QSqlDatabase db = QSqlDatabase::addDatabase("QPSQL", config->connectionName());
-  ASqlProfile profile = config->connectionProfile();
-  db.setHostName(profile.getHostname());
-  db.setPort(profile.getPort());
-  db.setDatabaseName(profile.getDatabaseName());
-  db.setUserName(profile.getUsername());
-  db.setPassword(profile.getPassword());
+  QSqlDatabase _dbc = QSqlDatabase::addDatabase("QPSQL", config->connectionName());
+  ASqlProfile _cfg = config->connectionProfile();
+  _dbc.setHostName(_cfg.getHostname());
+  _dbc.setPort(_cfg.getPort());
+  _dbc.setDatabaseName(_cfg.getDatabaseName());
+  _dbc.setUserName(_cfg.getUsername());
+  _dbc.setPassword(_cfg.getPassword());
 
-  QStringList options;
-  options << QString("connect_timeout=%1").arg(profile.getTimeout());
-  options << QString("application_name=%1").arg(identifier());
-  options << QString("target_session_attrs=read-write");
+  QStringList _opts;
+  _opts << QString("connect_timeout=%1").arg(_cfg.getTimeout());
+  _opts << QString("application_name=%1").arg(identifier());
+  _opts << QString("target_session_attrs=read-write");
 
-  if (profile.getEnableSSL()) {
-    options << QString("sslsni=1");
-    options << QString("sslmode=%1").arg(profile.getSslMode());
-    QString _crt = profile.getSslRootCert();
+  if (_cfg.getEnableSSL()) {
+    _opts << QString("sslsni=1");
+    _opts << QString("sslmode=%1").arg(_cfg.getSslMode());
+    QString _crt = _cfg.getSslRootCert();
     if (_crt.isEmpty())
-      options << QString("sslrootcert=%1").arg("system");
+      _opts << QString("sslrootcert=%1").arg("system");
     else
-      options << QString("sslrootcert=%1").arg(_crt);
+      _opts << QString("sslrootcert=%1").arg(_crt);
   }
-  db.setConnectOptions(options.join(";"));
+  _dbc.setConnectOptions(_opts.join(";"));
 
-  if (!db.isValid())
+  if (!_dbc.isValid())
     return false;
 
   if (database == nullptr)
-    database = new QSqlDatabase(db);
+    database = new QSqlDatabase(_dbc);
 
   if (database->isOpenError()) {
     qWarning("Database open errors ...");
@@ -98,7 +97,7 @@ bool ASqlCore::isConnected() {
   if (database->open())
     return true;
 
-  QSqlError _err = database->lastError();
+  const QSqlError _err = database->lastError();
   if (_err.isValid())
     prepareSqlError(_err);
 
@@ -141,9 +140,8 @@ bool ASqlCore::status() {
     return false;
 
   QString _select("SELECT state FROM pg_stat_activity WHERE");
-  _select.append(" application_name='" + identifier() + "'");
-  _select.append(" AND state IS NOT NULL;");
-  return (query(_select).size() > 0);
+  _select.append(" application_name='" + identifier() + "' AND state IS NOT NULL;");
+  return (ASqlCore::query(_select).size() > 0);
 }
 
 bool ASqlCore::networkStatus() {
@@ -216,32 +214,33 @@ const QSqlRecord ASqlCore::record(const QString& table) {
   if (!isConnected())
     return QSqlRecord();
 
-  QSqlRecord re;
-  re = database->record(table);
-  return re;
+  return database->record(table);
 }
 
 const QStringList ASqlCore::fieldNames(const QString& table) {
-  if (!isConnected())
-    return QStringList();
+  QStringList _l;
 
-  QStringList l;
-  QSqlRecord re = record(table);
-  if (!re.isEmpty()) {
-    for (int i = 0; i < re.count(); i++) {
-      if (re.field(i).isValid())
-        l.append(re.field(i).name());
-    }
+  if (!isConnected())
+    return _l;
+
+  const QSqlRecord _r = ASqlCore::record(table);
+  if (_r.isEmpty())
+    return _l;
+
+  for (int i = 0; i < _r.count(); i++) {
+    if (_r.field(i).isValid())
+      _l.append(_r.field(i).name());
   }
-  return l;
+
+  return _l;
 }
 
 const QSqlQuery ASqlCore::query(const QString& statement) {
   if (!isConnected() || statement.isEmpty())
     return QSqlQuery();
 
-  QSqlQuery _query;
-  _query = database->exec(statement);
+  QSqlQuery _query(db());
+  _query.exec(statement);
 
   if (_query.lastError().isValid())
     prepareSqlError(_query.lastError());
@@ -250,7 +249,7 @@ const QSqlQuery ASqlCore::query(const QString& statement) {
 }
 
 const QString ASqlCore::lastError() {
-  QSqlError _error = database->lastError();
+  const QSqlError _error = database->lastError();
   if (_error.isValid())
     return _error.text();
 

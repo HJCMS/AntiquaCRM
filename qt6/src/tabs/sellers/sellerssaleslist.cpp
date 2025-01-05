@@ -10,6 +10,7 @@
 #include <QDate>
 #include <QDebug>
 #include <QIcon>
+#include <QLocale>
 #include <QMenu>
 
 SellersSalesList::SellersSalesList(QWidget* parent) : QTreeWidget{parent} {
@@ -215,25 +216,26 @@ void SellersSalesList::addOrder(const QString& pro, const TreeOrderItem& data) {
   if (exists(pro, data.id))
     return;
 
-  QFont font(SellersSalesList::font());
-  font.setItalic(true);
+  QFont _font(SellersSalesList::font());
+  _font.setItalic(true);
 
   QTreeWidgetItem* p = getParent(pro);
   if (p != nullptr) {
-    QTreeWidgetItem* item = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
-    item->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
+    QTreeWidgetItem* m_i = new QTreeWidgetItem(p, QTreeWidgetItem::UserType);
+    m_i->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled | Qt::ItemNeverHasChildren);
 
-    QDateTime dt(data.datetime);
-    QString tip(data.buyer + "\n" + dt.toString("ddd dd. MMMM yyyy hh:mm"));
-    item->setText(0, data.id);
-    item->setFont(0, font);
-    item->setToolTip(0, tip.trimmed());
-    item->setText(1, setDateString(dt));
-    item->setIcon(1, AntiquaCRM::antiquaIcon("dialog-warning"));
-    item->setToolTip(1, tip.trimmed());
-    item->setText(2, data.buyer);
-    updateOrderStatus(item, data.status);
-    p->addChild(item);
+    QString _tip(data.buyer + "\n"
+                 + QLocale::system().toString(data.datetime, ANTIQUACRM_DATETIME_DISPLAY));
+
+    m_i->setText(0, data.id);
+    m_i->setFont(0, _font);
+    m_i->setToolTip(0, _tip.trimmed());
+    m_i->setText(1, setDateString(data.datetime));
+    m_i->setIcon(1, AntiquaCRM::antiquaIcon("dialog-warning"));
+    m_i->setToolTip(1, _tip.trimmed());
+    m_i->setText(2, data.buyer);
+    updateOrderStatus(m_i, data.status);
+    p->addChild(m_i);
   }
 }
 
@@ -290,51 +292,51 @@ void SellersSalesList::copyProviderId() {
 void SellersSalesList::loadUpdate() {
   // Untermenü-Einträge entfernen!
   if (topLevelItemCount() > 0) {
-    for (int t = 0; t < topLevelItemCount(); t++) {
-      clearProvider(topLevelItem(t)->text(0));
+    for (int _i = 0; _i < topLevelItemCount(); _i++) {
+      clearProvider(topLevelItem(_i)->text(0));
     }
   }
 
-  QString table("query_provider_orders");
+  QString _table("query_provider_orders");
   AntiquaCRM::ASqlCore pgsql(this);
   if (!pgsql.open()) {
     qWarning("No SQL connection for load Update Sellers list.");
     return;
   }
 
-  QString sql = AntiquaCRM::ASqlFiles::queryStatement(table);
-  QSqlQuery q = pgsql.query(sql);
-  int count = 0;
-  if (q.size() > 0) {
-    while (q.next()) {
-      QString id = q.value("order_number").toString();
-      QString provider = q.value("order_provider").toString();
-      addProvider(provider);
+  const QString _sql = AntiquaCRM::ASqlFiles::queryStatement(_table);
+  QSqlQuery _q = pgsql.query(_sql);
+  int _c = 0;
+  if (_q.size() > 0) {
+    while (_q.next()) {
+      QString _ordnr = _q.value("order_number").toString();
+      QString _provider = _q.value("order_provider").toString();
+      addProvider(_provider);
 
-      AntiquaCRM::OrderStatus status = AntiquaCRM::OrderStatus::CANCELED;
-      if (!q.value("pr_ignore").toBool())
-        status = static_cast<AntiquaCRM::OrderStatus>(q.value("order_status").toInt());
+      AntiquaCRM::OrderStatus _status = AntiquaCRM::OrderStatus::CANCELED;
+      if (!_q.value("pr_ignore").toBool())
+        _status = static_cast<AntiquaCRM::OrderStatus>(_q.value("order_status").toInt());
 
-      count++;
+      _c++;
 
-      if (exists(provider, id)) {
-        updateItemStatus(provider, id, status);
+      if (exists(_provider, _ordnr)) {
+        updateItemStatus(_provider, _ordnr, _status);
         continue;
       }
-      //  TODO order_comment
-      QString d_time = q.value("order_datetime").toString();
-      TreeOrderItem data;
-      data.id = id;
-      data.datetime = QDateTime::fromString(d_time, Qt::ISODate);
-      data.buyer = q.value("order_buyername").toString();
-      data.status = status;
-      addOrder(provider, data);
+
+      QDateTime _dt = QDateTime::fromString(_q.value("order_datetime").toString(), Qt::ISODate);
+      TreeOrderItem _item;
+      _item.id = _ordnr;
+      _item.datetime = _dt;
+      _item.buyer = _q.value("order_buyername").toString();
+      _item.status = _status;
+      addOrder(_provider, _item);
     }
   } else if (!pgsql.lastError().isEmpty()) {
     return;
   }
 
-  if (count > 0)
+  if (_c > 0)
     sortAndResize();
 }
 
