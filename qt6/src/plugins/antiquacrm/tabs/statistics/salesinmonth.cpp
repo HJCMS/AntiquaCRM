@@ -7,13 +7,11 @@
 
 #include <QChar>
 #include <QFontMetricsF>
+#include <QLocale>
 #include <QSqlQuery>
 
-#ifdef ANTIQUA_DEVELOPMENT
-#define CURRENT_DATE QDate::currentDate()
-#endif
-
-SalesInMonth::SalesInMonth(QWidget* parent) : AntiquaCRM::AChartView{parent} {
+SalesInMonth::SalesInMonth(QWidget* parent)
+    : AntiquaCRM::AChartView{parent}, p_date{QDate::currentDate()} {
   setObjectName("statistics_sales_in_month");
   m_chart = new QChart(itemAt(0, 0));
   m_chart->setTitleFont(headersFont);
@@ -88,6 +86,7 @@ bool SalesInMonth::initMaps() {
 
 bool SalesInMonth::initialChartView(int year) {
   Q_UNUSED(year);
+  const QLocale _lc(QLocale::system());
   QString _query; // query statement
   // init months range map
   if (!initMaps())
@@ -112,7 +111,7 @@ bool SalesInMonth::initialChartView(int year) {
     QMap<int, double> _smap = p_soldMap[_y];
     _smap[_m] += _s;
 #ifdef ANTIQUA_DEVELOPMENT
-    if (_y == CURRENT_DATE.year() && _m == CURRENT_DATE.month())
+    if (_y == p_date.year() && _m == p_date.month())
       qDebug() << _m << _s << _smap[_m];
 #endif
     p_soldMap[_y] = _smap;
@@ -128,14 +127,14 @@ bool SalesInMonth::initialChartView(int year) {
     MonthBarSet* m_solded = createBarset(y, MonthBarSet::Type::Sales);
     m_solded->setSales(_s);
     for (int m = 1; m < 13; m++) {
-      QDate _curr(y, m, 1);
+      const QDate _d(y, m, 1);
       m_counts->append(_m[m]);
       m_solded->append(_s[m]);
-      // @note label beginn with 0
-      m_label->insert((m - 1), _curr.toString("MMMM"));
+      // @note label index begin with 0
+      m_label->insert((m - 1), _lc.monthName(_d.month(), QLocale::LongFormat));
 #ifdef ANTIQUA_DEVELOPMENT
-      if (y == CURRENT_DATE.year() && m == CURRENT_DATE.month())
-        qDebug() << _curr.toString("MMMM") << _m[m] << _s[m];
+      if (y == p_date.year() && m == p_date.month())
+        qDebug() << _lc.monthName(_d.month(), QLocale::LongFormat) << _m[m] << _s[m];
 #endif
     }
     m_numsBar->insert(0, m_counts);
