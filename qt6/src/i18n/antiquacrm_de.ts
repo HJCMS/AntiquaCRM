@@ -7353,7 +7353,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rechnungs-ID</translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+119"/>
         <source>An error has occurred!</source>
         <translation>Ein Fehler ist aufgetreten!</translation>
     </message>
@@ -7415,14 +7415,14 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     </message>
     <message>
         <location line="+8"/>
-        <location line="+540"/>
+        <location line="+542"/>
         <source>Missing required Identities!</source>
         <translation>Erforderliche Identitäten fehlen!</translation>
     </message>
     <message>
-        <location line="-510"/>
-        <source>Article: %1 not found or no stock!</source>
-        <translation>Artikel: %1 nicht gefunden oder nicht auf Lager!</translation>
+        <location line="-512"/>
+        <source>Article: %1 not found or out of stock!</source>
+        <translation>Artikel: %1 nicht gefunden oder vergriffen!</translation>
     </message>
     <message>
         <location line="+148"/>
@@ -7485,7 +7485,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rückerstattungsdialog abgebrochen.</translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>Refund created.</source>
         <translation>Rückerstattung erstellt.</translation>
     </message>
@@ -7676,17 +7676,17 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     <message>
         <location line="+1"/>
         <source>Media</source>
-        <translation>Medium</translation>
+        <translation></translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Print</source>
-        <translation>Drucken</translation>
+        <translation>Druck</translation>
     </message>
     <message>
         <location line="+1"/>
         <source>Other</source>
-        <translation>Andere</translation>
+        <translation>Sonstiges</translation>
     </message>
 </context>
 <context>
@@ -7785,7 +7785,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
     <message>
         <location line="+3"/>
         <source>Print</source>
-        <translation>Drucken</translation>
+        <translation>Druck</translation>
     </message>
     <message>
         <location line="+3"/>
@@ -8843,7 +8843,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+20"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+18"/>
         <source>Compare sales from past years with current.</source>
         <translation>Vergleichen Sie die Umsätze vergangener Jahre mit den aktuellen.</translation>
     </message>

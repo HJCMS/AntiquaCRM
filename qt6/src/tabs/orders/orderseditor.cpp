@@ -132,7 +132,16 @@ void OrdersEditor::setInputFields() {
   // @deprecated Werden seit 1.1.* nicht mehr verwendet
   ignoreFields << "o_provider_order";
   ignoreFields << "o_vat_included";
-  // PayPal TaxId
+
+  /*
+   IMPORTANT HINT for "o_payment_confirmed" parameter
+   This parameter "o_payment_confirmed", is a optional parameter for identify
+   completed PayPal payments. If PayPal process has succesfully finished it is
+   filled with a TIMESTAMP and a new parameter with "o_payment_paypal_txn_id"
+   created. In this case we check this values and translate it for
+   AntiquaCRM::SelectOrderPayment status.
+   This standard behavior is not supported by all providers.
+  */
   ignoreFields << "o_payment_confirmed";
 
   m_tableData = new AntiquaCRM::ASqlDataQuery(ORDERS_SQL_TABLE_NAME);
@@ -514,7 +523,7 @@ const QJsonObject OrdersEditor::createDialogData(qint64 oid) const {
 
 AntiquaCRM::SalesTax OrdersEditor::initSalesTax() {
   QString _country = getDataValue("o_vat_country").toString();
-  if (_country.isEmpty() || _country == "XX") {
+  if (_country.isEmpty() || _country.startsWith("XX", Qt::CaseInsensitive)) {
     qInfo("No Eurpean country - set invoice tax to no!");
     getInputEdit("o_vat_levels")->setValue(AntiquaCRM::SalesTax::TAX_NOT);
     return AntiquaCRM::SalesTax::TAX_NOT;
@@ -605,7 +614,7 @@ bool OrdersEditor::addOrderTableArticle(qint64 aid) {
       }
     }
   }
-  pushStatusMessage(tr("Article: %1 not found or no stock!").arg(aid));
+  pushStatusMessage(tr("Article: %1 not found or out of stock!").arg(aid));
   return false;
 }
 
@@ -1040,6 +1049,8 @@ bool OrdersEditor::createOrderRefund(qint64 oid) {
     QList<AntiquaCRM::OrderArticleItems> _articles = d->refundArticles();
     if (_articles.size() > 0)
       m_ordersTable->addArticles(_articles);
+    else
+      qWarning("OrderArticleItems is empty:%s,%d", __FUNCTION__, __LINE__);
 
     m_ordersTable->setWindowModified(true);
     setWindowModified(true);
@@ -1223,7 +1234,6 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
         while (q.next()) {
           for (int c = 0; c < rec.count(); c++) {
             QSqlField f = rec.field(c);
-            // qDebug() << f.name() << q.value(f.name());
             _prorder.setValue(f.name(), q.value(f.name()));
           }
         }
@@ -1273,10 +1283,14 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
       // o_media_type | a_type
       if (!article.contains("a_tax") && article.contains("a_type")) {
         article.insert("a_tax", getSalesTaxType(article.value("a_type").toInt()));
+      } else if (article.contains("o_media_type")) {
+        article.insert("a_tax", getSalesTaxType(article.value("o_media_type").toInt()));
       }
+
       if (!article.contains("a_refunds_cost")) {
         article.insert("a_refunds_cost", 0.00);
       }
+
       if (!article.contains("a_modified")) {
         article.insert("a_modified", m_sql->getDateTime());
       }
@@ -1293,6 +1307,10 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
         items.append(_prorder.createItem("a_customer_id", _customer_id));
 
       foreach (QString key, article.keys()) {
+        // @BUGFIX prevent invalid column fields in m_ordersTable
+        if (!key.startsWith("a_"))
+          continue;
+
         items.append(_prorder.createItem(key, article.value(key).toVariant()));
       }
 

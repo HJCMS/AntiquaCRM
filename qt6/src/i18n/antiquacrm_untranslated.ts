@@ -7327,7 +7327,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+110"/>
+        <location line="+119"/>
         <source>An error has occurred!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7389,13 +7389,13 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+8"/>
-        <location line="+540"/>
+        <location line="+542"/>
         <source>Missing required Identities!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-510"/>
-        <source>Article: %1 not found or no stock!</source>
+        <location line="-512"/>
+        <source>Article: %1 not found or out of stock!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7459,7 +7459,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+16"/>
         <source>Refund created.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8816,7 +8816,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+20"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+18"/>
         <source>Compare sales from past years with current.</source>
         <translation type="unfinished"></translation>
     </message>

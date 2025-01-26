@@ -327,7 +327,6 @@ const AntiquaCRM::ATableHeaderColumn OrdersTableModel::headerColumn(int column) 
       break;
 
     default:
-      _col = AntiquaCRM::ATableHeaderColumn("unknown", tr("Unknown"));
       break;
   };
   return _col;
@@ -362,10 +361,11 @@ bool OrdersTableModel::addArticles(const QList<AntiquaCRM::OrderArticleItems>& i
                << "Current" << p_columns << "Size" << items.size();
 
       __debug_article_items(items);
+      return false;
 #else
       qWarning("OrdersTableModel: Invalid Order Article column Count!");
+      return false;
 #endif
-      p_columns = items.size();
     }
     articles.insert(row, items);
     row++;

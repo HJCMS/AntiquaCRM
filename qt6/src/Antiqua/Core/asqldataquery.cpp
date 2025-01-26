@@ -20,17 +20,20 @@ static const QSqlRecord asql_table_record(const QString& name) {
 #endif
     return QSqlRecord();
   }
-  QSqlDatabase db = QSqlDatabase::database(ANTIQUACRM_CONNECTION_DOMAIN);
-/*
+  const QSqlDatabase _db = QSqlDatabase::database(ANTIQUACRM_CONNECTION_DOMAIN);
+
 #ifdef ANTIQUA_DEVELOPMENT
-  QSqlRecord _r = db.record(name);
-  for(int i = 0; i < _r.count(); i++) {
+  qDebug() << "-- Table:Begin" << name;
+  const QSqlRecord _r = _db.record(name);
+  for (int i = 0; i < _r.count(); i++) {
     QSqlField _f = _r.field(i);
-    qDebug() << "F:" << _f.name() << _f.metaType().id() << _f.metaType().name();
+    qDebug() << "- Field:" << _f.name() << "MetyType:" << _f.metaType().name()
+             << "MetaId:" << _f.metaType().id();
   }
+  qDebug() << "-- Table:End";
 #endif
-*/
-  return (db.isValid() ? db.record(name) : QSqlRecord());
+
+  return (_db.isValid() ? _db.record(name) : QSqlRecord());
 }
 
 ASqlDataQuery::ASqlDataQuery(const QString& tableName) : p_record{asql_table_record(tableName)} {
@@ -143,6 +146,10 @@ void ASqlDataQuery::setValue(const QString& column, const QVariant& value) {
     p_data.remove(column);
     return;
   }
+
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << Q_FUNC_INFO << "p_data.insert" << Qt::endl << " " << column << value;
+#endif
 
   p_data.insert(column, value);
 }

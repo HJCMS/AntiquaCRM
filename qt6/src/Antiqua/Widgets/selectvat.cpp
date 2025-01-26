@@ -48,7 +48,7 @@ void SelectVAT::setValue(const QVariant& value) {
     return;
   }
   int _index = m_edit->findData(value.toInt(), Qt::UserRole);
-  if (_index > 0)
+  if (_index >= 0)
     m_edit->setCurrentIndex(_index);
 }
 

@@ -261,7 +261,7 @@ const QStringList OrdersTableView::getSqlQuery() {
   // output
   QStringList queries;
   // Will be ignored during INSERT or UPDATE!
-  QStringList ignoreList({"a_payment_id", "a_modified"});
+  QStringList ignoreList({"a_payment_id", "a_modified", "unknown"});
   // Start table query...
   for (int r = 0; r < m_model->rowCount(); r++) {
     // Search "a_payment_id" for INSERT or UPDATE Test!
