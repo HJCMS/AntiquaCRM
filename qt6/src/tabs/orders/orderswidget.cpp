@@ -216,7 +216,7 @@ bool OrdersWidget::customAction(const QJsonObject& obj) {
   } else if (_action == "import_order") {
     // Create Import Orders from Provider data.
     qint64 _cid = obj.value("VALUE").toInt();
-    if (_cid < 1)
+    if (_cid < 1) // check customer id
       return false;
 
     if (m_editorWidget->createCustomEntry(obj)) {

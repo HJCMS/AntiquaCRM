@@ -30,6 +30,7 @@ void SelectVAT::initData() {
   m_edit->insertItem(_c++, AntiquaCRM::antiquaIcon("view-financial-transfer"), tr("With sales tax"),
                      AntiquaCRM::SalesTax::TAX_WITH);
 
+  setValue(AntiquaCRM::SalesTax::TAX_NOT);
   setWindowModified(false);
 }
 

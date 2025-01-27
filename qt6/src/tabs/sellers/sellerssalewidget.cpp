@@ -13,8 +13,7 @@
 #include <QLayout>
 #include <QMessageBox>
 
-SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
-                                       QWidget *parent)
+SellersSalesWidget::SellersSalesWidget(const QJsonObject& config, QWidget* parent)
     : QWidget{parent}, p_order{config} {
   setWindowTitle(p_order.value("orderid").toString());
   setContentsMargins(0, 0, 0, 0);
@@ -22,7 +21,7 @@ SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
 
   const QIcon _icon = AntiquaCRM::antiquaIcon("system-users");
 
-  QVBoxLayout *layout = new QVBoxLayout(this);
+  QVBoxLayout* layout = new QVBoxLayout(this);
   layout->setContentsMargins(0, 2, 0, 2);
 
   m_header = new PurchaseHeader(this);
@@ -55,29 +54,28 @@ SellersSalesWidget::SellersSalesWidget(const QJsonObject &config,
   connect(m_actionBar, SIGNAL(sendViewCustomer()), SLOT(openCustomer()));
   connect(m_actionBar, SIGNAL(sendCheckArticles()), SLOT(findArticleIds()));
   connect(m_actionBar, SIGNAL(sendCreateOrder()), SLOT(prepareCreateOrder()));
-  connect(m_actionBar, SIGNAL(sendProviderAction()),
-          SLOT(createProviderActions()));
+  connect(m_actionBar, SIGNAL(sendProviderAction()), SLOT(createProviderActions()));
 }
 
-const QString SellersSalesWidget::mediaType(const QJsonValue &object) {
+const QString SellersSalesWidget::mediaType(const QJsonValue& object) {
   // qDebug() << Q_FUNC_INFO << object;
   QString _name;
   switch (static_cast<AntiquaCRM::ArticleType>(object.toInt())) {
-  case AntiquaCRM::ArticleType::BOOK: /**< Bücher */
-    _name = tr("Book");
-    break;
+    case AntiquaCRM::ArticleType::BOOK: /**< Bücher */
+      _name = tr("Book");
+      break;
 
-  case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
-    _name = tr("Media");
-    break;
+    case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
+      _name = tr("Media");
+      break;
 
-  case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
-    _name = tr("Prints");
-    break;
+    case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
+      _name = tr("Prints");
+      break;
 
-  default:
-    _name = tr("Diverse");
-    break;
+    default:
+      _name = tr("Diverse");
+      break;
   };
   return _name;
 }
@@ -93,18 +91,18 @@ AntiquaCRM::ArticleType SellersSalesWidget::getArticleType(qint64 aid) {
   return AntiquaCRM::ArticleType::BOOK;
 }
 
-const QString SellersSalesWidget::getPrice(const QJsonValue &price) const {
+const QString SellersSalesWidget::getPrice(const QJsonValue& price) const {
   return AntiquaCRM::ATaxCalculator::money(price.toDouble());
 }
 
-const QString SellersSalesWidget::getTitle(const QJsonValue &title) const {
+const QString SellersSalesWidget::getTitle(const QJsonValue& title) const {
   QString _str = title.toString();
   _str.replace("\"", "’");
   _str.replace("'", "’");
   return _str.trimmed();
 }
 
-bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
+bool SellersSalesWidget::findCustomer(const QJsonObject& object) {
   // qDebug() << object;
   QString _fullname = object.value("c_provider_import").toString();
   if (object.contains("c_postal_address")) {
@@ -154,8 +152,7 @@ bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
       _q.next();
       qint64 _cid = _q.value("c_id").toInt();
       AntiquaCRM::CustomerTrustLevel _trust =
-          static_cast<AntiquaCRM::CustomerTrustLevel>(
-              _q.value("c_trusted").toInt());
+          static_cast<AntiquaCRM::CustomerTrustLevel>(_q.value("c_trusted").toInt());
       QString _name = _q.value("display_name").toString();
       if (_cid > 0 && !_name.isEmpty()) {
         m_header->setHeader(_name, _cid);
@@ -168,8 +165,8 @@ bool SellersSalesWidget::findCustomer(const QJsonObject &object) {
   return false;
 }
 
-void SellersSalesWidget::pushCmd(const QJsonObject &action) {
-  AntiquaCRM::ATransmitter *m_sock = new AntiquaCRM::ATransmitter(this);
+void SellersSalesWidget::pushCmd(const QJsonObject& action) {
+  AntiquaCRM::ATransmitter* m_sock = new AntiquaCRM::ATransmitter(this);
   connect(m_sock, SIGNAL(disconnected()), m_sock, SLOT(deleteLater()));
   if (m_sock->pushOperation(action))
     m_sock->close();
@@ -187,7 +184,7 @@ void SellersSalesWidget::openOrder(qint64 oid) {
   pushCmd(_obj);
 }
 
-void SellersSalesWidget::createOrder(const QString &prid) {
+void SellersSalesWidget::createOrder(const QString& prid) {
   qint64 _cid = m_header->getCustomerId();
   QStringList _list = m_table->getArticleIds();
   if (_list.size() < 1 || _cid < 1) {
@@ -200,8 +197,8 @@ void SellersSalesWidget::createOrder(const QString &prid) {
   QJsonObject _obj;
   _obj.insert("ACTION", "import_order");
   _obj.insert("TARGET", "orders_tab");
-  _obj.insert("VALUE", _cid);
-  _obj.insert("PRORDER", prid);
+  _obj.insert("VALUE", _cid);   // Customer ID
+  _obj.insert("PRORDER", prid); // Provider Order
   _obj.insert("ARTICLES", _list.join(","));
   pushCmd(_obj);
 }
@@ -223,21 +220,21 @@ void SellersSalesWidget::openArticle(qint64 aid) {
   obj.insert("ACTION", "open_article");
   // mediaType
   switch (getArticleType(aid)) {
-  case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
-    obj.insert("TARGET", "cdvinyl_tab");
-    break;
+    case AntiquaCRM::ArticleType::MEDIA: /**< Film & Tonträger */
+      obj.insert("TARGET", "cdvinyl_tab");
+      break;
 
-  case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
-    obj.insert("TARGET", "stitches_tab");
-    break;
+    case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
+      obj.insert("TARGET", "stitches_tab");
+      break;
 
-  case AntiquaCRM::ArticleType::OTHER: /**< Various */
-    obj.insert("TARGET", "various_tab");
-    break;
+    case AntiquaCRM::ArticleType::OTHER: /**< Various */
+      obj.insert("TARGET", "various_tab");
+      break;
 
-  default: /**< Default: Books */
-    obj.insert("TARGET", "books_tab");
-    break;
+    default: /**< Default: Books */
+      obj.insert("TARGET", "books_tab");
+      break;
   };
   obj.insert("VALUE", aid);
   pushCmd(obj);
@@ -316,30 +313,30 @@ void SellersSalesWidget::prepareCreateOrder() {
   popUp.setWindowTitle(tr("Order already exists!"));
   popUp.setMessage(_list);
   switch (popUp.exec()) {
-  case (QMessageBox::Open):
-    openOrder(_oid);
-    break;
+    case (QMessageBox::Open):
+      openOrder(_oid);
+      break;
 
-  case (QMessageBox::Yes):
-    createOrder(_proid);
-    break;
+    case (QMessageBox::Yes):
+      createOrder(_proid);
+      break;
 
-  default:
-    break;
+    default:
+      break;
   }
 }
 
 void SellersSalesWidget::setTrustStatus(AntiquaCRM::CustomerTrustLevel tl) {
   switch (tl) {
-  case (AntiquaCRM::CustomerTrustLevel::WITH_DELAY):
-  case (AntiquaCRM::CustomerTrustLevel::PREPAYMENT):
-  case (AntiquaCRM::CustomerTrustLevel::NO_DELIVERY):
-    m_worthiness->setVisible(true);
-    break;
+    case (AntiquaCRM::CustomerTrustLevel::WITH_DELAY):
+    case (AntiquaCRM::CustomerTrustLevel::PREPAYMENT):
+    case (AntiquaCRM::CustomerTrustLevel::NO_DELIVERY):
+      m_worthiness->setVisible(true);
+      break;
 
-  default:
-    m_worthiness->setVisible(false);
-    break;
+    default:
+      m_worthiness->setVisible(false);
+      break;
   }
 }
 
@@ -355,8 +352,7 @@ bool SellersSalesWidget::init() {
     qWarning("No Customer found!");
     QStringList txt(tr("No Customer found!"));
     txt.append(tr("Can not create an Order without customer data!"));
-    txt.append(
-        tr("This can be due to an incorrect import or deleted customer data."));
+    txt.append(tr("This can be due to an incorrect import or deleted customer data."));
     txt.append(tr("Alternatively, you must create the customer manually."));
     QMessageBox::warning(this, tr("Broken Orderdata!"), txt.join("\n"));
     return false;

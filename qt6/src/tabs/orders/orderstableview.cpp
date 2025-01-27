@@ -232,6 +232,23 @@ bool OrdersTableView::isEmpty() {
   return (m_model->rowCount() < 1);
 }
 
+const QStringList OrdersTableView::getColumnsList() {
+  QStringList _l("a_payment_id");
+  _l.append("a_order_id");
+  _l.append("a_article_id");
+  _l.append("a_customer_id");
+  _l.append("a_type");
+  _l.append("a_count");
+  _l.append("a_price");
+  _l.append("a_sell_price");
+  _l.append("a_tax");
+  _l.append("a_title");
+  _l.append("a_modified");
+  _l.append("a_provider_id");
+  _l.append("a_refunds_cost");
+  return _l;
+}
+
 void OrdersTableView::hideColumns(const QStringList& list) {
   foreach (QString fieldName, list) {
     int column = m_model->columnIndex(fieldName);

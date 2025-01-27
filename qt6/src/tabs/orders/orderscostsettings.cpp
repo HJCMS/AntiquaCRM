@@ -47,7 +47,6 @@ OrdersCostSettings::OrdersCostSettings(QWidget *parent) : QTabWidget{parent} {
   o_vat_levels = new AntiquaCRM::SelectVAT(m_deliveryTab);
   o_vat_levels->setObjectName("o_vat_levels");
   o_vat_levels->setBuddyLabel(tr("Sales tax in invoice"));
-  o_vat_levels->setValue(AntiquaCRM::SalesTax::TAX_INCL);
   o_vat_levels->appendStretch(0);
   gridLayout->addWidget(o_vat_levels, _row, 0, 1, 1);
 

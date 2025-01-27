@@ -1171,8 +1171,10 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
 
   // Ohne Dienstleister Bestellnummer keine weitere Ausführung.
   const QString _provider_id = object.value("PRORDER").toString();
-  if (_provider_id.isEmpty())
+  if (_provider_id.isEmpty()) {
+    qWarning("Missing order ID from provider, abort!");
     return false;
+  }
 
   // Lese Artikelliste ein ...
   const QString _articles = object.value("ARTICLES").toString();
@@ -1306,12 +1308,11 @@ bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
       if (_customer_id > 0)
         items.append(_prorder.createItem("a_customer_id", _customer_id));
 
+      // prevent invalid use of column fields
+      const QStringList _cNames = m_ordersTable->getColumnsList();
       foreach (QString key, article.keys()) {
-        // @BUGFIX prevent invalid column fields in m_ordersTable
-        if (!key.startsWith("a_"))
-          continue;
-
-        items.append(_prorder.createItem(key, article.value(key).toVariant()));
+        if (_cNames.contains(key))
+          items.append(_prorder.createItem(key, article.value(key).toVariant()));
       }
 
       if (items.size() > 0)

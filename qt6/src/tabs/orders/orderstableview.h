@@ -124,6 +124,12 @@ public:
   bool isEmpty();
 
   /**
+   * @brief A list of Calid column names
+   * @return Columns
+   */
+  static const QStringList getColumnsList();
+
+  /**
    * @brief Fieldname list of defined Table cells to be hidden.
    */
   void hideColumns(const QStringList&);
