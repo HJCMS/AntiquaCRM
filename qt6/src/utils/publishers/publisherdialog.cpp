@@ -5,8 +5,7 @@
 #include "publisheredit.h"
 #include "publishertableview.h"
 
-PublisherDialog::PublisherDialog(QWidget *parent)
-    : AntiquaCRM::ADialog{parent} {
+PublisherDialog::PublisherDialog(QWidget* parent) : AntiquaCRM::ADialog{parent} {
   setObjectName("publisher_dialog");
   setWindowTitle(tr("Publishers edit") + "[*]");
 
@@ -16,14 +15,14 @@ PublisherDialog::PublisherDialog(QWidget *parent)
   m_edit = new PublisherEdit(this);
   layout->addWidget(m_edit);
 
-  connect(m_table, SIGNAL(sendItemSelected(const QModelIndex &)),
-          SLOT(itemSelected(const QModelIndex &)));
+  connect(m_table, SIGNAL(sendItemSelected(QModelIndex)), SLOT(itemSelected(QModelIndex)));
   connect(m_edit, SIGNAL(sendDataChanged()), SLOT(dataChanged()));
+  connect(m_edit, SIGNAL(sendFindPublisher(QString)), m_table, SLOT(findPublisher(QString)));
   connect(btn_apply, SIGNAL(clicked()), SLOT(saveData()));
   connect(btn_reject, SIGNAL(clicked()), SLOT(reject()));
 }
 
-void PublisherDialog::itemSelected(const QModelIndex &index) {
+void PublisherDialog::itemSelected(const QModelIndex& index) {
   p_tmp.first = m_table->getPublisher(index);
   p_tmp.second = m_table->getLocation(index);
   m_edit->setData(p_tmp.first, p_tmp.second);

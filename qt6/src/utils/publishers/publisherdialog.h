@@ -10,8 +10,8 @@
 #define ANTIQUACRM_UTILS_PUBLISHERDIALOG_H
 
 #include <AntiquaWidgets>
-#include <QPair>
 #include <QObject>
+#include <QPair>
 #include <QWidget>
 
 class PublisherTableView;
@@ -22,16 +22,16 @@ class PublisherDialog final : public AntiquaCRM::ADialog {
 
 private:
   mutable QPair<QString, QString> p_tmp;
-  PublisherTableView *m_table;
-  PublisherEdit *m_edit;
+  PublisherTableView* m_table;
+  PublisherEdit* m_edit;
 
 private Q_SLOTS:
-  void itemSelected(const QModelIndex &);
+  void itemSelected(const QModelIndex&);
   void dataChanged();
   void saveData();
 
 public:
-  explicit PublisherDialog(QWidget *parent = nullptr);
+  explicit PublisherDialog(QWidget* parent = nullptr);
   int exec() override;
 };
 

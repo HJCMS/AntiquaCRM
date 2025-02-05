@@ -10,23 +10,28 @@
 #define ANTIQUACRM_UTILS_PUBLISHEREDIT_H
 
 #include <AntiquaWidgets>
+#include <QLineEdit>
 #include <QWidget>
 
 class PublisherEdit final : public QWidget {
   Q_OBJECT
 
 private:
-  AntiquaCRM::TextLine *m_publisher;
-  AntiquaCRM::TextLine *m_location;
+  QLineEdit* m_publisher;
+  AntiquaCRM::TextLine* m_location;
+
+private Q_SLOTS:
+  void searchOnEdit(const QString &);
 
 Q_SIGNALS:
+  void sendFindPublisher(const QString &);
   void sendDataChanged();
 
 public Q_SLOTS:
-  void setData(const QString &publisher, const QString &location);
+  void setData(const QString& publisher, const QString& location);
 
 public:
-  explicit PublisherEdit(QWidget *parent = nullptr);
+  explicit PublisherEdit(QWidget* parent = nullptr);
   const QString getPublisher();
   const QString getLocation();
 };
