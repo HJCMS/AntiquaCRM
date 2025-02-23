@@ -7,11 +7,10 @@
 
 #include <QChar>
 #include <QFontMetricsF>
-#include <QLocale>
 #include <QSqlQuery>
 
 SalesInMonth::SalesInMonth(QWidget* parent)
-    : AntiquaCRM::AChartView{parent}, p_date{QDate::currentDate()} {
+    : AntiquaCRM::AChartView{parent}, p_lc{QLocale::system()}, p_date{QDate::currentDate()} {
   setObjectName("statistics_sales_in_month");
   m_chart = new QChart(itemAt(0, 0));
   m_chart->setTitleFont(headersFont);
@@ -86,7 +85,6 @@ bool SalesInMonth::initMaps() {
 
 bool SalesInMonth::initialChartView(int year) {
   Q_UNUSED(year);
-  const QLocale _lc(QLocale::system());
   QString _query; // query statement
   // init months range map
   if (!initMaps())
@@ -110,10 +108,7 @@ bool SalesInMonth::initialChartView(int year) {
     // preise
     QMap<int, double> _smap = p_soldMap[_y];
     _smap[_m] += _s;
-#ifdef ANTIQUA_DEVELOPMENT
-    if (_y == p_date.year() && _m == p_date.month())
-      qDebug() << _m << _s << _smap[_m];
-#endif
+    // qDebug() << _m << _s << _smap[_m];
     p_soldMap[_y] = _smap;
   }
   _query.clear();
@@ -130,11 +125,11 @@ bool SalesInMonth::initialChartView(int year) {
       const QDate _d(y, m, 1);
       m_counts->append(_m[m]);
       m_solded->append(_s[m]);
-      // @note label index begin with 0
-      m_label->insert((m - 1), _lc.monthName(_d.month(), QLocale::LongFormat));
+      qsizetype _p = (m - 1); // @note a label index starts with 0
+      m_label->insert(_p, p_lc.monthName(_d.month(), QLocale::LongFormat));
 #ifdef ANTIQUA_DEVELOPMENT
       if (y == p_date.year() && m == p_date.month())
-        qDebug() << _lc.monthName(_d.month(), QLocale::LongFormat) << _m[m] << _s[m];
+        qDebug() << m_label->at(_p) << _m[m] << _s[m];
 #endif
     }
     m_numsBar->insert(0, m_counts);

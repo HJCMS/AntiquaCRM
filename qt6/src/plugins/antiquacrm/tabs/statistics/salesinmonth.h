@@ -15,6 +15,7 @@
 #include <QBarCategoryAxis>
 #include <QBarSet>
 #include <QDate>
+#include <QLocale>
 #include <QMap>
 #include <QObject>
 #include <QWidget>
@@ -28,6 +29,7 @@ class ANTIQUACRM_STATISTICS_PLUGIN SalesInMonth final : public AntiquaCRM::AChar
 private:
   mutable QMap<int, QMap<int, qint64>> p_voluMap;
   mutable QMap<int, QMap<int, double>> p_soldMap;
+  const QLocale p_lc;
   const QDate p_date;
   QChart* m_chart;
   QBarCategoryAxis* m_label;

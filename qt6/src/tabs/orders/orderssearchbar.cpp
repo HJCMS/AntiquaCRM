@@ -7,7 +7,7 @@
 #include <QFrame>
 #include <QToolButton>
 
-OrdersSearchBar::OrdersSearchBar(QWidget *parent)
+OrdersSearchBar::OrdersSearchBar(QWidget* parent)
     : AntiquaCRM::TabsSearchBar{parent}, cDate{QDate::currentDate()} {
   const QIcon _icon = AntiquaCRM::antiquaIcon("view-search");
   const QString _tip = tr("Press CTRL+Shift+F, to quickly open this Menu.");
@@ -20,7 +20,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_filter->addItem(_icon, tr("Provider"));         // o_provider_name
   addWidget(m_filter);
 
-  QToolButton *m_icontb = new QToolButton(this);
+  QToolButton* m_icontb = new QToolButton(this);
   m_icontb->setEnabled(false);
   m_icontb->setIcon(AntiquaCRM::antiquaIcon("view-search"));
   addWidget(m_icontb);
@@ -33,14 +33,13 @@ OrdersSearchBar::OrdersSearchBar(QWidget *parent)
   m_searchBtn = startSearchButton();
   addWidget(m_searchBtn);
 
-  QFrame *m_spacer = new QFrame(this);
-  m_spacer->setSizePolicy(QSizePolicy::MinimumExpanding,
-                          QSizePolicy::Preferred);
+  QFrame* m_spacer = new QFrame(this);
+  m_spacer->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::Preferred);
   addWidget(m_spacer);
 
   const QString _toolTip(tr("Restrict search to current selection."));
 
-  AntiquaCRM::ALabel *m_label = new AntiquaCRM::ALabel(this);
+  AntiquaCRM::ALabel* m_label = new AntiquaCRM::ALabel(this);
   m_label->setText(tr("Restriction"));
   m_label->setToolTip(_toolTip);
   addWidget(m_label);
@@ -88,39 +87,43 @@ void OrdersSearchBar::setSearch() {
 
 void OrdersSearchBar::setFilter(int index) {
   switch (index) {
-  case 0: {
-    m_searchInput->setPlaceholderText(tr("Search Customer or Company"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    min_length = getMinLength();
-  } break;
+    case 0:
+      {
+        m_searchInput->setPlaceholderText(tr("Search Customer or Company"));
+        m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+        min_length = getMinLength();
+      }
+      break;
 
-  case 1: {
-    m_searchInput->setPlaceholderText(tr("Search Order id"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
-    min_length = 1;
-  } break;
+    case 1:
+      {
+        m_searchInput->setPlaceholderText(tr("Search Order id"));
+        m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::ARTICLE);
+        min_length = 1;
+      }
+      break;
 
-  case 2: {
-    m_searchInput->setPlaceholderText(tr("Search Delivery Service"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    min_length = 3;
-  } break;
+    case 2:
+      {
+        m_searchInput->setPlaceholderText(tr("Search Delivery Service"));
+        m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+        min_length = 3;
+      }
+      break;
 
-  case 3: {
-    m_searchInput->setPlaceholderText(tr("Search Provider"));
-    m_searchInput->setValidation(
-        AntiquaCRM::ALineEdit::InputValidator::STRINGS);
-    min_length = getMinLength();
-  } break;
+    case 3:
+      {
+        m_searchInput->setPlaceholderText(tr("Search Provider"));
+        m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+        min_length = getMinLength();
+      }
+      break;
 
-  default:
-    m_searchInput->setPlaceholderText(tr("Search ..."));
-    m_searchInput->setValidation(m_searchInput->InputValidator::DEFAULT);
-    min_length = getMinLength();
-    break;
+    default:
+      m_searchInput->setPlaceholderText(tr("Search ..."));
+      m_searchInput->setValidation(m_searchInput->InputValidator::DEFAULT);
+      min_length = getMinLength();
+      break;
   }
   setClearAndFocus();
   emit sendFilterChanged(index);
@@ -136,7 +139,9 @@ void OrdersSearchBar::setClearAndFocus() {
   setSearchFocus();
 }
 
-void OrdersSearchBar::setSearchFocus() { m_searchInput->setFocus(); }
+void OrdersSearchBar::setSearchFocus() {
+  m_searchInput->setFocus();
+}
 
 const QString OrdersSearchBar::past12Months() const {
   QString _sql("(o_since BETWEEN ");
@@ -161,8 +166,7 @@ const QString OrdersSearchBar::getDatePart() {
   // Starte optionale abfragen
   const QString _part = m_datePart->itemData(_index).toString();
   if (_part.startsWith("year"))
-    return QString(" AND DATE_PART('year',o_since)=" +
-                   QString::number(getYear()));
+    return QString(" AND DATE_PART('year',o_since)=" + QString::number(getYear()));
 
   const QDate _date(getYear(), cDate.month(), cDate.day());
   const QString _date_str = _date.toString("yyyy-MM-dd");
@@ -186,33 +190,35 @@ const QString OrdersSearchBar::getSearchStatement() {
     return QString("o_delivered IS NULL AND o_order_status<4");
 
   switch (_index) {
-  case 0: {
-    QStringList sList({"c_company_name", "c_firstname", "c_lastname"});
-    QStringList buffer;
-    foreach (QString f, sList) {
-      buffer << f + " ILIKE '%" + p_search + "%'";
-    }
-    _sql = "(" + buffer.join(" OR ") + ")";
-    _sql.append(getDatePart());
-  } break;
+    case 0:
+      {
+        QStringList sList({"c_company_name", "c_firstname", "c_lastname"});
+        QStringList buffer;
+        foreach (QString f, sList) {
+          buffer << f + " ILIKE '%" + p_search + "%'";
+        }
+        _sql = "(" + buffer.join(" OR ") + ")";
+        _sql.append(getDatePart());
+      }
+      break;
 
-  case 1:
-    _sql = QString("o_id IN (%1)").arg(p_search);
-    break;
+    case 1:
+      _sql = QString("o_id IN (%1)").arg(p_search);
+      break;
 
-  case 2:
-    _sql = QString("d_name ILIKE '%1%'").arg(p_search);
-    _sql.append(getDatePart());
-    break;
+    case 2:
+      _sql = QString("d_name ILIKE '%1%'").arg(p_search);
+      _sql.append(getDatePart());
+      break;
 
-  case 3:
-    _sql = QString("o_provider_name ILIKE '%1%'").arg(p_search);
-    _sql.append(getDatePart());
-    break;
+    case 3:
+      _sql = QString("o_provider_name ILIKE '%1%'").arg(p_search);
+      _sql.append(getDatePart());
+      break;
 
-  default:
-    _sql.clear();
-    break;
+    default:
+      _sql.clear();
+      break;
   }
 
   _sql.replace("%%", "%");

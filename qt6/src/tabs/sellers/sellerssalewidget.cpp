@@ -121,19 +121,18 @@ bool SellersSalesWidget::findCustomer(const QJsonObject& object) {
   AntiquaCRM::ASqlFiles _tpl("query_customer_exists");
   if (_tpl.openTemplate()) {
     const QStringList _fields({"c_firstname", "c_lastname", "c_postalcode"});
-    QStringList _values;
-
+    QStringList _values; // buffer
     QString _postalcode;
-    foreach (QString f, _fields) {
-      QVariant _v = object.value(f);
-      if (_v.isNull())
+    foreach (QString _f, _fields) {
+      const QString _str = object.value(_f).toString().trimmed();
+      if (_str.length() < 2)
         continue;
 
-      if (f == "c_postalcode") {
-        _values << f + " ILIKE '" + _v.toString() + "'";
-        _postalcode = _v.toString().trimmed();
+      if (_f == "c_postalcode") {
+        _values << _f + " ILIKE '" + _str + "'";
+        _postalcode = _str;
       } else {
-        _values << f + " ILIKE '" + _v.toString() + "%'";
+        _values << _f + " ILIKE '" + _str + "%'";
       }
     }
 
@@ -141,9 +140,13 @@ bool SellersSalesWidget::findCustomer(const QJsonObject& object) {
     _clause.append(_values.join(" AND "));
     _clause.append(") OR (c_provider_import ILIKE '");
     _clause.append(_fullname);
-    _clause.append("' AND c_postalcode LIKE '");
-    _clause.append(_postalcode);
-    _clause.append("')");
+    _clause.append("%'");
+    if (!_postalcode.isEmpty()) {
+      _clause.append(" AND c_postalcode ILIKE '");
+      _clause.append(_postalcode);
+      _clause.append("'");
+    }
+    _clause.append(")");
     _tpl.setWhereClause(_clause);
 
     AntiquaCRM::ASqlCore psql(this);
@@ -162,6 +165,11 @@ bool SellersSalesWidget::findCustomer(const QJsonObject& object) {
     }
   }
   m_header->setHeader(_fullname);
+
+#ifdef ANTIQUA_DEVELOPMENT
+  qDebug() << Q_FUNC_INFO << _tpl.getQueryContent();
+#endif
+
   return false;
 }
 

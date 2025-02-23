@@ -44,6 +44,8 @@ SellerImportRepair::SellerImportRepair(const QString& provider, const QString& o
   btn_apply->setToolTip(tr("Save current changes"));
   btn_apply->setStatusTip(btn_apply->toolTip());
 
+  btn_reject->setText(tr("Quit"));
+
   // ImportsNavBar
   connect(m_navbar, SIGNAL(sendPrev()), SLOT(setStartPage()));
   connect(m_navbar, SIGNAL(sendNext()), SLOT(setEditPage()));

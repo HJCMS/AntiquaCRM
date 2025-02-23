@@ -2601,7 +2601,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Mit Umsatzsteuer</translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>a valid VAT is required.</source>
         <translation>Eine gültige Mehrwertsteuer ist erforderlich.</translation>
     </message>
@@ -7249,7 +7249,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Umsatzsteuer in der Rechnung</translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Country</source>
         <translation>Land</translation>
     </message>
@@ -7490,7 +7490,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rückerstattung erstellt.</translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+136"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleisterbestelldaten gefunden!</translation>
     </message>
@@ -7533,7 +7533,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Suche nach Firma oder Kunde</translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Restrict search to current selection.</source>
         <translation>Suche auf aktuelle Auswahl beschränken.</translation>
     </message>
@@ -7568,22 +7568,22 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Die Abfragelänge ist kleiner als %1.</translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Search Customer or Company</source>
         <translation>Suchen nach Kunde oder Unternehmen</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Search Order id</source>
         <translation>Suche Auftrags-Id</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Search Delivery Service</source>
         <translation>Suche Lieferservice</translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Search Provider</source>
         <translation>Suche Dienstleister</translation>
     </message>
@@ -7767,8 +7767,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rückerstattung</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+77"/>
+        <location line="+81"/>
         <source>Unknown</source>
         <translation>Unbekannt</translation>
     </message>
@@ -8432,7 +8431,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>PublisherDialog</name>
     <message>
-        <location filename="../utils/publishers/publisherdialog.cpp" line="+11"/>
+        <location filename="../utils/publishers/publisherdialog.cpp" line="+10"/>
         <source>Publishers edit</source>
         <translation>Herausgeber bearbeiten</translation>
     </message>
@@ -8455,12 +8454,12 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>PublisherEdit</name>
     <message>
-        <location filename="../utils/publishers/publisheredit.cpp" line="+14"/>
+        <location filename="../utils/publishers/publisheredit.cpp" line="+16"/>
         <source>Publisher</source>
         <translation>Herausgeber</translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>Location</source>
         <translation>Standort</translation>
     </message>
@@ -8486,7 +8485,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>PublisherTableView</name>
     <message>
-        <location filename="../utils/publishers/publishertableview.cpp" line="+76"/>
+        <location filename="../utils/publishers/publishertableview.cpp" line="+89"/>
         <source>Remove</source>
         <translation>Entfernen</translation>
     </message>
@@ -8843,7 +8842,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+18"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+17"/>
         <source>Compare sales from past years with current.</source>
         <translation>Vergleichen Sie die Umsätze vergangener Jahre mit den aktuellen.</translation>
     </message>
@@ -8915,7 +8914,12 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Aktuelle Änderungen speichern</translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+3"/>
+        <source>Quit</source>
+        <translation>Beenden</translation>
+    </message>
+    <message>
+        <location line="+83"/>
         <source>Success</source>
         <translation>Erfolgreich</translation>
     </message>
@@ -9053,7 +9057,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
 <context>
     <name>SellersSalesWidget</name>
     <message>
-        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+35"/>
+        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+34"/>
         <source>Buyer</source>
         <translation>Käufer</translation>
     </message>
@@ -9063,7 +9067,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Zahlungsinformationen</translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+28"/>
         <source>Book</source>
         <translation>Buch</translation>
     </message>
@@ -9088,7 +9092,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Telefon</translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+84"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation>Keine verfügbaren Artikel!</translation>
@@ -9129,7 +9133,7 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Ohne Kundendaten kann keine Bestellung erstellt werden!</translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>This can be due to an incorrect import or deleted customer data.</source>
         <translation>Dies kann an einem fehlerhaften Import oder gelöschten Kundendaten liegen.</translation>
     </message>

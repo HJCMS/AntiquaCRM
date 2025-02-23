@@ -2599,7 +2599,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+68"/>
+        <location line="+69"/>
         <source>a valid VAT is required.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7223,7 +7223,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Country</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7464,7 +7464,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+134"/>
+        <location line="+136"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7507,7 +7507,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+12"/>
+        <location line="+11"/>
         <source>Restrict search to current selection.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7542,22 +7542,22 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+17"/>
+        <location line="+18"/>
         <source>Search Customer or Company</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Search Order id</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Search Delivery Service</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+8"/>
         <source>Search Provider</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7741,8 +7741,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+77"/>
+        <location line="+81"/>
         <source>Unknown</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8405,7 +8404,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>PublisherDialog</name>
     <message>
-        <location filename="../utils/publishers/publisherdialog.cpp" line="+11"/>
+        <location filename="../utils/publishers/publisherdialog.cpp" line="+10"/>
         <source>Publishers edit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8428,12 +8427,12 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>PublisherEdit</name>
     <message>
-        <location filename="../utils/publishers/publisheredit.cpp" line="+14"/>
+        <location filename="../utils/publishers/publisheredit.cpp" line="+16"/>
         <source>Publisher</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+11"/>
         <source>Location</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8459,7 +8458,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>PublisherTableView</name>
     <message>
-        <location filename="../utils/publishers/publishertableview.cpp" line="+76"/>
+        <location filename="../utils/publishers/publishertableview.cpp" line="+89"/>
         <source>Remove</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8816,7 +8815,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+18"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+17"/>
         <source>Compare sales from past years with current.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8888,7 +8887,12 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+84"/>
+        <location line="+3"/>
+        <source>Quit</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+83"/>
         <source>Success</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9026,7 +9030,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SellersSalesWidget</name>
     <message>
-        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+35"/>
+        <location filename="../tabs/sellers/sellerssalewidget.cpp" line="+34"/>
         <source>Buyer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9036,7 +9040,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+29"/>
+        <location line="+28"/>
         <source>Book</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9061,7 +9065,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+77"/>
+        <location line="+84"/>
         <location line="+2"/>
         <source>No available Articles!</source>
         <translation type="unfinished"></translation>
@@ -9102,7 +9106,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
+        <location line="+1"/>
         <source>This can be due to an incorrect import or deleted customer data.</source>
         <translation type="unfinished"></translation>
     </message>
