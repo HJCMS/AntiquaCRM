@@ -12,7 +12,7 @@
  */
 
 #ifndef ANTIQUACRM_GLOBAL_H
-#define ANTIQUACRM_GLOBAL_H
+# define ANTIQUACRM_GLOBAL_H
 
 #include <QObject>
 #include <QtGlobal>
@@ -29,7 +29,7 @@
  * @short Required by setApplicationName() and QSettings class.
  */
 #ifndef ANTIQUACRM_NAME
-#define ANTIQUACRM_NAME "@PROJECTNAME@"
+# define ANTIQUACRM_NAME "@PROJECTNAME@"
 #endif
 
 /**
@@ -40,7 +40,7 @@
  * @endcode
  */
 #ifndef HJCMS_CONFIG_DOMAIN
-#define HJCMS_CONFIG_DOMAIN "de.hjcms"
+# define HJCMS_CONFIG_DOMAIN "de.hjcms"
 #endif
 
 /**
@@ -48,7 +48,7 @@
  * @brief Application name in user configuration path
  */
 #ifndef HJCMS_CONFIG_NAME
-#define HJCMS_CONFIG_NAME "@PROJECTNAME@"
+# define HJCMS_CONFIG_NAME "@PROJECTNAME@"
 #endif
 
 /**
@@ -58,7 +58,7 @@
  *  of the current user configuration file.
  */
 #ifndef HJCMS_CONFIG_VERSION
-#define HJCMS_CONFIG_VERSION "@ANTIQUACRM_VERSION_MAJOR@.1"
+# define HJCMS_CONFIG_VERSION "@ANTIQUACRM_VERSION_MAJOR@.1"
 #endif
 
 /**
@@ -66,7 +66,7 @@
  * @brief Configuration Application ID
  */
 #ifndef HJCMS_CONFIG_APPID
-#define HJCMS_CONFIG_APPID "@ANTIQUACRM_APPID@"
+# define HJCMS_CONFIG_APPID "@ANTIQUACRM_APPID@"
 #endif
 
 /**
@@ -74,7 +74,7 @@
  * @brief Configuration DNS ID
  */
 #ifndef HJCMS_CONFIG_DNSID
-#define HJCMS_CONFIG_DNSID "@ANTIQUACRM_DNSID@"
+# define HJCMS_CONFIG_DNSID "@ANTIQUACRM_DNSID@"
 #endif
 
 /**
@@ -82,7 +82,7 @@
  * @brief Configuration URL ID
  */
 #ifndef HJCMS_CONFIG_URLID
-#define HJCMS_CONFIG_URLID "@ANTIQUACRM_URLID@"
+# define HJCMS_CONFIG_URLID "@ANTIQUACRM_URLID@"
 #endif
 
 /**
@@ -90,7 +90,7 @@
  * @brief required by PostgreSQL, D-Bus, TCP-Socket and Interfaces
  */
 #ifndef ANTIQUACRM_CONNECTION_DOMAIN
-#define ANTIQUACRM_CONNECTION_DOMAIN "de.hjcms.@PROJECTNAME@"
+# define ANTIQUACRM_CONNECTION_DOMAIN "de.hjcms.@PROJECTNAME@"
 #endif
 
 /**
@@ -99,7 +99,7 @@
  * @warning This fixed string is needet for OAuth
  */
 #ifndef ANTIQUACRM_USERAGENT
-#define ANTIQUACRM_USERAGENT "AntiquaCRM/@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@"
+# define ANTIQUACRM_USERAGENT "AntiquaCRM/@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@"
 #endif
 
 /**
@@ -107,7 +107,7 @@
  * @brief Application Version String
  */
 #ifndef ANTIQUACRM_VERSION
-#define ANTIQUACRM_VERSION "@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@.@ANTIQUACRM_VERSION_RELEASE@"
+# define ANTIQUACRM_VERSION "@ANTIQUACRM_VERSION_MAJOR@.@ANTIQUACRM_VERSION_MINOR@.@ANTIQUACRM_VERSION_RELEASE@"
 #endif
 
 /**
@@ -115,7 +115,7 @@
  * @brief Application Display title
  */
 #ifndef ANTIQUACRM_DISPLAYNAME
-#define ANTIQUACRM_DISPLAYNAME "AntiquaCRM"
+# define ANTIQUACRM_DISPLAYNAME "AntiquaCRM"
 #endif
 
 /**
@@ -123,7 +123,7 @@
  * @brief Application Window title inkl. Version string
  */
 #ifndef ANTIQUACRM_WINDOW_TITLE
-#define ANTIQUACRM_WINDOW_TITLE "AntiquaCRM (v@ANTIQUACRM_VERSION_STRING@)"
+# define ANTIQUACRM_WINDOW_TITLE "AntiquaCRM (v@ANTIQUACRM_VERSION_STRING@)"
 #endif
 
 /**
@@ -131,7 +131,7 @@
  * @brief Project Homepage url
  */
 #ifndef ANTIQUACRM_HOMEPAGE
-#define ANTIQUACRM_HOMEPAGE "@HOMEPAGEURL@"
+# define ANTIQUACRM_HOMEPAGE "@HOMEPAGEURL@"
 #endif
 
 /**
@@ -139,7 +139,7 @@
  * @brief Shared Data location
  */
 #ifndef ANTIQUACRM_DATA_TARGET
-#define ANTIQUACRM_DATA_TARGET "@ANTIQUACRM_DATA_TARGET@"
+# define ANTIQUACRM_DATA_TARGET "@ANTIQUACRM_DATA_TARGET@"
 #endif
 
 /**
@@ -147,7 +147,7 @@
  * @brief Antiqua CRM Plugins target
  */
 #ifndef ANTIQUACRM_PLUGIN_TARGET
-#define ANTIQUACRM_PLUGIN_TARGET "@ANTIQUACRM_PLUGIN_TARGET@"
+# define ANTIQUACRM_PLUGIN_TARGET "@ANTIQUACRM_PLUGIN_TARGET@"
 #endif
 
 /**
@@ -155,7 +155,7 @@
  * @brief Translations target
  */
 #ifndef ANTIQUACRM_TRANSLATION_TARGET
-#define ANTIQUACRM_TRANSLATION_TARGET "@ANTIQUACRM_TRANSLATION_TARGET@"
+# define ANTIQUACRM_TRANSLATION_TARGET "@ANTIQUACRM_TRANSLATION_TARGET@"
 #endif
 
 /**
@@ -164,9 +164,9 @@
  */
 #ifndef ANTIQUACRM_SOCKET_TIMEOUT
 #ifdef Q_OS_WIN
-#define ANTIQUACRM_SOCKET_TIMEOUT 3000
+# define ANTIQUACRM_SOCKET_TIMEOUT 3000
 #else
-#define ANTIQUACRM_SOCKET_TIMEOUT 1500
+# define ANTIQUACRM_SOCKET_TIMEOUT 1500
 #endif
 #endif
 
@@ -175,7 +175,7 @@
  * @brief Standard mode for socket connections
  */
 #ifndef ANTIQUACRM_TRANSMITTER_MODE
-#define ANTIQUACRM_TRANSMITTER_MODE QIODevice::WriteOnly
+# define ANTIQUACRM_TRANSMITTER_MODE QIODevice::WriteOnly
 #endif
 
 /**
@@ -195,7 +195,7 @@
  * Used in DateEdit and DateTimeEdit Widgets for global fallback detection.
  */
 #ifndef ANTIQUACRM_DEFAULT_STARTDATE
-#define ANTIQUACRM_DEFAULT_STARTDATE QDate(1900, 01, 01)
+# define ANTIQUACRM_DEFAULT_STARTDATE QDate(1900, 01, 01)
 #endif
 
 /**
@@ -204,7 +204,7 @@
  * @note AntiquaCRM not using Time Zones in SQL Tables!
  */
 #ifndef ANTIQUACRM_TIMESTAMP_IMPORT
-#define ANTIQUACRM_TIMESTAMP_IMPORT "dd.MM.yyyy hh:mm:ss.zzz"
+# define ANTIQUACRM_TIMESTAMP_IMPORT "dd.MM.yyyy hh:mm:ss.zzz"
 #endif
 
 /**
@@ -218,7 +218,7 @@
  * @endcode
  */
 #ifndef ANTIQUACRM_DATETIME_EXPORT
-#define ANTIQUACRM_DATETIME_EXPORT Qt::ISODate
+# define ANTIQUACRM_DATETIME_EXPORT Qt::ISODate
 #endif
 
 /**
@@ -226,7 +226,7 @@
  * @brief Date and time information for the UI display.
  */
 #ifndef ANTIQUACRM_DATETIME_TOOLTIP
-#define ANTIQUACRM_DATETIME_TOOLTIP "dd.MM.yyyy hh:mm:ss"
+# define ANTIQUACRM_DATETIME_TOOLTIP "dd.MM.yyyy hh:mm:ss"
 #endif
 
 /**
@@ -234,7 +234,7 @@
  * @brief Long date time display format
  */
 #ifndef ANTIQUACRM_DATETIME_DISPLAY
-#define ANTIQUACRM_DATETIME_DISPLAY "dddd dd. MMMM yyyy hh:mm"
+# define ANTIQUACRM_DATETIME_DISPLAY "dddd dd. MMMM yyyy hh:mm"
 #endif
 
 /**
@@ -242,7 +242,7 @@
  * @brief Normal date time display format
  */
 #ifndef ANTIQUACRM_DATE_DISPLAY
-#define ANTIQUACRM_DATE_DISPLAY "dddd dd. MMMM yyyy"
+# define ANTIQUACRM_DATE_DISPLAY "dddd dd. MMMM yyyy"
 #endif
 
 /**
@@ -250,7 +250,7 @@
  * @brief Short date time display format
  */
 #ifndef ANTIQUACRM_SHORT_DATE_DISPLAY
-#define ANTIQUACRM_SHORT_DATE_DISPLAY "dd MMM yyyy"
+# define ANTIQUACRM_SHORT_DATE_DISPLAY "dd MMM yyyy"
 #endif
 
 /**
@@ -258,7 +258,7 @@
  * @brief Default Charset for Database Connections, Application files, is utf8!
  */
 #ifndef ANTIQUACRM_CHARSET
-#define ANTIQUACRM_CHARSET QByteArray("UTF8")
+# define ANTIQUACRM_CHARSET QByteArray("UTF8")
 #endif
 
 /**
@@ -272,14 +272,14 @@
  * @endcode
  */
 #ifndef ANTIQUACRM_ARCHIVE_CONFIG_DIRS
-#define ANTIQUACRM_ARCHIVE_CONFIG_DIRS "dirs"
-#define ANTIQUACRM_ARCHIVE_IMAGES "archive_images"
-#define ANTIQUACRM_ARCHIVE_DELIVERY "archive_delivery"
-#define ANTIQUACRM_ARCHIVE_CARDS "archive_cards"
-#define ANTIQUACRM_ARCHIVE_INVOICES "archive_invoices"
-#define ANTIQUACRM_ARCHIVE_REMINDERS "archive_reminder"
-#define ANTIQUACRM_ARCHIVE_REPORTS "archive_reports"
-#define ANTIQUACRM_ARCHIVE_IMPORT "import_folder"
+# define ANTIQUACRM_ARCHIVE_CONFIG_DIRS "dirs"
+# define ANTIQUACRM_ARCHIVE_IMAGES "archive_images"
+# define ANTIQUACRM_ARCHIVE_DELIVERY "archive_delivery"
+# define ANTIQUACRM_ARCHIVE_CARDS "archive_cards"
+# define ANTIQUACRM_ARCHIVE_INVOICES "archive_invoices"
+# define ANTIQUACRM_ARCHIVE_REMINDERS "archive_reminder"
+# define ANTIQUACRM_ARCHIVE_REPORTS "archive_reports"
+# define ANTIQUACRM_ARCHIVE_IMPORT "import_folder"
 #endif
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
