@@ -43,7 +43,8 @@ inline const QIcon qrcIcon(const QString& name) {
  * @ingroup IconTheme
  */
 inline const QIcon flagIcon(const QString& name) {
-  return QIcon(":/flags/" + name + ".png");
+  const QString _s(name.compare("en", Qt::CaseInsensitive) ? name : "gb");
+  return QIcon(":/flags/" + _s + ".png");
 }
 
 /**

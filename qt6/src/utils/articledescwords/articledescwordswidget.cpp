@@ -16,6 +16,7 @@ ArticleDescWordsWidget::ArticleDescWordsWidget(QWidget* parent) : QWidget{parent
 
   m_table = new ArticleDescWordsTable(this);
   m_layout->addWidget(m_table, 0, 0, 1, 4);
+  m_layout->setRowStretch(0, 1);
 
   m_id = new AntiquaCRM::SerialId(this);
   m_id->setObjectName("aes_id");
