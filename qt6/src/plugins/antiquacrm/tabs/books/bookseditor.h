@@ -70,7 +70,6 @@ private:
   bool realyDeactivateEntry();
 
 private Q_SLOTS:
-  void createDNBSearch();
   void setSaveData() override;
   void setCheckLeaveEditor() override;
   void setFinalLeaveEditor(bool force = true) override;

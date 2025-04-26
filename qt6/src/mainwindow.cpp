@@ -131,27 +131,37 @@ void MainWindow::setAction(const QString& name, const QJsonObject& data) {
     const QString _action = data.value("ACTION").toString();
     if (_action.startsWith("provider")) {
       QString _provider = data.value("NAME").toString();
+#ifdef ANTIQUA_DEVELOPMENT
       qDebug() << Q_FUNC_INFO << "TODO" << name << _provider;
+#endif
     }
     return;
   }
 
   if (!tabViewAction(name) || !data.contains("TARGET")) {
     qWarning("Window: Invalid Target call!");
+#ifdef ANTIQUA_DEVELOPMENT
+    qDebug() << Q_FUNC_INFO << "REJECTED" << name << data;
+#endif
     return;
   }
 
   if (!data.contains("ACTION")) {
     qWarning("Window: Missing Custom Action parameter!");
+#ifdef ANTIQUA_DEVELOPMENT
+    qDebug() << Q_FUNC_INFO << "REJECTED" << name << data;
+#endif
     return;
   }
 
   int _index = m_tabWidget->indexByName(name);
   AntiquaCRM::TabsIndex* _tab = m_tabWidget->tabIndex(_index);
-  // qDebug() << Q_FUNC_INFO << name << _index;
   if (_tab == nullptr) {
     qWarning("Window: Required Tab '%s' not open!", qPrintable(name));
     m_statusBar->showMessage("The required Tab is not opened!");
+#ifdef ANTIQUA_DEVELOPMENT
+    qDebug() << Q_FUNC_INFO << "Tab" << name << _index << data;
+#endif
     return;
   }
 

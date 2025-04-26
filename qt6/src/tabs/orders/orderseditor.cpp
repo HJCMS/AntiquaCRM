@@ -1005,7 +1005,7 @@ bool OrdersEditor::openEditEntry(qint64 oid) {
 
 /*
  * Weil der SLOT mit einem Signal von OrderStatusActionFrame ausgelöst wird.
- * Müssen einige Abfragen durchgeführt werden damit dder RefundingDialog nicht
+ * Müssen einige Abfragen durchgeführt werden damit der RefundingDialog nicht
  * beim öffnen des Editors ausgelöst wird.
  *
  * Es kann an diesem Punkt nur der Status abgefragt werden.
@@ -1163,6 +1163,10 @@ bool OrdersEditor::changeOrderToCustomer(const QJsonObject& object) {
   return false;
 }
 
+/*
+ * Wird ausgelöst wenn eine externer Import von Sellers klasse kommt.
+ *
+ */
 bool OrdersEditor::createCustomEntry(const QJsonObject& object) {
   // Zuerst die Aktion prüfen
   const QString _action = object.value("ACTION").toString();

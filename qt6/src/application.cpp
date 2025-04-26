@@ -26,7 +26,6 @@
 #include <QStyle>
 #include <QStyleFactory>
 #include <QTimer>
-#include <QtCore>
 
 Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   setApplicationName(ANTIQUACRM_NAME);

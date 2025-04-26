@@ -39,35 +39,11 @@ class ANTIQUACRM_BOOKS_PLUGIN CatalogSearchButton final : public QPushButton {
 
 private:
   QString p_type;
-  QMenu* m_menu;
 
   /**
    * @brief Default search icon
    */
   const QIcon icon() const;
-
-  /**
-   * @brief Default catalog Homepage
-   * @li https://katalog.dnb.de/DE/home.html
-   */
-  const QUrl home() const;
-
-  /**
-   * @brief Query catalog in list mode
-   * @li https://katalog.dnb.de/DE/list.html
-   */
-  const QUrl list() const;
-
-private Q_SLOTS:
-  void prepareAction(QAction*);
-
-Q_SIGNALS:
-  /**
-   * @brief Send query if button has clicked.
-   *
-   * This Signal is emitted when prepareAction has finished successfully.
-   */
-  void sendQuery();
 
 public Q_SLOTS:
   /**
@@ -77,7 +53,7 @@ public Q_SLOTS:
    *
    * @param query - prepared query
    */
-  void openLink(const QUrlQuery& query);
+  void openSearchPage();
 
 public:
   /**
@@ -95,6 +71,18 @@ public:
     TITAUT = 0x8,  /**< @brief Title and Author search */
     NUMERIC = 0x10 /**< @brief ISBN search */
   };
+
+  /**
+   * @brief Default catalog Homepage
+   * @li https://katalog.dnb.de/DE/home.html
+   */
+  const QUrl home() const;
+
+  /**
+   * @brief Query catalog in list mode
+   * @li https://katalog.dnb.de/DE/list.html
+   */
+  const QUrl list() const;
 
   /**
    * @brief Map with configured button options

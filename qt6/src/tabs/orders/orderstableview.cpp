@@ -156,7 +156,7 @@ void OrdersTableView::addArticleQuery() {
       break;
 
     case AntiquaCRM::ArticleType::PRINTS: /**< Drucke & Stiche */
-      _action.insert("TARGET", "printsstitches_tab");
+      _action.insert("TARGET", "stitches_tab");
       break;
 
     case AntiquaCRM::ArticleType::OTHER: /**< Various */

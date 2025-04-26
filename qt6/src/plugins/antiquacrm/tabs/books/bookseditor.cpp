@@ -377,9 +377,6 @@ BooksEditor::BooksEditor(QWidget* parent)
   // Signals::Storage
   connect(ib_storage, SIGNAL(sendValueChanged()), SLOT(setStorageCompartments()));
 
-  // Signals::CatalogSearchButton
-  connect(btn_dnbQuery, SIGNAL(sendQuery()), SLOT(createDNBSearch()));
-
   // Signals:ActionBar
   connect(m_actionBar, SIGNAL(sendCancelClicked()), SLOT(setFinalLeaveEditor()));
   connect(m_actionBar, SIGNAL(sendRestoreClicked()), SLOT(setRestore()));
@@ -707,65 +704,6 @@ bool BooksEditor::realyDeactivateEntry() {
 
   ib_count->setRequired(false);
   return true;
-}
-
-void BooksEditor::createDNBSearch() {
-  QString _type = btn_dnbQuery->getSearchType();
-  if (_type.length() < 3)
-    return;
-
-  QString _search;
-  QString _buffer;
-  if (_type == "tit") {
-    _buffer = QString("\"");
-    _buffer.append(ib_title->getValue().toString());
-    _buffer.append("\"");
-    _search = AntiquaCRM::AUtil::strEncode(_buffer);
-  } else if (_type == "num") {
-    _buffer = ib_isbn->getValue().toString();
-    if (_buffer.length() < 10) {
-      pushStatusMessage(tr("Missing a valid ISBN Number!"));
-      return;
-    }
-    _search = _buffer;
-  } else if (_type == "nam") {
-    _buffer = QString("\"");
-    _buffer.append(ib_author->getValue().toString());
-    _buffer.append("\"");
-    _search = AntiquaCRM::AUtil::strEncode(_buffer);
-  } else if (_type == "tit+nam") {
-    _type = "cql";
-    _buffer = QString("tit=\"");
-    _buffer.append(ib_title->getValue().toString());
-    _buffer.append("\" AND nam=\"");
-    _buffer.append(ib_author->getValue().toString());
-    _buffer.append("\"");
-    _search = AntiquaCRM::AUtil::strEncode(_buffer.trimmed());
-  } else {
-    _type = "all";
-    _search = AntiquaCRM::AUtil::strEncode(ib_title->getValue().toString());
-  }
-
-  if (_search.length() < 5)
-    return;
-
-  QUrlQuery _query;
-  _query.addQueryItem("key", _type);
-  _query.addQueryItem("key.GROUP", "1");
-  _query.addQueryItem("sortA", "bez");
-  _query.addQueryItem("pr", "0");
-  _query.addQueryItem("v", "plist");
-  _query.addQueryItem("t", _search);
-
-#ifdef ANTIQUA_DEVELOPMENT
-  qDebug() << "DNB Search:" << Qt::endl << _query.toString();
-#endif
-
-  btn_dnbQuery->openLink(_query);
-
-  _buffer.clear();
-  _type.clear();
-  _search.clear();
 }
 
 void BooksEditor::setSaveData() {
