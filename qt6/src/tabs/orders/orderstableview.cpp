@@ -45,8 +45,8 @@ OrdersTableView::OrdersTableView(QWidget* parent, bool readOnly) : QTableView{pa
   m_header->setSectionResizeMode(QHeaderView::ResizeToContents);
   setHorizontalHeader(m_header);
 
-  connect(m_model, SIGNAL(dataChanged(QModelIndex, QModelIndex)),
-          SLOT(articleChanged(QModelIndex, QModelIndex)));
+  connect(m_model, SIGNAL(dataChanged(QModelIndex,QModelIndex)),
+          SLOT(articleChanged(QModelIndex,QModelIndex)));
   connect(this, SIGNAL(doubleClicked(QModelIndex)), SLOT(rowSelected(QModelIndex)));
 }
 

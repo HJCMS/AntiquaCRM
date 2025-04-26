@@ -11,7 +11,8 @@
 #include <QLayout>
 #include <QMessageBox>
 
-StitchesWidget::StitchesWidget(QWidget* parent) : AntiquaCRM::TabsIndex{"stitches_tab", parent} {
+StitchesWidget::StitchesWidget(QWidget* parent)
+    : AntiquaCRM::TabsIndex{STITCHES_INTERFACE_TABID, parent} {
   setObjectName("stitches_tab_widget");
   setWindowIcon(AntiquaCRM::antiquaIcon("kjournal"));
   setWindowTitle(getTitle());

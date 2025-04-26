@@ -4,8 +4,11 @@
 #include "tabstitches.h"
 #include "stitchesconfigwidget.h"
 #include "stitcheswidget.h"
+#ifndef STITCHES_INTERFACE_TABID
+#  include "stitchesconfig.h"
+#endif
 
-TabStitches::TabStitches(QObject *parent) : AntiquaCRM::TabsInterface{parent} {
+TabStitches::TabStitches(QObject* parent) : AntiquaCRM::TabsInterface{parent} {
   setObjectName("stitches_plugin");
 }
 
@@ -17,35 +20,41 @@ const QString TabStitches::interfaceName() const {
   return STITCHES_INTERFACE_NAME;
 }
 
-const QString TabStitches::sqlTableName() const { return STITCHES_TABLE_NAME; }
+const QString TabStitches::sqlTableName() const {
+  return STITCHES_TABLE_NAME;
+}
 
-const QString TabStitches::sqlFieldPrefix() const { return QString("ip"); }
+const QString TabStitches::sqlFieldPrefix() const {
+  return QString("ip");
+}
 
-AntiquaCRM::PluginConfigWidget *TabStitches::configWidget(QWidget *parent) const {
-  StitchesConfigWidget *_w = new StitchesConfigWidget(parent);
+AntiquaCRM::PluginConfigWidget* TabStitches::configWidget(QWidget* parent) const {
+  StitchesConfigWidget* _w = new StitchesConfigWidget(parent);
   _w->setWindowTitle(displayName() + "[*]");
   return _w;
 }
 
-bool TabStitches::addIndexOnInit() const { return false; }
+bool TabStitches::addIndexOnInit() const {
+  return false;
+}
 
 const QJsonObject TabStitches::menuEntry() const {
   QJsonObject _jo;
-  _jo.insert("id", "stitches_tab");
+  _jo.insert("id", STITCHES_INTERFACE_TABID);
   _jo.insert("title", tr("Prints && Stitches"));
   _jo.insert("tip", tr("Inventory Prints and Stitches"));
   _jo.insert("icon", "kjournal");
   return _jo;
 }
 
-AntiquaCRM::TabsIndex *TabStitches::indexWidget(QWidget *parent) const {
-  StitchesWidget *_w = new StitchesWidget(parent);
+AntiquaCRM::TabsIndex* TabStitches::indexWidget(QWidget* parent) const {
+  StitchesWidget* _w = new StitchesWidget(parent);
   if (_w == nullptr)
     qFatal("Unable to load StitchesWidget!");
 
   return _w;
 }
 
-bool TabStitches::createInterface(QObject *parent) {
+bool TabStitches::createInterface(QObject* parent) {
   return (parent != nullptr);
 }

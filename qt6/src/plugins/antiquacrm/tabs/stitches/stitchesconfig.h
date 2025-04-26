@@ -39,6 +39,10 @@
 #  define STITCHES_TABLE_NAME QString("inventory_prints")
 #endif
 
+#ifndef STITCHES_INTERFACE_TABID
+#define STITCHES_INTERFACE_TABID "stitches_tab"
+#endif
+
 #ifndef STITCHES_INDEX_COLUMN
 #  define STITCHES_INDEX_COLUMN QString("ip_id")
 #endif
