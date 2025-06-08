@@ -293,5 +293,5 @@ AntiquaCRM::ArticleType ACmdProviders::findArticlType(const QString& aid) {
       return static_cast<AntiquaCRM::ArticleType>(_q.value(0).toInt());
     }
   }
-  return AntiquaCRM::ArticleType::BOOK;
+  return AntiquaCRM::ArticleType::OTHER;
 }
