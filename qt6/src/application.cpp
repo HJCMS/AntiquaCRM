@@ -27,6 +27,19 @@
 #include <QStyleFactory>
 #include <QTimer>
 
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE 1
+#endif
+
+// Normal abort to display the message about a missing network or SQL port in bootsplash.
+#ifndef SILENT_QUIT
+#ifndef SILENT_QUIT
+# define SILENT_QUIT 0
+#else
+# define SILENT_QUIT EXITS_SUCCESS
+#endif
+#endif
+
 Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   setApplicationName(ANTIQUACRM_NAME);
   setDesktopFileName(ANTIQUACRM_NAME);
@@ -188,16 +201,17 @@ bool Application::initMainWindow() {
   if (QSystemTrayIcon::isSystemTrayAvailable())
     m_systray = new SystemTrayIcon(applIcon(), this);
 
-#ifdef Q_OS_WIN
-  // @fixme worker threads in windows taskbar
-  suspending();
-#endif
-
   // The MainWindow must initialized behind the taskbar entry,
   // otherwise it can't put the Window to the right process tree.
   m_window = new MainWindow(m_topWidget);
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
+  m_window->openWindow();
+
+#ifdef Q_OS_WIN
+  // @fixme worker threads in windows taskbar
+  suspending();
+#endif
 
   // Checks for System tray and create all required signal bindings.
   if (checkSysTrayIcon()) {
@@ -293,7 +307,7 @@ int Application::exec() {
   if (!checkInterfaces()) {
     p_splash.errorMessage(tr("No Networkconnection found!"));
     mutex.unlock();
-    return 0;
+    return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
@@ -305,7 +319,7 @@ int Application::exec() {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
     mutex.unlock();
     suspending();
-    return 0;
+    return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));
   mutex.unlock();
@@ -326,7 +340,7 @@ int Application::exec() {
     }
     mutex.unlock();
     suspending();
-    return 1;
+    return EXIT_FAILURE;
   }
   p_splash.setMessage(tr("Database connection successfully."));
   mutex.unlock();
@@ -354,11 +368,11 @@ int Application::exec() {
     p_splash.errorMessage(tr("Open window failed."));
     qFatal("failed to initital antiquacrm window");
     suspending();
-    return 1;
+    return EXIT_FAILURE;
   }
 
   // Step 7 - open window
-  if (m_window->openWindow()) {
+  if (m_window != nullptr) {
 #ifdef ANTIQUACRM_DBUS_ENABLED
     if (registerSessionBus()) {
       // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
@@ -371,10 +385,9 @@ int Application::exec() {
       connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
     }
 #endif
+    // Step 8 - finish splash and unlock
+    p_splash.finish(m_window);
+    return QApplication::exec();
   }
-
-  // Step 8 - finish splash and unlock
-  p_splash.finish(m_window);
-
-  return QApplication::exec();
+  return EXIT_FAILURE;
 }
