@@ -33,7 +33,7 @@
 
 // Normal abort to display the message about a missing network or SQL port in bootsplash.
 #ifndef SILENT_QUIT
-#ifndef SILENT_QUIT
+#ifndef EXITS_SUCCESS
 # define SILENT_QUIT 0
 #else
 # define SILENT_QUIT EXITS_SUCCESS
