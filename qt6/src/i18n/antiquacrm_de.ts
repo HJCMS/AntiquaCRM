@@ -3127,7 +3127,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+219"/>
+        <location filename="../application.cpp" line="+232"/>
         <source>Please close all editors before exiting!</source>
         <translation>Bitte schließen Sie alle Editoren vor dem Beenden!</translation>
     </message>
@@ -3230,7 +3230,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
         <translation>Dialog ohne Speichern schließen.</translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+35"/>
         <source>Description data saving success!</source>
         <translation>Beschreibungsdaten erfolgreich gespeichert!</translation>
     </message>
@@ -3256,7 +3256,7 @@ Dieser Code stellt nur die Ziffern 0-9 mit einer Länge von 10 oder 13 dar. Eine
 <context>
     <name>ArticleDescWordsWidget</name>
     <message>
-        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+22"/>
+        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+23"/>
         <source>Id</source>
         <translation>Id</translation>
     </message>
@@ -3852,7 +3852,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Informationen</translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+64"/>
         <source>Authors group</source>
         <translation>Autorengruppe</translation>
     </message>
@@ -3912,12 +3912,7 @@ Sie können vordefinierte Schlüsselwörter in Ihrem Datenbankkonfigurationsmen�
         <translation>Buchdeaktivierung</translation>
     </message>
     <message>
-        <location line="+26"/>
-        <source>Missing a valid ISBN Number!</source>
-        <translation>Es fehlt eine gültige ISBN-Nummer!</translation>
-    </message>
-    <message>
-        <location line="+85"/>
+        <location line="+52"/>
         <source>Missing valid Article Id!</source>
         <translation>Es fehlt eine gültige Artikel-ID!</translation>
     </message>
@@ -5003,12 +4998,12 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>CatalogSearchButton</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/catalogsearchbutton.cpp" line="+12"/>
-        <source>Search</source>
-        <translation>Suche</translation>
+        <location filename="../plugins/antiquacrm/tabs/books/catalogsearchbutton.cpp" line="+11"/>
+        <source>DNB Website</source>
+        <translation>DNB Webseite</translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Opens the search page of the German National Library in your web browser.</source>
         <translation>Öffnet die Suchseite der Deutschen Nationalbibliothek in Ihrem Webbrowser.</translation>
     </message>
@@ -5018,32 +5013,27 @@ Bild – Artikel-ID: %2</translation>
         <translation>Verknüpfung: Deutsche Nationalbibliothek</translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+68"/>
+        <location line="+30"/>
         <source>Search in everything</source>
         <translation>Suche überall</translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>Title search</source>
         <translation>Titelsuche</translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>Authors search</source>
         <translation>Autorensuche</translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>Title and Authors search</source>
         <translation>Titel und Autorensuche</translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>ISBN search</source>
         <translation>ISBN suche</translation>
     </message>
@@ -7034,19 +7024,19 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+228"/>
+        <location filename="../mainwindow.cpp" line="+238"/>
         <source>No tabs available</source>
         <translation>Keine Registerkarten verfügbar</translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Window opened</source>
         <translation>Fenster geöffnet</translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Do you really want to close the application?&lt;/p&gt;</source>
-        <translation>Möchten Sie die Anwendung wirklich schließen?&lt;/p&gt;</translation>
+        <source>&lt;p&gt;Do you really want to quit the program?&lt;/p&gt;</source>
+        <translation>&lt;p&gt;Möchtest du das Programm wirklich beenden?&lt;/p&gt;</translation>
     </message>
 </context>
 <context>
@@ -7490,7 +7480,7 @@ Wenn Sie kein SSL verwenden, kann in diesem Feld auch die IP-Adresse hinzugefüg
         <translation>Rückerstattung erstellt.</translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+140"/>
         <source>No Provider orders data found!</source>
         <translation>Keine Dienstleisterbestelldaten gefunden!</translation>
     </message>
@@ -9970,7 +9960,7 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>StitchesWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+166"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+167"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation>Drucke &amp;&amp; Stiche</translation>
     </message>
@@ -10304,8 +10294,8 @@ Bild – Artikel-ID: %2</translation>
 <context>
     <name>TabStitches</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/tabstitches.cpp" line="+13"/>
-        <location line="+22"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/tabstitches.cpp" line="+16"/>
+        <location line="+28"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation>Drucke &amp;&amp; Stiche</translation>
     </message>

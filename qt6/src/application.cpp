@@ -127,10 +127,10 @@ bool Application::openDatabase() {
 void Application::initStyleTheme() {
   Q_INIT_RESOURCE(application);
 
-  // AntiquaCRM using Fusion theme
+         // AntiquaCRM using Fusion theme
   setStyle(QStyleFactory::create("Fusion"));
 
-  // Required for System Desktop changes
+         // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
 
   if (_platform.startsWith("xcb")) {
@@ -139,7 +139,7 @@ void Application::initStyleTheme() {
     QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
   }
 
-  // NOTE Loading stylesheet before change fonts!
+         // NOTE Loading stylesheet before change fonts!
   QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
   if (_info.isReadable()) {
     QFile _fp(_info.filePath());
@@ -209,7 +209,7 @@ bool Application::initMainWindow() {
   m_window->openWindow();
 
 #ifdef Q_OS_WIN
-  // @fixme worker threads in windows taskbar
+  // @fixme worker threads in windows
   suspending();
 #endif
 
@@ -243,7 +243,7 @@ void Application::applicationQuit() {
   m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
 #endif
 
-  // Force destructers
+         // Force destructers
   if (m_window != nullptr) {
     m_window->hide();
     m_window->deleteLater();
@@ -259,7 +259,7 @@ void Application::applicationQuit() {
     m_sql->deleteLater();
   }
 
-  // finaly
+         // finaly
   quit();
 }
 
@@ -291,17 +291,17 @@ int Application::exec() {
   // Translation at first
   initTranslations();
 
-  // Step 0 - Open splash
+         // Step 0 - Open splash
   SplashScreen p_splash(this);
   p_splash.show();
 
-  // Step 1 - Stylesheets
+         // Step 1 - Stylesheets
   p_splash.setMessage("Initial Themes & styles.");
   mutex.lock();
   initStyleTheme();
   mutex.unlock();
 
-  // Step 2 - Networking
+         // Step 2 - Networking
   p_splash.setMessage("Search Networkconnection!");
   mutex.lock();
   if (!checkInterfaces()) {
@@ -312,7 +312,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-  // Step 3 - SQL Server
+         // Step 3 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
   mutex.lock();
   if (!checkRemotePort()) {
@@ -324,7 +324,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Network connection to remote port exists."));
   mutex.unlock();
 
-  // Step 4 - SQL Database
+         // Step 4 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
   mutex.lock();
   if (!openDatabase()) {
@@ -345,7 +345,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Database connection successfully."));
   mutex.unlock();
 
-  // Step 5 - create cache files
+         // Step 5 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->open()) {
     mutex.lock();
@@ -353,7 +353,7 @@ int Application::exec() {
     DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(QString)), &p_splash, SLOT(setMessage(QString)));
 
-    // m_sql->getDateTimeStamp();
+           // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {
       p_splash.setMessage(tr("Cachefiles updated ..."));
     }
@@ -363,7 +363,7 @@ int Application::exec() {
     suspending();
   }
 
-  // Step 6 - UIX
+         // Step 6 - UIX
   if (!initMainWindow()) {
     p_splash.errorMessage(tr("Open window failed."));
     qFatal("failed to initital antiquacrm window");
@@ -371,7 +371,7 @@ int Application::exec() {
     return EXIT_FAILURE;
   }
 
-  // Step 7 - open window
+         // Step 7 - open window
   if (m_window != nullptr) {
 #ifdef ANTIQUACRM_DBUS_ENABLED
     if (registerSessionBus()) {

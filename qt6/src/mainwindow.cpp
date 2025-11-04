@@ -36,7 +36,7 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
 
 bool MainWindow::createSocketListener() {
   m_rx = new AntiquaCRM::AReceiver(this);
-  connect(m_rx, SIGNAL(sendOperation(QString, QJsonObject)), SLOT(setAction(QString, QJsonObject)));
+  connect(m_rx, SIGNAL(sendOperation(QString,QJsonObject)), SLOT(setAction(QString,QJsonObject)));
   connect(m_rx, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(statusInfoMessage(QString)));
   return m_rx->listen(AntiquaCRM::AUtil::socketName());
 }
@@ -242,12 +242,15 @@ bool MainWindow::openWindow() {
 
   if (config->contains("window/windowState")) {
     QByteArray state = config->value("window/windowState").toByteArray();
-    if (!state.isNull()) {
+    if (state.isNull()) {
+      setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
+    } else {
       restoreState(state);
     }
   }
   // Always show on application start
-  showNormal();
+  setVisible(true);
+
   m_statusBar->showMessage(tr("Window opened"), 5000);
   // @see also showEvent handle
   firstShown = true;
@@ -256,22 +259,21 @@ bool MainWindow::openWindow() {
 
 bool MainWindow::closeWindow() {
   if (isWindowModified()) {
+    bool _reject = false;
     AntiquaCRM::APopUpMessage* d = new AntiquaCRM::APopUpMessage(this);
-    d->setUnsavedMessage(tr("Do you really want to close the application?</p>"), true);
-
-    if (d->exec() == QDialog::Rejected) {
-      return false;
-    }
+    d->setUnsavedMessage(tr("<p>Do you really want to quit the program?</p>"), true);
+    _reject = (d->exec() == QDialog::Rejected);
     d->deleteLater();
+    if(_reject)
+      return false;
   }
 
   QByteArray _geometry = saveGeometry();
-  if (!_geometry.isNull())
+  if (!_geometry.isNull()) {
     config->setValue("window/geometry", _geometry);
+    _geometry.clear();
+  }
 
-  _geometry.clear();
-
-         // DEVELOPMENT return close();
   return (m_tabWidget->unloadTabs() && close());
 }
 

@@ -3124,7 +3124,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+219"/>
+        <location filename="../application.cpp" line="+232"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3227,7 +3227,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+34"/>
+        <location line="+35"/>
         <source>Description data saving success!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3253,7 +3253,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>ArticleDescWordsWidget</name>
     <message>
-        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+22"/>
+        <location filename="../utils/articledescwords/articledescwordswidget.cpp" line="+23"/>
         <source>Id</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3832,7 +3832,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+67"/>
+        <location line="+64"/>
         <source>Authors group</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3892,12 +3892,7 @@ You can edit predefined Keywords in your Database Configuration Menu.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+26"/>
-        <source>Missing a valid ISBN Number!</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+85"/>
+        <location line="+52"/>
         <source>Missing valid Article Id!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4978,12 +4973,12 @@ Image - Article Id: %2</source>
 <context>
     <name>CatalogSearchButton</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/books/catalogsearchbutton.cpp" line="+12"/>
-        <source>Search</source>
+        <location filename="../plugins/antiquacrm/tabs/books/catalogsearchbutton.cpp" line="+11"/>
+        <source>DNB Website</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>Opens the search page of the German National Library in your web browser.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4993,32 +4988,27 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <location line="+68"/>
+        <location line="+30"/>
         <source>Search in everything</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>Title search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>Authors search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>Title and Authors search</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-67"/>
-        <location line="+68"/>
+        <location line="+1"/>
         <source>ISBN search</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7008,18 +6998,18 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+228"/>
+        <location filename="../mainwindow.cpp" line="+238"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+16"/>
         <source>Window opened</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location line="+9"/>
-        <source>Do you really want to close the application?&lt;/p&gt;</source>
+        <source>&lt;p&gt;Do you really want to quit the program?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7464,7 +7454,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+136"/>
+        <location line="+140"/>
         <source>No Provider orders data found!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9930,7 +9920,7 @@ Image - Article Id: %2</source>
 <context>
     <name>StitchesWidget</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+166"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/stitcheswidget.cpp" line="+167"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10264,8 +10254,8 @@ Image - Article Id: %2</source>
 <context>
     <name>TabStitches</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/stitches/tabstitches.cpp" line="+13"/>
-        <location line="+22"/>
+        <location filename="../plugins/antiquacrm/tabs/stitches/tabstitches.cpp" line="+16"/>
+        <location line="+28"/>
         <source>Prints &amp;&amp; Stitches</source>
         <translation type="unfinished"></translation>
     </message>
