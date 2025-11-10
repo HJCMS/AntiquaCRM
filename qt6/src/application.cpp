@@ -5,19 +5,19 @@
 #include "mainwindow.h"
 #include "splashscreen.h"
 #include "switchdatabaseprofile.h"
-#include "systemtrayicon.h"
 #include "utils/datacache/datacache.h"
 
 #ifdef Q_OS_WIN
-#  include <Windows.h>
+# include <Windows.h>
 #else
-#  include <chrono>
-#  include <thread>
+# include <chrono>
+# include <thread>
 #endif
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
-#  include "abusadaptor.h"
-#  include <QDBusMessage>
+# include "systemtrayicon.h"
+# include "abusadaptor.h"
+# include <QDBusMessage>
 #endif
 
 #include <AntiquaWidgets>
@@ -27,17 +27,15 @@
 #include <QStyleFactory>
 #include <QTimer>
 
-#ifndef EXIT_FAILURE
-#define EXIT_FAILURE 1
-#endif
-
 // Normal abort to display the message about a missing network or SQL port in bootsplash.
-#ifndef SILENT_QUIT
-#ifndef EXITS_SUCCESS
+#ifndef EXIT_SUCCESS
 # define SILENT_QUIT 0
 #else
-# define SILENT_QUIT EXITS_SUCCESS
+# define SILENT_QUIT EXIT_SUCCESS
 #endif
+
+#ifndef EXIT_FAILURE
+#define EXIT_FAILURE 1
 #endif
 
 Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
@@ -68,6 +66,13 @@ bool Application::registerSessionBus() {
     return true;
   }
   return false;
+}
+
+bool Application::checkSysTrayIcon() {
+  if (!QSystemTrayIcon::isSystemTrayAvailable())
+    qWarning("SystemTray is not available!");
+
+  return (m_systray != nullptr);
 }
 #endif
 
@@ -100,13 +105,6 @@ bool Application::checkRemotePort() {
 
   qWarning("Remote port „%s:%d“, is unreachable!", qPrintable(_pr.getHostname()), _pr.getPort());
   return false;
-}
-
-bool Application::checkSysTrayIcon() {
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    qWarning("SystemTray is not available!");
-
-  return (m_systray != nullptr);
 }
 
 bool Application::openDatabase() {
@@ -197,9 +195,12 @@ bool Application::initMainWindow() {
       break;
     }
   }
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
   // Now we can create the taskbar entry
   if (QSystemTrayIcon::isSystemTrayAvailable())
     m_systray = new SystemTrayIcon(applIcon(), this);
+#endif
 
   // The MainWindow must initialized behind the taskbar entry,
   // otherwise it can't put the Window to the right process tree.
@@ -208,11 +209,7 @@ bool Application::initMainWindow() {
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
   m_window->openWindow();
 
-#ifdef Q_OS_WIN
-  // @fixme worker threads in windows
-  suspending();
-#endif
-
+#ifdef ANTIQUACRM_DBUS_ENABLED
   // Checks for System tray and create all required signal bindings.
   if (checkSysTrayIcon()) {
     connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
@@ -222,6 +219,7 @@ bool Application::initMainWindow() {
     // ready to view
     m_systray->setVisible(true);
   }
+#endif
 
   return (m_window != nullptr);
 }
@@ -229,12 +227,14 @@ bool Application::initMainWindow() {
 void Application::applicationQuit() {
   if (!m_window->closeWindow()) {
     m_window->showNormal();
+#ifdef ANTIQUACRM_DBUS_ENABLED
     const QString _hint = tr("Please close all editors before exiting!");
     if (checkSysTrayIcon()) {
       m_systray->setMessage(_hint);
     } else {
       QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
     }
+#endif
     return;
   }
 
@@ -249,10 +249,12 @@ void Application::applicationQuit() {
     m_window->deleteLater();
   }
 
+#ifdef ANTIQUACRM_DBUS_ENABLED
   if (checkSysTrayIcon()) {
     m_systray->setVisible(false);
     m_systray->deleteLater();
   }
+#endif
 
   if (m_sql != nullptr) {
     m_sql->close();
@@ -291,17 +293,17 @@ int Application::exec() {
   // Translation at first
   initTranslations();
 
-         // Step 0 - Open splash
+  // Step 0 - Open splash
   SplashScreen p_splash(this);
   p_splash.show();
 
-         // Step 1 - Stylesheets
+  // Step 1 - Stylesheets
   p_splash.setMessage("Initial Themes & styles.");
   mutex.lock();
   initStyleTheme();
   mutex.unlock();
 
-         // Step 2 - Networking
+  // Step 2 - Networking
   p_splash.setMessage("Search Networkconnection!");
   mutex.lock();
   if (!checkInterfaces()) {
@@ -312,7 +314,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Valid Networkconnection found!"));
   mutex.unlock();
 
-         // Step 3 - SQL Server
+  // Step 3 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
   mutex.lock();
   if (!checkRemotePort()) {
@@ -324,7 +326,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Network connection to remote port exists."));
   mutex.unlock();
 
-         // Step 4 - SQL Database
+  // Step 4 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
   mutex.lock();
   if (!openDatabase()) {
@@ -345,7 +347,7 @@ int Application::exec() {
   p_splash.setMessage(tr("Database connection successfully."));
   mutex.unlock();
 
-         // Step 5 - create cache files
+  // Step 5 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->open()) {
     mutex.lock();
@@ -353,7 +355,6 @@ int Application::exec() {
     DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(QString)), &p_splash, SLOT(setMessage(QString)));
 
-           // m_sql->getDateTimeStamp();
     if (m_cache->createCaches()) {
       p_splash.setMessage(tr("Cachefiles updated ..."));
     }
@@ -363,7 +364,7 @@ int Application::exec() {
     suspending();
   }
 
-         // Step 6 - UIX
+  // Step 6 - UIX
   if (!initMainWindow()) {
     p_splash.errorMessage(tr("Open window failed."));
     qFatal("failed to initital antiquacrm window");
@@ -371,7 +372,7 @@ int Application::exec() {
     return EXIT_FAILURE;
   }
 
-         // Step 7 - open window
+  // Step 7 - open window
   if (m_window != nullptr) {
 #ifdef ANTIQUACRM_DBUS_ENABLED
     if (registerSessionBus()) {

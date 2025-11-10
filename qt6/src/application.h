@@ -18,7 +18,9 @@
 #include <QObject>
 
 class MainWindow;
+#ifdef ANTIQUACRM_DBUS_ENABLED
 class SystemTrayIcon;
+#endif
 
 class Application final : public QApplication {
   Q_OBJECT
@@ -27,11 +29,20 @@ private:
   bool errors = false;
   AntiquaCRM::ASettings* m_cfg;          /**< @brief Configurations */
   AntiquaCRM::ASqlCore* m_sql = nullptr; /**< @brief PostgreSQL Database */
-  SystemTrayIcon* m_systray = nullptr;   /**< @brief UI SystemTray */
   MainWindow* m_window = nullptr;        /**< @brief UI Window */
 #ifdef ANTIQUACRM_DBUS_ENABLED
+  SystemTrayIcon* m_systray = nullptr;   /**< @brief UI SystemTray */
   QDBusConnection* m_dbus = nullptr; /**< @brief D-Bus Connection */
+
+  /**
+   * @brief registering DBUS Session bus
+   */
   bool registerSessionBus();
+
+  /**
+   * @brief Is Systemtray enabled and visible?
+   */
+  bool checkSysTrayIcon();
 #endif
 
   /**
@@ -52,11 +63,6 @@ private:
    * @brief Database remote port and status check
    */
   bool checkRemotePort();
-
-  /**
-   * @brief Is Systemtray enabled and visible?
-   */
-  bool checkSysTrayIcon();
 
   /**
    * @brief Connect to Database
