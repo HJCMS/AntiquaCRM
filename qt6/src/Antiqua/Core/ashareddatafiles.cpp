@@ -73,13 +73,16 @@ bool ASharedDataFiles::needsUpdate(const QString& basename, const QDateTime date
 
 bool ASharedDataFiles::fileExists(const QString& basename, const QStringList& ext) {
   bool status = false;
-  if (ext.count() > 0)
-    setNameFilters(ext);
-  else
-    setNameFilters(defaultFilter());
-
-  QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
-  foreach (QFileInfo i, li) {
+  QFileInfoList _list;
+  setNameFilters((ext.count() > 0) ? ext : defaultFilter());
+  // Check for System or user path
+  if(path().startsWith(QDir::homePath())) {
+    _list = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
+  } else {
+    _list = entryInfoList((QDir::Files | QDir::Readable), QDir::Name);
+  }
+  // qDebug() << Q_FUNC_INFO << _list;
+  foreach (QFileInfo i, _list) {
     if (i.baseName() == basename) {
       status = true;
       break;
