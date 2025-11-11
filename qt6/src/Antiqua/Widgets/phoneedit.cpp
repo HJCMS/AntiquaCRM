@@ -67,7 +67,7 @@ QVariant PhoneCountryCodeModel::headerData(int section, Qt::Orientation orientat
 void PhoneCountryCodeModel::initModel() {
   p_codes.clear();
   AntiquaCRM::ASharedDataFiles _db(AntiquaCRM::ASettings::getDataDir("json"));
-  if (!_db.fileExists("iso_countrycodes")) {
+  if (!_db.fileExists("iso_countrycodes", QStringList("json"))) {
     qWarning("Missing 'iso_countrycodes.json' from '%s'!", qPrintable(_db.path()));
     return;
   }

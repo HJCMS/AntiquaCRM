@@ -72,10 +72,12 @@ bool ASharedDataFiles::needsUpdate(const QString& basename, const QDateTime date
 }
 
 bool ASharedDataFiles::fileExists(const QString& basename, const QStringList& ext) {
+  bool status = false;
   if (ext.count() > 0)
     setNameFilters(ext);
+  else
+    setNameFilters(defaultFilter());
 
-  bool status = false;
   QFileInfoList li = entryInfoList((QDir::Files | QDir::Writable), QDir::Name);
   foreach (QFileInfo i, li) {
     if (i.baseName() == basename) {
@@ -83,6 +85,7 @@ bool ASharedDataFiles::fileExists(const QString& basename, const QStringList& ex
       break;
     }
   }
+  // restore filter
   setNameFilters(defaultFilter());
   return status;
 }
