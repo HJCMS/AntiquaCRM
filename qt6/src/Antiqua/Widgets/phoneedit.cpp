@@ -68,7 +68,7 @@ void PhoneCountryCodeModel::initModel() {
   p_codes.clear();
   AntiquaCRM::ASharedDataFiles _db(AntiquaCRM::ASettings::getDataDir("json"));
   if (!_db.fileExists("iso_countrycodes")) {
-    qWarning("Missing Country codes document!");
+    qWarning("Missing 'iso_countrycodes.json' from '%s'!", qPrintable(_db.path()));
     return;
   }
 
