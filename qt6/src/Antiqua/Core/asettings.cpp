@@ -31,9 +31,12 @@ const QString ASettings::currentPrefix() {
 const QString ASettings::genericDataLocation() {
   QString _p;
 #ifdef Q_WS_WIN
-  _p = QCoreApplication::applicationDirPath();
+  return currentPrefix();
 #else
   // is this a development target or not?
+  if(QCoreApplication::applicationDirPath().contains("src"))
+    return currentPrefix();
+
   QStringList _l = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
   _l.removeDuplicates();
 
@@ -41,15 +44,11 @@ const QString ASettings::genericDataLocation() {
   if(_i>=0)
     _l.remove(_i);
 
-  if(QCoreApplication::applicationDirPath().contains("src")) {
-    _p = QDir::currentPath();
-  } else {
-    foreach(QString _sp, _l) {
-      QString _t = _sp + "/antiquacrm";
-      if(QDir(_t).isReadable()) {
-        _p = _sp;
-        break;
-      }
+  foreach(QString _sp, _l) {
+    QString _t = _sp + "/antiquacrm";
+    if(QDir(_t).isReadable()) {
+      _p = _sp;
+      break;
     }
   }
 #endif
@@ -197,7 +196,13 @@ const QDir ASettings::getPluginDir(const QString& target) {
 }
 
 const QDir ASettings::getTranslationDir() {
-  QString _p = genericDataLocation();
+  QString _p;
+  // Developement
+  if(QString(ANTIQUACRM_TRANSLATION_TARGET).contains("/src/")) {
+    _p = QCoreApplication::applicationDirPath();
+  } else {
+    _p = genericDataLocation();
+  }
   _p.append(QDir::separator());
   _p.append(ANTIQUACRM_TRANSLATION_TARGET);
   _p.append(QDir::separator());
@@ -215,31 +220,29 @@ const QDir ASettings::getTranslationDir() {
 }
 
 const QDir ASettings::getDataDir(const QString& name) {
+  QDir _d;
   QString _p;
-  if(!QDir(ANTIQUACRM_DATA_TARGET).exists()) {
-    _p = genericDataLocation();
-    _p.append(QDir::separator());
-    _p.append(ANTIQUACRM_DATA_TARGET);
+  // Developement
+  if(QString(ANTIQUACRM_DATA_TARGET).contains("/src/")) {
+    _p = QCoreApplication::applicationDirPath();
   } else {
-    _p = ANTIQUACRM_DATA_TARGET;
+    _p = genericDataLocation();
   }
 
+  _p.append(QDir::separator());
+  _p.append(ANTIQUACRM_DATA_TARGET);
+  _p.append(QDir::separator());
+
   if (!name.isEmpty()) {
-    _p.append(QDir::separator());
     _p.append(name);
   }
 
-  QDir t(_p);
   QStringList filters({"*.xml", "*.sql", "*.json", "*.txt", "*.qcss"});
-  t.setNameFilters(filters);
-  t.setFilter(directoryFilter());
-  t.setSorting(QDir::Name);
-#ifdef ANTIQUA_DEVELOPMENT
-  if(!t.isReadable()) {
-    qDebug() << Q_FUNC_INFO << _p;
-  }
-#endif
-  return t.isReadable() ? t : QDir(ANTIQUACRM_DATA_TARGET);
+  _d.setNameFilters(filters);
+  _d.setFilter(directoryFilter());
+  _d.setSorting(QDir::Name);
+  _d.setPath(_p);
+  return _d;
 }
 
 const QDir ASettings::getUserDataDir() {
