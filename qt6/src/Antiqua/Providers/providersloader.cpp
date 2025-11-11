@@ -35,8 +35,6 @@ const QStringList ProvidersLoader::getInterfaceList() {
   if (plugins.isEmpty()) {
     qDebug() << Q_FUNC_INFO << "Missing Plugins:" << p_dir.path();
   }
-#else
-  qWarning("Missing plugins target %s", qPrintable(p_dir.path()));
 #endif
   return plugins;
 }
