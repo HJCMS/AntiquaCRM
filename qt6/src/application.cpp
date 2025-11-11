@@ -14,8 +14,11 @@
 # include <thread>
 #endif
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
 # include "systemtrayicon.h"
+#endif
+
+#ifdef ANTIQUACRM_DBUS_ENABLED
 # include "abusadaptor.h"
 # include <QDBusMessage>
 #endif
@@ -55,8 +58,10 @@ bool Application::registerSessionBus() {
     if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
       m_dbus->registerObject(QString("/"), this);
       m_dbus->registerObject(QString("/Window"), m_window);
+# ifdef ANTIQUACRM_SYSTRAY_ENABLED
       if (checkSysTrayIcon())
         m_dbus->registerObject(QString("/Systray"), m_systray);
+# endif
     }
 #  ifdef ANTIQUA_DEVELOPMENT
     else {
@@ -67,7 +72,9 @@ bool Application::registerSessionBus() {
   }
   return false;
 }
+#endif
 
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
 bool Application::checkSysTrayIcon() {
   if (!QSystemTrayIcon::isSystemTrayAvailable())
     qWarning("SystemTray is not available!");
@@ -196,7 +203,7 @@ bool Application::initMainWindow() {
     }
   }
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   // Now we can create the taskbar entry
   if (QSystemTrayIcon::isSystemTrayAvailable())
     m_systray = new SystemTrayIcon(applIcon(), this);
@@ -209,7 +216,7 @@ bool Application::initMainWindow() {
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
   m_window->openWindow();
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   // Checks for System tray and create all required signal bindings.
   if (checkSysTrayIcon()) {
     connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
@@ -227,7 +234,7 @@ bool Application::initMainWindow() {
 void Application::applicationQuit() {
   if (!m_window->closeWindow()) {
     m_window->showNormal();
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
     const QString _hint = tr("Please close all editors before exiting!");
     if (checkSysTrayIcon()) {
       m_systray->setMessage(_hint);
@@ -249,7 +256,7 @@ void Application::applicationQuit() {
     m_window->deleteLater();
   }
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   if (checkSysTrayIcon()) {
     m_systray->setVisible(false);
     m_systray->deleteLater();
@@ -379,9 +386,10 @@ int Application::exec() {
       // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
       ABusAdaptor* m_adaptor = new ABusAdaptor(this);
       m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
+# ifdef ANTIQUACRM_SYSTRAY_ENABLED
       if (checkSysTrayIcon())
         connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
-
+# endif
       connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
       connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
     }

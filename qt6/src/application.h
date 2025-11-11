@@ -18,7 +18,7 @@
 #include <QObject>
 
 class MainWindow;
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
 class SystemTrayIcon;
 #endif
 
@@ -30,15 +30,18 @@ private:
   AntiquaCRM::ASettings* m_cfg;          /**< @brief Configurations */
   AntiquaCRM::ASqlCore* m_sql = nullptr; /**< @brief PostgreSQL Database */
   MainWindow* m_window = nullptr;        /**< @brief UI Window */
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   SystemTrayIcon* m_systray = nullptr;   /**< @brief UI SystemTray */
+#endif
+#ifdef ANTIQUACRM_DBUS_ENABLED
   QDBusConnection* m_dbus = nullptr; /**< @brief D-Bus Connection */
-
   /**
    * @brief registering DBUS Session bus
    */
   bool registerSessionBus();
+#endif
 
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   /**
    * @brief Is Systemtray enabled and visible?
    */
