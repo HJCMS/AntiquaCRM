@@ -11,7 +11,24 @@
 namespace AntiquaCRM
 {
 
-static const QString genericDataLocation() {
+ASettings::ASettings(const QString& applName, QObject* parent)
+    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(), applName, parent) {
+  setValue("name", applName);
+  setValue("version", ANTIQUACRM_VERSION);
+}
+
+ASettings::ASettings(QObject* parent)
+    : ASettings(ANTIQUACRM_NAME, parent) {}
+
+const QString ASettings::currentPrefix() {
+  QDir _d(QCoreApplication::applicationDirPath());
+#ifndef Q_WS_WIN
+  _d.cdUp();
+#endif
+  return _d.path();
+}
+
+const QString ASettings::genericDataLocation() {
   QString _p;
 #ifdef Q_WS_WIN
   _p = QCoreApplication::applicationDirPath();
@@ -34,24 +51,9 @@ static const QString genericDataLocation() {
         break;
       }
     }
-    // qDebug() << Q_FUNC_INFO << _p;
   }
 #endif
   return _p;
-}
-
-ASettings::ASettings(QObject* parent)
-    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(), ANTIQUACRM_NAME,
-                parent),
-      p_locale(QLocale::system()) {
-  setValue("name", ANTIQUACRM_NAME);
-  setValue("version", ANTIQUACRM_VERSION);
-}
-
-ASettings::ASettings(const QString& applName, QObject* parent)
-    : QSettings(QSettings::NativeFormat, QSettings::UserScope, configDomain(), applName, parent) {
-  setValue("name", applName);
-  setValue("version", ANTIQUACRM_VERSION);
 }
 
 const QString ASettings::configDomain() {
@@ -176,7 +178,7 @@ const QStringList ASettings::pluginSearchFilter() {
 }
 
 const QDir ASettings::getPluginDir(const QString& target) {
-  QString _p(QDir::currentPath());
+  QString _p(currentPrefix());
   _p.append(QDir::separator());
   _p.append(ANTIQUACRM_PLUGIN_TARGET);
   _p.append(QDir::separator());
@@ -187,11 +189,10 @@ const QDir ASettings::getPluginDir(const QString& target) {
   QDir t(_p);
   t.setFilter(directoryFilter());
   t.setSorting(QDir::Name);
-#ifdef ANTIQUA_DEVELOPMENT
   if(!t.isReadable()) {
-    qDebug() << Q_FUNC_INFO << _p;
+    qWarning("%s:'%s' not exists",Q_FUNC_INFO, qPrintable(t.path()));
   }
-#endif
+  // qDebug() << Q_FUNC_INFO << t.path();
   return t;
 }
 

@@ -17,7 +17,6 @@ Group:          Productivity/Databases
 Url:            @HOMEPAGEURL@
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 Requires:       libAntiquaCRM1 = %{version}-%{release}
-Requires:       libAntiquaCRM1 = %{version}-%{release}
 Requires:       qt6-sql-postgresql >= %{qtversion}
 Requires:       libdiscid0 >= 0.6.2
 Requires:       libqrencode4 >= 4.1.1
@@ -112,13 +111,13 @@ cmake -Wno-dev -Wno-deprecated \
   -DCMAKE_BUILD_TYPE:STRING=MinSizeRel \
   -DCMAKE_CXX_FLAGS_MINSIZEREL:STRING="$RPM_OPT_FLAGS" \
   -DCMAKE_INSTALL_PREFIX:PATH=%{_prefix} \
+  -DCMAKE_INSTALL_LIBDIR:STRING=lib64 \
   -DLRELEASE_EXECUTABLE:FILEPATH=/usr/bin/lrelease6 \
-  -DLIB_SUFFIX:STRING=64 \
   -DWITH_ANTIQUACMD:BOOL=ON \
   -DCMAKE_SKIP_RPATH:BOOL=ON \
   ../qt6/
 
-make --jobs 6
+make
 
 %install
 pushd build

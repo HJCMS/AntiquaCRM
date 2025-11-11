@@ -38,8 +38,20 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit ASettings(QObject* parent = nullptr);
   explicit ASettings(const QString& applName, QObject* parent = nullptr);
+  explicit ASettings(QObject* parent = nullptr);
+
+  /**
+   * @brief Current Prefix
+   *
+   * e.g. QDir(QCoreApplication::applicationDirPath()).cdUp();
+   */
+  static const QString currentPrefix();
+
+  /**
+   * @brief Generic Data location
+   */
+  static const QString genericDataLocation();
 
   /**
    * @brief AntiquaCRM Configuration Domain
