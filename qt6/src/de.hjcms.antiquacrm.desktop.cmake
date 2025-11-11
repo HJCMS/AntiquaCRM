@@ -1,10 +1,14 @@
 [Desktop Entry]
 Type=Application
-Exec=@PROJECTNAME@
-Icon=@PROJECTNAME@
-Terminal=false
+Exec=@CMAKE_PROJECT_NAME@
+Icon=@CMAKE_PROJECT_NAME@
+X-DBUS-ServiceName=de.hjcms.@CMAKE_PROJECT_NAME@
+Name=Antiqua CRM
 GenericName=Antiquarian Book- and Ordermanager
 GenericName[de]=Antiquarischer Buch- und Bestellmanager
-Name=Antiqua CRM
-Comment=@DESCRIPTION@
+Comment=Application for Managing antiquarian Books
+Comment[de]=Anwendung zur Verwaltung antiquarischer Bücher
 Categories=Utility;
+Terminal=false
+SingleMainWindow=true
+StartupNotify=true

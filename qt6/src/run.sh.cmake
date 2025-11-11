@@ -27,6 +27,7 @@ set +x
 test -d ${CMAKE_CURRENT_BINARY_DIR} || exit 1
 
 ## https://specifications.freedesktop.org/menu-spec/latest/onlyshowin-registry.html
+## Legacy menu systems
 # export XDG_CURRENT_DESKTOP=Old
 # export XDG_SESSION_DESKTOP=$XDG_CURRENT_DESKTOP
 # export QT_QPA_PLATFORMTHEME=qt6ct
