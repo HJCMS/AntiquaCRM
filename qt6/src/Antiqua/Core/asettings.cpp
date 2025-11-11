@@ -14,12 +14,27 @@ namespace AntiquaCRM
 static const QString genericDataLocation() {
   QString _p;
 #ifdef Q_WS_WIN
-  _p = QDir::currentPath();
+  _p = QCoreApplication::applicationDirPath();
 #else
   // is this a development target or not?
-  _p = QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation);
-  if(!_p.startsWith(QDir::currentPath())) {
+  QStringList _l = QStandardPaths::standardLocations(QStandardPaths::GenericDataLocation);
+  _l.removeDuplicates();
+
+  qsizetype _i = _l.indexOf(QStandardPaths::writableLocation(QStandardPaths::GenericDataLocation));
+  if(_i>=0)
+    _l.remove(_i);
+
+  if(QCoreApplication::applicationDirPath().contains("src")) {
     _p = QDir::currentPath();
+  } else {
+    foreach(QString _sp, _l) {
+      QString _t = _sp + "/antiquacrm";
+      if(QDir(_t).isReadable()) {
+        _p = _sp;
+        break;
+      }
+    }
+    // qDebug() << Q_FUNC_INFO << _p;
   }
 #endif
   return _p;
