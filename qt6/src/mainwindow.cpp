@@ -205,11 +205,13 @@ void MainWindow::hideEvent(QHideEvent* event) {
 }
 
 void MainWindow::closeEvent(QCloseEvent*) {
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   // NOTE: QApplication::setQuitOnLastWindowClosed is set to false.
   // Prevent window close events from window decoration.
   QHideEvent hide;
   hide.setAccepted(true);
   hideEvent(&hide);
+#endif
 }
 
 void MainWindow::setToggleWindow() {
@@ -281,7 +283,7 @@ MainWindow::~MainWindow() {
   if (config != nullptr)
     config->deleteLater();
 
-         // Destroy tab interfaces, tabs already closed in closeWindow().
+  // Destroy tab interfaces, tabs already closed in closeWindow().
   if (tabInterfaces.size() > 0) {
     for (int i = 0; i < tabInterfaces.size(); i++) {
       tabInterfaces.takeAt(i)->deleteLater();

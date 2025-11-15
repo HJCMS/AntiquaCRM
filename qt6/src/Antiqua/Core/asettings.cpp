@@ -22,7 +22,8 @@ ASettings::ASettings(QObject* parent)
 
 const QString ASettings::currentPrefix() {
   QDir _d(QCoreApplication::applicationDirPath());
-#ifndef Q_WS_WIN
+#ifdef Q_OS_LINUX
+  // e.g.: change from /usr/bin to /usr
   _d.cdUp();
 #endif
   return _d.path();
@@ -30,7 +31,7 @@ const QString ASettings::currentPrefix() {
 
 const QString ASettings::genericDataLocation() {
   QString _p;
-#ifdef Q_WS_WIN
+#ifdef Q_OS_WIN
   return currentPrefix();
 #else
   // is this a development target or not?
@@ -197,19 +198,23 @@ const QDir ASettings::getPluginDir(const QString& target) {
 
 const QDir ASettings::getTranslationDir() {
   QString _p;
+#ifndef Q_OS_WIN
   // Developement
   if(QString(ANTIQUACRM_TRANSLATION_TARGET).contains("/src/")) {
-    _p = QCoreApplication::applicationDirPath();
+    _p = currentPrefix();
   } else {
     _p = genericDataLocation();
   }
+#else
+  _p = currentPrefix();
+#endif
   _p.append(QDir::separator());
   _p.append(ANTIQUACRM_TRANSLATION_TARGET);
   _p.append(QDir::separator());
 
   QDir t(_p);
   t.setFilter(QDir::Files | QDir::NoSymLinks | QDir::NoDotAndDotDot);
-  t.setNameFilters(QStringList("*.qm"));
+  t.setNameFilters(QStringList({"*.qm","*.QM"}));
   t.setSorting(QDir::Name);
 #ifdef ANTIQUA_DEVELOPMENT
   if(!t.isReadable()) {
@@ -222,13 +227,16 @@ const QDir ASettings::getTranslationDir() {
 const QDir ASettings::getDataDir(const QString& name) {
   QDir _d;
   QString _p;
+#ifndef Q_OS_WIN
   // Developement
   if(QString(ANTIQUACRM_DATA_TARGET).contains("/src/")) {
     _p = QCoreApplication::applicationDirPath();
   } else {
     _p = genericDataLocation();
   }
-
+#else
+  _p = currentPrefix();
+#endif
   _p.append(QDir::separator());
   _p.append(ANTIQUACRM_DATA_TARGET);
   _p.append(QDir::separator());

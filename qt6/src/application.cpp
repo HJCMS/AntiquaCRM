@@ -46,7 +46,9 @@ Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   setDesktopFileName(ANTIQUACRM_NAME);
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
+#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   setQuitOnLastWindowClosed(false);
+#endif
   // WARNING - Do not init Database Connections in constructors!
   m_cfg = new AntiquaCRM::ASettings(this);
 }
@@ -250,7 +252,7 @@ void Application::applicationQuit() {
   m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
 #endif
 
-         // Force destructers
+  // Force destructers
   if (m_window != nullptr) {
     m_window->hide();
     m_window->deleteLater();
@@ -268,7 +270,7 @@ void Application::applicationQuit() {
     m_sql->deleteLater();
   }
 
-         // finaly
+  // finaly
   quit();
 }
 
