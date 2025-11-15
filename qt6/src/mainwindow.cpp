@@ -10,6 +10,8 @@
 #include "tabs/orders/taborders.h"
 #include "tabs/sellers/tabsellers.h"
 
+#include <QApplication>
+
 MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
@@ -204,14 +206,16 @@ void MainWindow::hideEvent(QHideEvent* event) {
   QMainWindow::hideEvent(event);
 }
 
-void MainWindow::closeEvent(QCloseEvent*) {
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
+void MainWindow::closeEvent(QCloseEvent* ev) {
   // NOTE: QApplication::setQuitOnLastWindowClosed is set to false.
   // Prevent window close events from window decoration.
-  QHideEvent hide;
-  hide.setAccepted(true);
-  hideEvent(&hide);
-#endif
+  if (qApp->quitOnLastWindowClosed()) {
+    QHideEvent hide;
+    hide.setAccepted(true);
+    hideEvent(&hide);
+    return;
+  }
+  QMainWindow::closeEvent(ev);
 }
 
 void MainWindow::setToggleWindow() {

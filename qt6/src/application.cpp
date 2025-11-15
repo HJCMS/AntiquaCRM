@@ -60,10 +60,10 @@ bool Application::registerSessionBus() {
     if (m_dbus->registerService(ANTIQUACRM_CONNECTION_DOMAIN)) {
       m_dbus->registerObject(QString("/"), this);
       m_dbus->registerObject(QString("/Window"), m_window);
-# ifdef ANTIQUACRM_SYSTRAY_ENABLED
-      if (checkSysTrayIcon())
-        m_dbus->registerObject(QString("/Systray"), m_systray);
-# endif
+      if (quitOnLastWindowClosed()) {
+        if (checkSysTrayIcon())
+          m_dbus->registerObject(QString("/Systray"), m_systray);
+      }
     }
 #  ifdef ANTIQUA_DEVELOPMENT
     else {
@@ -205,11 +205,11 @@ bool Application::initMainWindow() {
     }
   }
 
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
-  // Now we can create the taskbar entry
-  if (QSystemTrayIcon::isSystemTrayAvailable())
-    m_systray = new SystemTrayIcon(applIcon(), this);
-#endif
+  if (quitOnLastWindowClosed()) {
+    // Now we can create the taskbar entry
+    if (QSystemTrayIcon::isSystemTrayAvailable())
+      m_systray = new SystemTrayIcon(applIcon(), this);
+  }
 
   // The MainWindow must initialized behind the taskbar entry,
   // otherwise it can't put the Window to the right process tree.
@@ -218,17 +218,17 @@ bool Application::initMainWindow() {
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
   m_window->openWindow();
 
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
-  // Checks for System tray and create all required signal bindings.
-  if (checkSysTrayIcon()) {
-    connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
-    connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
-    connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-    connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-    // ready to view
-    m_systray->setVisible(true);
+  if (quitOnLastWindowClosed()) {
+    // Checks for System tray and create all required signal bindings.
+    if (checkSysTrayIcon()) {
+      connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
+      connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
+      connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+      connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+      // ready to view
+      m_systray->setVisible(true);
+    }
   }
-#endif
 
   return (m_window != nullptr);
 }
@@ -236,14 +236,14 @@ bool Application::initMainWindow() {
 void Application::applicationQuit() {
   if (!m_window->closeWindow()) {
     m_window->showNormal();
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
-    const QString _hint = tr("Please close all editors before exiting!");
-    if (checkSysTrayIcon()) {
-      m_systray->setMessage(_hint);
-    } else {
-      QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
+    if (quitOnLastWindowClosed()) {
+      const QString _hint = tr("Please close all editors before exiting!");
+      if (checkSysTrayIcon()) {
+        m_systray->setMessage(_hint);
+      } else {
+        QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
+      }
     }
-#endif
     return;
   }
 
@@ -258,12 +258,12 @@ void Application::applicationQuit() {
     m_window->deleteLater();
   }
 
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
-  if (checkSysTrayIcon()) {
-    m_systray->setVisible(false);
-    m_systray->deleteLater();
+  if (quitOnLastWindowClosed()) {
+    if (checkSysTrayIcon()) {
+      m_systray->setVisible(false);
+      m_systray->deleteLater();
+    }
   }
-#endif
 
   if (m_sql != nullptr) {
     m_sql->close();
@@ -388,10 +388,10 @@ int Application::exec() {
       // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
       ABusAdaptor* m_adaptor = new ABusAdaptor(this);
       m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-# ifdef ANTIQUACRM_SYSTRAY_ENABLED
-      if (checkSysTrayIcon())
-        connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
-# endif
+      if (quitOnLastWindowClosed()) {
+        if (checkSysTrayIcon())
+          connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
+      }
       connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
       connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
     }
