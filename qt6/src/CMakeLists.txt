@@ -121,9 +121,6 @@ ELSE()
     FILE_PERMISSIONS OWNER_READ OWNER_WRITE OWNER_EXECUTE GROUP_READ
     NEWLINE_STYLE UNIX
   )
-  ## FIXME Windows 11 make trouble with QSystemTrayIcon classes in this version.
-  ## There is currently no solution to the problem. :-(
-  ADD_DEFINITIONS (-DANTIQUACRM_SYSTRAY_ENABLED)
 ENDIF()
 
 IF(Qt6DBus_FOUND)

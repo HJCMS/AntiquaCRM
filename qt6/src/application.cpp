@@ -6,17 +6,7 @@
 #include "splashscreen.h"
 #include "switchdatabaseprofile.h"
 #include "utils/datacache/datacache.h"
-
-#ifdef Q_OS_WIN
-# include <Windows.h>
-#else
-# include <chrono>
-# include <thread>
-#endif
-
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
-# include "systemtrayicon.h"
-#endif
+#include "systemtrayicon.h"
 
 #ifdef ANTIQUACRM_DBUS_ENABLED
 # include "abusadaptor.h"
@@ -46,9 +36,8 @@ Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   setDesktopFileName(ANTIQUACRM_NAME);
   setApplicationVersion(ANTIQUACRM_VERSION);
   setOrganizationDomain(ANTIQUACRM_CONNECTION_DOMAIN);
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
   setQuitOnLastWindowClosed(false);
-#endif
+
   // WARNING - Do not init Database Connections in constructors!
   m_cfg = new AntiquaCRM::ASettings(this);
 }
@@ -61,8 +50,7 @@ bool Application::registerSessionBus() {
       m_dbus->registerObject(QString("/"), this);
       m_dbus->registerObject(QString("/Window"), m_window);
       if (quitOnLastWindowClosed()) {
-        if (checkSysTrayIcon())
-          m_dbus->registerObject(QString("/Systray"), m_systray);
+        m_dbus->registerObject(QString("/Systray"), m_systray);
       }
     }
 #  ifdef ANTIQUA_DEVELOPMENT
@@ -76,21 +64,11 @@ bool Application::registerSessionBus() {
 }
 #endif
 
-#ifdef ANTIQUACRM_SYSTRAY_ENABLED
 bool Application::checkSysTrayIcon() {
   if (!QSystemTrayIcon::isSystemTrayAvailable())
     qWarning("SystemTray is not available!");
 
   return (m_systray != nullptr);
-}
-#endif
-
-void Application::suspending() const {
-#ifdef Q_OS_WIN
-  Sleep(500);
-#else
-  std::this_thread::sleep_for(std::chrono::milliseconds(500));
-#endif
 }
 
 bool Application::checkInterfaces() {
@@ -134,10 +112,10 @@ bool Application::openDatabase() {
 void Application::initStyleTheme() {
   Q_INIT_RESOURCE(application);
 
-         // AntiquaCRM using Fusion theme
+  // AntiquaCRM using Fusion theme
   setStyle(QStyleFactory::create("Fusion"));
 
-         // Required for System Desktop changes
+  // Required for System Desktop changes
   const QString _platform = platformName().toLower().trimmed();
 
   if (_platform.startsWith("xcb")) {
@@ -146,7 +124,7 @@ void Application::initStyleTheme() {
     QIcon::setThemeName(m_cfg->value("icon_theme", _fallback).toString());
   }
 
-         // NOTE Loading stylesheet before change fonts!
+  // NOTE Loading stylesheet before change fonts!
   QFileInfo _info(m_cfg->getDataDir(), "antiquacrm.qcss");
   if (_info.isReadable()) {
     QFile _fp(_info.filePath());
@@ -194,23 +172,7 @@ void Application::initTranslations() {
 }
 
 bool Application::initMainWindow() {
-  // We need a main widget for process trees into Windows taskbars.
-  // This must be initialized before a taskbar entry is created.
-  // Otherwise the application can freeze on startup :-(
   QWidget* m_topWidget = nullptr;
-  foreach (QWidget* m_w, topLevelWidgets()) {
-    if (m_w->isWindow()) {
-      m_topWidget = m_w;
-      break;
-    }
-  }
-
-  if (quitOnLastWindowClosed()) {
-    // Now we can create the taskbar entry
-    if (QSystemTrayIcon::isSystemTrayAvailable())
-      m_systray = new SystemTrayIcon(applIcon(), this);
-  }
-
   // The MainWindow must initialized behind the taskbar entry,
   // otherwise it can't put the Window to the right process tree.
   m_window = new MainWindow(m_topWidget);
@@ -218,16 +180,17 @@ bool Application::initMainWindow() {
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
   m_window->openWindow();
 
-  if (quitOnLastWindowClosed()) {
-    // Checks for System tray and create all required signal bindings.
-    if (checkSysTrayIcon()) {
-      connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
-      connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
-      connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-      connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-      // ready to view
-      m_systray->setVisible(true);
-    }
+  // Now we can create the taskbar entry
+  m_systray = new SystemTrayIcon(applIcon(), this);
+
+  // Checks for System tray and create all required signal bindings.
+  if (checkSysTrayIcon()) {
+    connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
+    connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
+    connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+    connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+    // ready to view
+    m_systray->setVisible(true);
   }
 
   return (m_window != nullptr);
@@ -329,7 +292,6 @@ int Application::exec() {
   if (!checkRemotePort()) {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
     mutex.unlock();
-    suspending();
     return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));
@@ -350,7 +312,6 @@ int Application::exec() {
       qInfo("Database profile changed, application restart required.");
     }
     mutex.unlock();
-    suspending();
     return EXIT_FAILURE;
   }
   p_splash.setMessage(tr("Database connection successfully."));
@@ -370,14 +331,12 @@ int Application::exec() {
     m_cache->deleteLater();
     mutex.unlock();
     p_splash.setMessage(tr("Open Application ..."));
-    suspending();
   }
 
   // Step 6 - UIX
   if (!initMainWindow()) {
     p_splash.errorMessage(tr("Open window failed."));
     qFatal("failed to initital antiquacrm window");
-    suspending();
     return EXIT_FAILURE;
   }
 
@@ -388,10 +347,7 @@ int Application::exec() {
       // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
       ABusAdaptor* m_adaptor = new ABusAdaptor(this);
       m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-      if (quitOnLastWindowClosed()) {
-        if (checkSysTrayIcon())
-          connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
-      }
+      connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
       connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
       connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
     }
