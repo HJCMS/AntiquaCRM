@@ -102,7 +102,8 @@ const QUrl BookLookerActions::apiQuery(const QString &target) {
 
 void BookLookerActions::setTokenCookie(const QString &token) {
   QDateTime _dt = QDateTime::currentDateTime();
-  _dt.setTimeSpec(Qt::UTC);
+  QTimeZone _zone(QTimeZone::UTC);
+  _dt.setTimeZone(_zone);
   authenticCookie = QNetworkCookie("token", token.toLocal8Bit());
   authenticCookie.setDomain(p_config.value("api_host").toString());
   authenticCookie.setSecure(true);
@@ -122,9 +123,10 @@ bool BookLookerActions::isCookieExpired() {
   if (authenticCookie.value().isNull())
     return true;
 
-  QDateTime dt = QDateTime::currentDateTime();
-  dt.setTimeSpec(Qt::UTC);
-  return (authenticCookie.expirationDate() <= dt);
+  QDateTime _dt = QDateTime::currentDateTime();
+  QTimeZone _zone(QTimeZone::UTC);
+  _dt.setTimeZone(_zone);
+  return (authenticCookie.expirationDate() <= _dt);
 }
 
 void BookLookerActions::authenticate() {

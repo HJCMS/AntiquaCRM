@@ -96,9 +96,9 @@ void CmdAbeBooks::prepareContent(const QDomDocument& document) {
   // Wieder öffnen und neu einlesen!
   QDomDocument _import;
   if (_fp.open(QIODevice::ReadOnly)) {
-    QString _errno;
-    if (!_import.setContent(&_fp, false, &_errno)) {
-      qWarning("CmdAbeBooks: XML Errors '%s'.", qPrintable(_errno));
+    QDomDocument::ParseResult _result = _import.setContent(&_fp, QDomDocument::ParseOption::Default);
+    if (_result.errorLine > 0) {
+      qWarning("CmdAbeBooks: XML Errors '%s'.", qPrintable(_result.errorMessage));
       emit sendDisjointed();
       return;
     }
@@ -282,21 +282,19 @@ void CmdAbeBooks::prepareContent(const QDomDocument& document) {
 }
 
 void CmdAbeBooks::responsed(const QByteArray& bread) {
-  QDomDocument xml("response");
+  QDomDocument _doc("response");
   // WARNING: We need a Header with ABEBOOKS_CHARSET
-  QDomProcessingInstruction pir = xml.createProcessingInstruction(
+  QDomProcessingInstruction pir = _doc.createProcessingInstruction(
       "xml", "version=\"1.0\" encoding=\"" + ABEBOOKS_CHARSET + "\"");
-  xml.appendChild(pir);
+  _doc.appendChild(pir);
 
-  QString errorMsg;
-  int errorLine = 0;
-  int errorColumn = 0;
-  if (!xml.setContent(bread, false, &errorMsg, &errorLine, &errorColumn)) {
-    qWarning("AbeBooks: Responsed XML is not well format!");
+  QDomDocument::ParseResult _result = _doc.setContent(bread, QDomDocument::ParseOption::Default);
+  if (_result.errorLine > 0) {
+    qWarning("AbeBooks: Responsed XML is not well format!\n%s", qPrintable(_result.errorMessage));
     emit sendDisjointed();
     return;
   }
-  prepareContent(xml);
+  prepareContent(_doc);
 }
 
 void CmdAbeBooks::start() {

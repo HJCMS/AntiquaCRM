@@ -106,13 +106,14 @@ bool StorageEditorWidget::setAbeBooks() {
   QFileInfo xmlFile(file);
   if (xmlFile.isReadable()) {
     QMap<QString, QString> data;
-    QFile fp(file);
-    if (fp.open(QIODevice::ReadOnly)) {
+    QFile _fp(file);
+    if (_fp.open(QIODevice::ReadOnly)) {
       m_abebooks->initData();
 
-      QDomDocument dom;
-      if (dom.setContent(&fp, false)) {
-        QDomNodeList list = dom.elementsByTagName("item");
+      QDomDocument _doc;
+      QDomDocument::ParseResult _result = _doc.setContent(&_fp, QDomDocument::ParseOption::Default);
+      if (_result.errorLine < 1) {
+        QDomNodeList list = _doc.elementsByTagName("item");
         for (int i = 0; i < list.size(); i++) {
           QDomElement e = list.at(i).toElement();
           QString name = e.firstChild().nodeValue().trimmed();
@@ -120,7 +121,7 @@ bool StorageEditorWidget::setAbeBooks() {
             data.insert(name, e.attribute("id", "0"));
         }
       }
-      fp.close();
+      _fp.close();
       if (data.size() > 0) {
         m_abebooks->addItems(data);
         return true;
@@ -135,13 +136,14 @@ bool StorageEditorWidget::setBooklooker() {
   QFileInfo xmlFile(file);
   if (xmlFile.isReadable()) {
     QMap<QString, QString> data;
-    QFile fp(xmlFile.filePath());
-    if (fp.open(QIODevice::ReadOnly)) {
+    QFile _fp(xmlFile.filePath());
+    if (_fp.open(QIODevice::ReadOnly)) {
       m_booklooker->initData();
 
-      QDomDocument dom;
-      if (dom.setContent(&fp, false)) {
-        QDomNodeList list = dom.elementsByTagName("item");
+      QDomDocument _doc;
+      QDomDocument::ParseResult _result = _doc.setContent(&_fp, QDomDocument::ParseOption::Default);
+      if (_result.errorLine < 1) {
+        QDomNodeList list = _doc.elementsByTagName("item");
         for (int i = 0; i < list.size(); i++) {
           QDomElement e = list.at(i).toElement();
           QString name = e.firstChild().nodeValue().trimmed();
@@ -149,7 +151,7 @@ bool StorageEditorWidget::setBooklooker() {
             data.insert(name, e.attribute("id", "0"));
         }
       }
-      fp.close();
+      _fp.close();
       if (data.size() > 0) {
         m_booklooker->addItems(data);
         return true;

@@ -72,7 +72,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
       antiqua_order.insert("provider", QJsonValue(provider()));
       antiqua_order.insert("orderid", QJsonValue(order_str));
 
-      // Kundendaten
+             // Kundendaten
       QJsonObject antiqua_customer;
       QString bcp47 = "DE"; // Siehe orderinfo
       if (!order.value("invoiceAddress").toObject().isEmpty()) {
@@ -132,7 +132,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
           antiqua_customer.insert("c_tax_id", order.value("ustIdNr").toString());
         }
 
-        // Delivery Address Body
+               // Delivery Address Body
         if (!order.value("deliveryAddress").toObject().isEmpty()) {
           QJsonObject address = order.value("deliveryAddress").toObject();
           QString firstname = address.value("firstName").toString();
@@ -156,7 +156,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
       }
       antiqua_order.insert("customer", QJsonValue(antiqua_customer));
 
-      // Bestellinfos
+             // Bestellinfos
       QJsonObject antiqua_orderinfo;
       antiqua_orderinfo.insert("o_provider_name", provider());
       antiqua_orderinfo.insert("o_provider_order_id", order_str);
@@ -178,7 +178,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
         antiqua_orderinfo.insert("o_order_status", AntiquaCRM::OrderStatus::OPEN);
       }
 
-      // AntiquaCRM::PaymentMethod
+             // AntiquaCRM::PaymentMethod
       AntiquaCRM::PaymentMethod payment_method = AntiquaCRM::PaymentMethod::PAYMENT_NOT_SET;
       switch (order.value("paymentId").toInt()) {
         case 1: // Banküberweisung (Vorkasse)
@@ -226,7 +226,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
       }
       antiqua_orderinfo.insert("o_payment_method", payment_method);
 
-      // Delivery Cost
+             // Delivery Cost
       if (order.contains("calculatedShippingCost")) {
         QString d_cost = order.value("calculatedShippingCost").toString();
         double d_coast_double = d_cost.toDouble();
@@ -237,19 +237,19 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
         antiqua_orderinfo.insert("o_delivery_add_price", false);
       }
 
-      // Buyer payment comment
+             // Buyer payment comment
       if (order.contains("comments")) {
         antiqua_orderinfo.insert("o_delivery_comment", order.value("comments").toString());
       }
 
-      // Payment Confirmed
+             // Payment Confirmed
       if (order.contains("paymentConfirmed")) {
         QString date_time = order.value("paymentConfirmed").toString();
         QDateTime payment_time = getDateTime(date_time);
         antiqua_orderinfo.insert("o_payment_confirmed", payment_time.toString(Qt::ISODate));
       }
 
-      // PayPal TransactionId
+             // PayPal TransactionId
       if (order.contains("transactionId")) {
         QString paypal_txn = order.value("transactionId").toString();
         antiqua_orderinfo.insert("o_payment_paypal_txn_id", paypal_txn);
@@ -260,7 +260,7 @@ void CmdBooklooker::prepareContent(const QJsonDocument& document) {
 
       antiqua_order.insert("orderinfo", QJsonValue(antiqua_orderinfo));
 
-      // Artikelliste
+             // Artikelliste
       QJsonArray antiqua_articles;
       QJsonArray articles = order.value("orderItems").toArray();
       for (int a = 0; a < articles.count(); a++) {
@@ -313,13 +313,14 @@ const QString CmdBooklooker::dateString(const QDate& date) const {
 }
 
 void CmdBooklooker::setTokenCookie(const QString& token) {
-  QDateTime dt = QDateTime::currentDateTime();
-  dt.setTimeSpec(Qt::UTC);
+  QTimeZone _zone(QTimeZone::UTC);
+  QDateTime _dt = QDateTime::currentDateTime();
+  _dt.setTimeZone(_zone); // Qt::OffsetFromUTC
   qint64 cookie_lifetime = (9 * 60);
   authenticCookie = QNetworkCookie("token", token.toLocal8Bit());
   authenticCookie.setDomain(baseUrl.host());
   authenticCookie.setSecure(true);
-  authenticCookie.setExpirationDate(dt.addSecs(cookie_lifetime));
+  authenticCookie.setExpirationDate(_dt.addSecs(cookie_lifetime));
   start();
 }
 
@@ -327,9 +328,10 @@ bool CmdBooklooker::isCookieExpired() {
   if (authenticCookie.value().isNull())
     return true;
 
-  QDateTime dt = QDateTime::currentDateTime();
-  dt.setTimeSpec(Qt::UTC);
-  return (authenticCookie.expirationDate() <= dt);
+  QDateTime _dt = QDateTime::currentDateTime();
+  QTimeZone _zone(QTimeZone::UTC);
+  _dt.setTimeZone(_zone);
+  return (authenticCookie.expirationDate() <= _dt);
 }
 
 void CmdBooklooker::authenticate() {

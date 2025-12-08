@@ -180,9 +180,9 @@ const QDomDocument ASharedDataFiles::getXML(const QString& basename) {
 
   QFile _fp(_info.filePath());
   if (_fp.open(QIODevice::ReadOnly)) {
-    QString _errno;
-    if (!_doc.setContent(&_fp, false, &_errno)) {
-      qWarning("XML Errors: '%s'.", qPrintable(_errno));
+    QDomDocument::ParseResult _result = _doc.setContent(&_fp, QDomDocument::ParseOption::Default);
+    if (_result.errorLine > 0) {
+      qWarning("XML Errors: '%s'.", qPrintable(_result.errorMessage));
       return QDomDocument();
     }
     _fp.close();

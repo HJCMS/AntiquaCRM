@@ -31,7 +31,11 @@ QPieSeries* AChartView::initSeries(QChart* parent) const {
 }
 
 const QDateTime AChartView::getEpoch(qint64 ct) const {
-  return QDateTime::fromSecsSinceEpoch(ct, Qt::LocalTime);
+  QTimeZone _zone(QTimeZone::LocalTime);
+  QDateTime _dt = QDateTime::currentDateTime();
+  _dt.setTimeZone(_zone);
+  _dt.setSecsSinceEpoch(ct);
+  return _dt;
 }
 
 int AChartView::getYear(const QDateTime& dt) const {

@@ -147,18 +147,19 @@ void ANetworker::slotReadResponse() {
 
   // XML/SOAP Request
   if (queryType == AntiquaCRM::NetworkQueryType::XML_QUERY) {
-    QDomDocument xml("response");
-    QString errorMsg = QString();
-    int errorLine = 0;
-    int errorColumn = 0;
-    if (!xml.setContent(data, false, &errorMsg, &errorLine, &errorColumn)) {
+    QDomDocument _doc("response");
+    QDomDocument::ParseResult _result = _doc.setContent(data, QDomDocument::ParseOption::Default);
+    if (_result.errorLine>0) {
       qWarning("Network: Responsed XML is not well format!");
+#ifdef ANTIQUA_DEVELOPMENT
+      qDebug() << Q_FUNC_INFO << _result.errorMessage;
+#endif
       emit sendFinishedWithErrors();
       return;
     }
 
     data.clear();
-    emit sendXmlResponse(xml);
+    emit sendXmlResponse(_doc);
     return;
   }
 

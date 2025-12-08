@@ -6,6 +6,7 @@
 
 #include <QByteArray>
 #include <QRegularExpression>
+#include <QTimeZone>
 
 ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject* parent) : QObject{parent} {
   setObjectName("acmdproviders");
@@ -13,7 +14,7 @@ ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject* parent)
   pgsql = new AntiquaCRM::ASqlCore(this, QString("Default"));
   netw = new AntiquaCRM::ANetworker(type, this);
 
-  // Verlaufsabfrage
+         // Verlaufsabfrage
   if (!cfg->contains("history_query"))
     cfg->setValue("history_query", -3);
 
@@ -140,27 +141,31 @@ const QString ACmdProviders::getCountry(const QString& bcp47) const {
 
 const QDateTime ACmdProviders::getDateTime(const QString& dateString, const QString& timeString,
                                            Qt::TimeSpec spec) const {
-  QDateTime dateTime;
+  QDateTime _dt;
+  QTimeZone _zone(spec);
+  _dt.setTimeZone(_zone);
+
   QDate d = QDate::fromString(dateString, "yyyy-MM-dd");
-  dateTime.setDate(d);
+  _dt.setDate(d);
   QTime t = QTime::fromString(timeString, "HH:mm:ss");
-  dateTime.setTime(t);
-  dateTime.setTimeSpec(spec);
-  return dateTime;
+  _dt.setTime(t);
+  return _dt;
 }
 
 const QDateTime ACmdProviders::getDateTime(const QString& dateTimeString, Qt::TimeSpec spec) const {
-  QDateTime dateTime;
-  dateTime = QDateTime::fromString(dateTimeString, "yyyy-MM-dd HH:mm:ss");
-  dateTime.setTimeSpec(spec);
-  return dateTime;
+  QDateTime _dt;
+  QTimeZone _zone(spec);
+  _dt.setTimeZone(_zone);
+  _dt = QDateTime::fromString(dateTimeString, "yyyy-MM-dd HH:mm:ss");
+  return _dt;
 }
 
 const QDateTime ACmdProviders::timeSpecDate(const QDateTime& dateTime,
                                             Qt::TimeSpec fromSpec) const {
-  QDateTime dt(dateTime);
-  dt.setTimeSpec(fromSpec);
-  return dt;
+  QDateTime _dt(dateTime);
+  QTimeZone _zone(fromSpec);
+  _dt.setTimeZone(_zone);
+  return _dt;
 }
 
 const QJsonValue ACmdProviders::convert(const QString& field, const QJsonValue& value) const {

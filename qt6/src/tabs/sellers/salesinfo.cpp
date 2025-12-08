@@ -2,6 +2,8 @@
 // vim: set fileencoding=utf-8
 
 #include "salesinfo.h"
+#include <QTimeZone>
+#include <QtGlobal>
 
 SalesInfo::SalesInfo(QWidget *parent) : QWidget{parent} {
   setContentsMargins(5, 0, 5, 0);
@@ -48,7 +50,8 @@ QLabel *SalesInfo::infoCell(const QString &str) {
 
 const QDateTime SalesInfo::convertDateTime(const QString &str) {
   QDateTime _dt = QDateTime::fromString(str, Qt::ISODate);
-  _dt.setTimeSpec(Qt::OffsetFromUTC);
+  QTimeZone _zone(QTimeZone::UTC);
+  _dt.setTimeZone(_zone); // Qt::OffsetFromUTC
   return _dt;
 }
 
