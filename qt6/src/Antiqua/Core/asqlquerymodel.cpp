@@ -131,4 +131,4 @@ const QString ASqlQueryModel::queryResultInfo() {
   return _info;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

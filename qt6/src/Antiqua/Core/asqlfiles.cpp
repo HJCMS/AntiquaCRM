@@ -130,4 +130,4 @@ const QString ASqlFiles::queryStatement(const QString& basename) {
   return _out.trimmed();
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

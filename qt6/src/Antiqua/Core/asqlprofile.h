@@ -183,6 +183,6 @@ public:
   const QString getSslRootCert();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SQLPROFILE_H

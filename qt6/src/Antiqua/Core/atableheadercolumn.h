@@ -60,6 +60,6 @@ public:
   QMetaType::Type type(HeaderSection section = HeaderSection::ARTICLE);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_TABLE_HEADER_COLUMN_H

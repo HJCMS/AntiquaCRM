@@ -186,6 +186,6 @@ public:
   static const QString pathDecoded(const QString& path);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_AUTIL_H

@@ -126,4 +126,4 @@ const QString ASqlProfile::getSslRootCert() {
   return url.toString(QUrl::FullyEncoded);
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

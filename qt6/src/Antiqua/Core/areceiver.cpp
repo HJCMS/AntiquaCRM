@@ -115,4 +115,4 @@ void AReceiver::getTransmitter() {
   }
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

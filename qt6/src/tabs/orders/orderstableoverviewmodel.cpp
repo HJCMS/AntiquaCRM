@@ -163,10 +163,11 @@ QVariant OrdersTableOverViewModel::headerData(int section,
   if (orientation == Qt::Vertical && role == Qt::DisplayRole)
     return verticalHeader(section, role);
 
+  const QVariant _var; // empty return value
   QMap<int, QString> map = headerList();
   if (orientation == Qt::Horizontal) {
     if (section > map.size())
-      return QVariant();
+      return _var;
 
     if (role == Qt::DecorationRole && map.value(section).isEmpty()) {
       return getHeaderIcon(section);
@@ -181,7 +182,7 @@ QVariant OrdersTableOverViewModel::headerData(int section,
     return AntiquaCRM::ASqlQueryModel::headerData(section, orientation, role);
 
   if (section > map.size())
-    return QVariant();
+    return _var;
 
   return map.value(section);
 }

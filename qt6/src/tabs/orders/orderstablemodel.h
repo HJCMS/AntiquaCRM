@@ -37,6 +37,8 @@ private:
    */
   mutable QMap<int, AntiquaCRM::OrderArticleItems> articles;
 
+  const QVariant emptyTableCell() const;
+
   /**
    * @brief Convert double to Currency with System locales
    */

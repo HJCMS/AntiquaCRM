@@ -172,6 +172,6 @@ public:
   static const QDir getUserTempDir();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SETTINGS_H

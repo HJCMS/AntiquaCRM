@@ -274,4 +274,4 @@ const QDir ASettings::getUserTempDir() {
   return d;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

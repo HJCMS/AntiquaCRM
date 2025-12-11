@@ -131,6 +131,6 @@ public:
   const QString queryResultInfo();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SQLQUERYMODEL_H

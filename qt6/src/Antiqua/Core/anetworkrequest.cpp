@@ -130,4 +130,4 @@ void ANetworkRequest::setHeaderContentLength(qint64 size) {
   setRawHeader(QByteArray("Content-Length"), arr);
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

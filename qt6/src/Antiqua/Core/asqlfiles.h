@@ -79,6 +79,6 @@ public:
   static const QString queryStatement(const QString &basename);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SQLFILES_H

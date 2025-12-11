@@ -115,6 +115,6 @@ public:
   const QVariant getParam(const QString &key);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SQLSETTINGS_H

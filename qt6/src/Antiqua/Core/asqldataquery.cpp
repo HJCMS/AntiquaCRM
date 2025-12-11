@@ -171,4 +171,4 @@ const QHash<QString, QVariant> ASqlDataQuery::getDataset() {
   return p_data;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

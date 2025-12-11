@@ -72,4 +72,4 @@ bool ANetworkIface::checkRemotePort(const QString& host, int port, int wait) {
   return _b;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

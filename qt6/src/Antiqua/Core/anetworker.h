@@ -132,6 +132,6 @@ public:
    */
   QNetworkReply *getRequest(const QUrl &url);
 };
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_NETWORKER_H

@@ -211,5 +211,6 @@ const QString OrdersTableOverView::defaultWhereClause()
   _sql.append(" AND o_since BETWEEN ");
   _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
   _sql.append(" AND CURRENT_TIMESTAMP");
+  qDebug() << Q_FUNC_INFO << _sql;
   return _sql;
 }

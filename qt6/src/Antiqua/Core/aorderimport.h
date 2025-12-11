@@ -148,6 +148,6 @@ public:
   const QJsonDocument create();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_ORDERIMPORT_H

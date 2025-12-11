@@ -27,6 +27,11 @@ OrdersTableModel::OrdersTableModel(QObject* parent) : QAbstractTableModel{parent
   cfg.endGroup();
 }
 
+const QVariant OrdersTableModel::emptyTableCell() const {
+  QVariant _var;
+  return _var;
+}
+
 const QString OrdersTableModel::displayPrice(double price) const {
   QString str = QString::number(price, 'f', 2);
   str.append(" " + currency);
@@ -73,14 +78,14 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation, 
     if (role == Qt::DisplayRole)
       return section + 1;
 
-    return QVariant();
+    return emptyTableCell();
   }
 
   if (orientation == Qt::Horizontal && role == Qt::DecorationRole) {
     if (editableColumns().contains(section))
       return AntiquaCRM::antiquaIcon("document-edit");
 
-    return QVariant();
+    return emptyTableCell();
   }
 
   AntiquaCRM::ATableHeaderColumn info = headerColumn(section);
@@ -90,7 +95,7 @@ QVariant OrdersTableModel::headerData(int section, Qt::Orientation orientation, 
   if (role == Qt::EditRole)
     return info.field();
 
-  return QVariant();
+  return emptyTableCell();
 }
 
 QVariant OrdersTableModel::data(const QModelIndex& index, int role) const {
@@ -196,7 +201,7 @@ QVariant OrdersTableModel::data(const QModelIndex& index, int role) const {
   };
   // END::DisplayRole
 
-  return QVariant();
+  return emptyTableCell();
 }
 
 bool OrdersTableModel::setData(const QModelIndex& index, const QVariant& value, int role) {

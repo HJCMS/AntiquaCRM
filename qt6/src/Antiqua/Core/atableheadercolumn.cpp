@@ -41,4 +41,4 @@ QMetaType::Type ATableHeaderColumn::type(HeaderSection section) {
     return QMetaType::UnknownType;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

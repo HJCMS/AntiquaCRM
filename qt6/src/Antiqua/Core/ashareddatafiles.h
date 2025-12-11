@@ -151,6 +151,6 @@ public:
   const QJsonObject getTempJson(const QString& md5sum);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SHAREDDATAFILES_H

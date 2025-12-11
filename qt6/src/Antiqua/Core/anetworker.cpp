@@ -311,4 +311,4 @@ QNetworkReply* ANetworker::getRequest(const QUrl& url) {
   return m_reply;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

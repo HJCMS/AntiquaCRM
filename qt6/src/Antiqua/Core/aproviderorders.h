@@ -161,7 +161,7 @@ public:
  */
 typedef QList<AProviderOrder> AProviderOrders;
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 Q_DECLARE_METATYPE(AntiquaCRM::OrderArticleItems)
 Q_DECLARE_METATYPE(AntiquaCRM::AProviderOrders)

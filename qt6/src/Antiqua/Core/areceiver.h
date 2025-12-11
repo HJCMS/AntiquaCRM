@@ -88,6 +88,6 @@ public:
   virtual ~AReceiver();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_ARECEIVER_H

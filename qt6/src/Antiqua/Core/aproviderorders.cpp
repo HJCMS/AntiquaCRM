@@ -478,4 +478,4 @@ bool AProviderOrder::removeOrderItem(const QString& orderItemId) {
   return false;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

@@ -102,6 +102,6 @@ public:
   const QHash<QString, QVariant> getDataset();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_SQLDATAQUERY_H

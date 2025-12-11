@@ -293,4 +293,4 @@ const QJsonObject ASharedCacheFiles::getTempJson(const QString& md5sum) {
   return doc.object();
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

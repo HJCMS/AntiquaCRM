@@ -11,20 +11,20 @@
 ACmdProviders::ACmdProviders(AntiquaCRM::NetworkQueryType type, QObject* parent) : QObject{parent} {
   setObjectName("acmdproviders");
   cfg = new AntiquaCRM::ASettings("antiquacmd", this);
-  pgsql = new AntiquaCRM::ASqlCore(this, QString("Default"));
+  pgsql = new AntiquaCRM::ASqlCore(this, cfg->value("database","Default").toString());
   netw = new AntiquaCRM::ANetworker(type, this);
 
-         // Verlaufsabfrage
+  // Verlaufsabfrage
   if (!cfg->contains("history_query"))
     cfg->setValue("history_query", -3);
 
   history_query = cfg->value("history_query", -3).toInt();
 
-  connect(netw, SIGNAL(sendJsonResponse(const QJsonDocument&)),
-          SLOT(getNetworkResponse(const QJsonDocument&)));
+  connect(netw, SIGNAL(sendJsonResponse(QJsonDocument)),
+          SLOT(getNetworkResponse(QJsonDocument)));
 
-  connect(netw, SIGNAL(sendXmlResponse(const QDomDocument&)),
-          SLOT(getNetworkResponse(const QDomDocument&)));
+  connect(netw, SIGNAL(sendXmlResponse(QDomDocument)),
+          SLOT(getNetworkResponse(QDomDocument)));
 }
 
 ACmdProviders::~ACmdProviders() {

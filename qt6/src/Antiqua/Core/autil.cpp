@@ -191,4 +191,4 @@ const QString AUtil::pathDecoded(const QString& path) {
   return QUrl::fromPercentEncoding(_arr);
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

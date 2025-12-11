@@ -60,6 +60,6 @@ public:
   void setHeaderContentLength(qint64 size);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_NETWORKREQUEST_H

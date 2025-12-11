@@ -80,6 +80,6 @@ public:
   void close() override;
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_ATXSOCKET_H

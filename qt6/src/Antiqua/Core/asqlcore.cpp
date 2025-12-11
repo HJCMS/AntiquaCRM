@@ -263,4 +263,4 @@ void ASqlCore::close() {
   }
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

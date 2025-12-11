@@ -106,4 +106,4 @@ const QVariant ASqlSettings::getParam(const QString& key) {
   return out;
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

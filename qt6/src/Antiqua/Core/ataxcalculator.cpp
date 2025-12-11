@@ -83,4 +83,4 @@ const QString ATaxCalculator::money(double value, QLocale::CurrencySymbolFormat 
   return _l.toCurrencyString(value, _s, 2);
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

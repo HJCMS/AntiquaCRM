@@ -136,4 +136,4 @@ void ATransmitter::close() {
   }
 }
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM

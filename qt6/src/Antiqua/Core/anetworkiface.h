@@ -48,6 +48,6 @@ public:
   bool checkRemotePort(const QString &host, int port = 5432, int wait = 5);
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // ANTIQUACRM_NETWORKIFACE_H

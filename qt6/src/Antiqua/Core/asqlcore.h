@@ -156,6 +156,6 @@ public:
   void close();
 };
 
-}; // namespace AntiquaCRM
+} // namespace AntiquaCRM
 
 #endif // #ifndef ANTIQUACRM_SQLCORE_H
