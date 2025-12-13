@@ -11,7 +11,7 @@
 
 #include <AntiquaCRM>
 #include <QApplication>
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
 #  include <QDBusConnection>
 #endif
 #include <QIcon>
@@ -29,7 +29,7 @@ private:
   AntiquaCRM::ASqlCore* m_sql = nullptr; /**< @brief PostgreSQL Database */
   MainWindow* m_window = nullptr;        /**< @brief UI Window */
   SystemTrayIcon* m_systray = nullptr;   /**< @brief UI SystemTray */
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
   QDBusConnection* m_dbus = nullptr; /**< @brief D-Bus Connection */
   /**
    * @brief registering DBUS Session bus

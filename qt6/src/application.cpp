@@ -8,7 +8,7 @@
 #include "utils/datacache/datacache.h"
 #include "systemtrayicon.h"
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
 # include "abusadaptor.h"
 # include <QDBusMessage>
 #endif
@@ -42,7 +42,7 @@ Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
   m_cfg = new AntiquaCRM::ASettings(this);
 }
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
 bool Application::registerSessionBus() {
   m_dbus = new QDBusConnection(QDBusConnection::sessionBus());
   if (m_dbus->isConnected()) {
@@ -210,7 +210,7 @@ void Application::applicationQuit() {
     return;
   }
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
   m_dbus->unregisterObject(QString("/"), QDBusConnection::UnregisterTree);
   m_dbus->unregisterService(ANTIQUACRM_CONNECTION_DOMAIN);
 #endif
@@ -245,7 +245,7 @@ bool Application::isRunning() {
   QLocalSocket socket(this);
   socket.setServerName(AntiquaCRM::AUtil::socketName());
   if (socket.open(QLocalSocket::ReadWrite)) {
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
     QDBusConnection _dbc =
         QDBusConnection::connectToBus(QDBusConnection::SessionBus, ANTIQUACRM_CONNECTION_DOMAIN);
     if (_dbc.isConnected()) {
@@ -342,7 +342,7 @@ int Application::exec() {
 
   // Step 7 - open window
   if (m_window != nullptr) {
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef Q_OS_LINUX
     if (registerSessionBus()) {
       // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
       ABusAdaptor* m_adaptor = new ABusAdaptor(this);

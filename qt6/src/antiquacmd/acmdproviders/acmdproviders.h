@@ -171,19 +171,19 @@ protected:
    * @brief Creates QDateTime from QDate and QTime
    */
   const QDateTime getDateTime(const QString& dateString, const QString& timeString,
-                              Qt::TimeSpec spec = Qt::LocalTime) const;
+                              QTimeZone::Initialization spec = QTimeZone::LocalTime) const;
 
   /**
    * @brief Converts QDateTime to AntiquaCRM::ISODate Time
    */
   const QDateTime getDateTime(const QString& dateTimeString,
-                              Qt::TimeSpec spec = Qt::LocalTime) const;
+                              QTimeZone::Initialization spec = QTimeZone::LocalTime) const;
 
   /**
    * @brief Time zones are required for the “cookies”.
    */
   const QDateTime timeSpecDate(const QDateTime& dateTime,
-                               Qt::TimeSpec fromSpec = Qt::LocalTime) const;
+                               QTimeZone::Initialization spec = QTimeZone::LocalTime) const;
 
   /**
    * @brief Helper for the types converting the service provider tasks!

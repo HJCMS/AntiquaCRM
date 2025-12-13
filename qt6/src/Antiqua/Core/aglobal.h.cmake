@@ -281,7 +281,7 @@
 # define ANTIQUACRM_ARCHIVE_IMPORT "import_folder"
 #endif
 
-#ifdef ANTIQUACRM_DBUS_ENABLED
+#ifdef QT_DBUS_LIB
 #include <QDBusAbstractAdaptor>
 #endif
 

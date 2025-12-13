@@ -139,8 +139,9 @@ const QString ACmdProviders::getCountry(const QString& bcp47) const {
   return found.first();
 }
 
-const QDateTime ACmdProviders::getDateTime(const QString& dateString, const QString& timeString,
-                                           Qt::TimeSpec spec) const {
+const QDateTime ACmdProviders::getDateTime(const QString& dateString,
+                                           const QString& timeString,
+                                           QTimeZone::Initialization spec) const {
   QDateTime _dt;
   QTimeZone _zone(spec);
   _dt.setTimeZone(_zone);
@@ -152,7 +153,8 @@ const QDateTime ACmdProviders::getDateTime(const QString& dateString, const QStr
   return _dt;
 }
 
-const QDateTime ACmdProviders::getDateTime(const QString& dateTimeString, Qt::TimeSpec spec) const {
+const QDateTime ACmdProviders::getDateTime(const QString& dateTimeString,
+                                           QTimeZone::Initialization spec) const {
   QDateTime _dt;
   QTimeZone _zone(spec);
   _dt.setTimeZone(_zone);
@@ -161,9 +163,9 @@ const QDateTime ACmdProviders::getDateTime(const QString& dateTimeString, Qt::Ti
 }
 
 const QDateTime ACmdProviders::timeSpecDate(const QDateTime& dateTime,
-                                            Qt::TimeSpec fromSpec) const {
+                                            QTimeZone::Initialization spec) const {
   QDateTime _dt(dateTime);
-  QTimeZone _zone(fromSpec);
+  QTimeZone _zone(spec);
   _dt.setTimeZone(_zone);
   return _dt;
 }
