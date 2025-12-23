@@ -172,10 +172,7 @@ void Application::initTranslations() {
 }
 
 bool Application::initMainWindow() {
-  QWidget* m_topWidget = nullptr;
-  // The MainWindow must initialized behind the taskbar entry,
-  // otherwise it can't put the Window to the right process tree.
-  m_window = new MainWindow(m_topWidget);
+  m_window = new MainWindow;
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
   m_window->openWindow();
@@ -199,13 +196,11 @@ bool Application::initMainWindow() {
 void Application::applicationQuit() {
   if (!m_window->closeWindow()) {
     m_window->showNormal();
-    if (quitOnLastWindowClosed()) {
-      const QString _hint = tr("Please close all editors before exiting!");
-      if (checkSysTrayIcon()) {
-        m_systray->setMessage(_hint);
-      } else {
-        QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
-      }
+    const QString _hint = tr("Please close all editors before exiting!");
+    if (checkSysTrayIcon()) {
+      m_systray->setMessage(_hint);
+    } else {
+      QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
     }
     return;
   }
@@ -221,11 +216,9 @@ void Application::applicationQuit() {
     m_window->deleteLater();
   }
 
-  if (quitOnLastWindowClosed()) {
-    if (checkSysTrayIcon()) {
-      m_systray->setVisible(false);
-      m_systray->deleteLater();
-    }
+  if (checkSysTrayIcon()) {
+    m_systray->setVisible(false);
+    m_systray->deleteLater();
   }
 
   if (m_sql != nullptr) {
@@ -344,7 +337,7 @@ int Application::exec() {
   if (m_window != nullptr) {
 #ifdef QT_DBUS_LIB
     if (registerSessionBus()) {
-      // qdbus-qt5 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage shout
+      // qdbus6 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage test-string
       ABusAdaptor* m_adaptor = new ABusAdaptor(this);
       m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
       connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));

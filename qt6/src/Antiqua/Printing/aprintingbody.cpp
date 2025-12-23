@@ -18,6 +18,9 @@ APrintingBody::APrintingBody(QWidget* parent) : QTextEdit{parent} {
   setPalette(_palette);
   setTextColor(Qt::black);
   setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+#ifndef ANTIQUA_DEVELOPMENT
+  setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+#endif
   setStyleSheet("QTextEdit {color:black;border:none;}");
   const QString _css("* {color:black;} p,li {white-space:pre-wrap;}");
   document()->setDefaultStyleSheet(_css);

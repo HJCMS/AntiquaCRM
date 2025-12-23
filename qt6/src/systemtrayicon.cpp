@@ -3,7 +3,6 @@
 
 #include "systemtrayicon.h"
 #include "antiquaicon.h"
-#include "application.h"
 
 #include <QMenu>
 

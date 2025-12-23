@@ -132,9 +132,13 @@ protected:
 Q_SIGNALS:
   /**
    * @brief Notify status messages
-   * @param msg - Notification string
    */
-  void sendMessage(const QString &msg);
+  void sendMessage(const QString &);
+
+  /**
+   * @brief Notify messages to Statusbar
+   */
+  void sendStatusMessage(const QString &);
 
 public Q_SLOTS:
   /**

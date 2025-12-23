@@ -33,7 +33,8 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
   connect(m_menuBar, SIGNAL(sendApplicationQuit()), SIGNAL(sendApplicationQuit()));
   connect(m_menuBar->tabsMenu, SIGNAL(sendOpenTab(QString)), SLOT(setViewTab(QString)));
   // End:Menu:Signals
-  connect(m_tabWidget, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(showMessage(QString)));
+  connect(m_tabWidget, SIGNAL(sendStatusMessage(QString)),
+          m_statusBar, SLOT(statusInfoMessage(QString)));
 }
 
 bool MainWindow::createSocketListener() {
@@ -206,16 +207,12 @@ void MainWindow::hideEvent(QHideEvent* event) {
   QMainWindow::hideEvent(event);
 }
 
-void MainWindow::closeEvent(QCloseEvent* ev) {
-  // NOTE: QApplication::setQuitOnLastWindowClosed is set to false.
+void MainWindow::closeEvent(QCloseEvent*) {
   // Prevent window close events from window decoration.
-  if (qApp->quitOnLastWindowClosed()) {
-    QHideEvent hide;
-    hide.setAccepted(true);
-    hideEvent(&hide);
-    return;
-  }
-  QMainWindow::closeEvent(ev);
+  QHideEvent hide;
+  hide.setAccepted(true);
+  hideEvent(&hide);
+  return;
 }
 
 void MainWindow::setToggleWindow() {
@@ -237,6 +234,7 @@ void MainWindow::setToggleFullScreen() {
 bool MainWindow::openWindow() {
   tabInterfaces.clear();
   config = new AntiquaCRM::ASettings(this);
+
   createSocketListener();
   loadStaticTabs();
 

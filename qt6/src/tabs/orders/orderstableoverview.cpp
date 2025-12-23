@@ -7,8 +7,7 @@
 
 #include <AntiquaCRM>
 
-OrdersTableOverView::OrdersTableOverView(QWidget* parent)
-    : AntiquaCRM::TableView{parent}
+OrdersTableOverView::OrdersTableOverView(QWidget* parent) : AntiquaCRM::TableView{parent}
 {
   setEnableTableViewSorting(true);
   m_model = new OrdersTableOverViewModel(this);
@@ -51,21 +50,22 @@ bool OrdersTableOverView::sqlModelQuery(const QString& query)
 
 void OrdersTableOverView::contextMenuEvent(QContextMenuEvent* event)
 {
-  QModelIndex index = indexAt(event->pos());
-  qint64 rows = m_model->rowCount();
-  AntiquaCRM::TableContextMenu* m_menu = new AntiquaCRM::TableContextMenu(index, rows, this);
-  m_menu->addOpenAction(tr("Open order"));
-  m_menu->addCopyAction(tr("Copy Order Id"));
-  QAction* ac_customer = m_menu->addOrderAction(tr("View Customer"));
+  QModelIndex _i = indexAt(event->pos());
+  qint64 _r = m_model->rowCount();
+  AntiquaCRM::TableContextMenu* m_m = new AntiquaCRM::TableContextMenu(_i, _r, this);
+  m_m->addOpenAction(tr("Open order"));
+  m_m->addCopyAction(tr("Copy Order Id"));
+
+  QAction* ac_customer = m_m->addOrderAction(tr("View Customer"));
   ac_customer->setIcon(AntiquaCRM::antiquaIcon("system-users"));
-  m_menu->addRefundAction(tr("Create refund"));
-  m_menu->addReloadAction(tr("Update"));
-  connect(m_menu, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)),
+  m_m->addRefundAction(tr("Create refund"));
+  m_m->addReloadAction(tr("Update"));
+  connect(m_m, SIGNAL(sendAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)),
           SLOT(contextMenuAction(AntiquaCRM::TableContextMenu::Actions,QModelIndex)));
 
-  connect(m_menu, SIGNAL(sendRefresh()), SLOT(setReloadView()));
-  m_menu->exec(event->globalPos());
-  m_menu->deleteLater();
+  connect(m_m, SIGNAL(sendRefresh()), SLOT(setReloadView()));
+  m_m->exec(event->globalPos());
+  m_m->deleteLater();
 }
 
 void OrdersTableOverView::contextMenuAction(AntiquaCRM::TableContextMenu::Actions ac,
@@ -211,6 +211,6 @@ const QString OrdersTableOverView::defaultWhereClause()
   _sql.append(" AND o_since BETWEEN ");
   _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
   _sql.append(" AND CURRENT_TIMESTAMP");
-  qDebug() << Q_FUNC_INFO << _sql;
+  // qDebug() << Q_FUNC_INFO << _sql;
   return _sql;
 }

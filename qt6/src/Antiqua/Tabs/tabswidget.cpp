@@ -158,7 +158,7 @@ bool TabsWidget::unloadTabs() {
 
     if (m_ti->currentPage() != TabsIndex::ViewPage::MainView) {
       setCurrentIndex(t);
-      emit sendMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
+      emit sendStatusMessage(tr("'%1' Editor is open!").arg(m_ti->getTitle()));
       return false;
     }
     removeIndex(t);

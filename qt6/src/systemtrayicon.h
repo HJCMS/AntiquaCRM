@@ -9,11 +9,11 @@
 #ifndef ANTIQUA_UI_SYSTEMTRAYICON_H
 #define ANTIQUA_UI_SYSTEMTRAYICON_H
 
-#include <AGlobal>
 #include <QAction>
 #include <QSystemTrayIcon>
-
-class Application;
+#ifndef ANTIQUA_UI_APPLICATION_H
+#include "application.h"
+#endif
 
 class SystemTrayIcon final : public QSystemTrayIcon {
   Q_OBJECT

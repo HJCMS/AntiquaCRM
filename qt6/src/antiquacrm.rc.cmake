@@ -1,4 +1,3 @@
-// -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 
 #include <winver.h>
@@ -48,7 +47,7 @@ FILESUBTYPE     VFT2_UNKNOWN
       VALUE "AppId",            "@ANTIQUACRM_APPID@"
       VALUE "ProductName",      "AntiquaCRM"
       VALUE "ProductVersion",   "@ANTIQUACRM_VERSION_STRING@\0"
-      VALUE "LegalCopyright",   "Copyright(C) 2013-2025 HJCMS https://www.hjcms.de"
+      VALUE "LegalCopyright",   "Copyright(C) 2013-2026 HJCMS https://www.hjcms.de"
     }
   }
 
