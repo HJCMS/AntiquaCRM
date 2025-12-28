@@ -76,22 +76,6 @@ bool ASettings::check(const QString& pkey) const {
   return false;
 }
 
-#if QT_VERSION >= QT_VERSION_CHECK(6,4,0)
-void ASettings::setValue(const QString &key, const QVariant &value) {
-  QAnyStringView _key(key.trimmed());
-  switch(value.metaType().id()) {
-    case(QMetaType::QString): {
-      QString _str = value.toString().trimmed();
-      QSettings::setValue(_key, _str);
-      break;
-    }
-    default:
-      QSettings::setValue(_key, value);
-      break;
-  }
-}
-#endif
-
 const QVariant ASettings::getValue(const QString& key, const QMetaType& type) const {
   if (key.isEmpty())
     return QVariant();
@@ -116,9 +100,6 @@ const QVariant ASettings::getValue(const QString& key, const QMetaType& type) co
       break;
   };
 
-#ifdef Q_OS_WIN
-  qInfo() << ASettings::getValue << "META_ID:" << type.id() << "VALUE:" << _value;
-#endif
   return _value;
 }
 

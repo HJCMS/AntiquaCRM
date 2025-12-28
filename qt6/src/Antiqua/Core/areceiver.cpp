@@ -27,6 +27,8 @@ AReceiver::~AReceiver() {
 #ifdef ANTIQUA_DEVELOPMENT
   qInfo("Shutdown and Close socket ...");
 #endif
+  if(isListening())
+    close();
 }
 
 bool AReceiver::createAction(const QJsonObject& obj) {
@@ -102,13 +104,9 @@ void AReceiver::getTransmitter() {
         return;
       }
 
-      if (!createAction(_obj)) {
-#ifdef ANTIQUA_DEVELOPMENT
-        qDebug() << Q_FUNC_INFO << _obj;
-#else
-        qWarning("Operation rejected!");
-#endif
-      }
+      if (!createAction(_obj))
+        qWarning("AReceiver::createAction rejected!");
+
     } else {
       qWarning("Socketserver parse error: '%s'", qPrintable(_parser.errorString()));
     }

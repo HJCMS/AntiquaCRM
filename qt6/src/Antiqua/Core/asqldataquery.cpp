@@ -5,7 +5,8 @@
 
 #include <QSqlDatabase>
 #include <QVariant>
-#ifdef ANTIQUA_DEVELOPMENT
+// #define ANTIQUA_DEVELOPMENT_SQL_DEBUG
+#ifdef ANTIQUA_DEVELOPMENT_SQL_DEBUG
 #  include <QDebug>
 #endif
 
@@ -22,7 +23,7 @@ static const QSqlRecord asql_table_record(const QString& name) {
   }
   const QSqlDatabase _db = QSqlDatabase::database(ANTIQUACRM_CONNECTION_DOMAIN);
 
-#ifdef ANTIQUA_DEVELOPMENT
+#ifdef ANTIQUA_DEVELOPMENT_SQL_DEBUG
   qDebug() << "-- Table:Begin" << name;
   const QSqlRecord _r = _db.record(name);
   for (int i = 0; i < _r.count(); i++) {
@@ -147,10 +148,9 @@ void ASqlDataQuery::setValue(const QString& column, const QVariant& value) {
     return;
   }
 
-#ifdef ANTIQUA_DEVELOPMENT
+#ifdef ANTIQUA_DEVELOPMENT_SQL_DEBUG
   qDebug() << Q_FUNC_INFO << "p_data.insert" << Qt::endl << " " << column << value;
 #endif
-
   p_data.insert(column, value);
 }
 

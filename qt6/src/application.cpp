@@ -86,9 +86,7 @@ bool Application::checkRemotePort() {
   AntiquaCRM::ASqlSettings _csql(this);
   AntiquaCRM::ASqlProfile _pr = _csql.connectionProfile();
   AntiquaCRM::ANetworkIface iface;
-#ifdef ANTIQUA_DEVELOPMENT
-  qInfo("Test SQL connection to %s:%d ...", qPrintable(_pr.getHostname()), _pr.getPort());
-#endif
+  qInfo("PgSQL config test %s:%d ...", qPrintable(_pr.getHostname()), _pr.getPort());
   if (iface.checkRemotePort(_pr.getHostname(), _pr.getPort()))
     return true;
 
@@ -256,7 +254,8 @@ bool Application::isRunning() {
 }
 
 int Application::exec() {
-  QMutex mutex;
+  // Disable temporary mutex locker
+  // QMutex p_mutex;
   // Translation at first
   initTranslations();
 
@@ -266,35 +265,30 @@ int Application::exec() {
 
   // Step 1 - Stylesheets
   p_splash.setMessage("Initial Themes & styles.");
-  mutex.lock();
   initStyleTheme();
-  mutex.unlock();
 
   // Step 2 - Networking
   p_splash.setMessage("Search Networkconnection!");
-  mutex.lock();
   if (!checkInterfaces()) {
     p_splash.errorMessage(tr("No Networkconnection found!"));
-    mutex.unlock();
     return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Valid Networkconnection found!"));
-  mutex.unlock();
 
   // Step 3 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
-  mutex.lock();
+  // p_mutex.lock();
   if (!checkRemotePort()) {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
-    mutex.unlock();
+    // p_mutex.unlock();
     return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));
-  mutex.unlock();
+  // p_mutex.unlock();
 
   // Step 4 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
-  mutex.lock();
+  // p_mutex.lock();
   if (!openDatabase()) {
     p_splash.errorMessage(tr("SQL Server connection unsuccessful!"));
     SwitchDatabaseProfile _dbd(m_cfg, &p_splash);
@@ -306,16 +300,16 @@ int Application::exec() {
     } else {
       qInfo("Database profile changed, application restart required.");
     }
-    mutex.unlock();
+    // p_mutex.unlock();
     return EXIT_FAILURE;
   }
   p_splash.setMessage(tr("Database connection successfully."));
-  mutex.unlock();
+  // p_mutex.unlock();
 
   // Step 5 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->open()) {
-    mutex.lock();
+    // p_mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
     DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(QString)), &p_splash, SLOT(setMessage(QString)));
@@ -324,7 +318,7 @@ int Application::exec() {
       p_splash.setMessage(tr("Cachefiles updated ..."));
     }
     m_cache->deleteLater();
-    mutex.unlock();
+    // p_mutex.unlock();
     p_splash.setMessage(tr("Open Application ..."));
   }
 

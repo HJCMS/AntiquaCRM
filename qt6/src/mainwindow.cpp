@@ -197,7 +197,7 @@ void MainWindow::showEvent(QShowEvent* event) {
 }
 
 void MainWindow::hideEvent(QHideEvent* event) {
-  if (event->isAccepted()) {
+  if (isVisible() && event->isAccepted()) {
     config->setValue("window/geometry", saveGeometry());
     if (isFullScreen()) // do not save fullscreen window
       setWindowState(windowState() & ~Qt::WindowFullScreen);
@@ -292,4 +292,7 @@ MainWindow::~MainWindow() {
     }
     tabInterfaces.clear();
   }
+
+  if(m_rx != nullptr)
+    m_rx->deleteLater();
 }

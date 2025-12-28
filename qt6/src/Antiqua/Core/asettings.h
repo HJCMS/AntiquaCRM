@@ -69,18 +69,6 @@ public:
    */
   bool check(const QString &pkey) const;
 
-#if QT_VERSION >= QT_VERSION_CHECK(6,4,0)
-  /**
-   * @brief This is an overloaded function, read desciption.
-   * @param key - config path to key
-   * @param value - config value
-   *
-   * With Qt-Version from 6.4 we get a misbehavior when save small strings into Windows Registry.
-   * This overload function wants to fix this temporary.
-   */
-  void setValue(const QString &key, const QVariant &value);
-#endif
-
   /**
    * @brief Get value with given Path and MetaType.
    * @param key - config path to key
