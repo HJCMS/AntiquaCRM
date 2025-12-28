@@ -8,10 +8,10 @@
 #include <QSizePolicy>
 #include <QTableWidgetItem>
 
-// #ifdef ANTIQUA_DEVELOPMENT
+#ifdef ANTIQUA_DEVELOPMENT
 // Display helper borders
-// #define PRINTPAGE_DEBUG
-// #endif
+# define PRINTPAGE_DEBUG
+#endif
 
 namespace AntiquaCRM
 {

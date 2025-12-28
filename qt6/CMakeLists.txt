@@ -3,7 +3,7 @@
 #
 # SPDX-License-Identifier: MIT
 #
-CMAKE_MINIMUM_REQUIRED(VERSION 3.30 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.29 FATAL_ERROR)
 
 ###
 # \Section project main info

@@ -40,6 +40,8 @@ Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
 
   // WARNING - Do not init Database Connections in constructors!
   m_cfg = new AntiquaCRM::ASettings(this);
+  m_cfg->setValue("name", ANTIQUACRM_NAME);
+  m_cfg->setValue("version", ANTIQUACRM_VERSION);
 }
 
 #ifdef QT_DBUS_LIB

@@ -38,8 +38,8 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit ASettings(const QString& applName, QObject* parent = nullptr);
-  explicit ASettings(QObject* parent = nullptr);
+  explicit ASettings(const QString &applName, QObject *parent = nullptr);
+  explicit ASettings(QObject *parent = nullptr);
 
   /**
    * @brief Current Prefix
@@ -67,14 +67,26 @@ public:
    *
    * This function is a extended call from QSettings::contains
    */
-  bool check(const QString& pkey) const;
+  bool check(const QString &pkey) const;
+
+#if QT_VERSION >= QT_VERSION_CHECK(6,4,0)
+  /**
+   * @brief This is an overloaded function, read desciption.
+   * @param key - config path to key
+   * @param value - config value
+   *
+   * With Qt-Version from 6.4 we get a misbehavior when save small strings into Windows Registry.
+   * This overload function wants to fix this temporary.
+   */
+  void setValue(const QString &key, const QVariant &value);
+#endif
 
   /**
    * @brief Get value with given Path and MetaType.
    * @param key - config path to key
    * @param type - required Meta type
    */
-  const QVariant getValue(const QString& key, const QMetaType& type) const;
+  const QVariant getValue(const QString &key, const QMetaType &type) const;
 
   /**
    * @brief Returns Directory from Section[dirs]
@@ -87,7 +99,7 @@ public:
    *   qDebug() << config.getArchivPath(ANTIQUACRM_ARCHIVE_IMAGES);
    * @endcode
    */
-  const QDir getArchivPath(const QString& section);
+  const QDir getArchivPath(const QString &section);
 
   /**
    * @brief get value from group and key
@@ -95,8 +107,8 @@ public:
    * @param key   - key from group
    * @param fallback - what it says
    */
-  const QVariant groupValue(const QString& group, const QString& key,
-                            const QVariant& fallback = QVariant());
+  const QVariant groupValue(const QString &group, const QString &key,
+                            const QVariant &fallback = QVariant());
 
   /**
    * @brief Payment Settings with Default values.
@@ -107,7 +119,7 @@ public:
    * @brief Format QDate to current locale date string.
    * @note View aglobal.h for formating options!
    */
-  const QString shortDateFormat(const QDate& date);
+  const QString shortDateFormat(const QDate &date);
 
   /**
    * @brief Default Filter for all Dir requests!
@@ -135,7 +147,7 @@ public:
    *
    * Creates a search target from Install Plugin Directory.
    */
-  static const QDir getPluginDir(const QString& target = QString());
+  static const QDir getPluginDir(const QString &target = QString());
 
   /**
    * @brief Translations Target
@@ -149,7 +161,7 @@ public:
    *
    * Search Datafiles directory in @ref ANTIQUACRM_DATA_TARGET
    */
-  static const QDir getDataDir(const QString& name = QString());
+  static const QDir getDataDir(const QString &name = QString());
 
   /**
    * @brief Users Data Directory
