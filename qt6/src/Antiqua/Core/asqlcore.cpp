@@ -152,13 +152,17 @@ bool ASqlCore::networkStatus() {
   return false;
 }
 
-qint64 ASqlCore::getQueryLimit() {
-  int _limit = config->getParam("querylimit").toInt();
-  if (_limit > 0)
-    return _limit;
-
-  // fallback
-  return config->value("database/SqlQueryLimit", 999).toInt();
+const QString ASqlCore::getYearByDays(qint8 days) {
+  QString _str("EXTRACT(YEAR FROM ");
+  if (days < 0) {
+    _str.append(QString::asprintf("(CURRENT_DATE %d)", days));
+  } else if (days > 0) {
+    _str.append(QString::asprintf("(CURRENT_DATE +%d)", days));
+  } else {
+    _str.append("CURRENT_DATE");
+  }
+  _str.append(")");
+  return _str;
 }
 
 const QString ASqlCore::identifier() {
@@ -167,6 +171,15 @@ const QString ASqlCore::identifier() {
   _name.append("_");
   _name.append(QSysInfo::machineHostName());
   return _name.trimmed();
+}
+
+qint64 ASqlCore::getQueryLimit() {
+  int _limit = config->getParam("querylimit").toInt();
+  if (_limit > 0)
+    return _limit;
+
+  // fallback
+  return config->value("database/SqlQueryLimit", 999).toInt();
 }
 
 const QString ASqlCore::getDateTime() const {

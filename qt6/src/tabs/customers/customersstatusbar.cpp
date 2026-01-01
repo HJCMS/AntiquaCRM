@@ -37,8 +37,7 @@ void CustomersStatusBar::setHistoryActionMenu(QPushButton *parent) {
 void CustomersStatusBar::setHistoryAction(int index) {
   TabsStatusBar::History _history = static_cast<TabsStatusBar::History>(index);
   QString _sql;
-  QString _year("DATE_PART('year',c_changed)=");
-  _year.append("DATE_PART('year',CURRENT_DATE)");
+  const QString _year("DATE_PART('year',c_changed)=DATE_PART('year',CURRENT_DATE)");
 
   switch (_history) {
   case (TabsStatusBar::History::Today): {
@@ -47,35 +46,30 @@ void CustomersStatusBar::setHistoryAction(int index) {
   }
 
   case (TabsStatusBar::History::Yesterday): {
-    _sql.append("DATE(c_changed)=(CURRENT_DATE -1)");
+    _sql.append("DATE(c_changed)=(CURRENT_DATE -1) OR DATE(c_since)=(CURRENT_DATE -1)");
     break;
   }
 
   case (TabsStatusBar::History::ThisWeek): {
-    _sql.append("DATE_PART('week',c_changed)=");
-    _sql.append("DATE_PART('week',CURRENT_DATE)");
-    _sql.append(" AND " + _year);
+    _sql.append("DATE_PART('week',c_changed)=DATE_PART('week',CURRENT_DATE)");
+    _sql.append(" AND DATE_PART('year',c_changed)>=" + AntiquaCRM::ASqlCore::getYearByDays(-5));
     break;
   }
 
   case (TabsStatusBar::History::LastWeek): {
-    _sql.append("DATE_PART('week',c_changed)=");
-    _sql.append("DATE_PART('week',CURRENT_DATE -7)");
-    _sql.append(" AND " + _year);
+    _sql.append("DATE_PART('week',c_changed)=DATE_PART('week',CURRENT_DATE -7)");
+    _sql.append(" AND DATE_PART('year',c_changed)>=" + AntiquaCRM::ASqlCore::getYearByDays(-7));
     break;
   }
 
   case (TabsStatusBar::History::ThisMonth): {
-    _sql.append("DATE_PART('month',c_changed)=");
-    _sql.append("DATE_PART('month',CURRENT_DATE)");
-    _sql.append(" AND " + _year);
+    _sql.append("DATE_PART('month',c_changed)=DATE_PART('month',CURRENT_DATE) AND " + _year);
     break;
   }
 
   case (TabsStatusBar::History::LastMonth): {
-    _sql.append("DATE_PART('month',c_changed)=");
-    _sql.append("DATE_PART('month',CURRENT_DATE - 31)");
-    _sql.append(" AND " + _year);
+    _sql.append("DATE_PART('month',c_changed)=DATE_PART('month',CURRENT_DATE - 31)");
+    _sql.append(" AND DATE_PART('year',c_changed)>=" + AntiquaCRM::ASqlCore::getYearByDays(-31));
     break;
   }
 

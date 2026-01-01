@@ -18,14 +18,15 @@
 ;; Path settings
 #define BUILD_DIR "@ANTIQUACRM_CURRENT_BINARY_DIR@"
 #define SOURCE_DIR "@ANTIQUACRM_CURRENT_SOURCE_DIR@"
-#define TPL_DIR "@ANTIQUACRM_CURRENT_SOURCE_DIR@\xdg"
-#define QT5_PATH "E:\Development\qt\5.15.2\mingw81_64"
-#define QRENCODE_PATH "E:\Development\qt\5.15.2\mingw81_64"
-#define PgSQL_PATH "E:\Development\PostgreSQL\bin"
-#define CURL_PATH "E:\Development\cUrl\bin"
+#define TPL_DIR "@ANTIQUACRM_CURRENT_SOURCE_DIR@\pkgbuild"
+#define QTSDK_PATH "G:\QtProject\6.9.3\mingw_64"
+#define MINGW_PATH "G:\QtProject\Tools\mingw1120_64\opt"
+#define QRENCODE_PATH "G:\GNU"
+#define PgSQL_PATH "G:\Tools\PgSQL\bin"
+#define CURL_PATH "G:\GNU\bin"
 ;; Special copy target
-#define COPY_DIR "..."
-#define CURL_HOME "..."
+#define COPY_DIR "G:\Customers\Default"
+#define CURL_HOME "G:\GNU"
 
 [Setup]
 AppId={#MY_APPL_UUID}
@@ -41,7 +42,7 @@ AppCopyright="Copyright(C) 2011-{#CURRENT_YEAR} {#MY_APPL_PUBLISHER} {#MY_APPL_H
 AppContact="{#MY_APPL_PUBLISHER} {#MY_APPL_HOMEPAGE}"
 AppComments="Antiquarisches Datenbank Verwaltungsprogramm"
 DefaultGroupName={#MY_APPL_DISPLAY_NAME}
-DefaultDirName={commonpf64}\{#MY_APPL_PUBLISHER}\{#MY_APPL_NAME}\{#MY_APPL_VERSION}
+DefaultDirName={commonpf64}\{#MY_APPL_PUBLISHER}\{#MY_APPL_NAME}\1.1
 DisableDirPage=yes
 LicenseFile={#TPL_DIR}\LICENSE.md
 OutputDir=.
@@ -75,31 +76,17 @@ BeveledLabel=Copyright(C) 2011-{#CURRENT_YEAR} {#MY_APPL_PUBLISHER} {#MY_APPL_HO
 Name: "application"; Description: "{#MY_APPL_DISPLAY_NAME} {cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Dirs]
-Name: "{app}
+Name: "{app}"; Attribs: system;
 Name: "{app}\i18n"; Attribs: system;
 Name: "{app}\data"; Attribs: system;
 Name: "{app}\data\documents"; Attribs: system;
 Name: "{app}\data\pgsql"; Attribs: system;
 Name: "{app}\data\json"; Attribs: system;
-Name: "{app}\data\fonts"; Attribs: system;
+Name: "{app}\data\fonts"; Attribs: system; 
 Name: "{app}\data\certs"; Attribs: system;
-Name: "{app}\plugins"; Attribs: system;
-Name: "{app}\plugins\providers"; Attribs: system;
-Name: "{app}\plugins\providers/Buchfreund"; Attribs: system;
-Name: "{app}\plugins\providers/Booklooker"; Attribs: system;
-Name: "{app}\plugins\providers/AbeBooks"; Attribs: system;
-Name: "{app}\plugins\acmdproviders"; Attribs: system;
-Name: "{app}\plugins\acmdproviders/CmdBuchfreund"; Attribs: system;
-Name: "{app}\plugins\acmdproviders/CmdAbeBooks"; Attribs: system;
-Name: "{app}\plugins\acmdproviders/CmdBooklooker"; Attribs: system;
-Name: "{app}\plugins\tabs"; Attribs: system;
-Name: "{app}\plugins\tabs/Reports"; Attribs: system;
-Name: "{app}\plugins\tabs/Various"; Attribs: system;
-Name: "{app}\plugins\tabs/Statistics"; Attribs: system;
-Name: "{app}\plugins\tabs/Books"; Attribs: system;
-Name: "{app}\plugins\tabs/Stitches"; Attribs: system;
-Name: "{app}\plugins\tabs/CDsVinyl"; Attribs: system;
-Name: "{app}\plugins\tabs/Views"; Attribs: system;
+Name: "{app}\plugins"; Attribs: system;    
+Name: "{app}\plugins\antiquacrm\providers"; Attribs: system;
+Name: "{app}\plugins\antiquacrm\tabs"; Attribs: system;
 
 [Files]
 Source: "{#BUILD_DIR}\src\antiquacrm.exe"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
@@ -111,13 +98,13 @@ Source: "{#BUILD_DIR}\src\Antiqua\Printing\libAntiquaPrinting.dll"; DestDir: "{a
 Source: "{#BUILD_DIR}\src\Antiqua\Providers\libAntiquaProviders.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\Antiqua\Tabs\libAntiquaTabs.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\Antiqua\Widgets\libAntiquaWidgets.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
-Source: "{#BUILD_DIR}\pkgbuild\qt.conf"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\i18n\antiquacrm_de.qm"; DestDir: "{app}\i18n"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\data\pgsql\*.sql"; DestDir: "{app}\data\pgsql\"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\data\json\*.json"; DestDir: "{app}\data\json\"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\data\fonts\*.ttf"; DestDir: "{app}\data\fonts"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\data\fonts\*.ttf"; DestDir: "{app}\data\fonts"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\data\documents\*.txt"; DestDir: "{app}\data\documents"; Attribs: system; Flags: ignoreversion;
+Source: "{#SOURCE_DIR}\src\data\antiquacrm.qcss"; DestDir: "{app}\data"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\plugins\antiquacrm\providers\Abebooks\libAbebooks.dll"; DestDir: "{app}\plugins\antiquacrm\providers\Abebooks"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\plugins\antiquacrm\providers\Booklooker\libBooklooker.dll"; DestDir: "{app}\plugins\antiquacrm\providers\Booklooker"; Attribs: system; Flags: ignoreversion;
 Source: "{#BUILD_DIR}\src\plugins\antiquacrm\providers\Buchfreund\libBuchfreund.dll"; DestDir: "{app}\plugins\antiquacrm\providers\Buchfreund"; Attribs: system; Flags: ignoreversion;
@@ -142,7 +129,7 @@ Source: "{#QTSDK_PATH}\bin\libgcc_s_seh-1.dll"; DestDir: "{app}"; Attribs: syste
 Source: "{#QTSDK_PATH}\bin\libstdc++-6.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#QTSDK_PATH}\bin\libwinpthread-1.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#QTSDK_PATH}\bin\opengl32sw.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
-;; Qt6
+;; Qt6 
 Source: "{#QTSDK_PATH}\bin\Qt6Core.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#QTSDK_PATH}\bin\Qt6Gui.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#QTSDK_PATH}\bin\Qt6Widgets.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
@@ -152,19 +139,23 @@ Source: "{#QTSDK_PATH}\bin\Qt6Svg.dll"; DestDir: "{app}"; Attribs: system; Flags
 Source: "{#QTSDK_PATH}\bin\Qt6SvgWidgets.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#QTSDK_PATH}\bin\Qt6Xml.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
 Source: "{#QTSDK_PATH}\bin\Qt6PrintSupport.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
-Source: "{#QTSDK_PATH}\bin\Qt6Charts.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;
-Source: "{#QTSDK_PATH}\plugins\generic\*.dll"; DestDir: "{app}\plugins\generic"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
-Source: "{#QTSDK_PATH}\plugins\imageformats\*.dll"; DestDir: "{app}\plugins\imageformats"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
-Source: "{#QTSDK_PATH}\plugins\iconengines\*.dll"; DestDir: "{app}\plugins\iconengines"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
-Source: "{#QTSDK_PATH}\plugins\platforms\*.dll"; DestDir: "{app}\plugins\platforms"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
-Source: "{#QTSDK_PATH}\plugins\sqldrivers\qsqlpsql.dll"; DestDir: "{app}\plugins\sqldrivers"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
-Source: "{#QTSDK_PATH}\plugins\tls\*.dll"; DestDir: "{app}\plugins\tls"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
-;; Kundendaten
+Source: "{#QTSDK_PATH}\bin\Qt6Charts.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion;  
+Source: "{#QTSDK_PATH}\bin\Qt6OpenGL.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion; 
+Source: "{#QTSDK_PATH}\bin\Qt6OpenGLWidgets.dll"; DestDir: "{app}"; Attribs: system; Flags: ignoreversion; 
+Source: "{#QTSDK_PATH}\plugins\generic\*.dll"; DestDir: "{app}\qt6plugins\generic"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#QTSDK_PATH}\plugins\imageformats\*.dll"; DestDir: "{app}\qt6plugins\imageformats"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#QTSDK_PATH}\plugins\iconengines\*.dll"; DestDir: "{app}\qt6plugins\iconengines"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#QTSDK_PATH}\plugins\platforms\*.dll"; DestDir: "{app}\qt6plugins\platforms"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#QTSDK_PATH}\plugins\sqldrivers\qsqlpsql.dll"; DestDir: "{app}\qt6plugins\sqldrivers"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
+Source: "{#QTSDK_PATH}\plugins\tls\*.dll"; DestDir: "{app}\qt6plugins\tls"; Attribs: system; Flags: ignoreversion recursesubdirs createallsubdirs;
+;; Vulkan TODO
+;; Kundendaten  
+Source: "{#COPY_DIR}\qt.conf"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "{#COPY_DIR}\URWChancery_L-Medium-Italic.ttf"; DestDir: "{app}\company"; Flags: ignoreversion;
 Source: "{#COPY_DIR}\druck_header.png"; DestDir: "{app}\company"; Flags: ignoreversion;
-Source: "{#COPY_DIR}\Zertifikat\*.crt"; DestDir: "{app}\data\certs\"; Attribs: system; Flags: ignoreversion;
+Source: "{#COPY_DIR}\Zertifikat\*.crt"; DestDir: "{app}\data\certs\"; Attribs: system; Flags: ignoreversion;  
 ;; Curl CA-Bundle
-Source: "{#CURL_HOME}\bin\curl-ca-bundle.crt"; DestDir: "{app}\"; Attribs: system; Flags: ignoreversion;
+Source: "{#CURL_HOME}\bin\curl-ca-bundle.crt"; DestDir: "{app}\data\certs"; DestName: "ca-bundle.crt"; Attribs: system; Flags: ignoreversion;
 
 [Icons]
 Name: "{group}\{#MY_APPL_DISPLAY_NAME}"; Filename: "{app}\{#MY_APPL_BINARY}"; IconFilename: "{app}\{#MY_APPL_NAME}.ico";
@@ -179,5 +170,15 @@ Root: HKLM; Subkey: "Software\HJCMS\{#MY_APPL_UUID}"; ValueType: string; ValueNa
 Root: HKLM; Subkey: "Software\HJCMS\{#MY_APPL_UUID}"; ValueType: string; ValueName: "Author"; ValueData: "{#MY_APPL_PUBLISHER}"; Flags: uninsdeletekey;
 Root: HKLM; Subkey: "Software\HJCMS\{#MY_APPL_UUID}"; ValueType: string; ValueName: "Homepage"; ValueData: "{#MY_APPL_HOMEPAGE}"; Flags: uninsdeletekey;
 Root: HKLM; Subkey: "Software\HJCMS\{#MY_APPL_UUID}"; ValueType: string; ValueName: "InstallPath"; ValueData: "{commonpf64}\HJCMS\{#MY_APPL_BINARY}"; Flags: uninsdeletekey;
+
+;; Adding Firewall rules   
+;; netsh advfirewall firewall show rule name=@DISPLAYNAME@
+;; https://jrsoftware.org/ishelp/index.php?topic=setup_changesenvironment
+[Run]
+Filename: {sys}\netsh.exe; Parameters: "advfirewall firewall add rule name={#MY_APPL_NAME} dir=in protocol=TCP program=""{app}\{#MY_APPL_BINARY}"" profile=any action=allow"; StatusMsg: "Set Firewall IN:RULE ..."; Flags: skipifdoesntexist;
+Filename: {sys}\netsh.exe; Parameters: "advfirewall firewall add rule name={#MY_APPL_NAME} dir=out protocol=TCP program=""{app}\{#MY_APPL_BINARY}"" profile=any action=allow"; StatusMsg: "Set Firewall OUT:RULE ..."; Flags: skipifdoesntexist;
+
+[UninstallRun]     
+Filename: {sys}\netsh.exe; Parameters: "advfirewall firewall delete rule name={#MY_APPL_NAME}"; RunOnceId: "{#MY_APPL_NAME}"; Flags: skipifdoesntexist;
 
 ;; EOF

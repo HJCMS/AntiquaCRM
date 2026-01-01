@@ -255,7 +255,7 @@ bool Application::isRunning() {
 
 int Application::exec() {
   // Disable temporary mutex locker
-  // QMutex p_mutex;
+  QMutex p_mutex;
   // Translation at first
   initTranslations();
 
@@ -277,18 +277,18 @@ int Application::exec() {
 
   // Step 3 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
-  // p_mutex.lock();
+  p_mutex.lock();
   if (!checkRemotePort()) {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
-    // p_mutex.unlock();
+    p_mutex.unlock();
     return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));
-  // p_mutex.unlock();
+  p_mutex.unlock();
 
   // Step 4 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
-  // p_mutex.lock();
+  p_mutex.lock();
   if (!openDatabase()) {
     p_splash.errorMessage(tr("SQL Server connection unsuccessful!"));
     SwitchDatabaseProfile _dbd(m_cfg, &p_splash);
@@ -300,16 +300,16 @@ int Application::exec() {
     } else {
       qInfo("Database profile changed, application restart required.");
     }
-    // p_mutex.unlock();
+    p_mutex.unlock();
     return EXIT_FAILURE;
   }
   p_splash.setMessage(tr("Database connection successfully."));
-  // p_mutex.unlock();
+  p_mutex.unlock();
 
   // Step 5 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->open()) {
-    // p_mutex.lock();
+    p_mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
     DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(QString)), &p_splash, SLOT(setMessage(QString)));
@@ -318,7 +318,7 @@ int Application::exec() {
       p_splash.setMessage(tr("Cachefiles updated ..."));
     }
     m_cache->deleteLater();
-    // p_mutex.unlock();
+    p_mutex.unlock();
     p_splash.setMessage(tr("Open Application ..."));
   }
 

@@ -73,9 +73,21 @@ public:
   static bool networkStatus();
 
   /**
-   * @brief Responses the max database query limit for tables.
+   * @brief Generate EXTRACT(YEAR FROM CURRENT_DATE (+/-)Days)
+   * @param days - Set this integer from negative(past) to positive(future) to get year.
+   *  When days is 0 then extract year from CURRENT_DATE
+   *  @ref https://www.postgresql.org/docs/current/functions-datetime.html#EXTRACT
+   *
+   * @code
+   *  // Year from CURRENT_DATE
+   *  getYearByDays() = "EXTRACT(YEAR FROM CURRENT_DATE)"
+   *  // Year from for Week
+   *  getYearByDays(7) = "EXTRACT(YEAR FROM (CURRENT_DATE +7))"
+   *  // Year from last Month
+   *  getYearByDays(-31) = "EXTRACT(YEAR FROM (CURRENT_DATE -31))"
+   * @endcode
    */
-  qint64 getQueryLimit();
+  static const QString getYearByDays(qint8 days = 0);
 
   /**
    * @brief Connection ApplicationName
@@ -83,6 +95,11 @@ public:
    * This Idientifier must uniq!
    */
   static const QString identifier();
+
+  /**
+   * @brief Responses the max database query limit for tables.
+   */
+  qint64 getQueryLimit();
 
   /**
    * @brief Locale date time string
