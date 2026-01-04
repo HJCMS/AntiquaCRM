@@ -38,11 +38,6 @@ private:
 #endif
 
   /**
-   * @brief Is Systemtray enabled and visible?
-   */
-  bool checkSysTrayIcon();
-
-  /**
    * @brief Network Interfaces and connection check.
    */
   bool checkInterfaces();
@@ -67,11 +62,6 @@ private:
    * @brief Search Qt based translation files „*.qm“ and load it.
    */
   void initTranslations();
-
-  /**
-   * @brief Load and initial window and components.
-   */
-  bool initMainWindow();
 
 Q_SIGNALS:
   /**

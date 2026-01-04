@@ -2,7 +2,7 @@
 // vim: set fileencoding=utf-8
 
 #include "application.h"
-#include "mainwindow.h"
+#include "mainwindow.h" // IWYU pragma: keep
 #include "splashscreen.h"
 #include "switchdatabaseprofile.h"
 #include "utils/datacache/datacache.h"
@@ -28,7 +28,7 @@
 #endif
 
 #ifndef EXIT_FAILURE
-#define EXIT_FAILURE 1
+# define EXIT_FAILURE 1
 #endif
 
 Application::Application(int& argc, char** argv) : QApplication{argc, argv} {
@@ -65,13 +65,6 @@ bool Application::registerSessionBus() {
   return false;
 }
 #endif
-
-bool Application::checkSysTrayIcon() {
-  if (!QSystemTrayIcon::isSystemTrayAvailable())
-    qWarning("SystemTray is not available!");
-
-  return (m_systray != nullptr);
-}
 
 bool Application::checkInterfaces() {
   AntiquaCRM::ANetworkIface iface;
@@ -171,37 +164,11 @@ void Application::initTranslations() {
     installTranslator(m_qtr);
 }
 
-bool Application::initMainWindow() {
-  m_window = new MainWindow;
-  m_window->setWindowIcon(applIcon());
-  connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
-  m_window->openWindow();
-
-  // Now we can create the taskbar entry
-  m_systray = new SystemTrayIcon(applIcon(), this);
-
-  // Checks for System tray and create all required signal bindings.
-  if (checkSysTrayIcon()) {
-    connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
-    connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
-    connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-    connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-    // ready to view
-    m_systray->setVisible(true);
-  }
-
-  return (m_window != nullptr);
-}
-
 void Application::applicationQuit() {
   if (!m_window->closeWindow()) {
     m_window->showNormal();
     const QString _hint = tr("Please close all editors before exiting!");
-    if (checkSysTrayIcon()) {
-      m_systray->setMessage(_hint);
-    } else {
-      QMessageBox::warning(m_window, tr("AntiquaCRM"), _hint);
-    }
+    m_systray->setMessage(_hint);
     return;
   }
 
@@ -216,7 +183,7 @@ void Application::applicationQuit() {
     m_window->deleteLater();
   }
 
-  if (checkSysTrayIcon()) {
+  if (m_systray != nullptr) {
     m_systray->setVisible(false);
     m_systray->deleteLater();
   }
@@ -254,8 +221,6 @@ bool Application::isRunning() {
 }
 
 int Application::exec() {
-  // Disable temporary mutex locker
-  QMutex p_mutex;
   // Translation at first
   initTranslations();
 
@@ -267,7 +232,7 @@ int Application::exec() {
   p_splash.setMessage("Initial Themes & styles.");
   initStyleTheme();
 
-  // Step 2 - Networking
+         // Step 2 - Networking
   p_splash.setMessage("Search Networkconnection!");
   if (!checkInterfaces()) {
     p_splash.errorMessage(tr("No Networkconnection found!"));
@@ -277,18 +242,14 @@ int Application::exec() {
 
   // Step 3 - SQL Server
   p_splash.setMessage(tr("Check Network server port!"));
-  p_mutex.lock();
   if (!checkRemotePort()) {
     p_splash.errorMessage(tr("Network server port isn't reachable!"));
-    p_mutex.unlock();
     return SILENT_QUIT;
   }
   p_splash.setMessage(tr("Network connection to remote port exists."));
-  p_mutex.unlock();
 
   // Step 4 - SQL Database
   p_splash.setMessage(tr("Open Database connection."));
-  p_mutex.lock();
   if (!openDatabase()) {
     p_splash.errorMessage(tr("SQL Server connection unsuccessful!"));
     SwitchDatabaseProfile _dbd(m_cfg, &p_splash);
@@ -300,16 +261,13 @@ int Application::exec() {
     } else {
       qInfo("Database profile changed, application restart required.");
     }
-    p_mutex.unlock();
     return EXIT_FAILURE;
   }
   p_splash.setMessage(tr("Database connection successfully."));
-  p_mutex.unlock();
 
   // Step 5 - create cache files
   p_splash.setMessage(tr("Update application cache."));
   if (m_sql->open()) {
-    p_mutex.lock();
     p_splash.setMessage(tr("Creating Cachefiles."));
     DataCache* m_cache = new DataCache(m_cfg, m_sql, this);
     connect(m_cache, SIGNAL(statusMessage(QString)), &p_splash, SLOT(setMessage(QString)));
@@ -318,32 +276,38 @@ int Application::exec() {
       p_splash.setMessage(tr("Cachefiles updated ..."));
     }
     m_cache->deleteLater();
-    p_mutex.unlock();
     p_splash.setMessage(tr("Open Application ..."));
   }
 
   // Step 6 - UIX
-  if (!initMainWindow()) {
-    p_splash.errorMessage(tr("Open window failed."));
-    qFatal("failed to initital antiquacrm window");
-    return EXIT_FAILURE;
-  }
+  // Checks for System tray and create all required signal bindings.
+  m_systray = new SystemTrayIcon(applIcon(), this);
+  connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+
+  m_window = new MainWindow;
+  m_window->setWindowIcon(applIcon());
+  connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
+
+  connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
+  connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
+  connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
 
   // Step 7 - open window
-  if (m_window != nullptr) {
 #ifdef QT_DBUS_LIB
-    if (registerSessionBus()) {
-      // qdbus6 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage test-string
-      ABusAdaptor* m_adaptor = new ABusAdaptor(this);
-      m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
-      connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
-      connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
-      connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
-    }
-#endif
-    // Step 8 - finish splash and unlock
-    p_splash.finish(m_window);
-    return QApplication::exec();
+  if (registerSessionBus()) {
+    // qdbus6 de.hjcms.antiquacrm / de.hjcms.antiquacrm.pushMessage test-string
+    ABusAdaptor* m_adaptor = new ABusAdaptor(this);
+    m_adaptor->setObjectName(ANTIQUACRM_CONNECTION_DOMAIN);
+    connect(m_adaptor, SIGNAL(sendMessage(QString)), m_systray, SLOT(setMessage(QString)));
+    connect(m_adaptor, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+    connect(m_adaptor, SIGNAL(sendAboutQuit()), SLOT(applicationQuit()));
   }
-  return EXIT_FAILURE;
+#endif
+  // Step 8 - finish splash and unlock
+  p_splash.finish(m_window);
+
+  m_systray->setVisible(true);
+  m_window->openWindow();
+
+  return QApplication::exec();
 }
