@@ -361,6 +361,9 @@ void SellersSalesList::removeOrder(const QString& provider, const QString& id) {
 }
 
 void SellersSalesList::sortAndResize() {
+  if(topLevelItemCount() < 1)
+    return;
+
   // Erst mal alles Ausgewählte aufheben!
   if (selectedItems().size() > 0) {
     QListIterator<QTreeWidgetItem*> selections(selectedItems());

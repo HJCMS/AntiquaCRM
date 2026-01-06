@@ -27,7 +27,8 @@ SellersWidget::SellersWidget(QWidget* parent)
   setCurrentIndex(ViewPage::MainView);
 
   // Signals:SellersSalesList
-  connect(m_tree, SIGNAL(sendQueryOrder(QString,QString)), SLOT(openOrderPage(QString,QString)));
+  connect(m_tree, SIGNAL(sendQueryOrder(QString,QString)),SLOT(openOrderPage(QString,QString)));
+  connect(m_tree, SIGNAL(sendStatusInfo(QString)),SLOT(sendStatusMessage(QString)));
 }
 
 bool SellersWidget::loadProviderPlugins() {
@@ -120,9 +121,6 @@ void SellersWidget::updateSellersList() {
   if (!initialed)
     return;
 
-#ifdef ANTIQUA_DEVELOPMENT
-  qInfo(Q_FUNC_INFO);
-#endif
   m_tree->loadUpdate();
 }
 
@@ -138,10 +136,12 @@ void SellersWidget::onEnterChanged() {
     initialed = true;
     // first shot on load
     updateSellersList();
-  }
-  // only update if tab is visible
-  if (m_tree->isVisible())
+  } else if (isVisible()) {
+    // only update if tab is visible
     updateSellersList();
+  } else {
+    qWarning("unkown update sellers list");
+  }
 }
 
 const QString SellersWidget::getTitle() const {

@@ -1037,6 +1037,11 @@ bool OrdersEditor::createOrderRefund(qint64 oid) {
 
   m_tableData->setValue("o_payment_status", AntiquaCRM::OrderPayment::RETURN);
   setDataField(m_tableData->getProperties("o_payment_status"), AntiquaCRM::OrderPayment::RETURN);
+  /* @note o_delivered requires a status from Monthly Reports
+   * @see query_monthly_report.sql
+   */
+  m_tableData->setValue("o_delivered", "CURRENT_TIMESTAMP");
+  setDataField(m_tableData->getProperties("o_delivered"), "CURRENT_TIMESTAMP");
 
   RefundingDialog* d = new RefundingDialog(oid, this);
   if (d->exec() == QDialog::Rejected) {

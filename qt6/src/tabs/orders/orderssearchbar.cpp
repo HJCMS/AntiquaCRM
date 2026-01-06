@@ -18,6 +18,7 @@ OrdersSearchBar::OrdersSearchBar(QWidget* parent)
   m_filter->addItem(_icon, tr("Order Id"));         // o_id
   m_filter->addItem(_icon, tr("Delivery Service")); // d_name
   m_filter->addItem(_icon, tr("Provider"));         // o_provider_name
+  m_filter->addItem(_icon, tr("Provider ID"));      // o_provider_order_id
   addWidget(m_filter);
 
   QToolButton* m_icontb = new QToolButton(this);
@@ -119,6 +120,14 @@ void OrdersSearchBar::setFilter(int index) {
       }
       break;
 
+    case 4:
+      {
+        m_searchInput->setPlaceholderText(tr("Transaction ID"));
+        m_searchInput->setValidation(AntiquaCRM::ALineEdit::InputValidator::STRINGS);
+        min_length = getMinLength();
+      }
+      break;
+
     default:
       m_searchInput->setPlaceholderText(tr("Search ..."));
       m_searchInput->setValidation(m_searchInput->InputValidator::DEFAULT);
@@ -213,6 +222,11 @@ const QString OrdersSearchBar::getSearchStatement() {
 
     case 3:
       _sql = QString("o_provider_name ILIKE '%1%'").arg(p_search);
+      _sql.append(getDatePart());
+      break;
+
+    case 4:
+      _sql = QString("o_provider_order_id ILIKE '%1%'").arg(p_search);
       _sql.append(getDatePart());
       break;
 

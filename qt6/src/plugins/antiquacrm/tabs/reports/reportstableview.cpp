@@ -57,7 +57,6 @@ void ReportsTableView::setQuery(const QString& query) {
   calc_section = -1;
   refunds_section = -1;
   netto_section = -1;
-  // qDebug() << Q_FUNC_INFO << query;
   if (m_model->querySelect(query)) {
     calc_section = m_model->record().indexOf("calc");
     refunds_section = m_model->record().indexOf("refundscost");
@@ -66,6 +65,8 @@ void ReportsTableView::setQuery(const QString& query) {
     m_tableHeader->hideSection(calc_section);
     m_tableHeader->hideSection(refunds_section);
     m_tableHeader->hideSection(netto_section);
+#else
+    qDebug() << Q_FUNC_INFO << query;
 #endif
     resizeColumnsToContents();
     emit sendFinished();

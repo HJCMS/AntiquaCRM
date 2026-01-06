@@ -113,6 +113,11 @@ Q_SIGNALS:
    */
   void sendQueryOrder(const QString& provider, const QString& id);
 
+  /**
+   * @brief Send status information
+   */
+  void sendStatusInfo(const QString &);
+
 public Q_SLOTS:
   /**
    * @brief Eintrag entfernen mit ...
