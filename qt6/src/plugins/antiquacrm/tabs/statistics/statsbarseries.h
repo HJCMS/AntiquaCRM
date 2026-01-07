@@ -10,6 +10,7 @@
 #include <QAbstractSeries>
 #include <QBarSeries>
 #include <QHorizontalBarSeries>
+#include <QLineSeries>
 #include <QObject>
 #include <QWidget>
 

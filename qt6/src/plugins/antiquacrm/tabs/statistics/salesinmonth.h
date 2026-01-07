@@ -12,36 +12,59 @@
 #include "statisticsconfig.h"
 #include <AChartView>
 #include <AntiquaCRM>
-#include <QBarCategoryAxis>
-#include <QBarSet>
+#include <QPointF>
+#include <QCategoryAxis>
 #include <QDate>
+#include <QLineSeries>
 #include <QLocale>
 #include <QMap>
 #include <QObject>
 #include <QWidget>
 
-class VerticalBarSeries;
-class MonthBarSet;
+/**
+ * @brief The SalesInMonthSeries class
+ * @ingroup _chartstat
+ */
+class ANTIQUACRM_STATISTICS_PLUGIN MonthSeries final : public QLineSeries {
+  Q_OBJECT
+
+private:
+  qint64 Year;
+  QMap<qint16, qint64> MonthData;
+
+private Q_SLOTS:
+  void toolTip(const QPointF &, bool);
+
+public Q_SLOTS:
+  void updatePointLabels();
+
+public:
+  explicit MonthSeries(qint64 year, QMap<qint16, qint64> map, QObject* parent = nullptr);
+  bool setPoints();
+  QAbstractSeries::SeriesType type() const override;
+};
 
 class ANTIQUACRM_STATISTICS_PLUGIN SalesInMonth final : public AntiquaCRM::AChartView {
   Q_OBJECT
 
 private:
-  mutable QMap<int, QMap<int, qint64>> p_voluMap;
-  mutable QMap<int, QMap<int, double>> p_soldMap;
   const QLocale p_lc;
   const QDate p_date;
+  /**
+   * @code
+   *  QMap<YEARS, QMap<MONTHS, VOLUME_COUNT>>
+   * @endcode
+   */
+  mutable QMap<qint64, QMap<qint16, qint64>> p_dataMap;
   QChart* m_chart;
-  QBarCategoryAxis* m_label;
-  VerticalBarSeries* m_numsBar;
-  VerticalBarSeries* m_paidBar;
-  void setMiniViewWidth(qreal);
+  QCategoryAxis* m_monthsAxis;
+  QValueAxis* m_valueAxis;
   bool initMaps();
-  MonthBarSet* createBarset(int year, int type = 0);
   bool initialChartView(int year = -1) override;
 
 public:
   explicit SalesInMonth(QWidget* parent = nullptr);
+  const QList<MonthSeries*> series();
   virtual ~SalesInMonth();
 };
 

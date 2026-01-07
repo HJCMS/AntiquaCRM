@@ -2,12 +2,83 @@
 // vim: set fileencoding=utf-8
 
 #include "salesinmonth.h"
-#include "monthbarset.h"
-#include "statsbarseries.h"
 
-#include <QChar>
 #include <QFontMetricsF>
 #include <QSqlQuery>
+#include <QToolTip>
+
+// #define DEBUG_SALES_IN_MONTH
+
+MonthSeries::MonthSeries(qint64 year, QMap<qint16, qint64> map, QObject* parent)
+    : QLineSeries{parent}, Year{year}, MonthData{map} {
+  setName(QString::number(year));
+  setPointsVisible(true);
+  setPointLabelsFormat("@yPoint");
+  setPointLabelsVisible(true);
+  setVisible(true);
+
+  connect(this, SIGNAL(hovered(QPointF, bool)), SLOT(toolTip(QPointF, bool)));
+}
+
+void MonthSeries::toolTip(const QPointF& p, bool b) {
+  if (b && !p.isNull()) {
+    QLocale _lc;
+    qint16 _m = qRound(p.x());
+    QDate _d(Year, _m, 1);
+    const QString _info = tr("%1 %2 (%3)")
+                              .arg(name())
+                              .arg(_lc.monthName(_d.month(), QLocale::ShortFormat), _d.month())
+                              .arg(MonthData[_m]);
+    QToolTip::showText(QCursor::pos(), _info);
+    return;
+  }
+  QToolTip::hideText();
+}
+
+void MonthSeries::updatePointLabels() {
+  QHash<QXYSeries::PointConfiguration, QVariant> cfg;
+  cfg[QXYSeries::PointConfiguration::LabelVisibility] = true;
+  QListIterator<QPointF> it(points());
+  int index = 0;
+  while (it.hasNext()) {
+    QPointF _p = it.next();
+    cfg[QXYSeries::PointConfiguration::LabelVisibility] = !(index == 0 || _p.y() == 0);
+
+    setPointConfiguration(index, cfg);
+    index++;
+  }
+}
+
+bool MonthSeries::setPoints() {
+  if (MonthData.size() < 12)
+    return false;
+
+  const QMap<qint16, qint64> _map(MonthData);
+
+  qint64 _year = 0;
+  foreach (qint64 v, _map.values()) {
+    _year += v;
+  }
+  setName(QString::number(Year) + " (" + QString::number(_year) + ")");
+
+  for (int m = 1; m <= 12; m++) {
+    const QDate _d(Year, m, 1);
+    // hide this and create a horizontal line to next month
+    if (m == 0)
+      continue;
+
+    qint64 _v = _map[m];
+    if (m == 1) // first month counts
+      append(QPoint(0, _v));
+
+    append(QPoint(m, _v));
+  }
+  return true;
+}
+
+QAbstractSeries::SeriesType MonthSeries::type() const {
+  return QAbstractSeries::SeriesTypeLine;
+}
 
 SalesInMonth::SalesInMonth(QWidget* parent)
     : AntiquaCRM::AChartView{parent}, p_lc{QLocale::system()}, p_date{QDate::currentDate()} {
@@ -15,19 +86,24 @@ SalesInMonth::SalesInMonth(QWidget* parent)
   m_chart = new QChart(itemAt(0, 0));
   m_chart->setTitleFont(headersFont);
   m_chart->setTitle(tr("Compare sales from past years with current."));
-  m_chart->setMargins(QMargins(0, 0, 0, 0));
+  m_chart->setMargins(QMargins(10, 0, 10, 0));
   m_chart->setAnimationOptions(QChart::SeriesAnimations);
 
-  m_label = new QBarCategoryAxis(m_chart);
-  m_label->setLabelsFont(labelsFont);
-  m_chart->addAxis(m_label, Qt::AlignBottom);
+  m_valueAxis = new QValueAxis(m_chart);
+  m_valueAxis->setMin(0);
+  m_valueAxis->setMax(100);
+  m_chart->addAxis(m_valueAxis, Qt::AlignLeft);
 
-  m_numsBar = new VerticalBarSeries(this);
-  m_numsBar->setBarWidth(0.95);
-
-  m_paidBar = new VerticalBarSeries(this);
-  m_paidBar->setBarWidth(0.95);
-  m_paidBar->setLabelsFormat(currency);
+  m_monthsAxis = new QCategoryAxis(m_chart);
+  m_monthsAxis->setObjectName("MonthsAxis");
+  m_monthsAxis->setLabelsFont(labelsFont);
+  m_monthsAxis->setMin(0);
+  m_monthsAxis->setMax(12);
+  for (int m = 1; m < 13; m++) {
+    const QDate _d(QDate::currentDate().year(), m, 1);
+    m_monthsAxis->append(p_lc.monthName(_d.month(), QLocale::LongFormat), _d.month());
+  }
+  m_chart->addAxis(m_monthsAxis, Qt::AlignBottom);
 
   if (initialChartView()) {
     setChart(m_chart);
@@ -36,28 +112,24 @@ SalesInMonth::SalesInMonth(QWidget* parent)
   }
 }
 
+const QList<MonthSeries*> SalesInMonth::series() {
+  QList<MonthSeries*> _list;
+  QListIterator<QAbstractSeries*> it(m_chart->series());
+  while (it.hasNext()) {
+    MonthSeries* m_s = static_cast<MonthSeries*>(it.next());
+    if (m_s != nullptr)
+      _list.append(m_s);
+  }
+  return _list;
+}
+
 SalesInMonth::~SalesInMonth() {
   if (m_chart != nullptr)
     m_chart->deleteLater();
 }
 
-MonthBarSet* SalesInMonth::createBarset(int year, int type) {
-  MonthBarSet::Type _t = static_cast<MonthBarSet::Type>(type);
-  MonthBarSet* bs = new MonthBarSet(year, m_chart, _t);
-  bs->setLabelFont(labelsFont);
-  bs->setLabelColor(Qt::black);
-  bs->setParent(this);
-  return bs;
-}
-
-void SalesInMonth::setMiniViewWidth(qreal i) {
-  qreal _b = 0.5; // border line
-  qreal _w = QFontMetricsF(font()).boundingRect("X000X").width();
-  m_chart->setMinimumWidth((_w + _b) * (i * 12));
-}
-
 bool SalesInMonth::initMaps() {
-  const QString _sql = AntiquaCRM::ASqlFiles::queryStatement("statistics_from_until_delivery_year");
+  QString _sql = AntiquaCRM::ASqlFiles::queryStatement("statistics_from_until_delivery_year");
   QSqlQuery _q = getSqlQuery(_sql);
   if (_q.size() < 1) {
     qWarning("Sales in Month chart, without ranges!");
@@ -67,19 +139,18 @@ bool SalesInMonth::initMaps() {
   _q.next();
   const QDate _from = _q.value("min").toDate();
   const QDate _until = _q.value("max").toDate();
-  for (int _y = _from.year(); _y <= _until.year(); _y++) {
-    QMap<int, qint64> _vol;
-    QMap<int, double> _sel;
-    for (int m = 1; m < 13; m++) {
+  for (qint64 _y = _from.year(); _y <= _until.year(); _y++) {
+    QMap<qint16, qint64> _vol;
+    for (qint16 m = 1; m < 13; m++) {
       _vol.insert(m, 0);
-      _sel.insert(m, 0.00);
     }
-    // qDebug() << Q_FUNC_INFO << _vol.size()  << _sel.size();
-    p_voluMap.insert(_y, _vol);
-    p_soldMap.insert(_y, _sel);
+#ifdef DEBUG_SALES_IN_MONTH
+    qDebug() << Q_FUNC_INFO << _vol.size();
+#endif
+    p_dataMap.insert(_y, _vol);
   }
   _q.clear();
-  setMiniViewWidth(p_voluMap.size());
+
   return true;
 }
 
@@ -96,47 +167,36 @@ bool SalesInMonth::initialChartView(int year) {
     return false;
 
   while (_q.next()) {
-    int _c = _q.value("counts").toInt();
-    double _s = _q.value("sell").toDouble();
+    qint64 _c = _q.value("counts").toInt();
     const QDateTime _dt = getEpoch(_q.value("sepoch").toInt());
-    int _y = getYear(_dt);
-    int _m = getMonth(_dt);
-    // verkäufe
-    QMap<int, qint64> _vmap = p_voluMap[_y];
+    qint64 _y = getYear(_dt);
+    qint16 _m = getMonth(_dt);
+    QMap<qint16, qint64> _vmap = p_dataMap[_y];
     _vmap[_m] += _c;
-    p_voluMap[_y] = _vmap;
-    // preise
-    QMap<int, double> _smap = p_soldMap[_y];
-    _smap[_m] += _s;
-    // qDebug() << _m << _s << _smap[_m];
-    p_soldMap[_y] = _smap;
+    p_dataMap[_y] = _vmap;
   }
   _query.clear();
   _q.clear();
 
   // finally insert chart data
-  foreach (int y, p_voluMap.keys()) {
-    QMap<int, qint64> _m = p_voluMap[y];
-    MonthBarSet* m_counts = createBarset(y, MonthBarSet::Type::Volume);
-    QMap<int, double> _s = p_soldMap[y];
-    MonthBarSet* m_solded = createBarset(y, MonthBarSet::Type::Sales);
-    m_solded->setSales(_s);
-    for (int m = 1; m < 13; m++) {
-      const QDate _d(y, m, 1);
-      m_counts->append(_m[m]);
-      m_solded->append(_s[m]);
-      qsizetype _p = (m - 1); // @note a label index starts with 0
-      m_label->insert(_p, p_lc.monthName(_d.month(), QLocale::LongFormat));
-#ifdef ANTIQUA_DEVELOPMENT
-      if (y == p_date.year() && m == p_date.month())
-        qDebug() << m_label->at(_p) << _m[m] << _s[m];
-#endif
+  foreach (int _y, p_dataMap.keys()) {
+    MonthSeries* m_series = new MonthSeries(_y, p_dataMap[_y], this);
+    m_series->setObjectName("obj_" + QString::number(_y));
+    m_series->setPointLabelsFont(headersFont);
+    if (!m_series->setPoints()) {
+      qWarning("Missing data for year %d.", _y);
+      break;
     }
-    m_numsBar->insert(0, m_counts);
-    m_paidBar->insert(0, m_solded);
+    m_chart->addSeries(m_series);
+    // note we need attach when add multible lines
+    m_valueAxis->setTickCount(10);
+    m_series->attachAxis(m_valueAxis);
+    // update label visibilities
+    m_series->updatePointLabels();
+#ifdef DEBUG_SALES_IN_MONTH
+    qDebug() << "Year:" << _y << Qt::endl << "Points:" << m_series->points();
+#endif
   }
-  m_chart->addSeries(m_numsBar);
-  m_chart->addSeries(m_paidBar);
-  // updateHeight();
+
   return true;
 }

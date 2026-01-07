@@ -3,6 +3,8 @@
 
 #include "statsbarseries.h"
 
+#include <QPen>
+
 HorizontalBarSeries::HorizontalBarSeries(QObject *parent)
     : QHorizontalBarSeries{parent} {
   setLabelsPosition(QAbstractBarSeries::LabelsOutsideEnd);

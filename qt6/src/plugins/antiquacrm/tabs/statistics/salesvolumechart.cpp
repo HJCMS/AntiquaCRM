@@ -40,7 +40,7 @@ bool SalesVolumeChart::initialChartView(int year) {
       _q.clear();
 
       // Darstellung erzeugen
-      QPieSeries *m_series = initSeries(m_chart);
+      QPieSeries *m_series = initPieSeries(m_chart);
       QMapIterator<QString, double> it(_map);
       while (it.hasNext()) {
         it.next();

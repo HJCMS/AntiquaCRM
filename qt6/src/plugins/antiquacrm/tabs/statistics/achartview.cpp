@@ -24,7 +24,7 @@ AChartView::AChartView(QWidget* parent) : QChartView{parent} {
   cfg.endGroup();
 }
 
-QPieSeries* AChartView::initSeries(QChart* parent) const {
+QPieSeries* AChartView::initPieSeries(QChart* parent) const {
   QPieSeries* m_s = new QPieSeries(parent);
   m_s->setVisible(false); // no header labels
   return m_s;

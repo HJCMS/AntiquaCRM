@@ -22,7 +22,7 @@ StatisticsSelecter::StatisticsSelecter(QWidget *parent) : QToolBar{parent} {
   m_date = new AntiquaCRM::ASpinBox(this);
   m_date->setLayoutDirection(Qt::LeftToRight);
   m_date->setToolTip(tr("Year"));
-  m_date->setRange(_dt.year() - 2, _dt.year());
+  m_date->setRange(_dt.year() - 6, _dt.year());
   m_date->setValue(_dt.year());
   addWidget(m_date);
   addSeparator();

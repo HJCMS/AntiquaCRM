@@ -25,7 +25,7 @@ bool SoldCountChart::initialChartView(int year) {
     QSqlQuery _q = getSqlQuery(_tpl.getQueryContent());
     if (_q.size() > 0) {
       int summary = 0;
-      QPieSeries *m_series = initSeries(m_chart);
+      QPieSeries *m_series = initPieSeries(m_chart);
       while (_q.next()) {
         int _c = _q.value("pr_count").toInt();
         QString _lb = _q.value("pr_name").toString();

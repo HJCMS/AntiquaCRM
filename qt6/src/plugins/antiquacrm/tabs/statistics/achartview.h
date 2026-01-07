@@ -1,4 +1,3 @@
-// -*- coding: utf-8 -*-
 // vim: set fileencoding=utf-8
 //
 // SPDX-FileCopyrightText: 2024 Juergen Heinemann <nospam@hjcms.de>
@@ -43,7 +42,7 @@ protected:
    * @brief Initial PieSeries
    * @param parent QChart
    */
-  QPieSeries* initSeries(QChart* parent) const;
+  QPieSeries* initPieSeries(QChart* parent) const;
 
   /**
    * @brief Overload function from QDateTime::fromSecsSinceEpoch
