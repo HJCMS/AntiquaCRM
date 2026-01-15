@@ -33,15 +33,15 @@ MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
   connect(m_menuBar, SIGNAL(sendApplicationQuit()), SIGNAL(sendApplicationQuit()));
   connect(m_menuBar->tabsMenu, SIGNAL(sendOpenTab(QString)), SLOT(setViewTab(QString)));
   // End:Menu:Signals
-  connect(m_tabWidget, SIGNAL(sendStatusMessage(QString)),
-          m_statusBar, SLOT(statusInfoMessage(QString)));
+  connect(m_tabWidget, SIGNAL(sendStatusMessage(QString)), m_statusBar,
+          SLOT(statusInfoMessage(QString)));
 }
 
 bool MainWindow::createSocketListener() {
   m_rx = new AntiquaCRM::AReceiver(this);
-  connect(m_rx, SIGNAL(sendOperation(QString,QJsonObject)), SLOT(setAction(QString,QJsonObject)));
+  connect(m_rx, SIGNAL(sendOperation(QString, QJsonObject)), SLOT(setAction(QString, QJsonObject)));
   connect(m_rx, SIGNAL(sendMessage(QString)), m_statusBar, SLOT(statusInfoMessage(QString)));
-  return m_rx->listen(AntiquaCRM::AUtil::socketName());
+  return m_rx->open();
 }
 
 void MainWindow::loadStaticTabs() {
@@ -235,7 +235,11 @@ bool MainWindow::openWindow() {
   tabInterfaces.clear();
   config = new AntiquaCRM::ASettings(this);
 
-  createSocketListener();
+  if (!createSocketListener()) {
+    qWarning("MainWindow::createSocketListener() failed!");
+    return false;
+  }
+
   loadStaticTabs();
 
   if (!loadPluginTabs())
@@ -268,7 +272,7 @@ bool MainWindow::closeWindow() {
     d->setUnsavedMessage(tr("<p>Do you really want to quit the program?</p>"), true);
     _reject = (d->exec() == QDialog::Rejected);
     d->deleteLater();
-    if(_reject)
+    if (_reject)
       return false;
   }
 
@@ -293,6 +297,6 @@ MainWindow::~MainWindow() {
     tabInterfaces.clear();
   }
 
-  if(m_rx != nullptr)
+  if (m_rx != nullptr)
     m_rx->deleteLater();
 }

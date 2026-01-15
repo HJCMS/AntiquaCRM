@@ -85,6 +85,13 @@ public:
    * @param parent - parent object
    */
   explicit AReceiver(QObject *parent = nullptr);
+
+  /**
+   * @brief Start Listener
+   * @return isListening()
+   */
+  bool open();
+
   virtual ~AReceiver();
 };
 

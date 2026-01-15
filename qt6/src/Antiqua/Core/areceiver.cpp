@@ -16,19 +16,8 @@ AReceiver::AReceiver(QObject* parent) : QLocalServer{parent} {
   setObjectName("socket_notifier");
   setSocketOptions(QLocalServer::UserAccessOption);
   setMaxPendingConnections(100);
+  setListenBacklogSize(50);
   connect(this, SIGNAL(newConnection()), SLOT(getTransmitter()));
-}
-
-AReceiver::~AReceiver() {
-  if (hasPendingConnections()) {
-    qWarning("found pending connections");
-  }
-
-#ifdef ANTIQUA_DEVELOPMENT
-  qInfo("Shutdown and Close socket ...");
-#endif
-  if(isListening())
-    close();
 }
 
 bool AReceiver::createAction(const QJsonObject& obj) {
@@ -111,6 +100,27 @@ void AReceiver::getTransmitter() {
       qWarning("Socketserver parse error: '%s'", qPrintable(_parser.errorString()));
     }
   }
+}
+
+AReceiver::~AReceiver() {
+  if (hasPendingConnections()) {
+    qWarning("found pending connections");
+  }
+
+#ifdef ANTIQUA_DEVELOPMENT
+  qInfo("Shutdown and Close socket ...");
+#endif
+  if (isListening())
+    close();
+}
+
+bool AReceiver::open() {
+#ifdef Q_OS_WIN
+  listen(socketDescriptor());
+#else
+  listen(AntiquaCRM::AUtil::socketName());
+#endif
+  return isListening();
 }
 
 } // namespace AntiquaCRM
