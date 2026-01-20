@@ -115,11 +115,8 @@ AReceiver::~AReceiver() {
 }
 
 bool AReceiver::open() {
-#ifdef Q_OS_WIN
-  listen(socketDescriptor());
-#else
+  // TODO WINDOWS BUG
   listen(AntiquaCRM::AUtil::socketName());
-#endif
   return isListening();
 }
 

@@ -6,15 +6,6 @@
 #define QUOTE(x) _QUOTE(x)
 #define CONCAT(x,y) x ## y
 
-#define VER_VERSIONINFO             @ANTIQUACRM_VERSION_STRING@
-#define VER_PRODUCTVERSION          @ANTIQUACRM_VERSION_FILEOS@
-#define VER_FILEVERSION             @ANTIQUACRM_VERSION_FILEOS@
-#ifndef ANTIQUA_DEVELOPMENT
-#define VER_DEBUG                   0
-#else
-#define VER_DEBUG                   VS_FF_DEBUG
-#endif
-
 /**
 * Defines a version-information resource.
 * Contains information such as the version number,
@@ -23,15 +14,13 @@
 * @{
 */
 VS_VERSION_INFO VERSIONINFO
-FILEVERSION     VER_FILEVERSION
-PRODUCTVERSION  VER_PRODUCTVERSION
 
 /**
  * Die Datei wurde nicht mithilfe von Standardfreigabeprozeduren erstellt.
  * Wenn dieser Wert angegeben wird, muss der StringFileInfo-Block eine
  * PrivateBuild-Zeichenfolge enthalten.
  */
-FILEFLAGS       (VS_FF_PRIVATEBUILD|VER_PRERELEASE|VER_DEBUG)
+FILEFLAGS       VS_FF_PRIVATEBUILD
 FILEOS          VOS_UNKNOWN
 FILETYPE        VFT_APP
 FILESUBTYPE     VFT2_UNKNOWN
@@ -47,13 +36,13 @@ FILESUBTYPE     VFT2_UNKNOWN
     {
       VALUE "CompanyName",      "HJCMS @HOMEPAGEURL@"
       VALUE "FileDescription",  "@PROJECTNAME@"
-      VALUE "FileVersion",      VER_FILEVERSION
+      VALUE "FileVersion",      "@ANTIQUACRM_VERSION_FILEOS@"
       VALUE "InternalName",     "@PROJECTNAME@"
       VALUE "LegalCopyright",   "Copyright(C) 2013-2026 HJCMS https://www.hjcms.de"
       VALUE "LegalTrademarks",  "HJCMS @HOMEPAGEURL@"
       VALUE "OriginalFilename", "@PROJECTNAME@"
       VALUE "ProductName",      "AntiquaCRM"
-      VALUE "ProductVersion",   VER_PRODUCTVERSION
+      VALUE "ProductVersion",   "@ANTIQUACRM_VERSION_FILEOS@"
     }
   }
 
