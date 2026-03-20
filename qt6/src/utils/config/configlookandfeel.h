@@ -21,6 +21,7 @@ class ConfigLookAndFeel final : public AntiquaCRM::PluginConfigWidget {
 private:
   AntiquaCRM::BoolBox *m_toolTipIcons;
   AntiquaCRM::BoolBox *m_wheelSupport;
+  AntiquaCRM::BoolBox *m_nativeMenuBarSupport;
   IconThemes *m_iconThemes;
   AntiquaCRM::NumEdit *m_queryLimit;
   AntiquaCRM::NumEdit *m_queryAutoUpdate;

@@ -11,7 +11,6 @@
 
 MenuBar::MenuBar(QWidget* parent) : QMenuBar{parent} {
   setObjectName("antiqua_ui_menubar");
-  setNativeMenuBar(true);
 
   m_applMenu = addMenu("Antiqua CRM");
   QAction* ac_quit = m_applMenu->addAction(tr("Application Quit"));

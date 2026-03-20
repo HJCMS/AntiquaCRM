@@ -297,7 +297,7 @@ void SellersSalesList::loadUpdate() {
     }
   }
 
-  QString _table("query_provider_orders");
+  const QString _table("query_provider_orders");
   AntiquaCRM::ASqlCore pgsql(this);
   if (!pgsql.open()) {
     qWarning("No SQL connection for load Update Sellers list.");

@@ -12,7 +12,8 @@
 
 #include <QApplication>
 
-MainWindow::MainWindow(QWidget* parent) : QMainWindow{parent} {
+MainWindow::MainWindow(AntiquaCRM::ASettings* cfg, QWidget* parent)
+  : QMainWindow{parent}, m_cfg{cfg} {
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setMinimumSize(QSize(800, 580));
@@ -76,7 +77,7 @@ bool MainWindow::loadPluginTabs() {
       AntiquaCRM::TabsInterface* _iface = it.next();
       if (_iface != nullptr) {
         m_menuBar->tabsMenu->addAction(_iface->menuEntry());
-        bool _load = config->value("plugin/tabs/enable/" + _iface->getSerialId(), false).toBool();
+        bool _load = m_cfg->value("plugin/tabs/enable/" + _iface->getSerialId(), false).toBool();
         if (!_iface->addIndexOnInit()) {
           if (!_load)
             continue;
@@ -198,11 +199,11 @@ void MainWindow::showEvent(QShowEvent* event) {
 
 void MainWindow::hideEvent(QHideEvent* event) {
   if (isVisible() && event->isAccepted()) {
-    config->setValue("window/geometry", saveGeometry());
+    m_cfg->setValue("window/geometry", saveGeometry());
     if (isFullScreen()) // do not save fullscreen window
       setWindowState(windowState() & ~Qt::WindowFullScreen);
 
-    config->setValue("window/windowState", saveState());
+    m_cfg->setValue("window/windowState", saveState());
   }
   QMainWindow::hideEvent(event);
 }
@@ -233,23 +234,25 @@ void MainWindow::setToggleFullScreen() {
 
 bool MainWindow::openWindow() {
   tabInterfaces.clear();
-  config = new AntiquaCRM::ASettings(this);
 
   if (!createSocketListener()) {
     qWarning("MainWindow::createSocketListener() failed!");
     return false;
   }
 
+  // if changed by user, disable NativeMenuBar
+  m_menuBar->setNativeMenuBar(m_cfg->value("window_behavior/native_window_support",true).toBool());
+
   loadStaticTabs();
 
   if (!loadPluginTabs())
     m_statusBar->showMessage(tr("No tabs available"));
 
-  if (config->contains("window/geometry"))
-    restoreGeometry(config->value("window/geometry").toByteArray());
+  if (m_cfg->contains("window/geometry"))
+    restoreGeometry(m_cfg->value("window/geometry").toByteArray());
 
-  if (config->contains("window/windowState")) {
-    QByteArray state = config->value("window/windowState").toByteArray();
+  if (m_cfg->contains("window/windowState")) {
+    QByteArray state = m_cfg->value("window/windowState").toByteArray();
     if (state.isNull()) {
       setWindowState((windowState() & ~Qt::WindowMinimized) | Qt::WindowActive);
     } else {
@@ -278,7 +281,7 @@ bool MainWindow::closeWindow() {
 
   QByteArray _geometry = saveGeometry();
   if (!_geometry.isNull()) {
-    config->setValue("window/geometry", _geometry);
+    m_cfg->setValue("window/geometry", _geometry);
     _geometry.clear();
   }
 
@@ -286,9 +289,6 @@ bool MainWindow::closeWindow() {
 }
 
 MainWindow::~MainWindow() {
-  if (config != nullptr)
-    config->deleteLater();
-
   // Destroy tab interfaces, tabs already closed in closeWindow().
   if (tabInterfaces.size() > 0) {
     for (int i = 0; i < tabInterfaces.size(); i++) {

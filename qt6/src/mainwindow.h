@@ -29,16 +29,16 @@ class MainWindow final : public QMainWindow {
 
 private:
   /**
+   * @brief Configuration will initialed in Constructor.
+   */
+  AntiquaCRM::ASettings* m_cfg = nullptr;
+
+  /**
    * @brief firstShown
    *
    * prevent duplicate triggers
    */
   bool firstShown = false;
-
-  /**
-   * @brief Configuration will initialed in openWindow()
-   */
-  AntiquaCRM::ASettings* config = nullptr;
 
   /**
    * @brief Window Menu bar
@@ -145,7 +145,7 @@ public:
   /**
    * @param parent - parent object
    */
-  explicit MainWindow(QWidget* parent = nullptr);
+  explicit MainWindow(AntiquaCRM::ASettings* cfg, QWidget* parent = nullptr);
 
   /**
    * @brief Primary Window initialisation

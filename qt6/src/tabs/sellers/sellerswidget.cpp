@@ -34,10 +34,12 @@ SellersWidget::SellersWidget(QWidget* parent)
 bool SellersWidget::loadProviderPlugins() {
   AntiquaCRM::ProvidersLoader loader(this);
   p_list = loader.interfaces(this);
-  if (p_list.size() < 1) {
-    qWarning("Provider plugins loader failed!");
+  initialed = (p_list.size() > 0);
+  if (!initialed) {
+    qWarning("Load Providerplugins failed!");
     return false;
   }
+  updateSellersList();
   return true;
 }
 
@@ -121,10 +123,12 @@ void SellersWidget::updateSellersList() {
   if (!initialed)
     return;
 
+  qDebug("SellersWidget::updateSellersList");
   m_tree->loadUpdate();
 }
 
 void SellersWidget::openStartPage() {
+  // @warning Do not initial AntiquaCRM::ASqlCore in constructors!
   if (m_sql == nullptr)
     m_sql = new AntiquaCRM::ASqlCore(this);
 }
@@ -132,15 +136,10 @@ void SellersWidget::openStartPage() {
 void SellersWidget::onEnterChanged() {
   openStartPage();
   if (!initialed) {
-    loadProviderPlugins();
-    initialed = true;
-    // first shot on load
-    updateSellersList();
+    initialed = loadProviderPlugins();
   } else if (isVisible()) {
     // only update if tab is visible
     updateSellersList();
-  } else {
-    qWarning("unkown update sellers list");
   }
 }
 

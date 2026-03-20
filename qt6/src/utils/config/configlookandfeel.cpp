@@ -20,14 +20,13 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
       new AntiquaCRM::ConfigGridLayout(m_central);
 
   _info = tr("All settings in this area require a restart of the application.");
-  layout->addWidget(new QLabel(_info, m_central), _row++, 0, 1, 1);
+  layout->addWidget(new QLabel(_info, m_central), _row++, 0, 1, 1); // -tooltip
 
   _info = tr("Show tooltip symbols after input fields.");
   m_toolTipIcons = new AntiquaCRM::BoolBox(m_central);
   m_toolTipIcons->setObjectName("display_tooltip_buttons");
   m_toolTipIcons->setBuddyLabel(_info);
   layout->addWidget(m_toolTipIcons, _row, 0, 1, 1);
-
   _info = tr("If enabled, it will append to all supported input fields a "
              "clickable icon with additional popup information.");
   layout->addToolTip(_row++, 1, _info);
@@ -37,11 +36,18 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
   m_wheelSupport->setObjectName("mouse_wheel_support");
   m_wheelSupport->setBuddyLabel(_info);
   layout->addWidget(m_wheelSupport, _row, 0, 1, 1);
-
-  _info =
-      tr("If switched off, unintentional changing of entries with scrolling "
+  _info = tr("If switched off, unintentional changing of entries with scrolling "
          "is prevented.<br>Experience has shown that older people in "
          "particular have problems with large input masks.");
+  layout->addToolTip(_row++, 1, _info);
+
+  _info = tr("When this option is enabled, the OS native menu bar will be used.");
+  m_nativeMenuBarSupport = new AntiquaCRM::BoolBox(m_central);
+  m_nativeMenuBarSupport->setObjectName("native_window_support");
+  m_nativeMenuBarSupport->setBuddyLabel(_info);
+  layout->addWidget(m_nativeMenuBarSupport, _row, 0, 1, 1);
+  _info = tr("If the operating system has the native window enabled/present, "
+         "the menu bar in the program will be hidden.");
   layout->addToolTip(_row++, 1, _info);
 
   m_iconThemes = new IconThemes(this);
@@ -88,10 +94,9 @@ ConfigLookAndFeel::ConfigLookAndFeel(QWidget *parent)
 void ConfigLookAndFeel::loadSectionConfig() {
   // window_behavior
   config->beginGroup("window_behavior");
-  m_toolTipIcons->setValue(
-      config->value("display_tooltip_buttons", true).toBool());
-  m_wheelSupport->setValue(
-      config->value("mouse_wheel_support", false).toBool());
+  m_toolTipIcons->setValue(config->value("display_tooltip_buttons", true).toBool());
+  m_wheelSupport->setValue(config->value("mouse_wheel_support", false).toBool());
+  m_nativeMenuBarSupport->setValue(config->value("native_window_support", true).toBool());
   config->endGroup();
   // database
   config->beginGroup("database");
@@ -111,6 +116,7 @@ void ConfigLookAndFeel::saveSectionConfig() {
   config->beginGroup("window_behavior");
   config->setValue("display_tooltip_buttons", m_toolTipIcons->getValue());
   config->setValue("mouse_wheel_support", m_wheelSupport->getValue());
+  config->setValue("native_window_support", m_nativeMenuBarSupport->getValue());
   config->endGroup();
   // database
   config->beginGroup("database");

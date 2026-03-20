@@ -4,7 +4,7 @@
 <context>
     <name>ACmdProviders</name>
     <message>
-        <location filename="../antiquacmd/acmdproviders/acmdproviders.cpp" line="+133"/>
+        <location filename="../antiquacmd/acmdproviders/acmdproviders.cpp" line="+134"/>
         <source>Germany</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2998,7 +2998,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+13"/>
+        <location line="+14"/>
         <source>Create</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3023,7 +3023,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+113"/>
+        <location line="+123"/>
         <source>Query started, waiting for response.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3124,78 +3124,68 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
 <context>
     <name>Application</name>
     <message>
-        <location filename="../application.cpp" line="+232"/>
+        <location filename="../application.cpp" line="+170"/>
         <source>Please close all editors before exiting!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
-        <source>AntiquaCRM</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+72"/>
+        <location line="+68"/>
         <source>No Networkconnection found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Valid Networkconnection found!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Check Network server port!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Network server port isn&apos;t reachable!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+5"/>
+        <location line="+3"/>
         <source>Network connection to remote port exists.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Open Database connection.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>SQL Server connection unsuccessful!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+14"/>
+        <location line="+12"/>
         <source>Database connection successfully.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Update application cache.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+3"/>
+        <location line="+2"/>
         <source>Creating Cachefiles.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>Cachefiles updated ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+4"/>
+        <location line="+3"/>
         <source>Open Application ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+6"/>
-        <source>Open window failed.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3384,7 +3374,7 @@ This Code only represent digits 0-9 with  a length of 10 or 13. For detailed des
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+141"/>
+        <location line="+143"/>
         <source>Update Successfully.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5051,7 +5041,12 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+2"/>
+        <source></source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <location line="+3"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
@@ -5532,7 +5527,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+5"/>
         <source>If enabled, it will append to all supported input fields a clickable icon with additional popup information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5542,12 +5537,22 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+7"/>
+        <location line="+10"/>
+        <source>When this option is enabled, the OS native menu bar will be used.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="-5"/>
         <source>If switched off, unintentional changing of entries with scrolling is prevented.&lt;br&gt;Experience has shown that older people in particular have problems with large input masks.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+6"/>
+        <location line="+10"/>
+        <source>If the operating system has the native window enabled/present, the menu bar in the program will be hidden.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+5"/>
         <source>Set application icon theme</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5989,7 +5994,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+79"/>
+        <location line="+73"/>
         <source>Not implemented in this View!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6998,7 +7003,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MainWindow</name>
     <message>
-        <location filename="../mainwindow.cpp" line="+238"/>
+        <location filename="../mainwindow.cpp" line="+249"/>
         <source>No tabs available</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7008,7 +7013,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
+        <location line="+10"/>
         <source>&lt;p&gt;Do you really want to quit the program?&lt;/p&gt;</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7016,7 +7021,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>MenuBar</name>
     <message>
-        <location filename="../menubar.cpp" line="+17"/>
+        <location filename="../menubar.cpp" line="+16"/>
         <source>Application Quit</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7092,6 +7097,14 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+10"/>
         <source>Summary %1 (%2)</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>MonthSeries</name>
+    <message>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+28"/>
+        <source>%1 %2 (%3)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7379,12 +7392,12 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     </message>
     <message>
         <location line="+8"/>
-        <location line="+542"/>
+        <location line="+547"/>
         <source>Missing required Identities!</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="-512"/>
+        <location line="-517"/>
         <source>Article: %1 not found or out of stock!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7444,7 +7457,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+21"/>
+        <location line="+26"/>
         <source>Refunding dialog aborted.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7489,6 +7502,11 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+1"/>
         <source>Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+1"/>
+        <source>Provider ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7549,6 +7567,11 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
     <message>
         <location line="+8"/>
         <source>Search Provider</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location line="+8"/>
+        <source>Transaction ID</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7656,7 +7679,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableModel</name>
     <message>
-        <location filename="../tabs/orders/orderstablemodel.cpp" line="+165"/>
+        <location filename="../tabs/orders/orderstablemodel.cpp" line="+170"/>
         <source>Yes</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7759,7 +7782,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
 <context>
     <name>OrdersTableOverView</name>
     <message>
-        <location filename="../tabs/orders/orderstableoverview.cpp" line="+57"/>
+        <location filename="../tabs/orders/orderstableoverview.cpp" line="+56"/>
         <source>Open order</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7769,7 +7792,7 @@ If you are not using SSL, the IP address can also be added in this field.</sourc
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+1"/>
+        <location line="+2"/>
         <source>View Customer</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8805,7 +8828,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SalesInMonth</name>
     <message>
-        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+17"/>
+        <location filename="../plugins/antiquacrm/tabs/statistics/salesinmonth.cpp" line="+60"/>
         <source>Compare sales from past years with current.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -8813,7 +8836,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
 <context>
     <name>SalesInfo</name>
     <message>
-        <location filename="../tabs/sellers/salesinfo.cpp" line="+15"/>
+        <location filename="../tabs/sellers/salesinfo.cpp" line="+17"/>
         <source>Displays the current payment and order status Information.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9115,7 +9138,7 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
     <name>SellersWidget</name>
     <message>
         <location filename="../tabs/sellers/sellerswidget.cpp" line="+14"/>
-        <location line="+134"/>
+        <location line="+133"/>
         <source>Providers</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10134,7 +10157,7 @@ Image - Article Id: %2</source>
 <context>
     <name>SystemTrayIcon</name>
     <message>
-        <location filename="../systemtrayicon.cpp" line="+46"/>
+        <location filename="../systemtrayicon.cpp" line="+45"/>
         <source>Database connected.</source>
         <translation type="unfinished"></translation>
     </message>

@@ -284,7 +284,7 @@ int Application::exec() {
   m_systray = new SystemTrayIcon(applIcon(), this);
   connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
 
-  m_window = new MainWindow;
+  m_window = new MainWindow(m_cfg);
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
 
