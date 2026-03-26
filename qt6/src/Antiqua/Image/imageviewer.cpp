@@ -202,9 +202,14 @@ bool ImageViewer::isEmpty() {
 }
 
 const QSize ImageViewer::getMaxScaleSize() const {
-  QSize _size = qApp->screenAt(pos())->size();
+  const QSize p_size(800,600);
+  QScreen *m_screen = qApp->screenAt(pos());
+  if(m_screen == nullptr)
+    return p_size;
+
+  QSize _size = m_screen->size();
   if (!_size.isValid())
-    _size = QSize(800, 600);
+    return p_size;
 
   return _size;
 }
