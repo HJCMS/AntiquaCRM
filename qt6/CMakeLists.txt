@@ -38,6 +38,7 @@ PROJECT(${PROJECTNAME}
 ## Enables some Development options and tracing
 OPTION (ANTIQUA_DEVELOPMENT "Enable development macro code" OFF)
 OPTION (WITH_ANTIQUACMD "With antiquacmd cron application." OFF)
+OPTION (WITH_LTO_OPTIMIZATION "Enable INTERPROCEDURAL_OPTIMIZATION" OFF)
 
 IF(EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/custom-config.cmake)
   MESSAGE(STATUS "Using Custom config")
