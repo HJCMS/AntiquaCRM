@@ -108,15 +108,17 @@ AReceiver::~AReceiver() {
   }
 
 #ifdef ANTIQUA_DEVELOPMENT
-  qInfo("Shutdown and Close socket ...");
+  qInfo("AntiquaCRM shutdown:'%s' ...", qPrintable(fullServerName()));
 #endif
   if (isListening())
     close();
 }
 
 bool AReceiver::open() {
-  // TODO WINDOWS BUG
-  listen(AntiquaCRM::AUtil::socketName());
+  // lsof -d 6 -U -a +E -p $(pgrep antiquacrm)
+  if(listen(AntiquaCRM::AUtil::socketName()))
+    qInfo("AntiquaCRM listen:'%s' ...", qPrintable(fullServerName()));
+
   return isListening();
 }
 

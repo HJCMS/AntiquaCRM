@@ -280,14 +280,13 @@ int Application::exec() {
   }
 
   // Step 6 - UIX
-  // Checks for System tray and create all required signal bindings.
-  m_systray = new SystemTrayIcon(applIcon(), this);
-  connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-
   m_window = new MainWindow(m_cfg);
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
 
+  // @note wait for SocketDescriptor
+  m_systray = new SystemTrayIcon(applIcon(), this);
+  connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
   connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
   connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
   connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
