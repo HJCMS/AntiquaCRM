@@ -284,12 +284,15 @@ int Application::exec() {
   m_window->setWindowIcon(applIcon());
   connect(m_window, SIGNAL(sendApplicationQuit()), SLOT(applicationQuit()));
 
-  // @note wait for SocketDescriptor
-  m_systray = new SystemTrayIcon(applIcon(), this);
-  connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
-  connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
-  connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
-  connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+  // @note wait for SocketDescriptors
+  if(m_window->openWindow()) {
+    m_systray = new SystemTrayIcon(applIcon(), this);
+    connect(m_systray, SIGNAL(sendApplQuit()), SLOT(applicationQuit()));
+    connect(m_systray, SIGNAL(sendShowWindow()), m_window, SLOT(show()));
+    connect(m_systray, SIGNAL(sendHideWindow()), m_window, SLOT(hide()));
+    connect(m_systray, SIGNAL(sendToggleView()), m_window, SLOT(setToggleWindow()));
+    m_systray->setVisible(true);
+  }
 
   // Step 7 - open window
 #ifdef QT_DBUS_LIB
@@ -304,9 +307,6 @@ int Application::exec() {
 #endif
   // Step 8 - finish splash and unlock
   p_splash.finish(m_window);
-
-  m_systray->setVisible(true);
-  m_window->openWindow();
 
   return QApplication::exec();
 }
