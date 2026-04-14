@@ -12,6 +12,7 @@
 #include <AntiquaWidgets>
 #include <QObject>
 #include <QSqlRecord>
+#include <QDateTime>
 
 class OrdersTableOverViewModel;
 
@@ -19,6 +20,7 @@ class OrdersTableOverView final : public AntiquaCRM::TableView {
   Q_OBJECT
 
 private:
+  const QDateTime p_dateTime;
   OrdersTableOverViewModel* m_model;
   QString where_clause;
   QSqlRecord p_tableRecord;

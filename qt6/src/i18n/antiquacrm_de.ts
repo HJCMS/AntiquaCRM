@@ -5066,12 +5066,7 @@ Bild – Artikel-ID: %2</translation>
         <translation>Vom Anbieter importierter Name</translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <location line="+3"/>
         <source>Search</source>
         <translation>Suche</translation>
@@ -9301,9 +9296,9 @@ Hinweis: Bitte beachten Sie, dass QR-Bilder neu erstellt werden müssen, wenn Si
         <translation>Jahr</translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Sales in Month</source>
-        <translation>Verkäufe im Monat</translation>
+        <location line="+10"/>
+        <source>Sales history</source>
+        <translation>Verkaufsverlauf</translation>
     </message>
     <message>
         <location line="+2"/>

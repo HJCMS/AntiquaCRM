@@ -18,11 +18,16 @@ class ANTIQUACRM_STATISTICS_PLUGIN StatisticsSelecter : public QToolBar {
   Q_OBJECT
 
 private:
+  const QDate p_date;
   AntiquaCRM::ASpinBox* m_date;
   AntiquaCRM::AComboBox* m_box;
   QPushButton* m_button;
 
 private Q_SLOTS:
+  /**
+   * @brief Set default year
+   * Used in \ref updateView and triggered when a selected index supports year selection.
+   */
   void chartSelected(int);
   void updateView();
 

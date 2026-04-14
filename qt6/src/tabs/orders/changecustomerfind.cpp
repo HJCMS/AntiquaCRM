@@ -61,7 +61,7 @@ ChangeCustomerFind::ChangeCustomerFind(QWidget* parent) : QWidget{parent} {
 
   m_comboBox->insertItem(5, tr("Provider imported name"), "c_provider_import");
   m_comboBox->setItemData(5, _sicon, Qt::DecorationRole);
-  m_comboBox->setItemData(5, tr(""), Qt::ToolTipRole);
+  // m_comboBox->setItemData(5, tr(""), Qt::ToolTipRole);
 
   layout->addWidget(m_comboBox, _r, 0, 1, 1);
 

@@ -7,7 +7,8 @@
 
 #include <AntiquaCRM>
 
-OrdersTableOverView::OrdersTableOverView(QWidget* parent) : AntiquaCRM::TableView{parent}
+OrdersTableOverView::OrdersTableOverView(QWidget* parent)
+  : AntiquaCRM::TableView{parent}, p_dateTime{QDateTime::currentDateTime()}
 {
   setEnableTableViewSorting(true);
   m_model = new OrdersTableOverViewModel(this);
@@ -194,23 +195,31 @@ bool OrdersTableOverView::setQuery(const QString& clause)
   AntiquaCRM::ASqlFiles query("query_tab_orders_main");
   if (query.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
-    // qDebug() << Q_FUNC_INFO << where_clause;
     query.setWhereClause(where_clause);
     query.setOrderBy("(" + sortOrder().join(",") + ")");
     query.setSorting(Qt::DescendingOrder);
     query.setLimits(getQueryLimit());
   }
+  // qDebug() << Q_FUNC_INFO << query.getQueryContent();
   return sqlModelQuery(query.getQueryContent());
 }
 
+/**
+ @since Wed Apr  8 18:49:43 CEST 2026
+  The macro CURRENT_TIMESTAMP has been changed to LOCALTIMESTAMP.
+  The column o_since does not have an output format with time zone.
+*/
 const QString OrdersTableOverView::defaultWhereClause()
 {
+  // @warning We need to request this information in the future due to daylight saving time.
+  // @var _mtf  minutes to the future
+  const QString _mtf = QString::number(p_dateTime.offsetFromUtc() / 60);
+
   QStringList _l(QString::number(AntiquaCRM::OrderStatus::DELIVERED));
   _l.append(QString::number(AntiquaCRM::OrderStatus::CANCELED));
-  QString _sql("o_order_status NOT IN (" + _l.join(",") + ")");
-  _sql.append(" AND o_since BETWEEN ");
-  _sql.append("(CURRENT_TIMESTAMP - justify_interval(interval '12 months'))");
-  _sql.append(" AND CURRENT_TIMESTAMP");
-  // qDebug() << Q_FUNC_INFO << _sql;
+
+  QString _sql("o_order_status NOT IN (" + _l.join(",") + ") AND ");
+  _sql.append("(o_since BETWEEN (LOCALTIMESTAMP - justify_interval(interval '1 year')) AND ");
+  _sql.append("(LOCALTIMESTAMP + justify_interval(interval '" + _mtf + " minutes')))");
   return _sql;
 }

@@ -5041,12 +5041,7 @@ Image - Article Id: %2</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+2"/>
-        <source></source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location line="+5"/>
+        <location line="+7"/>
         <location line="+3"/>
         <source>Search</source>
         <translation type="unfinished"></translation>
@@ -9274,8 +9269,8 @@ Note: Please keep in mind that QR images must be recreated if you change somethi
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location line="+9"/>
-        <source>Sales in Month</source>
+        <location line="+10"/>
+        <source>Sales history</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
