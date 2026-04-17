@@ -54,10 +54,10 @@ use Text::Iconv;
 ## BEGIN configuration
 ## Alle Einstellungen für die Server Zugriffe
 ## API Benutzer
-my $_API_USER = "WILMS";
+my $_API_USER = "";
 
 ## API Key
-my $_API_KEY = "a75cb3180f134f9c9b59";
+my $_API_KEY = "";
 
 ## Standard Ausgabename
 my $_APPL_NAME = "antiqua-update-abebooks-am";

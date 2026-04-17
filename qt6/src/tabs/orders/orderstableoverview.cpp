@@ -192,16 +192,15 @@ int OrdersTableOverView::rowCount()
 
 bool OrdersTableOverView::setQuery(const QString& clause)
 {
-  AntiquaCRM::ASqlFiles query("query_tab_orders_main");
-  if (query.openTemplate()) {
+  AntiquaCRM::ASqlFiles _sql("query_tab_orders_main");
+  if (_sql.openTemplate()) {
     where_clause = (clause.isEmpty() ? where_clause : clause);
-    query.setWhereClause(where_clause);
-    query.setOrderBy("(" + sortOrder().join(",") + ")");
-    query.setSorting(Qt::DescendingOrder);
-    query.setLimits(getQueryLimit());
+    _sql.setWhereClause(where_clause);
+    _sql.setOrderBy("(" + sortOrder().join(",") + ")");
+    _sql.setSorting(Qt::DescendingOrder);
+    _sql.setLimits(getQueryLimit());
   }
-  // qDebug() << Q_FUNC_INFO << query.getQueryContent();
-  return sqlModelQuery(query.getQueryContent());
+  return sqlModelQuery(_sql.getQueryContent());
 }
 
 /**
