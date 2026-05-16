@@ -314,7 +314,7 @@ int PrintRefund::exec(const QJsonObject& options, bool pdfbtn) {
   QJsonObject _content;
   _content.insert("config", _config);
   _content.insert("subject", tr("Invoice"));
-  _content.insert("address", _person.value("address").toString());
+  _content.insert("address", _person.value("invoice_address").toString());
 
   QJsonArray _array;
   _array.append(tr("Invoice No."));

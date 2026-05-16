@@ -349,7 +349,8 @@ const QMap<QString, QVariant> APrintingPage::queryCustomerData(qint64 cid) {
       _map.insert("id", cid);
       _map.insert("gender", _query.value("gender").toInt());
       _map.insert("person", _query.value("person").toString());
-      _map.insert("address", _query.value("address").toString());
+      _map.insert("invoice_address", _query.value("invoice_address").toString());
+      _map.insert("shipping_address", _query.value("shipping_address").toString());
     }
     _query.clear();
   } else {

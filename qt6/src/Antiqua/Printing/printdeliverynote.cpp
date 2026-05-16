@@ -229,7 +229,7 @@ int PrintDeliveryNote::exec(const QJsonObject& options, bool pdfbtn) {
   QJsonObject _content;
   _content.insert("config", _config);
   _content.insert("subject", tr("Delivery note"));
-  _content.insert("address", _person.value("address").toString());
+  _content.insert("address", _person.value("shipping_address").toString());
 
   QJsonArray _array;
   _array.append(tr("Invoice No."));
