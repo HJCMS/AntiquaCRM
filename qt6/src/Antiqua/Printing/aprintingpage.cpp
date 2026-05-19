@@ -8,11 +8,6 @@
 #include <QSizePolicy>
 #include <QTableWidgetItem>
 
-#ifdef ANTIQUA_DEVELOPMENT
-// Display helper borders
-# define PRINTPAGE_DEBUG
-#endif
-
 namespace AntiquaCRM
 {
 
@@ -89,7 +84,7 @@ void APrintingPage::initConfiguration() {
   _company.append(companyData("COMPANY_LOCATION"));
   p_companyData.insert("COMPANY_ADDRESS_LABEL", _company);
 
-#ifdef PRINTPAGE_DEBUG
+#ifdef ANTIQUA_DEVELOPMENT
   QHashIterator<QString, QString> it(p_companyData);
   while (it.hasNext()) {
     it.next();
@@ -221,8 +216,9 @@ void APrintingPage::paintFooter(QPainter& painter) {
   // END:Right
 
   // start positioning
-  int _spacing = 6;
-  int _height = -1;
+  qint8 _margin_top = 10;
+  qint8 _spacing = 6;
+  quint8 _height = -1;
   if (_leftBox.size().height() > _rightBox.size().height()) {
     _height = _leftBox.size().height();
   } else {
@@ -233,8 +229,7 @@ void APrintingPage::paintFooter(QPainter& painter) {
 
   // float left
   // @note must painted before calculate the right box!
-  int _left_box_y = (_ft_y - _spacing);
-  painter.drawStaticText(QPoint(borderLeft(), _left_box_y), _leftBox);
+  painter.drawStaticText(QPoint(borderLeft(), (_ft_y + _margin_top)), _leftBox);
 
   // footer text box right x()
   int _lb_right = (borderLeft() + _leftBox.size().width());
@@ -243,8 +238,7 @@ void APrintingPage::paintFooter(QPainter& painter) {
     _right_box_x = (_lb_right + _spacing);
 
   // float right
-  int _right_box_y = (_ft_y - _spacing);
-  painter.drawStaticText(QPoint(_right_box_x, _right_box_y), _rightBox);
+  painter.drawStaticText(QPoint(_right_box_x, (_ft_y + _margin_top)), _rightBox);
 }
 
 void APrintingPage::paintEvent(QPaintEvent* event) {
@@ -268,7 +262,7 @@ void APrintingPage::paintEvent(QPaintEvent* event) {
     painter.drawLine(QPoint(5, _ym), // start
                      QPoint(((borderLeft() / 3) * 2), _ym));
     // END::Letter_folding_lines
-#ifdef PRINTPAGE_DEBUG
+#ifdef ANTIQUA_DEVELOPMENT
     const QRectF _frame(QPointF(borderLeft(), 0),                     // top left
                         QPointF(borderRight(), pagePoints().height()) // bottom right
     );
