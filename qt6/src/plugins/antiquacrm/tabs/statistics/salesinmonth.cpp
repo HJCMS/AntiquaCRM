@@ -15,9 +15,13 @@ MonthSeries::MonthSeries(qint64 year, QMap<qint16, qint64> map, QObject* parent)
   setPointsVisible(true);
   setPointLabelsFormat("@yPoint");
   setPointLabelsVisible(true);
+  setPointLabelsClipping(true);
   setVisible(true);
+  connect(this, SIGNAL(hovered(QPointF,bool)), SLOT(toolTip(QPointF,bool)));
+}
 
-  connect(this, SIGNAL(hovered(QPointF, bool)), SLOT(toolTip(QPointF, bool)));
+bool MonthSeries::labelIsVisible(const QPointF &p) const {
+  return (p.x() > 0 && p.y() > 0 && p.x() < 12);
 }
 
 void MonthSeries::toolTip(const QPointF& p, bool b) {
@@ -37,15 +41,14 @@ void MonthSeries::toolTip(const QPointF& p, bool b) {
 
 void MonthSeries::updatePointLabels() {
   QHash<QXYSeries::PointConfiguration, QVariant> cfg;
+  cfg[QXYSeries::PointConfiguration::Visibility] = true;
   cfg[QXYSeries::PointConfiguration::LabelVisibility] = true;
   QListIterator<QPointF> it(points());
-  int index = 0;
+  qint8 _index = 0;
   while (it.hasNext()) {
-    QPointF _p = it.next();
-    cfg[QXYSeries::PointConfiguration::LabelVisibility] = !(index == 0 || _p.y() == 0);
-
-    setPointConfiguration(index, cfg);
-    index++;
+    const QPointF _p = it.next();
+    cfg[QXYSeries::PointConfiguration::LabelVisibility] = labelIsVisible(_p);
+    setPointConfiguration(_index++, cfg);
   }
 }
 
@@ -83,11 +86,11 @@ QAbstractSeries::SeriesType MonthSeries::type() const {
 SalesInMonth::SalesInMonth(QWidget* parent)
     : AntiquaCRM::AChartView{parent}, p_lc{QLocale::system()}, p_date{QDate::currentDate()} {
   setObjectName("statistics_sales_in_month");
-  m_chart = new QChart(itemAt(0, 0));
+  m_chart = new QChart(mainItem());
   m_chart->setTitleFont(headersFont);
   m_chart->setTitle(tr("Compare sales from past years with current."));
-  m_chart->setMargins(QMargins(10, 0, 10, 0));
-  m_chart->setAnimationOptions(QChart::SeriesAnimations);
+  m_chart->setMargins(QMargins(5, 0, 5, 0));
+  m_chart->setAnimationOptions(QChart::NoAnimation);
 
   m_valueAxis = new QValueAxis(m_chart);
   m_valueAxis->setMin(0);
@@ -177,6 +180,9 @@ bool SalesInMonth::initialChartView(int year) {
   }
   _query.clear();
   _q.clear();
+
+  if(p_dataMap.keys().size() < 1)
+    return false;
 
   // finally insert chart data
   foreach (int _y, p_dataMap.keys()) {

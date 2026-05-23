@@ -13,6 +13,7 @@
 #include <QChartView>
 #include <QDateTime>
 #include <QFont>
+#include <QGraphicsItem>
 #include <QObject>
 #include <QPieSeries>
 #include <QSqlQuery>
@@ -79,6 +80,8 @@ protected:
    * @param value - Price
    */
   double roundPrice(double value) const;
+
+  QGraphicsItem* mainItem() const;
 
   virtual bool initialChartView(int year = -1) = 0;
 

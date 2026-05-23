@@ -10,7 +10,7 @@ namespace AntiquaCRM
 {
 
 AChartView::AChartView(QWidget* parent) : QChartView{parent} {
-  setContentsMargins(0, 0, 0, 0);
+  setContentsMargins(0, 0, 2, 0);
   setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing);
 
   m_sql = new AntiquaCRM::ASqlCore(this);
@@ -62,6 +62,15 @@ const QSqlQuery AChartView::getTplSqlQuery(const QString& tpl) {
 double AChartView::roundPrice(double value) const {
   double _precision = 0.01;
   return std::round(value / _precision) * _precision;
+}
+
+QGraphicsItem* AChartView::mainItem() const {
+  QGraphicsItem* m_item = items().at(0);
+  if(m_item != nullptr)
+    return m_item;
+
+  qWarning() << "!!! Missing QGraphicsItem inside of AChartView:: !!!";
+  return nullptr;
 }
 
 AChartView::~AChartView() {

@@ -31,6 +31,7 @@ class ANTIQUACRM_STATISTICS_PLUGIN MonthSeries final : public QLineSeries {
 private:
   qint64 Year;
   QMap<qint16, qint64> MonthData;
+  bool labelIsVisible(const QPointF &) const;
 
 private Q_SLOTS:
   void toolTip(const QPointF &, bool);

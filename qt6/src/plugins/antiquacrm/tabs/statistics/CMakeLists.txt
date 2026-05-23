@@ -45,6 +45,11 @@ SET_TARGET_PROPERTIES (${_pluginTarget} PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
 
+SET(OPENGL_SUPPORT "")
+IF(OPENGL_opengl_LIBRARY)
+  SET(OPENGL_SUPPORT "Qt6::OpenGL")
+ENDIF()
+
 TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
  Qt6::Core
  Qt6::Widgets
@@ -52,6 +57,7 @@ TARGET_LINK_LIBRARIES (${_pluginTarget} PRIVATE
  Qt6::Network
  Qt6::Xml
  Qt6::Charts
+ ${OPENGL_SUPPORT}
  AntiquaCRM
  AntiquaTabs
  AntiquaWidgets
