@@ -7,6 +7,7 @@
 //
 
 // AntiquaCRM::PrintInvoice
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_PRINTING_INVOICE_H
 #include "printinvoice.h"
 #endif
@@ -36,4 +37,5 @@
 #include "printbookcard.h"
 #endif
 
+// IWYU pragma: end_exports
 // EOF

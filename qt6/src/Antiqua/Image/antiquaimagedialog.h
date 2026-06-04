@@ -7,6 +7,7 @@
 //
 
 // AntiquaCRM::AGlobal
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_GLOBAL_H
 #include "aglobal.h"
 #endif
@@ -20,4 +21,5 @@
 // AntiquaCRM::ImageImportDialog
 #include "imageimportdialog.h"
 
+// IWYU pragma: end_exports
 // EOF

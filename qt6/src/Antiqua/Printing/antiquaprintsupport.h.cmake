@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PRINTING_SUPPORT
 #define ANTIQUACRM_PRINTING_SUPPORT
 
+// IWYU pragma: begin_exports
 #include <QPrinter>
 #include <QPrinterInfo>
 
@@ -22,4 +23,5 @@
 #include "aprinttools.h"
 #endif
 
+// IWYU pragma: end_exports
 #endif

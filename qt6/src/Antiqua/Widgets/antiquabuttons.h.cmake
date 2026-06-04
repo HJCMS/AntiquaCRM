@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_WIDGETS_BUTTONS_H
 #define ANTIQUACRM_WIDGETS_BUTTONS_H
 
+// IWYU pragma: begin_exports
 // AntiquaCRM::PrinterButton
 #ifndef ANTIQUACRM_WIDGETS_PRINT_BUTTON_H
 #include "printerbutton.h"
@@ -19,6 +20,7 @@
 #include "mailbutton.h"
 #endif
 
+// IWYU pragma: end_exports
 #endif
 
 // EOF

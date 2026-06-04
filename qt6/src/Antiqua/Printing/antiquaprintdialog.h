@@ -7,6 +7,7 @@
 //
 
 // AntiquaCRM::AGlobal
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_GLOBAL_H
 #include "aglobal.h"
 #endif
@@ -21,4 +22,5 @@
 #include "aprintdialog.h"
 #endif
 
+// IWYU pragma: end_exports
 // EOF

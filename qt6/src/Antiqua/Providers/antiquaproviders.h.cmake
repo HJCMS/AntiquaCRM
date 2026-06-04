@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_PROVIDERS_PLUGIN_H
 #define ANTIQUACRM_PROVIDERS_PLUGIN_H
 
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_PROVIDER_INTERFACE
 #define ANTIQUACRM_PROVIDER_INTERFACE "@CMAKE_ANTIQUA_PROVIDER_INTERFACE@"
 #endif
@@ -36,4 +37,5 @@
 // AntiquaCRM::ProviderActionNavigator
 #include "provideractionnavigator.h"
 
+// IWYU pragma: end_exports
 #endif // ANTIQUACRM_PROVIDERS_PLUGIN_H

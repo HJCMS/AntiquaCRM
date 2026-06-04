@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_WIDGETS_LIB_H
 #define ANTIQUACRM_WIDGETS_LIB_H
 
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_WIDGETS_ANTIQUAICON_H
 #include "antiquaicon.h"
 #endif
@@ -168,5 +169,6 @@
 // AntiquaCRM::CustomersDataWidget
 #include "customersdatawidget.h"
 
+// IWYU pragma: end_exports
 #endif
 // EOF

@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_ANTIQUATABS_H
 #define ANTIQUACRM_ANTIQUATABS_H
 
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_TABS_INTERFACE
 #define ANTIQUACRM_TABS_INTERFACE "de.hjcms.antiquacrm.tabs"
 #endif
@@ -60,4 +61,5 @@
 // AntiquaCRM::TabsEditActionBar
 #include "tabseditactionbar.h"
 
+// IWYU pragma: end_exports
 #endif // ANTIQUACRM_ANTIQUATABS_H

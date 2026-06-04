@@ -9,6 +9,7 @@
 #ifndef ANTIQUACRM_CORE_LIB_H
 #define ANTIQUACRM_CORE_LIB_H
 
+// IWYU pragma: begin_exports
 #ifndef ANTIQUACRM_GLOBAL_H
 #include "aglobal.h"
 #endif
@@ -75,4 +76,5 @@
 // AntiquaCRM::ATaxCalculator
 #include "ataxcalculator.h"
 
+// IWYU pragma: end_exports
 #endif

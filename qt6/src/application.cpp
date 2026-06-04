@@ -232,7 +232,7 @@ int Application::exec() {
   p_splash.setMessage("Initial Themes & styles.");
   initStyleTheme();
 
-         // Step 2 - Networking
+  // Step 2 - Networking
   p_splash.setMessage("Search Networkconnection!");
   if (!checkInterfaces()) {
     p_splash.errorMessage(tr("No Networkconnection found!"));

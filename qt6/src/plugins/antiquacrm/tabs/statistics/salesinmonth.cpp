@@ -17,6 +17,12 @@ MonthSeries::MonthSeries(qint64 year, QMap<qint16, qint64> map, QObject* parent)
   setPointLabelsVisible(true);
   setPointLabelsClipping(true);
   setVisible(true);
+
+  /* A line series used as an edge series for QAreaSeries.
+   * For this behavior it cannot use OpenGL acceleration!
+   */
+  setUseOpenGL(false);
+
   connect(this, SIGNAL(hovered(QPointF,bool)), SLOT(toolTip(QPointF,bool)));
 }
 
