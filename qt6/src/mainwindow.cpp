@@ -17,6 +17,7 @@ MainWindow::MainWindow(AntiquaCRM::ASettings* cfg, QWidget* parent)
   setObjectName("antiqua_ui_mainwindow");
   setWindowTitle(QString(ANTIQUACRM_WINDOW_TITLE) + " [*]");
   setMinimumSize(QSize(800, 580));
+  setTabletTracking(false);
 
   // Main Window Menubar
   m_menuBar = new MenuBar(this);

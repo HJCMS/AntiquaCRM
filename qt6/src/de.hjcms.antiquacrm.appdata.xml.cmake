@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Copyright 2026 HJCMS https://www.hjcms.de -->
+<component type="desktop">
+  <id>de.hjcms.@CMAKE_PROJECT_NAME@.desktop</id>
+  <releases>
+    <release date="2026-09-03" version="1.1.5" />
+  </releases>
+  <project_license>GPL-3.0-or-later</project_license>
+  <metadata_license>CC0-1.0</metadata_license>
+  <name>Antiquacrm</name>
+  <summary>A program for managing antiquarian books.</summary>
+  <summary xml:lang="de">Ein Programm zur Verwaltung von Antiquarischen Büchern.</summary>
+  <categories>
+    <category>Office</category>
+    <category>Database</category>
+    <category>Qt</category>
+  </categories>
+  <provides>
+    <dbus type="user">de.hjcms.@CMAKE_PROJECT_NAME@</dbus>
+  </provides>
+  <developer_name>HJCMS</developer_name>
+  <url type="homepage">https://www.hjcms.de</url>
+  <translation />
+  <description>
+    <p>It offers inventory management and several online interfaces to simplify data management with individual service providers.</p>
+    <p xml:lang="de">Es bietet eine Verwaltung der Artikelbestände und einige Online Schnittstellen für eine vereinfachte Datenverwaltung zu den einzelnen Dienstanbietern.</p>
+  </description>
+  <screenshots>
+    <screenshot type="default">https://raw.githubusercontent.com/HJCMS/AntiquaCRM/devel/preview.png</screenshot>
+  </screenshots>
+</component>
