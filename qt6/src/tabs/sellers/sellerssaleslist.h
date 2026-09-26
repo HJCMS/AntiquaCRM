@@ -28,6 +28,7 @@ private:
     QDateTime datetime;             /**< Auftrag entgegen genommen */
     QString buyer;                  /**< Käufername des Dienstleisters */
     AntiquaCRM::OrderStatus status; /**< Aktueller Auftrags-Status */
+    qint8 trust;                    /**< Werte von 0-5 PgSQL::customers::column(c_trusted) */
   };
 
   /**

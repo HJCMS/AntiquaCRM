@@ -132,11 +132,11 @@ void Application::initStyleTheme() {
     }
   }
 
+  AntiquaCRM::AColorLuminance _cluminance = AntiquaCRM::AColorLuminance(this);
   QPalette _palette = palette();
   // @fixme XDesktop themes
   if (_platform.startsWith("xcb")) {
-    const QColor _rgb = _palette.color(QPalette::PlaceholderText).toRgb();
-    if (!AntiquaCRM::AColorLuminance(this).checkForeground(_rgb)) {
+    if (!_cluminance.checkForeground(_palette.color(QPalette::PlaceholderText).toRgb())) {
       _palette.setColor(QPalette::PlaceholderText, Qt::darkGray);
     }
   }
@@ -149,6 +149,12 @@ void Application::initStyleTheme() {
     }
     QColor _highlight(255, 255, 127);
     _palette.setColor(QPalette::Inactive, QPalette::Highlight, _highlight);
+  }
+  // Notification Highlight in Tree/List Widgets.
+  if (!_cluminance.checkForeground(_palette.color(QPalette::Accent).toRgb())) {
+    _palette.setColor(QPalette::Accent, Qt::red);
+  } else {
+    _palette.setColor(QPalette::Accent, Qt::darkRed);
   }
   setPalette(_palette);
 }

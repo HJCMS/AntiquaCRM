@@ -12,6 +12,7 @@
 #include <QIcon>
 #include <QLocale>
 #include <QMenu>
+#include <QPalette>
 
 SellersSalesList::SellersSalesList(QWidget* parent) : QTreeWidget{parent} {
   setColumnCount(3);
@@ -234,6 +235,14 @@ void SellersSalesList::addOrder(const QString& pro, const TreeOrderItem& data) {
     m_i->setIcon(1, AntiquaCRM::antiquaIcon("dialog-warning"));
     m_i->setToolTip(1, _tip.trimmed());
     m_i->setText(2, data.buyer);
+    if(data.trust>2) {
+      m_i->setToolTip(2, tr("Notification from Customer Trust Management."));
+      if(data.trust>4) { // 5 Untrusted
+        m_i->setForeground(2, palette().accent());
+      } else { // Warnings only
+        m_i->setForeground(2, palette().highlight());
+      }
+    }
     updateOrderStatus(m_i, data.status);
     p->addChild(m_i);
   }
@@ -330,6 +339,8 @@ void SellersSalesList::loadUpdate() {
       _item.datetime = _dt;
       _item.buyer = _q.value("order_buyername").toString();
       _item.status = _status;
+      _item.trust = static_cast<qint8>(_q.value("c_trusted").toInt(0));
+
       addOrder(_provider, _item);
     }
   } else if (!pgsql.lastError().isEmpty()) {
