@@ -39,8 +39,10 @@ bool OrdersTableOverView::sqlModelQuery(const QString& query)
   if (m_model->querySelect(query)) {
     QueryHistory = query;
     setModel(m_model);
-    // Table Record und NICHT QueryRecord abfragen!
-    // Siehe: setSortByColumn
+    /*!
+      @note Table Record und NICHT QueryRecord abfragen!
+      @see setSortByColumn
+    */
     p_tableRecord = m_model->tableRecord();
     emit sendQueryReport(m_model->queryResultInfo());
     queryFinished(m_model->rowCount() > 0);
@@ -113,8 +115,8 @@ void OrdersTableOverView::setSortByColumn(int column, Qt::SortOrder order)
   if (column < 0)
     return;
 
-  /**
-   * @warning Not mixing aliases with column names in order clauses!
+  /*!
+   @warning Not mixing aliases with column names in order clauses!
    */
   QString _order_by;
   if (p_tableRecord.isEmpty())
@@ -200,25 +202,37 @@ bool OrdersTableOverView::setQuery(const QString& clause)
     _sql.setSorting(Qt::DescendingOrder);
     _sql.setLimits(getQueryLimit());
   }
+  // qDebug() << Q_FUNC_INFO << _sql.getQueryContent();
   return sqlModelQuery(_sql.getQueryContent());
 }
 
-/**
- @since Wed Apr  8 18:49:43 CEST 2026
-  The macro CURRENT_TIMESTAMP has been changed to LOCALTIMESTAMP.
-  The column o_since does not have an output format with time zone.
-*/
 const QString OrdersTableOverView::defaultWhereClause()
 {
-  // @warning We need to request this information in the future due to daylight saving time.
-  // @var _mtf  minutes to the future
+  /*!
+   @warning We need this information in the future due to daylight saving time.
+   @var _mtf  minutes to the future
+  */
   const QString _mtf = QString::number(p_dateTime.offsetFromUtc() / 60);
 
-  QStringList _l(QString::number(AntiquaCRM::OrderStatus::DELIVERED));
-  _l.append(QString::number(AntiquaCRM::OrderStatus::CANCELED));
+  // NOT IN o_order_status
+  QStringList _not_in(QString::number(AntiquaCRM::OrderStatus::DELIVERED));
+  _not_in.append(QString::number(AntiquaCRM::OrderStatus::CANCELED));
 
-  QString _sql("o_order_status NOT IN (" + _l.join(",") + ") AND ");
+  /*!
+   @since Wed Apr  8 18:49:43 CEST 2026
+    The macro CURRENT_TIMESTAMP has been changed to LOCALTIMESTAMP.
+    The column o_since does not have an output format with time zone.
+  */
+  QString _sql("o_order_status NOT IN (" + _not_in.join(",") + ") AND ");
   _sql.append("(o_since BETWEEN (LOCALTIMESTAMP - justify_interval(interval '1 year')) AND ");
-  _sql.append("(LOCALTIMESTAMP + justify_interval(interval '" + _mtf + " minutes')))");
+  _sql.append("(LOCALTIMESTAMP + justify_interval(interval '" + _mtf + " minutes'))) ");
+
+  // IN o_order_status
+  QStringList _dnpo(QString::number(AntiquaCRM::OrderStatus::DELIVERY));
+  _dnpo.append(QString::number(AntiquaCRM::OrderStatus::DELIVERED));
+  // EQUAL o_payment_status
+  QString _ps(QString::number(AntiquaCRM::OrderPayment::NOTPAID));
+  _sql.append("OR (o_payment_status=" + _ps + " AND o_order_status IN (" + _dnpo.join(",") + "))");
+
   return _sql;
 }

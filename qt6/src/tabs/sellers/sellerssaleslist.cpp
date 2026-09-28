@@ -235,6 +235,11 @@ void SellersSalesList::addOrder(const QString& pro, const TreeOrderItem& data) {
     m_i->setIcon(1, AntiquaCRM::antiquaIcon("dialog-warning"));
     m_i->setToolTip(1, _tip.trimmed());
     m_i->setText(2, data.buyer);
+    /*!
+     @since 2026-09-28
+     Highlight customer name with trust number from customer.trusted database column.
+     This is intended to provide a preview of some customer warnings.
+     */
     if(data.trust>2) {
       m_i->setToolTip(2, tr("Notification from Customer Trust Management."));
       if(data.trust>4) { // 5 Untrusted
